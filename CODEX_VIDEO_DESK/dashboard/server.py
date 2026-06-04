@@ -884,6 +884,39 @@ class Handler(BaseHTTPRequestHandler):
             )
             html_response(self, page)
             return
+        if parsed.path.startswith("/illustration-requests/"):
+            slug = validate_slug(unquote(parsed.path.split("/illustration-requests/", 1)[1]))
+            path = CARD_OUTPUT / slug / "codex_illustration_requests.md"
+            body = path.read_text(encoding="utf-8", errors="replace") if path.exists() else "아직 생성된 일러스트 요청서가 없습니다. 먼저 영상용 프롬프트 준비를 실행하세요."
+            page = (
+                "<!doctype html><html><head><meta charset='utf-8'>"
+                "<title>영상 일러스트 요청서</title>"
+                "<style>"
+                "body{font-family:Arial,'Malgun Gothic',sans-serif;margin:24px;line-height:1.55}"
+                ".bar{display:flex;gap:8px;align-items:center;margin:12px 0 18px}"
+                "pre{white-space:pre-wrap;font-size:15px;background:#f7f7f8;border:1px solid #ddd;padding:18px;border-radius:8px}"
+                "button{padding:10px 14px;border:0;border-radius:8px;background:#111;color:white;cursor:pointer}"
+                "button:hover{background:#F74B0B}"
+                ".hint{color:#64748b;font-size:13px}"
+                "</style>"
+                "<script>"
+                "async function copyAllPrompt(){"
+                "const el=document.getElementById('promptText');"
+                "const text=el?el.innerText:'';"
+                "try{await navigator.clipboard.writeText(text);alert('전체 복사했습니다.');}"
+                "catch(e){const t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();alert('전체 복사했습니다.');}"
+                "}"
+                "</script>"
+                "</head><body><h1>영상 일러스트 요청서</h1><p><b>"
+                + html.escape(slug)
+                + "</b></p><div class='bar'><button onclick='copyAllPrompt()'>전체 복사</button>"
+                + "<span class='hint'>GPT Plus에 붙여넣고, 생성 이미지를 ILLUSTRATION_DROP에 저장하세요.</span></div>"
+                + "<pre id='promptText'>"
+                + html.escape(body)
+                + "</pre></body></html>"
+            )
+            html_response(self, page)
+            return
         if parsed.path.startswith("/card-prompt/"):
             slug = validate_slug(unquote(parsed.path.split("/card-prompt/", 1)[1]))
             path = CARD_IMAGES / slug / "prompt.md"
@@ -938,6 +971,22 @@ class Handler(BaseHTTPRequestHandler):
             return
         if parsed.path == "/api/cardnews/slugs":
             json_response(self, {"rows": get_cardnews_rows()})
+            return
+        if parsed.path == "/api/illustration-requests":
+            query = urllib.parse.parse_qs(parsed.query)
+            slug = validate_slug((query.get("slug") or [""])[0])
+            md_path = CARD_OUTPUT / slug / "codex_illustration_requests.md"
+            json_path = CARD_OUTPUT / slug / "codex_illustration_requests.json"
+            payload = {"slug": slug, "exists": md_path.exists(), "count": 0, "gaps": 0, "path": str(md_path)}
+            if json_path.exists():
+                try:
+                    data = json.loads(json_path.read_text(encoding="utf-8-sig"))
+                    payload["count"] = len(data.get("requests") or [])
+                    payload["gaps"] = len(data.get("uncovered_gaps") or [])
+                    payload["requests"] = data.get("requests") or []
+                except Exception as exc:
+                    payload["error"] = str(exc)
+            json_response(self, payload)
             return
         if parsed.path == "/api/preflight":
             query = urllib.parse.parse_qs(parsed.query)
@@ -1227,6 +1276,7 @@ INDEX_HTML = r"""<!doctype html>
           <button class="btn" onclick="runPreflight()"><strong>렌더 전 사전검사</strong><span>이미지, 스크립트, CTA, 한글 문장, 중복 사용을 먼저 확인합니다.</span></button>
           <button class="btn" onclick="runAction('video_render_selected')"><strong>3. 선택 영상만 렌더</strong><span>추가 이미지 없이 현재 선택한 슬러그를 다시 렌더합니다.</span></button>
           <button class="btn" onclick="window.open('/prompt','_blank')"><strong>영상 이미지 프롬프트 보기</strong><span>최신 영상용 GPT 프롬프트를 브라우저에서 엽니다.</span></button>
+          <button class="btn" onclick="openIllustrationRequests()"><strong>신규 일러스트 요청서</strong><span>선택한 영상의 범용 일러스트 추천과 GPT 프롬프트를 엽니다.</span></button>
           <button class="btn" onclick="runAction('open_results')"><strong>영상 결과 폴더</strong><span>완성 MP4와 발행 패키지 폴더를 엽니다.</span></button>
           <button class="btn" onclick="runAction('system_update')"><strong>시스템 업데이트</strong><span>GitHub에서 최신 코드만 받아옵니다. 렌더 결과물은 건드리지 않습니다.</span></button>
           <button class="btn" onclick="runAction('open_illustrations')"><strong>일러스트 폴더</strong><span>재사용 일러스트 라이브러리와 드롭 폴더를 엽니다.</span></button>
@@ -1259,6 +1309,7 @@ INDEX_HTML = r"""<!doctype html>
             <div class="preflight-list" id="preflightRows"></div>
           </div>
         </div>
+        <div id="illustrationRequestNote" class="pad small"></div>
         <div id="weakPanel" class="weak-panel">
           <div class="head"><h2>약한 매핑 상세</h2><button onclick="toggleWeakPanel()">닫기</button></div>
           <div class="pad small">이미지/일러스트가 청크 문맥과 약하게 연결된 항목입니다. 10개 이상이면 렌더 전 재매핑을 권장합니다.</div>
@@ -1303,6 +1354,7 @@ INDEX_HTML = r"""<!doctype html>
       document.getElementById("listTitle").textContent = next === "video" ? "영상 후보" : "카드뉴스 후보";
       document.getElementById("actionTitle").textContent = next === "video" ? "영상 작업" : "카드뉴스 작업";
       updateSelectedStatus();
+      refreshIllustrationRequestNote();
     }
     async function loadSlugs() {
       const data = await api("/api/slugs"); videoItems = data.slugs || []; const box = document.getElementById("videoList"); box.innerHTML = "";
@@ -1343,6 +1395,30 @@ INDEX_HTML = r"""<!doctype html>
         div.innerHTML = `<b>[${escapeHtml(item.level || "-")}] ${escapeHtml(item.message || "")}</b>${item.detail ? `<pre>${escapeHtml(item.detail)}</pre>` : ""}`;
         rows.appendChild(div);
       });
+    }
+    async function refreshIllustrationRequestNote() {
+      const slug = selected || selectedCard;
+      const box = document.getElementById("illustrationRequestNote");
+      if (!box || !slug) return;
+      try {
+        const data = await api(`/api/illustration-requests?slug=${encodeURIComponent(slug)}`);
+        if (!data.exists) {
+          box.innerHTML = `<div class="status-note">신규 일러스트 요청서가 아직 없습니다. 1번 영상용 프롬프트 준비를 먼저 실행하세요.</div>`;
+          return;
+        }
+        const tone = (data.count || 0) > 0 ? "warn" : "ok";
+        const text = (data.count || 0) > 0
+          ? `신규 일러스트 제안 ${data.count}개 · 문맥 경고 ${data.gaps || 0}개`
+          : `신규 일러스트 제안 없음 · 문맥 경고 ${data.gaps || 0}개`;
+        box.innerHTML = `<div class="status-note"><b>일러스트 요청서</b> · ${text} <button onclick="openIllustrationRequests()" style="margin-left:8px">열기</button></div>`;
+      } catch (e) {
+        box.innerHTML = `<div class="status-note">일러스트 요청서 상태 확인 실패: ${escapeHtml(e.message)}</div>`;
+      }
+    }
+    function openIllustrationRequests() {
+      const slug = selected || selectedCard;
+      if (!slug) { alert("먼저 슬러그를 선택하세요."); return; }
+      window.open(`/illustration-requests/${encodeURIComponent(slug)}`, "_blank");
     }
     async function runPreflight() {
       const slug = selected || selectedCard;
@@ -1419,6 +1495,7 @@ INDEX_HTML = r"""<!doctype html>
       document.getElementById("runtimeSyncText").textContent = `${sync.ok ? "성공" : "확인 필요"} · ${sync.endedAt || sync.message || "-"}`;
       document.getElementById("runtimeSync").className = `runtime-card ${sync.ok ? "good" : "bad"}`;
       document.getElementById("runtimeCounts").textContent = `기사 ${sync.articles || 0} · 이미지 ${sync.images || 0} · 결과 ${sync.output || 0}`;
+      refreshIllustrationRequestNote();
       updateSelectedStatus();
       const job = data.job || {};
       document.getElementById("jobText").textContent = job.running ? `실행 중: ${job.name}` : (job.exit_code === null ? "대기 중" : `마지막 종료 코드: ${job.exit_code}`);
