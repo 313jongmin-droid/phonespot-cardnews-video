@@ -939,6 +939,26 @@ class Handler(BaseHTTPRequestHandler):
         if parsed.path == "/api/cardnews/slugs":
             json_response(self, {"rows": get_cardnews_rows()})
             return
+        if parsed.path == "/api/preflight":
+            query = urllib.parse.parse_qs(parsed.query)
+            slug = validate_slug((query.get("slug") or [""])[0])
+            proc = subprocess.run(
+                [sys.executable, str(SCRIPTS / "codex_preflight_check.py"), slug, "--json"],
+                cwd=str(ROOT),
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                capture_output=True,
+            )
+            try:
+                payload = json.loads(proc.stdout)
+            except Exception:
+                payload = {"slug": slug, "status": "ERROR", "errors": 1, "warnings": 0, "items": [
+                    {"level": "ERROR", "message": "사전검사 결과를 읽지 못했습니다.", "detail": (proc.stdout + "\n" + proc.stderr).strip()}
+                ]}
+            payload["exitCode"] = proc.returncode
+            json_response(self, payload)
+            return
         if parsed.path == "/api/weak-mappings":
             payload = prompt_payload()
             gaps = payload.get("uncovered_gaps", []) or []
@@ -1158,6 +1178,13 @@ INDEX_HTML = r"""<!doctype html>
     .warn { color:var(--red); } .ok { color:var(--green); }
     .log { height:390px; overflow:auto; background:#0b1020; color:#dbeafe; padding:14px; font-family:Consolas,monospace; font-size:12px; white-space:pre-wrap; }
     .results { max-height:170px; overflow:auto; font-size:13px; } .result-row { display:flex; justify-content:space-between; gap:10px; padding:7px 0; border-bottom:1px solid #eef1f5; }
+    .preflight-panel { display:none; border-top:1px solid var(--line); background:#f8fafc; }
+    .preflight-list { display:grid; gap:8px; }
+    .preflight-item { border:1px solid var(--line); border-radius:8px; padding:8px 10px; background:white; font-size:13px; line-height:1.45; }
+    .preflight-item.OK { border-color:#86efac; background:#f0fdf4; }
+    .preflight-item.WARN { border-color:#fdba74; background:#fff7ed; }
+    .preflight-item.ERROR { border-color:#fecaca; background:#fef2f2; }
+    .preflight-item pre { white-space:pre-wrap; margin:6px 0 0; font-family:Consolas,monospace; font-size:12px; color:#334155; }
     .weak-panel { display:none; border-top:1px solid var(--line); background:#fffaf7; }
     .weak-table { width:100%; border-collapse:collapse; font-size:12px; }
     .weak-table th,.weak-table td { border-bottom:1px solid #f0d8ce; padding:8px; vertical-align:top; text-align:left; }
@@ -1197,6 +1224,7 @@ INDEX_HTML = r"""<!doctype html>
         <div id="videoActions" class="pad grid">
           <button class="btn primary" onclick="runAction('video_prepare')"><strong>1. 영상용 프롬프트 준비</strong><span>선택한 카드뉴스 결과를 숏폼 영상 스크립트와 일러스트 요청으로 변환합니다.</span></button>
           <button class="btn primary" onclick="runAction('video_import_render')"><strong>2. 이미지 가져오기 + 렌더</strong><span>다운로드한 GPT 이미지를 반영하고 최신 영상 작업물을 렌더합니다.</span></button>
+          <button class="btn" onclick="runPreflight()"><strong>렌더 전 사전검사</strong><span>이미지, 스크립트, CTA, 한글 문장, 중복 사용을 먼저 확인합니다.</span></button>
           <button class="btn" onclick="runAction('video_render_selected')"><strong>3. 선택 영상만 렌더</strong><span>추가 이미지 없이 현재 선택한 슬러그를 다시 렌더합니다.</span></button>
           <button class="btn" onclick="window.open('/prompt','_blank')"><strong>영상 이미지 프롬프트 보기</strong><span>최신 영상용 GPT 프롬프트를 브라우저에서 엽니다.</span></button>
           <button class="btn" onclick="runAction('open_results')"><strong>영상 결과 폴더</strong><span>완성 MP4와 발행 패키지 폴더를 엽니다.</span></button>
@@ -1224,6 +1252,13 @@ INDEX_HTML = r"""<!doctype html>
           <div class="metric"><span class="small" id="metric5Label">영상 스크립트</span><b id="weakCount">-</b></div>
         </div>
         <div class="pad small" id="advice"></div>
+        <div id="preflightPanel" class="preflight-panel">
+          <div class="head"><h2>렌더 전 사전검사</h2><button onclick="togglePreflightPanel()">닫기</button></div>
+          <div class="pad">
+            <div class="status-note" id="preflightSummary">아직 검사하지 않았습니다.</div>
+            <div class="preflight-list" id="preflightRows"></div>
+          </div>
+        </div>
         <div id="weakPanel" class="weak-panel">
           <div class="head"><h2>약한 매핑 상세</h2><button onclick="toggleWeakPanel()">닫기</button></div>
           <div class="pad small">이미지/일러스트가 청크 문맥과 약하게 연결된 항목입니다. 10개 이상이면 렌더 전 재매핑을 권장합니다.</div>
@@ -1289,6 +1324,35 @@ INDEX_HTML = r"""<!doctype html>
         btn.onclick = () => { selectedCard = item.slug; selected = item.slug; document.getElementById("selectedSlug").textContent = selected; setMode("card"); updateSelectedStatus(); loadCardnews(); loadSlugs(); };
         box.appendChild(btn);
       });
+    }
+    function togglePreflightPanel() {
+      const panel = document.getElementById("preflightPanel");
+      panel.style.display = panel.style.display === "block" ? "none" : "block";
+    }
+    function renderPreflight(result) {
+      const panel = document.getElementById("preflightPanel");
+      const summary = document.getElementById("preflightSummary");
+      const rows = document.getElementById("preflightRows");
+      panel.style.display = "block";
+      const cls = result.status === "OK" ? "ok" : "warn";
+      summary.innerHTML = `<b>${escapeHtml(result.slug || selected)}</b> · 상태 ${result.status} · 오류 ${result.errors || 0} · 경고 ${result.warnings || 0}`;
+      rows.innerHTML = "";
+      (result.items || []).forEach(item => {
+        const div = document.createElement("div");
+        div.className = `preflight-item ${item.level || ""}`;
+        div.innerHTML = `<b>[${escapeHtml(item.level || "-")}] ${escapeHtml(item.message || "")}</b>${item.detail ? `<pre>${escapeHtml(item.detail)}</pre>` : ""}`;
+        rows.appendChild(div);
+      });
+    }
+    async function runPreflight() {
+      const slug = selected || selectedCard;
+      if (!slug) { alert("먼저 슬러그를 선택하세요."); return; }
+      try {
+        const result = await api(`/api/preflight?slug=${encodeURIComponent(slug)}`);
+        renderPreflight(result);
+      } catch (e) {
+        alert("사전검사 실패: " + e.message);
+      }
     }
     async function reloadLists() { await loadSlugs(); await loadCardnews(); }
     function findCardRow(slug) {
