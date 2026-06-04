@@ -1,0 +1,105 @@
+=== run_all start 2026-05-29 10:06:13.68 
+ 
+[using py] 
+============================================================
+phonespot cardnews — batch runner (run_all.py)
+발견 JSON   : 22개
+처리 대상   : 1개
+건너뜀      : 21개
+============================================================
+[건너뜀 목록]
+  - 002_iphone_anti_theft_2026: 이미 완료 (18장)
+  - apple_wwdc_siri_gemini_2026: 이미 완료 (18장)
+  - chrome_auto_test: 이미지 0장 (<5)
+  - election_call_block_2026: 이미지 0장 (<5)
+  - face_auth_july: 이미지 1장 (<5)
+  - family_month_telcom_2026: 이미지 0장 (<5)
+  - galaxy_a37_korea_may_launch: 이미 완료 (18장)
+  - galaxy_ai_club_may_2026: 이미 완료 (18장)
+  - galaxy_price_hike_europe_2026: 이미 완료 (18장)
+  - galaxy_s26_family_festa_may: 이미지 1장 (<5)
+  - galaxy_zfold8_lineup: 이미지 0장 (<5)
+  - galaxys26_zero_2026: 이미 완료 (18장)
+  - ios_26_6_beta_2026: 이미 완료 (18장)
+  - iphone17_q1_2026_no1: 이미 완료 (18장)
+  - iphone18_aluminum_2026: 이미 완료 (18장)
+  - iphone_nfc_open_2026: 이미 완료 (18장)
+  - kidsphones_compare_2026_05: 이미지 0장 (<5)
+  - oneui85_q2_2026: 이미 완료 (18장)
+  - oneui_8_5_korea_may_rollout: 이미 완료 (18장)
+  - phone_repair_security_2026: 이미 완료 (18장)
+  - voice_phishing_care: 이미지 1장 (<5)
+
+[처리 대상]
+  - 001_apple_ondevice_ai_wwdc26
+
+============================================================
+[1/1] 001_apple_ondevice_ai_wwdc26 렌더링 시작
+============================================================
+============================================================
+phonespot cardnews renderer (v5)
+BASE: C:\Users\di898\Documents\phonespot_cardnews\cardnews
+SLUG: 001_apple_ondevice_ai_wwdc26
+OUT : C:\Users\di898\Documents\phonespot_cardnews\cardnews\output\001_apple_ondevice_ai_wwdc26
+============================================================
+[info] Chromium 다운로드 중 (약 130MB, 첫 실행만)...
+[slug] SLUG='001_apple_ondevice_ai_wwdc26'  IMG_DIR=C:\Users\di898\Documents\phonespot_cardnews\cardnews\images\001_apple_ondevice_ai_wwdc26
+[v9 매거진 모드] cards 6장 로드 + 스키마 검증 통과
+
+=== 1x1 (1080x1080) ===
+  OK card_1.jpg
+  OK card_2.jpg
+  OK card_3.jpg
+  OK card_4.jpg
+  OK card_5.jpg
+  OK card_6.jpg
+
+=== 4x5 (1080x1350) ===
+  OK card_1.jpg
+  OK card_2.jpg
+  OK card_3.jpg
+  OK card_4.jpg
+  OK card_5.jpg
+  OK card_6.jpg
+
+=== 9x16 (1080x1920) ===
+  OK card_1.jpg
+  OK card_2.jpg
+  OK card_3.jpg
+  OK card_4.jpg
+  OK card_5.jpg
+  OK card_6.jpg
+
+렌더 시간: 13.8s
+
+=== JPG 결과 ===
+  18 장 / 총 2500 KB (2 MB)
+
+OK captions.md (articles/001_apple_ondevice_ai_wwdc26.json에서 로드)
+
+============================================================
+Images: 18
+Total size: 2 MB (2509 KB)
+============================================================
+
+[검증] 결과 점검 시작...
+[검증 ⚠ 문제 발견]
+  - 이전 기사 잔재 — '002_iphone_anti_theft_2026'의 키워드 '아이폰'이 captions.md에 있음
+  - 이전 기사 잔재 — 'apple_wwdc_siri_gemini_2026'의 키워드 'WWDC'이 captions.md에 있음
+  - 이전 기사 잔재 — 'galaxys26_zero_2026'의 키워드 '통신3사'이 captions.md에 있음
+  - 이전 기사 잔재 — 'ios_26_6_beta_2026'의 키워드 'iOS'이 captions.md에 있음
+  - 이전 기사 잔재 — 'iphone17_q1_2026_no1'의 키워드 '아이폰'이 captions.md에 있음
+  - 이전 기사 잔재 — 'iphone_nfc_open_2026'의 키워드 '아이폰'이 captions.md에 있음
+  - 이전 기사 잔재 — 'oneui_8_5_korea_may_rollout'의 키워드 '신기능'이 captions.md에 있음
+============================================================
+
+[백업] 현재 1개 백업 (최대 5개 유지)
+  → returncode=0 / output 카드 18장
+
+============================================================
+배치 완료 요약
+============================================================
+  ✓ OK   001_apple_ondevice_ai_wwdc26  (18장)
+============================================================
+ 
+=== run_all end 2026-05-29 10:06:32.73 

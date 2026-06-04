@@ -1,0 +1,16 @@
+{
+  "channel_name": "폰스팟",
+  "channel_tagline": "광교 휴대폰 정찰제",
+  "kakao": "@폰스팟광교점",
+  "litt": "litt.ly/phonespot",
+  "location": "광교호수공원 B1-47",
+  "primary_color": "#F74B0B",
+  "secondary_color": "#1A1A1A",
+  "accent_color": "#FFF1EA",
+  "logo_path": "shorts/logos/phonespot.png",
+  "cta_text": {
+    "main": "휴대폰 구매할 땐?",
+    "sub": "지원금부터 무료로 조회해보세요",
+    "url": "litt.ly/phonespot"
+  }
+}

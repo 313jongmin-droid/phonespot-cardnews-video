@@ -1,0 +1,72 @@
+{
+  "slug": "004_nosangdam",
+  "title_short": "상담 강요 없음",
+  "video_title": "상담 강요 없음",
+  "preset": "showcase",
+  "channel_name": "",
+  "channel_tagline": "",
+  "publication_date": "2026.05.29",
+  "opening": {
+    "line1": "가격 물어보면",
+    "line2": "'일단 오세요'",
+    "style": "oversize",
+    "sfx": "whoosh"
+  },
+  "hook": {
+    "style": "glitch",
+    "sfx": "tick",
+    "caption_chunks": [
+      "물어보면",
+      "'일단 오세요'",
+      "가격은?"
+    ],
+    "tts": "가격 궁금해 물어보면, 일단 오라고만 하고."
+  },
+  "facts": [
+    {
+      "id": "problem",
+      "style": "marker",
+      "sfx": "tick",
+      "caption_chunks": [
+        "상담부터",
+        "가면 또",
+        "권유"
+      ],
+      "tts": "상담받아야 가격 나오고, 가면 또 권유받고."
+    },
+    {
+      "id": "solution",
+      "style": "kinetic-box",
+      "sfx": "ding",
+      "caption_chunks": [
+        "폰스팟은",
+        "강요 없이",
+        "바로 조회"
+      ],
+      "tts": "폰스팟은 상담 강요 없이, 바로 가격부터 조회."
+    },
+    {
+      "id": "trust",
+      "style": "reveal",
+      "sfx": "pop",
+      "caption_chunks": [
+        "필요하면",
+        "그때",
+        "문의"
+      ],
+      "tts": "필요하면 그때 편하게 문의하세요."
+    }
+  ],
+  "cta": {
+    "style": "kinetic-box",
+    "sfx": "ding",
+    "caption_chunks": [
+      "가격부터",
+      "폰스팟"
+    ],
+    "tts": "가격부터 보고 결정하세요. 폰스팟.",
+    "kakao": "",
+    "litt": "",
+    "location": ""
+  }
+}

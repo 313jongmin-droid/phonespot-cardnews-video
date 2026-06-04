@@ -1,0 +1,72 @@
+{
+  "slug": "006_gwanggyo",
+  "title_short": "광교 동네 소개",
+  "video_title": "광교 동네 소개",
+  "preset": "showcase",
+  "channel_name": "",
+  "channel_tagline": "",
+  "publication_date": "2026.05.29",
+  "opening": {
+    "line1": "광교에서",
+    "line2": "휴대폰 살 땐",
+    "style": "oversize",
+    "sfx": "whoosh"
+  },
+  "hook": {
+    "style": "kinetic",
+    "sfx": "whoosh",
+    "caption_chunks": [
+      "광교호수공원",
+      "바로 옆",
+      "폰스팟"
+    ],
+    "tts": "광교호수공원 바로 옆, 정찰제로 휴대폰 파는 곳."
+  },
+  "facts": [
+    {
+      "id": "problem",
+      "style": "glitch",
+      "sfx": "tick",
+      "caption_chunks": [
+        "동네에서도",
+        "가격은",
+        "깜깜이"
+      ],
+      "tts": "동네에서도 가격은 깜깜이, 물어봐야 알고."
+    },
+    {
+      "id": "solution",
+      "style": "kinetic-box",
+      "sfx": "ding",
+      "caption_chunks": [
+        "그 가격 그대로",
+        "개통",
+        "비대면도"
+      ],
+      "tts": "폰스팟은 조회한 그 가격 그대로 개통. 비대면도 가능."
+    },
+    {
+      "id": "trust",
+      "style": "reveal",
+      "sfx": "pop",
+      "caption_chunks": [
+        "궁금하면",
+        "카톡으로",
+        "먼저"
+      ],
+      "tts": "궁금하면 카톡으로 먼저 물어보세요."
+    }
+  ],
+  "cta": {
+    "style": "kinetic-box",
+    "sfx": "ding",
+    "caption_chunks": [
+      "광교",
+      "폰스팟"
+    ],
+    "tts": "광교 폰스팟, 정찰제로 만나요.",
+    "kakao": "",
+    "litt": "",
+    "location": ""
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "description": "Applied only to the spoken TTS copy. Screen captions and authored narration remain unchanged.",
+  "entries": [
+    {
+      "match": "WWDC",
+      "spoken": "더블유 더블유 디 씨"
+    },
+    {
+      "match": "iOS",
+      "spoken": "아이 오 에스"
+    },
+    {
+      "match": "NFC",
+      "spoken": "엔 에프 씨"
+    },
+    {
+      "match": "RCS",
+      "spoken": "알 씨 에스"
+    },
+    {
+      "match": "OIS",
+      "spoken": "오 아이 에스"
+    },
+    {
+      "match": "USB-C",
+      "spoken": "유 에스 비 씨"
+    },
+    {
+      "match": "Gemini",
+      "spoken": "제미나이"
+    },
+    {
+      "match": "Siri",
+      "spoken": "시리"
+    },
+    {
+      "match": "SKT",
+      "spoken": "에스 케이 티"
+    },
+    {
+      "match": "KT",
+      "spoken": "케이 티"
+    },
+    {
+      "match": "LGU+",
+      "spoken": "엘지 유플러스"
+    },
+    {
+      "match": "IP68",
+      "spoken": "아이 피 육십팔"
+    },
+    {
+      "match": "IP67",
+      "spoken": "아이 피 육십칠"
+    },
+    {
+      "match": "mAh",
+      "spoken": "밀리암페어아워"
+    },
+    {
+      "match": "AI",
+      "spoken": "에이 아이"
+    },
+    {
+      "match": "5G",
+      "spoken": "파이브 지"
+    },
+    {
+      "match": "LTE",
+      "spoken": "엘 티 이"
+    }
+  ]
+}

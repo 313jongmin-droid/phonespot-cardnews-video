@@ -1,0 +1,28 @@
+{
+  "_howto": "새 홍보영상 1편 = 이 파일 복사 → promo/<새slug>.json 로 저장 → 문구 채우기 → run_promo.bat 의 PROMO_SRC 를 이 파일로 바꾸거나 promo/<slug>.json 지정 → 렌더. caption_chunks=화면자막(짧게), tts=나레이션(자연스럽게). 가격/숫자는 근거있는 실제값만, 경쟁사 비방 금지.",
+  "slug": "promo_NEWTOPIC",
+  "title_short": "한 줄 제목",
+  "video_title": "영상 제목",
+  "channel_name": "폰스팟",
+  "channel_tagline": "광교 휴대폰 정찰제",
+  "publication_date": "2026.00.00",
+  "opening": { "line1": "오프닝 1줄", "line2": "오프닝 2줄(강조)" },
+  "hook": {
+    "topic": "훅",
+    "tts": "훅 나레이션 한 문장.",
+    "caption_chunks": ["훅 자막1", "훅 자막2", "훅 자막3(강조)"]
+  },
+  "facts": [
+    { "id": "problem", "topic": "문제", "tts": "문제 나레이션.", "caption_chunks": ["문제1", "문제2", "문제3(강조)"] },
+    { "id": "solution", "topic": "해결", "tts": "해결 나레이션.", "caption_chunks": ["해결1", "해결2", "해결3(강조)"] },
+    { "id": "trust", "topic": "신뢰", "tts": "신뢰 나레이션.", "caption_chunks": ["신뢰1", "신뢰2", "신뢰3(강조)"] }
+  ],
+  "cta": {
+    "topic": "안내",
+    "tts": "CTA 나레이션.",
+    "caption_chunks": ["휴대폰도 이제", "정찰제"],
+    "kakao": "@폰스팟광교점",
+    "litt": "litt.ly/phonespot",
+    "location": "광교호수공원 B1-47"
+  }
+}

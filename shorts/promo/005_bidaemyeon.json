@@ -1,0 +1,72 @@
+{
+  "slug": "005_bidaemyeon",
+  "title_short": "비대면 견적",
+  "video_title": "비대면 견적",
+  "preset": "showcase",
+  "channel_name": "",
+  "channel_tagline": "",
+  "publication_date": "2026.05.29",
+  "opening": {
+    "line1": "휴대폰 사러",
+    "line2": "매장 꼭 가야 해?",
+    "style": "oversize",
+    "sfx": "whoosh"
+  },
+  "hook": {
+    "style": "kinetic",
+    "sfx": "whoosh",
+    "caption_chunks": [
+      "매장 돌고",
+      "줄 서고",
+      "꼭 그래야 해?"
+    ],
+    "tts": "휴대폰 하나 사려고, 매장 돌고 줄 서고. 꼭 그래야 할까요?"
+  },
+  "facts": [
+    {
+      "id": "problem",
+      "style": "glitch",
+      "sfx": "tick",
+      "caption_chunks": [
+        "발품 팔아도",
+        "말은 제각각",
+        "시간만 버린다"
+      ],
+      "tts": "발품 팔아도 매장마다 말이 다르고, 시간만 버리죠."
+    },
+    {
+      "id": "solution",
+      "style": "kinetic-box",
+      "sfx": "ding",
+      "caption_chunks": [
+        "폰스팟은",
+        "집에서",
+        "비. 대. 면 조회"
+      ],
+      "tts": "폰스팟은 집에서 비대면으로 바로 조회. 매장 안 가도 됩니다."
+    },
+    {
+      "id": "trust",
+      "style": "steps",
+      "sfx": "pop",
+      "caption_chunks": [
+        "조회부터 개통까지",
+        "카톡으로",
+        "간편하게"
+      ],
+      "tts": "조회부터 개통 안내까지, 카톡으로 간편하게."
+    }
+  ],
+  "cta": {
+    "style": "kinetic-box",
+    "sfx": "ding",
+    "caption_chunks": [
+      "휴대폰도 이제",
+      "비대면"
+    ],
+    "tts": "휴대폰, 이제 집에서. 폰스팟에서 비대면으로.",
+    "kakao": "",
+    "litt": "",
+    "location": ""
+  }
+}

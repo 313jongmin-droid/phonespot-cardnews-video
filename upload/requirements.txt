@@ -1,0 +1,23 @@
+# ───── 공통 ─────
+requests>=2.31.0
+python-dotenv>=1.0.1
+
+# ───── 유튜브 ─────
+google-api-python-client>=2.130.0
+google-auth>=2.29.0
+google-auth-oauthlib>=1.2.0
+google-auth-httplib2>=0.2.0
+
+# ───── 이미지 호스팅 (Cloudflare R2 = S3 호환) ─────
+boto3>=1.34.0
+
+# ───── 네이버 블로그 반자동 (Chrome MCP 미사용 시 fallback) ─────
+playwright>=1.44.0
+
+# ───── 개발 편의 ─────
+rich>=13.7.0          # 콘솔 로깅
+tenacity>=8.2.3       # exponential backoff 재시도
+
+# 참고:
+#  - 설치:  python -m pip install -r requirements.txt
+#  - Playwright 사용 시 추가:  python -m playwright install chromium

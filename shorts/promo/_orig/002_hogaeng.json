@@ -1,0 +1,72 @@
+{
+  "slug": "002_hogaeng",
+  "title_short": "호갱 방지",
+  "video_title": "호갱 방지",
+  "preset": "showcase",
+  "channel_name": "",
+  "channel_tagline": "",
+  "publication_date": "2026.05.29",
+  "opening": {
+    "line1": "공개된 가격,",
+    "line2": "믿어도 될까?",
+    "style": "oversize",
+    "sfx": "whoosh"
+  },
+  "hook": {
+    "caption_chunks": [
+      "싸다고 올려놓고",
+      "막상 가면",
+      "말이 바뀐다"
+    ],
+    "tts": "싸다고 올려놓고, 막상 가면 이 조건 저 조건.",
+    "style": "glitch",
+    "sfx": "tick"
+  },
+  "facts": [
+    {
+      "id": "problem",
+      "caption_chunks": [
+        "이 조건",
+        "저 조건",
+        "호갱?"
+      ],
+      "tts": "조건 붙이고 가격 바꾸고. 호갱 되는 기분, 다들 아시죠.",
+      "style": "glitch",
+      "sfx": "tick"
+    },
+    {
+      "id": "solution",
+      "caption_chunks": [
+        "폰스팟은",
+        "그 가격",
+        "그. 대. 로"
+      ],
+      "tts": "폰스팟은 조회된 그 가격 그대로. 바뀌지 않습니다.",
+      "style": "kinetic-box",
+      "sfx": "ding"
+    },
+    {
+      "id": "trust",
+      "caption_chunks": [
+        "숨은 조건 없이",
+        "본 그대로",
+        "개통"
+      ],
+      "tts": "숨은 조건 없이, 본 그대로 개통.",
+      "style": "checklist",
+      "sfx": "pop"
+    }
+  ],
+  "cta": {
+    "caption_chunks": [
+      "호갱 그만",
+      "폰스팟"
+    ],
+    "tts": "이제 호갱 그만. 폰스팟에서 확인하세요.",
+    "kakao": "",
+    "litt": "",
+    "location": "",
+    "style": "kinetic-box",
+    "sfx": "ding"
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "slug": "001_jeongchalje",
+  "title_short": "휴대폰도 정찰제",
+  "video_title": "휴대폰도 정찰제",
+  "preset": "showcase",
+  "channel_name": "",
+  "channel_tagline": "",
+  "publication_date": "2026.05.29",
+  "opening": {
+    "line1": "세상 모든 건",
+    "line2": "가격표가 있어요",
+    "style": "oversize",
+    "sfx": "whoosh"
+  },
+  "hook": {
+    "style": "kinetic",
+    "sfx": "whoosh",
+    "caption_chunks": [
+      "편의점",
+      "마트",
+      "인터넷 쇼핑"
+    ],
+    "tts": "편의점, 마트, 인터넷 쇼핑. 가격이 딱 보이잖아요."
+  },
+  "facts": [
+    {
+      "id": "problem",
+      "style": "glitch",
+      "sfx": "tick",
+      "caption_chunks": [
+        "그런데 왜?",
+        "휴대폰만",
+        "상담 문의"
+      ],
+      "tts": "근데 왜, 휴대폰만 가격은 안 보이고 상담부터 하라고 할까요?"
+    },
+    {
+      "id": "solution",
+      "style": "kinetic-box",
+      "sfx": "ding",
+      "caption_chunks": [
+        "폰스팟은",
+        "그 가격 그대로",
+        "즉. 시. 조. 회!"
+      ],
+      "tts": "폰스팟은, 조회된 그 가격 그대로. 즉시 조회됩니다."
+    },
+    {
+      "id": "trust",
+      "style": "checklist",
+      "sfx": "pop",
+      "caption_chunks": [
+        "지원금도 요금제도",
+        "숨김없이",
+        "한눈에 비교"
+      ],
+      "tts": "지원금도, 요금제도, 숨김없이. 복잡한 조건을 한눈에 비교하세요."
+    }
+  ],
+  "cta": {
+    "style": "kinetic-box",
+    "sfx": "ding",
+    "caption_chunks": [
+      "휴대폰도 이제",
+      "정찰제"
+    ],
+    "tts": "휴대폰 살 땐, 폰스팟에서 먼저",
+    "kakao": "",
+    "litt": "",
+    "location": ""
+  }
+}

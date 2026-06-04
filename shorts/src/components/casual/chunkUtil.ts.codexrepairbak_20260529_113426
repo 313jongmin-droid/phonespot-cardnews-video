@@ -1,0 +1,151 @@
+﻿const countChars = (value: string) => value.replace(/\s/g, "").length;
+
+const PROTECTED_PATTERNS = [
+  /WWDC\s*\d+/gi,
+  /iOS\s*\d+(?:\.\d+)*/gi,
+  /One\s*UI\s*\d+(?:\.\d+)*/gi,
+  /Android\s*\d+(?:\.\d+)*/gi,
+  /Gemini/gi,
+  /Siri/gi,
+  /NFC/gi,
+  /RCS/gi,
+  /(?:媛ㅻ윮??s*)?S\s*\d{2}/gi,
+  /Z\s*?대뱶\s*\d+/g,
+  /Z\s*?뚮┰\s*\d+/g,
+  /\d+\s*??s*\d+\s*??g,
+  /\d+\s*\/\s*\d+/g,
+  /\d+(?:[,.]?\d+)*\s*(?:留?s*)???g,
+  /\d+(?:[,.]?\d+)*\s*(?:?좊줈|?щ윭|媛?紐?%)\b/g,
+];
+
+const protectTokens = (text: string) => {
+  const protectedTokens: string[] = [];
+  let output = text;
+
+  for (const pattern of PROTECTED_PATTERNS) {
+    output = output.replace(pattern, (match) => {
+      const key = `__PS${protectedTokens.length}__`;
+      protectedTokens.push(match.replace(/\s+/g, "\u00A0"));
+      return key;
+    });
+  }
+
+  return {
+    text: output,
+    restore: (value: string) =>
+      value.replace(/__PS(\d+)__/g, (_, idx) => protectedTokens[Number(idx)] || ""),
+  };
+};
+
+const shouldBreakAfter = (word: string) =>
+  /(?:硫?怨?吏留??몃뜲|?쇰줈|濡??먯꽌|源뚯?|遺???섎㈃|?섎ŉ|?섍퀬|?섎뒗|?꾨쭩|蹂대룄|遺꾩꽍|?덉젙|媛?μ꽦|?뚮Ц)$/.test(
+    word,
+  );
+
+const isBadLineStart = (word: string) =>
+  /^(?:?|????媛|??瑜???????留?怨??|濡??쇰줈|遺??源뚯?|?먯꽌|?쇨퀬|?쇰뒗|?섎ŉ|?섍퀬|洹몃━怨???諛?$/.test(
+    word,
+  );
+
+const mergeBadStarts = (chunks: string[]) => {
+  const merged: string[] = [];
+
+  for (const chunk of chunks) {
+    const first = chunk.split(/\s+/)[0] || "";
+    if (merged.length && isBadLineStart(first)) {
+      merged[merged.length - 1] = `${merged[merged.length - 1]} ${chunk}`.trim();
+    } else {
+      merged.push(chunk);
+    }
+  }
+
+  return merged;
+};
+
+export function splitChunks(text: string, maxChars = 14): string[] {
+  const protectedText = protectTokens(text.replace(/\n/g, " ").trim());
+  const words = protectedText.text.split(/\s+/).filter(Boolean);
+  const chunks: string[] = [];
+  let cur = "";
+
+  for (const word of words) {
+    const merged = cur ? `${cur} ${word}` : word;
+    const mergedLen = countChars(merged);
+    const softBreak =
+      cur && countChars(cur) >= Math.floor(maxChars * 0.72) && shouldBreakAfter(cur);
+
+    if ((mergedLen > maxChars || softBreak) && cur) {
+      chunks.push(cur);
+      cur = word;
+    } else {
+      cur = merged;
+    }
+  }
+
+  if (cur) {
+    chunks.push(cur);
+  }
+
+  return mergeBadStarts(chunks).map((chunk) => protectedText.restore(chunk));
+}
+
+export function formatCaptionLines(text: string, maxLineChars = 14): string {
+  const clean = text.replace(/\n/g, " ").trim();
+  if (countChars(clean) <= maxLineChars) {
+    return clean;
+  }
+
+  const protectedText = protectTokens(clean);
+  const words = protectedText.text.split(/\s+/).filter(Boolean);
+  if (words.length <= 1) {
+    return clean;
+  }
+
+  let best = { index: -1, score: Number.POSITIVE_INFINITY };
+  for (let i = 1; i < words.length; i++) {
+    const left = words.slice(0, i).join(" ");
+    const right = words.slice(i).join(" ");
+    const rightFirst = words[i] || "";
+    const leftLen = countChars(left);
+    const rightLen = countChars(right);
+    const overflow = Math.max(0, leftLen - maxLineChars) + Math.max(0, rightLen - maxLineChars);
+    const badStartPenalty = isBadLineStart(rightFirst) ? 100 : 0;
+    const rhythmPenalty = shouldBreakAfter(words[i - 1] || "") ? -2 : 0;
+    const score = Math.abs(leftLen - rightLen) + overflow * 8 + badStartPenalty + rhythmPenalty;
+    if (score < best.score) {
+      best = { index: i, score };
+    }
+  }
+
+  if (best.index < 0) {
+    return clean;
+  }
+
+  const line1 = words.slice(0, best.index).join(" ");
+  const line2 = words.slice(best.index).join(" ");
+  return protectedText.restore(`${line1}\n${line2}`);
+}
+
+export function chunkInfo(text: string, frame: number, durFrames: number, maxChars = 14) {
+  const chunks = splitChunks(text, maxChars);
+  const idx = chunkIndexFromList(chunks, frame, durFrames);
+  return { chunks, idx, count: chunks.length };
+}
+
+export function chunkIndexFromList(chunks: string[], frame: number, durFrames: number) {
+  const clean = chunks && chunks.length ? chunks : [""];
+  const counts = clean.map((chunk) => Math.max(1, chunk.replace(/\s/g, "").length));
+  const total = counts.reduce((sum, count) => sum + count, 0) || 1;
+
+  let idx = 0;
+  let acc = 0;
+  for (let i = 0; i < counts.length; i++) {
+    const start = (acc / total) * durFrames;
+    if (frame >= start) {
+      idx = i;
+    }
+    acc += counts[i];
+  }
+
+  return Math.min(idx, clean.length - 1);
+}

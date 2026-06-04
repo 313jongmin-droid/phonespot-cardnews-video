@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ slug }} | Phonespot 카드뉴스</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; }
+    .brand { color: #F74B0B; }
+    .bg-brand { background-color: #F74B0B; }
+    .border-brand { border-color: #F74B0B; }
+    .btn-brand { background-color: #F74B0B; color: white; }
+    .btn-brand:hover { background-color: #D83A00; }
+    .drop-active { background-color: rgba(247,75,11,0.08); border-color: #F74B0B; }
+  </style>
+</head>
+<body class="bg-stone-50 text-stone-900 min-h-screen">
+  <header class="border-b border-stone-200 bg-white">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="/" class="text-sm brand hover:underline">← 슬러그 목록</a>
+      <div class="text-xs text-stone-500 font-mono">{{ slug }}</div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 py-8 space-y-6">
+    <div>
+      <h1 class="text-2xl font-bold mb-1">{{ data.title }}</h1>
+      <div class="flex gap-2 text-xs">
+        {% if data.content_type %}<span class="px-2 py-0.5 rounded bg-stone-200">{{ data.content_type }}</span>{% endif %}
+        {% if data.publication_date %}<span class="px-2 py-0.5 rounded bg-stone-200">{{ data.publication_date }}</span>{% endif %}
+        {% if is_done %}
+          <span class="px-2 py-0.5 rounded bg-green-100 text-green-800">렌더 완료</span>
+        {% elif img_count >= 5 %}
+          <span class="px-2 py-0.5 rounded bg-orange-100 brand">렌더 준비</span>
+        {% else %}
+          <span class="px-2 py-0.5 rounded bg-stone-200">이미지 {{ img_count }}/5</span>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Cards 미리보기 -->
+    <section class="bg-white border border-stone-200 rounded-lg p-5">
+      <h2 class="font-semibold mb-3">카드 6장</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+        {% for c in data.cards %}
+        <div class="border border-stone-200 rounded p-3">
+          <div class="text-xs text-stone-500 mb-1">{{ c.image }}</div>
+          <div class="font-medium mb-1" style="white-space:pre-line;">{{ c.headline | replace('<span class="hl">', '') | replace('</span>', '') | safe }}</div>
+          <div class="text-stone-600 text-xs">{{ c.body }}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- 이미지 프롬프트 -->
+    <section class="bg-white border border-stone-200 rounded-lg p-5">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="font-semibold">GPT/Gemini 이미지 프롬프트</h2>
+        {% if prompt_md %}
+        <button onclick="copyPrompt()" class="text-sm px-3 py-1 rounded border border-stone-300 hover:border-brand">복사</button>
+        {% endif %}
+      </div>
+      {% if prompt_md %}
+      <pre id="prompt-md" class="bg-stone-50 border border-stone-200 rounded p-3 text-xs whitespace-pre-wrap overflow-x-auto max-h-80 overflow-y-auto">{{ prompt_md }}</pre>
+      {% else %}
+      <div class="text-stone-500 text-sm">prompt.md가 아직 없습니다.</div>
+      {% endif %}
+    </section>
+
+    <!-- 이미지 업로드 -->
+    <section class="bg-white border border-stone-200 rounded-lg p-5">
+      <h2 class="font-semibold mb-3">이미지 5장 업로드 (1.png ~ 5.png)</h2>
+      <div id="drop-zone" class="border-2 border-dashed border-stone-300 rounded p-8 text-center cursor-pointer hover:border-brand transition">
+        <input type="file" id="file-input" multiple accept="image/png,image/jpeg,image/webp" class="hidden">
+        <p class="text-sm text-stone-600">파일 드래그 또는 <span class="brand underline">클릭해서 선택</span></p>
+        <p class="text-xs text-stone-400 mt-1">권장 파일명: 1.png, 2.png, 3.png, 4.png, 5.png</p>
+      </div>
+      <div id="upload-status" class="mt-3 text-sm"></div>
+      {% if img_files %}
+      <div class="mt-4 grid grid-cols-5 gap-2">
+        {% for f in img_files %}
+        <div class="border border-stone-200 rounded overflow-hidden">
+          <img src="/images/{{ slug }}/{{ f }}" alt="{{ f }}" class="w-full h-20 object-cover">
+          <div class="text-xs text-stone-500 p-1 text-center font-mono">{{ f }}</div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </section>
+
+    <!-- 렌더 트리거 (SSE 실시간 로그) -->
+    <section class="bg-white border border-stone-200 rounded-lg p-5">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="font-semibold">렌더링</h2>
+        <div class="flex gap-2">
+          {% if is_done %}
+          <a href="/result/{{ slug }}" class="px-4 py-2 rounded text-sm font-medium border border-stone-300 hover:border-brand">결과 보기</a>
+          {% endif %}
+          <button id="render-btn" class="btn-brand px-4 py-2 rounded text-sm font-medium disabled:bg-stone-300">
+            렌더링 시작
+          </button>
+        </div>
+      </div>
+      <p class="text-xs text-stone-500 mb-3">실시간 로그 (SSE) · 약 30~60초 소요</p>
+      <pre id="render-log" class="bg-stone-900 text-stone-100 rounded p-3 text-xs whitespace-pre-wrap overflow-x-auto max-h-96 overflow-y-auto hidden"></pre>
+      <div id="render-result" class="mt-3 hidden"></div>
+    </section>
+
+  </main>
+
+  <script>
+    const slug = "{{ slug }}";
+
+    function copyPrompt() {
+      const el = document.getElementById('prompt-md');
+      navigator.clipboard.writeText(el.textContent).then(() => {
+        alert('프롬프트 복사 완료');
+      });
+    }
+
+    // Upload (drag & drop + click)
+    const dropZone = document.getElementById('drop-zone');
+    const fileInput = document.getElementById('file-input');
+    const uploadStatus = document.getElementById('upload-status');
+
+    dropZone.addEventListener('click', () => fileInput.click());
+    dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('drop-active'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drop-active'));
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('drop-active');
+      handleFiles(e.dataTransfer.files);
+    });
+    fileInput.addEventListener('change', () => handleFiles(fileInput.files));
+
+    function handleFiles(files) {
+      if (!files.length) return;
+      const fd = new FormData();
+      for (const f of files) fd.append('files', f);
+      uploadStatus.textContent = '업로드 중...';
+      fetch(`/slug/${slug}/upload`, { method: 'POST', body: fd })
+        .then(r => r.json())
+        .then(j => {
+          if (j.ok) {
+            uploadStatus.innerHTML = `<span class="text-green-700">업로드 OK · ${j.saved.length}장 저장 · 현재 ${j.img_count}/5</span>`;
+            if (j.img_count >= 5) setTimeout(() => location.reload(), 800);
+          } else {
+            uploadStatus.innerHTML = `<span class="text-red-600">실패: ${j.error}</span>`;
+          }
+        })
+        .catch(e => { uploadStatus.innerHTML = `<span class="text-red-600">오류: ${e}</span>`; });
+    }
+
+    // Render trigger (SSE 실시간 로그)
+    const renderBtn = document.getElementById('render-btn');
+    const renderLog = document.getElementById('render-log');
+    const renderResult = document.getElementById('render-result');
+    let currentSource = null;
+
+    renderBtn.addEventListener('click', () => {
+      if (currentSource) { currentSource.close(); currentSource = null; }
+      renderBtn.disabled = true;
+      renderBtn.textContent = '렌더링 중...';
+      renderLog.classList.remove('hidden');
+      renderLog.textContent = '';
+      renderResult.classList.add('hidden');
+      const src = new EventSource(`/slug/${slug}/render-stream`);
+      currentSource = src;
+      src.onmessage = (e) => {
+        renderLog.textContent += e.data + '\n';
+        renderLog.scrollTop = renderLog.scrollHeight;
+      };
+      src.addEventListener('done', (e) => {
+        src.close();
+        currentSource = null;
+        renderBtn.disabled = false;
+        renderBtn.textContent = '렌더링 다시 시작';
+        const isDone = renderLog.textContent.includes('is_done=True');
+        renderResult.classList.remove('hidden');
+        if (isDone) {
+          renderResult.innerHTML = `
+            <div class="bg-green-50 border border-green-200 rounded p-3 flex items-center justify-between">
+              <p class="text-green-800 font-medium">렌더 완료 · 18장 + captions.md</p>
+              <a href="/result/${slug}" class="text-sm btn-brand px-3 py-1 rounded">결과 페이지</a>
+            </div>`;
+        } else {
+          renderResult.innerHTML = `
+            <div class="bg-red-50 border border-red-200 rounded p-3">
+              <p class="text-red-800 font-medium">렌더 실패 또는 미완료</p>
+              <p class="text-xs text-red-700 mt-1">로그 확인 후 재시도</p>
+            </div>`;
+        }
+      });
+      src.onerror = () => {
+        renderLog.textContent += '\n[stream closed]\n';
+        if (currentSource) { currentSource.close(); currentSource = null; }
+        renderBtn.disabled = false;
+        renderBtn.textContent = '렌더링 다시 시작';
+      };
+    });
+  </script>
+</body>
+</html>

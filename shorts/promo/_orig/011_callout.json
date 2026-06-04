@@ -1,0 +1,72 @@
+{
+  "slug": "011_callout",
+  "title_short": "대상 지목",
+  "video_title": "대상 지목",
+  "preset": "showcase",
+  "channel_name": "",
+  "channel_tagline": "",
+  "publication_date": "2026.05.29",
+  "opening": {
+    "line1": "이번에",
+    "line2": "폰 바꿀 사람만",
+    "style": "oversize",
+    "sfx": "whoosh"
+  },
+  "hook": {
+    "caption_chunks": [
+      "폰 바꿀 사람만",
+      "딱",
+      "30초"
+    ],
+    "tts": "이번에 휴대폰 바꿀 생각이라면, 30초만 보세요.",
+    "style": "kinetic",
+    "sfx": "whoosh"
+  },
+  "facts": [
+    {
+      "id": "problem",
+      "caption_chunks": [
+        "매장 돌고",
+        "상담받고",
+        "진 빼지 마"
+      ],
+      "tts": "매장 돌며 상담받고 흥정하느라 진 빼지 마세요.",
+      "style": "glitch",
+      "sfx": "tick"
+    },
+    {
+      "id": "solution",
+      "caption_chunks": [
+        "바꿀 기종 가격",
+        "비대면",
+        "즉시 조회"
+      ],
+      "tts": "폰스팟은 바꿀 기종 가격, 비대면으로 즉시 조회.",
+      "style": "kinetic-box",
+      "sfx": "ding"
+    },
+    {
+      "id": "trust",
+      "caption_chunks": [
+        "조회한 그대로",
+        "개통",
+        "정찰제니까"
+      ],
+      "tts": "조회한 그대로 개통. 정찰제니까.",
+      "style": "checklist",
+      "sfx": "pop"
+    }
+  ],
+  "cta": {
+    "caption_chunks": [
+      "바꾸기 전",
+      "폰스팟"
+    ],
+    "tts": "폰 바꾸기 전, 폰스팟에서 먼저 확인.",
+    "kakao": "",
+    "litt": "",
+    "location": "",
+    "style": "kinetic-box",
+    "sfx": "ding"
+  }
+}

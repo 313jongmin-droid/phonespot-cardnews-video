@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phonespot 카드뉴스 | 슬러그 목록</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; }
+    .brand { color: #F74B0B; }
+    .bg-brand { background-color: #F74B0B; }
+    .border-brand { border-color: #F74B0B; }
+  </style>
+</head>
+<body class="bg-stone-50 text-stone-900 min-h-screen">
+  <header class="border-b border-stone-200 bg-white">
+    <div class="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
+      <div>
+        <h1 class="text-2xl font-bold">
+          <span class="brand">Phonespot</span> 카드뉴스
+        </h1>
+        <p class="text-sm text-stone-500 mt-1">광교점 운영 패널 · MVP Phase 1</p>
+      </div>
+      <div class="flex items-center gap-3 text-sm">
+        <span class="px-3 py-1 rounded-full bg-stone-100">전체 {{ counts.total }}</span>
+        <span class="px-3 py-1 rounded-full bg-green-100 text-green-800">완료 {{ counts.done }}</span>
+        <span class="px-3 py-1 rounded-full bg-orange-100 brand">렌더 가능 {{ counts.ready }}</span>
+        <span class="px-3 py-1 rounded-full bg-stone-100 text-stone-600">대기 {{ counts.waiting }}</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 py-8">
+    <!-- 검색·필터 -->
+    <form method="get" action="/" class="mb-6 flex flex-wrap items-center gap-2">
+      <input type="text" name="q" value="{{ q }}" placeholder="슬러그·제목 검색" class="flex-1 min-w-[200px] px-3 py-2 rounded border border-stone-300 focus:border-brand focus:outline-none text-sm">
+      <select name="status" class="px-3 py-2 rounded border border-stone-300 text-sm">
+        <option value="all" {% if status == 'all' %}selected{% endif %}>전체 상태</option>
+        <option value="done" {% if status == 'done' %}selected{% endif %}>완료만</option>
+        <option value="ready" {% if status == 'ready' %}selected{% endif %}>렌더 준비만</option>
+        <option value="waiting" {% if status == 'waiting' %}selected{% endif %}>이미지 대기만</option>
+      </select>
+      <button type="submit" class="px-4 py-2 rounded bg-brand text-white text-sm hover:opacity-90">필터</button>
+      {% if q or status != 'all' %}
+      <a href="/" class="text-sm text-stone-500 hover:brand underline">초기화</a>
+      {% endif %}
+    </form>
+
+    {% if slugs %}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {% for s in slugs %}
+      <div class="bg-white border border-stone-200 rounded-lg p-5 hover:border-brand hover:shadow-md transition">
+        <div class="flex items-start justify-between mb-2">
+          <span class="text-xs font-mono text-stone-500">{{ s.slug }}</span>
+          {% if s.is_done %}
+            <span class="text-xs px-2 py-0.5 rounded bg-green-100 text-green-800">완료</span>
+          {% elif s.img_count >= 5 %}
+            <span class="text-xs px-2 py-0.5 rounded bg-orange-100 brand">렌더 준비</span>
+          {% else %}
+            <span class="text-xs px-2 py-0.5 rounded bg-stone-100 text-stone-600">이미지 {{ s.img_count }}/5</span>
+          {% endif %}
+        </div>
+        <a href="/slug/{{ s.slug }}" class="block">
+          <h2 class="font-semibold text-stone-900 mb-2 line-clamp-2 hover:brand">{{ s.title }}</h2>
+        </a>
+        <div class="flex items-center justify-between gap-2 text-xs text-stone-500 mt-2">
+          <div class="flex items-center gap-2">
+            {% if s.content_type %}<span class="px-2 py-0.5 rounded bg-stone-100">{{ s.content_type }}</span>{% endif %}
+            {% if s.publication_date %}<span>{{ s.publication_date }}</span>{% endif %}
+          </div>
+          <div class="flex gap-2">
+            <a href="/slug/{{ s.slug }}" class="brand hover:underline">상세</a>
+            {% if s.is_done %}
+            <a href="/result/{{ s.slug }}" class="brand hover:underline">결과</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="bg-white border border-stone-200 rounded-lg p-10 text-center text-stone-500">
+      articles/ 에 슬러그 JSON이 없습니다.
+    </div>
+    {% endif %}
+  </main>
+
+  <footer class="max-w-6xl mx-auto px-6 py-6 text-xs text-stone-400">
+    Phonespot 광교점 · 사내용 (외부 공유 금지)
+  </footer>
+</body>
+</html>

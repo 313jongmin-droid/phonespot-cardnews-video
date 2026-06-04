@@ -1,0 +1,72 @@
+{
+  "slug": "008_3check",
+  "title_short": "3가지 체크(N가지)",
+  "video_title": "3가지 체크(N가지)",
+  "preset": "showcase",
+  "channel_name": "",
+  "channel_tagline": "",
+  "publication_date": "2026.05.29",
+  "opening": {
+    "line1": "휴대폰 살 때",
+    "line2": "호갱 안 되는 3가지",
+    "style": "oversize",
+    "sfx": "whoosh"
+  },
+  "hook": {
+    "caption_chunks": [
+      "호갱 안 되는",
+      "딱",
+      "3가지"
+    ],
+    "tts": "휴대폰 살 때, 호갱 안 당하는 세 가지만 기억하세요.",
+    "style": "kinetic",
+    "sfx": "whoosh"
+  },
+  "facts": [
+    {
+      "id": "problem",
+      "caption_chunks": [
+        "①",
+        "가격 공개",
+        "돼 있나?"
+      ],
+      "tts": "하나, 가격이 공개돼 있는가.",
+      "style": "table",
+      "sfx": "tick"
+    },
+    {
+      "id": "solution",
+      "caption_chunks": [
+        "②",
+        "조회가",
+        "= 개통가?"
+      ],
+      "tts": "둘, 조회한 가격이 개통 때 그대로인가.",
+      "style": "barcompare",
+      "sfx": "tick"
+    },
+    {
+      "id": "trust",
+      "caption_chunks": [
+        "③",
+        "상담 없이",
+        "가격부터?"
+      ],
+      "tts": "셋, 상담 없이 가격부터 볼 수 있는가.",
+      "style": "checklist",
+      "sfx": "pop"
+    }
+  ],
+  "cta": {
+    "caption_chunks": [
+      "3가지 다 되는 곳",
+      "폰스팟"
+    ],
+    "tts": "세 가지 다 되는 곳, 폰스팟.",
+    "kakao": "",
+    "litt": "",
+    "location": "",
+    "style": "kinetic-box",
+    "sfx": "ding"
+  }
+}

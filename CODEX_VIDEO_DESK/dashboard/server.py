@@ -1,0 +1,1427 @@
+# -*- coding: utf-8 -*-
+from __future__ import annotations
+
+import html
+import json
+import os
+import re
+import subprocess
+import sys
+import threading
+import time
+import urllib.error
+import urllib.parse
+import urllib.request
+import webbrowser
+from datetime import datetime
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from pathlib import Path
+from urllib.parse import unquote, urlparse
+
+ROOT = Path(__file__).resolve().parent.parent.parent
+DESK = ROOT / "CODEX_VIDEO_DESK"
+SHORTS = ROOT / "shorts"
+SCRIPTS = SHORTS / "scripts"
+CARDNEWS = ROOT / "cardnews"
+CARD_OUTPUT = CARDNEWS / "output"
+CARD_IMAGES = CARDNEWS / "images"
+CARD_ARTICLES = CARDNEWS / "articles"
+SECRETS = ROOT / "_secrets"
+TELEGRAM_TOKEN_FILE = SECRETS / "telegram_token.txt"
+TELEGRAM_CHAT_ID_FILE = SECRETS / "telegram_chat_id.txt"
+DOWNLOADS = Path.home() / "Downloads"
+CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
+PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
+SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
+
+STATE_LOCK = threading.Lock()
+JOB = {
+    "running": False,
+    "name": "",
+    "started": 0.0,
+    "ended": 0.0,
+    "exit_code": None,
+    "log": "",
+}
+
+
+def append_log(text: str) -> None:
+    with STATE_LOCK:
+        JOB["log"] += text
+        if len(JOB["log"]) > 260_000:
+            JOB["log"] = JOB["log"][-260_000:]
+
+
+def telegram_send(message: str) -> bool:
+    if not TELEGRAM_TOKEN_FILE.exists() or not TELEGRAM_CHAT_ID_FILE.exists():
+        append_log("[telegram] token/chat_id missing; skipped.\n")
+        return False
+    token = TELEGRAM_TOKEN_FILE.read_text(encoding="utf-8", errors="replace").strip()
+    chat_id = TELEGRAM_CHAT_ID_FILE.read_text(encoding="utf-8", errors="replace").strip()
+    if not token or not chat_id or ":" not in token:
+        append_log("[telegram] invalid token/chat_id; skipped.\n")
+        return False
+    url = f"https://api.telegram.org/bot{token}/sendMessage"
+    data = urllib.parse.urlencode({
+        "chat_id": chat_id,
+        "text": message,
+        "parse_mode": "HTML",
+        "disable_web_page_preview": "true",
+    }).encode("utf-8")
+    try:
+        req = urllib.request.Request(url, data=data, method="POST")
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            ok = b'"ok":true' in resp.read(400)
+        append_log("[telegram] sent.\n" if ok else "[telegram] send returned non-ok.\n")
+        return ok
+    except (urllib.error.URLError, OSError) as exc:
+        append_log(f"[telegram] send failed: {exc}\n")
+        return False
+
+
+def telegram_escape(text: str) -> str:
+    return (text or "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
+def telegram_job_message(name: str, exit_code: int) -> str:
+    ok = exit_code == 0
+    icon = "✅" if ok else "❌"
+    status = "완료" if ok else f"실패(exit={exit_code})"
+    safe_name = telegram_escape(name)
+    if "카드뉴스 생성" in name:
+        next_step = "다음 단계: 패널에서 <b>6. 영상으로 넘기기</b>를 실행하세요."
+    elif "카드뉴스를 영상 준비" in name or "영상 이미지 프롬프트" in name:
+        next_step = "다음 단계: GPT 이미지가 필요하면 생성 후 <b>2. 이미지 가져오기 + 렌더</b>를 실행하세요."
+    elif "영상 렌더" in name or "이미지 가져오기 + 영상 렌더" in name:
+        next_step = "다음 단계: <b>결과 폴더</b>에서 MP4와 발행 패키지를 확인하세요."
+    else:
+        next_step = "패널에서 다음 단계를 확인하세요."
+    return f"{icon} <b>폰스팟 제작 패널</b>\n{safe_name} {status}\n{next_step}"
+
+
+def run_job(name: str, commands: list[list[str]], cwd: Path, stdin_text: str | None = None) -> bool:
+    with STATE_LOCK:
+        if JOB["running"]:
+            return False
+        JOB.update({
+            "running": True,
+            "name": name,
+            "started": time.time(),
+            "ended": 0.0,
+            "exit_code": None,
+            "log": f"[START] {name}\n",
+        })
+
+    def worker() -> None:
+        exit_code = 0
+        try:
+            for index, command in enumerate(commands, 1):
+                append_log("\n")
+                append_log(f"----- command {index}/{len(commands)} -----\n")
+                append_log(" ".join(command) + "\n")
+                use_stdin = stdin_text if index == 1 and stdin_text is not None else None
+                process = subprocess.Popen(
+                    command,
+                    cwd=str(cwd),
+                    stdin=subprocess.PIPE if use_stdin is not None else subprocess.DEVNULL,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT,
+                    text=True,
+                    encoding="utf-8",
+                    errors="replace",
+                )
+                if use_stdin is not None and process.stdin is not None:
+                    process.stdin.write(use_stdin)
+                    process.stdin.close()
+                assert process.stdout is not None
+                for line in process.stdout:
+                    append_log(line)
+                exit_code = process.wait()
+                append_log(f"\n[EXIT] {exit_code}\n")
+                if exit_code:
+                    break
+        except Exception as exc:
+            exit_code = 99
+            append_log(f"\n[SERVER ERROR] {exc}\n")
+        finally:
+            with STATE_LOCK:
+                JOB["running"] = False
+                JOB["ended"] = time.time()
+                JOB["exit_code"] = exit_code
+                JOB["log"] += "\n[DONE]\n" if exit_code == 0 else "\n[FAILED]\n"
+            telegram_send(telegram_job_message(name, exit_code))
+
+    threading.Thread(target=worker, daemon=True).start()
+    return True
+
+
+def run_capture(command: list[str], cwd: Path = SHORTS) -> str:
+    result = subprocess.run(
+        command,
+        cwd=str(cwd),
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+    )
+    return result.stdout
+
+
+def parse_slugs(raw: str) -> list[dict]:
+    rows = []
+    pattern = re.compile(r"^\s*(\d+)\.\s+(\d{4}\.\d{2}\.\d{2})\s+\[([^\]]+)\]\s+(.+?)\s*$")
+    for line in raw.splitlines():
+        match = pattern.match(line)
+        if match:
+            rows.append({
+                "number": int(match.group(1)),
+                "date": match.group(2),
+                "flag": match.group(3),
+                "slug": match.group(4),
+            })
+    return rows
+
+
+def get_video_slugs() -> list[dict]:
+    return parse_slugs(run_capture([sys.executable, str(SCRIPTS / "list_slugs.py")]))
+
+
+def validate_slug(slug: str) -> str:
+    slug = (slug or "").strip()
+    if not slug or not SAFE_SLUG.match(slug):
+        raise RuntimeError(f"잘못된 슬러그입니다: {slug!r}")
+    return slug
+
+
+def card_prefix(slug: str) -> str:
+    return validate_slug(slug).split("_", 1)[0]
+
+
+def latest_slug() -> str:
+    path = DESK / "LATEST_SLUG.txt"
+    return path.read_text(encoding="utf-8", errors="replace").strip() if path.exists() else ""
+
+
+def prompt_payload() -> dict:
+    path = DESK / "LATEST_PROMPT.json"
+    if not path.exists():
+        return {"requests": [], "uncovered_gaps": []}
+    try:
+        return json.loads(path.read_text(encoding="utf-8", errors="replace"))
+    except Exception:
+        return {"requests": [], "uncovered_gaps": [], "parse_error": True}
+
+
+def available_visuals() -> dict:
+    illust_dir = DESK / "ILLUSTRATION_DROP"
+    if not illust_dir.exists():
+        illust_dir = SHORTS / "public" / "assets" / "illustrations"
+    logo_dir = SHORTS / "public" / "assets" / "logos"
+    return {
+        "illust": sorted(p.stem for p in illust_dir.glob("*.png")) if illust_dir.exists() else [],
+        "logo": sorted(p.name for p in logo_dir.glob("*.png")) if logo_dir.exists() else [],
+        "image": [f"{i}.png" for i in range(1, 6)],
+        "mascot": ["surprised", "suspicious", "thinking", "serious", "satisfied"],
+    }
+
+
+def weak_mapping_rows(limit: int = 80) -> list[dict]:
+    payload = prompt_payload()
+    rows = []
+    for item in (payload.get("uncovered_gaps") or [])[:limit]:
+        try:
+            raw_chunk = int(item.get("chunk_index", 0))
+            chunk_num = raw_chunk + 1
+        except Exception:
+            raw_chunk = item.get("chunk_index", "")
+            chunk_num = item.get("chunk_index", "")
+        rows.append({
+            "section": item.get("section", ""),
+            "chunk": chunk_num,
+            "chunk_index": raw_chunk,
+            "variant": item.get("variant", ""),
+            "text": item.get("text", ""),
+            "suggestion": weak_mapping_suggestion(item.get("text", ""), item.get("variant", "")),
+        })
+    return rows
+
+
+def weak_mapping_suggestion(text: str, variant: str) -> str:
+    t = text or ""
+    rules = [
+        (("위약", "약정", "반환", "할인", "지원금"), "penalty_refund / contract_month / telecom_fee"),
+        (("법", "시행령", "조항", "약관"), "law_document / policy_notice"),
+        (("개월", "만료", "기간", "잔여"), "contract_calendar / month_timeline"),
+        (("통신사", "SKT", "KT", "LGU", "T world"), "telecom_app / carrier_check"),
+        (("조회", "확인", "계산"), "checklist / calculator"),
+        (("대납", "프로모션", "보전"), "promo_support / refund_arrow"),
+        (("도난", "사망", "해외", "특별 사유"), "exception_case / shield_document"),
+    ]
+    for keys, suggestion in rules:
+        if any(k in t for k in keys):
+            return suggestion
+    if variant in {"aluminum_label", "appliance", "battery_overheat", "biometric"}:
+        return "문맥 전용 일러스트 필요"
+    return "검토 권장"
+
+
+def count_recent_downloads() -> int:
+    report = DESK / "LATEST_PROMPT.json"
+    if not report.exists() or not DOWNLOADS.exists():
+        return 0
+    allowed = {".png", ".jpg", ".jpeg", ".webp"}
+    threshold = report.stat().st_mtime - 2
+    count = 0
+    for item in DOWNLOADS.iterdir():
+        try:
+            if item.is_file() and item.suffix.lower() in allowed and item.stat().st_size >= 10_000 and item.stat().st_mtime >= threshold:
+                count += 1
+        except OSError:
+            pass
+    return count
+
+
+def missing_requests(payload: dict) -> list[dict]:
+    rows = []
+    illust = DESK / "ILLUSTRATION_DROP"
+    runtime_illust = SHORTS / "public" / "assets" / "illustrations"
+    for item in payload.get("requests", []) or []:
+        filename = item.get("filename")
+        if filename and not (illust / filename).exists() and not (runtime_illust / filename).exists():
+            rows.append(item)
+    return rows
+
+
+def results_list() -> list[dict]:
+    root = DESK / "RESULTS"
+    if not root.exists():
+        return []
+    rows = []
+    for folder in root.iterdir():
+        if folder.is_dir():
+            mp4s = sorted(folder.glob("*.mp4"), key=lambda p: p.stat().st_mtime, reverse=True)
+            rows.append({
+                "name": folder.name,
+                "mp4": mp4s[0].name if mp4s else "",
+                "mtime": folder.stat().st_mtime,
+            })
+    rows.sort(key=lambda item: item["mtime"], reverse=True)
+    return rows[:30]
+
+
+def count_files(root: Path, patterns: tuple[str, ...], recursive: bool = True) -> int:
+    if not root.exists():
+        return 0
+    count = 0
+    for pattern in patterns:
+        count += len(list(root.rglob(pattern) if recursive else root.glob(pattern)))
+    return count
+
+
+def card_image_count(slug: str) -> int:
+    img = CARD_IMAGES / slug
+    if not img.exists():
+        return 0
+    count = 0
+    for pattern in ("*.png", "*.jpg", "*.jpeg", "*.webp"):
+        for path in img.glob(pattern):
+            name = path.name.lower()
+            if name.startswith(("card_", "logo_")) or name == "cover.png" or name == "prompt.md":
+                continue
+            count += 1
+    return count
+
+
+def card_done(slug: str) -> bool:
+    out = CARD_OUTPUT / slug
+    if not out.exists():
+        return False
+    cards = list(out.rglob("card_*.jpg"))
+    if len(cards) < 18:
+        return False
+    if not (out / "captions.md").exists():
+        return False
+    return not any(p.stat().st_size < 30 * 1024 for p in cards)
+
+
+def article_title(slug: str) -> str:
+    path = CARD_ARTICLES / f"{slug}.json"
+    if not path.exists():
+        return ""
+    try:
+        data = json.loads(path.read_text(encoding="utf-8", errors="replace"))
+        return data.get("title", "") or ""
+    except Exception:
+        return ""
+
+
+def script_path_for_slug(slug: str) -> Path:
+    slug = validate_slug(slug)
+    candidates = [
+        CARD_OUTPUT / slug / "shorts_script.json",
+        SHORTS / "public" / "shorts_script.json",
+    ]
+    for path in candidates:
+        if path.exists():
+            return path
+    raise RuntimeError(f"shorts_script.json not found: {slug}")
+
+
+def get_section_obj(data: dict, section: str) -> dict:
+    if section == "hook":
+        obj = data.get("hook")
+        if isinstance(obj, dict):
+            return obj
+    if section == "cta":
+        obj = data.get("cta")
+        if isinstance(obj, dict):
+            return obj
+    if section.startswith("fact_"):
+        try:
+            index = int(section.split("_", 1)[1]) - 1
+        except Exception:
+            index = -1
+        facts = data.get("facts") or []
+        if 0 <= index < len(facts) and isinstance(facts[index], dict):
+            return facts[index]
+    raise RuntimeError(f"section not found: {section}")
+
+
+def normalize_visual(kind: str, value: str) -> dict:
+    kind = (kind or "").strip()
+    value = (value or "").strip()
+    if not kind or not value:
+        raise RuntimeError("visual type/value is empty")
+    if kind not in {"illust", "image", "logo", "mascot", "none"}:
+        raise RuntimeError(f"unsupported visual type: {kind}")
+    if kind == "none":
+        return {"type": "none", "value": "none"}
+    if not re.match(r"^[A-Za-z0-9_.:/+-]+$", value):
+        raise RuntimeError(f"unsafe visual value: {value}")
+    return {"type": kind, "value": value}
+
+
+def update_chunk_visual(slug: str, section: str, chunk_index: int, visual_type: str, visual_value: str) -> Path:
+    path = script_path_for_slug(slug)
+    data = json.loads(path.read_text(encoding="utf-8", errors="replace"))
+    apply_chunk_overrides(data, slug)
+    sec = get_section_obj(data, section)
+    visuals = sec.setdefault("chunk_visuals", [])
+    if not isinstance(visuals, list):
+        raise RuntimeError(f"{section}.chunk_visuals is not a list")
+    while len(visuals) <= chunk_index:
+        visuals.append({"type": "none", "value": "none"})
+    visuals[chunk_index] = normalize_visual(visual_type, visual_value)
+    data["_codex_manual_visual_edit"] = True
+    data["_codex_manual_visual_edit_at"] = time.strftime("%Y-%m-%dT%H:%M:%S")
+    backup = path.with_suffix(path.suffix + f".bak_visual_edit_{time.strftime('%Y%m%d_%H%M%S')}")
+    shutil.copy2(path, backup)
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
+    runtime = SHORTS / "public" / "shorts_script.json"
+    if path != runtime and runtime.exists():
+        runtime.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
+    return path
+
+
+def override_path_for_slug(slug: str) -> Path:
+    return CHUNK_OVERRIDES / f"{validate_slug(slug)}.json"
+
+
+def section_names(data: dict) -> list[tuple[str, dict]]:
+    result: list[tuple[str, dict]] = []
+    if isinstance(data.get("hook"), dict):
+        result.append(("hook", data["hook"]))
+    for idx, fact in enumerate(data.get("facts") or [], 1):
+        if isinstance(fact, dict):
+            result.append((f"fact_{idx}", fact))
+    if isinstance(data.get("cta"), dict):
+        result.append(("cta", data["cta"]))
+    return result
+
+
+def apply_chunk_overrides(data: dict, slug: str) -> None:
+    path = override_path_for_slug(slug)
+    if not path.exists():
+        return
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8", errors="replace"))
+    except Exception:
+        return
+    sections = payload.get("sections") or {}
+    if not isinstance(sections, dict):
+        return
+    for section_name, override in sections.items():
+        if not isinstance(override, dict):
+            continue
+        try:
+            sec = get_section_obj(data, section_name)
+        except Exception:
+            continue
+        chunks = [str(x).strip() for x in (override.get("chunks") or []) if str(x).strip()]
+        if chunks:
+            sec["caption_chunks"] = chunks
+            sec["display_chunks"] = [strip_display_period(chunk) for chunk in chunks]
+            sec["_codex_chunk_override"] = True
+        visuals = override.get("visuals")
+        if isinstance(visuals, list):
+            sec["chunk_visuals"] = visuals
+    data["_codex_chunk_overrides_applied"] = True
+
+
+def strip_display_period(text: str) -> str:
+    return str(text or "").strip().rstrip(".。.!?！？").strip()
+
+
+def chunk_source(sec: dict) -> list[str]:
+    chunks = sec.get("caption_chunks")
+    if not isinstance(chunks, list) or not chunks:
+        chunks = sec.get("display_chunks")
+    if not isinstance(chunks, list):
+        return []
+    return [str(x) for x in chunks]
+
+
+def compare_text(text: str) -> str:
+    value = re.sub(r"\s+", "", str(text or ""))
+    return re.sub(r"[.。,!！?？、，]", "", value)
+
+
+def validate_override_section(section_name: str, sec: dict, chunks: list[str]) -> None:
+    clean = [str(x).strip() for x in chunks if str(x).strip()]
+    if not clean:
+        raise RuntimeError("chunk list is empty")
+    tts = str(sec.get("tts") or "").strip()
+    if tts and compare_text(" ".join(clean)) != compare_text(tts):
+        raise RuntimeError(
+            f"{section_name}: chunks must preserve the TTS sentence. "
+            "Use merge/split only; do not add or remove words."
+        )
+    for idx, chunk in enumerate(clean, 1):
+        units = len(re.sub(r"\s+", "", chunk))
+        if len(clean) > 1 and units < 4:
+            raise RuntimeError(f"{section_name} chunk {idx}: too short")
+        if units > 42:
+            raise RuntimeError(f"{section_name} chunk {idx}: too long")
+    forbidden_end = ("은", "는", "이", "가", "을", "를", "에", "의", "와", "과", "로", "으로")
+    forbidden_start = ("은", "는", "이", "가", "을", "를", "에", "의", "와", "과", "로", "으로")
+    for left, right in zip(clean, clean[1:]):
+        lword = left.split()[-1] if left.split() else ""
+        rword = right.split()[0] if right.split() else ""
+        if lword in forbidden_end or rword in forbidden_start:
+            raise RuntimeError(f"{section_name}: unnatural Korean boundary near `{lword} | {rword}`")
+
+
+def save_chunk_override(slug: str, section: str, sec: dict, chunks: list[str], visuals: list[dict]) -> Path:
+    validate_override_section(section, sec, chunks)
+    CHUNK_OVERRIDES.mkdir(parents=True, exist_ok=True)
+    path = override_path_for_slug(slug)
+    if path.exists():
+        payload = json.loads(path.read_text(encoding="utf-8", errors="replace"))
+    else:
+        payload = {"version": 1, "slug": slug, "sections": {}}
+    payload.setdefault("sections", {})[section] = {
+        "chunks": [str(x).strip() for x in chunks if str(x).strip()],
+        "display_chunks": [strip_display_period(x) for x in chunks if str(x).strip()],
+        "visuals": visuals,
+        "updated_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
+        "policy": "TTS text is preserved; only screen chunk boundaries are overridden.",
+    }
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
+    return path
+
+
+def chunk_rows_for_slug(slug: str) -> list[dict]:
+    path = script_path_for_slug(slug)
+    data = json.loads(path.read_text(encoding="utf-8", errors="replace"))
+    apply_chunk_overrides(data, slug)
+    rows = []
+    for section, sec in section_names(data):
+        chunks = chunk_source(sec)
+        visuals = sec.get("chunk_visuals") or []
+        for index, chunk in enumerate(chunks):
+            visual = visuals[index] if index < len(visuals) and isinstance(visuals[index], dict) else {}
+            rows.append({
+                "section": section,
+                "chunk_index": index,
+                "chunk": index + 1,
+                "text": strip_display_period(chunk),
+                "visual": f"{visual.get('type', '-')}: {visual.get('value', '-')}",
+                "chars": len(str(chunk).replace("\\n", "")),
+                "override": bool(sec.get("_codex_chunk_override")),
+            })
+    return rows
+
+
+def best_split_index(text: str) -> int:
+    plain = " ".join(str(text or "").replace("\\n", " ").split())
+    if len(plain) < 18:
+        return -1
+    preferred = [" 그리고 ", " 또한 ", " 다만 ", " 때문에 ", " 기준 ", " 경우 ", "이며 ", "하고 ", ", "]
+    target = len(plain) // 2
+    best = -1
+    best_score = 10_000
+    for token in preferred:
+        start = 0
+        while True:
+            pos = plain.find(token, start)
+            if pos < 0:
+                break
+            split = pos + len(token)
+            score = abs(split - target)
+            if 7 <= split <= len(plain) - 7 and score < best_score:
+                best = split
+                best_score = score
+            start = pos + 1
+    if best >= 0:
+        return best
+    spaces = [m.start() for m in re.finditer(r"\s+", plain)]
+    if not spaces:
+        return -1
+    split = min(spaces, key=lambda x: abs(x - target))
+    return split if 7 <= split <= len(plain) - 7 else -1
+
+
+def auto_linebreak(text: str) -> str:
+    plain = " ".join(str(text or "").replace("\\n", " ").split())
+    if len(plain) <= 18:
+        return strip_display_period(plain)
+    idx = best_split_index(plain)
+    if idx < 0:
+        return strip_display_period(plain)
+    left = plain[:idx].strip(" ,")
+    right = plain[idx:].strip(" ,")
+    if not left or not right:
+        return strip_display_period(plain)
+    return strip_display_period(left) + "\\n" + strip_display_period(right)
+
+
+def adjust_chunk_boundary(slug: str, section: str, chunk_index: int, op: str) -> Path:
+    path = script_path_for_slug(slug)
+    data = json.loads(path.read_text(encoding="utf-8", errors="replace"))
+    apply_chunk_overrides(data, slug)
+    sec = get_section_obj(data, section)
+    chunks = chunk_source(sec)
+    if not chunks:
+        raise RuntimeError(f"{section} has no chunks")
+    if not (0 <= chunk_index < len(chunks)):
+        raise RuntimeError(f"chunk index out of range: {chunk_index}")
+    visuals = sec.setdefault("chunk_visuals", [])
+    if not isinstance(visuals, list):
+        visuals = []
+    visuals = [dict(v) if isinstance(v, dict) else {"type": "none", "value": "none"} for v in visuals]
+    while len(visuals) < len(chunks):
+        visuals.append({"type": "none", "value": "none"})
+
+    if op == "linebreak":
+        chunks[chunk_index] = auto_linebreak(chunks[chunk_index])
+    elif op == "merge_prev":
+        if chunk_index <= 0:
+            raise RuntimeError("first chunk cannot merge previous")
+        chunks[chunk_index - 1] = (chunks[chunk_index - 1].replace("\\n", " ").rstrip(" ,") + " " + chunks[chunk_index].replace("\\n", " ").lstrip()).strip()
+        del chunks[chunk_index]
+        if len(visuals) > chunk_index:
+            del visuals[chunk_index]
+    elif op == "merge_next":
+        if chunk_index >= len(chunks) - 1:
+            raise RuntimeError("last chunk cannot merge next")
+        chunks[chunk_index] = (chunks[chunk_index].replace("\\n", " ").rstrip(" ,") + " " + chunks[chunk_index + 1].replace("\\n", " ").lstrip()).strip()
+        del chunks[chunk_index + 1]
+        if len(visuals) > chunk_index + 1:
+            del visuals[chunk_index + 1]
+    elif op == "split_auto":
+        plain = " ".join(chunks[chunk_index].replace("\\n", " ").split())
+        split = best_split_index(plain)
+        if split < 0:
+            raise RuntimeError("this chunk is too short or has no safe split point")
+        left = plain[:split].strip(" ,")
+        right = plain[split:].strip(" ,")
+        chunks[chunk_index] = left
+        chunks.insert(chunk_index + 1, right)
+        visuals.insert(chunk_index + 1, {"type": "none", "value": "none"})
+    elif op == "rebalance_section":
+        chunks = [auto_linebreak(x) for x in chunks]
+    else:
+        raise RuntimeError(f"unknown chunk operation: {op}")
+
+    while len(visuals) > len(chunks):
+        visuals.pop()
+    return save_chunk_override(slug, section, sec, chunks, visuals)
+
+
+def cardnews_summary(limit: int = 12) -> str:
+    rows = get_cardnews_rows()[:limit]
+    if not rows:
+        return "카드뉴스 후보가 없습니다."
+    lines = ["📋 <b>카드뉴스 후보 현황</b>"]
+    for item in rows:
+        slug = telegram_escape(item.get("slug", ""))
+        title = telegram_escape(item.get("title", ""))[:56]
+        lines.append(
+            f"- <b>{slug}</b> · {item.get('status')} · 이미지 {item.get('images')}/5 · 카드 {item.get('cards')}\n  {title}"
+        )
+    lines.append("\n후보가 준비됐으면 패널에서 카드뉴스 탭 → 프롬프트 보기 → 이미지 업로드 폴더 순서로 진행하세요.")
+    return "\n".join(lines)
+
+
+def card_row(slug: str) -> dict:
+    out = CARD_OUTPUT / slug
+    img = CARD_IMAGES / slug
+    article = CARD_ARTICLES / f"{slug}.json"
+    captions = out / "captions.md"
+    prompt_md = img / "prompt.md"
+    shorts_script = out / "shorts_script.json"
+    image_count = card_image_count(slug)
+    card_count = count_files(out, ("card_*.jpg", "card_*.png"))
+    mtimes = []
+    for path in (out, img, article, captions, prompt_md, shorts_script):
+        try:
+            if path.exists():
+                mtimes.append(path.stat().st_mtime)
+        except OSError:
+            pass
+    mtime = max(mtimes) if mtimes else 0.0
+    done = card_done(slug)
+    if done:
+        status = "완료"
+    elif image_count >= 5:
+        status = "렌더 준비"
+    elif prompt_md.exists():
+        status = "이미지 대기"
+    elif article.exists():
+        status = "후보"
+    else:
+        status = "부분"
+    return {
+        "slug": slug,
+        "title": article_title(slug),
+        "status": status,
+        "cards": card_count,
+        "images": image_count,
+        "article": article.exists(),
+        "captions": captions.exists(),
+        "prompt": prompt_md.exists(),
+        "script": shorts_script.exists(),
+        "done": done,
+        "mtime": mtime,
+        "date": time.strftime("%Y.%m.%d", time.localtime(mtime)) if mtime else "",
+    }
+
+
+def get_cardnews_rows() -> list[dict]:
+    names: set[str] = set()
+    for root in (CARD_OUTPUT, CARD_IMAGES):
+        if root.exists():
+            names.update(p.name for p in root.iterdir() if p.is_dir())
+    if CARD_ARTICLES.exists():
+        names.update(p.stem for p in CARD_ARTICLES.glob("*.json"))
+    rows = [card_row(name) for name in names if SAFE_SLUG.match(name)]
+    rows.sort(key=lambda item: item["mtime"], reverse=True)
+    return rows[:80]
+
+
+def json_response(handler: BaseHTTPRequestHandler, data: dict, status: int = 200) -> None:
+    payload = json.dumps(data, ensure_ascii=False).encode("utf-8")
+    handler.send_response(status)
+    handler.send_header("Content-Type", "application/json; charset=utf-8")
+    handler.send_header("Content-Length", str(len(payload)))
+    handler.end_headers()
+    handler.wfile.write(payload)
+
+
+def html_response(handler: BaseHTTPRequestHandler, page: str, status: int = 200) -> None:
+    payload = page.encode("utf-8")
+    handler.send_response(status)
+    handler.send_header("Content-Type", "text/html; charset=utf-8")
+    handler.send_header("Content-Length", str(len(payload)))
+    handler.end_headers()
+    handler.wfile.write(payload)
+
+
+def read_body(handler: BaseHTTPRequestHandler) -> dict:
+    length = int(handler.headers.get("Content-Length", "0") or "0")
+    if length <= 0:
+        return {}
+    raw = handler.rfile.read(length).decode("utf-8", errors="replace")
+    return json.loads(raw or "{}")
+
+
+def cmd_video_runner(slug: str) -> list[str]:
+    return [str(SHORTS / "run_codex_casual.bat"), validate_slug(slug)]
+
+
+def cmd_card_runner(slug: str) -> list[str]:
+    return [str(CARDNEWS / "run_pngs.bat"), card_prefix(slug)]
+
+
+def safe_open(path: Path) -> None:
+    if path.is_dir():
+        os.startfile(path)
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    os.startfile(path)
+
+
+def safe_open_existing(path: Path) -> None:
+    if not path.exists():
+        raise RuntimeError(f"경로가 없습니다: {path}")
+    os.startfile(path)
+
+
+def start_card_webui(slug: str = "") -> None:
+    start_bat = CARDNEWS / "webui" / "start.bat"
+    if start_bat.exists():
+        subprocess.Popen(
+            ["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command",
+             f"Start-Process -FilePath '{start_bat}' -WorkingDirectory '{start_bat.parent}' -WindowStyle Minimized"],
+            cwd=str(CARDNEWS),
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+    target = f"http://localhost:8080/slug/{slug}" if slug else "http://localhost:8080/"
+    webbrowser.open(target)
+
+
+class Handler(BaseHTTPRequestHandler):
+    def log_message(self, format: str, *args) -> None:
+        return
+
+    def do_GET(self) -> None:
+        parsed = urlparse(self.path)
+        if parsed.path == "/":
+            html_response(self, INDEX_HTML)
+            return
+        if parsed.path == "/prompt":
+            path = DESK / "LATEST_PROMPT.md"
+            body = path.read_text(encoding="utf-8", errors="replace") if path.exists() else "LATEST_PROMPT.md가 없습니다."
+            page = (
+                "<!doctype html><html><head><meta charset='utf-8'>"
+                "<title>최신 이미지 프롬프트</title>"
+                "<style>body{font-family:Arial,'Malgun Gothic',sans-serif;margin:24px;line-height:1.55}"
+                "pre{white-space:pre-wrap;font-size:15px;background:#f7f7f8;border:1px solid #ddd;padding:18px;border-radius:8px}"
+                "button{padding:10px 14px;border:0;border-radius:8px;background:#111;color:white;cursor:pointer}"
+                "button:hover{background:#F74B0B}</style>"
+                "<script>async function copyAllPrompt(){const el=document.getElementById('promptText');const text=el?el.innerText:'';try{await navigator.clipboard.writeText(text);alert('전체 복사했습니다.');}catch(e){const t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();alert('전체 복사했습니다.');}}</script>"
+                "</head><body><h1>최신 영상용 이미지 프롬프트</h1><p><button onclick='copyAllPrompt()'>전체 복사</button></p><pre id='promptText'>"
+                + html.escape(body)
+                + "</pre></body></html>"
+            )
+            html_response(self, page)
+            return
+        if parsed.path.startswith("/card-prompt/"):
+            slug = validate_slug(unquote(parsed.path.split("/card-prompt/", 1)[1]))
+            path = CARD_IMAGES / slug / "prompt.md"
+            body = path.read_text(encoding="utf-8", errors="replace") if path.exists() else "prompt.md가 없습니다."
+            page = (
+                "<!doctype html><html><head><meta charset='utf-8'>"
+                "<title>카드뉴스 이미지 프롬프트</title>"
+                "<style>"
+                "body{font-family:Arial,'Malgun Gothic',sans-serif;margin:24px;line-height:1.55}"
+                "pre{white-space:pre-wrap;font-size:15px;background:#f7f7f8;border:1px solid #ddd;padding:18px;border-radius:8px}"
+                "button{padding:10px 14px;border:0;border-radius:8px;background:#111;color:white;cursor:pointer}"
+                "button:hover{background:#F74B0B}"
+                "</style>"
+                "<script>"
+                "async function copyAllPrompt(){"
+                "const el=document.getElementById('promptText');"
+                "const text=el?el.innerText:'';"
+                "try{await navigator.clipboard.writeText(text);alert('전체 복사했습니다.');}"
+                "catch(e){const t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();alert('전체 복사했습니다.');}"
+                "}"
+                "</script>"
+                "</head><body><h1>카드뉴스 이미지 프롬프트</h1><p>"
+                + html.escape(slug)
+                + "</p><p><button onclick='copyAllPrompt()'>전체 복사</button></p><pre id='promptText'>"
+                + html.escape(body)
+                + "</pre></body></html>"
+            )
+            html_response(self, page)
+            return
+        if parsed.path == "/api/state":
+            payload = prompt_payload()
+            missing = missing_requests(payload)
+            gaps = payload.get("uncovered_gaps", []) or []
+            with STATE_LOCK:
+                job = dict(JOB)
+            json_response(self, {
+                "root": str(ROOT),
+                "desk": str(DESK),
+                "latestSlug": latest_slug(),
+                "requests": len(payload.get("requests", []) or []),
+                "missingRequests": len(missing),
+                "recentDownloads": count_recent_downloads(),
+                "weakMappings": len(gaps),
+                "canImport": len(missing) == 0,
+                "job": job,
+                "results": results_list(),
+            })
+            return
+        if parsed.path == "/api/slugs":
+            json_response(self, {"slugs": get_video_slugs()})
+            return
+        if parsed.path == "/api/cardnews/slugs":
+            json_response(self, {"rows": get_cardnews_rows()})
+            return
+        if parsed.path == "/api/weak-mappings":
+            payload = prompt_payload()
+            gaps = payload.get("uncovered_gaps", []) or []
+            json_response(self, {
+                "count": len(gaps),
+                "rows": weak_mapping_rows(),
+                "visuals": available_visuals(),
+                "parseError": bool(payload.get("parse_error")),
+            })
+            return
+        if parsed.path == "/api/chunks":
+            query = urllib.parse.parse_qs(parsed.query)
+            slug = validate_slug((query.get("slug") or [latest_slug()])[0])
+            json_response(self, {"slug": slug, "rows": chunk_rows_for_slug(slug)})
+            return
+        if parsed.path == "/api/job":
+            with STATE_LOCK:
+                json_response(self, {"job": dict(JOB)})
+            return
+        json_response(self, {"error": "not found"}, 404)
+
+    def do_POST(self) -> None:
+        try:
+            data = read_body(self)
+            action = data.get("action")
+            slug = (data.get("slug") or latest_slug()).strip()
+            if action == "video_prepare":
+                slug = validate_slug(slug)
+                commands = [
+                    [sys.executable, str(SCRIPTS / "codex_prepare_illustrations.py"), slug],
+                    [sys.executable, str(SCRIPTS / "codex_clean_latest_prompt.py"), slug],
+                ]
+                ok = run_job("영상 이미지 프롬프트 준비", commands, SHORTS)
+                if not ok:
+                    json_response(self, {"ok": False, "busy": True, "message": "이미 다른 작업이 실행 중입니다. 현재 작업이 끝난 뒤 다시 눌러주세요."})
+                else:
+                    json_response(self, {"ok": True})
+                return
+            if action == "video_import_render":
+                slug_now = validate_slug(latest_slug())
+                commands = [
+                    [sys.executable, str(SCRIPTS / "codex_import_downloads.py")],
+                    cmd_video_runner(slug_now),
+                ]
+                ok = run_job("이미지 가져오기 + 영상 렌더", commands, SHORTS, stdin_text="Y\n")
+                if not ok:
+                    json_response(self, {"ok": False, "busy": True, "message": "이미 다른 작업이 실행 중입니다. 현재 작업이 끝난 뒤 다시 눌러주세요."})
+                else:
+                    json_response(self, {"ok": True})
+                return
+            if action == "video_render_selected":
+                slug = validate_slug(slug)
+                ok = run_job(f"영상 렌더: {slug}", [cmd_video_runner(slug)], SHORTS)
+                if not ok:
+                    json_response(self, {"ok": False, "busy": True, "message": "이미 다른 작업이 실행 중입니다. 현재 작업이 끝난 뒤 다시 눌러주세요."})
+                else:
+                    json_response(self, {"ok": True})
+                return
+            if action == "card_render":
+                slug = validate_slug(slug)
+                ok = run_job(f"카드뉴스 생성: {slug}", [cmd_card_runner(slug)], CARDNEWS)
+                if not ok:
+                    json_response(self, {"ok": False, "busy": True, "message": "이미 다른 작업이 실행 중입니다. 현재 작업이 끝난 뒤 다시 눌러주세요."})
+                else:
+                    json_response(self, {"ok": True})
+                return
+            if action == "card_to_video":
+                slug = validate_slug(slug)
+                commands = [
+                    [sys.executable, str(SCRIPTS / "codex_prepare_illustrations.py"), slug],
+                    [sys.executable, str(SCRIPTS / "codex_clean_latest_prompt.py"), slug],
+                ]
+                ok = run_job("카드뉴스를 영상 준비로 넘기기", commands, SHORTS)
+                if not ok:
+                    json_response(self, {"ok": False, "busy": True, "message": "이미 다른 작업이 실행 중입니다. 현재 작업이 끝난 뒤 다시 눌러주세요."})
+                else:
+                    json_response(self, {"ok": True})
+                return
+            if action == "open_prompt":
+                safe_open(DESK / "LATEST_PROMPT.md")
+                json_response(self, {"ok": True})
+                return
+            if action == "open_results":
+                safe_open(DESK / "RESULTS")
+                json_response(self, {"ok": True})
+                return
+            if action == "open_illustrations":
+                safe_open(DESK / "ILLUSTRATION_DROP")
+                json_response(self, {"ok": True})
+                return
+            if action == "open_desk":
+                safe_open(DESK)
+                json_response(self, {"ok": True})
+                return
+            if action == "system_update":
+                ok = run_job("시스템 업데이트: GitHub pull", [[sys.executable, str(DESK / "MAINTENANCE" / "codex_github_update.py")]], ROOT)
+                if not ok:
+                    json_response(self, {"ok": False, "busy": True, "message": "이미 다른 작업이 실행 중입니다. 현재 작업이 끝난 뒤 다시 눌러주세요."})
+                else:
+                    json_response(self, {"ok": True})
+                return
+            if action == "open_card_output":
+                slug = validate_slug(slug)
+                safe_open_existing(CARD_OUTPUT / slug)
+                json_response(self, {"ok": True})
+                return
+            if action == "open_card_images":
+                slug = validate_slug(slug)
+                (CARD_IMAGES / slug).mkdir(parents=True, exist_ok=True)
+                safe_open(CARD_IMAGES / slug)
+                json_response(self, {"ok": True})
+                return
+            if action == "open_card_prompt":
+                slug = validate_slug(slug)
+                safe_open_existing(CARD_IMAGES / slug / "prompt.md")
+                json_response(self, {"ok": True})
+                return
+            if action == "open_card_result":
+                slug = validate_slug(slug)
+                safe_open_existing(CARD_OUTPUT / slug)
+                json_response(self, {"ok": True})
+                return
+            if action == "open_card_webui":
+                slug = validate_slug(slug) if slug else ""
+                start_card_webui(slug)
+                json_response(self, {"ok": True})
+                return
+            if action == "open_card_root":
+                safe_open_existing(CARDNEWS)
+                json_response(self, {"ok": True})
+                return
+            if action == "update_visual":
+                slug = validate_slug(data.get("slug") or latest_slug())
+                section = data.get("section") or ""
+                chunk_index = int(data.get("chunk_index", 0))
+                visual_type = data.get("visual_type") or ""
+                visual_value = data.get("visual_value") or ""
+                path = update_chunk_visual(slug, section, chunk_index, visual_type, visual_value)
+                json_response(self, {"ok": True, "path": str(path)})
+                return
+            if action == "adjust_chunk":
+                slug = validate_slug(data.get("slug") or latest_slug())
+                section = data.get("section") or ""
+                chunk_index = int(data.get("chunk_index", 0))
+                op = data.get("op") or ""
+                path = adjust_chunk_boundary(slug, section, chunk_index, op)
+                json_response(self, {"ok": True, "path": str(path)})
+                return
+            if action == "telegram_card_summary":
+                ok = telegram_send(cardnews_summary())
+                if not ok:
+                    json_response(self, {"ok": False, "busy": True, "message": "이미 다른 작업이 실행 중입니다. 현재 작업이 끝난 뒤 다시 눌러주세요."})
+                else:
+                    json_response(self, {"ok": True})
+                return
+            if action == "telegram_test":
+                ok = telegram_send("✅ <b>폰스팟 제작 패널</b>\n텔레그램 알림 테스트가 정상 전송되었습니다.")
+                if not ok:
+                    json_response(self, {"ok": False, "busy": True, "message": "이미 다른 작업이 실행 중입니다. 현재 작업이 끝난 뒤 다시 눌러주세요."})
+                else:
+                    json_response(self, {"ok": True})
+                return
+            raise RuntimeError(f"알 수 없는 액션입니다: {action}")
+        except Exception as exc:
+            json_response(self, {"ok": False, "error": str(exc)}, 500)
+
+
+INDEX_HTML = r"""<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>폰스팟 통합 제작 패널</title>
+  <style>
+    :root { --bg:#f5f6f8; --panel:#fff; --ink:#15181d; --muted:#667085; --line:#dde2ea; --orange:#f74b0b; --blue:#17345f; --red:#b42318; --green:#027a48; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif; }
+    header { min-height:64px; display:flex; align-items:center; justify-content:space-between; padding:12px 24px; background:#111827; color:white; gap:16px; }
+    header strong { font-size:20px; } header span { color:#cbd5e1; font-size:13px; word-break:break-all; }
+    main { display:grid; grid-template-columns:400px 1fr; gap:16px; padding:16px; max-width:1540px; margin:0 auto; }
+    section { background:var(--panel); border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+    .head { display:flex; align-items:center; justify-content:space-between; padding:13px 15px; border-bottom:1px solid var(--line); background:#fbfcfd; gap:10px; }
+    h2 { margin:0; font-size:16px; } .small { font-size:12px; color:var(--muted); }
+    .pad { padding:14px 16px; }
+    .tabs { display:flex; gap:8px; padding:10px; background:#fff; border-bottom:1px solid var(--line); }
+    .tab { flex:1; border:1px solid var(--line); background:#fff; border-radius:7px; padding:9px; cursor:pointer; font-weight:700; }
+    .tab.active { background:#fff0e8; border-color:var(--orange); color:var(--orange); }
+    .list { max-height:715px; overflow:auto; }
+    .row { width:100%; border:0; border-bottom:1px solid #eef1f5; background:white; text-align:left; padding:10px 12px; cursor:pointer; display:grid; grid-template-columns:42px 82px 58px 1fr; gap:8px; align-items:center; font-size:13px; }
+    .row.card { grid-template-columns:82px 76px 1fr; }
+    .row:hover { background:#fff7f3; } .row.active { background:#fff0e8; outline:2px solid rgba(247,75,11,.25); }
+    .slug-name { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .title-sub { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--muted); font-size:12px; margin-top:2px; }
+    .flag { font-weight:700; color:var(--blue); }
+    .grid { display:grid; grid-template-columns:repeat(3, minmax(160px,1fr)); gap:12px; }
+    .action-head { align-items:flex-start; }
+    .selected-badge { min-width:360px; max-width:720px; padding:10px 14px; border:2px solid var(--orange); border-radius:10px; background:#fff7f3; color:#111827; box-shadow:0 6px 20px rgba(247,75,11,.12); }
+    .selected-badge span { display:block; font-size:12px; color:#9a3412; font-weight:700; margin-bottom:4px; }
+    .selected-badge b { display:block; font-size:22px; line-height:1.18; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .status-note { margin-top:8px; padding:10px 12px; background:#f8fafc; border:1px solid var(--line); border-radius:8px; line-height:1.45; }
+    .btn { border:1px solid var(--line); background:white; border-radius:8px; min-height:84px; padding:12px; cursor:pointer; text-align:left; }
+    .btn:hover { border-color:var(--orange); box-shadow:0 2px 12px rgba(0,0,0,.06); }
+    .btn.primary { background:var(--orange); color:white; border-color:var(--orange); }
+    .btn strong { display:block; font-size:15px; margin-bottom:6px; } .btn span { font-size:12px; color:inherit; opacity:.82; line-height:1.35; }
+    .status { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; }
+    .metric { border:1px solid var(--line); border-radius:8px; padding:12px; background:white; min-height:76px; } .metric b { display:block; font-size:20px; margin-top:4px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .warn { color:var(--red); } .ok { color:var(--green); }
+    .log { height:390px; overflow:auto; background:#0b1020; color:#dbeafe; padding:14px; font-family:Consolas,monospace; font-size:12px; white-space:pre-wrap; }
+    .results { max-height:170px; overflow:auto; font-size:13px; } .result-row { display:flex; justify-content:space-between; gap:10px; padding:7px 0; border-bottom:1px solid #eef1f5; }
+    .weak-panel { display:none; border-top:1px solid var(--line); background:#fffaf7; }
+    .weak-table { width:100%; border-collapse:collapse; font-size:12px; }
+    .weak-table th,.weak-table td { border-bottom:1px solid #f0d8ce; padding:8px; vertical-align:top; text-align:left; }
+    .weak-table th { background:#fff0e8; color:#7a271a; position:sticky; top:0; }
+    .weak-scroll { max-height:330px; overflow:auto; }
+    .weak-table select,.weak-table input { width:100%; border:1px solid #e7b9a8; border-radius:6px; padding:6px; font-size:12px; background:white; }
+    .mini-btn { border:1px solid var(--orange); color:var(--orange); background:white; border-radius:6px; padding:6px 8px; cursor:pointer; font-size:12px; margin:2px; }
+    .mini-btn:hover { background:#fff0e8; }
+    .chunk-panel { display:none; border-top:1px solid var(--line); background:#f8fbff; }
+    .chunk-table { width:100%; border-collapse:collapse; font-size:12px; }
+    .chunk-table th,.chunk-table td { border-bottom:1px solid #dbe7f5; padding:8px; vertical-align:top; text-align:left; }
+    .chunk-table th { background:#edf5ff; color:#17345f; position:sticky; top:0; }
+    .chunk-text { white-space:pre-wrap; line-height:1.45; }
+    @media (max-width:1080px) { main { grid-template-columns:1fr; } .grid,.status { grid-template-columns:1fr 1fr; } }
+  </style>
+</head>
+<body>
+  <header><div><strong>폰스팟 통합 제작 패널</strong> <span>카드뉴스 + 숏폼 영상</span></div><span id="rootText"></span></header>
+  <main>
+    <section>
+      <div class="tabs">
+        <button id="tabVideo" class="tab active" onclick="setMode('video')">영상</button>
+        <button id="tabCard" class="tab" onclick="setMode('card')">카드뉴스</button>
+      </div>
+      <div class="head"><h2 id="listTitle">영상 후보</h2><button onclick="reloadLists()">새로고침</button></div>
+      <div id="videoList" class="list"></div>
+      <div id="cardList" class="list" style="display:none"></div>
+    </section>
+    <div style="display:grid; gap:16px;">
+      <section>
+        <div class="head action-head"><h2 id="actionTitle">영상 작업</h2><div class="selected-badge"><span id="selectedModeLabel">선택 항목</span><b id="selectedSlug">없음</b></div></div>
+        <div id="videoActions" class="pad grid">
+          <button class="btn primary" onclick="runAction('video_prepare')"><strong>1. 영상용 프롬프트 준비</strong><span>선택한 카드뉴스 결과를 숏폼 영상 스크립트와 일러스트 요청으로 변환합니다.</span></button>
+          <button class="btn primary" onclick="runAction('video_import_render')"><strong>2. 이미지 가져오기 + 렌더</strong><span>다운로드한 GPT 이미지를 반영하고 최신 영상 작업물을 렌더합니다.</span></button>
+          <button class="btn" onclick="runAction('video_render_selected')"><strong>3. 선택 영상만 렌더</strong><span>추가 이미지 없이 현재 선택한 슬러그를 다시 렌더합니다.</span></button>
+          <button class="btn" onclick="window.open('/prompt','_blank')"><strong>영상 이미지 프롬프트 보기</strong><span>최신 영상용 GPT 프롬프트를 브라우저에서 엽니다.</span></button>
+          <button class="btn" onclick="runAction('open_results')"><strong>영상 결과 폴더</strong><span>완성 MP4와 발행 패키지 폴더를 엽니다.</span></button>
+          <button class="btn" onclick="runAction('system_update')"><strong>시스템 업데이트</strong><span>GitHub에서 최신 코드만 받아옵니다. 렌더 결과물은 건드리지 않습니다.</span></button>
+          <button class="btn" onclick="runAction('open_illustrations')"><strong>일러스트 폴더</strong><span>재사용 일러스트 라이브러리와 드롭 폴더를 엽니다.</span></button>
+          <button class="btn" onclick="showChunks()"><strong>7. 청크 경계 편집</strong><span>문구 내용과 TTS는 유지하고 줄바꿈, 앞뒤 합치기, 자동 분할만 조정합니다.</span></button>
+        </div>
+        <div id="cardActions" class="pad grid" style="display:none">
+          <button class="btn" onclick="reloadLists()"><strong>1. 후보 새로고침</strong><span>cardnews/articles, images, output 폴더를 다시 스캔합니다. 외부 뉴스 수집 실행은 아직 붙이지 않았습니다.</span></button>
+          <button class="btn" onclick="runAction('telegram_card_summary')"><strong>후보 현황 텔레그램</strong><span>현재 카드뉴스 후보와 상태를 텔레그램으로 보냅니다.</span></button>
+          <button class="btn primary" onclick="openCardPrompt()"><strong>2. 이미지 프롬프트 보기</strong><span>선택한 카드뉴스의 images/&lt;slug&gt;/prompt.md를 브라우저에서 확인합니다.</span></button>
+          <button class="btn" onclick="runAction('open_card_images')"><strong>3. 이미지 업로드 폴더</strong><span>1.png~5.png를 넣을 카드뉴스 이미지 폴더를 엽니다.</span></button>
+          <button class="btn primary" onclick="runAction('card_render')"><strong>4. 카드뉴스 생성</strong><span>기존 카드뉴스 렌더러를 실행해 1x1, 4x5, 9x16 카드와 captions.md를 생성합니다.</span></button>
+          <button class="btn" onclick="runAction('open_card_result')"><strong>5. 카드뉴스 결과 확인</strong><span>완성된 카드뉴스 output 폴더를 엽니다.</span></button>
+          <button class="btn primary" onclick="runAction('card_to_video')"><strong>6. 영상으로 넘기기</strong><span>완성된 카드뉴스를 Codex 숏폼 영상 준비 단계로 넘깁니다.</span></button>
+        </div>
+      </section>
+      <section>
+        <div class="head"><h2>상태</h2><span class="small" id="jobText">대기 중</span></div>
+        <div class="pad status">
+          <div class="metric"><span class="small" id="metric1Label">선택 슬러그</span><b id="latestSlug">-</b></div>
+          <div class="metric"><span class="small" id="metric2Label">상태</span><b id="requestCount">-</b></div>
+          <div class="metric"><span class="small" id="metric3Label">이미지</span><b id="missingCount">-</b></div>
+          <div class="metric"><span class="small" id="metric4Label">카드</span><b id="downloadCount">-</b></div>
+          <div class="metric"><span class="small" id="metric5Label">영상 스크립트</span><b id="weakCount">-</b></div>
+        </div>
+        <div class="pad small" id="advice"></div>
+        <div id="weakPanel" class="weak-panel">
+          <div class="head"><h2>약한 매핑 상세</h2><button onclick="toggleWeakPanel()">닫기</button></div>
+          <div class="pad small">이미지/일러스트가 청크 문맥과 약하게 연결된 항목입니다. 10개 이상이면 렌더 전 재매핑을 권장합니다.</div>
+          <div class="weak-scroll">
+            <table class="weak-table">
+              <thead><tr><th>구간</th><th>현재 visual</th><th>청크</th><th>추천 방향</th><th>수정</th></tr></thead>
+              <tbody id="weakRows"></tbody>
+            </table>
+          </div>
+        </div>
+        <div id="chunkPanel" class="chunk-panel">
+          <div class="head"><h2>청크 경계 편집</h2><button onclick="toggleChunkPanel()">닫기</button></div>
+          <div class="pad small">문장 내용과 TTS는 바꾸지 않습니다. 화면에 보이는 청크 경계와 줄바꿈만 조정합니다.</div>
+          <div class="weak-scroll">
+            <table class="chunk-table">
+              <thead><tr><th>구간</th><th>청크 문구</th><th>visual</th><th>작업</th></tr></thead>
+              <tbody id="chunkRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+      <section><div class="head"><h2>실행 로그</h2><span class="small">실패하면 이 로그를 복사해서 보내면 됩니다.</span></div><div id="log" class="log"></div></section>
+      <section><div class="head"><h2>최근 영상 결과</h2><button onclick="runAction('open_results')">결과 폴더 열기</button></div><div class="pad results" id="results"></div></section>
+    </div>
+  </main>
+  <script>
+    let selected = "";
+    let selectedCard = "";
+    let mode = "video";
+    let videoItems = [];
+    let cardItems = [];
+    let lastState = null;
+    async function api(path, options) { const res = await fetch(path, options); if (!res.ok) throw new Error(await res.text()); return await res.json(); }
+    function setMode(next) {
+      mode = next;
+      document.getElementById("tabVideo").classList.toggle("active", next === "video");
+      document.getElementById("tabCard").classList.toggle("active", next === "card");
+      document.getElementById("videoList").style.display = next === "video" ? "" : "none";
+      document.getElementById("cardList").style.display = next === "card" ? "" : "none";
+      document.getElementById("videoActions").style.display = next === "video" ? "" : "none";
+      document.getElementById("cardActions").style.display = next === "card" ? "" : "none";
+      document.getElementById("listTitle").textContent = next === "video" ? "영상 후보" : "카드뉴스 후보";
+      document.getElementById("actionTitle").textContent = next === "video" ? "영상 작업" : "카드뉴스 작업";
+      updateSelectedStatus();
+    }
+    async function loadSlugs() {
+      const data = await api("/api/slugs"); videoItems = data.slugs || []; const box = document.getElementById("videoList"); box.innerHTML = "";
+      videoItems.forEach(item => {
+        const btn = document.createElement("button");
+        btn.className = "row" + (item.slug === selected ? " active" : "");
+        btn.innerHTML = `<b>${item.number}</b><span>${item.date}</span><span class="flag">[${item.flag}]</span><span class="slug-name">${item.slug}</span>`;
+        btn.onclick = () => { selected = item.slug; document.getElementById("selectedSlug").textContent = selected; setMode("video"); updateSelectedStatus(); loadSlugs(); };
+        box.appendChild(btn);
+      });
+      if (!selected && videoItems.length) { selected = videoItems[0].slug; document.getElementById("selectedSlug").textContent = selected; updateSelectedStatus(); loadSlugs(); }
+    }
+    async function loadCardnews() {
+      const data = await api("/api/cardnews/slugs"); cardItems = data.rows || []; const box = document.getElementById("cardList"); box.innerHTML = "";
+      cardItems.forEach(item => {
+        const btn = document.createElement("button");
+        btn.className = "row card" + (item.slug === selectedCard ? " active" : "");
+        btn.innerHTML = `<span>${item.date || "-"}</span><span class="flag">${item.status}</span><span class="slug-name">${item.slug}<span class="title-sub">${item.title || ""}</span><span class="title-sub">이미지 ${item.images}/5 · 카드 ${item.cards} · 프롬프트 ${item.prompt ? "있음" : "없음"}</span></span>`;
+        btn.onclick = () => { selectedCard = item.slug; selected = item.slug; document.getElementById("selectedSlug").textContent = selected; setMode("card"); updateSelectedStatus(); loadCardnews(); loadSlugs(); };
+        box.appendChild(btn);
+      });
+    }
+    async function reloadLists() { await loadSlugs(); await loadCardnews(); }
+    function findCardRow(slug) {
+      return (cardItems || []).find(x => x.slug === slug) || null;
+    }
+    function findVideoRow(slug) {
+      return (videoItems || []).find(x => x.slug === slug) || null;
+    }
+    function setMetric(id, value, cls) {
+      const el = document.getElementById(id);
+      el.textContent = value == null || value === "" ? "-" : String(value);
+      el.className = cls || "";
+    }
+    function updateSelectedStatus() {
+      const activeSlug = mode === "card" ? (selectedCard || selected) : selected;
+      document.getElementById("selectedSlug").textContent = activeSlug || "없음";
+      document.getElementById("selectedModeLabel").textContent = mode === "card" ? "선택한 카드뉴스" : "선택한 영상";
+      const card = activeSlug ? findCardRow(activeSlug) : null;
+      const video = activeSlug ? findVideoRow(activeSlug) : null;
+
+      document.getElementById("metric1Label").textContent = "선택 슬러그";
+      document.getElementById("metric2Label").textContent = "상태";
+      document.getElementById("metric3Label").textContent = "이미지";
+      document.getElementById("metric4Label").textContent = "카드";
+      document.getElementById("metric5Label").textContent = "영상 스크립트";
+      setMetric("latestSlug", activeSlug || "-");
+
+      if (card) {
+        setMetric("requestCount", card.status || (card.done ? "완료" : "진행중"), card.done ? "ok" : "warn");
+        setMetric("missingCount", `${card.images || 0}/5`, (card.images || 0) >= 5 ? "ok" : "warn");
+        setMetric("downloadCount", `${card.cards || 0}`, (card.cards || 0) > 0 ? "ok" : "warn");
+        setMetric("weakCount", card.script ? "있음" : "없음", card.script ? "ok" : "warn");
+        const advice = document.getElementById("advice");
+        const parts = [];
+        parts.push(`<b>${escapeHtml(activeSlug || "")}</b> 선택 중`);
+        parts.push(`기사 ${card.article ? "있음" : "없음"}`);
+        parts.push(`프롬프트 ${card.prompt ? "있음" : "없음"}`);
+        parts.push(`캡션 ${card.captions ? "있음" : "없음"}`);
+        parts.push(`영상 스크립트 ${card.script ? "있음" : "없음"}`);
+        if (mode === "video" && video) parts.push(`영상 플래그 [${video.flag}]`);
+        advice.innerHTML = `<div class="status-note">${parts.join(" · ")}</div>`;
+      } else if (video) {
+        setMetric("requestCount", `[${video.flag}]`, video.flag === "OK" ? "ok" : "warn");
+        setMetric("missingCount", "-");
+        setMetric("downloadCount", "-");
+        setMetric("weakCount", "-");
+        document.getElementById("advice").innerHTML = `<div class="status-note"><b>${escapeHtml(activeSlug || "")}</b> 선택 중 · 카드뉴스 상세 정보는 아직 로드되지 않았습니다.</div>`;
+      } else if (lastState) {
+        setMetric("requestCount", "대기");
+        setMetric("missingCount", "-");
+        setMetric("downloadCount", "-");
+        setMetric("weakCount", "-");
+        document.getElementById("advice").innerHTML = `<div class="status-note">왼쪽 목록에서 작업할 항목을 선택하세요.</div>`;
+      }
+    }
+    async function loadState() {
+      const data = await api("/api/state");
+      lastState = data;
+      document.getElementById("rootText").textContent = data.root;
+      updateSelectedStatus();
+      const job = data.job || {};
+      document.getElementById("jobText").textContent = job.running ? `실행 중: ${job.name}` : (job.exit_code === null ? "대기 중" : `마지막 종료 코드: ${job.exit_code}`);
+      const log = document.getElementById("log"); log.textContent = job.log || ""; log.scrollTop = log.scrollHeight;
+      const results = document.getElementById("results"); results.innerHTML = ""; (data.results || []).forEach(r => { const div = document.createElement("div"); div.className = "result-row"; div.innerHTML = `<span>${r.name}</span><span class="small">${r.mp4 || ""}</span>`; results.appendChild(div); });
+    }
+    async function runAction(action) {
+      try {
+        const result = await api("/api/action", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({action, slug:selected}) });
+        if (!result.ok) {
+          alert(result.message || "작업을 시작하지 못했습니다. 실행 로그를 확인해주세요.");
+        }
+        await loadState();
+      } catch (err) { alert(String(err)); }
+    }
+    function toggleWeakPanel() {
+      const panel = document.getElementById("weakPanel");
+      panel.style.display = panel.style.display === "block" ? "none" : "block";
+    }
+    async function showWeakMappings() {
+      const data = await api("/api/weak-mappings");
+      const body = document.getElementById("weakRows");
+      body.innerHTML = "";
+      if (!data.rows || data.rows.length === 0) {
+        body.innerHTML = "<tr><td colspan='5'>약한 매핑이 없습니다.</td></tr>";
+      } else {
+        const visualOptions = buildVisualOptions(data.visuals || {});
+        data.rows.forEach((r, idx) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `<td>${r.section}<br>청크 ${r.chunk}</td>
+            <td>${r.variant || "-"}</td>
+            <td>${escapeHtml(r.text || "")}</td>
+            <td>${escapeHtml(r.suggestion || "")}</td>
+            <td>
+              <select id="weakType_${idx}" onchange="fillVisualValue(${idx})">
+                <option value="illust">일러스트</option>
+                <option value="image">GPT 이미지</option>
+                <option value="logo">로고</option>
+                <option value="mascot">마스코트</option>
+                <option value="none">비우기</option>
+              </select>
+              <input id="weakValue_${idx}" list="weakValues_${idx}" placeholder="예: penalty_refund 또는 3.png">
+              <datalist id="weakValues_${idx}">${visualOptions}</datalist>
+              <button class="mini-btn" onclick="saveWeakVisual(${idx}, '${escapeJs(r.section)}', ${Number(r.chunk_index) || 0})">저장</button>
+            </td>`;
+          body.appendChild(tr);
+        });
+      }
+      document.getElementById("weakPanel").style.display = "block";
+      window.__weakVisuals = data.visuals || {};
+    }
+    function buildVisualOptions(visuals) {
+      const rows = [];
+      ["illust","image","logo","mascot"].forEach(type => {
+        (visuals[type] || []).forEach(v => rows.push(`<option value="${escapeHtml(v)}" label="${type}:${escapeHtml(v)}"></option>`));
+      });
+      return rows.join("");
+    }
+    function fillVisualValue(idx) {
+      const type = document.getElementById(`weakType_${idx}`).value;
+      const input = document.getElementById(`weakValue_${idx}`);
+      if (type === "none") input.value = "none";
+      else input.value = "";
+    }
+    async function saveWeakVisual(idx, section, chunkIndex) {
+      const type = document.getElementById(`weakType_${idx}`).value;
+      const value = document.getElementById(`weakValue_${idx}`).value.trim();
+      if (!value) { alert("새 visual 값을 입력하세요."); return; }
+      await api("/api/action", {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({
+          action:"update_visual",
+          slug:selected,
+          section,
+          chunk_index:chunkIndex,
+          visual_type:type,
+          visual_value:value
+        })
+      });
+      alert("저장했습니다. 필요하면 선택 영상만 렌더를 다시 실행하세요.");
+      await showWeakMappings();
+    }
+    async function showChunks() {
+      try {
+        if (!selected) { alert("먼저 슬러그를 선택하세요."); return; }
+        const data = await api("/api/chunks?slug=" + encodeURIComponent(selected));
+        const body = document.getElementById("chunkRows");
+        body.innerHTML = "";
+        const rows = data.rows || [];
+        if (!rows.length) {
+          body.innerHTML = "<tr><td colspan='4'>청크가 없습니다. 먼저 영상 이미지 프롬프트 준비를 실행하세요.</td></tr>";
+        }
+        rows.forEach((r) => {
+          const tr = document.createElement("tr");
+          const overrideBadge = r.override ? "<br><span class='pill ok'>편집본</span>" : "";
+          tr.innerHTML = `<td>${escapeHtml(r.section)}<br>청크 ${Number(r.chunk) || 0}<br>${Number(r.chars) || 0}자${overrideBadge}</td>
+            <td class="chunk-text">${escapeHtml(r.text || "")}</td>
+            <td>${escapeHtml(r.visual || "-")}</td>
+            <td>
+              <button class="mini-btn" onclick="adjustChunk('${escapeJs(r.section)}', ${Number(r.chunk_index)||0}, 'linebreak')">줄바꿈 정리</button>
+              <button class="mini-btn" onclick="adjustChunk('${escapeJs(r.section)}', ${Number(r.chunk_index)||0}, 'merge_prev')">앞과 합치기</button>
+              <button class="mini-btn" onclick="adjustChunk('${escapeJs(r.section)}', ${Number(r.chunk_index)||0}, 'merge_next')">뒤와 합치기</button>
+              <button class="mini-btn" onclick="adjustChunk('${escapeJs(r.section)}', ${Number(r.chunk_index)||0}, 'split_auto')">자동 둘로 나누기</button>
+            </td>`;
+          body.appendChild(tr);
+        });
+        document.getElementById("chunkPanel").style.display = "block";
+      } catch (err) {
+        alert("청크 목록을 불러오지 못했습니다.\n" + String(err));
+      }
+    }
+    function toggleChunkPanel() {
+      const panel = document.getElementById("chunkPanel");
+      panel.style.display = panel.style.display === "block" ? "none" : "block";
+    }
+    async function adjustChunk(section, chunkIndex, op) {
+      try {
+        const result = await api("/api/action", {
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body: JSON.stringify({ action:"adjust_chunk", slug:selected, section, chunk_index:chunkIndex, op })
+        });
+        if (!result.ok) {
+          alert(result.message || "청크 조정에 실패했습니다.");
+          return;
+        }
+        await showChunks();
+      } catch (err) {
+        alert("청크 조정 실패\n" + String(err));
+      }
+    }
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+    }
+    function escapeJs(s) {
+      return String(s).replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+    }
+    function openCardPrompt() {
+      if (!selected) { alert("카드뉴스를 먼저 선택하세요."); return; }
+      window.open("/card-prompt/" + encodeURIComponent(selected), "_blank");
+    }
+    reloadLists(); loadState(); setInterval(loadState, 1500); setInterval(loadCardnews, 10000);
+  </script>
+</body>
+</html>"""
+
+
+def main() -> int:
+    if not SHORTS.exists():
+        print(f"[ERROR] shorts folder missing: {SHORTS}")
+        return 1
+    server = ThreadingHTTPServer(("127.0.0.1", PORT), Handler)
+    url = f"http://localhost:{PORT}/"
+    print("=" * 60)
+    print(" 폰스팟 통합 제작 패널")
+    print("=" * 60)
+    print(f"프로젝트: {ROOT}")
+    print(f"주소    : {url}")
+    print("카드뉴스 기능: 후보/프롬프트/이미지 폴더/렌더/결과/영상 넘기기")
+    print("창을 닫으면 패널이 종료됩니다.")
+    if os.environ.get("PHONESPOT_PANEL_NO_BROWSER") != "1":
+        webbrowser.open(url)
+    server.serve_forever()
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

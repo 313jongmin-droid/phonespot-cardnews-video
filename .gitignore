@@ -1,0 +1,155 @@
+# === 시크릿 (절대 git에 올리지 말 것) ===
+_secrets/
+*.key
+*.env
+.env
+
+# === 런타임 상태·로그 ===
+_state/
+*.log
+**/logs/
+
+# === 백업 ===
+_backup/
+
+# === Python ===
+__pycache__/
+*.pyc
+.playwright/
+*.tmp
+
+# === Node ===
+shorts/node_modules/
+**/node_modules/
+
+# === 영상·이미지 출력 (재생성 가능) ===
+cardnews/output/
+shorts/out/
+shorts/out_codex/
+shorts/hyperframes_codex/
+shorts/public/audio/
+
+# === 자동 생성 ===
+*.codexbak_*
+*.codexfixbak_*
+*.codexrenderbak_*
+
+# === IDE ===
+.vscode/
+.idea/
+# PhoneSpot runtime outputs
+node_modules/
+__pycache__/
+*.pyc
+
+# Secrets
+_secrets/
+*.env
+.env
+
+# Cardnews generated data
+cardnews/output/
+cardnews/images/
+cardnews/articles/
+
+# Shorts runtime/public generated data
+shorts/public/audio/
+shorts/public/assets/
+shorts/out/
+shorts/out_codex/
+shorts/upload_codex/
+shorts/hyperframes/
+shorts/.cache/
+
+# Codex desk runtime
+CODEX_VIDEO_DESK/RESULTS/
+CODEX_VIDEO_DESK/ILLUSTRATION_DROP/
+CODEX_VIDEO_DESK/TEMP/
+CODEX_VIDEO_DESK/CHUNK_OVERRIDES/
+CODEX_VIDEO_DESK/BACKUPS/
+CODEX_VIDEO_DESK/LATEST_PROMPT.*
+CODEX_VIDEO_DESK/LATEST_SLUG.txt
+CODEX_VIDEO_DESK/**/*.bak*
+
+# Local logs and media
+*.log
+*.mp4
+*.mov
+*.wav
+*.mp3
+# === PhoneSpot GitHub distribution rules ===
+# Keep code + reusable shared assets. Exclude generated news/runtime outputs.
+
+# Secrets / credentials
+_secrets/
+*.key
+*.env
+.env
+gemini_key.txt
+telegram_token.txt
+telegram_chat_id.txt
+
+# Python / Node runtime
+__pycache__/
+*.pyc
+.pytest_cache/
+node_modules/
+**/node_modules/
+shorts/node_modules/
+
+# Generated cardnews data
+cardnews/output/
+cardnews/images/
+cardnews/articles/
+
+# Generated shorts runtime
+shorts/public/audio/
+shorts/out/
+shorts/out_codex/
+shorts/upload_codex/
+shorts/hyperframes/
+shorts/hyperframes_codex/
+shorts/.cache/
+
+# Runtime assets: ignore per-slug copied assets, keep reusable libraries.
+shorts/public/assets/
+!shorts/public/assets/
+shorts/public/assets/*
+!shorts/public/assets/illustrations/
+!shorts/public/assets/illustrations/**
+!shorts/public/assets/logos/
+!shorts/public/assets/logos/**
+
+# Codex desk runtime
+CODEX_VIDEO_DESK/RESULTS/
+CODEX_VIDEO_DESK/ILLUSTRATION_DROP/
+CODEX_VIDEO_DESK/TEMP/
+CODEX_VIDEO_DESK/CHUNK_OVERRIDES/
+CODEX_VIDEO_DESK/BACKUPS/
+CODEX_VIDEO_DESK/_ARCHIVE_OLD_LAUNCHERS_*/
+CODEX_VIDEO_DESK/LATEST_PROMPT.*
+CODEX_VIDEO_DESK/LATEST_SLUG.txt
+CODEX_VIDEO_DESK/**/*.bak*
+
+# Backups and generated media
+*.zip
+*.mp4
+*.mov
+*.wav
+*.mp3
+*.log
+*.tmp
+*.bak
+*.bak_*
+*.codexbak_*
+*.codexfixbak_*
+*.codexrenderbak_*
+
+# IDE
+.vscode/
+.idea/
+# Local OAuth/API tokens - never commit
+upload/tokens/*.json
+upload/tokens/*.token
+upload/tokens/*secret*
+!upload/tokens/.gitkeep

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ slug }} 결과 | Phonespot 카드뉴스</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; }
+    .brand { color: #F74B0B; }
+    .bg-brand { background-color: #F74B0B; }
+    .border-brand { border-color: #F74B0B; }
+    .btn-brand { background-color: #F74B0B; color: white; }
+    .btn-brand:hover { background-color: #D83A00; }
+    .tab-active { background-color: #F74B0B; color: white; }
+  </style>
+</head>
+<body class="bg-stone-50 text-stone-900 min-h-screen">
+  <header class="border-b border-stone-200 bg-white">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="/" class="text-sm brand hover:underline">← 슬러그 목록</a>
+      <div class="flex items-center gap-3">
+        <a href="/slug/{{ slug }}" class="text-sm text-stone-600 hover:brand">상세로 돌아가기</a>
+        <a href="/result/{{ slug }}/zip" class="btn-brand px-3 py-1.5 rounded text-sm">ZIP 다운로드</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 py-8 space-y-6">
+    <div>
+      <div class="text-xs text-stone-500 font-mono mb-1">{{ slug }}</div>
+      <h1 class="text-2xl font-bold">렌더 결과</h1>
+      <div class="flex gap-2 text-xs mt-2">
+        {% if is_done %}
+          <span class="px-2 py-0.5 rounded bg-green-100 text-green-800">완료</span>
+        {% else %}
+          <span class="px-2 py-0.5 rounded bg-yellow-100 text-yellow-800">미완료 (재렌더 권장)</span>
+        {% endif %}
+        <span class="px-2 py-0.5 rounded bg-stone-100">{{ total_jpgs }}장</span>
+        <span class="px-2 py-0.5 rounded bg-stone-100">{{ total_kb }} KB</span>
+      </div>
+    </div>
+
+    <!-- 사이즈 탭 -->
+    <section class="bg-white border border-stone-200 rounded-lg p-5">
+      <div class="flex gap-2 mb-4">
+        {% for sz in ['1x1', '4x5', '9x16'] %}
+        <button onclick="showTab('{{ sz }}')" id="tab-btn-{{ sz }}" class="px-3 py-1.5 rounded text-sm border border-stone-300 {% if loop.first %}tab-active{% endif %}">{{ sz }} ({{ sizes[sz]|length }})</button>
+        {% endfor %}
+      </div>
+      {% for sz in ['1x1', '4x5', '9x16'] %}
+      <div id="tab-{{ sz }}" class="tab-pane {% if not loop.first %}hidden{% endif %}">
+        {% if sizes[sz] %}
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+          {% for fn in sizes[sz] %}
+          <div class="border border-stone-200 rounded overflow-hidden">
+            <a href="/output/{{ slug }}/{{ sz }}/{{ fn }}" target="_blank">
+              <img src="/output/{{ slug }}/{{ sz }}/{{ fn }}" alt="{{ fn }}" class="w-full block">
+            </a>
+            <div class="text-xs text-stone-500 p-1.5 text-center font-mono">{{ fn }}</div>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-stone-500 text-sm">{{ sz }} 폴더가 비어 있음.</div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </section>
+
+    <!-- captions.md -->
+    <section class="bg-white border border-stone-200 rounded-lg p-5">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="font-semibold">captions.md (5채널 + 영상 나레이션)</h2>
+        {% if captions_md %}
+        <div class="flex gap-2">
+          <button onclick="copyCaptions()" class="text-sm px-3 py-1 rounded border border-stone-300 hover:border-brand">복사</button>
+          <a href="/output/{{ slug }}/captions.md" target="_blank" class="text-sm px-3 py-1 rounded border border-stone-300 hover:border-brand">새 창</a>
+        </div>
+        {% endif %}
+      </div>
+      {% if captions_md %}
+      <pre id="captions-md" class="bg-stone-50 border border-stone-200 rounded p-3 text-xs whitespace-pre-wrap overflow-x-auto max-h-[600px] overflow-y-auto">{{ captions_md }}</pre>
+      {% else %}
+      <div class="text-stone-500 text-sm">captions.md가 아직 없습니다.</div>
+      {% endif %}
+    </section>
+  </main>
+
+  <script>
+    function showTab(sz) {
+      document.querySelectorAll('.tab-pane').forEach(el => el.classList.add('hidden'));
+      document.getElementById('tab-' + sz).classList.remove('hidden');
+      ['1x1', '4x5', '9x16'].forEach(s => {
+        const b = document.getElementById('tab-btn-' + s);
+        if (s === sz) b.classList.add('tab-active'); else b.classList.remove('tab-active');
+      });
+    }
+    function copyCaptions() {
+      const el = document.getElementById('captions-md');
+      navigator.clipboard.writeText(el.textContent).then(() => alert('captions 복사 완료'));
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,950 @@
+{
+  "version": 1,
+  "policy": "Tag reusable illustrations and prefer less recently used semantic matches.",
+  "illustrations": {
+    "aluminum_label": {
+      "tags": [
+        "materials",
+        "hardware",
+        "library"
+      ],
+      "keywords": [
+        "알루미늄",
+        "소재",
+        "합금"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "appliance": {
+      "tags": [
+        "hardware",
+        "device",
+        "library"
+      ],
+      "keywords": [
+        "전자제품",
+        "노트북",
+        "콘솔",
+        "가전"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "battery_charge_range": {
+      "tags": [
+        "battery",
+        "charging",
+        "tips",
+        "library"
+      ],
+      "keywords": [
+        "20~80",
+        "충전 범위",
+        "과충전"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "battery_health_check": {
+      "tags": [
+        "battery",
+        "health",
+        "tips"
+      ],
+      "keywords": [
+        "배터리 건강",
+        "배터리 상태",
+        "교체 시기",
+        "최대 용량"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": false
+    },
+    "battery_overheat": {
+      "tags": [
+        "battery",
+        "heat",
+        "warning",
+        "library"
+      ],
+      "keywords": [
+        "고온",
+        "과열",
+        "발열",
+        "충전 중 게임"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "biometric": {
+      "tags": [
+        "security",
+        "privacy",
+        "authentication",
+        "library"
+      ],
+      "keywords": [
+        "생체",
+        "얼굴",
+        "지문",
+        "인증"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "chart_down": {
+      "tags": [
+        "price",
+        "data",
+        "decrease",
+        "library"
+      ],
+      "keywords": [
+        "감소",
+        "하락",
+        "줄어",
+        "낮아"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "chart_up": {
+      "tags": [
+        "price",
+        "data",
+        "increase",
+        "library"
+      ],
+      "keywords": [
+        "증가",
+        "상승",
+        "급등",
+        "오르"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "chat_backup_restore": {
+      "tags": [
+        "messenger",
+        "backup",
+        "restore",
+        "tips",
+        "library"
+      ],
+      "keywords": [
+        "대화 백업",
+        "대화 복원",
+        "메신저",
+        "카카오톡"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "chatbot": {
+      "tags": [
+        "ai",
+        "assistant",
+        "software",
+        "library"
+      ],
+      "keywords": [
+        "챗봇",
+        "AI 비서",
+        "대화형",
+        "시리"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "clock": {
+      "tags": [
+        "time",
+        "tips",
+        "library"
+      ],
+      "keywords": [
+        "시간",
+        "기간",
+        "주기",
+        "수명"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "cloud_backup": {
+      "tags": [
+        "security",
+        "privacy",
+        "cloud",
+        "library"
+      ],
+      "keywords": [
+        "클라우드",
+        "백업",
+        "복원"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "cover_screen_widgets": {
+      "tags": [
+        "library"
+      ],
+      "keywords": [],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "device_data_transfer": {
+      "tags": [
+        "device",
+        "migration",
+        "backup",
+        "tips",
+        "library"
+      ],
+      "keywords": [
+        "데이터 이전",
+        "데이터 옮기",
+        "Smart Switch",
+        "iCloud",
+        "USB 케이블"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "device_price_rise": {
+      "tags": [
+        "price",
+        "increase",
+        "device"
+      ],
+      "keywords": [
+        "가격 인상",
+        "비싸질",
+        "인상 폭",
+        "가격 조정"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": false
+    },
+    "display_ratio_change": {
+      "tags": [
+        "library"
+      ],
+      "keywords": [],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "emergency_account_freeze": {
+      "tags": [
+        "security",
+        "bank",
+        "response",
+        "golden-time",
+        "library"
+      ],
+      "keywords": [
+        "지급정지",
+        "환수",
+        "송금",
+        "거래 은행"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "fake_government_page": {
+      "tags": [
+        "security",
+        "smishing",
+        "government",
+        "warning"
+      ],
+      "keywords": [
+        "가짜 페이지",
+        "공식 사이트",
+        "정부 사칭"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": false
+    },
+    "final_update": {
+      "tags": [
+        "software",
+        "update",
+        "library"
+      ],
+      "keywords": [
+        "업데이트",
+        "베타",
+        "버전",
+        "공개"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "foldable": {
+      "tags": [
+        "hardware",
+        "foldable",
+        "library"
+      ],
+      "keywords": [
+        "폴더블",
+        "폴드",
+        "플립"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "forecast": {
+      "tags": [
+        "news",
+        "forecast",
+        "library"
+      ],
+      "keywords": [
+        "전망",
+        "예상",
+        "가능성",
+        "예정"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "gemini": {
+      "tags": [
+        "ai",
+        "assistant",
+        "google",
+        "library"
+      ],
+      "keywords": [
+        "제미나이",
+        "Gemini",
+        "구글 AI"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "gift_prohibit": {
+      "tags": [
+        "price",
+        "security",
+        "warning",
+        "library"
+      ],
+      "keywords": [
+        "결제 제거",
+        "결제 차단",
+        "카드 제거"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "gift_voucher": {
+      "tags": [
+        "price",
+        "subsidy",
+        "purchase",
+        "library"
+      ],
+      "keywords": [
+        "지원금",
+        "할인",
+        "혜택",
+        "구매"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "handshake": {
+      "tags": [
+        "policy",
+        "access",
+        "partnership",
+        "library"
+      ],
+      "keywords": [
+        "협력",
+        "상호운용",
+        "개방",
+        "동등"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "health_sensor_watch": {
+      "tags": [
+        "library"
+      ],
+      "keywords": [],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "heat_release": {
+      "tags": [
+        "battery",
+        "heat",
+        "hardware",
+        "library"
+      ],
+      "keywords": [
+        "발열",
+        "열 특성",
+        "열 처리",
+        "방열"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "impersonation_call": {
+      "tags": [
+        "security",
+        "voice-phishing",
+        "call",
+        "warning",
+        "library"
+      ],
+      "keywords": [
+        "기관사칭",
+        "사칭",
+        "보이스피싱",
+        "위험 통화"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "launch_event": {
+      "tags": [
+        "library"
+      ],
+      "keywords": [],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "liquid_titanium": {
+      "tags": [
+        "materials",
+        "hardware",
+        "library"
+      ],
+      "keywords": [
+        "액체 금속",
+        "티타늄",
+        "합금"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "lock": {
+      "tags": [
+        "security",
+        "privacy",
+        "lock",
+        "library"
+      ],
+      "keywords": [
+        "잠금",
+        "보안",
+        "도난",
+        "접근 제한"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "logout": {
+      "tags": [
+        "security",
+        "privacy",
+        "account",
+        "library"
+      ],
+      "keywords": [
+        "로그아웃",
+        "계정 제거"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "market_cap": {
+      "tags": [
+        "price",
+        "data",
+        "market",
+        "library"
+      ],
+      "keywords": [
+        "시가총액",
+        "주가",
+        "매출",
+        "실적"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "meeting_room": {
+      "tags": [
+        "policy",
+        "news",
+        "strategy",
+        "library"
+      ],
+      "keywords": [
+        "회의",
+        "전략",
+        "검토",
+        "집행위"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "memory_chip": {
+      "tags": [
+        "ai",
+        "hardware",
+        "chip",
+        "library"
+      ],
+      "keywords": [
+        "메모리",
+        "램",
+        "RAM",
+        "칩",
+        "반도체"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "microphone": {
+      "tags": [
+        "news",
+        "quote",
+        "library"
+      ],
+      "keywords": [
+        "발언",
+        "인터뷰",
+        "팁스터",
+        "기자"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "module_install": {
+      "tags": [
+        "library"
+      ],
+      "keywords": [],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "newspaper": {
+      "tags": [
+        "news",
+        "source",
+        "library"
+      ],
+      "keywords": [
+        "보도",
+        "매체",
+        "외신",
+        "기사"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "nfc_open_access": {
+      "tags": [
+        "payment",
+        "nfc",
+        "access"
+      ],
+      "keywords": [
+        "NFC 개방",
+        "상호운용",
+        "경쟁 서비스"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": false
+    },
+    "nfc_pay": {
+      "tags": [
+        "payment",
+        "nfc",
+        "access",
+        "library"
+      ],
+      "keywords": [
+        "NFC",
+        "비접촉",
+        "결제",
+        "단말기"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "official_site_check": {
+      "tags": [
+        "security",
+        "official-site",
+        "check"
+      ],
+      "keywords": [
+        "공식 사이트",
+        "공식 페이지",
+        "정부24",
+        "mygov"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": false
+    },
+    "ondevice_ai_chip": {
+      "tags": [
+        "ai",
+        "hardware",
+        "privacy"
+      ],
+      "keywords": [
+        "온디바이스",
+        "기기 내",
+        "자체 칩",
+        "클라우드를 거치지"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": false
+    },
+    "optimized_charging": {
+      "tags": [
+        "battery",
+        "charging",
+        "tips",
+        "library"
+      ],
+      "keywords": [
+        "최적화 충전",
+        "배터리 보호",
+        "적응형 보호"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "password": {
+      "tags": [
+        "security",
+        "privacy",
+        "authentication",
+        "library"
+      ],
+      "keywords": [
+        "비밀번호",
+        "암호",
+        "계정"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "personal_data_leak": {
+      "tags": [
+        "security",
+        "privacy",
+        "leak"
+      ],
+      "keywords": [
+        "개인정보",
+        "주민번호",
+        "계좌",
+        "인증번호",
+        "유출"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": false
+    },
+    "phone_setup_ready": {
+      "tags": [
+        "library"
+      ],
+      "keywords": [],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "plan_price_tier_compare": {
+      "tags": [
+        "price",
+        "plan",
+        "compare",
+        "telecom"
+      ],
+      "keywords": [
+        "요금제",
+        "고가 요금제",
+        "중저가 요금제",
+        "분기점"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": false
+    },
+    "price_hike": {
+      "tags": [
+        "price",
+        "increase",
+        "library"
+      ],
+      "keywords": [
+        "가격 인상",
+        "인상 폭",
+        "비싸",
+        "가격 조정"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "prohibit": {
+      "tags": [
+        "security",
+        "warning",
+        "restriction",
+        "library"
+      ],
+      "keywords": [
+        "금지",
+        "차단",
+        "제한",
+        "주의"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "release_calendar": {
+      "tags": [
+        "library"
+      ],
+      "keywords": [],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "repair_privacy": {
+      "tags": [
+        "security",
+        "privacy",
+        "repair"
+      ],
+      "keywords": [
+        "수리",
+        "사생활",
+        "개인정보",
+        "보안 폴더"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": false
+    },
+    "reset": {
+      "tags": [
+        "security",
+        "privacy",
+        "software",
+        "library"
+      ],
+      "keywords": [
+        "초기화",
+        "복원",
+        "리셋"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "samsung_ai": {
+      "tags": [
+        "ai",
+        "assistant",
+        "software",
+        "library"
+      ],
+      "keywords": [
+        "AI",
+        "인공지능",
+        "AI 앱",
+        "AI 기능"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "secure_app_reregistration": {
+      "tags": [
+        "security",
+        "bank",
+        "authentication",
+        "setup",
+        "library"
+      ],
+      "keywords": [
+        "인증서",
+        "금융 앱",
+        "결제 수단",
+        "기기 인증",
+        "재등록"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "shield": {
+      "tags": [
+        "security",
+        "privacy",
+        "protection",
+        "library"
+      ],
+      "keywords": [
+        "보호",
+        "보안",
+        "차단",
+        "방어"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "smartphone": {
+      "tags": [
+        "device",
+        "purchase",
+        "cta",
+        "library"
+      ],
+      "keywords": [
+        "휴대폰",
+        "스마트폰",
+        "구매",
+        "상담"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "smishing_fake_link": {
+      "tags": [
+        "security",
+        "smishing",
+        "warning",
+        "link"
+      ],
+      "keywords": [
+        "스미싱",
+        "문자 링크",
+        "악성 앱",
+        "가짜 페이지"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": false
+    },
+    "stock_chart": {
+      "tags": [
+        "price",
+        "data",
+        "market",
+        "library"
+      ],
+      "keywords": [
+        "목표주가",
+        "주식",
+        "증시",
+        "매출"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "store": {
+      "tags": [
+        "store",
+        "purchase",
+        "cta",
+        "library"
+      ],
+      "keywords": [
+        "매장",
+        "방문",
+        "상담",
+        "점검"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "telecom_discount_compare": {
+      "tags": [
+        "price",
+        "subsidy",
+        "compare",
+        "telecom",
+        "library"
+      ],
+      "keywords": [
+        "공시지원금",
+        "선택약정",
+        "단말 할인",
+        "월 요금 할인"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "theft_auto_lock": {
+      "tags": [
+        "security",
+        "privacy",
+        "theft"
+      ],
+      "keywords": [
+        "도난",
+        "강제 탈취",
+        "자동 잠금"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": false
+    },
+    "ti_decrease": {
+      "tags": [
+        "materials",
+        "hardware",
+        "decrease",
+        "library"
+      ],
+      "keywords": [
+        "티타늄",
+        "사용을 줄",
+        "감소"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "transfer_interruption_warning": {
+      "tags": [
+        "library"
+      ],
+      "keywords": [],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "transfer_path_steps": {
+      "tags": [
+        "library"
+      ],
+      "keywords": [],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "warning": {
+      "tags": [
+        "security",
+        "warning",
+        "library"
+      ],
+      "keywords": [
+        "경고",
+        "위험",
+        "주의",
+        "악성"
+      ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    }
+  },
+  "updated_at": "2026-06-04T16:06:15"
+}\n
