@@ -1147,7 +1147,7 @@ INDEX_HTML = r"""<!doctype html>
     .btn:hover { border-color:var(--orange); box-shadow:0 2px 12px rgba(0,0,0,.06); }
     .btn.primary { background:var(--orange); color:white; border-color:var(--orange); }
     .btn strong { display:block; font-size:15px; margin-bottom:6px; } .btn span { font-size:12px; color:inherit; opacity:.82; line-height:1.35; }
-    .runtime-strip { display:grid; grid-template-columns:1.1fr 1.4fr 1fr; gap:10px; margin:14px 0 0; }
+    .runtime-strip { max-width:1520px; margin:14px auto 0; padding:0 18px; display:grid; grid-template-columns:1.1fr 1.4fr 1fr; gap:10px; box-sizing:border-box; }
     .runtime-card { border:1px solid var(--line); border-radius:10px; background:white; padding:10px 12px; min-height:62px; }
     .runtime-card span { display:block; font-size:11px; color:#64748b; margin-bottom:5px; }
     .runtime-card b { display:block; font-size:15px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
