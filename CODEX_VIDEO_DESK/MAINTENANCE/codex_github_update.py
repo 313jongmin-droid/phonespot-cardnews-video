@@ -8,13 +8,47 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 SHORTS = ROOT / "shorts"
-DESK = ROOT / "CODEX_VIDEO_DESK"
+
+
+def find_git() -> str | None:
+    candidates = [
+        "git",
+        r"C:\Program Files\Git\cmd\git.exe",
+        r"C:\Program Files\Git\bin\git.exe",
+    ]
+    local = Path(os.environ.get("LOCALAPPDATA", ""))
+    if local:
+        candidates.extend(
+            str(p)
+            for p in sorted(
+                (local / "GitHubDesktop").glob(r"app-*\resources\app\git\cmd\git.exe"),
+                reverse=True,
+            )
+        )
+    for candidate in candidates:
+        try:
+            result = subprocess.run(
+                [candidate, "--version"],
+                cwd=str(ROOT),
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                capture_output=True,
+            )
+            if result.returncode == 0:
+                return candidate
+        except FileNotFoundError:
+            continue
+    return None
+
+
+GIT = find_git()
 
 
 def run(command: list[str], cwd: Path = ROOT, check: bool = True) -> subprocess.CompletedProcess:
     print("")
     print("[cmd] " + " ".join(command))
-    result = subprocess.run(command, cwd=str(cwd), text=True)
+    result = subprocess.run(command, cwd=str(cwd), text=True, encoding="utf-8", errors="replace")
     if check and result.returncode:
         raise SystemExit(result.returncode)
     return result
@@ -25,35 +59,34 @@ def main() -> int:
     print(" PhoneSpot Codex - GitHub System Update")
     print("============================================================")
     print(f"Root: {ROOT}")
-    print("")
 
     if not (ROOT / ".git").exists():
         print("[ERROR] This folder is not a Git repository yet.")
-        print("")
-        print("Use GitHub only after the project is cloned locally, for example:")
-        print(r"  C:\PhoneSpot\phonespot_cardnews")
-        print("")
-        print("Initial setup should clone from GitHub first. This updater only runs git pull.")
         return 2
+    if not GIT:
+        print("[ERROR] Git was not found. Install Git for Windows or GitHub Desktop.")
+        return 2
+    print(f"[git] {GIT}")
 
-    run(["git", "--version"])
-    run(["git", "remote", "-v"], check=False)
+    run([GIT, "--version"])
+    run([GIT, "remote", "-v"], check=False)
 
-    print("")
-    print("[check] local changes")
-    status = subprocess.run(["git", "status", "--short"], cwd=str(ROOT), text=True, capture_output=True)
+    status = subprocess.run(
+        [GIT, "status", "--short"],
+        cwd=str(ROOT),
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        capture_output=True,
+    )
     dirty_lines = [line for line in status.stdout.splitlines() if line.strip()]
     if dirty_lines:
-        print("[WARN] Local changes exist. Runtime folders should be ignored by .gitignore.")
-        for line in dirty_lines[:40]:
+        print("[STOP] Local changes exist. Commit, discard, or back them up before update.")
+        for line in dirty_lines[:60]:
             print("  " + line)
-        if len(dirty_lines) > 40:
-            print(f"  ... {len(dirty_lines) - 40} more")
-        print("")
-        print("[STOP] Commit/stash intentionally before pulling to avoid overwriting work.")
         return 3
 
-    run(["git", "pull", "--ff-only"])
+    run([GIT, "pull", "--ff-only"])
 
     if (SHORTS / "package.json").exists():
         print("")
@@ -62,7 +95,7 @@ def main() -> int:
 
     print("")
     print("[deps] Python packages")
-    subprocess.run([sys.executable, "-m", "pip", "install", "-q", "edge-tts", "mutagen"], cwd=str(ROOT))
+    subprocess.run([sys.executable, "-m", "pip", "install", "-q", "edge-tts", "mutagen", "pillow", "requests"], cwd=str(ROOT))
 
     refresh = ROOT / "shorts" / "scripts" / "codex_refresh_workbench.py"
     if refresh.exists():
