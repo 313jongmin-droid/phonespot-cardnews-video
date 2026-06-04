@@ -184,9 +184,39 @@ def upload_short(
         response = None
         while response is None:
             status, response = request.next_chunk()
-        return response.get("id", "")
+        video_id = response.get("id", "")
+
+        # Post-upload hook: 시트 sync + 가이드 갱신 (실패해도 throw 안 함)
+        if video_id:
+            _run_post_upload_hooks()
+        return video_id
     except HttpError as e:
         raise YouTubeError("YouTube API error: %s" % e)
+
+
+def _run_post_upload_hooks():
+    """업로드 직후 자동: push_to_sheet.py + analyze_patterns.py 호출.
+    영상 업로드 후 시트는 즉시 sync, 가이드는 D-2 이상 영상만 보니까 새 영상 영향 X."""
+    import subprocess
+    project_root = _HERE.parent.parent.parent  # phonespot_cardnews/
+    scripts = [
+        project_root / "ads" / "integrations" / "youtube" / "push_to_sheet.py",
+        project_root / "ads" / "integrations" / "youtube" / "analyze_patterns.py",
+    ]
+    for s in scripts:
+        if not s.exists():
+            print("[post-hook] skip (not found): %s" % s.name, file=sys.stderr)
+            continue
+        try:
+            subprocess.run(
+                [sys.executable, str(s)],
+                cwd=str(project_root),
+                check=False,
+                timeout=300,
+            )
+            print("[post-hook] %s OK" % s.name, file=sys.stderr)
+        except Exception as e:
+            print("[post-hook] %s failed: %s" % (s.name, e), file=sys.stderr)
 
 
 def publish_from_slug(slug: str, assets_root, dry_run: bool = False, privacy: str = "public") -> dict:
