@@ -11,8 +11,29 @@ Write-Host "============================================================"
 Write-Host "[source] $sourceRoot"
 Write-Host "[target] $targetRoot"
 
+$statusDir = Join-Path $desk "TEMP"
+New-Item -ItemType Directory -Force -Path $statusDir | Out-Null
+$statusFile = Join-Path $statusDir "cardnews_sync_status.json"
+$syncStart = Get-Date
+$syncOk = $true
+$syncMessage = "동기화 완료"
+
 if (-not (Test-Path $sourceRoot)) {
   Write-Host "[sync][skip] source not reachable"
+  $syncOk = $false
+  $syncMessage = "대표 PC 공유폴더에 접근할 수 없습니다."
+  $status = [ordered]@{
+    ok = $syncOk
+    message = $syncMessage
+    startedAt = $syncStart.ToString("yyyy-MM-dd HH:mm:ss")
+    endedAt = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
+    source = $sourceRoot
+    target = $targetRoot
+    articles = 0
+    images = 0
+    output = 0
+  }
+  try { $status | ConvertTo-Json -Depth 4 | Set-Content -Path $statusFile -Encoding utf8 } catch {}
   exit 0
 }
 
@@ -53,6 +74,34 @@ foreach ($name in $folders) {
   } catch {
     Write-Host "[sync][warn] $name" $_.Exception.Message
   }
+}
+
+
+$counts = @{}
+foreach ($name in @("articles", "images", "output")) {
+  $folder = Join-Path $targetRoot $name
+  if (Test-Path $folder) {
+    $counts[$name] = @(Get-ChildItem -LiteralPath $folder -Force -ErrorAction SilentlyContinue).Count
+  } else {
+    $counts[$name] = 0
+  }
+}
+
+$status = [ordered]@{
+  ok = $syncOk
+  message = $syncMessage
+  startedAt = $syncStart.ToString("yyyy-MM-dd HH:mm:ss")
+  endedAt = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
+  source = $sourceRoot
+  target = $targetRoot
+  articles = $counts["articles"]
+  images = $counts["images"]
+  output = $counts["output"]
+}
+try {
+  $status | ConvertTo-Json -Depth 4 | Set-Content -Path $statusFile -Encoding utf8
+} catch {
+  Write-Host "[sync][warn] could not write status:" $_.Exception.Message
 }
 
 Write-Host ""

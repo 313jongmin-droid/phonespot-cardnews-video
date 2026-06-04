@@ -720,6 +720,32 @@ def get_cardnews_rows() -> list[dict]:
     return rows[:80]
 
 
+
+def sync_status() -> dict:
+    status_file = DESK / "TEMP" / "cardnews_sync_status.json"
+    local_root = str(ROOT)
+    network = local_root.startswith("\\\\")
+    status = {
+        "ok": False,
+        "message": "아직 동기화 기록이 없습니다.",
+        "source": "",
+        "target": str(CARDNEWS),
+        "endedAt": "",
+        "articles": len(list(CARD_ARTICLES.glob("*.json"))) if CARD_ARTICLES.exists() else 0,
+        "images": len([p for p in CARD_IMAGES.iterdir() if p.is_dir()]) if CARD_IMAGES.exists() else 0,
+        "output": len([p for p in CARD_OUTPUT.iterdir() if p.is_dir()]) if CARD_OUTPUT.exists() else 0,
+        "rootMode": "네트워크 실행" if network else "로컬 실행",
+        "rootOk": not network,
+    }
+    if status_file.exists():
+        try:
+            saved = json.loads(status_file.read_text(encoding="utf-8-sig"))
+            if isinstance(saved, dict):
+                status.update(saved)
+        except Exception as exc:
+            status["message"] = f"동기화 상태 파일 읽기 실패: {exc}"
+    return status
+
 def json_response(handler: BaseHTTPRequestHandler, data: dict, status: int = 200) -> None:
     payload = json.dumps(data, ensure_ascii=False).encode("utf-8")
     handler.send_response(status)
@@ -854,6 +880,7 @@ class Handler(BaseHTTPRequestHandler):
                 "canImport": len(missing) == 0,
                 "job": job,
                 "results": results_list(),
+                "sync": sync_status(),
             })
             return
         if parsed.path == "/api/slugs":
@@ -1066,6 +1093,12 @@ INDEX_HTML = r"""<!doctype html>
     .btn:hover { border-color:var(--orange); box-shadow:0 2px 12px rgba(0,0,0,.06); }
     .btn.primary { background:var(--orange); color:white; border-color:var(--orange); }
     .btn strong { display:block; font-size:15px; margin-bottom:6px; } .btn span { font-size:12px; color:inherit; opacity:.82; line-height:1.35; }
+    .runtime-strip { display:grid; grid-template-columns:1.1fr 1.4fr 1fr; gap:10px; margin:14px 0 0; }
+    .runtime-card { border:1px solid var(--line); border-radius:10px; background:white; padding:10px 12px; min-height:62px; }
+    .runtime-card span { display:block; font-size:11px; color:#64748b; margin-bottom:5px; }
+    .runtime-card b { display:block; font-size:15px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .runtime-card.good { border-color:#86efac; background:#f0fdf4; }
+    .runtime-card.bad { border-color:#fecaca; background:#fef2f2; }
     .status { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; }
     .metric { border:1px solid var(--line); border-radius:8px; padding:12px; background:white; min-height:76px; } .metric b { display:block; font-size:20px; margin-top:4px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
     .warn { color:var(--red); } .ok { color:var(--green); }
@@ -1089,6 +1122,11 @@ INDEX_HTML = r"""<!doctype html>
 </head>
 <body>
   <header><div><strong>폰스팟 통합 제작 패널</strong> <span>카드뉴스 + 숏폼 영상</span></div><span id="rootText"></span></header>
+  <div class="runtime-strip">
+    <div class="runtime-card" id="runtimeMode"><span>실행 위치</span><b id="runtimeModeText">확인 중</b></div>
+    <div class="runtime-card" id="runtimeSync"><span>카드뉴스 동기화</span><b id="runtimeSyncText">확인 중</b></div>
+    <div class="runtime-card"><span>작업 데이터</span><b id="runtimeCounts">-</b></div>
+  </div>
   <main>
     <section>
       <div class="tabs">
@@ -1256,6 +1294,12 @@ INDEX_HTML = r"""<!doctype html>
       const data = await api("/api/state");
       lastState = data;
       document.getElementById("rootText").textContent = data.root;
+      const sync = data.sync || {};
+      document.getElementById("runtimeModeText").textContent = `${sync.rootMode || "-"} · ${data.root || ""}`;
+      document.getElementById("runtimeMode").className = `runtime-card ${sync.rootOk ? "good" : "bad"}`;
+      document.getElementById("runtimeSyncText").textContent = `${sync.ok ? "성공" : "확인 필요"} · ${sync.endedAt || sync.message || "-"}`;
+      document.getElementById("runtimeSync").className = `runtime-card ${sync.ok ? "good" : "bad"}`;
+      document.getElementById("runtimeCounts").textContent = `기사 ${sync.articles || 0} · 이미지 ${sync.images || 0} · 결과 ${sync.output || 0}`;
       updateSelectedStatus();
       const job = data.job || {};
       document.getElementById("jobText").textContent = job.running ? `실행 중: ${job.name}` : (job.exit_code === null ? "대기 중" : `마지막 종료 코드: ${job.exit_code}`);

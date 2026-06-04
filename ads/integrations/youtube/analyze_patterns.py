@@ -1,13 +1,4 @@
-"""Analyze YouTube video patterns from the managed sheet → write content_guide.md.
-
-Filtering policy (per user spec):
-  - Exclude videos published in the last 48h (D-2 미만)
-  - Rationale: 막 올린 영상은 reach 데이터 안 안정 → 분석 노이즈
-
-Outputs:
-  - shorts/_state/content_guide.md  (학습 가이드, 다음 영상 기획 시 참조)
-  - shorts/_state/content_guide_data.json  (분석 raw 데이터, 디버깅용)
-"""
+"""YouTube pattern analyzer → content_guide.md. Filters D-2+ videos."""
 from __future__ import annotations
 
 import argparse
@@ -23,7 +14,7 @@ _PROJECT_ROOT = _HERE.parent.parent.parent
 _DEFAULT_SA = _PROJECT_ROOT / "_secrets" / "sheets_service_account.json"
 _DEFAULT_SHEET_ID = "1tCGFfu2FbGo1XbigaYPptlSbD-7Tj3PLnYH0_o9g5jI"
 _DEFAULT_TAB = "유튜브"
-_GUIDE_DIR = _PROJECT_ROOT / "shorts" / "_state"
+_GUIDE_DIR = _PROJECT_ROOT / "cardnews" / "_state"
 _GUIDE_PATH = _GUIDE_DIR / "content_guide.md"
 _DATA_PATH = _GUIDE_DIR / "content_guide_data.json"
 
@@ -430,6 +421,21 @@ def render_guide(analysis, excluded_recent_n, excluded_invalid_n):
         lines.append("→ 다음 영상 작성 시 위 형식 특징을 의도적으로 적용해 보기")
     lines.append("")
 
+    # 9. Claude 후보 추천 규칙 (간략판 - size 제약)
+    positive_cats = [(c, s) for c, s in sorted_kws if s["lift_pct"] >= 0]
+    negative_cats = [(c, s) for c, s in sorted_kws if s["lift_pct"] <= -20]
+    lines.append("## 9. Claude 추천 규칙")
+    lines.append("")
+    lines.append("- 카테고리당 안전 1 + 도전 1 = 최대 2개 후보 제시")
+    lines.append("- 안전 = 가이드 패턴 (22자, 이모지, 시의성)")
+    lines.append("- 도전 = 새 형식·새 후크 (가이드 외)")
+    lines.append("- 사용자 선택 비율: 안전 70 + 도전 30")
+    if positive_cats:
+        lines.append("- 추천: " + ", ".join([c for c, _ in positive_cats[:5]]))
+    if negative_cats:
+        lines.append("- 회피: " + ", ".join([c for c, _ in negative_cats]))
+    lines.append("")
+
     lines.append("---")
     lines.append("")
     lines.append("## 분석 한계 (정직 표기)")
@@ -452,7 +458,48 @@ def main():
     p.add_argument("--exclude-days", type=int, default=EXCLUDE_RECENT_DAYS)
     p.add_argument("--guide-out", default=str(_GUIDE_PATH))
     p.add_argument("--data-out", default=str(_DATA_PATH))
-    p.add_argument("--dry-run", action="store_true", help="stdout 에 출력만, 파일 X")
+    p.add_argument("--dry-run", action="store_true", help="stdout only, no file")
+    args = p.parse_args()
+
+    print("[1/4] sheet read...", file=sys.stderr)
+    rows = read_sheet_rows(args.sa_path, args.spreadsheet_id, args.tab)
+    print("  total %d rows" % len(rows), file=sys.stderr)
+
+    print("[2/4] filter (D-%d+)..." % args.exclude_days, file=sys.stderr)
+    kept, excluded_recent, excluded_invalid = filter_for_analysis(rows, args.exclude_days)
+    print("  analyze target: %d (excluded: recent %d, invalid %d)"
+          % (len(kept), len(excluded_recent), len(excluded_invalid)), file=sys.stderr)
+
+    print("[3/4] pattern analyze...", file=sys.stderr)
+    analysis = analyze(kept)
+
+    print("[4/4] guide generate...", file=sys.stderr)
+    guide_md = render_guide(analysis, len(excluded_recent), len(excluded_invalid))
+
+    if args.dry_run:
+        print(guide_md)
+        return 0
+
+    Path(args.guide_out).parent.mkdir(parents=True, exist_ok=True)
+    Path(args.guide_out).write_text(guide_md, encoding="utf-8")
+    Path(args.data_out).parent.mkdir(parents=True, exist_ok=True)
+    Path(args.data_out).write_text(
+        json.dumps({
+            "generated_at": datetime.now().isoformat(),
+            "exclude_days": args.exclude_days,
+            "excluded_recent_count": len(excluded_recent),
+            "excluded_invalid_count": len(excluded_invalid),
+            "analysis": analysis,
+        }, ensure_ascii=False, indent=2),
+        encoding="utf-8"
+    )
+    print("\n[OK] guide: %s" % args.guide_out, file=sys.stderr)
+    print("[OK] data backup: %s" % args.data_out, file=sys.stderr)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main()) 파일 X")
     args = p.parse_args()
 
     print("[1/4] 시트 읽기...", file=sys.stderr)

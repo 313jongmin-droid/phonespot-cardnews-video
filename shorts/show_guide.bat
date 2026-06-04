@@ -3,7 +3,7 @@ chcp 65001 >nul
 title 학습 가이드 — 영상 만들기 전 확인
 cd /d C:\Users\di898\Documents\phonespot_cardnews
 
-set GUIDE=shorts\_state\content_guide.md
+set GUIDE=cardnews\_state\content_guide.md
 
 echo ============================================
 echo  폰스팟 유튜브 학습 가이드

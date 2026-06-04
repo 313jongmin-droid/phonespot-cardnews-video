@@ -201,7 +201,7 @@ def _run_post_upload_hooks():
     project_root = _HERE.parent.parent.parent  # phonespot_cardnews/
     scripts = [
         project_root / "ads" / "integrations" / "youtube" / "push_to_sheet.py",
-        project_root / "ads" / "integrations" / "youtube" / "analyze_patterns.py",
+        project_root / "ads" / "integrations" / "youtube" / "run_analyze.py",
     ]
     for s in scripts:
         if not s.exists():
