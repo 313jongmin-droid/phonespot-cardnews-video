@@ -27,8 +27,8 @@ phonespot_cardnews/
 
 | 작업 | 첫 진입 |
 |---|---|
-| **카드뉴스 생성** | `_docs/INSTRUCTIONS_CARDNEWS.md` |
-| **쇼츠 영상 빌드** | `shorts/harness/README_FOR_AI.md` |
+| **카드뉴스 생성** | `_docs/INSTRUCTIONS_CARDNEWS.md` + `cardnews/_state/content_guide.md` (학습 가이드 자동 참조) |
+| **쇼츠 영상 빌드** | `shorts/harness/README_FOR_AI.md` (+ `cardnews/_state/content_guide.md` 권장) |
 | **SNS 업로드** | `_docs/INSTRUCTIONS_UPLOAD.md` |
 | **폰스팟 광고운영·KPI·시트** | `ads/README_FOR_AI.md` |
 | **KT다이렉트샵 광고운영** | `ads_kt/README_FOR_AI.md` |

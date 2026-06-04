@@ -184,7 +184,17 @@ def parse_slugs(raw: str) -> list[dict]:
 
 
 def get_video_slugs() -> list[dict]:
-    return parse_slugs(run_capture([sys.executable, str(SCRIPTS / "list_slugs.py")]))
+    rows = parse_slugs(run_capture([sys.executable, str(SCRIPTS / "list_slugs.py")]))
+    card_map = {row["slug"]: row for row in get_cardnews_rows()}
+    for row in rows:
+        card = card_map.get(row["slug"])
+        if card:
+            row["stage"] = card.get("stage", "")
+            row["stageClass"] = card.get("stageClass", "")
+        else:
+            row["stage"] = "부분"
+            row["stageClass"] = "muted"
+    return rows
 
 
 def validate_slug(slug: str) -> str:
@@ -664,6 +674,42 @@ def cardnews_summary(limit: int = 12) -> str:
     return "\n".join(lines)
 
 
+
+def rendered_video_exists(slug: str) -> bool:
+    for root in (DESK / "RESULTS", SHORTS / "out_codex", SHORTS / "out"):
+        if not root.exists():
+            continue
+        patterns = [
+            f"{slug}*.mp4",
+            f"*{slug}*.mp4",
+        ]
+        for pattern in patterns:
+            if any(root.rglob(pattern)):
+                return True
+    return False
+
+
+def card_stage(row: dict) -> str:
+    if rendered_video_exists(row["slug"]):
+        return "렌더 완료"
+    if row.get("script"):
+        return "영상 준비됨"
+    if row.get("done"):
+        return "카드뉴스 완료"
+    if (row.get("images") or 0) >= 5:
+        return "이미지 있음"
+    if row.get("article"):
+        return "기사만"
+    return "부분"
+
+
+def stage_class(stage: str) -> str:
+    if stage in {"렌더 완료", "영상 준비됨", "카드뉴스 완료"}:
+        return "ok"
+    if stage in {"이미지 있음"}:
+        return "warn"
+    return "muted"
+
 def card_row(slug: str) -> dict:
     out = CARD_OUTPUT / slug
     img = CARD_IMAGES / slug
@@ -692,7 +738,7 @@ def card_row(slug: str) -> dict:
         status = "후보"
     else:
         status = "부분"
-    return {
+    row = {
         "slug": slug,
         "title": article_title(slug),
         "status": status,
@@ -706,6 +752,10 @@ def card_row(slug: str) -> dict:
         "mtime": mtime,
         "date": time.strftime("%Y.%m.%d", time.localtime(mtime)) if mtime else "",
     }
+    stage = card_stage(row)
+    row["stage"] = stage
+    row["stageClass"] = stage_class(stage)
+    return row
 
 
 def get_cardnews_rows() -> list[dict]:
@@ -1083,6 +1133,10 @@ INDEX_HTML = r"""<!doctype html>
     .slug-name { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
     .title-sub { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--muted); font-size:12px; margin-top:2px; }
     .flag { font-weight:700; color:var(--blue); }
+    .stage-pill { display:inline-flex; align-items:center; justify-content:center; min-width:82px; padding:4px 8px; border-radius:999px; font-size:11px; font-weight:800; border:1px solid var(--line); background:#f8fafc; color:#475569; }
+    .stage-pill.ok { background:#ecfdf5; border-color:#86efac; color:#166534; }
+    .stage-pill.warn { background:#fff7ed; border-color:#fdba74; color:#9a3412; }
+    .stage-pill.muted { background:#f1f5f9; border-color:#cbd5e1; color:#64748b; }
     .grid { display:grid; grid-template-columns:repeat(3, minmax(160px,1fr)); gap:12px; }
     .action-head { align-items:flex-start; }
     .selected-badge { min-width:360px; max-width:720px; padding:10px 14px; border:2px solid var(--orange); border-radius:10px; background:#fff7f3; color:#111827; box-shadow:0 6px 20px rgba(247,75,11,.12); }
@@ -1220,7 +1274,7 @@ INDEX_HTML = r"""<!doctype html>
       videoItems.forEach(item => {
         const btn = document.createElement("button");
         btn.className = "row" + (item.slug === selected ? " active" : "");
-        btn.innerHTML = `<b>${item.number}</b><span>${item.date}</span><span class="flag">[${item.flag}]</span><span class="slug-name">${item.slug}</span>`;
+        btn.innerHTML = `<b>${item.number}</b><span>${item.date}</span><span class="flag">[${item.flag}]</span><span class="stage-pill ${item.stageClass || "muted"}">${item.stage || "-"}</span><span class="slug-name">${item.slug}</span>`;
         btn.onclick = () => { selected = item.slug; document.getElementById("selectedSlug").textContent = selected; setMode("video"); updateSelectedStatus(); loadSlugs(); };
         box.appendChild(btn);
       });
@@ -1231,7 +1285,7 @@ INDEX_HTML = r"""<!doctype html>
       cardItems.forEach(item => {
         const btn = document.createElement("button");
         btn.className = "row card" + (item.slug === selectedCard ? " active" : "");
-        btn.innerHTML = `<span>${item.date || "-"}</span><span class="flag">${item.status}</span><span class="slug-name">${item.slug}<span class="title-sub">${item.title || ""}</span><span class="title-sub">이미지 ${item.images}/5 · 카드 ${item.cards} · 프롬프트 ${item.prompt ? "있음" : "없음"}</span></span>`;
+        btn.innerHTML = `<span>${item.date || "-"}</span><span class="stage-pill ${item.stageClass || "muted"}">${item.stage || item.status}</span><span class="slug-name">${item.slug}<span class="title-sub">${item.title || ""}</span><span class="title-sub">이미지 ${item.images}/5 · 카드 ${item.cards} · 프롬프트 ${item.prompt ? "있음" : "없음"}</span></span>`;
         btn.onclick = () => { selectedCard = item.slug; selected = item.slug; document.getElementById("selectedSlug").textContent = selected; setMode("card"); updateSelectedStatus(); loadCardnews(); loadSlugs(); };
         box.appendChild(btn);
       });
@@ -1263,13 +1317,14 @@ INDEX_HTML = r"""<!doctype html>
       setMetric("latestSlug", activeSlug || "-");
 
       if (card) {
-        setMetric("requestCount", card.status || (card.done ? "완료" : "진행중"), card.done ? "ok" : "warn");
+        setMetric("requestCount", card.stage || card.status || (card.done ? "완료" : "진행중"), card.stageClass === "ok" ? "ok" : "warn");
         setMetric("missingCount", `${card.images || 0}/5`, (card.images || 0) >= 5 ? "ok" : "warn");
         setMetric("downloadCount", `${card.cards || 0}`, (card.cards || 0) > 0 ? "ok" : "warn");
         setMetric("weakCount", card.script ? "있음" : "없음", card.script ? "ok" : "warn");
         const advice = document.getElementById("advice");
         const parts = [];
         parts.push(`<b>${escapeHtml(activeSlug || "")}</b> 선택 중`);
+        if (card.stage) parts.push(`단계 ${card.stage}`);
         parts.push(`기사 ${card.article ? "있음" : "없음"}`);
         parts.push(`프롬프트 ${card.prompt ? "있음" : "없음"}`);
         parts.push(`캡션 ${card.captions ? "있음" : "없음"}`);
