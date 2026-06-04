@@ -15,8 +15,8 @@ if errorlevel 1 (
 )
 
 set "DESK_DIR=%CD%"
-if exist "%DESK_DIR%\AUTO_SYNC_CARDNEWS_OUTPUT.ps1" (
-  powershell -NoProfile -ExecutionPolicy Bypass -File "%DESK_DIR%\AUTO_SYNC_CARDNEWS_OUTPUT.ps1"
+if exist "%DESK_DIR%\AUTO_SYNC_CARDNEWS_WORKSPACE.ps1" (
+  powershell -NoProfile -ExecutionPolicy Bypass -File "%DESK_DIR%\AUTO_SYNC_CARDNEWS_WORKSPACE.ps1"
 )
 powershell -NoProfile -ExecutionPolicy Bypass -File "%DESK_DIR%\dashboard\start_hidden.ps1"
 set "ERR=%ERRORLEVEL%"

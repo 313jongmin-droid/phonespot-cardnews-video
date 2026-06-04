@@ -108,3 +108,30 @@ C:\PhoneSpot\phonespot_cardnews\cardnews\output
 
 패널이 이미 켜진 뒤 새 카드뉴스가 추가되었다면 패널을 다시 열거나 수동 동기화 파일을 한 번 실행하면 됩니다.
 
+## 카드뉴스 작업 데이터 전체 동기화
+
+부사수 PC의 슬러그 목록은 `cardnews/output`만으로는 부족할 수 있습니다.
+새 카드뉴스는 보통 아래 순서로 생성됩니다.
+
+```text
+cardnews/articles  -> 기사 JSON
+cardnews/images    -> GPT 생성 이미지
+cardnews/output    -> 최종 카드뉴스 렌더 결과
+```
+
+그래서 부사수 PC에서는 `00_PHONE_SPOT_PANEL.bat` 실행 시 세 폴더를 모두 동기화합니다.
+
+```text
+\\192.168.0.7\phonespot_cardnews\cardnews\articles
+\\192.168.0.7\phonespot_cardnews\cardnews\images
+\\192.168.0.7\phonespot_cardnews\cardnews\output
+```
+
+수동으로 다시 동기화하려면:
+
+```text
+CODEX_VIDEO_DESK\01_SYNC_CARDNEWS_WORKSPACE_FROM_MAIN_PC.bat
+```
+
+15번처럼 `articles/images`는 있는데 `output`이 아직 없는 경우, 부사수 PC는 카드뉴스 탭에서 카드뉴스 렌더를 먼저 실행한 뒤 영상 작업으로 넘어갈 수 있습니다.
+
