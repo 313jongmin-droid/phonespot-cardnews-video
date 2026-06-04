@@ -95,3 +95,16 @@ C:\PhoneSpot\phonespot_cardnews\cardnews\output
 - 스크립트 실행은 부사수 PC 로컬에서 합니다.
 - 네트워크 공유 폴더에서 렌더링하지 않습니다.
 - 목록이 비어 있으면 먼저 동기화하고 패널을 새로고침하세요.
+
+## 자동 카드뉴스 결과물 동기화
+
+부사수 PC에서 `00_PHONE_SPOT_PANEL.bat`을 실행하면 시작 전에 자동으로 대표 PC의 카드뉴스 결과물을 로컬로 가져옵니다.
+
+```text
+\\192.168.0.7\phonespot_cardnews\cardnews\output
+↓
+C:\PhoneSpot\phonespot_cardnews\cardnews\output
+```
+
+패널이 이미 켜진 뒤 새 카드뉴스가 추가되었다면 패널을 다시 열거나 수동 동기화 파일을 한 번 실행하면 됩니다.
+

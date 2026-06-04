@@ -34,18 +34,21 @@ SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 EXCLUDE_RECENT_DAYS = 2  # D-2 미만 (=48h 미만) 제외
 
 # 키워드 카테고리 (제목 분석용)
+# wwdc 카테고리 제거 (apple 의 부분집합 → 중복 카운팅 방지)
 KEYWORD_CATEGORIES = {
     "apple": ["apple", "애플", "iphone", "아이폰", "ios", "ipad", "ipados", "wwdc", "siri"],
     "samsung": ["galaxy", "갤럭시", "samsung", "삼성", "one ui", "원ui", "oneui", "z폴드", "z플립", "s26", "s25"],
     "telecom": ["통신", "skt", "kt", "lg u", "공시지원금", "선택약정", "위약금", "요금제", "5g"],
     "security": ["보이스피싱", "스미싱", "사기", "보안", "도난", "잠금", "분실"],
-    "wwdc": ["wwdc"],
     "ai": ["ai", "인공지능", "지능"],
     "price": ["가격", "할인", "특가", "원", "만원", "비용"],
     "question_hook": ["?", "왜", "어떻게", "vs", "비교", "차이"],
     "urgency": ["오늘", "내일", "지금", "임박", "마감", "급증", "발표"],
     "info_summary": ["정리", "총정리", "총정리한", "요약", "5가지", "정리합니다"],
 }
+
+# 카테고리 추천 임계값
+MIN_SAMPLE_SIZE = 3  # N < 3 카테고리는 추천에서 제외 (통계적 무의미)
 
 
 class AnalyzeError(RuntimeError):
@@ -135,12 +138,17 @@ def parse_views(s):
 
 
 def parse_retention_from_note(s):
-    """I열 비고 형식: '40% retention - 24s - cmt1' → 40.0 반환."""
+    """I열 비고 형식: '40% retention - 24s - cmt1' → 40.0 반환.
+    100 초과는 데이터 이상치로 보고 None 반환 (반복 시청자 등으로 가끔 100+ 나옴)."""
     if not s:
         return None
     m = re.match(r"(\d+)\s*%", str(s))
     if m:
-        return float(m.group(1))
+        v = float(m.group(1))
+        if v > 100.0:
+            # clamp to 100 - 데이터 이상치 (100% 초과는 비정상)
+            return 100.0
+        return v
     return None
 
 
@@ -201,12 +209,12 @@ def analyze(rows_filtered):
 
     median = videos[n // 2]["views"] if n > 0 else 0
 
-    # 키워드별 평균 reach
+    # 키워드별 평균 reach (N<MIN_SAMPLE_SIZE 카테고리는 통계적 무의미라 제외)
     keyword_stats = {}
     for cat, kws in KEYWORD_CATEGORIES.items():
         with_kw = [v for v in videos if has_keyword(v["title"], kws)]
         without_kw = [v for v in videos if not has_keyword(v["title"], kws)]
-        if with_kw and without_kw:
+        if len(with_kw) >= MIN_SAMPLE_SIZE and without_kw:
             keyword_stats[cat] = {
                 "count_with": len(with_kw),
                 "count_without": len(without_kw),
@@ -246,9 +254,13 @@ def analyze(rows_filtered):
         k: {
             "count": len(vs),
             "avg_views": round(avg(vs, "views"), 1) if vs else 0,
+            "reliable": len(vs) >= MIN_SAMPLE_SIZE,
         }
         for k, vs in length_buckets.items()
     }
+
+    # 상위 5편 자동 패턴 추출
+    top5_patterns = analyze_top_patterns(top[:5])
 
     # 시청률 (retention) 데이터가 있는 영상만
     with_ret = [v for v in videos if v.get("retention") is not None]
@@ -262,11 +274,37 @@ def analyze(rows_filtered):
         "avg_views_bot25": round(avg_views_bot, 1),
         "top_videos": [{"title": v["title"], "views": v["views"], "link": v["link"]} for v in top[:5]],
         "bottom_videos": [{"title": v["title"], "views": v["views"], "link": v["link"]} for v in bottom[:5]],
+        "top5_patterns": top5_patterns,
         "keyword_stats": keyword_stats,
         "number_stat": number_stat,
         "length_stat": length_stat,
         "avg_retention_pct": avg_retention,
         "retention_sample_size": len(with_ret),
+    }
+
+
+def analyze_top_patterns(top_videos):
+    """상위 N편의 자동 패턴 추출 — 키워드 외 형식 특징."""
+    if not top_videos:
+        return None
+    n = len(top_videos)
+    emoji_re = re.compile(r"[\U0001F300-\U0001F9FF\U0001FA00-\U0001FAFF☀-➿]")
+    lengths = [title_length(v["title"]) for v in top_videos]
+    emoji_counts = [len(emoji_re.findall(v["title"])) for v in top_videos]
+    with_num = sum(1 for v in top_videos if has_number(v["title"]))
+    with_compare = sum(1 for v in top_videos
+                       if any(w in v["title"] for w in ["vs", "VS", "비교", "차이"]))
+    with_question = sum(1 for v in top_videos if "?" in v["title"])
+    return {
+        "n": n,
+        "avg_title_length": round(sum(lengths) / max(1, n), 1),
+        "title_length_min": min(lengths) if lengths else 0,
+        "title_length_max": max(lengths) if lengths else 0,
+        "avg_emoji_count": round(sum(emoji_counts) / max(1, n), 1),
+        "videos_with_emoji": sum(1 for c in emoji_counts if c > 0),
+        "videos_with_number": with_num,
+        "videos_with_compare": with_compare,
+        "videos_with_question": with_question,
     }
 
 
@@ -367,10 +405,29 @@ def render_guide(analysis, excluded_recent_n, excluded_invalid_n):
         lines.append("")
         lines.append("- [ ] 제목에 구체 숫자 포함 (리프트 %+.0f%%)" % a["number_stat"]["lift_pct"])
 
-    # 최적 제목 길이
-    best_len = max(a["length_stat"].items(), key=lambda x: x[1]["avg_views"])
+    # 최적 제목 길이 (N>=MIN_SAMPLE_SIZE 인 구간만)
+    reliable_lengths = {k: v for k, v in a["length_stat"].items() if v.get("reliable")}
+    if reliable_lengths:
+        best_len = max(reliable_lengths.items(), key=lambda x: x[1]["avg_views"])
+        lines.append("")
+        lines.append("- [ ] 제목 길이 권장 구간: **%s자** (%d편 평균 %.0f회)"
+                     % (best_len[0], best_len[1]["count"], best_len[1]["avg_views"]))
     lines.append("")
-    lines.append("- [ ] 제목 길이 권장 구간: **%s자** (해당 구간 평균 %.0f회)" % (best_len[0], best_len[1]["avg_views"]))
+
+    # 상위 5편 자동 패턴 (키워드 외 형식 특징)
+    tp = a.get("top5_patterns")
+    if tp:
+        lines.append("## 8. 상위 5편 자동 패턴 (키워드 외 형식 특징)")
+        lines.append("")
+        lines.append("- 제목 길이 평균: **%.1f자** (범위 %d~%d자)"
+                     % (tp["avg_title_length"], tp["title_length_min"], tp["title_length_max"]))
+        lines.append("- 이모지 평균: **%.1f개** (이모지 쓴 영상 %d/%d편)"
+                     % (tp["avg_emoji_count"], tp["videos_with_emoji"], tp["n"]))
+        lines.append("- 숫자 포함: **%d/%d편**" % (tp["videos_with_number"], tp["n"]))
+        lines.append("- 비교(vs/차이): **%d/%d편**" % (tp["videos_with_compare"], tp["n"]))
+        lines.append("- 질문(?): **%d/%d편**" % (tp["videos_with_question"], tp["n"]))
+        lines.append("")
+        lines.append("→ 다음 영상 작성 시 위 형식 특징을 의도적으로 적용해 보기")
     lines.append("")
 
     lines.append("---")
