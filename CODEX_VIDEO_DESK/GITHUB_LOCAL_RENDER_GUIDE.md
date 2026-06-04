@@ -66,3 +66,32 @@ CODEX_VIDEO_DESK\MAINTENANCE\codex_github_update.py
 - 렌더링은 반드시 각 PC의 로컬 폴더에서 합니다.
 - 카드뉴스 원본 결과물은 별도 동기화 전략이 필요합니다.
 - OAuth 토큰, API 키, 결과 영상은 GitHub에 올리지 않습니다.
+## 카드뉴스 결과물 동기화
+
+부사수 PC는 GitHub로 코드는 받을 수 있지만, 카드뉴스 결과물(`cardnews/output`)은 GitHub에 올리지 않습니다.
+
+부사수 PC에서 슬러그가 비어 있으면 아래 파일을 실행하세요.
+
+```text
+CODEX_VIDEO_DESK\01_SYNC_CARDNEWS_OUTPUT_FROM_MAIN_PC.bat
+```
+
+이 파일은 대표 PC 공유폴더:
+
+```text
+\\192.168.0.7\phonespot_cardnews\cardnews\output
+```
+
+를 부사수 PC 로컬:
+
+```text
+C:\PhoneSpot\phonespot_cardnews\cardnews\output
+```
+
+으로 복사합니다.
+
+중요:
+
+- 스크립트 실행은 부사수 PC 로컬에서 합니다.
+- 네트워크 공유 폴더에서 렌더링하지 않습니다.
+- 목록이 비어 있으면 먼저 동기화하고 패널을 새로고침하세요.
