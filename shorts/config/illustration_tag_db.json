@@ -93,6 +93,14 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "call_recording_notice": {
+      "tags": [
+        "library"
+      ],
+      "keywords": [],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
     "chart_down": {
       "tags": [
         "price",
@@ -211,6 +219,14 @@
         "iCloud",
         "USB 케이블"
       ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "device_os_requirement": {
+      "tags": [
+        "library"
+      ],
+      "keywords": [],
       "note": "Reusable editorial illustration.",
       "available": true
     },
@@ -716,6 +732,14 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "recording_archive": {
+      "tags": [
+        "library"
+      ],
+      "keywords": [],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
     "release_calendar": {
       "tags": [
         "library"
@@ -785,6 +809,14 @@
         "기기 인증",
         "재등록"
       ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "settings_steps": {
+      "tags": [
+        "library"
+      ],
+      "keywords": [],
       "note": "Reusable editorial illustration.",
       "available": true
     },
@@ -946,5 +978,5 @@
       "available": true
     }
   },
-  "updated_at": "2026-06-05T17:07:39"
+  "updated_at": "2026-06-05T17:45:21"
 }\n

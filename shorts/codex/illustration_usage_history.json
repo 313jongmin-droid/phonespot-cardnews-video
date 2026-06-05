@@ -2,14 +2,10 @@
   "version": 1,
   "videos": {},
   "requests": {
-    "010_tip_iphone_call_record": {
-      "updated_at": "2026-06-05T17:07:39",
-      "variants": [
-        "call_recording_notice",
-        "device_os_requirement",
-        "recording_archive"
-      ]
+    "012_news_galaxy_unpack_july": {
+      "updated_at": "2026-06-05T17:45:21",
+      "variants": []
     }
   },
-  "updated_at": "2026-06-05T17:07:39"
+  "updated_at": "2026-06-05T17:45:21"
 }\n

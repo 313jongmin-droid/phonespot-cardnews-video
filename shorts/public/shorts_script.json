@@ -1,40 +1,39 @@
 {
-  "slug": "009_scam_kakao_family_phishing",
-  "title_short": "카톡 가족 사칭 메신저피싱",
-  "video_title": "카톡 가족 사칭 메신저피싱",
+  "slug": "011_qa_combo_discount_check",
+  "title_short": "결합할인 진짜 이득?",
+  "video_title": "결합할인 진짜 이득?",
   "publication_date": "2026.05.31",
-  "sources": "경찰청·금감원 메신저피싱 통계 + 폰스팟 광교점 자료",
+  "sources": "통신3사 공식 결합 약관 + 폰스팟 광교점 1차 자료",
   "channel_name": "폰스팟",
   "channel_tagline": "광교 미니 IT 브리핑",
   "opening": {
     "line1": "광교 미니 IT 브리핑",
-    "line2": "카톡 가족 사칭 메신저피싱"
+    "line2": "결합할인 진짜 이득?"
   },
   "hook": {
-    "tts": "엄마 폰이 망가졌으니 잠깐 돈 좀 보내달라는 카톡, 받아보신 적 있으신가요? 자녀를 사칭한 메신저피싱이 급증하고 있습니다.",
+    "tts": "결합할인이 진짜 본인 케이스에 이득인지, 가입 전에 1분 안에 계산하는 법을 정리합니다.",
     "caption_body": [
-      "엄마, 폰 망가졌어",
-      "잠깐 돈 좀"
+      "결합할인",
+      "진짜 이득인지 1분 계산"
     ],
     "caption_emphasis": [
-      "잠깐 돈 좀"
+      "진짜 이득"
     ],
     "headline_lines": [
       {
-        "text": "엄마, 폰 망가졌어"
+        "text": "결합할인"
       },
       {
-        "text": "잠깐 돈 좀",
+        "text": "진짜 이득인지 1분 계산",
         "accent": true
       }
     ],
-    "meta": "출처: 경찰청 메신저피싱 통계",
+    "meta": "출처: 통신3사 공식 + 폰스팟 1차",
     "topic": "뉴스",
     "background_image": "1.png",
     "caption_chunks": [
-      "엄마 폰이 망가졌으니 잠깐 돈 좀 보내달라는 카톡,",
-      "받아보신 적 있으신가요?",
-      "자녀를 사칭한 메신저피싱이 급증하고 있습니다."
+      "결합할인이 진짜 본인 케이스에 이득인지,",
+      "가입 전에 1분 안에 계산하는 법을 정리합니다."
     ],
     "chunk_visuals": [
       {
@@ -43,11 +42,7 @@
       },
       {
         "type": "image",
-        "value": "2.png"
-      },
-      {
-        "type": "mascot",
-        "value": "surprised"
+        "value": "3.png"
       }
     ],
     "stat": {
@@ -57,95 +52,76 @@
     },
     "_codex_narration_source": "captions.md#intro",
     "display_chunks": [
-      "엄마 폰이 망가졌으니 잠깐 돈 좀 보내달라는 카톡,",
-      "받아보신 적 있으신가요?",
-      "자녀를 사칭한 메신저피싱이 급증하고 있습니다"
+      "결합할인이 진짜 본인 케이스에 이득인지,",
+      "가입 전에 1분 안에 계산하는 법을 정리합니다"
     ],
     "_codex_caption_lockstep": {
       "version": 2,
       "compiler": "korean_caption_compiler_v2",
       "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-      "chunk_count": 3
+      "chunk_count": 2
     },
     "_codex_contextual_narrative": true,
     "_codex_sync_mode": "global999_tts_caption_lockstep",
     "tts_chunk_weights": [
-      2594.0,
-      1754.58,
-      2297.54
+      2171.46,
+      2147.91
     ],
     "_tts_timing": {
       "mode": "word_boundary_snap",
       "windows": [
         {
           "start_ms": 0.0,
-          "end_ms": 2594.0,
-          "duration_ms": 2594.0
+          "end_ms": 2171.46,
+          "duration_ms": 2171.46
         },
         {
-          "start_ms": 2594.0,
-          "end_ms": 4348.58,
-          "duration_ms": 1754.58
-        },
-        {
-          "start_ms": 4348.58,
-          "end_ms": 6646.12,
-          "duration_ms": 2297.54
+          "start_ms": 2171.46,
+          "end_ms": 4319.37,
+          "duration_ms": 2147.91
         }
       ],
-      "boundary_count": 16,
+      "boundary_count": 12,
       "min_chunk_ms": 1100
     }
   },
   "facts": [
     {
-      "tts": "경찰청과 금감원 통계에 따르면, 카카오톡으로 자녀를 사칭해 부모님에게 송금을 요구하는 메신저피싱이 빠르게 늘고 있습니다. 수법은 매우 단순하지만 효과적입니다. 자녀의 카톡 프로필 사진과 이름을 그대로 도용한 가짜 계정으로 친구 추가를 보내고, 폰이 고장 났다거나 급한 결제가 있다는 핑계로 부모님과 대화를 시작한 뒤 신분증, 계좌, 인증번호 사진을 요구하고 결국 송금을 끌어냅니다.",
+      "tts": "결합 이득의 기본 공식은 단순합니다. 매달 줄어드는 절감액에 약정 기간을 곱하고, 결합을 중간에 해지할 때 발생할 위약금을 뺀 값이 진짜 이득입니다. 가족결합의 핵심 변수는 회선 수와 요금제 수준입니다.",
       "caption_body": [
-        "수법",
-        "자녀 프로필 도용 + 신상 정보"
+        "기본 공식",
+        "월 절감액 × 약정기간"
       ],
       "caption_emphasis": [
-        "자녀 프로필"
+        "월 절감액 × 약정기간"
       ],
       "headline_lines": [
         {
-          "text": "수법"
+          "text": "기본 공식"
         },
         {
-          "text": "자녀 프로필 도용 + 신상 정보",
+          "text": "월 절감액 × 약정기간",
           "accent": true
         }
       ],
-      "meta": "출처: 금감원 보이스피싱 대응",
+      "meta": "출처: 통신3사 결합 약관",
       "topic": "뉴스",
       "background_image": "2.png",
       "caption_chunks": [
-        "경찰청과 금감원 통계에 따르면,",
-        "카카오톡으로 자녀를 사칭해 부모님에게",
-        "송금을 요구하는 메신저피싱이 빠르게 늘고 있습니다.",
-        "수법은 매우 단순하지만 효과적입니다.",
-        "자녀의 카톡 프로필 사진과 이름을 그대로",
-        "도용한 가짜 계정으로 친구 추가를 보내고,",
-        "폰이 고장 났다거나 급한 결제가 있다는",
-        "핑계로 부모님과 대화를 시작한 뒤 신분증,",
-        "계좌, 인증번호 사진을 요구하고 결국 송금을 끌어냅니다."
+        "결합 이득의 기본 공식은 단순합니다.",
+        "매달 줄어드는 절감액에 약정 기간을 곱하고,",
+        "결합을 중간에 해지할 때 발생할 위약금을",
+        "뺀 값이 진짜 이득입니다.",
+        "가족결합의 핵심 변수는 회선 수와 요금제 수준입니다."
       ],
       "chunk_visuals": [
         {
-          "type": "illust",
-          "value": "impersonation_call"
-        },
-        {
-          "type": "illust",
-          "value": "chat_backup_restore"
+          "type": "image",
+          "value": "2.png"
         },
         {
           "type": "image",
           "value": "4.png"
-        },
-        {
-          "type": "illust",
-          "value": "password"
         },
         {
           "type": "image",
@@ -153,7 +129,385 @@
         },
         {
           "type": "illust",
-          "value": "module_install"
+          "value": "chart_down"
+        },
+        {
+          "type": "illust",
+          "value": "settings_steps"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_1",
+      "_codex_narration_source": "captions.md#body",
+      "display_chunks": [
+        "결합 이득의 기본 공식은 단순합니다",
+        "매달 줄어드는 절감액에 약정 기간을 곱하고,",
+        "결합을 중간에 해지할 때 발생할 위약금을",
+        "뺀 값이 진짜 이득입니다",
+        "가족결합의 핵심 변수는 회선 수와 요금제 수준입니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 5
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        2526.42,
+        2394.37,
+        2015.83,
+        1760.55,
+        2764.12
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_snap",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 2526.42,
+            "duration_ms": 2526.42
+          },
+          {
+            "start_ms": 2526.42,
+            "end_ms": 4920.79,
+            "duration_ms": 2394.37
+          },
+          {
+            "start_ms": 4920.79,
+            "end_ms": 6936.62,
+            "duration_ms": 2015.83
+          },
+          {
+            "start_ms": 6936.62,
+            "end_ms": 8697.17,
+            "duration_ms": 1760.55
+          },
+          {
+            "start_ms": 8697.17,
+            "end_ms": 11461.29,
+            "duration_ms": 2764.12
+          }
+        ],
+        "boundary_count": 28,
+        "min_chunk_ms": 1100
+      }
+    },
+    {
+      "tts": "통신3사 가족결합은 보통 2회선부터 5회선까지 묶을 수 있고 회선당 1만 원에서 2만 원이 할인됩니다. 다만 가족 중 단 한 명이라도 알뜰폰이나 자급제 회선이면 결합 자체가 불가하다는 점이 함정입니다. 인터넷 결합의 핵심 변수는 약정 기간입니다. 인터넷 약정은 보통 3년이라 모바일 24개월보다 1년 길어, 약정 종료 시점이 어긋나면 한쪽 위약금이 거액으로 남습니다.",
+      "caption_body": [
+        "가족결합",
+        "회선 수 + 요금제가 핵심"
+      ],
+      "caption_emphasis": [
+        "회선 수 + 요금제"
+      ],
+      "headline_lines": [
+        {
+          "text": "가족결합"
+        },
+        {
+          "text": "회선 수 + 요금제가 핵심",
+          "accent": true
+        }
+      ],
+      "meta": "출처: SKT·KT·LGU+ 가족결합 약관",
+      "topic": "뉴스",
+      "background_image": "3.png",
+      "caption_chunks": [
+        "통신3사 가족결합은 보통 2회선부터 5회선까지",
+        "묶을 수 있고 회선당 1만 원에서 2만 원이 할인됩니다.",
+        "다만 가족 중 단 한 명이라도 알뜰폰이나 자급제 회선이면",
+        "결합 자체가 불가하다는 점이 함정입니다.",
+        "인터넷 결합의 핵심 변수는 약정 기간입니다.",
+        "인터넷 약정은 보통 3년이라 모바일 24개월보다 1년",
+        "길어, 약정 종료 시점이 어긋나면",
+        "한쪽 위약금이 거액으로 남습니다."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "clock"
+        },
+        {
+          "type": "illust",
+          "value": "gift_voucher"
+        },
+        {
+          "type": "illust",
+          "value": "chart_up"
+        },
+        {
+          "type": "mascot",
+          "value": "suspicious"
+        },
+        {
+          "type": "illust",
+          "value": "chat_backup_restore"
+        },
+        {
+          "type": "illust",
+          "value": "chatbot"
+        },
+        {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        {
+          "type": "illust",
+          "value": "appliance"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_2",
+      "_codex_narration_source": "captions.md#body",
+      "display_chunks": [
+        "통신3사 가족결합은 보통 2회선부터 5회선까지",
+        "묶을 수 있고 회선당 1만 원에서 2만 원이 할인됩니다",
+        "다만 가족 중 단 한 명이라도 알뜰폰이나 자급제 회선이면",
+        "결합 자체가 불가하다는 점이 함정입니다",
+        "인터넷 결합의 핵심 변수는 약정 기간입니다",
+        "인터넷 약정은 보통 3년이라 모바일 24개월보다 1년",
+        "길어, 약정 종료 시점이 어긋나면",
+        "한쪽 위약금이 거액으로 남습니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 8
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        2708.46,
+        3303.87,
+        2764.09,
+        2614.41,
+        1628.55,
+        3697.16,
+        1496.5,
+        2121.5
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_snap",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 2708.46,
+            "duration_ms": 2708.46
+          },
+          {
+            "start_ms": 2708.46,
+            "end_ms": 6012.33,
+            "duration_ms": 3303.87
+          },
+          {
+            "start_ms": 6012.33,
+            "end_ms": 8776.42,
+            "duration_ms": 2764.09
+          },
+          {
+            "start_ms": 8776.42,
+            "end_ms": 11390.83,
+            "duration_ms": 2614.41
+          },
+          {
+            "start_ms": 11390.83,
+            "end_ms": 13019.38,
+            "duration_ms": 1628.55
+          },
+          {
+            "start_ms": 13019.38,
+            "end_ms": 16716.54,
+            "duration_ms": 3697.16
+          },
+          {
+            "start_ms": 16716.54,
+            "end_ms": 18213.04,
+            "duration_ms": 1496.5
+          },
+          {
+            "start_ms": 18213.04,
+            "end_ms": 20334.54,
+            "duration_ms": 2121.5
+          }
+        ],
+        "boundary_count": 51,
+        "min_chunk_ms": 1100
+      }
+    },
+    {
+      "tts": "TV까지 결합하면 추가로 5천 원에서 1만 원이 더 절감되지만 TV 약정도 함께 늘어납니다. 반드시 알아야 할 함정 세 가지가 있습니다. 첫째, 결합 해지 시 받은 할인액의 일부를 반환해야 합니다.",
+      "caption_body": [
+        "인터넷 결합",
+        "속도·약정·TV까지 비교"
+      ],
+      "caption_emphasis": [
+        "속도·약정·TV"
+      ],
+      "headline_lines": [
+        {
+          "text": "인터넷 결합"
+        },
+        {
+          "text": "속도·약정·TV까지 비교",
+          "accent": true
+        }
+      ],
+      "meta": "출처: 통신3사 인터넷 결합 약관",
+      "topic": "뉴스",
+      "background_image": "4.png",
+      "caption_chunks": [
+        "TV까지 결합하면 추가로 5천",
+        "원에서 1만 원이 더 절감되지만 TV 약정도 함께 늘어납니다.",
+        "반드시 알아야 할 함정 세 가지가 있습니다.",
+        "첫째, 결합 해지 시 받은 할인액의 일부를 반환해야 합니다."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "cloud_backup"
+        },
+        {
+          "type": "illust",
+          "value": "cover_screen_widgets"
+        },
+        {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        {
+          "type": "illust",
+          "value": "display_ratio_change"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_3",
+      "_codex_narration_source": "captions.md#body",
+      "display_chunks": [
+        "TV까지 결합하면 추가로 5천",
+        "원에서 1만 원이 더 절감되지만 TV 약정도 함께 늘어납니다",
+        "반드시 알아야 할 함정 세 가지가 있습니다",
+        "첫째, 결합 해지 시 받은 할인액의 일부를 반환해야 합니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 4
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        1616.92,
+        3673.58,
+        2544.0,
+        2948.96
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_snap",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 1616.92,
+            "duration_ms": 1616.92
+          },
+          {
+            "start_ms": 1616.92,
+            "end_ms": 5290.5,
+            "duration_ms": 3673.58
+          },
+          {
+            "start_ms": 5290.5,
+            "end_ms": 7834.5,
+            "duration_ms": 2544.0
+          },
+          {
+            "start_ms": 7834.5,
+            "end_ms": 10783.46,
+            "duration_ms": 2948.96
+          }
+        ],
+        "boundary_count": 29,
+        "min_chunk_ms": 1100
+      }
+    },
+    {
+      "tts": "둘째, 인터넷 약정이 남아 있으면 모바일만 다른 통신사로 옮기기 어렵습니다. 셋째, 가족 한 명이 이탈하면 전체 할인 폭이 감소하거나 결합이 해지될 수 있습니다. 예를 들어 3회선에 인터넷과 TV를 결합하면 월 5만 원 절감, 24개월 누적 120만 원이지만, 인터넷 약정 잔여 위약금 25만 원을 차감하면 실제 이득은 95만 원이 됩니다. 가족 구성과 요금제, 인터넷 약정 상태만 알려주시면 매장에서 1분 안에 시뮬레이션해드릴 수 있습니다.",
+      "caption_body": [
+        "함정 3가지",
+        "위약금·약정·해지"
+      ],
+      "caption_emphasis": [
+        "위약금·약정·해지"
+      ],
+      "headline_lines": [
+        {
+          "text": "함정 3가지"
+        },
+        {
+          "text": "위약금·약정·해지",
+          "accent": true
+        }
+      ],
+      "meta": "출처: 통신3사 결합 약관",
+      "topic": "뉴스",
+      "background_image": "5.png",
+      "caption_chunks": [
+        "둘째, 인터넷 약정이 남아 있으면 모바일만",
+        "다른 통신사로 옮기기 어렵습니다.",
+        "셋째, 가족 한 명이 이탈하면",
+        "전체 할인 폭이 감소하거나 결합이 해지될 수 있습니다.",
+        "예를 들어 3회선에 인터넷과 TV를",
+        "결합하면 월 5만 원 절감, 24개월 누적 120만 원이지만,",
+        "인터넷 약정 잔여 위약금 25만 원을 차감하면",
+        "실제 이득은 95만 원이 됩니다.",
+        "가족 구성과 요금제,",
+        "인터넷 약정 상태만 알려주시면",
+        "매장에서 1분 안에 시뮬레이션해드릴 수 있습니다."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "store"
+        },
+        {
+          "type": "illust",
+          "value": "ti_decrease"
+        },
+        {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        {
+          "type": "mascot",
+          "value": "serious"
+        },
+        {
+          "type": "illust",
+          "value": "emergency_account_freeze"
+        },
+        {
+          "type": "illust",
+          "value": "final_update"
+        },
+        {
+          "type": "illust",
+          "value": "aluminum_label"
         },
         {
           "type": "illust",
@@ -166,147 +520,6 @@
         {
           "type": "illust",
           "value": "battery_overheat"
-        }
-      ],
-      "stat": {
-        "label": "",
-        "value": "",
-        "note": ""
-      },
-      "id": "fact_1",
-      "_codex_narration_source": "captions.md#body",
-      "display_chunks": [
-        "경찰청과 금감원 통계에 따르면,",
-        "카카오톡으로 자녀를 사칭해 부모님에게",
-        "송금을 요구하는 메신저피싱이 빠르게 늘고 있습니다",
-        "수법은 매우 단순하지만 효과적입니다",
-        "자녀의 카톡 프로필 사진과 이름을 그대로",
-        "도용한 가짜 계정으로 친구 추가를 보내고,",
-        "폰이 고장 났다거나 급한 결제가 있다는",
-        "핑계로 부모님과 대화를 시작한 뒤 신분증,",
-        "계좌, 인증번호 사진을 요구하고 결국 송금을 끌어냅니다"
-      ],
-      "_codex_caption_lockstep": {
-        "version": 2,
-        "compiler": "korean_caption_compiler_v2",
-        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 9
-      },
-      "_codex_contextual_narrative": true,
-      "_codex_sync_mode": "global999_tts_caption_lockstep",
-      "tts_chunk_weights": [
-        1889.79,
-        2103.88,
-        2573.25,
-        2500.0,
-        1822.16,
-        2024.67,
-        1954.21,
-        2385.58,
-        3028.13
-      ],
-      "_tts_timing": {
-        "mode": "word_boundary_snap",
-        "windows": [
-          {
-            "start_ms": 0.0,
-            "end_ms": 1889.79,
-            "duration_ms": 1889.79
-          },
-          {
-            "start_ms": 1889.79,
-            "end_ms": 3993.67,
-            "duration_ms": 2103.88
-          },
-          {
-            "start_ms": 3993.67,
-            "end_ms": 6566.92,
-            "duration_ms": 2573.25
-          },
-          {
-            "start_ms": 6566.92,
-            "end_ms": 9066.92,
-            "duration_ms": 2500.0
-          },
-          {
-            "start_ms": 9066.92,
-            "end_ms": 10889.08,
-            "duration_ms": 1822.16
-          },
-          {
-            "start_ms": 10889.08,
-            "end_ms": 12913.75,
-            "duration_ms": 2024.67
-          },
-          {
-            "start_ms": 12913.75,
-            "end_ms": 14867.96,
-            "duration_ms": 1954.21
-          },
-          {
-            "start_ms": 14867.96,
-            "end_ms": 17253.54,
-            "duration_ms": 2385.58
-          },
-          {
-            "start_ms": 17253.54,
-            "end_ms": 20281.67,
-            "duration_ms": 3028.13
-          }
-        ],
-        "boundary_count": 49,
-        "min_chunk_ms": 1100
-      }
-    },
-    {
-      "tts": "부모님 폰에 5분만 시간을 들여 다섯 가지를 점검해드리시기 바랍니다. 첫째, 카톡으로 입금 요청을 받으셨다면 무조건 자녀에게 직접 전화로 본인 확인을 하셔야 합니다. 전화는 안 되고 카톡으로만 가능하다는 메시지가 오면 100퍼센트 사칭입니다.",
-      "caption_body": [
-        "체크 1",
-        "전화 한 통으로 본인 확인"
-      ],
-      "caption_emphasis": [
-        "전화 한 통"
-      ],
-      "headline_lines": [
-        {
-          "text": "체크 1"
-        },
-        {
-          "text": "전화 한 통으로 본인 확인",
-          "accent": true
-        }
-      ],
-      "meta": "출처: 경찰청 예방수칙",
-      "topic": "뉴스",
-      "background_image": "3.png",
-      "caption_chunks": [
-        "부모님 폰에 5분만 시간을 들여 다섯",
-        "가지를 점검해드리시기 바랍니다.",
-        "첫째, 카톡으로 입금 요청을 받으셨다면",
-        "무조건 자녀에게 직접 전화로 본인 확인을 하셔야 합니다.",
-        "전화는 안 되고 카톡으로만 가능하다는",
-        "메시지가 오면 100퍼센트 사칭입니다."
-      ],
-      "chunk_visuals": [
-        {
-          "type": "image",
-          "value": "3.png"
-        },
-        {
-          "type": "illust",
-          "value": "clock"
-        },
-        {
-          "type": "mascot",
-          "value": "suspicious"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "gift_voucher"
         },
         {
           "type": "illust",
@@ -318,339 +531,102 @@
         "value": "",
         "note": ""
       },
-      "id": "fact_2",
-      "_codex_narration_source": "captions.md#body",
-      "display_chunks": [
-        "부모님 폰에 5분만 시간을 들여 다섯",
-        "가지를 점검해드리시기 바랍니다",
-        "첫째, 카톡으로 입금 요청을 받으셨다면",
-        "무조건 자녀에게 직접 전화로 본인 확인을 하셔야 합니다",
-        "전화는 안 되고 카톡으로만 가능하다는",
-        "메시지가 오면 100퍼센트 사칭입니다"
-      ],
-      "_codex_caption_lockstep": {
-        "version": 2,
-        "compiler": "korean_caption_compiler_v2",
-        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 6
-      },
-      "_codex_contextual_narrative": true,
-      "_codex_sync_mode": "global999_tts_caption_lockstep",
-      "tts_chunk_weights": [
-        1907.38,
-        2053.87,
-        2130.29,
-        2447.21,
-        2218.29,
-        2306.34
-      ],
-      "_tts_timing": {
-        "mode": "word_boundary_snap",
-        "windows": [
-          {
-            "start_ms": 0.0,
-            "end_ms": 1907.38,
-            "duration_ms": 1907.38
-          },
-          {
-            "start_ms": 1907.38,
-            "end_ms": 3961.25,
-            "duration_ms": 2053.87
-          },
-          {
-            "start_ms": 3961.25,
-            "end_ms": 6091.54,
-            "duration_ms": 2130.29
-          },
-          {
-            "start_ms": 6091.54,
-            "end_ms": 8538.75,
-            "duration_ms": 2447.21
-          },
-          {
-            "start_ms": 8538.75,
-            "end_ms": 10757.04,
-            "duration_ms": 2218.29
-          },
-          {
-            "start_ms": 10757.04,
-            "end_ms": 13063.38,
-            "duration_ms": 2306.34
-          }
-        ],
-        "boundary_count": 31,
-        "min_chunk_ms": 1100
-      }
-    },
-    {
-      "tts": "둘째, 신분증과 계좌, 인증번호 사진은 어떤 경우에도 카톡으로 전송하지 않도록 알려드리시기 바랍니다. 셋째, 모르는 발신자 무음 설정과 후후, 후스콜 같은 발신자 표시 앱을 설치하시기 바랍니다. 넷째, 자녀 연락처는 즐겨찾기에 등록해 매번 발신자를 확인하도록 하시기 바랍니다.",
-      "caption_body": [
-        "체크 2",
-        "신분증·계좌 사진 요구 차단"
-      ],
-      "caption_emphasis": [
-        "신분증·계좌"
-      ],
-      "headline_lines": [
-        {
-          "text": "체크 2"
-        },
-        {
-          "text": "신분증·계좌 사진 요구 차단",
-          "accent": true
-        }
-      ],
-      "meta": "출처: 금감원 예방수칙",
-      "topic": "뉴스",
-      "background_image": "4.png",
-      "caption_chunks": [
-        "둘째, 신분증과 계좌,",
-        "인증번호 사진은 어떤 경우에도 카톡으로",
-        "전송하지 않도록 알려드리시기 바랍니다.",
-        "셋째, 모르는 발신자 무음 설정과 후후,",
-        "후스콜 같은 발신자 표시 앱을 설치하시기 바랍니다.",
-        "넷째, 자녀 연락처는 즐겨찾기에 등록해",
-        "매번 발신자를 확인하도록 하시기 바랍니다."
-      ],
-      "chunk_visuals": [
-        {
-          "type": "illust",
-          "value": "chart_down"
-        },
-        {
-          "type": "illust",
-          "value": "chart_up"
-        },
-        {
-          "type": "illust",
-          "value": "chatbot"
-        },
-        {
-          "type": "illust",
-          "value": "cloud_backup"
-        },
-        {
-          "type": "illust",
-          "value": "final_update"
-        },
-        {
-          "type": "illust",
-          "value": "aluminum_label"
-        },
-        {
-          "type": "illust",
-          "value": "prohibit"
-        }
-      ],
-      "stat": {
-        "label": "",
-        "value": "",
-        "note": ""
-      },
-      "id": "fact_3",
-      "_codex_narration_source": "captions.md#body",
-      "display_chunks": [
-        "둘째, 신분증과 계좌,",
-        "인증번호 사진은 어떤 경우에도 카톡으로",
-        "전송하지 않도록 알려드리시기 바랍니다",
-        "셋째, 모르는 발신자 무음 설정과 후후,",
-        "후스콜 같은 발신자 표시 앱을 설치하시기 바랍니다",
-        "넷째, 자녀 연락처는 즐겨찾기에 등록해",
-        "매번 발신자를 확인하도록 하시기 바랍니다"
-      ],
-      "_codex_caption_lockstep": {
-        "version": 2,
-        "compiler": "korean_caption_compiler_v2",
-        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 7
-      },
-      "_codex_contextual_narrative": true,
-      "_codex_sync_mode": "global999_tts_caption_lockstep",
-      "tts_chunk_weights": [
-        1238.38,
-        2385.58,
-        2432.37,
-        1971.84,
-        3644.37,
-        1919.0,
-        2412.01
-      ],
-      "_tts_timing": {
-        "mode": "word_boundary_snap",
-        "windows": [
-          {
-            "start_ms": 0.0,
-            "end_ms": 1238.38,
-            "duration_ms": 1238.38
-          },
-          {
-            "start_ms": 1238.38,
-            "end_ms": 3623.96,
-            "duration_ms": 2385.58
-          },
-          {
-            "start_ms": 3623.96,
-            "end_ms": 6056.33,
-            "duration_ms": 2432.37
-          },
-          {
-            "start_ms": 6056.33,
-            "end_ms": 8028.17,
-            "duration_ms": 1971.84
-          },
-          {
-            "start_ms": 8028.17,
-            "end_ms": 11672.54,
-            "duration_ms": 3644.37
-          },
-          {
-            "start_ms": 11672.54,
-            "end_ms": 13591.54,
-            "duration_ms": 1919.0
-          },
-          {
-            "start_ms": 13591.54,
-            "end_ms": 16003.55,
-            "duration_ms": 2412.01
-          }
-        ],
-        "boundary_count": 35,
-        "min_chunk_ms": 1100
-      }
-    },
-    {
-      "tts": "다섯째, Play 프로텍트와 공인 백신 앱을 켜두시기 바랍니다. 혹시 이미 송금이 이뤄졌다면, 1시간 안에 거래 은행에 지급정지를 신청하시고 경찰 112와 금감원 1332에 동시에 신고하시기 바랍니다. 골든타임을 놓치지 않으면 환수 가능성이 있습니다.",
-      "caption_body": [
-        "송금 후",
-        "1시간 안 지급정지"
-      ],
-      "caption_emphasis": [
-        "1시간 안"
-      ],
-      "headline_lines": [
-        {
-          "text": "송금 후"
-        },
-        {
-          "text": "1시간 안 지급정지",
-          "accent": true
-        }
-      ],
-      "meta": "출처: 금감원 지급정지 가이드",
-      "topic": "뉴스",
-      "background_image": "5.png",
-      "caption_chunks": [
-        "다섯째, Play 프로텍트와 공인 백신",
-        "앱을 켜두시기 바랍니다.",
-        "혹시 이미 송금이 이뤄졌다면, 1시간",
-        "안에 거래 은행에 지급정지를 신청하시고",
-        "경찰 112와 금감원 1332에 동시에",
-        "신고하시기 바랍니다.",
-        "골든타임을 놓치지 않으면 환수 가능성이 있습니다."
-      ],
-      "chunk_visuals": [
-        {
-          "type": "illust",
-          "value": "emergency_account_freeze"
-        },
-        {
-          "type": "illust",
-          "value": "foldable"
-        },
-        {
-          "type": "mascot",
-          "value": "serious"
-        },
-        {
-          "type": "illust",
-          "value": "forecast"
-        },
-        {
-          "type": "illust",
-          "value": "gift_prohibit"
-        },
-        {
-          "type": "illust",
-          "value": "handshake"
-        },
-        {
-          "type": "illust",
-          "value": "cover_screen_widgets"
-        }
-      ],
-      "stat": {
-        "label": "",
-        "value": "",
-        "note": ""
-      },
       "id": "fact_4",
       "_codex_narration_source": "captions.md#body",
       "display_chunks": [
-        "다섯째, Play 프로텍트와 공인 백신",
-        "앱을 켜두시기 바랍니다",
-        "혹시 이미 송금이 이뤄졌다면, 1시간",
-        "안에 거래 은행에 지급정지를 신청하시고",
-        "경찰 112와 금감원 1332에 동시에",
-        "신고하시기 바랍니다",
-        "골든타임을 놓치지 않으면 환수 가능성이 있습니다"
+        "둘째, 인터넷 약정이 남아 있으면 모바일만",
+        "다른 통신사로 옮기기 어렵습니다",
+        "셋째, 가족 한 명이 이탈하면",
+        "전체 할인 폭이 감소하거나 결합이 해지될 수 있습니다",
+        "예를 들어 3회선에 인터넷과 TV를",
+        "결합하면 월 5만 원 절감, 24개월 누적 120만 원이지만,",
+        "인터넷 약정 잔여 위약금 25만 원을 차감하면",
+        "실제 이득은 95만 원이 됩니다",
+        "가족 구성과 요금제,",
+        "인터넷 약정 상태만 알려주시면",
+        "매장에서 1분 안에 시뮬레이션해드릴 수 있습니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 7
+        "chunk_count": 11
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        2109.88,
-        1736.95,
-        1919.0,
-        2394.38,
-        2174.29,
-        1602.12,
-        2420.75
+        2417.96,
+        2238.75,
+        1109.12,
+        2720.09,
+        2429.58,
+        3001.75,
+        2790.5,
+        1258.79,
+        1646.13,
+        1540.5,
+        2931.33
       ],
       "_tts_timing": {
         "mode": "word_boundary_snap",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 2109.88,
-            "duration_ms": 2109.88
+            "end_ms": 2417.96,
+            "duration_ms": 2417.96
           },
           {
-            "start_ms": 2109.88,
-            "end_ms": 3846.83,
-            "duration_ms": 1736.95
+            "start_ms": 2417.96,
+            "end_ms": 4656.71,
+            "duration_ms": 2238.75
           },
           {
-            "start_ms": 3846.83,
+            "start_ms": 4656.71,
             "end_ms": 5765.83,
-            "duration_ms": 1919.0
+            "duration_ms": 1109.12
           },
           {
             "start_ms": 5765.83,
-            "end_ms": 8160.21,
-            "duration_ms": 2394.38
+            "end_ms": 8485.92,
+            "duration_ms": 2720.09
           },
           {
-            "start_ms": 8160.21,
-            "end_ms": 10334.5,
-            "duration_ms": 2174.29
+            "start_ms": 8485.92,
+            "end_ms": 10915.5,
+            "duration_ms": 2429.58
           },
           {
-            "start_ms": 10334.5,
-            "end_ms": 11936.62,
-            "duration_ms": 1602.12
+            "start_ms": 10915.5,
+            "end_ms": 13917.25,
+            "duration_ms": 3001.75
           },
           {
-            "start_ms": 11936.62,
-            "end_ms": 14357.37,
-            "duration_ms": 2420.75
+            "start_ms": 13917.25,
+            "end_ms": 16707.75,
+            "duration_ms": 2790.5
+          },
+          {
+            "start_ms": 16707.75,
+            "end_ms": 17966.54,
+            "duration_ms": 1258.79
+          },
+          {
+            "start_ms": 17966.54,
+            "end_ms": 19612.67,
+            "duration_ms": 1646.13
+          },
+          {
+            "start_ms": 19612.67,
+            "end_ms": 21153.17,
+            "duration_ms": 1540.5
+          },
+          {
+            "start_ms": 21153.17,
+            "end_ms": 24084.5,
+            "duration_ms": 2931.33
           }
         ],
-        "boundary_count": 31,
+        "boundary_count": 62,
         "min_chunk_ms": 1100
       }
     }
@@ -683,7 +659,7 @@
     "chunk_visuals": [
       {
         "type": "illust",
-        "value": "store"
+        "value": "smartphone"
       },
       {
         "type": "logo",
@@ -738,24 +714,12 @@
   "_chunk_logic_v2": true,
   "_note": "build_script.py 자동 생성 (v2 로직): 시퀀스 내 이미지 순환 + 마스코트 짝수 시퀀스만.",
   "_codex_uses_captions_md_narration": true,
-  "_codex_captions_md_narration_path": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\009_scam_kakao_family_phishing\\captions.md",
+  "_codex_captions_md_narration_path": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\011_qa_combo_discount_check\\captions.md",
   "_codex_narration_policy": "tts_only_chunks_visuals_preserved",
   "_codex_unique_source_images": {
     "version": 1,
     "policy": "non-illustration image visuals are used at most once across one video",
     "replacements": [
-      {
-        "section": "fact_4",
-        "chunk": 7,
-        "from": {
-          "type": "image",
-          "value": "1.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "cover_screen_widgets"
-        }
-      },
       {
         "section": "cta",
         "chunk": 3,
@@ -764,8 +728,8 @@
           "value": "1.png"
         },
         "to": {
-          "type": "illust",
-          "value": "shield"
+          "type": "image",
+          "value": "5.png"
         }
       }
     ]
@@ -778,8 +742,8 @@
   "_codex_uploaded_illustrations": [
     {
       "section": "fact_1",
-      "chunk": 6,
-      "variant": "module_install"
+      "chunk": 5,
+      "variant": "settings_steps"
     }
   ],
   "_codex_semantic_visual_match": {
@@ -787,6 +751,20 @@
     "policy": "Match chunks to GPT source images using prompt.md descriptions, then fallback to tagged reusable illustrations.",
     "changes": [
       {
+        "section": "hook",
+        "chunk": 2,
+        "from": {
+          "type": "mascot",
+          "value": "surprised"
+        },
+        "to": {
+          "type": "image",
+          "value": "3.png"
+        },
+        "context": "결합할인이 진짜 본인 케이스에 이득인지, 가입 전에 1분 안에 계산하는 법을 정리합니다 결합할인 진짜 이득인지 1분 계산 ['결합할인', '진짜 이득인지 1분 계산'] 뉴스",
+        "reason": "image score 18: 가족결합 회선 수 + 요금제 A top-down flat lay on a light beige tabletop. Three small ident"
+      },
+      {
         "section": "fact_1",
         "chunk": 2,
         "from": {
@@ -794,320 +772,234 @@
           "value": "3.png"
         },
         "to": {
-          "type": "illust",
-          "value": "chat_backup_restore"
+          "type": "image",
+          "value": "4.png"
         },
-        "context": "경찰청과 금감원 통계에 따르면, 카카오톡으로 자녀를 사칭해 부모님에게 송금을 요구하는 메신저피싱이 빠르게 늘고 있습니다 수법 자녀 프로필 도용 + 신상 정보 ['수법', '자녀 프로필 도용 + 신상 정보'] 뉴스",
-        "reason": "illust score 24"
+        "context": "결합 이득의 기본 공식은 단순합니다 매달 줄어드는 절감액에 약정 기간을 곱하고, 결합을 중간에 해지할 때 발생할 위약금을 기본 공식 월 절감액 × 약정기간 ['기본 공식', '월 절감액 × 약정기간'] 뉴스",
+        "reason": "fallback image score 16"
       },
       {
-        "section": "fact_2",
-        "chunk": 1,
+        "section": "fact_1",
+        "chunk": 3,
         "from": {
-          "type": "illust",
-          "value": "store"
+          "type": "image",
+          "value": "4.png"
         },
         "to": {
           "type": "image",
-          "value": "3.png"
+          "value": "5.png"
         },
-        "context": "부모님 폰에 5분만 시간을 들여 다섯 가지를 점검해드리시기 바랍니다 체크 1 전화 한 통으로 본인 확인 ['체크 1', '전화 한 통으로 본인 확인'] 뉴스",
-        "reason": "image score 32: 전화 한 통으로 본인 확인 A close-up still life on a light beige tabletop. A modern smartph"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 7,
-        "from": {
-          "type": "illust",
-          "value": "appliance"
-        },
-        "to": {
-          "type": "illust",
-          "value": "prohibit"
-        },
-        "context": "넷째, 자녀 연락처는 즐겨찾기에 등록해 매번 발신자를 확인하도록 하시기 바랍니다 체크 2 신분증·계좌 사진 요구 차단 ['체크 2', '신분증·계좌 사진 요구 차단'] 뉴스",
-        "reason": "fallback illust score 12"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "forecast"
-        },
-        "to": {
-          "type": "illust",
-          "value": "emergency_account_freeze"
-        },
-        "context": "다섯째, Play 프로텍트와 공인 백신 앱을 켜두시기 바랍니다 송금 후 1시간 안 지급정지 ['송금 후', '1시간 안 지급정지'] 뉴스",
-        "reason": "illust score 24"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 7,
-        "from": {
-          "type": "illust",
-          "value": "aluminum_label"
-        },
-        "to": {
-          "type": "illust",
-          "value": "forecast"
-        },
-        "context": "신고하시기 바랍니다 골든타임을 놓치지 않으면 환수 가능성이 있습니다 송금 후 1시간 안 지급정지 ['송금 후', '1시간 안 지급정지'] 뉴스",
-        "reason": "fallback illust score 12"
+        "context": "매달 줄어드는 절감액에 약정 기간을 곱하고, 결합을 중간에 해지할 때 발생할 위약금을 뺀 값이 진짜 이득입니다 기본 공식 월 절감액 × 약정기간 ['기본 공식', '월 절감액 × 약정기간'] 뉴스",
+        "reason": "fallback image score 8"
       }
     ],
     "weak": [
       {
-        "section": "hook",
-        "chunk": 2,
+        "section": "fact_1",
+        "chunk": 1,
         "current": {
           "type": "image",
           "value": "2.png"
         },
-        "context": "엄마 폰이 망가졌으니 잠깐 돈 좀 보내달라는 카톡, 받아보신 적 있으신가요? 자녀를 사칭한 메신저피싱이 급증하고 있습니다 엄마, 폰 망가졌어 잠깐 돈 좀 ['엄마, 폰 망가졌어', '잠깐 돈 좀'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 12
-      },
-      {
-        "section": "hook",
-        "chunk": 3,
-        "current": {
-          "type": "mascot",
-          "value": "surprised"
-        },
-        "context": "받아보신 적 있으신가요? 자녀를 사칭한 메신저피싱이 급증하고 있습니다 엄마, 폰 망가졌어 잠깐 돈 좀 ['엄마, 폰 망가졌어', '잠깐 돈 좀'] 뉴스",
-        "best_image_score": 0,
+        "context": "결합 이득의 기본 공식은 단순합니다 매달 줄어드는 절감액에 약정 기간을 곱하고, 기본 공식 월 절감액 × 약정기간 ['기본 공식', '월 절감액 × 약정기간'] 뉴스",
+        "best_image_score": 16,
         "best_illust_score": 12
       },
       {
         "section": "fact_1",
-        "chunk": 1,
-        "current": {
-          "type": "illust",
-          "value": "impersonation_call"
-        },
-        "context": "경찰청과 금감원 통계에 따르면, 카카오톡으로 자녀를 사칭해 부모님에게 수법 자녀 프로필 도용 + 신상 정보 ['수법', '자녀 프로필 도용 + 신상 정보'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 12
-      },
-      {
-        "section": "fact_1",
-        "chunk": 3,
+        "chunk": 2,
         "current": {
           "type": "image",
           "value": "4.png"
         },
-        "context": "카카오톡으로 자녀를 사칭해 부모님에게 송금을 요구하는 메신저피싱이 빠르게 늘고 있습니다 수법은 매우 단순하지만 효과적입니다 수법 자녀 프로필 도용 + 신상 정보 ['수법', '자녀 프로필 도용 + 신상 정보'] 뉴스",
-        "best_image_score": 0,
+        "context": "결합 이득의 기본 공식은 단순합니다 매달 줄어드는 절감액에 약정 기간을 곱하고, 결합을 중간에 해지할 때 발생할 위약금을 기본 공식 월 절감액 × 약정기간 ['기본 공식', '월 절감액 × 약정기간'] 뉴스",
+        "best_image_score": 16,
         "best_illust_score": 12
       },
       {
         "section": "fact_1",
-        "chunk": 4,
-        "current": {
-          "type": "illust",
-          "value": "password"
-        },
-        "context": "송금을 요구하는 메신저피싱이 빠르게 늘고 있습니다 수법은 매우 단순하지만 효과적입니다 자녀의 카톡 프로필 사진과 이름을 그대로 수법 자녀 프로필 도용 + 신상 정보 ['수법', '자녀 프로필 도용 + 신상 정보'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 12
-      },
-      {
-        "section": "fact_1",
-        "chunk": 5,
+        "chunk": 3,
         "current": {
           "type": "image",
           "value": "5.png"
         },
-        "context": "수법은 매우 단순하지만 효과적입니다 자녀의 카톡 프로필 사진과 이름을 그대로 도용한 가짜 계정으로 친구 추가를 보내고, 수법 자녀 프로필 도용 + 신상 정보 ['수법', '자녀 프로필 도용 + 신상 정보'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_1",
-        "chunk": 6,
-        "current": {
-          "type": "illust",
-          "value": "module_install"
-        },
-        "context": "자녀의 카톡 프로필 사진과 이름을 그대로 도용한 가짜 계정으로 친구 추가를 보내고, 폰이 고장 났다거나 급한 결제가 있다는 수법 자녀 프로필 도용 + 신상 정보 ['수법', '자녀 프로필 도용 + 신상 정보'] 뉴스",
-        "best_image_score": 0,
+        "context": "매달 줄어드는 절감액에 약정 기간을 곱하고, 결합을 중간에 해지할 때 발생할 위약금을 뺀 값이 진짜 이득입니다 기본 공식 월 절감액 × 약정기간 ['기본 공식', '월 절감액 × 약정기간'] 뉴스",
+        "best_image_score": 8,
         "best_illust_score": 12
       },
       {
         "section": "fact_1",
-        "chunk": 7,
-        "current": {
-          "type": "illust",
-          "value": "appliance"
-        },
-        "context": "도용한 가짜 계정으로 친구 추가를 보내고, 폰이 고장 났다거나 급한 결제가 있다는 핑계로 부모님과 대화를 시작한 뒤 신분증, 수법 자녀 프로필 도용 + 신상 정보 ['수법', '자녀 프로필 도용 + 신상 정보'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 12
-      },
-      {
-        "section": "fact_1",
-        "chunk": 8,
-        "current": {
-          "type": "illust",
-          "value": "battery_charge_range"
-        },
-        "context": "폰이 고장 났다거나 급한 결제가 있다는 핑계로 부모님과 대화를 시작한 뒤 신분증, 계좌, 인증번호 사진을 요구하고 결국 송금을 끌어냅니다 수법 자녀 프로필 도용 + 신상 정보 ['수법', '자녀 프로필 도용 + 신상 정보'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 12
-      },
-      {
-        "section": "fact_1",
-        "chunk": 9,
-        "current": {
-          "type": "illust",
-          "value": "battery_overheat"
-        },
-        "context": "핑계로 부모님과 대화를 시작한 뒤 신분증, 계좌, 인증번호 사진을 요구하고 결국 송금을 끌어냅니다 수법 자녀 프로필 도용 + 신상 정보 ['수법', '자녀 프로필 도용 + 신상 정보'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 12
-      },
-      {
-        "section": "fact_2",
-        "chunk": 2,
-        "current": {
-          "type": "illust",
-          "value": "clock"
-        },
-        "context": "부모님 폰에 5분만 시간을 들여 다섯 가지를 점검해드리시기 바랍니다 첫째, 카톡으로 입금 요청을 받으셨다면 체크 1 전화 한 통으로 본인 확인 ['체크 1', '전화 한 통으로 본인 확인'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 12
-      },
-      {
-        "section": "fact_2",
-        "chunk": 3,
-        "current": {
-          "type": "mascot",
-          "value": "suspicious"
-        },
-        "context": "가지를 점검해드리시기 바랍니다 첫째, 카톡으로 입금 요청을 받으셨다면 무조건 자녀에게 직접 전화로 본인 확인을 하셔야 합니다 체크 1 전화 한 통으로 본인 확인 ['체크 1', '전화 한 통으로 본인 확인'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 12
-      },
-      {
-        "section": "fact_2",
         "chunk": 4,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "첫째, 카톡으로 입금 요청을 받으셨다면 무조건 자녀에게 직접 전화로 본인 확인을 하셔야 합니다 전화는 안 되고 카톡으로만 가능하다는 체크 1 전화 한 통으로 본인 확인 ['체크 1', '전화 한 통으로 본인 확인'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_2",
-        "chunk": 5,
-        "current": {
-          "type": "illust",
-          "value": "gift_voucher"
-        },
-        "context": "무조건 자녀에게 직접 전화로 본인 확인을 하셔야 합니다 전화는 안 되고 카톡으로만 가능하다는 메시지가 오면 100퍼센트 사칭입니다 체크 1 전화 한 통으로 본인 확인 ['체크 1', '전화 한 통으로 본인 확인'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_2",
-        "chunk": 6,
-        "current": {
-          "type": "illust",
-          "value": "biometric"
-        },
-        "context": "전화는 안 되고 카톡으로만 가능하다는 메시지가 오면 100퍼센트 사칭입니다 체크 1 전화 한 통으로 본인 확인 ['체크 1', '전화 한 통으로 본인 확인'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_3",
-        "chunk": 1,
         "current": {
           "type": "illust",
           "value": "chart_down"
         },
-        "context": "둘째, 신분증과 계좌, 인증번호 사진은 어떤 경우에도 카톡으로 체크 2 신분증·계좌 사진 요구 차단 ['체크 2', '신분증·계좌 사진 요구 차단'] 뉴스",
+        "context": "결합을 중간에 해지할 때 발생할 위약금을 뺀 값이 진짜 이득입니다 가족결합의 핵심 변수는 회선 수와 요금제 수준입니다 기본 공식 월 절감액 × 약정기간 ['기본 공식', '월 절감액 × 약정기간'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 12
       },
       {
-        "section": "fact_3",
+        "section": "fact_1",
+        "chunk": 5,
+        "current": {
+          "type": "illust",
+          "value": "settings_steps"
+        },
+        "context": "뺀 값이 진짜 이득입니다 가족결합의 핵심 변수는 회선 수와 요금제 수준입니다 기본 공식 월 절감액 × 약정기간 ['기본 공식', '월 절감액 × 약정기간'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 12
+      },
+      {
+        "section": "fact_2",
+        "chunk": 1,
+        "current": {
+          "type": "illust",
+          "value": "clock"
+        },
+        "context": "통신3사 가족결합은 보통 2회선부터 5회선까지 묶을 수 있고 회선당 1만 원에서 2만 원이 할인됩니다 가족결합 회선 수 + 요금제가 핵심 ['가족결합', '회선 수 + 요금제가 핵심'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 12
+      },
+      {
+        "section": "fact_2",
         "chunk": 2,
+        "current": {
+          "type": "illust",
+          "value": "gift_voucher"
+        },
+        "context": "통신3사 가족결합은 보통 2회선부터 5회선까지 묶을 수 있고 회선당 1만 원에서 2만 원이 할인됩니다 다만 가족 중 단 한 명이라도 알뜰폰이나 자급제 회선이면 가족결합 회선 수 + 요금제가 핵심 ['가족결합', '회선 수 + 요금제가 핵심'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 12
+      },
+      {
+        "section": "fact_2",
+        "chunk": 3,
         "current": {
           "type": "illust",
           "value": "chart_up"
         },
-        "context": "둘째, 신분증과 계좌, 인증번호 사진은 어떤 경우에도 카톡으로 전송하지 않도록 알려드리시기 바랍니다 체크 2 신분증·계좌 사진 요구 차단 ['체크 2', '신분증·계좌 사진 요구 차단'] 뉴스",
+        "context": "묶을 수 있고 회선당 1만 원에서 2만 원이 할인됩니다 다만 가족 중 단 한 명이라도 알뜰폰이나 자급제 회선이면 결합 자체가 불가하다는 점이 함정입니다 가족결합 회선 수 + 요금제가 핵심 ['가족결합', '회선 수 + 요금제가 핵심'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 12
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_2",
+        "chunk": 4,
+        "current": {
+          "type": "mascot",
+          "value": "suspicious"
+        },
+        "context": "다만 가족 중 단 한 명이라도 알뜰폰이나 자급제 회선이면 결합 자체가 불가하다는 점이 함정입니다 인터넷 결합의 핵심 변수는 약정 기간입니다 가족결합 회선 수 + 요금제가 핵심 ['가족결합', '회선 수 + 요금제가 핵심'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_2",
+        "chunk": 5,
+        "current": {
+          "type": "illust",
+          "value": "chat_backup_restore"
+        },
+        "context": "결합 자체가 불가하다는 점이 함정입니다 인터넷 결합의 핵심 변수는 약정 기간입니다 인터넷 약정은 보통 3년이라 모바일 24개월보다 1년 가족결합 회선 수 + 요금제가 핵심 ['가족결합', '회선 수 + 요금제가 핵심'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_2",
+        "chunk": 6,
+        "current": {
+          "type": "illust",
+          "value": "chatbot"
+        },
+        "context": "인터넷 결합의 핵심 변수는 약정 기간입니다 인터넷 약정은 보통 3년이라 모바일 24개월보다 1년 길어, 약정 종료 시점이 어긋나면 가족결합 회선 수 + 요금제가 핵심 ['가족결합', '회선 수 + 요금제가 핵심'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_2",
+        "chunk": 7,
+        "current": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "context": "인터넷 약정은 보통 3년이라 모바일 24개월보다 1년 길어, 약정 종료 시점이 어긋나면 한쪽 위약금이 거액으로 남습니다 가족결합 회선 수 + 요금제가 핵심 ['가족결합', '회선 수 + 요금제가 핵심'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_2",
+        "chunk": 8,
+        "current": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "context": "길어, 약정 종료 시점이 어긋나면 한쪽 위약금이 거액으로 남습니다 가족결합 회선 수 + 요금제가 핵심 ['가족결합', '회선 수 + 요금제가 핵심'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_3",
+        "chunk": 1,
+        "current": {
+          "type": "illust",
+          "value": "cloud_backup"
+        },
+        "context": "TV까지 결합하면 추가로 5천 원에서 1만 원이 더 절감되지만 TV 약정도 함께 늘어납니다 인터넷 결합 속도·약정·TV까지 비교 ['인터넷 결합', '속도·약정·TV까지 비교'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_3",
+        "chunk": 2,
+        "current": {
+          "type": "illust",
+          "value": "cover_screen_widgets"
+        },
+        "context": "TV까지 결합하면 추가로 5천 원에서 1만 원이 더 절감되지만 TV 약정도 함께 늘어납니다 반드시 알아야 할 함정 세 가지가 있습니다 인터넷 결합 속도·약정·TV까지 비교 ['인터넷 결합', '속도·약정·TV까지 비교'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
       },
       {
         "section": "fact_3",
         "chunk": 3,
         "current": {
           "type": "illust",
-          "value": "chatbot"
+          "value": "device_data_transfer"
         },
-        "context": "인증번호 사진은 어떤 경우에도 카톡으로 전송하지 않도록 알려드리시기 바랍니다 셋째, 모르는 발신자 무음 설정과 후후, 체크 2 신분증·계좌 사진 요구 차단 ['체크 2', '신분증·계좌 사진 요구 차단'] 뉴스",
+        "context": "원에서 1만 원이 더 절감되지만 TV 약정도 함께 늘어납니다 반드시 알아야 할 함정 세 가지가 있습니다 첫째, 결합 해지 시 받은 할인액의 일부를 반환해야 합니다 인터넷 결합 속도·약정·TV까지 비교 ['인터넷 결합', '속도·약정·TV까지 비교'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 12
+        "best_illust_score": 0
       },
       {
         "section": "fact_3",
         "chunk": 4,
         "current": {
           "type": "illust",
-          "value": "cloud_backup"
+          "value": "display_ratio_change"
         },
-        "context": "전송하지 않도록 알려드리시기 바랍니다 셋째, 모르는 발신자 무음 설정과 후후, 후스콜 같은 발신자 표시 앱을 설치하시기 바랍니다 체크 2 신분증·계좌 사진 요구 차단 ['체크 2', '신분증·계좌 사진 요구 차단'] 뉴스",
+        "context": "반드시 알아야 할 함정 세 가지가 있습니다 첫째, 결합 해지 시 받은 할인액의 일부를 반환해야 합니다 인터넷 결합 속도·약정·TV까지 비교 ['인터넷 결합', '속도·약정·TV까지 비교'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 12
+        "best_illust_score": 0
       },
       {
-        "section": "fact_3",
-        "chunk": 5,
+        "section": "fact_4",
+        "chunk": 1,
         "current": {
           "type": "illust",
-          "value": "final_update"
+          "value": "store"
         },
-        "context": "셋째, 모르는 발신자 무음 설정과 후후, 후스콜 같은 발신자 표시 앱을 설치하시기 바랍니다 넷째, 자녀 연락처는 즐겨찾기에 등록해 체크 2 신분증·계좌 사진 요구 차단 ['체크 2', '신분증·계좌 사진 요구 차단'] 뉴스",
+        "context": "둘째, 인터넷 약정이 남아 있으면 모바일만 다른 통신사로 옮기기 어렵습니다 함정 3가지 위약금·약정·해지 ['함정 3가지', '위약금·약정·해지'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 12
-      },
-      {
-        "section": "fact_3",
-        "chunk": 6,
-        "current": {
-          "type": "illust",
-          "value": "aluminum_label"
-        },
-        "context": "후스콜 같은 발신자 표시 앱을 설치하시기 바랍니다 넷째, 자녀 연락처는 즐겨찾기에 등록해 매번 발신자를 확인하도록 하시기 바랍니다 체크 2 신분증·계좌 사진 요구 차단 ['체크 2', '신분증·계좌 사진 요구 차단'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 12
-      },
-      {
-        "section": "fact_3",
-        "chunk": 7,
-        "current": {
-          "type": "illust",
-          "value": "prohibit"
-        },
-        "context": "넷째, 자녀 연락처는 즐겨찾기에 등록해 매번 발신자를 확인하도록 하시기 바랍니다 체크 2 신분증·계좌 사진 요구 차단 ['체크 2', '신분증·계좌 사진 요구 차단'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 12
+        "best_illust_score": 0
       },
       {
         "section": "fact_4",
         "chunk": 2,
         "current": {
           "type": "illust",
-          "value": "foldable"
+          "value": "ti_decrease"
         },
-        "context": "다섯째, Play 프로텍트와 공인 백신 앱을 켜두시기 바랍니다 혹시 이미 송금이 이뤄졌다면, 1시간 송금 후 1시간 안 지급정지 ['송금 후', '1시간 안 지급정지'] 뉴스",
+        "context": "둘째, 인터넷 약정이 남아 있으면 모바일만 다른 통신사로 옮기기 어렵습니다 셋째, 가족 한 명이 이탈하면 함정 3가지 위약금·약정·해지 ['함정 3가지', '위약금·약정·해지'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       },
@@ -1115,10 +1007,10 @@
         "section": "fact_4",
         "chunk": 3,
         "current": {
-          "type": "mascot",
-          "value": "serious"
+          "type": "illust",
+          "value": "smartphone"
         },
-        "context": "앱을 켜두시기 바랍니다 혹시 이미 송금이 이뤄졌다면, 1시간 안에 거래 은행에 지급정지를 신청하시고 송금 후 1시간 안 지급정지 ['송금 후', '1시간 안 지급정지'] 뉴스",
+        "context": "다른 통신사로 옮기기 어렵습니다 셋째, 가족 한 명이 이탈하면 전체 할인 폭이 감소하거나 결합이 해지될 수 있습니다 함정 3가지 위약금·약정·해지 ['함정 3가지', '위약금·약정·해지'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       },
@@ -1126,10 +1018,10 @@
         "section": "fact_4",
         "chunk": 4,
         "current": {
-          "type": "illust",
-          "value": "emergency_account_freeze"
+          "type": "mascot",
+          "value": "serious"
         },
-        "context": "혹시 이미 송금이 이뤄졌다면, 1시간 안에 거래 은행에 지급정지를 신청하시고 경찰 112와 금감원 1332에 동시에 송금 후 1시간 안 지급정지 ['송금 후', '1시간 안 지급정지'] 뉴스",
+        "context": "셋째, 가족 한 명이 이탈하면 전체 할인 폭이 감소하거나 결합이 해지될 수 있습니다 예를 들어 3회선에 인터넷과 TV를 함정 3가지 위약금·약정·해지 ['함정 3가지', '위약금·약정·해지'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       },
@@ -1138,9 +1030,9 @@
         "chunk": 5,
         "current": {
           "type": "illust",
-          "value": "gift_prohibit"
+          "value": "emergency_account_freeze"
         },
-        "context": "안에 거래 은행에 지급정지를 신청하시고 경찰 112와 금감원 1332에 동시에 신고하시기 바랍니다 송금 후 1시간 안 지급정지 ['송금 후', '1시간 안 지급정지'] 뉴스",
+        "context": "전체 할인 폭이 감소하거나 결합이 해지될 수 있습니다 예를 들어 3회선에 인터넷과 TV를 결합하면 월 5만 원 절감, 24개월 누적 120만 원이지만, 함정 3가지 위약금·약정·해지 ['함정 3가지', '위약금·약정·해지'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       },
@@ -1149,43 +1041,67 @@
         "chunk": 6,
         "current": {
           "type": "illust",
-          "value": "handshake"
+          "value": "final_update"
         },
-        "context": "경찰 112와 금감원 1332에 동시에 신고하시기 바랍니다 골든타임을 놓치지 않으면 환수 가능성이 있습니다 송금 후 1시간 안 지급정지 ['송금 후', '1시간 안 지급정지'] 뉴스",
+        "context": "예를 들어 3회선에 인터넷과 TV를 결합하면 월 5만 원 절감, 24개월 누적 120만 원이지만, 인터넷 약정 잔여 위약금 25만 원을 차감하면 함정 3가지 위약금·약정·해지 ['함정 3가지', '위약금·약정·해지'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 12
+        "best_illust_score": 0
       },
       {
         "section": "fact_4",
         "chunk": 7,
         "current": {
           "type": "illust",
-          "value": "forecast"
+          "value": "aluminum_label"
         },
-        "context": "신고하시기 바랍니다 골든타임을 놓치지 않으면 환수 가능성이 있습니다 송금 후 1시간 안 지급정지 ['송금 후', '1시간 안 지급정지'] 뉴스",
+        "context": "결합하면 월 5만 원 절감, 24개월 누적 120만 원이지만, 인터넷 약정 잔여 위약금 25만 원을 차감하면 실제 이득은 95만 원이 됩니다 함정 3가지 위약금·약정·해지 ['함정 3가지', '위약금·약정·해지'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 12
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_4",
+        "chunk": 8,
+        "current": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "context": "인터넷 약정 잔여 위약금 25만 원을 차감하면 실제 이득은 95만 원이 됩니다 가족 구성과 요금제, 함정 3가지 위약금·약정·해지 ['함정 3가지', '위약금·약정·해지'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_4",
+        "chunk": 9,
+        "current": {
+          "type": "illust",
+          "value": "battery_charge_range"
+        },
+        "context": "실제 이득은 95만 원이 됩니다 가족 구성과 요금제, 인터넷 약정 상태만 알려주시면 함정 3가지 위약금·약정·해지 ['함정 3가지', '위약금·약정·해지'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_4",
+        "chunk": 10,
+        "current": {
+          "type": "illust",
+          "value": "battery_overheat"
+        },
+        "context": "가족 구성과 요금제, 인터넷 약정 상태만 알려주시면 매장에서 1분 안에 시뮬레이션해드릴 수 있습니다 함정 3가지 위약금·약정·해지 ['함정 3가지', '위약금·약정·해지'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_4",
+        "chunk": 11,
+        "current": {
+          "type": "illust",
+          "value": "biometric"
+        },
+        "context": "인터넷 약정 상태만 알려주시면 매장에서 1분 안에 시뮬레이션해드릴 수 있습니다 함정 3가지 위약금·약정·해지 ['함정 3가지', '위약금·약정·해지'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
       }
     ]
-  },
-  "_codex_unique_illustration_guard": {
-    "version": 1,
-    "policy": "Illustrations and mascots should not repeat inside one video. CTA logo is exempt.",
-    "replacements": [
-      {
-        "section": "cta",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "store"
-        },
-        "context": "휴대폰 구매할 땐? 지원금부터 무료로 조회해보세요 휴대폰 구매할 땐? 지원금부터 무료로 조회해보세요 휴대폰 구매할 땐? 지원금부터 무료로 조회해보세요."
-      }
-    ],
-    "weak": []
   }
 }
