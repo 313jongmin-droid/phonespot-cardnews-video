@@ -2,10 +2,14 @@
   "version": 1,
   "videos": {},
   "requests": {
-    "012_news_galaxy_unpack_july": {
-      "updated_at": "2026-06-05T17:45:21",
-      "variants": []
+    "010_tip_iphone_call_record": {
+      "updated_at": "2026-06-05T17:58:07",
+      "variants": [
+        "phone_settings_toggle",
+        "call_filter_rules",
+        "security_feature_lock"
+      ]
     }
   },
-  "updated_at": "2026-06-05T17:45:21"
+  "updated_at": "2026-06-05T17:58:07"
 }\n
