@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>Apps Script 복사 도우미</title>
+  <style>
+    body{font-family:Arial,'Malgun Gothic',sans-serif;margin:24px;background:#f7f8fb;color:#111827}
+    h1{font-size:22px;margin:0 0 8px}
+    p{color:#667085;line-height:1.55}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .card{background:white;border:1px solid #dde2ea;border-radius:10px;padding:16px}
+    textarea{width:100%;height:520px;font-family:Consolas,monospace;font-size:12px;white-space:pre;border:1px solid #dde2ea;border-radius:8px;padding:12px}
+    button{border:0;border-radius:8px;background:#f74b0b;color:white;padding:12px 16px;font-weight:700;cursor:pointer;margin:8px 8px 12px 0}
+    button.secondary{background:#111827}
+    .hint{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;border-radius:8px;padding:12px;margin:16px 0}
+  </style>
+</head>
+<body>
+  <h1>Google Apps Script 복사 도우미</h1>
+  <p>아래 버튼으로 내용을 복사한 뒤, Apps Script의 같은 이름 파일에 붙여넣으면 됩니다.</p>
+  <div class="hint">
+    순서: Apps Script 열기 → <b>Code.gs</b> 클릭 → Code.gs 복사 버튼 → 붙여넣기 → <b>Sidebar.html</b> 클릭 → Sidebar.html 복사 버튼 → 붙여넣기 → 저장
+  </div>
+  <p>
+    <button onclick="copyText('code')">Code.gs 전체 복사</button>
+    <button onclick="copyText('sidebar')">Sidebar.html 전체 복사</button>
+    <button class="secondary" onclick="window.open('https://script.google.com/home','_blank')">Apps Script 열기</button>
+  </p>
+  <div class="grid">
+    <div class="card">
+      <h2>Code.gs</h2>
+      <textarea id="code">/**
+ * PhoneSpot Google Sheets Control Panel
+ *
+ * Files:
+ * - Code.gs
+ * - Sidebar.html
+ */
+
+const PHONESPOT_SHEET_NAME = &#x27;PhoneSpot 작업대장&#x27;;
+
+function onOpen() {
+  SpreadsheetApp.getUi()
+    .createMenu(&#x27;폰스팟 제작&#x27;)
+    .addItem(&#x27;제작 패널 열기&#x27;, &#x27;showPhoneSpotPanel&#x27;)
+    .addItem(&#x27;작업대장 시트 만들기/정리&#x27;, &#x27;ensurePhoneSpotSheet&#x27;)
+    .addToUi();
+}
+
+function showPhoneSpotPanel() {
+  ensurePhoneSpotSheet();
+  const html = HtmlService.createHtmlOutputFromFile(&#x27;Sidebar&#x27;)
+    .setTitle(&#x27;폰스팟 제작 패널&#x27;);
+  SpreadsheetApp.getUi().showSidebar(html);
+}
+
+function ensurePhoneSpotSheet() {
+  const ss = SpreadsheetApp.getActive();
+  let sheet = ss.getSheetByName(PHONESPOT_SHEET_NAME);
+  if (!sheet) sheet = ss.insertSheet(PHONESPOT_SHEET_NAME);
+
+  const headers = [
+    &#x27;날짜&#x27;, &#x27;슬러그&#x27;, &#x27;제목&#x27;, &#x27;담당자&#x27;,
+    &#x27;카드뉴스 상태&#x27;, &#x27;영상 상태&#x27;, &#x27;필요 일러스트&#x27;, &#x27;검수&#x27;,
+    &#x27;유튜브&#x27;, &#x27;인스타&#x27;, &#x27;틱톡&#x27;, &#x27;결과&#x27;, &#x27;메모&#x27;, &#x27;업데이트&#x27;
+  ];
+  sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
+  sheet.setFrozenRows(1);
+  sheet.getRange(1, 1, 1, headers.length)
+    .setFontWeight(&#x27;bold&#x27;)
+    .setBackground(&#x27;#111827&#x27;)
+    .setFontColor(&#x27;#ffffff&#x27;);
+  formatPhoneSpotSheet_(sheet);
+  return true;
+}
+
+function formatPhoneSpotSheet_(sheet) {
+  const widths = [90, 260, 320, 90, 110, 130, 120, 90, 90, 90, 90, 220, 260, 150];
+  widths.forEach((w, i) =&gt; sheet.setColumnWidth(i + 1, w));
+  sheet.getRange(&#x27;A:N&#x27;).setVerticalAlignment(&#x27;middle&#x27;);
+  sheet.getRange(&#x27;A:N&#x27;).setWrapStrategy(SpreadsheetApp.WrapStrategy.CLIP);
+  sheet.getRange(&#x27;B:B&#x27;).setFontWeight(&#x27;bold&#x27;);
+  sheet.getRange(&#x27;F:F&#x27;).setBackground(&#x27;#fff7ed&#x27;);
+  sheet.getRange(&#x27;H:H&#x27;).setBackground(&#x27;#f0fdf4&#x27;);
+  if (!sheet.getFilter()) {
+    const lastRow = Math.max(sheet.getLastRow(), 2);
+    sheet.getRange(1, 1, lastRow, 14).createFilter();
+  }
+}
+
+function getRowsForSidebar() {
+  ensurePhoneSpotSheet();
+  const sheet = SpreadsheetApp.getActive().getSheetByName(PHONESPOT_SHEET_NAME);
+  const values = sheet.getDataRange().getValues();
+  if (values.length &lt;= 1) return [];
+  const headers = values[0];
+  return values.slice(1).filter(row =&gt; row[1]).map((row, idx) =&gt; {
+    const item = { rowNumber: idx + 2 };
+    headers.forEach((h, i) =&gt; item[h] = row[i]);
+    return item;
+  });
+}
+
+function upsertRowsFromLocal(slugs) {
+  ensurePhoneSpotSheet();
+  const sheet = SpreadsheetApp.getActive().getSheetByName(PHONESPOT_SHEET_NAME);
+  const existing = sheet.getDataRange().getValues();
+  const bySlug = {};
+  for (let i = 1; i &lt; existing.length; i++) {
+    const slug = existing[i][1];
+    if (slug) bySlug[slug] = i + 1;
+  }
+  const now = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), &#x27;yyyy-MM-dd HH:mm:ss&#x27;);
+  if (!slugs || !slugs.length) {
+    setQueueNotice(&#x27;로컬 엔진에서 슬러그를 받지 못했습니다. 로컬 엔진 실행, 카드뉴스 동기화, 포트를 확인하세요.&#x27;);
+    return { ok: true, count: 0 };
+  }
+  (slugs || []).forEach(s =&gt; {
+    const row = [
+      s.date || &#x27;&#x27;, s.slug || &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;,
+      s.flag || &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;,
+      &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;, now
+    ];
+    if (bySlug[s.slug]) {
+      const r = bySlug[s.slug];
+      sheet.getRange(r, 1).setValue(row[0]);
+      sheet.getRange(r, 5).setValue(row[4]);
+      sheet.getRange(r, 14).setValue(now);
+    } else {
+      sheet.appendRow(row);
+    }
+  });
+  formatPhoneSpotSheet_(sheet);
+  return { ok: true, count: (slugs || []).length };
+}
+
+function markActionResult(slug, action, ok, message) {
+  ensurePhoneSpotSheet();
+  const sheet = SpreadsheetApp.getActive().getSheetByName(PHONESPOT_SHEET_NAME);
+  const values = sheet.getDataRange().getValues();
+  const now = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), &#x27;yyyy-MM-dd HH:mm:ss&#x27;);
+  const statusMap = {
+    video_prepare: ok ? &#x27;프롬프트 준비됨&#x27; : &#x27;프롬프트 실패&#x27;,
+    video_import_render: ok ? &#x27;렌더 시작됨&#x27; : &#x27;렌더 실패&#x27;,
+    video_render_selected: ok ? &#x27;재렌더 시작됨&#x27; : &#x27;재렌더 실패&#x27;,
+    system_update: ok ? &#x27;업데이트 시작됨&#x27; : &#x27;업데이트 실패&#x27;,
+  };
+  for (let i = 1; i &lt; values.length; i++) {
+    if (values[i][1] === slug) {
+      sheet.getRange(i + 1, 6).setValue(statusMap[action] || (ok ? action : &#x27;실패&#x27;));
+      sheet.getRange(i + 1, 13).setValue(message || &#x27;&#x27;);
+      sheet.getRange(i + 1, 14).setValue(now);
+      return { ok: true };
+    }
+  }
+  sheet.appendRow([&#x27;&#x27;, slug, &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;, statusMap[action] || action, &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;, message || &#x27;&#x27;, now]);
+  return { ok: true };
+}
+
+function markReview(slug, value) {
+  ensurePhoneSpotSheet();
+  const sheet = SpreadsheetApp.getActive().getSheetByName(PHONESPOT_SHEET_NAME);
+  const values = sheet.getDataRange().getValues();
+  const now = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), &#x27;yyyy-MM-dd HH:mm:ss&#x27;);
+  for (let i = 1; i &lt; values.length; i++) {
+    if (values[i][1] === slug) {
+      sheet.getRange(i + 1, 8).setValue(value);
+      sheet.getRange(i + 1, 14).setValue(now);
+      return { ok: true };
+    }
+  }
+  sheet.appendRow([&#x27;&#x27;, slug, &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;, value, &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;, now]);
+  return { ok: true };
+}
+
+
+function setQueueNotice(message) {
+  ensurePhoneSpotSheet();
+  const sheet = SpreadsheetApp.getActive().getSheetByName(PHONESPOT_SHEET_NAME);
+  const now = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), &#x27;yyyy-MM-dd HH:mm:ss&#x27;);
+  sheet.getRange(2, 1, 1, 14).setValues([[
+    now,
+    &#x27;SYSTEM_NOTICE&#x27;,
+    message || &#x27;&#x27;,
+    &#x27;&#x27;,
+    &#x27;&#x27;,
+    &#x27;&#x27;,
+    &#x27;&#x27;,
+    &#x27;&#x27;,
+    &#x27;&#x27;,
+    &#x27;&#x27;,
+    &#x27;&#x27;,
+    &#x27;&#x27;,
+    &#x27;시스템 안내 행입니다. 슬러그 새로고침이 성공하면 실제 데이터가 아래/위에 채워집니다.&#x27;,
+    now
+  ]]);
+  sheet.getRange(2, 1, 1, 14).setBackground(&#x27;#fff7ed&#x27;).setFontColor(&#x27;#9a3412&#x27;);
+  return { ok: true };
+}
+</textarea>
+    </div>
+    <div class="card">
+      <h2>Sidebar.html</h2>
+      <textarea id="sidebar">&lt;!doctype html&gt;
+&lt;html lang=&quot;ko&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;base target=&quot;_top&quot;&gt;
+  &lt;style&gt;
+    :root{--orange:#f74b0b;--ink:#111827;--muted:#667085;--line:#dde2ea;--bg:#f7f8fb;--green:#027a48;--red:#b42318}
+    body{margin:0;background:var(--bg);font-family:Arial,&quot;Malgun Gothic&quot;,sans-serif;color:var(--ink)}
+    .wrap{padding:14px}
+    h1{font-size:18px;margin:0 0 4px}
+    h2{font-size:13px;margin:18px 0 8px}
+    p{font-size:12px;color:var(--muted);line-height:1.45}
+    label{display:block;font-size:12px;font-weight:700;margin:12px 0 6px}
+    input,select{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;background:white}
+    button{width:100%;border:1px solid var(--line);background:white;border-radius:8px;padding:10px;margin:5px 0;text-align:left;cursor:pointer}
+    button strong{display:block;font-size:13px}
+    button span{display:block;font-size:11px;color:var(--muted);margin-top:3px}
+    button.primary{background:var(--orange);border-color:var(--orange);color:white}
+    button.primary span{color:#fff3ec}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+    .grid button{margin:0;text-align:center}
+    .status{white-space:pre-wrap;background:#0f172a;color:#e5e7eb;border-radius:8px;padding:10px;font-size:11px;min-height:96px;margin-top:10px;max-height:240px;overflow:auto}
+    .card{background:white;border:1px solid var(--line);border-radius:10px;padding:10px;margin:10px 0}
+    .pill{display:inline-block;background:#fff1ea;color:#bd3505;border:1px solid #ffd8c7;border-radius:999px;padding:4px 8px;font-size:11px;margin:3px 4px 3px 0}
+    .ok{color:var(--green);font-weight:700}.bad{color:var(--red);font-weight:700}
+    .small{font-size:11px;color:var(--muted)}
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class=&quot;wrap&quot;&gt;
+    &lt;h1&gt;폰스팟 제작 패널 V2&lt;/h1&gt;
+    &lt;p&gt;구글시트 안에서 조작하고, 렌더링은 현재 PC의 로컬 엔진이 실행합니다.&lt;/p&gt;
+
+    &lt;div class=&quot;card&quot;&gt;
+      &lt;label&gt;로컬 엔진 주소&lt;/label&gt;
+      &lt;input id=&quot;engine&quot; value=&quot;http://localhost:4878&quot;&gt;
+      &lt;div class=&quot;grid&quot;&gt;
+        &lt;button onclick=&quot;saveEngine()&quot;&gt;저장&lt;/button&gt;
+        &lt;button onclick=&quot;checkEngine()&quot;&gt;연결 확인&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;button onclick=&quot;autoDetectEngine()&quot;&gt;&lt;strong&gt;로컬 엔진 자동 찾기&lt;/strong&gt;&lt;span&gt;4878, 4888, 4901 등 사용 중인 패널 포트를 자동으로 찾습니다.&lt;/span&gt;&lt;/button&gt;
+      &lt;div id=&quot;engineState&quot; class=&quot;small&quot;&gt;대기 중&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;card&quot;&gt;
+      &lt;label&gt;슬러그 선택&lt;/label&gt;
+      &lt;select id=&quot;slug&quot;&gt;&lt;/select&gt;
+      &lt;button onclick=&quot;loadSlugs()&quot;&gt;&lt;strong&gt;슬러그 새로고침&lt;/strong&gt;&lt;span&gt;로컬 후보를 가져와 구글시트 작업대장에도 반영합니다.&lt;/span&gt;&lt;/button&gt;
+      &lt;div id=&quot;selectedPill&quot; class=&quot;pill&quot;&gt;선택 없음&lt;/div&gt;
+      &lt;div id=&quot;queueSummary&quot; class=&quot;small&quot;&gt;작업대장 대기 중&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;h2&gt;제작 액션&lt;/h2&gt;
+    &lt;button class=&quot;primary&quot; onclick=&quot;runLocal(&#x27;video_prepare&#x27;)&quot;&gt;&lt;strong&gt;1. 영상 프롬프트 준비&lt;/strong&gt;&lt;span&gt;영상 스크립트와 일러스트 요청서를 만듭니다.&lt;/span&gt;&lt;/button&gt;
+    &lt;button class=&quot;primary&quot; onclick=&quot;runLocal(&#x27;video_import_render&#x27;)&quot;&gt;&lt;strong&gt;2. 이미지 가져오기 + 렌더&lt;/strong&gt;&lt;span&gt;다운로드 이미지를 반영하고 렌더링합니다.&lt;/span&gt;&lt;/button&gt;
+    &lt;button onclick=&quot;runLocal(&#x27;video_render_selected&#x27;)&quot;&gt;&lt;strong&gt;선택 영상만 재렌더&lt;/strong&gt;&lt;span&gt;추가 이미지 없이 현재 슬러그를 다시 렌더합니다.&lt;/span&gt;&lt;/button&gt;
+
+    &lt;h2&gt;검수&lt;/h2&gt;
+    &lt;div class=&quot;grid&quot;&gt;
+      &lt;button onclick=&quot;runPreflight()&quot;&gt;사전검사&lt;/button&gt;
+      &lt;button onclick=&quot;loadIllustrationState()&quot;&gt;일러스트 상태&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;grid&quot;&gt;
+      &lt;button onclick=&quot;markReview(&#x27;검수 OK&#x27;)&quot;&gt;검수 OK&lt;/button&gt;
+      &lt;button onclick=&quot;markReview(&#x27;수정 필요&#x27;)&quot;&gt;수정 필요&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;h2&gt;바로 열기&lt;/h2&gt;
+    &lt;button onclick=&quot;openLocal(&#x27;/prompt&#x27;)&quot;&gt;&lt;strong&gt;최신 영상 프롬프트&lt;/strong&gt;&lt;span&gt;GPT Plus에 붙여넣을 프롬프트를 엽니다.&lt;/span&gt;&lt;/button&gt;
+    &lt;button onclick=&quot;openIllustrationRequests()&quot;&gt;&lt;strong&gt;신규 일러스트 요청서&lt;/strong&gt;&lt;span&gt;선택 슬러그의 범용 일러스트 제안을 엽니다.&lt;/span&gt;&lt;/button&gt;
+    &lt;button onclick=&quot;runLocal(&#x27;open_results&#x27;)&quot;&gt;&lt;strong&gt;결과 폴더 열기&lt;/strong&gt;&lt;span&gt;완성 MP4와 발행 패키지 폴더를 엽니다.&lt;/span&gt;&lt;/button&gt;
+    &lt;button onclick=&quot;runLocal(&#x27;open_illustrations&#x27;)&quot;&gt;&lt;strong&gt;일러스트 폴더 열기&lt;/strong&gt;&lt;span&gt;재사용 일러스트 라이브러리와 드롭 폴더를 엽니다.&lt;/span&gt;&lt;/button&gt;
+
+    &lt;h2&gt;시스템&lt;/h2&gt;
+    &lt;button onclick=&quot;runLocal(&#x27;system_update&#x27;)&quot;&gt;&lt;strong&gt;GitHub 업데이트&lt;/strong&gt;&lt;span&gt;현재 PC의 코드를 최신 버전으로 받습니다.&lt;/span&gt;&lt;/button&gt;
+    &lt;button onclick=&quot;loadJob()&quot;&gt;&lt;strong&gt;실행 로그 새로고침&lt;/strong&gt;&lt;span&gt;현재 로컬 엔진의 작업 로그를 확인합니다.&lt;/span&gt;&lt;/button&gt;
+
+    &lt;div class=&quot;status&quot; id=&quot;status&quot;&gt;대기 중&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;script&gt;
+    const statusBox = document.getElementById(&#x27;status&#x27;);
+    const engineInput = document.getElementById(&#x27;engine&#x27;);
+    const slugSelect = document.getElementById(&#x27;slug&#x27;);
+    const engineState = document.getElementById(&#x27;engineState&#x27;);
+
+    function log(msg){ statusBox.textContent = msg; }
+    function engine(){ return (engineInput.value || &#x27;http://localhost:4878&#x27;).replace(/\/+$/, &#x27;&#x27;); }
+    function selectedSlug(){ return slugSelect.value || &#x27;&#x27;; }
+    function saveEngine(){ localStorage.setItem(&#x27;phonespotEngine&#x27;, engine()); log(&#x27;저장됨: &#x27; + engine()); }
+    function restoreEngine(){ const saved = localStorage.getItem(&#x27;phonespotEngine&#x27;); if (saved) engineInput.value = saved; }
+    async function localJson(path, options){
+      const res = await fetch(engine() + path, options || {});
+      if (!res.ok) throw new Error(&#x27;HTTP &#x27; + res.status);
+      return await res.json();
+    }
+    function openLocal(path){ window.open(engine() + path, &#x27;_blank&#x27;); }
+    function openIllustrationRequests(){
+      const slug = selectedSlug();
+      if (!slug) { alert(&#x27;먼저 슬러그를 선택하세요.&#x27;); return; }
+      openLocal(&#x27;/illustration-requests/&#x27; + encodeURIComponent(slug));
+    }
+    async function checkEngine(){
+      engineState.innerHTML = &#x27;&lt;span&gt;연결 확인 중...&lt;/span&gt;&#x27;;
+      try {
+        const data = await localJson(&#x27;/api/state&#x27;);
+        const job = data.job || {};
+        engineState.innerHTML = &#x27;&lt;span class=&quot;ok&quot;&gt;연결됨&lt;/span&gt; · 최신 &#x27; + (data.latestSlug || &#x27;-&#x27;) + &#x27; · &#x27; + (job.running ? &#x27;작업 중&#x27; : &#x27;대기&#x27;);
+        log(&#x27;연결 성공\n최신 슬러그: &#x27; + (data.latestSlug || &#x27;-&#x27;) + &#x27;\n필요 이미지: &#x27; + data.missingRequests + &#x27;\n약한 매핑: &#x27; + data.weakMappings);
+      } catch(e) {
+        engineState.innerHTML = &#x27;&lt;span class=&quot;bad&quot;&gt;연결 실패&lt;/span&gt;&#x27;;
+        log(&#x27;연결 실패\n로컬 엔진이 켜져 있는지 확인하세요.\n&#x27; + e.message);
+      }
+    }
+
+
+    function updateQueueSummary(rows, reason){
+      const el = document.getElementById(&#x27;queueSummary&#x27;);
+      if (!el) return;
+      if (rows &amp;&amp; rows.length) {
+        const ok = rows.filter(r =&gt; String(r.flag || &#x27;&#x27;).trim() === &#x27;OK&#x27;).length;
+        el.innerHTML = `&lt;span class=&quot;ok&quot;&gt;작업대장 채움&lt;/span&gt; · 전체 ${rows.length}개 · OK ${ok}개`;
+      } else {
+        el.innerHTML = `&lt;span class=&quot;bad&quot;&gt;작업대장 비어 있음&lt;/span&gt; · ${reason || &#x27;슬러그 없음&#x27;}`;
+      }
+    }
+
+    async function loadSlugs(){
+      try {
+        const data = await localJson(&#x27;/api/slugs&#x27;);
+        const rows = data.slugs || [];
+        slugSelect.innerHTML = &#x27;&#x27;;
+        if (!rows.length) {
+          const opt = document.createElement(&#x27;option&#x27;);
+          opt.value = &#x27;&#x27;;
+          opt.textContent = &#x27;슬러그를 찾지 못했습니다 - 로컬 엔진/동기화 확인&#x27;;
+          slugSelect.appendChild(opt);
+        }
+        rows.forEach(r =&gt; {
+          const opt = document.createElement(&#x27;option&#x27;);
+          opt.value = r.slug;
+          opt.textContent = `${r.number}. ${r.date} [${r.flag}] ${r.slug}`;
+          slugSelect.appendChild(opt);
+        });
+        google.script.run.upsertRowsFromLocal(rows);
+        updateSelected();
+        updateQueueSummary(rows, rows.length ? &#x27;&#x27; : &#x27;로컬 엔진은 연결됐지만 후보가 없습니다. 카드뉴스 동기화를 확인하세요.&#x27;);
+        log(&#x27;슬러그 &#x27; + rows.length + &#x27;개 불러옴\n시트 작업대장에도 반영했습니다.&#x27;);
+      } catch(e) { updateQueueSummary([], &#x27;로컬 엔진 연결 실패 또는 API 오류&#x27;); google.script.run.setQueueNotice(&#x27;슬러그 불러오기 실패: &#x27; + e.message); log(&#x27;슬러그 불러오기 실패\n&#x27; + e.message); }
+    }
+    function updateSelected(){ document.getElementById(&#x27;selectedPill&#x27;).textContent = selectedSlug() ? &#x27;선택: &#x27; + selectedSlug() : &#x27;선택 없음&#x27;; }
+    slugSelect.addEventListener(&#x27;change&#x27;, updateSelected);
+
+    async function runLocal(action){
+      const slug = selectedSlug();
+      if (!slug &amp;&amp; ![&#x27;open_results&#x27;,&#x27;open_illustrations&#x27;,&#x27;system_update&#x27;].includes(action)) {
+        alert(&#x27;먼저 슬러그를 선택하세요.&#x27;);
+        return;
+      }
+      try {
+        log(&#x27;실행 요청 중...\n&#x27; + action + &#x27;\n&#x27; + slug);
+        const data = await localJson(&#x27;/api/action&#x27;, {
+          method:&#x27;POST&#x27;,
+          headers:{&#x27;Content-Type&#x27;:&#x27;application/json&#x27;},
+          body: JSON.stringify({action, slug})
+        });
+        google.script.run.markActionResult(slug || &#x27;-&#x27;, action, !!data.ok, data.message || data.error || &#x27;&#x27;);
+        log(data.ok ? &#x27;요청 완료\n실행 로그를 자동 확인합니다.&#x27; : &#x27;요청 실패\n&#x27; + JSON.stringify(data));
+        setTimeout(loadJob, 1000);
+      } catch(e) {
+        google.script.run.markActionResult(slug || &#x27;-&#x27;, action, false, e.message);
+        log(&#x27;실행 실패\n&#x27; + e.message);
+      }
+    }
+    async function runPreflight(){
+      const slug = selectedSlug();
+      if (!slug) { alert(&#x27;먼저 슬러그를 선택하세요.&#x27;); return; }
+      try {
+        const data = await localJson(&#x27;/api/preflight?slug=&#x27; + encodeURIComponent(slug));
+        const items = (data.items || []).slice(0, 12).map(x =&gt; `[${x.level}] ${x.message}${x.detail ? &#x27;\n  &#x27; + x.detail : &#x27;&#x27;}`).join(&#x27;\n&#x27;);
+        log(`사전검사: ${data.status}\nERROR ${data.errors} / WARN ${data.warnings}\n\n${items || &#x27;표시할 항목 없음&#x27;}`);
+      } catch(e) { log(&#x27;사전검사 실패\n&#x27; + e.message); }
+    }
+    async function loadIllustrationState(){
+      const slug = selectedSlug();
+      if (!slug) { alert(&#x27;먼저 슬러그를 선택하세요.&#x27;); return; }
+      try {
+        const data = await localJson(&#x27;/api/illustration-requests?slug=&#x27; + encodeURIComponent(slug));
+        log(`일러스트 요청서\n신규 제안: ${data.count || 0}\n문맥 경고: ${data.gaps || 0}\n파일: ${data.exists ? &#x27;있음&#x27; : &#x27;없음&#x27;}`);
+      } catch(e) { log(&#x27;일러스트 상태 확인 실패\n&#x27; + e.message); }
+    }
+    async function loadJob(){
+      try {
+        const data = await localJson(&#x27;/api/job&#x27;);
+        const job = data.job || {};
+        log((job.running ? &#x27;[작업 중] &#x27; : &#x27;[대기] &#x27;) + (job.name || &#x27;&#x27;) + &#x27;\nexit=&#x27; + job.exit_code + &#x27;\n\n&#x27; + ((job.log || &#x27;&#x27;).slice(-5000)));
+      } catch(e) { log(&#x27;로그 확인 실패\n&#x27; + e.message); }
+    }
+    function markReview(value){
+      const slug = selectedSlug();
+      if (!slug) { alert(&#x27;먼저 슬러그를 선택하세요.&#x27;); return; }
+      google.script.run.markReview(slug, value);
+      log(&#x27;검수 상태 기록: &#x27; + value + &#x27;\n&#x27; + slug);
+    }
+
+
+
+    // V3 override: auto-detect local engine ports used by different PCs/panel versions.
+    const ENGINE_CANDIDATES = [
+      &#x27;http://localhost:4878&#x27;,
+      &#x27;http://127.0.0.1:4878&#x27;,
+      &#x27;http://localhost:4888&#x27;,
+      &#x27;http://127.0.0.1:4888&#x27;,
+      &#x27;http://localhost:4901&#x27;,
+      &#x27;http://127.0.0.1:4901&#x27;,
+      &#x27;http://localhost:4877&#x27;,
+      &#x27;http://127.0.0.1:4877&#x27;
+    ];
+
+    async function fetchWithTimeout(url, options, timeoutMs) {
+      const controller = new AbortController();
+      const timer = setTimeout(() =&gt; controller.abort(), timeoutMs || 700);
+      try {
+        return await fetch(url, Object.assign({}, options || {}, {
+          signal: controller.signal,
+          cache: &#x27;no-store&#x27;
+        }));
+      } finally {
+        clearTimeout(timer);
+      }
+    }
+
+    async function tryEngine(base) {
+      const res = await fetchWithTimeout(base.replace(/\/+$/, &#x27;&#x27;) + &#x27;/api/state&#x27;, {}, 700);
+      if (!res.ok) throw new Error(&#x27;HTTP &#x27; + res.status);
+      const data = await res.json();
+      return data;
+    }
+
+    async function autoDetectEngine() {
+      const current = engine();
+      const candidates = [current].concat(ENGINE_CANDIDATES.filter(x =&gt; x !== current));
+      log(&#x27;로컬 엔진 자동 탐색 중...\n&#x27; + candidates.join(&#x27;\n&#x27;));
+      for (const base of candidates) {
+        try {
+          const data = await tryEngine(base);
+          engineInput.value = base;
+          localStorage.setItem(&#x27;phonespotEngine&#x27;, base);
+          const job = data.job || {};
+          engineState.innerHTML = &#x27;&lt;span class=&quot;ok&quot;&gt;연결됨&lt;/span&gt; · &#x27; + base + &#x27; · 최신 &#x27; + (data.latestSlug || &#x27;-&#x27;) + &#x27; · &#x27; + (job.running ? &#x27;작업 중&#x27; : &#x27;대기&#x27;);
+          log(&#x27;자동 연결 성공\n주소: &#x27; + base + &#x27;\n최신 슬러그: &#x27; + (data.latestSlug || &#x27;-&#x27;) + &#x27;\n필요 이미지: &#x27; + data.missingRequests + &#x27;\n약한 매핑: &#x27; + data.weakMappings);
+          return data;
+        } catch (e) {
+          // Try next candidate.
+        }
+      }
+      engineState.innerHTML = &#x27;&lt;span class=&quot;bad&quot;&gt;연결 실패&lt;/span&gt;&#x27;;
+      log(&#x27;자동 탐색 실패\n로컬 엔진을 찾지 못했습니다.\n\n확인할 것:\n1. CODEX_VIDEO_DESK의 00 실행 파일이 켜져 있는지\n2. 패널 서버가 꺼져 있지 않은지\n3. 방금 패치했다면 00을 재실행했는지&#x27;);
+      throw new Error(&#x27;local engine not found&#x27;);
+    }
+
+    async function checkEngine(){
+      try {
+        const data = await autoDetectEngine();
+        return data;
+      } catch(e) {
+        return null;
+      }
+    }
+
+    async function localJson(path, options){
+      let base = engine();
+      try {
+        const res = await fetchWithTimeout(base + path, options || {}, 8000);
+        if (!res.ok) throw new Error(&#x27;HTTP &#x27; + res.status);
+        return await res.json();
+      } catch (e) {
+        await autoDetectEngine();
+        base = engine();
+        const res = await fetchWithTimeout(base + path, options || {}, 8000);
+        if (!res.ok) throw new Error(&#x27;HTTP &#x27; + res.status);
+        return await res.json();
+      }
+    }
+
+
+
+    async function bootPanel(){
+      log(&#x27;초기화 중...\n로컬 엔진을 찾고 작업대장을 자동으로 채웁니다.&#x27;);
+      const data = await checkEngine();
+      if (data) {
+        await loadSlugs();
+      } else {
+        updateQueueSummary([], &#x27;로컬 엔진 연결 실패&#x27;);
+        google.script.run.setQueueNotice(&#x27;로컬 엔진 연결 실패. 각 PC에서 CODEX_VIDEO_DESK 00 실행 파일을 켠 뒤 다시 시도하세요.&#x27;);
+      }
+    }
+
+    restoreEngine();
+    bootPanel();
+    setInterval(() =&gt; { checkEngine(); }, 10000);
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</textarea>
+    </div>
+  </div>
+  <script>
+    async function copyText(id) {
+      const el = document.getElementById(id);
+      el.focus();
+      el.select();
+      try {
+        await navigator.clipboard.writeText(el.value);
+      } catch (e) {
+        document.execCommand('copy');
+      }
+      alert(id === 'code' ? 'Code.gs 복사 완료' : 'Sidebar.html 복사 완료');
+    }
+  </script>
+</body>
+</html>

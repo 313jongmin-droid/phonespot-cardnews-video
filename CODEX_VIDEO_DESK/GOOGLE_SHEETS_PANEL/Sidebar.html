@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <base target="_top">
+  <style>
+    :root{--orange:#f74b0b;--ink:#111827;--muted:#667085;--line:#dde2ea;--bg:#f7f8fb;--green:#027a48;--red:#b42318}
+    body{margin:0;background:var(--bg);font-family:Arial,"Malgun Gothic",sans-serif;color:var(--ink)}
+    .wrap{padding:14px}
+    h1{font-size:18px;margin:0 0 4px}
+    h2{font-size:13px;margin:18px 0 8px}
+    p{font-size:12px;color:var(--muted);line-height:1.45}
+    label{display:block;font-size:12px;font-weight:700;margin:12px 0 6px}
+    input,select{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;background:white}
+    button{width:100%;border:1px solid var(--line);background:white;border-radius:8px;padding:10px;margin:5px 0;text-align:left;cursor:pointer}
+    button strong{display:block;font-size:13px}
+    button span{display:block;font-size:11px;color:var(--muted);margin-top:3px}
+    button.primary{background:var(--orange);border-color:var(--orange);color:white}
+    button.primary span{color:#fff3ec}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+    .grid button{margin:0;text-align:center}
+    .status{white-space:pre-wrap;background:#0f172a;color:#e5e7eb;border-radius:8px;padding:10px;font-size:11px;min-height:96px;margin-top:10px;max-height:240px;overflow:auto}
+    .card{background:white;border:1px solid var(--line);border-radius:10px;padding:10px;margin:10px 0}
+    .pill{display:inline-block;background:#fff1ea;color:#bd3505;border:1px solid #ffd8c7;border-radius:999px;padding:4px 8px;font-size:11px;margin:3px 4px 3px 0}
+    .ok{color:var(--green);font-weight:700}.bad{color:var(--red);font-weight:700}
+    .small{font-size:11px;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>폰스팟 제작 패널 V6</h1>
+    <p>구글시트 안에서 조작하고, 렌더링은 현재 PC의 로컬 엔진이 실행합니다.</p>
+
+    <div class="card">
+      <label>로컬 엔진 주소</label>
+      <input id="engine" value="http://localhost:4878">
+      <div class="grid">
+        <button onclick="saveEngine()">저장</button>
+        <button onclick="checkEngine()">연결 확인</button>
+      </div>
+      <button onclick="autoDetectEngine()"><strong>로컬 엔진 자동 찾기</strong><span>4878, 4888, 4901 등 사용 중인 패널 포트를 자동으로 찾습니다.</span></button>
+      <div id="engineState" class="small">대기 중</div>
+    </div>
+
+    <div class="card">
+      <label>슬러그 선택</label>
+      <select id="slug"></select>
+      <button onclick="loadSlugs()"><strong>슬러그 새로고침</strong><span>로컬 후보를 가져와 구글시트 작업대장에도 반영합니다.</span></button>
+      <div id="selectedPill" class="pill">선택 없음</div>
+      <div id="queueSummary" class="small">작업대장 대기 중</div>
+    </div>
+
+    <h2>제작 액션</h2>
+    <button class="primary" onclick="runLocal('video_prepare')"><strong>1. 영상 프롬프트 준비</strong><span>영상 스크립트와 일러스트 요청서를 만듭니다.</span></button>
+    <button class="primary" onclick="runLocal('video_import_render')"><strong>2. 이미지 가져오기 + 렌더</strong><span>다운로드 이미지를 반영하고 렌더링합니다.</span></button>
+    <button onclick="runLocal('video_render_selected')"><strong>선택 영상만 재렌더</strong><span>추가 이미지 없이 현재 슬러그를 다시 렌더합니다.</span></button>
+
+    <h2>검수</h2>
+    <div class="grid">
+      <button onclick="runPreflight()">사전검사</button>
+      <button onclick="loadIllustrationState()">일러스트 상태</button>
+    </div>
+    <div class="grid">
+      <button onclick="markReview('검수 OK')">검수 OK</button>
+      <button onclick="markReview('수정 필요')">수정 필요</button>
+    </div>
+
+    <h2>바로 열기</h2>
+    <button onclick="openLocal('/prompt')"><strong>최신 영상 프롬프트</strong><span>GPT Plus에 붙여넣을 프롬프트를 엽니다.</span></button>
+    <button onclick="openIllustrationRequests()"><strong>신규 일러스트 요청서</strong><span>선택 슬러그의 범용 일러스트 제안을 엽니다.</span></button>
+    <button onclick="runLocal('open_results')"><strong>결과 폴더 열기</strong><span>완성 MP4와 발행 패키지 폴더를 엽니다.</span></button>
+    <button onclick="runLocal('open_illustrations')"><strong>일러스트 폴더 열기</strong><span>재사용 일러스트 라이브러리와 드롭 폴더를 엽니다.</span></button>
+
+    <h2>시스템</h2>
+    <button onclick="runLocal('system_update')"><strong>GitHub 업데이트</strong><span>현재 PC의 코드를 최신 버전으로 받습니다.</span></button>
+    <button onclick="loadJob()"><strong>실행 로그 새로고침</strong><span>현재 로컬 엔진의 작업 로그를 확인합니다.</span></button>
+
+    <div class="status" id="status">대기 중</div>
+  </div>
+
+  <script>
+    const statusBox = document.getElementById('status');
+    const engineInput = document.getElementById('engine');
+    const slugSelect = document.getElementById('slug');
+    const engineState = document.getElementById('engineState');
+    const engineCandidates = [
+      'http://localhost:4878',
+      'http://127.0.0.1:4878',
+      'http://localhost:4888',
+      'http://127.0.0.1:4888',
+      'http://localhost:4901',
+      'http://127.0.0.1:4901',
+      'http://localhost:4877',
+      'http://127.0.0.1:4877'
+    ];
+
+    function log(message) {
+      statusBox.textContent = String(message || '');
+    }
+    function engine() {
+      return (engineInput.value || 'http://localhost:4878').replace(/\/+$/, '');
+    }
+    function selectedSlug() {
+      return slugSelect.value || '';
+    }
+    function saveEngine() {
+      localStorage.setItem('phonespotEngine', engine());
+      log('저장됨: ' + engine());
+    }
+    function restoreEngine() {
+      const saved = localStorage.getItem('phonespotEngine');
+      if (saved) engineInput.value = saved;
+    }
+    async function fetchWithTimeout(url, options, timeoutMs) {
+      const controller = new AbortController();
+      const timer = setTimeout(function(){ controller.abort(); }, timeoutMs || 900);
+      try {
+        return await fetch(url, Object.assign({}, options || {}, {
+          signal: controller.signal,
+          cache: 'no-store'
+        }));
+      } finally {
+        clearTimeout(timer);
+      }
+    }
+    async function tryEngine(base) {
+      const res = await fetchWithTimeout(base.replace(/\/+$/, '') + '/api/state', {}, 900);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return await res.json();
+    }
+    async function autoDetectEngine() {
+      const current = engine();
+      const candidates = [current].concat(engineCandidates.filter(function(x){ return x !== current; }));
+      log('로컬 엔진 자동 탐색 중...');
+      for (const base of candidates) {
+        try {
+          const data = await tryEngine(base);
+          engineInput.value = base;
+          localStorage.setItem('phonespotEngine', base);
+          const job = data.job || {};
+          engineState.innerHTML = '<span class="ok">연결됨</span> · ' + base + ' · 최신 ' + (data.latestSlug || '-') + ' · ' + (job.running ? '작업 중' : '대기');
+          log('자동 연결 성공\n주소: ' + base + '\n최신 슬러그: ' + (data.latestSlug || '-') + '\n필요 이미지: ' + data.missingRequests + '\n약한 매핑: ' + data.weakMappings);
+          return data;
+        } catch (e) {}
+      }
+      engineState.innerHTML = '<span class="bad">연결 실패</span>';
+      log('연결 실패\n로컬 엔진을 찾지 못했습니다.\n\n확인:\n1. CODEX_VIDEO_DESK 00 실행 파일이 켜져 있는지\n2. 패널 포트가 열려 있는지\n3. 패치 후 00을 재실행했는지');
+      return null;
+    }
+    async function checkEngine() {
+      return await autoDetectEngine();
+    }
+    async function localJson(path, options) {
+      let base = engine();
+      try {
+        const res = await fetchWithTimeout(base + path, options || {}, 10000);
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return await res.json();
+      } catch (e) {
+        const data = await autoDetectEngine();
+        if (!data) throw e;
+        base = engine();
+        const res = await fetchWithTimeout(base + path, options || {}, 10000);
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return await res.json();
+      }
+    }
+    function updateSelected() {
+      document.getElementById('selectedPill').textContent = selectedSlug() ? '선택: ' + selectedSlug() : '선택 없음';
+    }
+    function updateQueueSummary(rows, reason) {
+      const el = document.getElementById('queueSummary');
+      if (!el) return;
+      if (rows && rows.length) {
+        const ok = rows.filter(function(r){ return String(r.flag || '').trim() === 'OK'; }).length;
+        el.innerHTML = '<span class="ok">작업대장 채움</span> · 전체 ' + rows.length + '개 · OK ' + ok + '개';
+      } else {
+        el.innerHTML = '<span class="bad">작업대장 비어 있음</span> · ' + (reason || '슬러그 없음');
+      }
+    }
+    async function loadSlugs() {
+      try {
+        const data = await localJson('/api/slugs');
+        const rows = data.slugs || [];
+        slugSelect.innerHTML = '';
+        if (!rows.length) {
+          const opt = document.createElement('option');
+          opt.value = '';
+          opt.textContent = '슬러그 없음 - 로컬 엔진/동기화 확인';
+          slugSelect.appendChild(opt);
+        }
+        rows.forEach(function(r){
+          const opt = document.createElement('option');
+          opt.value = r.slug;
+          opt.textContent = r.number + '. ' + r.date + ' [' + r.flag + '] ' + r.slug;
+          slugSelect.appendChild(opt);
+        });
+        google.script.run.upsertRowsFromLocal(rows);
+        updateSelected();
+        updateQueueSummary(rows, rows.length ? '' : '로컬 엔진은 연결됐지만 후보가 없습니다. 카드뉴스 동기화를 확인하세요.');
+        log('슬러그 ' + rows.length + '개 불러옴\n시트 작업대장에도 반영했습니다.');
+      } catch (e) {
+        updateQueueSummary([], '로컬 엔진 연결 실패 또는 API 오류');
+        google.script.run.setQueueNotice('슬러그 불러오기 실패: ' + e.message);
+        log('슬러그 불러오기 실패\n' + e.message);
+      }
+    }
+    slugSelect.addEventListener('change', updateSelected);
+
+    function openLocal(path) {
+      window.open(engine() + path, '_blank');
+    }
+    function openIllustrationRequests() {
+      const slug = selectedSlug();
+      if (!slug) { alert('먼저 슬러그를 선택하세요.'); return; }
+      openLocal('/illustration-requests/' + encodeURIComponent(slug));
+    }
+    async function runLocal(action) {
+      const slug = selectedSlug();
+      if (!slug && !['open_results','open_illustrations','system_update'].includes(action)) {
+        alert('먼저 슬러그를 선택하세요.');
+        return;
+      }
+      try {
+        log('실행 요청 중...\n' + action + '\n' + slug);
+        const data = await localJson('/api/action', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({action: action, slug: slug})
+        });
+        google.script.run.markActionResult(slug || '-', action, !!data.ok, data.message || data.error || '');
+        log(data.ok ? '요청 완료\n실행 로그를 확인하세요.' : '요청 실패\n' + JSON.stringify(data));
+        setTimeout(loadJob, 1000);
+      } catch(e) {
+        google.script.run.markActionResult(slug || '-', action, false, e.message);
+        log('실행 실패\n' + e.message);
+      }
+    }
+    async function runPreflight() {
+      const slug = selectedSlug();
+      if (!slug) { alert('먼저 슬러그를 선택하세요.'); return; }
+      try {
+        const data = await localJson('/api/preflight?slug=' + encodeURIComponent(slug));
+        const items = (data.items || []).slice(0, 12).map(function(x){
+          return '[' + x.level + '] ' + x.message + (x.detail ? '\n  ' + x.detail : '');
+        }).join('\n');
+        log('사전검사: ' + data.status + '\nERROR ' + data.errors + ' / WARN ' + data.warnings + '\n\n' + (items || '표시할 항목 없음'));
+      } catch(e) {
+        log('사전검사 실패\n' + e.message);
+      }
+    }
+    async function loadIllustrationState() {
+      const slug = selectedSlug();
+      if (!slug) { alert('먼저 슬러그를 선택하세요.'); return; }
+      try {
+        const data = await localJson('/api/illustration-requests?slug=' + encodeURIComponent(slug));
+        log('일러스트 요청서\n신규 제안: ' + (data.count || 0) + '\n문맥 경고: ' + (data.gaps || 0) + '\n파일: ' + (data.exists ? '있음' : '없음'));
+      } catch(e) {
+        log('일러스트 상태 확인 실패\n' + e.message);
+      }
+    }
+    async function loadJob() {
+      try {
+        const data = await localJson('/api/job');
+        const job = data.job || {};
+        log((job.running ? '[작업 중] ' : '[대기] ') + (job.name || '') + '\nexit=' + job.exit_code + '\n\n' + ((job.log || '').slice(-5000)));
+      } catch(e) {
+        log('로그 확인 실패\n' + e.message);
+      }
+    }
+    function markReview(value) {
+      const slug = selectedSlug();
+      if (!slug) { alert('먼저 슬러그를 선택하세요.'); return; }
+      google.script.run.markReview(slug, value);
+      log('검수 상태 기록: ' + value + '\n' + slug);
+    }
+    async function bootPanel() {
+      log('초기화 중...\n로컬 엔진을 찾고 작업대장을 자동으로 채웁니다.');
+      const data = await checkEngine();
+      if (data) {
+        await loadSlugs();
+      } else {
+        updateQueueSummary([], '로컬 엔진 연결 실패');
+        google.script.run.setQueueNotice('로컬 엔진 연결 실패. 각 PC에서 CODEX_VIDEO_DESK 00 실행 파일을 켠 뒤 다시 시도하세요.');
+      }
+    }
+
+    restoreEngine();
+    bootPanel();
+    setInterval(function(){ checkEngine(); }, 10000);
+  </script>
+</body>
+</html>

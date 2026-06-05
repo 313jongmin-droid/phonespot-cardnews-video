@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 """Create one copy-ready result folder for a Codex short.
 
-V2 keeps exactly one active MP4 per render result folder.
+V3 keeps exactly one active MP4 per render result folder.
 The MP4 filename matches its parent folder:
   CODEX_VIDEO_DESK/RESULTS/<render-key>/<render-key>.mp4
 
-Channel copy, checklist, source notes, and optional illustration requests are
-written beside the MP4. The rendered MP4 is never re-encoded by this script.
+Channel copy, upload checklist, source notes, and optional illustration
+requests are written beside the MP4. The rendered MP4 is never re-encoded by
+this script.
 """
 from __future__ import annotations
 
@@ -22,7 +23,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 CARDNEWS_OUTPUT = ROOT / "cardnews" / "output"
-SHORTS = ROOT / "shorts"
 DESK = ROOT / "CODEX_VIDEO_DESK"
 RESULTS = DESK / "RESULTS"
 
@@ -61,11 +61,18 @@ def sections_from_captions(text: str) -> dict[str, str]:
     return sections
 
 
+def compact_text(value: str, fallback: str = "") -> str:
+    value = re.sub(r"\r\n?", "\n", value or "")
+    value = re.sub(r"[ \t]+", " ", value)
+    value = re.sub(r"\n{3,}", "\n\n", value)
+    value = value.strip()
+    return value or fallback
+
+
 def clean_youtube_description(value: str) -> str:
     if not value:
         return ""
-    value = re.sub(r"(?ms)^▶\s*타임스탬프\s*$.*?(?=^▶\s*|\Z)", "", value)
-    value = re.sub(r"\n{3,}", "\n\n", value).strip()
+    value = compact_text(value)
     if "#Shorts" not in value and "#shorts" not in value:
         value = value.rstrip() + "\n\n#Shorts"
     return value
@@ -133,6 +140,149 @@ def unique_package(slug: str, date_text: str) -> Path:
     return RESULTS / f"{key}_{datetime.now().strftime('%H%M%S')}"
 
 
+def keyword_hashtags(text: str) -> list[str]:
+    lowered = text.lower()
+    tags = ["#폰스팟", "#휴대폰꿀팁", "#IT뉴스", "#스마트폰"]
+    checks = [
+        (("#아이폰", "#애플"), ["iphone", "ios", "apple", "아이폰", "애플"]),
+        (("#갤럭시", "#삼성"), ["galaxy", "samsung", "갤럭시", "삼성"]),
+        (("#보안", "#개인정보보호"), ["보안", "개인정보", "피싱", "사기", "도난", "분실"]),
+        (("#지원금", "#휴대폰성지"), ["지원금", "보조금", "가격", "요금", "할인"]),
+        (("#AI",), ["ai", "siri", "gemini", "제미나이", "시리", "인공지능"]),
+        (("#업데이트",), ["업데이트", "베타", "oneui", "android"]),
+    ]
+    for add_tags, needles in checks:
+        if any(needle in lowered or needle in text for needle in needles):
+            tags.extend(add_tags)
+    return list(dict.fromkeys(tags))
+
+
+def one_line(value: str, limit: int = 85) -> str:
+    value = re.sub(r"\s+", " ", value or "").strip()
+    if len(value) <= limit:
+        return value
+    return value[: limit - 1].rstrip() + "…"
+
+
+def build_title_candidates(title: str, slug: str) -> list[str]:
+    base = clean_title(title, slug.replace("_", " "))
+    candidates = [
+        base,
+        f"{base} | 폰스팟 IT",
+        one_line(f"{base} 핵심만 1분 정리", 60),
+    ]
+    return list(dict.fromkeys([candidate for candidate in candidates if candidate]))
+
+
+def build_thumbnail_candidates(title: str, data: dict) -> list[str]:
+    opening = data.get("opening") if isinstance(data.get("opening"), dict) else {}
+    candidates = [
+        str(opening.get("line1") or "").strip(),
+        str(opening.get("line2") or "").strip(),
+        title,
+    ]
+    cleaned = []
+    for candidate in candidates:
+        candidate = re.sub(r"\s+", " ", candidate).strip()
+        if candidate:
+            cleaned.append(one_line(candidate, 22))
+    return list(dict.fromkeys(cleaned))[:3]
+
+
+def build_upload_copy(
+    *,
+    slug: str,
+    title: str,
+    master_name: str,
+    youtube_description: str,
+    instagram: str,
+    tiktok: str,
+    data: dict,
+) -> str:
+    all_text = "\n".join([slug, title, youtube_description, instagram, tiktok])
+    tags = keyword_hashtags(all_text)
+    youtube_tags = " ".join(list(dict.fromkeys(tags + ["#Shorts"])))
+    instagram_tags = " ".join(list(dict.fromkeys(tags + ["#릴스", "#Reels"])))
+    tiktok_tags = " ".join(list(dict.fromkeys(tags + ["#틱톡", "#추천"])))
+    title_candidates = build_title_candidates(title, slug)
+    thumbnail_candidates = build_thumbnail_candidates(title, data)
+
+    youtube_description = clean_youtube_description(youtube_description or instagram or tiktok)
+    instagram = compact_text(instagram or youtube_description)
+    tiktok = compact_text(tiktok or instagram)
+
+    return f"""폰스팟 숏폼 발행 패키지
+
+영상 파일
+- {master_name}
+
+사용 순서
+1. 영상 파일을 끝까지 한 번 재생해서 자막 잘림, 음성 싱크, 마지막 CTA를 확인합니다.
+2. 업로드할 채널 영역만 복사해서 붙여넣습니다.
+3. 릴스와 틱톡은 앱에서 가장 읽기 좋은 프레임을 커버로 지정합니다.
+
+============================================================
+제목 후보
+============================================================
+{chr(10).join(f"- {candidate}" for candidate in title_candidates)}
+
+============================================================
+커버 문구 후보
+============================================================
+{chr(10).join(f"- {candidate}" for candidate in thumbnail_candidates) if thumbnail_candidates else "- 영상 첫 화면 제목 사용"}
+
+============================================================
+YOUTUBE SHORTS
+============================================================
+
+[제목]
+{title_candidates[0]}
+
+[설명]
+{youtube_description}
+
+[태그]
+{youtube_tags}
+
+============================================================
+INSTAGRAM REELS
+============================================================
+
+[본문]
+{instagram}
+
+[태그]
+{instagram_tags}
+
+============================================================
+TIKTOK
+============================================================
+
+[본문]
+{tiktok}
+
+[태그]
+{tiktok_tags}
+
+============================================================
+고정 댓글 / 첫 댓글 후보
+============================================================
+- 더 궁금한 기능이나 가격 비교는 댓글로 남겨주세요.
+- 휴대폰 구매 전 지원금 비교가 필요하면 폰스팟에서 확인해보세요.
+
+============================================================
+업로드 전 체크리스트
+============================================================
+- 첫 2초 안에 주제가 바로 보이는지 확인
+- 긴 자막이 화면 밖으로 나가지 않는지 확인
+- TTS 문장 전환과 화면 전환이 크게 어긋나지 않는지 확인
+- 같은 원본 이미지가 반복 사용되어 지루해 보이지 않는지 확인
+- CTA 문구가 고정 문구와 어긋나지 않는지 확인
+- 유튜브는 세로 영상 + 60초 내외 + #Shorts 포함 확인
+- 인스타/틱톡은 업로드 후 자동 자막이 원본 자막을 가리지 않는지 확인
+"""
+
+
 def package_for(video: Path, slug: str, date_text: str | None = None) -> Path:
     video = video.resolve()
     if not video.exists():
@@ -169,35 +319,15 @@ def package_for(video: Path, slug: str, date_text: str | None = None) -> Path:
 
     write_text(
         package / "UPLOAD_COPY.txt",
-        f"""폰스팟 SNS 업로드 문구
-
-사용 순서
-1. 결과 폴더와 이름이 같은 MP4를 한 번 확인합니다.
-2. 업로드할 채널 구역만 복사합니다.
-3. 첫 2초, 날짜, 숫자, 고정 CTA를 확인합니다.
-
-============================================================
-YOUTUBE SHORTS
-============================================================
-
-[제목]
-{title}
-
-[설명]
-{youtube_description}
-
-============================================================
-INSTAGRAM REELS
-============================================================
-
-{instagram}
-
-============================================================
-TIKTOK
-============================================================
-
-{tiktok}
-""",
+        build_upload_copy(
+            slug=slug,
+            title=title,
+            master_name=master.name,
+            youtube_description=youtube_description,
+            instagram=instagram,
+            tiktok=tiktok,
+            data=data,
+        ),
     )
 
     illustration_md = CARDNEWS_OUTPUT / slug / "codex_illustration_requests.md"
@@ -229,26 +359,35 @@ TIKTOK
     write_json(
         package / "publish.json",
         {
-            "version": 2,
+            "version": 3,
             "generated_at": datetime.now().isoformat(timespec="seconds"),
             "slug": slug,
             "title": title,
+            "title_candidates": build_title_candidates(title, slug),
+            "thumbnail_candidates": build_thumbnail_candidates(title, data),
             "master_video": master.name,
             "upload_copy": "UPLOAD_COPY.txt",
             "master_mode": master_mode,
             "master_video_sha256": sha256(master),
+            "hashtags": keyword_hashtags("\n".join([slug, title, youtube_description, instagram, tiktok])),
             "channels": {
                 "youtube_shorts": {
                     "video": master.name,
                     "copy_source": "UPLOAD_COPY.txt#YOUTUBE SHORTS",
                 },
-                "instagram_reels": {"video": master.name, "copy_source": "UPLOAD_COPY.txt#INSTAGRAM REELS"},
-                "tiktok": {"video": master.name, "copy_source": "UPLOAD_COPY.txt#TIKTOK"},
+                "instagram_reels": {
+                    "video": master.name,
+                    "copy_source": "UPLOAD_COPY.txt#INSTAGRAM REELS",
+                },
+                "tiktok": {
+                    "video": master.name,
+                    "copy_source": "UPLOAD_COPY.txt#TIKTOK",
+                },
             },
         },
     )
-    print(f"[result-package-v2] folder: {package}")
-    print(f"[result-package-v2] master: {master.name} ({master_mode})")
+    print(f"[result-package-v3] folder: {package}")
+    print(f"[result-package-v3] master: {master.name} ({master_mode})")
     return package
 
 

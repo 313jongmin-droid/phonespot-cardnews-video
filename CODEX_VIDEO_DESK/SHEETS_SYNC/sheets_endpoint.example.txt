@@ -1,0 +1,10 @@
+# 이 파일을 복사해서 같은 폴더에 sheets_endpoint.txt 로 저장한 뒤 값을 채우세요.
+# (sheets_endpoint.txt 가 없으면 동기화는 자동으로 비활성 = 기존 패널에 영향 없음)
+#
+# 1번째 줄: Apps Script 웹앱 배포 URL (반드시 .../exec 로 끝남)
+# 2번째 줄: 공유 토큰 (Apps Script 스크립트 속성 PHONESPOT_TOKEN 과 똑같이)
+#
+# '#' 으로 시작하는 줄과 빈 줄은 무시됩니다.
+
+https://script.google.com/macros/s/AKfycbXXXXXXXXXXXXXXXXXXXXX/exec
+change-this-to-a-long-random-token

@@ -31,6 +31,7 @@ TELEGRAM_TOKEN_FILE = SECRETS / "telegram_token.txt"
 TELEGRAM_CHAT_ID_FILE = SECRETS / "telegram_chat_id.txt"
 DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
+WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 
@@ -771,6 +772,36 @@ def get_cardnews_rows() -> list[dict]:
 
 
 
+
+def github_status() -> dict:
+    status_file = DESK / "TEMP" / "github_status.json"
+    script = DESK / "MAINTENANCE" / "codex_github_status.py"
+    cached = None
+    if status_file.exists():
+        try:
+            cached = json.loads(status_file.read_text(encoding="utf-8", errors="replace"))
+        except Exception:
+            cached = None
+    try:
+        stale = (not status_file.exists()) or (time.time() - status_file.stat().st_mtime > 60)
+        if stale and script.exists():
+            subprocess.run(
+                [sys.executable, str(script)],
+                cwd=str(ROOT),
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+                timeout=25,
+            )
+            if status_file.exists():
+                cached = json.loads(status_file.read_text(encoding="utf-8", errors="replace"))
+    except Exception as exc:
+        return {"ok": False, "class": "warn", "message": "GitHub 상태 확인 실패", "detail": str(exc)}
+    return cached or {"ok": False, "class": "warn", "message": "GitHub 상태 미확인", "detail": "상태 파일 없음"}
+
+
 def sync_status() -> dict:
     status_file = DESK / "TEMP" / "cardnews_sync_status.json"
     local_root = str(ROOT)
@@ -796,10 +827,19 @@ def sync_status() -> dict:
             status["message"] = f"동기화 상태 파일 읽기 실패: {exc}"
     return status
 
+def cors_headers(handler: BaseHTTPRequestHandler) -> None:
+    # Google Sheets sidebar runs on script.google.com. It must be allowed to
+    # call the local engine on localhost.
+    handler.send_header("Access-Control-Allow-Origin", "*")
+    handler.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+    handler.send_header("Access-Control-Allow-Headers", "Content-Type")
+
+
 def json_response(handler: BaseHTTPRequestHandler, data: dict, status: int = 200) -> None:
     payload = json.dumps(data, ensure_ascii=False).encode("utf-8")
     handler.send_response(status)
     handler.send_header("Content-Type", "application/json; charset=utf-8")
+    cors_headers(handler)
     handler.send_header("Content-Length", str(len(payload)))
     handler.end_headers()
     handler.wfile.write(payload)
@@ -809,6 +849,7 @@ def html_response(handler: BaseHTTPRequestHandler, page: str, status: int = 200)
     payload = page.encode("utf-8")
     handler.send_response(status)
     handler.send_header("Content-Type", "text/html; charset=utf-8")
+    cors_headers(handler)
     handler.send_header("Content-Length", str(len(payload)))
     handler.end_headers()
     handler.wfile.write(payload)
@@ -861,6 +902,11 @@ def start_card_webui(slug: str = "") -> None:
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, format: str, *args) -> None:
         return
+
+    def do_OPTIONS(self) -> None:
+        self.send_response(204)
+        cors_headers(self)
+        self.end_headers()
 
     def do_GET(self) -> None:
         parsed = urlparse(self.path)
@@ -964,6 +1010,7 @@ class Handler(BaseHTTPRequestHandler):
                 "job": job,
                 "results": results_list(),
                 "sync": sync_status(),
+                "github": github_status(),
             })
             return
         if parsed.path == "/api/slugs":
@@ -1047,7 +1094,7 @@ class Handler(BaseHTTPRequestHandler):
                     json_response(self, {"ok": True})
                 return
             if action == "video_import_render":
-                slug_now = validate_slug(latest_slug())
+                slug_now = validate_slug(slug)
                 commands = [
                     [sys.executable, str(SCRIPTS / "codex_import_downloads.py")],
                     cmd_video_runner(slug_now),
@@ -1101,6 +1148,39 @@ class Handler(BaseHTTPRequestHandler):
             if action == "open_desk":
                 safe_open(DESK)
                 json_response(self, {"ok": True})
+                return
+            if action == "work_queue_refresh":
+                ok = run_job("작업대장 새로고침", [[sys.executable, str(SCRIPTS / "codex_work_queue.py")]], ROOT)
+                if not ok:
+                    json_response(self, {"ok": False, "busy": True, "message": "이미 다른 작업이 실행 중입니다. 현재 작업이 끝난 뒤 다시 눌러주세요."})
+                else:
+                    json_response(self, {"ok": True})
+                return
+            if action == "open_work_queue":
+                WORK_QUEUE.mkdir(parents=True, exist_ok=True)
+                safe_open(WORK_QUEUE)
+                json_response(self, {"ok": True})
+                return
+            if action == "open_work_queue_tsv":
+                path = WORK_QUEUE / "phonespot_work_queue.tsv"
+                if not path.exists():
+                    subprocess.run([sys.executable, str(SCRIPTS / "codex_work_queue.py")], cwd=str(ROOT), check=False)
+                safe_open_existing(path)
+                json_response(self, {"ok": True})
+                return
+            if action == "open_work_queue_md":
+                path = WORK_QUEUE / "phonespot_work_queue.md"
+                if not path.exists():
+                    subprocess.run([sys.executable, str(SCRIPTS / "codex_work_queue.py")], cwd=str(ROOT), check=False)
+                safe_open_existing(path)
+                json_response(self, {"ok": True})
+                return
+            if action == "system_upload":
+                ok = run_job("시스템 업로드: GitHub commit/push", [[sys.executable, str(DESK / "MAINTENANCE" / "codex_github_upload.py")]], ROOT)
+                if not ok:
+                    json_response(self, {"ok": False, "busy": True, "message": "이미 다른 작업이 실행 중입니다. 현재 작업이 끝난 뒤 다시 눌러주세요."})
+                else:
+                    json_response(self, {"ok": True})
                 return
             if action == "system_update":
                 ok = run_job("시스템 업데이트: GitHub pull", [[sys.executable, str(DESK / "MAINTENANCE" / "codex_github_update.py")]], ROOT)
@@ -1196,11 +1276,15 @@ INDEX_HTML = r"""<!doctype html>
     .tab { flex:1; border:1px solid var(--line); background:#fff; border-radius:7px; padding:9px; cursor:pointer; font-weight:700; }
     .tab.active { background:#fff0e8; border-color:var(--orange); color:var(--orange); }
     .list { max-height:715px; overflow:auto; }
-    .row { width:100%; border:0; border-bottom:1px solid #eef1f5; background:white; text-align:left; padding:10px 12px; cursor:pointer; display:grid; grid-template-columns:42px 82px 58px 1fr; gap:8px; align-items:center; font-size:13px; }
-    .row.card { grid-template-columns:82px 76px 1fr; }
+    .row { width:100%; border:0; border-bottom:1px solid #eef1f5; background:white; text-align:left; padding:10px 12px; cursor:pointer; display:grid; gap:8px; align-items:center; font-size:13px; }
+    .row.video { grid-template-columns:44px 82px 58px 92px minmax(0,1fr); }
+    .row.card { grid-template-columns:44px 82px 92px minmax(0,1fr); }
     .row:hover { background:#fff7f3; } .row.active { background:#fff0e8; outline:2px solid rgba(247,75,11,.25); }
-    .slug-name { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-    .title-sub { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--muted); font-size:12px; margin-top:2px; }
+    .row-number { display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:8px; background:#0f172a; color:white; font-size:15px; font-weight:900; line-height:1; }
+    .row.active .row-number { background:var(--orange); color:white; }
+    .row-date,.flag { color:#334155; font-size:12px; white-space:nowrap; }
+    .slug-name { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0; font-weight:700; }
+    .title-sub { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--muted); font-size:12px; margin-top:2px; font-weight:400; }
     .flag { font-weight:700; color:var(--blue); }
     .stage-pill { display:inline-flex; align-items:center; justify-content:center; min-width:82px; padding:4px 8px; border-radius:999px; font-size:11px; font-weight:800; border:1px solid var(--line); background:#f8fafc; color:#475569; }
     .stage-pill.ok { background:#ecfdf5; border-color:#86efac; color:#166534; }
@@ -1216,12 +1300,17 @@ INDEX_HTML = r"""<!doctype html>
     .btn:hover { border-color:var(--orange); box-shadow:0 2px 12px rgba(0,0,0,.06); }
     .btn.primary { background:var(--orange); color:white; border-color:var(--orange); }
     .btn strong { display:block; font-size:15px; margin-bottom:6px; } .btn span { font-size:12px; color:inherit; opacity:.82; line-height:1.35; }
-    .runtime-strip { max-width:1520px; margin:14px auto 0; padding:0 18px; display:grid; grid-template-columns:1.1fr 1.4fr 1fr; gap:10px; box-sizing:border-box; }
+    .runtime-strip { max-width:1520px; margin:14px auto 0; padding:0 18px; display:grid; grid-template-columns:1.05fr 1.25fr .9fr .9fr; gap:10px; box-sizing:border-box; }
     .runtime-card { border:1px solid var(--line); border-radius:10px; background:white; padding:10px 12px; min-height:62px; }
     .runtime-card span { display:block; font-size:11px; color:#64748b; margin-bottom:5px; }
     .runtime-card b { display:block; font-size:15px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
     .runtime-card.good { border-color:#86efac; background:#f0fdf4; }
     .runtime-card.bad { border-color:#fecaca; background:#fef2f2; }
+    .runtime-card.warn { border-color:#fdba74; background:#fff7ed; }
+    .runtime-action { margin-top:8px; border:1px solid var(--orange); background:white; color:var(--orange); border-radius:7px; padding:5px 8px; font-size:11px; font-weight:800; cursor:pointer; }
+    .runtime-action:hover { background:#fff0e8; }
+    .runtime-actions { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+    .runtime-actions .runtime-action { margin-top:8px; }
     .status { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; }
     .metric { border:1px solid var(--line); border-radius:8px; padding:12px; background:white; min-height:76px; } .metric b { display:block; font-size:20px; margin-top:4px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
     .warn { color:var(--red); } .ok { color:var(--green); }
@@ -1256,6 +1345,7 @@ INDEX_HTML = r"""<!doctype html>
     <div class="runtime-card" id="runtimeMode"><span>실행 위치</span><b id="runtimeModeText">확인 중</b></div>
     <div class="runtime-card" id="runtimeSync"><span>카드뉴스 동기화</span><b id="runtimeSyncText">확인 중</b></div>
     <div class="runtime-card"><span>작업 데이터</span><b id="runtimeCounts">-</b></div>
+    <div class="runtime-card" id="runtimeGithub"><span>GitHub</span><b id="runtimeGithubText">확인 중</b><div class="runtime-actions"><button class="runtime-action" id="runtimeGithubDownloadButton" onclick="runGithubDownload(event)">다운로드</button><button class="runtime-action" id="runtimeGithubUploadButton" onclick="runGithubUpload(event)">업로드</button></div></div>
   </div>
   <main>
     <section>
@@ -1360,8 +1450,8 @@ INDEX_HTML = r"""<!doctype html>
       const data = await api("/api/slugs"); videoItems = data.slugs || []; const box = document.getElementById("videoList"); box.innerHTML = "";
       videoItems.forEach(item => {
         const btn = document.createElement("button");
-        btn.className = "row" + (item.slug === selected ? " active" : "");
-        btn.innerHTML = `<b>${item.number}</b><span>${item.date}</span><span class="flag">[${item.flag}]</span><span class="stage-pill ${item.stageClass || "muted"}">${item.stage || "-"}</span><span class="slug-name">${item.slug}</span>`;
+        btn.className = "row video" + (item.slug === selected ? " active" : "");
+        btn.innerHTML = `<span class="row-number">${item.number}</span><span class="row-date">${item.date}</span><span class="flag">[${item.flag}]</span><span class="stage-pill ${item.stageClass || "muted"}">${item.stage || "-"}</span><span class="slug-name">${item.slug}</span>`;
         btn.onclick = () => { selected = item.slug; document.getElementById("selectedSlug").textContent = selected; setMode("video"); updateSelectedStatus(); loadSlugs(); };
         box.appendChild(btn);
       });
@@ -1369,10 +1459,10 @@ INDEX_HTML = r"""<!doctype html>
     }
     async function loadCardnews() {
       const data = await api("/api/cardnews/slugs"); cardItems = data.rows || []; const box = document.getElementById("cardList"); box.innerHTML = "";
-      cardItems.forEach(item => {
+      cardItems.forEach((item, idx) => {
         const btn = document.createElement("button");
         btn.className = "row card" + (item.slug === selectedCard ? " active" : "");
-        btn.innerHTML = `<span>${item.date || "-"}</span><span class="stage-pill ${item.stageClass || "muted"}">${item.stage || item.status}</span><span class="slug-name">${item.slug}<span class="title-sub">${item.title || ""}</span><span class="title-sub">이미지 ${item.images}/5 · 카드 ${item.cards} · 프롬프트 ${item.prompt ? "있음" : "없음"}</span></span>`;
+        btn.innerHTML = `<span class="row-number">${idx + 1}</span><span class="row-date">${item.date || "-"}</span><span class="stage-pill ${item.stageClass || "muted"}">${item.stage || item.status}</span><span class="slug-name">${item.slug}<span class="title-sub">${item.title || ""}</span><span class="title-sub">이미지 ${item.images}/5 · 카드 ${item.cards} · 프롬프트 ${item.prompt ? "있음" : "없음"}</span></span>`;
         btn.onclick = () => { selectedCard = item.slug; selected = item.slug; document.getElementById("selectedSlug").textContent = selected; setMode("card"); updateSelectedStatus(); loadCardnews(); loadSlugs(); };
         box.appendChild(btn);
       });
@@ -1495,6 +1585,18 @@ INDEX_HTML = r"""<!doctype html>
       document.getElementById("runtimeSyncText").textContent = `${sync.ok ? "성공" : "확인 필요"} · ${sync.endedAt || sync.message || "-"}`;
       document.getElementById("runtimeSync").className = `runtime-card ${sync.ok ? "good" : "bad"}`;
       document.getElementById("runtimeCounts").textContent = `기사 ${sync.articles || 0} · 이미지 ${sync.images || 0} · 결과 ${sync.output || 0}`;
+      const gh = data.github || {};
+      const ghCard = document.getElementById("runtimeGithub");
+      const ghText = document.getElementById("runtimeGithubText");
+      if (ghText) {
+        const commit = gh.local ? " · " + gh.local : "";
+        ghText.textContent = `${gh.message || "확인 중"}${commit}`;
+      }
+      if (ghCard) ghCard.className = `runtime-card ${gh.class || "warn"}`;
+      const ghDown = document.getElementById("runtimeGithubDownloadButton");
+      const ghUp = document.getElementById("runtimeGithubUploadButton");
+      if (ghDown) ghDown.title = gh.detail || "GitHub에서 최신 코드를 받습니다.";
+      if (ghUp) ghUp.title = "내 PC의 변경사항을 GitHub에 올립니다.";
       refreshIllustrationRequestNote();
       updateSelectedStatus();
       const job = data.job || {};
@@ -1502,7 +1604,44 @@ INDEX_HTML = r"""<!doctype html>
       const log = document.getElementById("log"); log.textContent = job.log || ""; log.scrollTop = log.scrollHeight;
       const results = document.getElementById("results"); results.innerHTML = ""; (data.results || []).forEach(r => { const div = document.createElement("div"); div.className = "result-row"; div.innerHTML = `<span>${r.name}</span><span class="small">${r.mp4 || ""}</span>`; results.appendChild(div); });
     }
+
+    async function runGithubAction(event, action, label) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      const down = document.getElementById("runtimeGithubDownloadButton");
+      const up = document.getElementById("runtimeGithubUploadButton");
+      const text = document.getElementById("runtimeGithubText");
+      try {
+        if (down) down.disabled = true;
+        if (up) up.disabled = true;
+        if (text) text.textContent = label + " 요청 중...";
+        const result = await api("/api/action", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({action, slug: ""})
+        });
+        if (!result.ok) {
+          alert(result.message || result.error || label + "을 시작하지 못했습니다.");
+        }
+        await loadState();
+      } catch (err) {
+        alert("GitHub " + label + " 버튼 오류: " + String(err));
+      } finally {
+        if (down) down.disabled = false;
+        if (up) up.disabled = false;
+      }
+    }
+    async function runGithubDownload(event) {
+      return runGithubAction(event, "system_update", "다운로드");
+    }
+    async function runGithubUpload(event) {
+      return runGithubAction(event, "system_upload", "업로드");
+    }
+
     async function runAction(action) {
+      console.log("runAction", action);
       try {
         const result = await api("/api/action", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({action, slug:selected}) });
         if (!result.ok) {

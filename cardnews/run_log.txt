@@ -1,19 +1,19 @@
-=== start 2026-06-03 22:00:18.62 
+=== start 2026-06-05 15:02:32.24 
  
 [probe] where py: 
 C:\Windows\py.exe
 C:\Users\di898\AppData\Local\Microsoft\WindowsApps\py.exe
  
 [using py] 
-[arg-match] '013' -> 013_tip_galaxy_camera_hidden
+[arg-match] '011' -> 011_qa_combo_discount_check
 ============================================================
 phonespot cardnews renderer (v5)
 BASE: C:\Users\di898\Documents\phonespot_cardnews\cardnews
-SLUG: 013_tip_galaxy_camera_hidden
-OUT : C:\Users\di898\Documents\phonespot_cardnews\cardnews\output\013_tip_galaxy_camera_hidden
+SLUG: 011_qa_combo_discount_check
+OUT : C:\Users\di898\Documents\phonespot_cardnews\cardnews\output\011_qa_combo_discount_check
 ============================================================
 [info] Downloading Chromium (~130MB, first run only)...
-[slug] SLUG='013_tip_galaxy_camera_hidden'  IMG_DIR=C:\Users\di898\Documents\phonespot_cardnews\cardnews\images\013_tip_galaxy_camera_hidden
+[slug] SLUG='011_qa_combo_discount_check'  IMG_DIR=C:\Users\di898\Documents\phonespot_cardnews\cardnews\images\011_qa_combo_discount_check
 [auto-rename] numeric filenames detected -> numeric order:
   1.png → card_1.png
   2.png → card_2.png
@@ -46,25 +46,25 @@ OUT : C:\Users\di898\Documents\phonespot_cardnews\cardnews\output\013_tip_galaxy
   OK card_5.jpg
   OK card_6.jpg
 
-Render time: 145.0s
+Render time: 43.2s
 
 === JPG result ===
-  18 files / 2445 KB total (2 MB)
+  18 files / 2478 KB total (2 MB)
 
-OK captions.md (loaded from articles/013_tip_galaxy_camera_hidden.json) + narration_md (617 chars)
+OK captions.md (loaded from articles/011_qa_combo_discount_check.json) + narration_md (607 chars)
 
 ============================================================
 Images: 18
-Total size: 2 MB (2455 KB)
+Total size: 2 MB (2487 KB)
 ============================================================
 
 [verify] start
 [verify ! issues found]
-  - prior-article leak -- token '스마트폰' from '003_tip_battery_life_double' in captions.md
-  - prior-article leak -- token '26.6' from 'ios_26_6_beta_2026' in captions.md
+  - prior-article leak -- token '통신3사' from '008_qa_penalty_zero' in captions.md
+  - prior-article leak -- token '통신3사' from 'galaxys26_zero_2026' in captions.md
 ============================================================
 
 [backup] 1 backups kept (max 5)
  
  
-=== done 2026-06-03 22:04:05.27 
+=== done 2026-06-05 15:03:38.29 

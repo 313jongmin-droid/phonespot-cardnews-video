@@ -2,10 +2,12 @@
   "version": 1,
   "videos": {},
   "requests": {
-    "009_scam_kakao_family_phishing": {
-      "updated_at": "2026-06-04T16:06:15",
-      "variants": []
+    "011_qa_combo_discount_check": {
+      "updated_at": "2026-06-05T15:03:48",
+      "variants": [
+        "settings_steps"
+      ]
     }
   },
-  "updated_at": "2026-06-04T16:06:15"
+  "updated_at": "2026-06-05T15:03:48"
 }\n
