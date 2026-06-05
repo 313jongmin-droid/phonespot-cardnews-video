@@ -3,12 +3,14 @@ from __future__ import annotations
 import os
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
 SHORTS = ROOT / "shorts"
 TEMP = ROOT / "CODEX_VIDEO_DESK" / "TEMP"
+LOCAL_LOG_DIR = Path(tempfile.gettempdir()) / "PhoneSpotCodexVideo"
 LOG_PATH = TEMP / "github_update.log"
 
 
@@ -34,10 +36,26 @@ RUNTIME_SUFFIXES = (
 )
 
 
+def safe_log_path() -> Path:
+    try:
+        TEMP.mkdir(parents=True, exist_ok=True)
+        probe = TEMP / ".write_test"
+        probe.write_text("ok", encoding="utf-8")
+        probe.unlink(missing_ok=True)
+        return TEMP / "github_update.log"
+    except OSError:
+        LOCAL_LOG_DIR.mkdir(parents=True, exist_ok=True)
+        return LOCAL_LOG_DIR / "github_update.log"
+
+
+def is_network_root() -> bool:
+    return str(ROOT).startswith("\\\\")
+
+
 def log(message: str = "") -> None:
     print(message)
-    TEMP.mkdir(parents=True, exist_ok=True)
-    with LOG_PATH.open("a", encoding="utf-8", errors="replace") as fh:
+    path = safe_log_path()
+    with path.open("a", encoding="utf-8", errors="replace") as fh:
         fh.write(message + "\n")
 
 
@@ -124,13 +142,22 @@ def is_runtime_status_line(line: str) -> bool:
 
 
 def main() -> int:
-    if LOG_PATH.exists():
-        LOG_PATH.unlink()
+    log_path = safe_log_path()
+    try:
+        if log_path.exists():
+            log_path.unlink()
+    except OSError:
+        pass
 
     log("============================================================")
     log(" PhoneSpot Codex - GitHub System Update")
     log("============================================================")
     log(f"Root: {ROOT}")
+    if is_network_root():
+        log("[NETWORK MODE] This updater is running from a shared network folder.")
+        log("[HINT] Render/helper PCs should run their local clone, e.g. C:\\PhoneSpot\\phonespot_cardnews, not \\\\main-pc\\phonespot_cardnews.")
+        log("[HINT] Run 00_SETUP_RENDER_PC_FROM_GITHUB.bat on the helper PC, then open its local CODEX_VIDEO_DESK panel.")
+        return 4
 
     if not (ROOT / ".git").exists():
         log("[ERROR] This folder is not a Git repository yet.")

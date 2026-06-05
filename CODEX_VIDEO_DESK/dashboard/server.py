@@ -186,6 +186,7 @@ def parse_slugs(raw: str) -> list[dict]:
 
 def get_video_slugs() -> list[dict]:
     rows = parse_slugs(run_capture([sys.executable, str(SCRIPTS / "list_slugs.py")]))
+    rows.sort(key=slug_sort_key)
     card_map = {row["slug"]: row for row in get_cardnews_rows()}
     for row in rows:
         card = card_map.get(row["slug"])
