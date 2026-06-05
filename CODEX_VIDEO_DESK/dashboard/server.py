@@ -317,7 +317,7 @@ def results_list() -> list[dict]:
                 "mp4": mp4s[0].name if mp4s else "",
                 "mtime": folder.stat().st_mtime,
             })
-    rows.sort(key=lambda item: item["mtime"], reverse=True)
+    rows.sort(key=slug_sort_key)
     return rows[:30]
 
 
@@ -759,6 +759,14 @@ def card_row(slug: str) -> dict:
     return row
 
 
+def slug_sort_key(item: dict) -> tuple[int, str]:
+    slug = str(item.get("slug") or "")
+    head = slug.split("_", 1)[0]
+    if head.isdigit():
+        return (int(head), slug)
+    return (999999, slug)
+
+
 def get_cardnews_rows() -> list[dict]:
     names: set[str] = set()
     for root in (CARD_OUTPUT, CARD_IMAGES):
@@ -767,7 +775,7 @@ def get_cardnews_rows() -> list[dict]:
     if CARD_ARTICLES.exists():
         names.update(p.stem for p in CARD_ARTICLES.glob("*.json"))
     rows = [card_row(name) for name in names if SAFE_SLUG.match(name)]
-    rows.sort(key=lambda item: item["mtime"], reverse=True)
+    rows.sort(key=slug_sort_key)
     return rows[:80]
 
 
@@ -1344,7 +1352,7 @@ INDEX_HTML = r"""<!doctype html>
   <div class="runtime-strip">
     <div class="runtime-card" id="runtimeMode"><span>실행 위치</span><b id="runtimeModeText">확인 중</b></div>
     <div class="runtime-card" id="runtimeSync"><span>카드뉴스 동기화</span><b id="runtimeSyncText">확인 중</b></div>
-    <div class="runtime-card"><span>작업 데이터</span><b id="runtimeCounts">-</b></div>
+    <div class="runtime-card" id="runtimeJob"><span>실행 상태</span><b id="runtimeJobText">대기 중</b></div>
     <div class="runtime-card" id="runtimeGithub"><span>GitHub</span><b id="runtimeGithubText">확인 중</b><div class="runtime-actions"><button class="runtime-action" id="runtimeGithubDownloadButton" onclick="runGithubDownload(event)">다운로드</button><button class="runtime-action" id="runtimeGithubUploadButton" onclick="runGithubUpload(event)">업로드</button></div></div>
   </div>
   <main>
@@ -1584,7 +1592,6 @@ INDEX_HTML = r"""<!doctype html>
       document.getElementById("runtimeMode").className = `runtime-card ${sync.rootOk ? "good" : "bad"}`;
       document.getElementById("runtimeSyncText").textContent = `${sync.ok ? "성공" : "확인 필요"} · ${sync.endedAt || sync.message || "-"}`;
       document.getElementById("runtimeSync").className = `runtime-card ${sync.ok ? "good" : "bad"}`;
-      document.getElementById("runtimeCounts").textContent = `기사 ${sync.articles || 0} · 이미지 ${sync.images || 0} · 결과 ${sync.output || 0}`;
       const gh = data.github || {};
       const ghCard = document.getElementById("runtimeGithub");
       const ghText = document.getElementById("runtimeGithubText");
@@ -1600,6 +1607,10 @@ INDEX_HTML = r"""<!doctype html>
       refreshIllustrationRequestNote();
       updateSelectedStatus();
       const job = data.job || {};
+      const runtimeJob = document.getElementById("runtimeJob");
+      const runtimeJobText = document.getElementById("runtimeJobText");
+      if (runtimeJobText) runtimeJobText.textContent = job.running ? `실행 중 · ${job.name}` : (job.exit_code === null ? "대기 중" : `마지막 종료 ${job.exit_code}`);
+      if (runtimeJob) runtimeJob.className = `runtime-card ${job.running ? "warn" : (job.exit_code === 0 ? "good" : (job.exit_code === null ? "" : "bad"))}`;
       document.getElementById("jobText").textContent = job.running ? `실행 중: ${job.name}` : (job.exit_code === null ? "대기 중" : `마지막 종료 코드: ${job.exit_code}`);
       const log = document.getElementById("log"); log.textContent = job.log || ""; log.scrollTop = log.scrollHeight;
       const results = document.getElementById("results"); results.innerHTML = ""; (data.results || []).forEach(r => { const div = document.createElement("div"); div.className = "result-row"; div.innerHTML = `<span>${r.name}</span><span class="small">${r.mp4 || ""}</span>`; results.appendChild(div); });
