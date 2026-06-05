@@ -2,12 +2,14 @@
   "version": 1,
   "videos": {},
   "requests": {
-    "014_scam_voicephishing_zero_relief": {
-      "updated_at": "2026-06-05T16:10:08",
+    "010_tip_iphone_call_record": {
+      "updated_at": "2026-06-05T17:07:39",
       "variants": [
-        "device_os_requirement"
+        "call_recording_notice",
+        "device_os_requirement",
+        "recording_archive"
       ]
     }
   },
-  "updated_at": "2026-06-05T16:10:08"
+  "updated_at": "2026-06-05T17:07:39"
 }\n
