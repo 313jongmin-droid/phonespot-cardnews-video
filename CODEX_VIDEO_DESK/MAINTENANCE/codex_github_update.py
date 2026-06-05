@@ -23,6 +23,11 @@ RUNTIME_PREFIXES = (
     "shorts/out_codex/",
     "shorts/public/audio/",
     "shorts/public/assets/",
+    "shorts/codex/ILLUSTRATION_TAG_DB.md",
+    "shorts/codex/illustration_usage_history.json",
+    "shorts/config/illustration_tag_db.json",
+    "shorts/public/shorts_script.json",
+    "shorts/public/assets/illustrations/",
     "cardnews/output/",
     "cardnews/images/",
 )
