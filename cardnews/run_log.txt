@@ -1,19 +1,19 @@
-=== start 2026-06-05 16:09:18.59 
+=== start 2026-06-05 16:13:58.59 
  
 [probe] where py: 
 C:\Windows\py.exe
 C:\Users\di898\AppData\Local\Microsoft\WindowsApps\py.exe
  
 [using py] 
-[arg-match] '014' -> 014_scam_voicephishing_zero_relief
+[arg-match] '015' -> 015_qa_msafer_pass_identity_block
 ============================================================
 phonespot cardnews renderer (v5)
 BASE: C:\Users\di898\Documents\phonespot_cardnews\cardnews
-SLUG: 014_scam_voicephishing_zero_relief
-OUT : C:\Users\di898\Documents\phonespot_cardnews\cardnews\output\014_scam_voicephishing_zero_relief
+SLUG: 015_qa_msafer_pass_identity_block
+OUT : C:\Users\di898\Documents\phonespot_cardnews\cardnews\output\015_qa_msafer_pass_identity_block
 ============================================================
 [info] Downloading Chromium (~130MB, first run only)...
-[slug] SLUG='014_scam_voicephishing_zero_relief'  IMG_DIR=C:\Users\di898\Documents\phonespot_cardnews\cardnews\images\014_scam_voicephishing_zero_relief
+[slug] SLUG='015_qa_msafer_pass_identity_block'  IMG_DIR=C:\Users\di898\Documents\phonespot_cardnews\cardnews\images\015_qa_msafer_pass_identity_block
 [auto-rename] numeric filenames detected -> numeric order:
   1.png → card_1.png
   2.png → card_2.png
@@ -46,28 +46,25 @@ OUT : C:\Users\di898\Documents\phonespot_cardnews\cardnews\output\014_scam_voice
   OK card_5.jpg
   OK card_6.jpg
 
-Render time: 18.2s
+Render time: 69.5s
 
 === JPG result ===
-  18 files / 2708 KB total (2 MB)
+  18 files / 2463 KB total (2 MB)
 
-OK captions.md (loaded from articles/014_scam_voicephishing_zero_relief.json) + narration_md (609 chars)
+OK captions.md (loaded from articles/015_qa_msafer_pass_identity_block.json) + narration_md (676 chars)
 
 ============================================================
 Images: 18
-Total size: 2 MB (2715 KB)
+Total size: 2 MB (2472 KB)
 ============================================================
 
 [verify] start
 [verify ! issues found]
   - prior-article leak -- token '스마트폰' from '003_tip_battery_life_double' in captions.md
-  - prior-article leak -- token '골든타임' from '008_qa_penalty_zero' in captions.md
-  - prior-article leak -- token '메신저피싱' from '009_scam_kakao_family_phishing' in captions.md
-  - prior-article leak -- token '골든타임' from '011_qa_combo_discount_check' in captions.md
   - prior-article leak -- token '26.6' from 'ios_26_6_beta_2026' in captions.md
 ============================================================
 
 [backup] 1 backups kept (max 5)
  
  
-=== done 2026-06-05 16:09:59.45 
+=== done 2026-06-05 16:15:22.82 
