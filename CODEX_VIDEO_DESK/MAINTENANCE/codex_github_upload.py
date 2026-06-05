@@ -56,6 +56,35 @@ def run(command: list[str], check: bool = True) -> subprocess.CompletedProcess:
     return result
 
 
+def ahead_count() -> int:
+    result = subprocess.run(
+        [GIT, "rev-list", "--count", "@{u}..HEAD"],
+        cwd=str(ROOT),
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+    )
+    try:
+        return int((result.stdout or "0").strip())
+    except ValueError:
+        return 0
+
+
+def push_with_retry() -> int:
+    attempts = 2
+    last_code = 0
+    for attempt in range(1, attempts + 1):
+        log("")
+        log(f"[push] attempt {attempt}/{attempts}")
+        result = run([GIT, "push"], check=False)
+        last_code = result.returncode
+        if result.returncode == 0:
+            return 0
+    return last_code or 1
+
+
 def main() -> int:
     if LOG_PATH.exists():
         LOG_PATH.unlink()
@@ -73,6 +102,19 @@ def main() -> int:
 
     run([GIT, "--version"])
     run([GIT, "status", "--short"], check=False)
+
+    if ahead_count() > 0:
+        log("")
+        log(f"[ahead] Existing local commit waiting for push: {ahead_count()}")
+        code = push_with_retry()
+        if code:
+            return code
+        status_script = ROOT / "CODEX_VIDEO_DESK" / "MAINTENANCE" / "codex_github_status.py"
+        if status_script.exists():
+            subprocess.run([sys.executable, str(status_script)], cwd=str(ROOT))
+        log("[OK] Upload complete.")
+        return 0
+
     run([GIT, "add", "-A"])
 
     diff = run([GIT, "diff", "--cached", "--name-only"], check=False)
@@ -86,7 +128,9 @@ def main() -> int:
     log("")
     log(f"[commit] {message}")
     run([GIT, "commit", "-m", message])
-    run([GIT, "push"])
+    code = push_with_retry()
+    if code:
+        return code
 
     status_script = ROOT / "CODEX_VIDEO_DESK" / "MAINTENANCE" / "codex_github_status.py"
     if status_script.exists():
