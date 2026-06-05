@@ -113,8 +113,31 @@ set "OUTFILE=!RESULTDIR!\!RESULTKEY!.mp4"
 set "RAWFILE=!LOCAL_RAW!\!SLUG!_!DATE!_codex_remotion_raw.mp4"
 if exist "!RAWFILE!" del /q "!RAWFILE!" >nul 2>nul
 echo  Raw: !RAWFILE!
-call npx remotion render src/index.ts CasualShort "!RAWFILE!" --concurrency=2 --pixel-format=yuv420p --crf=18
-if errorlevel 1 goto :fail
+set "RENDERLOG=!RESULTDIR!\remotion_raw_render.log"
+echo  Log: !RENDERLOG!
+call npx remotion render src/index.ts CasualShort "!RAWFILE!" --concurrency=2 --pixel-format=yuv420p --crf=18 > "!RENDERLOG!" 2>&1
+if errorlevel 1 (
+    echo [ERROR] Remotion raw render command failed. See:
+    echo !RENDERLOG!
+    type "!RENDERLOG!"
+    goto :fail
+)
+if not exist "!RAWFILE!" (
+    echo [ERROR] Remotion finished but raw file was not created:
+    echo !RAWFILE!
+    echo [ERROR] Raw render log:
+    type "!RENDERLOG!"
+    goto :fail
+)
+for %%A in ("!RAWFILE!") do set "RAWSIZE=%%~zA"
+if "!RAWSIZE!"=="0" (
+    echo [ERROR] Remotion raw file is 0 bytes:
+    echo !RAWFILE!
+    echo [ERROR] Raw render log:
+    type "!RENDERLOG!"
+    goto :fail
+)
+echo  Raw OK: !RAWSIZE! bytes
 
 echo.
 echo ----- Step 6/7: Finalize SNS MP4 -----

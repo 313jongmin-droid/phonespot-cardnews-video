@@ -1090,6 +1090,17 @@ class Handler(BaseHTTPRequestHandler):
             data = read_body(self)
             action = data.get("action")
             slug = (data.get("slug") or latest_slug()).strip()
+            if action == "sync_cardnews":
+                sync_script = DESK / "SYNC_CARDNEWS_WORKSPACE_FROM_MAIN_PC.ps1"
+                if not sync_script.exists():
+                    json_response(self, {"ok": False, "message": f"동기화 스크립트가 없습니다: {sync_script}"})
+                    return
+                ok = run_job("카드뉴스 동기화 새로고침", [["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", str(sync_script)]], DESK)
+                if not ok:
+                    json_response(self, {"ok": False, "busy": True, "message": "이미 다른 작업이 실행 중입니다. 현재 작업이 끝난 뒤 다시 눌러주세요."})
+                else:
+                    json_response(self, {"ok": True})
+                return
             if action == "video_prepare":
                 slug = validate_slug(slug)
                 commands = [
@@ -1362,7 +1373,7 @@ INDEX_HTML = r"""<!doctype html>
         <button id="tabVideo" class="tab active" onclick="setMode('video')">영상</button>
         <button id="tabCard" class="tab" onclick="setMode('card')">카드뉴스</button>
       </div>
-      <div class="head"><h2 id="listTitle">영상 후보</h2><button onclick="reloadLists()">새로고침</button></div>
+      <div class="head"><h2 id="listTitle">영상 후보</h2><button onclick="reloadLists()">동기화 새로고침</button></div>
       <div id="videoList" class="list"></div>
       <div id="cardList" class="list" style="display:none"></div>
     </section>
@@ -1529,7 +1540,39 @@ INDEX_HTML = r"""<!doctype html>
         alert("사전검사 실패: " + e.message);
       }
     }
-    async function reloadLists() { await loadSlugs(); await loadCardnews(); }
+    async function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    async function waitForCurrentJob(maxMs) {
+      const started = Date.now();
+      while (Date.now() - started < maxMs) {
+        const data = await api("/api/job");
+        const job = data.job || {};
+        if (!job.running) return job;
+        document.getElementById("jobText").textContent = `실행 중: ${job.name || "작업"}`;
+        await sleep(1200);
+      }
+      return null;
+    }
+    async function reloadLists() {
+      try {
+        const result = await api("/api/action", {
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body: JSON.stringify({action:"sync_cardnews", slug:selected || selectedCard || ""})
+        });
+        if (result.ok) {
+          await waitForCurrentJob(180000);
+        } else if (!result.busy) {
+          alert(result.message || "카드뉴스 동기화를 시작하지 못했습니다. 로컬 목록만 새로고침합니다.");
+        }
+      } catch (e) {
+        alert("카드뉴스 동기화 호출 실패: " + e.message + "\n로컬 목록만 새로고침합니다.");
+      }
+      await loadSlugs();
+      await loadCardnews();
+      await loadState();
+    }
     function findCardRow(slug) {
       return (cardItems || []).find(x => x.slug === slug) || null;
     }
