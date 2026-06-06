@@ -1,7 +1,12 @@
 $ErrorActionPreference = "SilentlyContinue"
 $port = 4901
 $desk = Split-Path -Parent $PSScriptRoot
+$panelPidFile = Join-Path $desk "TEMP\panel\panel_server_$port.pid"
 $workerPidFile = Join-Path $desk "TEMP\worker\local_worker.pid"
+try {
+  Invoke-RestMethod -Method Post -Uri "http://127.0.0.1:$port/api/shutdown" -ContentType "application/json" -Body "{}" -TimeoutSec 2 | Out-Null
+  Start-Sleep -Milliseconds 700
+} catch {}
 if (Test-Path $workerPidFile) {
   try {
     $workerPid = [int](Get-Content $workerPidFile -Raw)
@@ -11,6 +16,16 @@ if (Test-Path $workerPidFile) {
     }
   } catch {}
   Remove-Item -LiteralPath $workerPidFile -Force -ErrorAction SilentlyContinue
+}
+if (Test-Path $panelPidFile) {
+  try {
+    $panelProcessId = [int](Get-Content $panelPidFile -Raw)
+    if ($panelProcessId -gt 0) {
+      Write-Host "[stop panel] pid=$panelProcessId"
+      taskkill /PID $panelProcessId /T /F | Out-Host
+    }
+  } catch {}
+  Remove-Item -LiteralPath $panelPidFile -Force -ErrorAction SilentlyContinue
 }
 $lines = cmd /c "netstat -ano | findstr :$port"
 if (-not $lines) {

@@ -278,8 +278,11 @@ def main() -> int:
     arg = sys.argv[1] if len(sys.argv) > 1 else "selftest"
     print(f"[illust_embed] 모델: {MODEL_NAME}")
     print(f"[illust_embed] 임베딩 사용 가능: {available()}  (False면 lexical 폴백)")
+    if arg == "check":
+        # 설치 검증용: 임베딩 가능하면 0, 아니면 1 종료코드
+        return 0 if available() else 1
     if arg != "selftest":
-        print("usage: python scripts/codex_illust_embed.py selftest")
+        print("usage: python scripts/codex_illust_embed.py selftest|check")
         return 0
     queries = [
         "송금 후 1시간 안에 거래은행에 지급정지 신청",

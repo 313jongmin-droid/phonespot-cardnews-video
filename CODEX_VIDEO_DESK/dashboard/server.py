@@ -35,6 +35,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
+PANEL_VERSION = "phonespot-web-v3"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_WORKER_PROCESS: subprocess.Popen | None = None
@@ -92,6 +93,18 @@ def start_local_worker() -> None:
         env=env,
         creationflags=creationflags,
     )
+
+
+def stop_local_worker() -> None:
+    if LOCAL_WORKER_PROCESS and LOCAL_WORKER_PROCESS.poll() is None:
+        try:
+            LOCAL_WORKER_PROCESS.terminate()
+            LOCAL_WORKER_PROCESS.wait(timeout=5)
+        except Exception:
+            try:
+                LOCAL_WORKER_PROCESS.kill()
+            except Exception:
+                pass
 
 
 def telegram_send(message: str) -> bool:
@@ -1027,7 +1040,7 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self) -> None:
         parsed = urlparse(self.path)
         if parsed.path == "/api/health":
-            json_response(self, {"ok": True, "service": "phonespot-panel"})
+            json_response(self, {"ok": True, "service": "phonespot-panel", "version": PANEL_VERSION})
             return
         if parsed.path == "/":
             html_response(self, INDEX_HTML)
@@ -1229,6 +1242,13 @@ class Handler(BaseHTTPRequestHandler):
             origin = self.headers.get("Origin", "")
             if origin and not origin_allowed(self, origin):
                 json_response(self, {"ok": False, "error": "origin not allowed"}, 403)
+                return
+            if parsed.path == "/api/shutdown":
+                if self.client_address[0] not in {"127.0.0.1", "::1"}:
+                    json_response(self, {"ok": False, "error": "local request required"}, 403)
+                    return
+                json_response(self, {"ok": True})
+                threading.Thread(target=self.server.shutdown, daemon=True).start()
                 return
             if parsed.path == "/api/worker/result":
                 query = urllib.parse.parse_qs(parsed.query)
@@ -2175,7 +2195,11 @@ def main() -> int:
     print("창을 닫으면 패널이 종료됩니다.")
     if os.environ.get("PHONESPOT_PANEL_NO_BROWSER") != "1":
         webbrowser.open(url)
-    server.serve_forever()
+    try:
+        server.serve_forever()
+    finally:
+        stop_local_worker()
+        server.server_close()
     return 0
 
 

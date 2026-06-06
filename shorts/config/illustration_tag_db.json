@@ -977,73 +977,70 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
-    "cpt_91af2e72": {
+    "cpt_f14977dc": {
       "keywords": [
-        "정리합니다",
-        "활용법과",
-        "iOS",
-        "차이를",
-        "와의"
+        "활용법",
+        "와의",
+        "차이"
       ],
       "tags": [
         "auto"
       ],
-      "note": "자동 발굴 개념: 정리합니다 활용법과",
+      "note": "자동 발굴 개념: 활용법 와의",
       "available": false
     },
-    "cpt_04ecdb93": {
+    "cpt_7a87dd35": {
       "keywords": [
-        "단순합니다",
-        "방법은"
+        "자동",
+        "고지",
+        "멘트",
+        "양쪽",
+        "통화자"
       ],
       "tags": [
         "auto"
       ],
-      "note": "자동 발굴 개념: 단순합니다 방법은",
+      "note": "자동 발굴 개념: 자동 고지",
       "available": false
     },
-    "cpt_aa1c84b0": {
+    "cpt_d877aced": {
       "keywords": [
-        "통화자에게",
-        "송출됩니다",
-        "자동으로",
-        "멘트가",
-        "시작"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 통화자에게 송출됩니다",
-      "available": false
-    },
-    "cpt_e035fe4a": {
-      "keywords": [
-        "저장됩니다",
-        "녹음본은",
-        "기록에",
+        "녹음본",
         "메모",
-        "앱과"
+        "앱과",
+        "전화",
+        "기록"
       ],
       "tags": [
         "auto"
       ],
-      "note": "자동 발굴 개념: 저장됩니다 녹음본은",
+      "note": "자동 발굴 개념: 녹음본 메모",
       "available": false
     },
-    "cpt_bcb2873e": {
+    "cpt_dff91a6d": {
       "keywords": [
-        "설정에서",
-        "들어가면",
-        "메뉴로",
-        "전화",
-        "앱의"
+        "통신사",
+        "서버",
+        "기반",
+        "서비스",
+        "활용하실"
       ],
       "tags": [
         "auto"
       ],
-      "note": "자동 발굴 개념: 설정에서 들어가면",
+      "note": "자동 발굴 개념: 통신사 서버",
+      "available": false
+    },
+    "cpt_3317f8c6": {
+      "keywords": [
+        "모델"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 모델",
       "available": false
     }
   },
-  "updated_at": "2026-06-06T14:12:20"
+  "updated_at": "2026-06-06T15:15:24"
 }

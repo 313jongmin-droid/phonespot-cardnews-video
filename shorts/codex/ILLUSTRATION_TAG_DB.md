@@ -19,11 +19,6 @@
 | `clock` | time, tips, library | 2 | 010_tip_iphone_call_record |
 | `cloud_backup` | security, privacy, cloud, library | 2 | 010_tip_iphone_call_record |
 | `cover_screen_widgets` | library | 0 |  |
-| `cpt_04ecdb93` | auto | 0 |  |
-| `cpt_91af2e72` | auto | 0 |  |
-| `cpt_aa1c84b0` | auto | 0 |  |
-| `cpt_bcb2873e` | auto | 0 |  |
-| `cpt_e035fe4a` | auto | 0 |  |
 | `device_data_transfer` | device, migration, backup, tips, library | 0 |  |
 | `device_os_requirement` | library | 0 |  |
 | `device_price_rise` | price, increase, device | 0 |  |

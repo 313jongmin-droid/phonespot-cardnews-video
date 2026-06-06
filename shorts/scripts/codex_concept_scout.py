@@ -57,7 +57,25 @@ STOPWORDS = {
     "오늘", "지금", "바로", "정말", "매우", "아주", "조금", "약간", "모두", "각각", "경우",
     "이번", "다음", "처음", "마지막", "관련", "위해", "통해", "대해", "기준", "확인", "필요",
     "사용", "방법", "내용", "설명", "안내", "수법", "체크", "주의", "뉴스", "기사",
+    "다만", "이후", "이전", "이상", "이하", "직후", "시작", "모든", "다시", "함께",
+    "같은", "매번", "무조건", "혹시", "또는", "그냥", "직접", "우선", "먼저", "결국",
+    "특히", "정도", "가지", "부분", "버전", "기능", "처음부터",
 }
+
+# 한국어 조사 제거(명사 본체가 2자 이상 남을 때만)
+JOSA_RE = re.compile(
+    r"(?:으로서|으로써|으로|로서|로써|에서|"
+    r"에게서|에게|한테서|한테|까지|부터|마저|"
+    r"조차|이라도|라도|이며|이고|이랑|랑|과|와|"
+    r"을|를|이|가|은|는|에|의|도|만|들)$"
+)
+
+
+def strip_josa(token: str) -> str:
+    m = JOSA_RE.search(token)
+    if m and (len(token) - len(m.group(0))) >= 2:
+        return token[: m.start()]
+    return token
 
 
 def clean(text: object) -> str:
@@ -91,7 +109,9 @@ def extract_concept(chunk: str, topic: str) -> dict:
     seen = set()
     tokens = []
     for tok in raw:
-        t = tok.strip()
+        t = strip_josa(tok.strip())
+        if len(t) < 2:
+            continue
         low = t.lower()
         if low in STOPWORDS or low in seen:
             continue

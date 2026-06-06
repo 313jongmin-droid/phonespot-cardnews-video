@@ -9,8 +9,9 @@ $desk = Split-Path -Parent $PSScriptRoot
 $root = Split-Path -Parent $desk
 $port = $Port
 $url = "http://127.0.0.1:$port"
+$expectedVersion = "phonespot-web-v3"
 $tempRoot = Join-Path $desk "TEMP\panel"
-$pidFile = Join-Path $tempRoot "panel_server.pid"
+$pidFile = Join-Path $tempRoot "panel_server_$port.pid"
 $logDir = Join-Path $tempRoot "panel_logs"
 
 New-Item -ItemType Directory -Force -Path $logDir | Out-Null
@@ -18,13 +19,17 @@ New-Item -ItemType Directory -Force -Path $logDir | Out-Null
 function Test-PanelHealth {
   try {
     $response = Invoke-RestMethod -Uri "$url/api/health" -TimeoutSec 2
-    return [bool]$response.ok
+    return [bool]$response.ok -and $response.version -eq $expectedVersion
   } catch {
     return $false
   }
 }
 
 if (-not (Test-PanelHealth)) {
+  try {
+    Invoke-RestMethod -Method Post -Uri "$url/api/shutdown" -ContentType "application/json" -Body "{}" -TimeoutSec 2 | Out-Null
+    Start-Sleep -Milliseconds 700
+  } catch {}
   if (Test-Path $pidFile) {
     try {
       $oldPid = [int](Get-Content $pidFile -Raw)
