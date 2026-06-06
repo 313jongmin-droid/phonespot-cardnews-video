@@ -144,6 +144,9 @@ class RemoteQueue:
                 "root": payload.get("root") or "",
                 "version": payload.get("version") or "",
                 "capabilities": payload.get("capabilities") or ["remotion"],
+                "ready": bool(payload.get("ready", True)),
+                "issues": payload.get("issues") or [],
+                "checks": payload.get("checks") or {},
                 "status": previous.get("status") if previous.get("status") == "running" else "idle",
                 "job_id": previous.get("job_id") or "",
                 "last_seen": self.now(),
@@ -176,6 +179,9 @@ class RemoteQueue:
         with LOCK:
             self.recover_stale_jobs()
             self.heartbeat(worker_id)
+            worker = self.workers().get(worker_id, {})
+            if not worker.get("online") or not worker.get("ready", True):
+                return None
             jobs = self.jobs()
             claimed = None
             for job in jobs:

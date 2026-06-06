@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
+import importlib.util
 import json
 import os
 import shutil
 import socket
 import subprocess
+import sys
 import tempfile
 import threading
 import time
@@ -23,7 +25,56 @@ URL_FILE = Path(__file__).resolve().parent / "panel_url.txt"
 SAVED_URL = URL_FILE.read_text(encoding="utf-8-sig", errors="replace").strip() if URL_FILE.exists() else ""
 SERVER = (os.environ.get("PHONESPOT_PANEL_URL") or SAVED_URL or "http://127.0.0.1:4901").rstrip("/")
 WORKER_ID = os.environ.get("PHONESPOT_WORKER_ID") or socket.gethostname()
-VERSION = "render-worker-v1"
+VERSION = "render-worker-v2"
+
+
+def readiness() -> dict:
+    checks = {
+        "python": f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}",
+        "node": shutil.which("node") or "",
+        "npm": shutil.which("npm") or "",
+        "remotion": str(SHORTS / "node_modules" / "@remotion" / "cli"),
+        "ffmpeg": str(SHORTS / "node_modules" / "@remotion" / "compositor-win32-x64-msvc" / "ffmpeg.exe"),
+        "disk_free_gb": round(shutil.disk_usage(ROOT).free / (1024 ** 3), 1),
+    }
+    issues: list[str] = []
+    if sys.version_info < (3, 10):
+        issues.append("Python 3.10 이상 필요")
+    if not checks["node"]:
+        issues.append("Node.js 없음")
+    if not checks["npm"]:
+        issues.append("npm 없음")
+    if not Path(checks["remotion"]).exists():
+        issues.append("Remotion 미설치")
+    if not Path(checks["ffmpeg"]).exists():
+        issues.append("FFmpeg 미설치")
+    required_modules = {
+        "edge_tts": "edge-tts",
+        "PIL": "Pillow",
+        "mutagen": "mutagen",
+        "requests": "requests",
+        "playwright": "Playwright",
+    }
+    for module, label in required_modules.items():
+        if importlib.util.find_spec(module) is None:
+            issues.append(f"{label} 미설치")
+    if not (SHORTS / "run_codex_casual.bat").exists():
+        issues.append("영상 실행 파일 없음")
+    if checks["disk_free_gb"] < 2:
+        issues.append("저장 공간 2GB 미만")
+    return {"ready": not issues, "issues": issues, "checks": checks}
+
+
+def registration_payload(status: dict | None = None) -> dict:
+    status = status or readiness()
+    return {
+        "worker_id": WORKER_ID,
+        "name": socket.gethostname(),
+        "root": str(ROOT),
+        "version": VERSION,
+        "capabilities": ["remotion"],
+        **status,
+    }
 
 
 def json_request(path: str, payload: dict | None = None, timeout: int = 30) -> dict:
@@ -115,13 +166,7 @@ def run_job(job: dict) -> tuple[bool, int, str]:
     def heartbeat_loop() -> None:
         while not heartbeat_stop.wait(5):
             try:
-                json_request("/api/worker/register", {
-                    "worker_id": WORKER_ID,
-                    "name": socket.gethostname(),
-                    "root": str(ROOT),
-                    "version": VERSION,
-                    "capabilities": ["remotion"],
-                }, 10)
+                json_request("/api/worker/register", registration_payload(), 10)
                 check = json_request("/api/worker/check", {
                     "worker_id": WORKER_ID,
                     "job_id": job_id,
@@ -198,15 +243,21 @@ def main() -> int:
     print(f"Worker : {WORKER_ID}")
     print(f"Panel  : {SERVER}")
     print(f"Root   : {ROOT}")
+    last_issues: tuple[str, ...] | None = None
     while True:
         try:
-            json_request("/api/worker/register", {
-                "worker_id": WORKER_ID,
-                "name": socket.gethostname(),
-                "root": str(ROOT),
-                "version": VERSION,
-                "capabilities": ["remotion"],
-            })
+            status = readiness()
+            issues = tuple(status["issues"])
+            if issues != last_issues:
+                if issues:
+                    print("[setup required] " + ", ".join(issues))
+                else:
+                    print("[ready] render dependencies passed")
+                last_issues = issues
+            json_request("/api/worker/register", registration_payload(status))
+            if not status["ready"]:
+                time.sleep(5)
+                continue
             response = json_request("/api/worker/claim", {"worker_id": WORKER_ID})
             job = response.get("job")
             if not job:

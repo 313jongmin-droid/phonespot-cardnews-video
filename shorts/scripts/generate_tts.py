@@ -25,12 +25,6 @@ try:
 except Exception:
     pass
 
-try:
-    import edge_tts
-except ImportError:
-    print("[ERROR] edge-tts not installed. Run: pip install edge-tts")
-    sys.exit(1)
-
 VOICE = os.getenv("PHONESPOT_TTS_VOICE", "ko-KR-SunHiNeural")
 RATE = os.getenv("PHONESPOT_TTS_RATE", "+42%")
 VOLUME = os.getenv("PHONESPOT_TTS_VOLUME", "+0%")
@@ -237,6 +231,61 @@ def clean_stale_audio(valid_keys: set[str]) -> None:
         print(f"Removed stale audio: {', '.join(sorted(removed))}")
 
 
+def restore_matching_cache(script: dict[str, Any], jobs: list[tuple[str, dict[str, Any]]]) -> bool:
+    if not manifest_path.exists():
+        return False
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except Exception:
+        return False
+
+    expected_settings = {
+        "voice": VOICE,
+        "rate": RATE,
+        "volume": VOLUME,
+        "pitch": PITCH,
+        "loudness_normalize": LOUDNORM,
+    }
+    for key, expected in expected_settings.items():
+        default = "+0%" if key == "volume" else None
+        if manifest.get(key, default) != expected:
+            return False
+
+    reports = {
+        str(item.get("key") or ""): item
+        for item in manifest.get("jobs", [])
+        if item.get("key")
+    }
+    changed = False
+    for key, section in jobs:
+        report = reports.get(key)
+        audio = audio_dir / f"{key}.mp3"
+        if not report or not audio.exists() or audio.stat().st_size <= 0:
+            return False
+        original = str(section.get("tts", "")).strip()
+        spoken, _ = apply_pronunciation(original, entries)
+        if str(report.get("original_tts", "")).strip() != original:
+            return False
+        if str(report.get("spoken_tts", "")).strip() != spoken:
+            return False
+        timing = report.get("timing") or {}
+        weights = timing.get("weights")
+        if not isinstance(weights, list) or not weights:
+            return False
+        timing_meta = {name: value for name, value in timing.items() if name != "weights"}
+        if section.get("tts_chunk_weights") != weights:
+            section["tts_chunk_weights"] = weights
+            changed = True
+        if section.get("_tts_timing") != timing_meta:
+            section["_tts_timing"] = timing_meta
+            changed = True
+
+    if changed:
+        script_path.write_text(json.dumps(script, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"[OK] Existing TTS cache matches this script. Reusing {len(jobs)} audio files.")
+    return True
+
+
 if not script_path.exists():
     print("[ERROR] shorts_script.json not found. Run copy_assets.py first.")
     sys.exit(1)
@@ -245,6 +294,16 @@ script = json.loads(script_path.read_text(encoding="utf-8"))
 entries = load_dictionary()
 jobs = section_jobs(script)
 clean_stale_audio({key for key, _ in jobs})
+
+if restore_matching_cache(script, jobs):
+    sys.exit(0)
+
+try:
+    import edge_tts
+except ImportError:
+    print("[ERROR] This script needs new TTS audio, but edge-tts is not installed.")
+    print("[ERROR] Run the render-worker setup once, then retry this job.")
+    sys.exit(1)
 
 
 async def gen_one(key: str, section: dict[str, Any]) -> tuple[Path, dict[str, Any]]:
@@ -299,6 +358,7 @@ async def main() -> None:
     manifest: dict[str, Any] = {
         "voice": VOICE,
         "rate": RATE,
+        "volume": VOLUME,
         "pitch": PITCH,
         "loudness_normalize": LOUDNORM,
         "pronunciation_dictionary": str(config_path),

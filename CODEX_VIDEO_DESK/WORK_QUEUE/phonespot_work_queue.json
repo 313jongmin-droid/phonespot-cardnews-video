@@ -2,6 +2,44 @@
   "version": 1,
   "rows": [
     {
+      "date": "2026.06.06",
+      "slug": "012_news_galaxy_unpack_july",
+      "title": "갤럭시 언팩 2026 / 7월 22일 런던 / 폴드8·플립8·워치9 공개 + 사전예약 임박",
+      "article_status": "있음",
+      "image_status": "5/5",
+      "cardnews_status": "완료 33장",
+      "video_script_status": "있음",
+      "illustration_request_status": "경고 15개",
+      "render_status": "완료",
+      "review_status": "",
+      "assignee": "",
+      "publish_youtube": "",
+      "publish_instagram": "",
+      "publish_tiktok": "",
+      "result_folder": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\CODEX_VIDEO_DESK\\RESULTS\\20260606_012_news_galaxy_unpack_july_codex_remotion_123101",
+      "notes": "",
+      "updated_at": "2026-06-06T12:47:40"
+    },
+    {
+      "date": "2026.06.06",
+      "slug": "011_qa_combo_discount_check",
+      "title": "결합할인 진짜 이득? / 가족 인터넷 결합 1분 계산법 / 6월 약정만료 골든타임",
+      "article_status": "있음",
+      "image_status": "5/5",
+      "cardnews_status": "완료 18장",
+      "video_script_status": "있음",
+      "illustration_request_status": "경고 20개",
+      "render_status": "완료",
+      "review_status": "",
+      "assignee": "",
+      "publish_youtube": "",
+      "publish_instagram": "",
+      "publish_tiktok": "",
+      "result_folder": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\CODEX_VIDEO_DESK\\RESULTS\\20260605_011_qa_combo_discount_check_codex_remotion",
+      "notes": "",
+      "updated_at": "2026-06-06T12:47:40"
+    },
+    {
       "date": "2026.06.05",
       "slug": "018_scam_wedding_invite_smishing",
       "title": "6월 결혼 시즌 모바일 청첩장 스미싱 / 악성앱 원격제어 / 의심 시 비행기 모드 즉시",
@@ -18,7 +56,7 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:40"
     },
     {
       "date": "2026.06.05",
@@ -37,7 +75,7 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:40"
     },
     {
       "date": "2026.06.05",
@@ -56,34 +94,15 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:40"
     },
     {
       "date": "2026.06.05",
-      "slug": "010_tip_iphone_call_record",
-      "title": "아이폰 통화 녹음 17년 만에 도입 / iOS 18.1+ 활용법 / 에이닷·익시오로 고지 우회",
-      "article_status": "있음",
-      "image_status": "5/5",
-      "cardnews_status": "완료 18장",
-      "video_script_status": "있음",
-      "illustration_request_status": "신규 3개",
-      "render_status": "없음",
-      "review_status": "",
-      "assignee": "",
-      "publish_youtube": "",
-      "publish_instagram": "",
-      "publish_tiktok": "",
-      "result_folder": "",
-      "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
-    },
-    {
-      "date": "2026.06.04",
       "slug": "015_qa_msafer_pass_identity_block",
       "title": "내 명의로 폰 몇 대 개통됐나 / Msafer + PASS 1분 확인 / 3가지 차단 신청법",
       "article_status": "있음",
-      "image_status": "없음",
-      "cardnews_status": "대기",
+      "image_status": "5/5",
+      "cardnews_status": "완료 18장",
       "video_script_status": "없음",
       "illustration_request_status": "요청서 없음",
       "render_status": "없음",
@@ -94,7 +113,45 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:40"
+    },
+    {
+      "date": "2026.06.05",
+      "slug": "014_scam_voicephishing_zero_relief",
+      "title": "보이스피싱 피해자 지원 6월 1일 재개 / 누적 5,211명 150억 / 신청 5가지 채널",
+      "article_status": "있음",
+      "image_status": "5/5",
+      "cardnews_status": "완료 18장",
+      "video_script_status": "있음",
+      "illustration_request_status": "신규 1개",
+      "render_status": "없음",
+      "review_status": "",
+      "assignee": "",
+      "publish_youtube": "",
+      "publish_instagram": "",
+      "publish_tiktok": "",
+      "result_folder": "",
+      "notes": "",
+      "updated_at": "2026-06-06T12:47:40"
+    },
+    {
+      "date": "2026.06.05",
+      "slug": "010_tip_iphone_call_record",
+      "title": "아이폰 통화 녹음 17년 만에 도입 / iOS 18.1+ 활용법 / 에이닷·익시오로 고지 우회",
+      "article_status": "있음",
+      "image_status": "5/5",
+      "cardnews_status": "완료 18장",
+      "video_script_status": "있음",
+      "illustration_request_status": "신규 3개",
+      "render_status": "완료",
+      "review_status": "",
+      "assignee": "",
+      "publish_youtube": "",
+      "publish_instagram": "",
+      "publish_tiktok": "",
+      "result_folder": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\CODEX_VIDEO_DESK\\RESULTS\\20260605_010_tip_iphone_call_record_codex_remotion",
+      "notes": "",
+      "updated_at": "2026-06-06T12:47:40"
     },
     {
       "date": "2026.06.04",
@@ -113,26 +170,7 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
-    },
-    {
-      "date": "2026.06.04",
-      "slug": "012_news_galaxy_unpack_july",
-      "title": "갤럭시 언팩 2026 / 7월 22일 런던 / 폴드8·플립8·워치9 공개 + 사전예약 임박",
-      "article_status": "있음",
-      "image_status": "5/5",
-      "cardnews_status": "완료 18장",
-      "video_script_status": "있음",
-      "illustration_request_status": "경고 15개",
-      "render_status": "완료",
-      "review_status": "",
-      "assignee": "",
-      "publish_youtube": "",
-      "publish_instagram": "",
-      "publish_tiktok": "",
-      "result_folder": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\CODEX_VIDEO_DESK\\RESULTS\\20260604_012_news_galaxy_unpack_july_codex_remotion",
-      "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:40"
     },
     {
       "date": "2026.06.04",
@@ -151,7 +189,7 @@
       "publish_tiktok": "",
       "result_folder": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\CODEX_VIDEO_DESK\\RESULTS\\20260604_009_scam_kakao_family_phishing_codex_remotion_160629",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:40"
     },
     {
       "date": "2026.06.04",
@@ -170,7 +208,7 @@
       "publish_tiktok": "",
       "result_folder": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\CODEX_VIDEO_DESK\\RESULTS\\20260603_008_qa_penalty_zero_codex_remotion_114921",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:40"
     },
     {
       "date": "2026.06.04",
@@ -189,26 +227,7 @@
       "publish_tiktok": "",
       "result_folder": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\CODEX_VIDEO_DESK\\RESULTS\\20260604_007_tip_data_transfer_smartswitch_codex_remotion",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
-    },
-    {
-      "date": "2026.06.03",
-      "slug": "014_scam_voicephishing_zero_relief",
-      "title": "보이스피싱 피해자 지원 6월 1일 재개 / 누적 5,211명 150억 / 신청 5가지 채널",
-      "article_status": "있음",
-      "image_status": "없음",
-      "cardnews_status": "대기",
-      "video_script_status": "없음",
-      "illustration_request_status": "요청서 없음",
-      "render_status": "없음",
-      "review_status": "",
-      "assignee": "",
-      "publish_youtube": "",
-      "publish_instagram": "",
-      "publish_tiktok": "",
-      "result_folder": "",
-      "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:40"
     },
     {
       "date": "2026.06.02",
@@ -227,7 +246,7 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:40"
     },
     {
       "date": "2026.06.02",
@@ -246,7 +265,7 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:40"
     },
     {
       "date": "2026.06.02",
@@ -265,26 +284,7 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
-    },
-    {
-      "date": "2026.06.01",
-      "slug": "011_qa_combo_discount_check",
-      "title": "결합할인 진짜 이득? / 가족 인터넷 결합 1분 계산법 / 6월 약정만료 골든타임",
-      "article_status": "있음",
-      "image_status": "없음",
-      "cardnews_status": "대기",
-      "video_script_status": "없음",
-      "illustration_request_status": "요청서 없음",
-      "render_status": "없음",
-      "review_status": "",
-      "assignee": "",
-      "publish_youtube": "",
-      "publish_instagram": "",
-      "publish_tiktok": "",
-      "result_folder": "",
-      "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:40"
     },
     {
       "date": "2026.06.01",
@@ -303,7 +303,7 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:40"
     },
     {
       "date": "2026.06.01",
@@ -322,7 +322,7 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:40"
     },
     {
       "date": "2026.06.01",
@@ -341,7 +341,7 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:40"
     },
     {
       "date": "2026.05.28",
@@ -360,7 +360,7 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:41"
     },
     {
       "date": "2026.05.28",
@@ -379,7 +379,7 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:41"
     },
     {
       "date": "2026.05.28",
@@ -398,7 +398,7 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:40"
     },
     {
       "date": "2026.05.28",
@@ -417,7 +417,7 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:40"
     },
     {
       "date": "2026.05.27",
@@ -436,7 +436,7 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:41"
     },
     {
       "date": "2026.05.27",
@@ -455,7 +455,7 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:41"
     },
     {
       "date": "2026.05.27",
@@ -474,7 +474,7 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:41"
     },
     {
       "date": "2026.05.26",
@@ -493,7 +493,7 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:41"
     },
     {
       "date": "2026.05.22",
@@ -512,7 +512,7 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:41"
     },
     {
       "date": "2026.05.13",
@@ -531,7 +531,7 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:41"
     },
     {
       "date": "2026.05.12",
@@ -550,7 +550,7 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:41"
     },
     {
       "date": "2026.05.11",
@@ -569,7 +569,7 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:41"
     },
     {
       "date": "2026.05.08",
@@ -588,7 +588,7 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:41"
     },
     {
       "date": "2026.05.07",
@@ -607,7 +607,7 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:41"
     },
     {
       "date": "2026.05.06",
@@ -626,7 +626,7 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:41"
     },
     {
       "date": "2026.05.04",
@@ -645,7 +645,7 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:41"
     },
     {
       "date": "2026.05.04",
@@ -664,7 +664,7 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:41"
     },
     {
       "date": "2026.04.30",
@@ -683,7 +683,7 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:41"
     },
     {
       "date": "2026.04.28",
@@ -702,7 +702,7 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:41"
     },
     {
       "date": "2026.04.28",
@@ -721,8 +721,8 @@
       "publish_tiktok": "",
       "result_folder": "",
       "notes": "",
-      "updated_at": "2026-06-05T11:08:19"
+      "updated_at": "2026-06-06T12:47:41"
     }
   ],
-  "updated_at": "2026-06-05T11:08:19"
+  "updated_at": "2026-06-06T12:47:41"
 }

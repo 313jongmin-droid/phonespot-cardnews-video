@@ -51,8 +51,8 @@
         "value": "2.png"
       },
       {
-        "type": "mascot",
-        "value": "surprised"
+        "type": "illust",
+        "value": "foldable"
       }
     ],
     "stat": {
@@ -141,10 +141,6 @@
       ],
       "chunk_visuals": [
         {
-          "type": "illust",
-          "value": "foldable"
-        },
-        {
           "type": "image",
           "value": "3.png"
         },
@@ -154,15 +150,19 @@
         },
         {
           "type": "illust",
-          "value": "final_update"
-        },
-        {
-          "type": "illust",
           "value": "chatbot"
         },
         {
           "type": "illust",
-          "value": "release_calendar"
+          "value": "final_update"
+        },
+        {
+          "type": "illust",
+          "value": "forecast"
+        },
+        {
+          "type": "illust",
+          "value": "smartphone"
         }
       ],
       "stat": {
@@ -266,11 +266,11 @@
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "display_ratio_change"
+          "value": "newspaper"
         },
         {
           "type": "illust",
-          "value": "appliance"
+          "value": "microphone"
         },
         {
           "type": "mascot",
@@ -278,15 +278,15 @@
         },
         {
           "type": "illust",
-          "value": "cover_screen_widgets"
+          "value": "shield"
         },
         {
           "type": "illust",
-          "value": "battery_overheat"
+          "value": "meeting_room"
         },
         {
           "type": "illust",
-          "value": "biometric"
+          "value": "smartphone"
         }
       ],
       "stat": {
@@ -389,11 +389,7 @@
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "health_sensor_watch"
-        },
-        {
-          "type": "illust",
-          "value": "memory_chip"
+          "value": "gift_voucher"
         },
         {
           "type": "illust",
@@ -401,11 +397,15 @@
         },
         {
           "type": "illust",
-          "value": "gemini"
+          "value": "smartphone"
         },
         {
           "type": "illust",
-          "value": "chart_down"
+          "value": "smartphone"
+        },
+        {
+          "type": "illust",
+          "value": "smartphone"
         }
       ],
       "stat": {
@@ -500,15 +500,15 @@
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "chart_up"
+          "value": "smartphone"
         },
         {
           "type": "illust",
-          "value": "chat_backup_restore"
+          "value": "smartphone"
         },
         {
           "type": "illust",
-          "value": "clock"
+          "value": "smartphone"
         },
         {
           "type": "mascot",
@@ -599,7 +599,7 @@
     "chunk_visuals": [
       {
         "type": "illust",
-        "value": "smartphone"
+        "value": "store"
       },
       {
         "type": "logo",
@@ -661,6 +661,66 @@
     "policy": "non-illustration image visuals are used at most once across one video",
     "replacements": [
       {
+        "section": "fact_3",
+        "chunk": 2,
+        "from": {
+          "type": "image",
+          "value": "1.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "memory_chip"
+        }
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "from": {
+          "type": "image",
+          "value": "2.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "samsung_ai"
+        }
+      },
+      {
+        "section": "fact_3",
+        "chunk": 5,
+        "from": {
+          "type": "image",
+          "value": "3.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "gemini"
+        }
+      },
+      {
+        "section": "fact_4",
+        "chunk": 2,
+        "from": {
+          "type": "image",
+          "value": "1.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "aluminum_label"
+        }
+      },
+      {
+        "section": "fact_4",
+        "chunk": 3,
+        "from": {
+          "type": "image",
+          "value": "2.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "appliance"
+        }
+      },
+      {
         "section": "cta",
         "chunk": 3,
         "from": {
@@ -669,7 +729,7 @@
         },
         "to": {
           "type": "illust",
-          "value": "store"
+          "value": "battery_charge_range"
         }
       }
     ]
@@ -696,138 +756,130 @@
     "policy": "Match chunks to GPT source images using prompt.md descriptions, then fallback to tagged reusable illustrations.",
     "changes": [
       {
-        "section": "hook",
-        "chunk": 2,
-        "from": {
-          "type": "image",
-          "value": "2.png"
-        },
-        "to": {
-          "type": "image",
-          "value": "5.png"
-        },
-        "context": "갤럭시 언팩이 다음 달 22일 영국 런던에서 열립니다 오늘 기준 D-49이고, 폴더블 신제품의 사전예약 골든타임이 갤럭시 언팩 7월 22일 런던 ['갤럭시 언팩', '7월 22일 런던'] 뉴스",
-        "reason": "image score 34: 사전예약 7월 말 시작 예상 A still life on a warm white desk. A small generic gift box wrap"
-      },
-      {
-        "section": "hook",
-        "chunk": 3,
-        "from": {
-          "type": "image",
-          "value": "3.png"
-        },
-        "to": {
-          "type": "image",
-          "value": "2.png"
-        },
-        "context": "오늘 기준 D-49이고, 폴더블 신제품의 사전예약 골든타임이 코앞으로 다가왔습니다 갤럭시 언팩 7월 22일 런던 ['갤럭시 언팩', '7월 22일 런던'] 뉴스",
-        "reason": "image score 26: 갤럭시 Z 폴드8 와이드 화면 모형 등장 A still life on a soft cream surface. A single folded-sty"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 2,
+        "section": "fact_3",
+        "chunk": 1,
         "from": {
           "type": "illust",
-          "value": "launch_event"
-        },
-        "to": {
-          "type": "image",
-          "value": "3.png"
-        },
-        "context": "삼성전자가 2026년 7월 22일 현지 시각으로 영국 런던에서 갤럭시 언팩 행사를 열고, 폴더블 신제품인 갤럭시 Z 폴드8과 Z 플립8, 갤럭시 Z 폴드8 와이드 화면 모형 등장 ['갤럭시 Z 폴드8', '와이드 화",
-        "reason": "image score 50: 갤럭시 Z 플립8 외부 디스플레이 확장 A top-down flat lay on a warm white surface. A small flip-"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 5,
-        "from": {
-          "type": "image",
-          "value": "5.png"
+          "value": "gift_voucher"
         },
         "to": {
           "type": "illust",
-          "value": "chatbot"
+          "value": "smartphone"
         },
-        "context": "그리고 갤럭시 워치9 시리즈를 공개합니다 사전예약은 보통 언팩 이후 며칠 안에 시작되어 7월 말, 정식 출시는 8월 초로 예상됩니다 갤럭시 Z 폴드8 와이드 화면 모형 등장 ['갤럭시 Z 폴드8', '와이드 화면 모",
-        "reason": "fallback illust score 12"
+        "context": "갤럭시 워치9 시리즈는 새 디자인과 향상된 건강 측정 센서를 탑재할 것으로 보입니다 갤럭시 워치9 새 디자인·건강 측정 ['갤럭시 워치9', '새 디자인·건강 측정'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
       },
       {
         "section": "fact_3",
-        "chunk": 3,
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "memory_chip"
+        },
+        "to": {
+          "type": "illust",
+          "value": "gift_voucher"
+        },
+        "context": "갤럭시 워치9 시리즈는 새 디자인과 향상된 건강 측정 센서를 탑재할 것으로 보입니다 사전예약 혜택은 과거 패턴 기준 저장공간 한 단계 업그레이드, 갤럭시 워치9 새 디자인·건강 측정 ['갤럭시 워치9', '새 디자인",
+        "reason": "illust score 12"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
         "from": {
           "type": "illust",
           "value": "samsung_ai"
         },
         "to": {
           "type": "illust",
-          "value": "gift_voucher"
+          "value": "smartphone"
         },
-        "context": "향상된 건강 측정 센서를 탑재할 것으로 보입니다 사전예약 혜택은 과거 패턴 기준 저장공간 한 단계 업그레이드, 워치와 버즈 같은 액세서리 무료 또는 할인이 보통 붙고, 갤럭시 워치9 새 디자인·건강 측정 ['갤럭시 ",
-        "reason": "illust score 24"
+        "context": "사전예약 혜택은 과거 패턴 기준 저장공간 한 단계 업그레이드, 워치와 버즈 같은 액세서리 무료 또는 할인이 보통 붙고, 통신3사 별 혜택에 차이가 있습니다 갤럭시 워치9 새 디자인·건강 측정 ['갤럭시 워치9', '",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 5,
+        "from": {
+          "type": "illust",
+          "value": "gemini"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "워치와 버즈 같은 액세서리 무료 또는 할인이 보통 붙고, 통신3사 별 혜택에 차이가 있습니다 갤럭시 워치9 새 디자인·건강 측정 ['갤럭시 워치9', '새 디자인·건강 측정'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "특히 6월에 약정만료가 되는 분이라면, 7월 사전예약 갈아타기가 가장 유리한 타이밍입니다 위약금 부담 없이 신규 사전예약 혜택을 풀로 받을 수 있어, 사전예약 7월 말 시작 예상 ['사전예약', '7월 말 시작 예상",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "사전예약 갈아타기가 가장 유리한 타이밍입니다 위약금 부담 없이 신규 사전예약 혜택을 풀로 받을 수 있어, 약정 시점 1개월에서 2개월 차이로 수만 원이 좌우됩니다 사전예약 7월 말 시작 예상 ['사전예약', '7월 ",
+        "reason": "neutral filler (no semantic match)"
       }
     ],
     "weak": [
       {
-        "section": "hook",
-        "chunk": 4,
-        "current": {
-          "type": "mascot",
-          "value": "surprised"
-        },
-        "context": "폴더블 신제품의 사전예약 골든타임이 코앞으로 다가왔습니다 갤럭시 언팩 7월 22일 런던 ['갤럭시 언팩', '7월 22일 런던'] 뉴스",
-        "best_image_score": 8,
-        "best_illust_score": 12
-      },
-      {
         "section": "fact_1",
         "chunk": 1,
         "current": {
-          "type": "illust",
-          "value": "foldable"
+          "type": "image",
+          "value": "3.png"
         },
         "context": "삼성전자가 2026년 7월 22일 현지 시각으로 영국 런던에서 갤럭시 언팩 행사를 열고, 갤럭시 Z 폴드8 와이드 화면 모형 등장 ['갤럭시 Z 폴드8', '와이드 화면 모형 등장'] 뉴스",
         "best_image_score": 8,
-        "best_illust_score": 12
+        "best_illust_score": 0
       },
       {
         "section": "fact_1",
-        "chunk": 4,
+        "chunk": 2,
         "current": {
-          "type": "illust",
-          "value": "final_update"
+          "type": "image",
+          "value": "4.png"
         },
-        "context": "폴더블 신제품인 갤럭시 Z 폴드8과 Z 플립8, 그리고 갤럭시 워치9 시리즈를 공개합니다 사전예약은 보통 언팩 이후 며칠 안에 시작되어 7월 말, 갤럭시 Z 폴드8 와이드 화면 모형 등장 ['갤럭시 Z 폴드8', '와이드 화면 모형 등장'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 12
-      },
-      {
-        "section": "fact_1",
-        "chunk": 5,
-        "current": {
-          "type": "illust",
-          "value": "chatbot"
-        },
-        "context": "그리고 갤럭시 워치9 시리즈를 공개합니다 사전예약은 보통 언팩 이후 며칠 안에 시작되어 7월 말, 정식 출시는 8월 초로 예상됩니다 갤럭시 Z 폴드8 와이드 화면 모형 등장 ['갤럭시 Z 폴드8', '와이드 화면 모형 등장'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 12
+        "context": "삼성전자가 2026년 7월 22일 현지 시각으로 영국 런던에서 갤럭시 언팩 행사를 열고, 폴더블 신제품인 갤럭시 Z 폴드8과 Z 플립8, 갤럭시 Z 폴드8 와이드 화면 모형 등장 ['갤럭시 Z 폴드8', '와이드 화면 모형 등장'] 뉴스",
+        "best_image_score": 8,
+        "best_illust_score": 0
       },
       {
         "section": "fact_1",
         "chunk": 6,
         "current": {
           "type": "illust",
-          "value": "release_calendar"
+          "value": "smartphone"
         },
         "context": "사전예약은 보통 언팩 이후 며칠 안에 시작되어 7월 말, 정식 출시는 8월 초로 예상됩니다 갤럭시 Z 폴드8 와이드 화면 모형 등장 ['갤럭시 Z 폴드8', '와이드 화면 모형 등장'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 12
+        "best_illust_score": 0
       },
       {
         "section": "fact_2",
         "chunk": 1,
         "current": {
           "type": "illust",
-          "value": "display_ratio_change"
+          "value": "newspaper"
         },
         "context": "폴드8은 화면 비율을 변경한 와이드 모형이 공개됐고, 외부 화면이 더 넓어지며 5천만 화소 메인 갤럭시 Z 플립8 외부 디스플레이 확장 ['갤럭시 Z 플립8', '외부 디스플레이 확장'] 뉴스",
         "best_image_score": 0,
@@ -838,11 +890,11 @@
         "chunk": 2,
         "current": {
           "type": "illust",
-          "value": "appliance"
+          "value": "microphone"
         },
         "context": "폴드8은 화면 비율을 변경한 와이드 모형이 공개됐고, 외부 화면이 더 넓어지며 5천만 화소 메인 카메라 탑재 가능성이 거론됩니다 갤럭시 Z 플립8 외부 디스플레이 확장 ['갤럭시 Z 플립8', '외부 디스플레이 확장'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 12
+        "best_illust_score": 0
       },
       {
         "section": "fact_2",
@@ -853,47 +905,47 @@
         },
         "context": "외부 화면이 더 넓어지며 5천만 화소 메인 카메라 탑재 가능성이 거론됩니다 플립8은 폴드를 닫은 상태에서 사용하는 갤럭시 Z 플립8 외부 디스플레이 확장 ['갤럭시 Z 플립8', '외부 디스플레이 확장'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 12
+        "best_illust_score": 0
       },
       {
         "section": "fact_2",
         "chunk": 4,
         "current": {
           "type": "illust",
-          "value": "cover_screen_widgets"
+          "value": "shield"
         },
         "context": "카메라 탑재 가능성이 거론됩니다 플립8은 폴드를 닫은 상태에서 사용하는 외부 디스플레이가 확장되고 갤럭시 Z 플립8 외부 디스플레이 확장 ['갤럭시 Z 플립8', '외부 디스플레이 확장'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 12
+        "best_illust_score": 0
       },
       {
         "section": "fact_2",
         "chunk": 5,
         "current": {
           "type": "illust",
-          "value": "battery_overheat"
+          "value": "meeting_room"
         },
         "context": "플립8은 폴드를 닫은 상태에서 사용하는 외부 디스플레이가 확장되고 위젯과 앱 호환이 강화될 전망입니다 갤럭시 Z 플립8 외부 디스플레이 확장 ['갤럭시 Z 플립8', '외부 디스플레이 확장'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 12
+        "best_illust_score": 0
       },
       {
         "section": "fact_2",
         "chunk": 6,
         "current": {
           "type": "illust",
-          "value": "biometric"
+          "value": "smartphone"
         },
         "context": "외부 디스플레이가 확장되고 위젯과 앱 호환이 강화될 전망입니다 갤럭시 Z 플립8 외부 디스플레이 확장 ['갤럭시 Z 플립8', '외부 디스플레이 확장'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 12
+        "best_illust_score": 0
       },
       {
         "section": "fact_3",
         "chunk": 1,
         "current": {
           "type": "illust",
-          "value": "health_sensor_watch"
+          "value": "smartphone"
         },
         "context": "갤럭시 워치9 시리즈는 새 디자인과 향상된 건강 측정 센서를 탑재할 것으로 보입니다 갤럭시 워치9 새 디자인·건강 측정 ['갤럭시 워치9', '새 디자인·건강 측정'] 뉴스",
         "best_image_score": 0,
@@ -901,21 +953,21 @@
       },
       {
         "section": "fact_3",
-        "chunk": 2,
+        "chunk": 3,
         "current": {
           "type": "illust",
-          "value": "memory_chip"
+          "value": "smartphone"
         },
-        "context": "갤럭시 워치9 시리즈는 새 디자인과 향상된 건강 측정 센서를 탑재할 것으로 보입니다 사전예약 혜택은 과거 패턴 기준 저장공간 한 단계 업그레이드, 갤럭시 워치9 새 디자인·건강 측정 ['갤럭시 워치9', '새 디자인·건강 측정'] 뉴스",
+        "context": "향상된 건강 측정 센서를 탑재할 것으로 보입니다 사전예약 혜택은 과거 패턴 기준 저장공간 한 단계 업그레이드, 워치와 버즈 같은 액세서리 무료 또는 할인이 보통 붙고, 갤럭시 워치9 새 디자인·건강 측정 ['갤럭시 워치9', '새 디자인·건강 측정'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 12
+        "best_illust_score": 0
       },
       {
         "section": "fact_3",
         "chunk": 4,
         "current": {
           "type": "illust",
-          "value": "gemini"
+          "value": "smartphone"
         },
         "context": "사전예약 혜택은 과거 패턴 기준 저장공간 한 단계 업그레이드, 워치와 버즈 같은 액세서리 무료 또는 할인이 보통 붙고, 통신3사 별 혜택에 차이가 있습니다 갤럭시 워치9 새 디자인·건강 측정 ['갤럭시 워치9', '새 디자인·건강 측정'] 뉴스",
         "best_image_score": 0,
@@ -926,7 +978,7 @@
         "chunk": 5,
         "current": {
           "type": "illust",
-          "value": "chart_down"
+          "value": "smartphone"
         },
         "context": "워치와 버즈 같은 액세서리 무료 또는 할인이 보통 붙고, 통신3사 별 혜택에 차이가 있습니다 갤럭시 워치9 새 디자인·건강 측정 ['갤럭시 워치9', '새 디자인·건강 측정'] 뉴스",
         "best_image_score": 0,
@@ -937,33 +989,33 @@
         "chunk": 1,
         "current": {
           "type": "illust",
-          "value": "chart_up"
+          "value": "smartphone"
         },
         "context": "특히 6월에 약정만료가 되는 분이라면, 7월 사전예약 갈아타기가 가장 유리한 타이밍입니다 사전예약 7월 말 시작 예상 ['사전예약', '7월 말 시작 예상'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 12
+        "best_illust_score": 0
       },
       {
         "section": "fact_4",
         "chunk": 2,
         "current": {
           "type": "illust",
-          "value": "chat_backup_restore"
+          "value": "smartphone"
         },
         "context": "특히 6월에 약정만료가 되는 분이라면, 7월 사전예약 갈아타기가 가장 유리한 타이밍입니다 위약금 부담 없이 신규 사전예약 혜택을 풀로 받을 수 있어, 사전예약 7월 말 시작 예상 ['사전예약', '7월 말 시작 예상'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 12
+        "best_illust_score": 0
       },
       {
         "section": "fact_4",
         "chunk": 3,
         "current": {
           "type": "illust",
-          "value": "clock"
+          "value": "smartphone"
         },
         "context": "사전예약 갈아타기가 가장 유리한 타이밍입니다 위약금 부담 없이 신규 사전예약 혜택을 풀로 받을 수 있어, 약정 시점 1개월에서 2개월 차이로 수만 원이 좌우됩니다 사전예약 7월 말 시작 예상 ['사전예약', '7월 말 시작 예상'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 12
+        "best_illust_score": 0
       },
       {
         "section": "fact_4",
@@ -974,7 +1026,113 @@
         },
         "context": "위약금 부담 없이 신규 사전예약 혜택을 풀로 받을 수 있어, 약정 시점 1개월에서 2개월 차이로 수만 원이 좌우됩니다 사전예약 7월 말 시작 예상 ['사전예약', '7월 말 시작 예상'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 12
+        "best_illust_score": 0
+      }
+    ]
+  },
+  "_codex_unique_illustration_guard": {
+    "version": 1,
+    "policy": "Illustrations and mascots should not repeat inside one video. CTA logo is exempt.",
+    "replacements": [
+      {
+        "section": "fact_3",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "gift_voucher"
+        },
+        "context": "갤럭시 워치9 시리즈는 새 디자인과 향상된 건강 측정 센서를 탑재할 것으로 보입니다 갤럭시 워치9 새 디자인·건강 측정 갤럭시 워치9 시리즈는 새 디자인과 향상된 건강 측정 센서를 탑재할 것으로 보입니다. 사전예약 혜택은 과거 패턴 기준 저장공간 한 단계 업그레이드, 워치와 버즈 같은 "
+      },
+      {
+        "section": "cta",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "store"
+        },
+        "context": "휴대폰 구매할 땐? 지원금부터 무료로 조회해보세요 휴대폰 구매할 땐? 지원금부터 무료로 조회해보세요 휴대폰 구매할 땐? 지원금부터 무료로 조회해보세요."
+      }
+    ],
+    "weak": [
+      {
+        "section": "fact_2",
+        "chunk": 6,
+        "duplicate": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "외부 디스플레이가 확장되고 위젯과 앱 호환이 강화될 전망입니다 갤럭시 Z 플립8 외부 디스플레이 확장 폴드8은 화면 비율을 변경한 와이드 모형이 공개됐고, 외부 화면이 더 넓어지며 5천만 화소 메인 카메라 탑재 가능성이 거론됩니다. 플립8은 폴드를 닫은 상태에서 사용하는 외부 디스플레이"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 2,
+        "duplicate": {
+          "type": "illust",
+          "value": "gift_voucher"
+        },
+        "context": "갤럭시 워치9 시리즈는 새 디자인과 향상된 건강 측정 센서를 탑재할 것으로 보입니다 사전예약 혜택은 과거 패턴 기준 저장공간 한 단계 업그레이드, 갤럭시 워치9 새 디자인·건강 측정 갤럭시 워치9 시리즈는 새 디자인과 향상된 건강 측정 센서를 탑재할 것으로 보입니다. 사전예약 혜택은 과"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 3,
+        "duplicate": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "향상된 건강 측정 센서를 탑재할 것으로 보입니다 사전예약 혜택은 과거 패턴 기준 저장공간 한 단계 업그레이드, 워치와 버즈 같은 액세서리 무료 또는 할인이 보통 붙고, 갤럭시 워치9 새 디자인·건강 측정 갤럭시 워치9 시리즈는 새 디자인과 향상된 건강 측정 센서를 탑재할 것으로 보입니다"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "duplicate": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "사전예약 혜택은 과거 패턴 기준 저장공간 한 단계 업그레이드, 워치와 버즈 같은 액세서리 무료 또는 할인이 보통 붙고, 통신3사 별 혜택에 차이가 있습니다 갤럭시 워치9 새 디자인·건강 측정 갤럭시 워치9 시리즈는 새 디자인과 향상된 건강 측정 센서를 탑재할 것으로 보입니다. 사전예약 "
+      },
+      {
+        "section": "fact_3",
+        "chunk": 5,
+        "duplicate": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "워치와 버즈 같은 액세서리 무료 또는 할인이 보통 붙고, 통신3사 별 혜택에 차이가 있습니다 갤럭시 워치9 새 디자인·건강 측정 갤럭시 워치9 시리즈는 새 디자인과 향상된 건강 측정 센서를 탑재할 것으로 보입니다. 사전예약 혜택은 과거 패턴 기준 저장공간 한 단계 업그레이드, 워치와 버"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 1,
+        "duplicate": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "특히 6월에 약정만료가 되는 분이라면, 7월 사전예약 갈아타기가 가장 유리한 타이밍입니다 사전예약 7월 말 시작 예상 특히 6월에 약정만료가 되는 분이라면, 7월 사전예약 갈아타기가 가장 유리한 타이밍입니다. 위약금 부담 없이 신규 사전예약 혜택을 풀로 받을 수 있어, 약정 시점 1개월"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 2,
+        "duplicate": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "특히 6월에 약정만료가 되는 분이라면, 7월 사전예약 갈아타기가 가장 유리한 타이밍입니다 위약금 부담 없이 신규 사전예약 혜택을 풀로 받을 수 있어, 사전예약 7월 말 시작 예상 특히 6월에 약정만료가 되는 분이라면, 7월 사전예약 갈아타기가 가장 유리한 타이밍입니다. 위약금 부담 없이"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 3,
+        "duplicate": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "사전예약 갈아타기가 가장 유리한 타이밍입니다 위약금 부담 없이 신규 사전예약 혜택을 풀로 받을 수 있어, 약정 시점 1개월에서 2개월 차이로 수만 원이 좌우됩니다 사전예약 7월 말 시작 예상 특히 6월에 약정만료가 되는 분이라면, 7월 사전예약 갈아타기가 가장 유리한 타이밍입니다. 위약"
       }
     ]
   }

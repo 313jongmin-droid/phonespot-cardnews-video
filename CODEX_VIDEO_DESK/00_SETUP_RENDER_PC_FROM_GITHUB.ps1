@@ -105,8 +105,10 @@ if (Test-Path (Join-Path $shorts "package.json")) {
 }
 
 Write-Host "[deps] Python packages"
-python -m pip install -q edge-tts mutagen pillow requests
+python -m pip install -q edge-tts mutagen pillow requests playwright
 if ($LASTEXITCODE -ne 0) { throw "Python package install failed." }
+python -m playwright install chromium
+if ($LASTEXITCODE -ne 0) { throw "Playwright Chromium install failed." }
 
 $desk = Join-Path $targetPath "CODEX_VIDEO_DESK"
 $workerDir = Join-Path $desk "RENDER_WORKER"

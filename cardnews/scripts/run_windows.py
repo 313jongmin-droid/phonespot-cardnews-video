@@ -155,27 +155,13 @@ print(f"SLUG: {SLUG}")
 print(f"OUT : {OUT}")
 print("=" * 60)
 
-# Playwright + Chromium 자동 설치 (첫 실행 시에만 실제 다운로드)
-import subprocess as _sp
-def _ensure_pkg(name, install_name=None):
-    try:
-        __import__(name)
-    except ImportError:
-        print(f"[info] Installing {install_name or name}...")
-        _sp.run([sys.executable, '-m', 'pip', 'install', '--quiet', install_name or name], check=False)
-
-_ensure_pkg('playwright')
-
-# Chromium 다운로드 확인 (없으면 설치)
-_chromium_check = _sp.run(
-    [sys.executable, '-m', 'playwright', 'install', '--dry-run', 'chromium'],
-    capture_output=True, text=True
-)
-if 'install' in _chromium_check.stdout.lower() or 'download' in _chromium_check.stdout.lower():
-    print("[info] Downloading Chromium (~130MB, first run only)...")
-    _sp.run([sys.executable, '-m', 'playwright', 'install', 'chromium'], check=False)
-else:
-    print("[info] Chromium ready")
+# Dependencies belong to one-time PC setup. Rendering must not silently install.
+try:
+    import playwright  # noqa: F401
+except ImportError:
+    print("[ERROR] Playwright is not installed.")
+    print("[ERROR] Run the PC setup once, then retry card rendering.")
+    sys.exit(1)
 
 os.environ.setdefault('PYTHONIOENCODING', 'utf-8')
 os.environ['SLUG'] = SLUG

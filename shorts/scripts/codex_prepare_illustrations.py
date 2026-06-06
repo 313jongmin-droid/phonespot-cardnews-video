@@ -60,8 +60,11 @@ def main() -> int:
     run("codex_illustration_scout.py", slug)
     run("codex_refresh_workbench.py", slug)
     prompt = DESK / "LATEST_PROMPT.md"
-    if prompt.exists():
-        os.startfile(prompt)
+    if prompt.exists() and os.environ.get("PHONESPOT_NO_OPEN") != "1":
+        try:
+            os.startfile(prompt)
+        except OSError as exc:
+            print(f"[WARN] Prompt report could not be opened automatically: {exc}")
     print("")
     print("[OK] Prompt report is ready.")
     print("[NEXT] Generate GPT Plus illustrations in report order and download them.")

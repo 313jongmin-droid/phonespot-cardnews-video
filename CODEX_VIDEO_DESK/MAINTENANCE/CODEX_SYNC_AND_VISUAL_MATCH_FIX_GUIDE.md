@@ -80,3 +80,35 @@
 - `shorts/src/components/casual/chunkUtil.ts.bak_caption_sync_fix_*`
 - `shorts/scripts/codex_semantic_visual_match.py.bak_visual_fallback_fix_*`
 문제 시 해당 백업으로 되돌리면 됩니다.
+
+
+---
+
+## 이미지 의미매칭 로드맵 (임베딩 기반, 진행 중)
+
+### 목표
+콘텐츠마다 1회용 그림을 새로 만드는 대신, **범용 개념 일러스트**를 쌓아 라이브러리만으로
+대부분을 커버(생성 요청이 0에 수렴)하고 중복 느낌도 제거한다.
+
+### 토대 (적용됨)
+- `shorts/scripts/codex_illust_embed.py` — **무료 로컬 임베딩 엔진**.
+  - 기본 모델: `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` (fastembed/ONNX, 한국어 포함, ~220MB, CPU).
+  - 라이브러리 개념 임베딩을 디스크 캐시(`shorts/codex/illust_embed_cache.json`), 새 개념만 계산.
+  - API: `rank(text)`(의미 매칭), `cover(concept)`(중복 판정), `similarity(a,b)`.
+  - **graceful 폴백:** 모델/패키지 없으면 기존 lexical 점수로 자동 폴백 → 파이프라인 안 깨짐.
+- 설치(PC당 1회, 온라인): `shorts/SETUP_EMBED.bat` (첫 실행 후 오프라인 동작).
+- 미리보기(읽기전용, 라이브 매처 미수정): `python scripts/codex_illust_match_preview.py <slug>`
+  → 청크별 [현재] vs [임베딩 제안]을 비교 출력.
+
+### 핵심 불변조건 (1회용 폭증 방지 = 수렴 조건)
+1. **개념 추상화:** 일러스트는 "그 기사 전용 장면"이 아니라 **재사용 가능한 개념**으로 만든다.
+   날짜·금액·브랜드·모델명·인물 등 1회용 디테일 금지(`codex_illustration_scout.py`의 STYLE 유지).
+2. **생성 전 의미 중복제거:** 새 일러스트를 요청하기 전에 `cover(concept)`로 기존 라이브러리와
+   비교해 임계 이상 유사하면 **재사용(생성 안 함)**. 이게 라이브러리 크기를 수렴시킨다.
+3. 모델 미사용 상태에서도 `rank()`는 lexical로 동작해야 한다(안전).
+
+### 다음 단계 (미적용)
+- **1단계:** 스카우트를 13개 고정 규칙 → "갭 청크에서 범용 개념 추출 → DB 신규 개념 등록 → 프롬프트 생성"으로 확장.
+- **2단계:** 위 2번(임베딩 중복제거)을 스카우트에 연결.
+- **3단계:** 렌더 매칭(`codex_semantic_visual_match.py`)의 lexical 점수를 `rank()` 임베딩으로 교체.
+  (라이브 매처 수정이라 백업 후 원자적으로, 폴백 유지)

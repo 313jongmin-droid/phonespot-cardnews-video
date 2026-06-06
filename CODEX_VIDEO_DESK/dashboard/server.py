@@ -1041,8 +1041,22 @@ class Handler(BaseHTTPRequestHandler):
             with STATE_LOCK:
                 local_job = dict(JOB)
             remote_job = REMOTE_QUEUE.panel_job()
-            job = remote_job if remote_job and (remote_job.get("running") or not local_job.get("running")) else local_job
+            if local_job.get("running"):
+                job = local_job
+            elif remote_job and remote_job.get("running"):
+                job = remote_job
+            else:
+                remote_ended = 0.0
+                if remote_job:
+                    remote_stamp = remote_job.get("ended") or remote_job.get("started") or ""
+                    try:
+                        remote_ended = datetime.fromisoformat(str(remote_stamp)).timestamp()
+                    except (TypeError, ValueError):
+                        remote_ended = 0.0
+                local_ended = float(local_job.get("ended") or local_job.get("started") or 0)
+                job = local_job if local_job.get("name") and local_ended >= remote_ended else (remote_job or local_job)
             workers = REMOTE_QUEUE.workers()
+            online_workers = [worker for worker in workers.values() if worker.get("online")]
             json_response(self, {
                 "root": str(ROOT),
                 "desk": str(DESK),
@@ -1054,7 +1068,8 @@ class Handler(BaseHTTPRequestHandler):
                 "canImport": len(missing) == 0,
                 "job": job,
                 "workers": workers,
-                "onlineWorkers": len([worker for worker in workers.values() if worker.get("online")]),
+                "onlineWorkers": len(online_workers),
+                "readyWorkers": len([worker for worker in online_workers if worker.get("ready", True)]),
                 "results": results_list(),
                 "sync": sync_status(),
                 "github": github_status(),
@@ -1751,6 +1766,7 @@ INDEX_HTML = r"""<!doctype html>
       document.getElementById("rootText").textContent = data.root;
       const sync = data.sync || {};
       document.getElementById("runtimeModeText").textContent = `${sync.rootMode || "-"} · 렌더 PC ${data.onlineWorkers || 0}대`;
+      document.getElementById("runtimeModeText").textContent = `${sync.rootMode || "-"} · 렌더 PC ${data.readyWorkers || 0}/${data.onlineWorkers || 0}대 준비`;
       const workerSelect = document.getElementById("targetWorker");
       const selectedWorker = workerSelect.value;
       workerSelect.innerHTML = `<option value="">자동 배정</option>`;
@@ -1759,6 +1775,10 @@ INDEX_HTML = r"""<!doctype html>
         const option = document.createElement("option");
         option.value = id;
         option.textContent = `${worker.name || id} · ${worker.status || "idle"}`;
+        option.disabled = worker.ready === false;
+        if (worker.ready === false) {
+          option.textContent = `${worker.name || id} · 준비 필요: ${(worker.issues || []).join(", ") || "설정 확인"}`;
+        }
         workerSelect.appendChild(option);
       });
       if ([...workerSelect.options].some(option => option.value === selectedWorker)) workerSelect.value = selectedWorker;

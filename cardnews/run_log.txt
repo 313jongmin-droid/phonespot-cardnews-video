@@ -1,70 +1,18 @@
-=== start 2026-06-05 16:13:58.59 
+=== start 2026-06-06 12:52:36.76 
  
 [probe] where py: 
 C:\Windows\py.exe
-C:\Users\di898\AppData\Local\Microsoft\WindowsApps\py.exe
  
-[using py] 
-[arg-match] '015' -> 015_qa_msafer_pass_identity_block
+[using python] 
+[arg-match] '012' -> 012_news_galaxy_unpack_july
 ============================================================
 phonespot cardnews renderer (v5)
 BASE: C:\Users\di898\Documents\phonespot_cardnews\cardnews
-SLUG: 015_qa_msafer_pass_identity_block
-OUT : C:\Users\di898\Documents\phonespot_cardnews\cardnews\output\015_qa_msafer_pass_identity_block
+SLUG: 012_news_galaxy_unpack_july
+OUT : C:\Users\di898\Documents\phonespot_cardnews\cardnews\output\012_news_galaxy_unpack_july
 ============================================================
-[info] Downloading Chromium (~130MB, first run only)...
-[slug] SLUG='015_qa_msafer_pass_identity_block'  IMG_DIR=C:\Users\di898\Documents\phonespot_cardnews\cardnews\images\015_qa_msafer_pass_identity_block
-[auto-rename] numeric filenames detected -> numeric order:
-  1.png → card_1.png
-  2.png → card_2.png
-  3.png → card_3.png
-  4.png → card_4.png
-  5.png → card_5.png
-[v9 magazine mode] 6 cards loaded + schema OK
-
-=== 1x1 (1080x1080) ===
-  OK card_1.jpg
-  OK card_2.jpg
-  OK card_3.jpg
-  OK card_4.jpg
-  OK card_5.jpg
-  OK card_6.jpg
-
-=== 4x5 (1080x1350) ===
-  OK card_1.jpg
-  OK card_2.jpg
-  OK card_3.jpg
-  OK card_4.jpg
-  OK card_5.jpg
-  OK card_6.jpg
-
-=== 9x16 (1080x1920) ===
-  OK card_1.jpg
-  OK card_2.jpg
-  OK card_3.jpg
-  OK card_4.jpg
-  OK card_5.jpg
-  OK card_6.jpg
-
-Render time: 69.5s
-
-=== JPG result ===
-  18 files / 2463 KB total (2 MB)
-
-OK captions.md (loaded from articles/015_qa_msafer_pass_identity_block.json) + narration_md (676 chars)
-
-============================================================
-Images: 18
-Total size: 2 MB (2472 KB)
-============================================================
-
-[verify] start
-[verify ! issues found]
-  - prior-article leak -- token '스마트폰' from '003_tip_battery_life_double' in captions.md
-  - prior-article leak -- token '26.6' from 'ios_26_6_beta_2026' in captions.md
-============================================================
-
-[backup] 1 backups kept (max 5)
+[ERROR] Playwright is not installed.
+[ERROR] Run the PC setup once, then retry card rendering.
  
  
-=== done 2026-06-05 16:15:22.82 
+=== done 2026-06-06 12:52:38.60 

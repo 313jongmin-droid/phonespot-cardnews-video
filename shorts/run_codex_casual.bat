@@ -55,9 +55,13 @@ if not exist node_modules (
 )
 
 echo.
-echo ----- Step 2/7: edge-tts install -----
-python -m pip install --quiet --upgrade edge-tts
-if errorlevel 1 goto :fail
+echo ----- Step 2/7: edge-tts check -----
+python -c "import edge_tts" >nul 2>nul
+if errorlevel 1 (
+    echo  edge-tts missing - existing matching audio can still be reused
+) else (
+    echo  already installed - skip
+)
 
 echo.
 echo ----- Step 3/7: Build script + copy assets -----
