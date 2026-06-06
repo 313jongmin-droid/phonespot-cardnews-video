@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import html
+import base64
+import hmac
 import json
 import os
 import re
@@ -31,6 +33,8 @@ CARD_ARTICLES = CARDNEWS / "articles"
 SECRETS = ROOT / "_secrets"
 TELEGRAM_TOKEN_FILE = SECRETS / "telegram_token.txt"
 TELEGRAM_CHAT_ID_FILE = SECRETS / "telegram_chat_id.txt"
+PANEL_AUTH_FILE = SECRETS / "panel_auth.txt"
+WORKER_API_KEY_FILE = SECRETS / "worker_api_key.txt"
 DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
@@ -840,11 +844,56 @@ def sync_status() -> dict:
     return status
 
 def cors_headers(handler: BaseHTTPRequestHandler) -> None:
-    # Google Sheets sidebar runs on script.google.com. It must be allowed to
-    # call the local engine on localhost.
-    handler.send_header("Access-Control-Allow-Origin", "*")
+    origin = handler.headers.get("Origin", "")
+    if origin and origin_allowed(handler, origin):
+        handler.send_header("Access-Control-Allow-Origin", origin)
+        handler.send_header("Vary", "Origin")
     handler.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-    handler.send_header("Access-Control-Allow-Headers", "Content-Type")
+    handler.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Worker-Key")
+
+
+def origin_allowed(handler: BaseHTTPRequestHandler, origin: str) -> bool:
+    if not origin:
+        return True
+    host = handler.headers.get("Host", "")
+    if origin in {f"http://{host}", f"https://{host}"}:
+        return True
+    return origin.startswith("https://script.google.com") or origin.endswith(".googleusercontent.com")
+
+
+def read_secret(path: Path) -> str:
+    return path.read_text(encoding="utf-8-sig", errors="replace").strip() if path.exists() else ""
+
+
+def panel_authorized(handler: BaseHTTPRequestHandler) -> bool:
+    expected = read_secret(PANEL_AUTH_FILE)
+    if not expected:
+        return handler.client_address[0] in {"127.0.0.1", "::1"}
+    header = handler.headers.get("Authorization", "")
+    if not header.startswith("Basic "):
+        return False
+    try:
+        supplied = base64.b64decode(header[6:]).decode("utf-8")
+    except Exception:
+        return False
+    return hmac.compare_digest(supplied, expected)
+
+
+def worker_authorized(handler: BaseHTTPRequestHandler) -> bool:
+    expected = read_secret(WORKER_API_KEY_FILE)
+    supplied = handler.headers.get("X-Worker-Key", "")
+    return bool(expected and supplied and hmac.compare_digest(supplied, expected))
+
+
+def unauthorized_response(handler: BaseHTTPRequestHandler, worker: bool = False) -> None:
+    payload = json.dumps({"ok": False, "error": "unauthorized"}).encode("utf-8")
+    handler.send_response(401)
+    handler.send_header("Content-Type", "application/json; charset=utf-8")
+    if not worker:
+        handler.send_header("WWW-Authenticate", 'Basic realm="PhoneSpot Panel"')
+    handler.send_header("Content-Length", str(len(payload)))
+    handler.end_headers()
+    handler.wfile.write(payload)
 
 
 def json_response(handler: BaseHTTPRequestHandler, data: dict, status: int = 200) -> None:
@@ -939,6 +988,16 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self) -> None:
         parsed = urlparse(self.path)
+        if parsed.path == "/api/health":
+            json_response(self, {"ok": True, "service": "phonespot-panel"})
+            return
+        if parsed.path.startswith("/api/worker/"):
+            if not worker_authorized(self):
+                unauthorized_response(self, worker=True)
+                return
+        elif not panel_authorized(self):
+            unauthorized_response(self)
+            return
         if parsed.path == "/":
             html_response(self, INDEX_HTML)
             return
@@ -1122,6 +1181,17 @@ class Handler(BaseHTTPRequestHandler):
     def do_POST(self) -> None:
         try:
             parsed = urlparse(self.path)
+            origin = self.headers.get("Origin", "")
+            if origin and not origin_allowed(self, origin):
+                json_response(self, {"ok": False, "error": "origin not allowed"}, 403)
+                return
+            if parsed.path.startswith("/api/worker/"):
+                if not worker_authorized(self):
+                    unauthorized_response(self, worker=True)
+                    return
+            elif not panel_authorized(self):
+                unauthorized_response(self)
+                return
             if parsed.path == "/api/worker/result":
                 query = urllib.parse.parse_qs(parsed.query)
                 job_id = (query.get("job_id") or [""])[0]
@@ -1144,6 +1214,13 @@ class Handler(BaseHTTPRequestHandler):
                     raise RuntimeError("worker_id is required")
                 job = REMOTE_QUEUE.claim(worker_id)
                 json_response(self, {"ok": True, "job": job})
+                return
+            if parsed.path == "/api/worker/check":
+                job_id = str(data.get("job_id") or "").strip()
+                json_response(self, {
+                    "ok": True,
+                    "cancel_requested": REMOTE_QUEUE.is_cancel_requested(job_id),
+                })
                 return
             if parsed.path == "/api/worker/log":
                 worker_id = str(data.get("worker_id") or "").strip()
@@ -1191,7 +1268,11 @@ class Handler(BaseHTTPRequestHandler):
                 return
             if action == "video_import_render":
                 slug_now = validate_slug(slug)
-                job = REMOTE_QUEUE.enqueue("video_import_render", slug_now)
+                job = REMOTE_QUEUE.enqueue(
+                    "video_import_render",
+                    slug_now,
+                    str(data.get("target_worker") or ""),
+                )
                 json_response(self, {
                     "ok": True,
                     "queued": True,
@@ -1201,13 +1282,25 @@ class Handler(BaseHTTPRequestHandler):
                 return
             if action == "video_render_selected":
                 slug = validate_slug(slug)
-                job = REMOTE_QUEUE.enqueue("video_render_selected", slug)
+                job = REMOTE_QUEUE.enqueue(
+                    "video_render_selected",
+                    slug,
+                    str(data.get("target_worker") or ""),
+                )
                 json_response(self, {
                     "ok": True,
                     "queued": True,
                     "job": job,
                     "message": "선택 영상 렌더를 대기열에 등록했습니다.",
                 })
+                return
+            if action == "remote_job_cancel":
+                job = REMOTE_QUEUE.cancel(str(data.get("job_id") or ""))
+                json_response(self, {"ok": True, "job": job})
+                return
+            if action == "remote_job_retry":
+                job = REMOTE_QUEUE.retry(str(data.get("job_id") or ""))
+                json_response(self, {"ok": True, "job": job})
                 return
             if action == "card_render":
                 slug = validate_slug(slug)
@@ -1407,6 +1500,7 @@ INDEX_HTML = r"""<!doctype html>
     .runtime-action:hover { background:#fff0e8; }
     .runtime-actions { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
     .runtime-actions .runtime-action { margin-top:8px; }
+    .runtime-select { width:100%; margin-top:7px; border:1px solid var(--line); border-radius:6px; padding:5px 7px; background:white; font-size:11px; }
     .status { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; }
     .metric { border:1px solid var(--line); border-radius:8px; padding:12px; background:white; min-height:76px; } .metric b { display:block; font-size:20px; margin-top:4px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
     .warn { color:var(--red); } .ok { color:var(--green); }
@@ -1438,9 +1532,9 @@ INDEX_HTML = r"""<!doctype html>
 <body>
   <header><div><strong>폰스팟 통합 제작 패널</strong> <span>카드뉴스 + 숏폼 영상</span></div><span id="rootText"></span></header>
   <div class="runtime-strip">
-    <div class="runtime-card" id="runtimeMode"><span>실행 위치</span><b id="runtimeModeText">확인 중</b></div>
+    <div class="runtime-card" id="runtimeMode"><span>실행 위치</span><b id="runtimeModeText">확인 중</b><select class="runtime-select" id="targetWorker"><option value="">자동 배정</option></select></div>
     <div class="runtime-card" id="runtimeSync"><span>카드뉴스 동기화</span><b id="runtimeSyncText">확인 중</b></div>
-    <div class="runtime-card" id="runtimeJob"><span>실행 상태</span><b id="runtimeJobText">대기 중</b></div>
+    <div class="runtime-card" id="runtimeJob"><span>실행 상태</span><b id="runtimeJobText">대기 중</b><div class="runtime-actions"><button class="runtime-action" id="cancelJobButton" onclick="cancelRemoteJob()" style="display:none">취소</button><button class="runtime-action" id="retryJobButton" onclick="retryRemoteJob()" style="display:none">재시도</button></div></div>
     <div class="runtime-card" id="runtimeGithub"><span>GitHub</span><b id="runtimeGithubText">확인 중</b><div class="runtime-actions"><button class="runtime-action" id="runtimeGithubDownloadButton" onclick="runGithubDownload(event)">다운로드</button><button class="runtime-action" id="runtimeGithubUploadButton" onclick="runGithubUpload(event)">업로드</button></div></div>
   </div>
   <main>
@@ -1528,6 +1622,7 @@ INDEX_HTML = r"""<!doctype html>
     let videoItems = [];
     let cardItems = [];
     let lastState = null;
+    let currentRemoteJob = null;
     async function api(path, options) { const res = await fetch(path, options); if (!res.ok) throw new Error(await res.text()); return await res.json(); }
     function setMode(next) {
       mode = next;
@@ -1709,6 +1804,17 @@ INDEX_HTML = r"""<!doctype html>
       document.getElementById("rootText").textContent = data.root;
       const sync = data.sync || {};
       document.getElementById("runtimeModeText").textContent = `${sync.rootMode || "-"} · 렌더 PC ${data.onlineWorkers || 0}대`;
+      const workerSelect = document.getElementById("targetWorker");
+      const selectedWorker = workerSelect.value;
+      workerSelect.innerHTML = `<option value="">자동 배정</option>`;
+      Object.entries(data.workers || {}).forEach(([id, worker]) => {
+        if (!worker.online) return;
+        const option = document.createElement("option");
+        option.value = id;
+        option.textContent = `${worker.name || id} · ${worker.status || "idle"}`;
+        workerSelect.appendChild(option);
+      });
+      if ([...workerSelect.options].some(option => option.value === selectedWorker)) workerSelect.value = selectedWorker;
       document.getElementById("runtimeMode").className = `runtime-card ${sync.rootOk ? "good" : "bad"}`;
       document.getElementById("runtimeSyncText").textContent = `${sync.ok ? "성공" : "확인 필요"} · ${sync.endedAt || sync.message || "-"}`;
       document.getElementById("runtimeSync").className = `runtime-card ${sync.ok ? "good" : "bad"}`;
@@ -1727,10 +1833,15 @@ INDEX_HTML = r"""<!doctype html>
       refreshIllustrationRequestNote();
       updateSelectedStatus();
       const job = data.job || {};
+      currentRemoteJob = job.remote ? job : null;
       const runtimeJob = document.getElementById("runtimeJob");
       const runtimeJobText = document.getElementById("runtimeJobText");
       if (runtimeJobText) runtimeJobText.textContent = job.running ? `실행 중 · ${job.name}` : (job.exit_code === null ? "대기 중" : `마지막 종료 ${job.exit_code}`);
       if (runtimeJob) runtimeJob.className = `runtime-card ${job.running ? "warn" : (job.exit_code === 0 ? "good" : (job.exit_code === null ? "" : "bad"))}`;
+      const cancelButton = document.getElementById("cancelJobButton");
+      const retryButton = document.getElementById("retryJobButton");
+      cancelButton.style.display = job.remote && job.running ? "" : "none";
+      retryButton.style.display = job.remote && !job.running && job.exit_code !== 0 ? "" : "none";
       document.getElementById("jobText").textContent = job.running ? `실행 중: ${job.name}` : (job.exit_code === null ? "대기 중" : `마지막 종료 코드: ${job.exit_code}`);
       const log = document.getElementById("log"); log.textContent = job.log || ""; log.scrollTop = log.scrollHeight;
       const results = document.getElementById("results"); results.innerHTML = ""; (data.results || []).forEach(r => { const div = document.createElement("div"); div.className = "result-row"; div.innerHTML = `<span>${r.name}</span><span class="small">${r.mp4 || ""}</span>`; results.appendChild(div); });
@@ -1774,12 +1885,23 @@ INDEX_HTML = r"""<!doctype html>
     async function runAction(action) {
       console.log("runAction", action);
       try {
-        const result = await api("/api/action", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({action, slug:selected}) });
+        const targetWorker = document.getElementById("targetWorker")?.value || "";
+        const result = await api("/api/action", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({action, slug:selected, target_worker:targetWorker}) });
         if (!result.ok) {
           alert(result.message || "작업을 시작하지 못했습니다. 실행 로그를 확인해주세요.");
         }
         await loadState();
       } catch (err) { alert(String(err)); }
+    }
+    async function cancelRemoteJob() {
+      if (!currentRemoteJob?.job_id) return;
+      await api("/api/action", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({action:"remote_job_cancel", job_id:currentRemoteJob.job_id})});
+      await loadState();
+    }
+    async function retryRemoteJob() {
+      if (!currentRemoteJob?.job_id) return;
+      await api("/api/action", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({action:"remote_job_retry", job_id:currentRemoteJob.job_id})});
+      await loadState();
     }
     function toggleWeakPanel() {
       const panel = document.getElementById("weakPanel");

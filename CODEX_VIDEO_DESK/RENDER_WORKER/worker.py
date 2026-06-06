@@ -20,7 +20,11 @@ ROOT = Path(__file__).resolve().parents[2]
 SHORTS = ROOT / "shorts"
 RESULTS = ROOT / "CODEX_VIDEO_DESK" / "RESULTS"
 URL_FILE = Path(__file__).resolve().parent / "panel_url.txt"
+KEY_FILE = Path(__file__).resolve().parent / "worker_api_key.txt"
 SAVED_URL = URL_FILE.read_text(encoding="utf-8-sig", errors="replace").strip() if URL_FILE.exists() else ""
+LOCAL_KEY_FILE = ROOT / "_secrets" / "worker_api_key.txt"
+ACTIVE_KEY_FILE = KEY_FILE if KEY_FILE.exists() else LOCAL_KEY_FILE
+WORKER_KEY = ACTIVE_KEY_FILE.read_text(encoding="utf-8-sig", errors="replace").strip() if ACTIVE_KEY_FILE.exists() else ""
 SERVER = (os.environ.get("PHONESPOT_PANEL_URL") or SAVED_URL or "http://127.0.0.1:4901").rstrip("/")
 WORKER_ID = os.environ.get("PHONESPOT_WORKER_ID") or socket.gethostname()
 VERSION = "render-worker-v1"
@@ -34,6 +38,8 @@ def json_request(path: str, payload: dict | None = None, timeout: int = 30) -> d
         body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
         headers["Content-Type"] = "application/json"
         method = "POST"
+    if WORKER_KEY:
+        headers["X-Worker-Key"] = WORKER_KEY
     request = urllib.request.Request(SERVER + path, data=body, headers=headers, method=method)
     with urllib.request.urlopen(request, timeout=timeout) as response:
         return json.loads(response.read().decode("utf-8", errors="replace"))
@@ -64,7 +70,11 @@ def safe_extract(zip_path: Path) -> None:
 def download_package(job: dict) -> None:
     with tempfile.TemporaryDirectory(prefix="phonespot_render_") as temp:
         target = Path(temp) / "job.zip"
-        with urllib.request.urlopen(SERVER + f"/api/worker/package?job_id={urllib.parse.quote(job['id'])}", timeout=180) as response:
+        request = urllib.request.Request(
+            SERVER + f"/api/worker/package?job_id={urllib.parse.quote(job['id'])}",
+            headers={"X-Worker-Key": WORKER_KEY},
+        )
+        with urllib.request.urlopen(request, timeout=180) as response:
             target.write_bytes(response.read())
         safe_extract(target)
 
@@ -89,6 +99,7 @@ def upload_result(job_id: str, path: Path) -> None:
         headers={"Content-Type": "video/mp4", "X-File-Name": path.name},
         method="POST",
     )
+    request.add_header("X-Worker-Key", WORKER_KEY)
     with urllib.request.urlopen(request, timeout=600) as response:
         response.read()
 
@@ -109,6 +120,7 @@ def run_job(job: dict) -> tuple[bool, int, str]:
     job_id = job["id"]
     slug = job["slug"]
     heartbeat_stop = threading.Event()
+    cancel_requested = threading.Event()
 
     def heartbeat_loop() -> None:
         while not heartbeat_stop.wait(5):
@@ -120,6 +132,12 @@ def run_job(job: dict) -> tuple[bool, int, str]:
                     "version": VERSION,
                     "capabilities": ["remotion"],
                 }, 10)
+                check = json_request("/api/worker/check", {
+                    "worker_id": WORKER_ID,
+                    "job_id": job_id,
+                }, 10)
+                if check.get("cancel_requested"):
+                    cancel_requested.set()
             except Exception:
                 pass
 
@@ -148,6 +166,13 @@ def run_job(job: dict) -> tuple[bool, int, str]:
                 errors="replace",
                 env=env,
             )
+            def cancel_monitor() -> None:
+                cancel_requested.wait()
+                if process.poll() is None:
+                    process.terminate()
+
+            monitor = threading.Thread(target=cancel_monitor, daemon=True)
+            monitor.start()
             if needs_confirmation and process.stdin is not None:
                 process.stdin.write("Y\n")
                 process.stdin.close()
@@ -161,6 +186,8 @@ def run_job(job: dict) -> tuple[bool, int, str]:
             if lines:
                 send_log(job_id, "".join(lines))
             exit_code = process.wait()
+            if cancel_requested.is_set():
+                return False, 96, "cancelled by user"
             if exit_code:
                 return False, exit_code, f"command {index} failed"
         result = result_after(slug, started)
@@ -181,6 +208,10 @@ def main() -> int:
     print(f"Worker : {WORKER_ID}")
     print(f"Panel  : {SERVER}")
     print(f"Root   : {ROOT}")
+    if not WORKER_KEY:
+        print("[ERROR] Render worker API key is missing.")
+        print("[NEXT] Run 00_SETUP_RENDER_PC_FROM_GITHUB.bat again.")
+        return 2
     while True:
         try:
             json_request("/api/worker/register", {
@@ -196,7 +227,10 @@ def main() -> int:
                 time.sleep(3)
                 continue
             print(f"[claim] {job['id']} {job['action']} {job['slug']}")
-            ok, exit_code, message = run_job(job)
+            try:
+                ok, exit_code, message = run_job(job)
+            except Exception as exc:
+                ok, exit_code, message = False, 99, f"worker exception: {exc}"
             json_request("/api/worker/complete", {
                 "worker_id": WORKER_ID,
                 "job_id": job["id"],

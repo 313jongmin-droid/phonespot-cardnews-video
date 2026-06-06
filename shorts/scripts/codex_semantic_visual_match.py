@@ -16,8 +16,15 @@ CARD_IMAGES = CARDNEWS / "images"
 CARD_OUTPUT = CARDNEWS / "output"
 ILLUST_DIR = SHORTS / "public" / "assets" / "illustrations"
 
-MIN_IMAGE_SCORE = 18
-MIN_ILLUST_SCORE = 14
+# Thresholds lowered so a genuine single strong-keyword illustration match is
+# used instead of falling through to a random library pick. See:
+#   MAINTENANCE/CODEX_SYNC_AND_VISUAL_MATCH_FIX_GUIDE.md
+MIN_IMAGE_SCORE = 16
+MIN_ILLUST_SCORE = 12
+
+# Topic-neutral editorial illustrations that are never "wrong" on a phone/IT
+# news short. Used as filler when nothing matches, instead of random library art.
+NEUTRAL_FILLERS = ["smartphone", "newspaper", "microphone", "shield", "meeting_room", "forecast"]
 
 
 ALIASES = {
@@ -129,6 +136,19 @@ def illustration_candidates(context: str, used_visuals: set[str]) -> list[tuple[
     return rows
 
 
+def pick_neutral(used_visuals: set[str]) -> str:
+    """Return a topic-neutral filler illustration that actually exists in the
+    library, preferring one not yet used in this video. Empty string if none."""
+    available = set(library_variants())
+    for variant in NEUTRAL_FILLERS:
+        if variant in available and f"illust:{variant}" not in used_visuals:
+            return variant
+    for variant in NEUTRAL_FILLERS:
+        if variant in available:
+            return variant
+    return ""
+
+
 def section_items(data: dict) -> list[tuple[str, dict]]:
     return [("hook", data.get("hook", {})), *[(f"fact_{i}", fact) for i, fact in enumerate(data.get("facts", []) or [], 1)], ("cta", data.get("cta", {}))]
 
@@ -212,20 +232,29 @@ def semantic_match(data: dict, slug: str) -> bool:
                 chosen = {"type": "illust", "value": best_ill[1]}
                 reason = f"illust score {best_ill[0]}"
             elif current.get("type") == "image" and current.get("value") not in used_images:
+                # Source images are generated for THIS article, so an on-topic
+                # source image beats any weak library guess.
                 chosen = current
-                reason = "kept existing image"
-            elif current.get("type") in {"illust", "mascot", "stat", "compare"} and visual_key(current) not in used_visuals:
+                reason = "kept source image (no semantic match)"
+            elif current.get("type") == "mascot" and visual_key(current) not in used_visuals:
+                # Mascots are emotion poses, not topical art - safe to keep.
                 chosen = current
-                reason = "kept existing non-image"
+                reason = "kept mascot (no semantic match)"
             elif imgs:
+                # Any unused source image is still on-topic by construction.
                 chosen = {"type": "image", "value": best_img[1]}
-                reason = f"fallback image score {best_img[0]}"
-            elif ills:
-                chosen = {"type": "illust", "value": best_ill[1]}
-                reason = f"fallback illust score {best_ill[0]}"
+                reason = f"unused source image (no semantic match, img score {best_img[0]})"
             else:
-                chosen = current
-                reason = "no candidate"
+                # No source image left and no confident match. Use a topic-neutral
+                # filler instead of a random library illustration - that fallback
+                # was what put battery/foldable art on unrelated scripts.
+                neutral = pick_neutral(used_visuals)
+                if neutral:
+                    chosen = {"type": "illust", "value": neutral}
+                    reason = "neutral filler (no semantic match)"
+                else:
+                    chosen = current
+                    reason = "kept current (no neutral available)"
 
             if chosen.get("type") == "image":
                 used_images.add(str(chosen.get("value") or ""))

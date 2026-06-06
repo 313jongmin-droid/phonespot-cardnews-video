@@ -146,7 +146,12 @@ export const repairListChunkBoundaries = (chunks: string[] = []): string[] =>
 
 
 const FPS = 30;
-const IDEAL_MIN_CHUNK_FRAMES = Math.round(FPS * 1.1);
+// Per-caption readability floor (~0.5s). Kept deliberately small so caption
+// timing stays proportional to the actual speech weights. See:
+//   MAINTENANCE/CODEX_SYNC_AND_VISUAL_MATCH_FIX_GUIDE.md
+// Do NOT raise this toward the average chunk length again - the old 1.1s floor
+// flattened speech timing and caused the TTS/caption desync.
+const CAPTION_MIN_READABLE_FRAMES = Math.round(FPS * 0.5);
 const MIN_VISUAL_FRAMES = Math.round(FPS * 2.2);
 const TARGET_VISUAL_FRAMES = Math.round(FPS * 3.2);
 const MAX_VISUAL_FRAMES = Math.round(FPS * 4.2);
@@ -388,10 +393,14 @@ export function getChunkWindows(chunks: string[], durFrames: number, timingWeigh
     ? timingWeights!.map((value) => Math.max(1, value))
     : clean.map((chunk) => Math.max(1, countChars(chunk)));
   const totalWeight = weights.reduce((sum, weight) => sum + weight, 0) || 1;
-  const canUseIdealMin = clean.length * IDEAL_MIN_CHUNK_FRAMES <= durFrames;
-  const minFrames = canUseIdealMin
-    ? IDEAL_MIN_CHUNK_FRAMES
-    : Math.max(8, Math.floor((durFrames / clean.length) * 0.72));
+  // Floor must never exceed half the average chunk length, so at least ~50% of
+  // the section timeline always follows the real speech weights (prevents the
+  // old "equal-spacing" desync). See MAINTENANCE/CODEX_SYNC_AND_VISUAL_MATCH_FIX_GUIDE.md
+  const avgFrames = durFrames / clean.length;
+  const minFrames = Math.max(
+    4,
+    Math.min(CAPTION_MIN_READABLE_FRAMES, Math.floor(avgFrames * 0.5))
+  );
   const spareFrames = Math.max(0, durFrames - minFrames * clean.length);
 
   let cursor = 0;

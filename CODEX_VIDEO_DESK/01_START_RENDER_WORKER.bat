@@ -21,6 +21,8 @@ echo Other PC:
 echo   set PHONESPOT_PANEL_URL=http://MAIN_PC_IP:4901
 echo   01_START_RENDER_WORKER.bat
 echo.
+echo Stop this window to stop rendering on this PC.
+echo.
 
 python RENDER_WORKER\worker.py
 pause

@@ -22,6 +22,12 @@ if "%PANEL_URL%"=="" (
   pause
   exit /b 1
 )
+set /p "WORKER_KEY=Render PC setup key: "
+if "%WORKER_KEY%"=="" (
+  echo [ERROR] Render PC setup key is required.
+  pause
+  exit /b 1
+)
 
 set "SCRIPT=%~dp000_SETUP_RENDER_PC_FROM_GITHUB.ps1"
 if not exist "%SCRIPT%" (
@@ -31,7 +37,7 @@ if not exist "%SCRIPT%" (
   exit /b 1
 )
 
-powershell -NoProfile -ExecutionPolicy Bypass -File "%SCRIPT%" -TargetDir "%TARGET_DIR%" -PanelUrl "%PANEL_URL%"
+powershell -NoProfile -ExecutionPolicy Bypass -File "%SCRIPT%" -TargetDir "%TARGET_DIR%" -PanelUrl "%PANEL_URL%" -WorkerKey "%WORKER_KEY%"
 if errorlevel 1 (
   echo.
   echo [ERROR] Setup failed.

@@ -13,6 +13,8 @@ from uuid import uuid4
 
 LOCK = threading.RLock()
 WORKER_TTL_SECONDS = 20
+JOB_LEASE_SECONDS = 90
+MAX_RETRIES = 1
 
 
 class RemoteQueue:
@@ -61,6 +63,40 @@ class RemoteQueue:
                 worker["online"] = now - float(worker.get("last_seen_epoch") or 0) <= WORKER_TTL_SECONDS
             return workers
 
+    def recover_stale_jobs(self) -> int:
+        with LOCK:
+            jobs = self.jobs()
+            workers = self.workers()
+            now = self.now_epoch()
+            changed = 0
+            for job in jobs:
+                if job.get("status") != "running":
+                    continue
+                worker = workers.get(job.get("worker_id") or "", {})
+                worker_online = bool(worker.get("online"))
+                lease_at = float(job.get("lease_epoch") or 0)
+                if worker_online and now - lease_at <= JOB_LEASE_SECONDS:
+                    continue
+                retries = int(job.get("retry_count") or 0)
+                if retries < MAX_RETRIES:
+                    job["status"] = "pending"
+                    job["worker_id"] = ""
+                    job["started_at"] = ""
+                    job["retry_count"] = retries + 1
+                    job["updated_at"] = self.now()
+                    job["log"] += f"\n[RECOVERED] worker lease expired; retry {retries + 1}/{MAX_RETRIES}\n"
+                else:
+                    job["status"] = "failed"
+                    job["exit_code"] = 97
+                    job["message"] = "worker disconnected or stopped responding"
+                    job["finished_at"] = self.now()
+                    job["updated_at"] = self.now()
+                    job["log"] += "\n[FAILED] worker lease expired\n"
+                changed += 1
+            if changed:
+                self._save_jobs(jobs)
+            return changed
+
     def _save_workers(self, workers: dict) -> None:
         clean = {}
         for worker_id, worker in workers.items():
@@ -70,7 +106,7 @@ class RemoteQueue:
     def online_workers(self) -> list[dict]:
         return [{"id": worker_id, **worker} for worker_id, worker in self.workers().items() if worker.get("online")]
 
-    def enqueue(self, action: str, slug: str) -> dict:
+    def enqueue(self, action: str, slug: str, target_worker: str = "") -> dict:
         with LOCK:
             jobs = self.jobs()
             for job in jobs:
@@ -82,6 +118,7 @@ class RemoteQueue:
                 "slug": slug,
                 "status": "pending",
                 "worker_id": "",
+                "target_worker": target_worker,
                 "created_at": self.now(),
                 "updated_at": self.now(),
                 "started_at": "",
@@ -90,6 +127,8 @@ class RemoteQueue:
                 "message": "",
                 "log": f"[QUEUED] {action} / {slug}\n",
                 "result_files": [],
+                "retry_count": 0,
+                "lease_epoch": 0,
             }
             jobs.append(job)
             self._save_jobs(jobs[-200:])
@@ -124,18 +163,31 @@ class RemoteQueue:
             if job_id or status == "idle":
                 worker["job_id"] = job_id
             self._save_workers(workers)
+            if job_id:
+                jobs = self.jobs()
+                for job in jobs:
+                    if job.get("id") == job_id and job.get("status") == "running":
+                        job["lease_epoch"] = self.now_epoch()
+                        job["updated_at"] = self.now()
+                        break
+                self._save_jobs(jobs)
 
     def claim(self, worker_id: str) -> dict | None:
         with LOCK:
+            self.recover_stale_jobs()
             self.heartbeat(worker_id)
             jobs = self.jobs()
             claimed = None
             for job in jobs:
                 if job.get("status") == "pending":
+                    target_worker = str(job.get("target_worker") or "")
+                    if target_worker and target_worker != worker_id:
+                        continue
                     job["status"] = "running"
                     job["worker_id"] = worker_id
                     job["started_at"] = self.now()
                     job["updated_at"] = self.now()
+                    job["lease_epoch"] = self.now_epoch()
                     job["log"] += f"[CLAIMED] {worker_id}\n"
                     claimed = dict(job)
                     break
@@ -151,6 +203,7 @@ class RemoteQueue:
                 if job.get("id") == job_id:
                     job["log"] = ((job.get("log") or "") + text)[-260000:]
                     job["updated_at"] = self.now()
+                    job["lease_epoch"] = self.now_epoch()
                     break
             self._save_jobs(jobs)
 
@@ -175,6 +228,7 @@ class RemoteQueue:
             return target
 
     def panel_job(self) -> dict | None:
+        self.recover_stale_jobs()
         jobs = self.jobs()
         active = [job for job in jobs if job.get("status") in {"pending", "running"}]
         target = active[-1] if active else (jobs[-1] if jobs else None)
@@ -191,6 +245,7 @@ class RemoteQueue:
             "status": target.get("status"),
             "worker_id": target.get("worker_id") or "",
             "job_id": target.get("id") or "",
+            "target_worker": target.get("target_worker") or "",
         }
 
     def package_bytes(self, job_id: str) -> bytes:
@@ -207,8 +262,18 @@ class RemoteQueue:
             roots = [
                 (self.cardnews / "images" / slug, f"cardnews/images/{slug}"),
                 (self.cardnews / "output" / slug, f"cardnews/output/{slug}"),
-                (self.desk / "ILLUSTRATION_DROP", "CODEX_VIDEO_DESK/ILLUSTRATION_DROP"),
             ]
+            prompt = self._read(self.desk / "LATEST_PROMPT.json", {})
+            requested_names = {
+                str(item.get("filename") or "")
+                for item in (prompt.get("requests") or [])
+                if item.get("filename")
+            }
+            illustration_drop = self.desk / "ILLUSTRATION_DROP"
+            for filename in sorted(requested_names):
+                path = illustration_drop / filename
+                if path.exists() and path.is_file():
+                    zf.write(path, f"CODEX_VIDEO_DESK/ILLUSTRATION_DROP/{path.name}")
             override = self.desk / "CHUNK_OVERRIDES" / f"{slug}.json"
             if override.exists():
                 zf.write(override, f"CODEX_VIDEO_DESK/CHUNK_OVERRIDES/{override.name}")
@@ -240,3 +305,46 @@ class RemoteQueue:
             job["updated_at"] = self.now()
             self._save_jobs(jobs)
             return target
+
+    def cancel(self, job_id: str) -> dict:
+        with LOCK:
+            jobs = self.jobs()
+            job = next((item for item in jobs if item.get("id") == job_id), None)
+            if not job:
+                raise RuntimeError("remote job not found")
+            if job.get("status") == "running":
+                job["cancel_requested"] = True
+                job["log"] += "\n[CANCEL REQUESTED]\n"
+            elif job.get("status") == "pending":
+                job["status"] = "cancelled"
+                job["finished_at"] = self.now()
+                job["log"] += "\n[CANCELLED]\n"
+            job["updated_at"] = self.now()
+            self._save_jobs(jobs)
+            return job
+
+    def retry(self, job_id: str) -> dict:
+        with LOCK:
+            jobs = self.jobs()
+            source = next((item for item in jobs if item.get("id") == job_id), None)
+            if not source:
+                raise RuntimeError("remote job not found")
+            if source.get("status") in {"pending", "running"}:
+                return source
+            source["status"] = "pending"
+            source["worker_id"] = ""
+            source["started_at"] = ""
+            source["finished_at"] = ""
+            source["exit_code"] = None
+            source["message"] = ""
+            source["cancel_requested"] = False
+            source["retry_count"] = 0
+            source["lease_epoch"] = 0
+            source["updated_at"] = self.now()
+            source["log"] += "\n[MANUAL RETRY]\n"
+            self._save_jobs(jobs)
+            return source
+
+    def is_cancel_requested(self, job_id: str) -> bool:
+        job = next((item for item in self.jobs() if item.get("id") == job_id), None)
+        return bool(job and job.get("cancel_requested"))

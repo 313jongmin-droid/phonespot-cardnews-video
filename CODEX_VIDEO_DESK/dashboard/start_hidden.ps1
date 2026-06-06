@@ -1,85 +1,112 @@
 param(
-  [switch]$NoBrowser
+  [switch]$NoBrowser,
+  [int]$Port = 4901
 )
 
-$ErrorActionPreference = "Continue"
+$ErrorActionPreference = "Stop"
 $desk = Split-Path -Parent $PSScriptRoot
-$port = 4901
+$root = Split-Path -Parent $desk
+$port = $Port
+$url = "http://127.0.0.1:$port"
+$tempRoot = Join-Path $desk "TEMP\panel"
+$pidFile = Join-Path $tempRoot "panel_server.pid"
+$logDir = Join-Path $tempRoot "panel_logs"
+$authFile = Join-Path $root "_secrets\panel_auth.txt"
+$accessInfo = Join-Path $desk "TEMP\PANEL_ACCESS_INFO.txt"
+$firstSecuritySetup = -not (Test-Path $authFile)
 
-# Keep volatile panel state beside the local project.
-# CODEX_VIDEO_DESK\TEMP is already runtime-only and ignored by Git.
-$localRoot = Join-Path $desk "TEMP\panel"
-$pidFile = Join-Path $localRoot "panel_server.pid"
-$logDir = Join-Path $localRoot "panel_logs"
 New-Item -ItemType Directory -Force -Path $logDir | Out-Null
 
-Write-Host "[panel] desk: $desk"
-Write-Host "[panel] local state: $localRoot"
-Write-Host "[panel] cleanup old PhoneSpot panel servers"
+python (Join-Path $PSScriptRoot "init_security.py")
+if ($LASTEXITCODE -ne 0) {
+  throw "Panel security initialization failed."
+}
 
-# 1) Kill last known local server PID.
-if (Test-Path $pidFile) {
+function Test-PanelHealth {
   try {
-    $oldPid = [int](Get-Content $pidFile -Raw)
-    if ($oldPid -gt 0) {
-      Stop-Process -Id $oldPid -Force -ErrorAction SilentlyContinue
-      Write-Host "  stopped pid-file PID $oldPid"
+    $response = Invoke-RestMethod -Uri "$url/api/health" -TimeoutSec 2
+    return [bool]$response.ok
+  } catch {
+    return $false
+  }
+}
+
+if (-not (Test-PanelHealth)) {
+  if (Test-Path $pidFile) {
+    try {
+      $oldPid = [int](Get-Content $pidFile -Raw)
+      if ($oldPid -gt 0) {
+        Stop-Process -Id $oldPid -Force -ErrorAction SilentlyContinue
+      }
+    } catch {}
+  }
+
+  try {
+    $listeners = Get-NetTCPConnection -LocalPort $port -State Listen -ErrorAction SilentlyContinue
+    foreach ($listener in $listeners) {
+      Stop-Process -Id $listener.OwningProcess -Force -ErrorAction SilentlyContinue
+    }
+  } catch {}
+  try {
+    $raw = cmd.exe /c "netstat -ano | findstr LISTENING | findstr :$port"
+    foreach ($line in ($raw -split "`r?`n")) {
+      $parts = $line.Trim() -split "\s+"
+      if ($parts.Count -ge 5 -and $parts[-1] -match "^\d+$") {
+        cmd.exe /c "taskkill /PID $($parts[-1]) /F" | Out-Null
+      }
+    }
+  } catch {}
+  Start-Sleep -Milliseconds 500
+
+  $stamp = Get-Date -Format "yyyyMMdd_HHmmss"
+  $stdoutLog = Join-Path $logDir "panel_${stamp}.out.log"
+  $stderrLog = Join-Path $logDir "panel_${stamp}.err.log"
+  $server = Join-Path $PSScriptRoot "server.py"
+  $launcher = Join-Path $tempRoot "launch_panel.cmd"
+  @"
+@echo off
+set "PHONESPOT_PANEL_PORT=$port"
+set "PHONESPOT_PANEL_NO_BROWSER=1"
+set "PHONESPOT_PANEL_HOST=0.0.0.0"
+cd /d "$desk"
+start "" /b python "$server" 1>>"$stdoutLog" 2>>"$stderrLog"
+"@ | Set-Content -Path $launcher -Encoding ascii
+  cmd.exe /c call "$launcher"
+
+  $healthy = $false
+  for ($i = 0; $i -lt 20; $i++) {
+    Start-Sleep -Milliseconds 500
+    if (Test-PanelHealth) {
+      $healthy = $true
+      break
+    }
+  }
+
+  if (-not $healthy) {
+    Write-Host "[ERROR] Panel server did not start."
+    Write-Host "[log] $stderrLog"
+    if (Test-Path $stderrLog) {
+      Get-Content $stderrLog -Tail 40
+    }
+    exit 1
+  }
+
+  try {
+    $listener = Get-NetTCPConnection -LocalPort $port -State Listen -ErrorAction Stop | Select-Object -First 1
+    if ($listener) {
+      $listener.OwningProcess | Set-Content -Path $pidFile -Encoding ascii
     }
   } catch {}
 }
 
-# 2) Kill any Python/Powershell process that is clearly running this dashboard server.
-try {
-  $needle = [regex]::Escape((Join-Path $desk "dashboard\server.py"))
-  $procs = Get-CimInstance Win32_Process | Where-Object {
-    $_.CommandLine -and ($_.CommandLine -match "dashboard\\server\.py" -or $_.CommandLine -match $needle)
-  }
-  foreach ($p in $procs) {
-    try {
-      Stop-Process -Id $p.ProcessId -Force -ErrorAction SilentlyContinue
-      Write-Host "  stopped dashboard server PID $($p.ProcessId)"
-    } catch {}
-  }
-} catch {}
+Write-Host "[OK] PhoneSpot panel is running."
+Write-Host "[local] http://localhost:$port/"
+Write-Host "[access info] $accessInfo"
 
-# 3) Best-effort cleanup by local port.
-try {
-  $raw = cmd /c "netstat -ano | findstr :$port"
-  foreach ($line in ($raw -split "`r?`n")) {
-    if (-not ($line -match "LISTENING")) { continue }
-    $parts = $line.Trim() -split "\s+"
-    if ($parts.Count -ge 5) {
-      $pidText = $parts[$parts.Count - 1]
-      if ($pidText -match "^\d+$") {
-        Stop-Process -Id ([int]$pidText) -Force -ErrorAction SilentlyContinue
-        Write-Host "  stopped port PID $pidText"
-      }
-    }
-  }
-} catch {}
-
-Start-Sleep -Milliseconds 800
-
-$log = Join-Path $logDir ("panel_" + (Get-Date -Format "yyyyMMdd_HHmmss") + ".log")
-$deskEsc = $desk.Replace("'", "''")
-$logEsc = $log.Replace("'", "''")
-$cmd = @"
-`$env:PHONESPOT_PANEL_PORT='4901'
-`$env:PHONESPOT_PANEL_NO_BROWSER='1'
-Set-Location -LiteralPath '$deskEsc'
-python 'dashboard\server.py' *> '$logEsc'
-"@
-
-$proc = Start-Process powershell.exe -ArgumentList @("-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", $cmd) -WindowStyle Hidden -PassThru
-try {
-  $proc.Id | Set-Content -Path $pidFile -Encoding ascii
-} catch {
-  Write-Host "  [WARN] Could not write local pid file: $($_.Exception.Message)"
+if ($firstSecuritySetup -and (Test-Path $accessInfo)) {
+  cmd.exe /c "start `"`" notepad.exe `"$accessInfo`""
 }
-Write-Host "[panel] started wrapper PID $($proc.Id)"
-Write-Host "[panel] log: $log"
 
-Start-Sleep -Seconds 2
 if (-not $NoBrowser) {
-  Start-Process "http://localhost:$port/"
+  cmd.exe /c "start `"`" `"http://localhost:$port/`""
 }

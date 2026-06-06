@@ -21,6 +21,9 @@ def sections(data: dict):
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--allow-missing", action="store_true")
+    # WordBoundary 타이밍을 못 받아 글자수 추정으로 떨어진 경우, 기본은 에러로 막는다.
+    # 정말 그대로 진행해야 할 때만 이 옵션으로 경고로 낮춘다.
+    parser.add_argument("--allow-char-fallback", action="store_true")
     args = parser.parse_args()
 
     if not SCRIPT.exists() or not MANIFEST.exists():
@@ -43,7 +46,15 @@ def main() -> int:
         if any(float(value) <= 0 for value in weights):
             errors.append(f"{key}: timing weight must be positive")
         if timing.get("mode") == "character_weight_fallback":
-            warnings.append(f"{key}: WordBoundary unavailable; character-weight fallback active")
+            message = (
+                f"{key}: WordBoundary 타이밍을 못 받아 글자수 추정(character-weight)으로 떨어졌습니다. "
+                "이 상태로 렌더하면 자막 싱크가 어긋납니다. edge-tts를 최신으로 올리세요 "
+                "(pip install -U edge-tts). 그래도 진행하려면 --allow-char-fallback 옵션을 쓰세요."
+            )
+            if args.allow_char_fallback:
+                warnings.append(message)
+            else:
+                errors.append(message)
         for idx, value in enumerate(weights, 1):
             visible_ms = float(value)
             if visible_ms < 650:
