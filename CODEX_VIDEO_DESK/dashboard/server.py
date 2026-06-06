@@ -37,6 +37,8 @@ WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
+LOCAL_WORKER_PROCESS: subprocess.Popen | None = None
+LOCAL_WORKER_STREAMS: list = []
 
 STATE_LOCK = threading.Lock()
 JOB = {
@@ -54,6 +56,42 @@ def append_log(text: str) -> None:
         JOB["log"] += text
         if len(JOB["log"]) > 260_000:
             JOB["log"] = JOB["log"][-260_000:]
+
+
+def start_local_worker() -> None:
+    global LOCAL_WORKER_PROCESS
+    if os.environ.get("PHONESPOT_AUTO_WORKER", "1") == "0":
+        return
+    worker_script = DESK / "RENDER_WORKER" / "worker.py"
+    if not worker_script.exists():
+        return
+    pid_file = DESK / "TEMP" / "worker" / "local_worker.pid"
+    if pid_file.exists():
+        try:
+            os.kill(int(pid_file.read_text(encoding="ascii").strip()), 0)
+            return
+        except (OSError, ValueError):
+            pid_file.unlink(missing_ok=True)
+    log_dir = DESK / "TEMP" / "worker" / "logs"
+    log_dir.mkdir(parents=True, exist_ok=True)
+    stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    stdout = (log_dir / f"worker_{stamp}.out.log").open("a", encoding="utf-8")
+    stderr = (log_dir / f"worker_{stamp}.err.log").open("a", encoding="utf-8")
+    LOCAL_WORKER_STREAMS.extend([stdout, stderr])
+    env = os.environ.copy()
+    env["PHONESPOT_PANEL_URL"] = f"http://127.0.0.1:{PORT}"
+    env["PHONESPOT_WORKER_PID_FILE"] = str(pid_file)
+    env["PLAYWRIGHT_BROWSERS_PATH"] = str(ROOT / ".playwright")
+    env["PYTHONUNBUFFERED"] = "1"
+    creationflags = getattr(subprocess, "CREATE_NO_WINDOW", 0)
+    LOCAL_WORKER_PROCESS = subprocess.Popen(
+        [sys.executable, str(worker_script)],
+        cwd=str(DESK),
+        stdout=stdout,
+        stderr=stderr,
+        env=env,
+        creationflags=creationflags,
+    )
 
 
 def telegram_send(message: str) -> bool:
@@ -2126,6 +2164,7 @@ def main() -> int:
         return 1
     host = os.environ.get("PHONESPOT_PANEL_HOST", "0.0.0.0")
     server = ThreadingHTTPServer((host, PORT), Handler)
+    start_local_worker()
     url = f"http://localhost:{PORT}/"
     print("=" * 60)
     print(" 폰스팟 통합 제작 패널")

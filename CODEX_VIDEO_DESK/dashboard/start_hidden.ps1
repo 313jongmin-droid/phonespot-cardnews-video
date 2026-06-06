@@ -63,6 +63,7 @@ if (-not (Test-PanelHealth)) {
 set "PHONESPOT_PANEL_PORT=$port"
 set "PHONESPOT_PANEL_NO_BROWSER=1"
 set "PHONESPOT_PANEL_HOST=0.0.0.0"
+set "PHONESPOT_AUTO_WORKER=$(if ($NoWorker) { '0' } else { '1' })"
 set "PLAYWRIGHT_BROWSERS_PATH=$root\.playwright"
 cd /d "$desk"
 start "" /b "$python" "$server" 1>>"$stdoutLog" 2>>"$stderrLog"
@@ -97,50 +98,7 @@ start "" /b "$python" "$server" 1>>"$stdoutLog" 2>>"$stderrLog"
 
 Write-Host "[OK] PhoneSpot panel is running."
 Write-Host "[local] http://localhost:$port/"
-
-if (-not $NoWorker) {
-  $workerRoot = Join-Path $desk "TEMP\worker"
-  $workerPidFile = Join-Path $workerRoot "local_worker.pid"
-  $workerLogDir = Join-Path $workerRoot "logs"
-  New-Item -ItemType Directory -Force -Path $workerLogDir | Out-Null
-  $workerRunning = $false
-  if (Test-Path $workerPidFile) {
-    try {
-      $workerPid = [int](Get-Content $workerPidFile -Raw)
-      $workerRunning = [bool](Get-Process -Id $workerPid -ErrorAction Stop)
-    } catch {
-      $workerRunning = $false
-    }
-  }
-  if (-not $workerRunning) {
-    $runtimePython = Join-Path $root ".phonespot_runtime\Scripts\python.exe"
-    $python = if (Test-Path $runtimePython) { $runtimePython } else { "python" }
-    $workerScript = Join-Path $desk "RENDER_WORKER\worker.py"
-    $stamp = Get-Date -Format "yyyyMMdd_HHmmss"
-    $workerOut = Join-Path $workerLogDir "worker_${stamp}.out.log"
-    $workerErr = Join-Path $workerLogDir "worker_${stamp}.err.log"
-    $workerLauncher = Join-Path $workerRoot "launch_worker.cmd"
-    @"
-@echo off
-set "PHONESPOT_PANEL_URL=http://127.0.0.1:$port"
-set "PHONESPOT_WORKER_PID_FILE=$workerPidFile"
-set "PLAYWRIGHT_BROWSERS_PATH=$root\.playwright"
-set "PYTHONUNBUFFERED=1"
-cd /d "$desk"
-start "" /b "$python" "$workerScript" 1>>"$workerOut" 2>>"$workerErr"
-"@ | Set-Content -Path $workerLauncher -Encoding ascii
-    cmd.exe /c call "$workerLauncher"
-    for ($i = 0; $i -lt 20; $i++) {
-      Start-Sleep -Milliseconds 250
-      if (Test-Path $workerPidFile) {
-        break
-      }
-    }
-    Write-Host "[worker] local render worker started."
-  } else {
-    Write-Host "[worker] local render worker already running."
-  }
-}
+if (-not $NoWorker) { Write-Host "[worker] managed by the panel server." }
 
 if (-not $NoBrowser) {
   cmd.exe /c "start `"`" `"http://localhost:$port/`""

@@ -48,6 +48,8 @@ ONE_OFF_PATTERNS = [
     re.compile(r"(?:갤럭시|아이폰|갤럭시탭|아이패드|갤럭시폴드|갤럭시플립|픽셀)\s*[a-z0-9+.-]*", re.I),
     re.compile(r"\b(?:s\d{1,2}|z\s*폴드\s*\d+|z\s*플립\s*\d+|ios\s*\d+|one\s*ui\s*\d+)\b", re.I),
     re.compile(r"\b(?:wwdc|nfc|rcs|hdr)\s*\d*\b", re.I),
+    re.compile(r"\b(?:iphone|ipad|ipados|ios|macos|android|galaxy|pixel|skt|kt|lgu|one\s*ui)\b", re.I),
+    re.compile(r"(?:\uc544\uc774\ud3f0|\uc544\uc774\ud328\ub4dc|\uc5d0\uc774\ub2ff|\uc775\uc2dc\uc624)"),
 ]
 
 STOPWORDS = {
@@ -70,8 +72,20 @@ def strip_one_off(text: str) -> str:
     return re.sub(r"\s+", " ", out).strip()
 
 
+# 한국어 서술어/종결형(개념 명사가 아님) 제외용
+PREDICATE_RE = re.compile(
+    r"(?:합니다|됩니다|입니다|습니다|니다|하세요|하시려면|하시기|하십시오|바랍니다|드립니다|"
+    r"있고|있습니다|없습니다|가능합니다|봅니다|냅니다|줍니다|십시오|면서|으며|에서만|에서|으로)$"
+)
+
+
+def _is_predicate(token: str) -> bool:
+    return bool(PREDICATE_RE.search(token)) and len(token) >= 3
+
+
 def extract_concept(chunk: str, topic: str) -> dict:
-    """청크/주제에서 재사용 가능한 개념 키워드를 뽑는다."""
+    """청크/주제에서 재사용 가능한 개념 명사 키워드를 뽑는다.
+    1회용 디테일·브랜드·한국어 서술어를 제외하고 등장 순서를 유지한다."""
     base = strip_one_off(clean(chunk) + " " + clean(topic))
     raw = re.findall(r"[가-힣]{2,}|[A-Za-z]{3,}", base)
     seen = set()
@@ -81,10 +95,11 @@ def extract_concept(chunk: str, topic: str) -> dict:
         low = t.lower()
         if low in STOPWORDS or low in seen:
             continue
+        if _is_predicate(t):  # 합니다/됩니다/에서만 등 서술어 제외
+            continue
         seen.add(low)
         tokens.append(t)
-    # 길이가 길수록(=더 구체적 명사일 확률) 우선, 동률은 등장 순서 유지
-    tokens.sort(key=lambda w: (-len(w),))
+    # 등장 순서 유지(명사가 보통 앞쪽). 길이 정렬은 서술어를 끌어올리므로 쓰지 않는다.
     keywords = tokens[:5]
     label = " ".join(keywords[:2]) if keywords else clean(topic) or "개념"
     return {"label": label, "keywords": keywords}
@@ -131,6 +146,27 @@ def find_gaps(data: dict, slug: str, db: dict) -> list[dict]:
     return gaps
 
 
+def existing_uncovered_gaps(slug: str) -> list[dict]:
+    """기존 codex_illustration_scout.py 가 남긴 약한 매핑 목록을 갭 후보로 읽는다."""
+    jpath = CARD_OUTPUT / slug / "codex_illustration_requests.json"
+    if not jpath.exists():
+        return []
+    try:
+        data = json.loads(jpath.read_text(encoding="utf-8-sig"))
+    except Exception:
+        return []
+    out = []
+    for g in (data.get("uncovered_gaps") or []):
+        out.append({
+            "section": g.get("section"),
+            "chunk_index": int(g.get("chunk_index", 0)),
+            "text": str(g.get("text", "")),
+            "best_existing": str(g.get("variant", "")),
+            "best_score": 0.0,
+        })
+    return out
+
+
 def build_request(concept: dict, variant: str, gap: dict) -> dict:
     prompt = (
         scout.STYLE
@@ -174,6 +210,14 @@ def scout_concepts(slug: str, dry_run: bool = False) -> dict:
     data = svm.read_json(path)
     db = db_mod.load_db()  # SEED + 라이브러리 병합본
     gaps = find_gaps(data, slug, db)
+    # 기존 일러스트 스카우트가 표시한 약한 매핑(uncovered_gaps)도 갭 소스로 포함한다.
+    # lexical 모드에서 find_gaps 가 갭을 못 잡아도 이쪽에서 후보가 들어온다.
+    seen_slots = {(g["section"], g["chunk_index"]) for g in gaps}
+    for g in existing_uncovered_gaps(slug):
+        slot = (g["section"], g["chunk_index"])
+        if slot not in seen_slots:
+            gaps.append(g)
+            seen_slots.add(slot)
 
     threshold = cover_threshold()
     requests = []
