@@ -2,8 +2,8 @@
   "version": 1,
   "videos": {
     "010_tip_iphone_call_record": {
-      "used_at": "2026-06-06T19:38:15",
-      "source": "uploaded_illustrations",
+      "used_at": "2026-06-06T19:57:30",
+      "source": "codex_enhance",
       "illustrations": [
         "phone_settings_toggle",
         "phone_setup_ready",
@@ -24,8 +24,8 @@
         "chatbot",
         "gemini",
         "memory_chip",
-        "security_feature_lock",
-        "gift_voucher"
+        "shield",
+        "security_feature_lock"
       ]
     },
     "012_news_galaxy_unpack_july": {
@@ -74,10 +74,10 @@
       ]
     }
   },
-  "updated_at": "2026-06-06T19:38:16",
+  "updated_at": "2026-06-06T19:57:39",
   "requests": {
     "010_tip_iphone_call_record": {
-      "updated_at": "2026-06-06T19:38:16",
+      "updated_at": "2026-06-06T19:57:39",
       "variants": []
     },
     "012_news_galaxy_unpack_july": {

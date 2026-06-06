@@ -38,7 +38,9 @@ PROPOSAL_PATH = DESK / "IMPORT_PROPOSAL.json"
 ALLOWED = {".png", ".jpg", ".jpeg", ".webp"}
 MIN_SIZE = 10_000
 
-DEDUP_WARN = 0.93   # 후보가 기존 라이브러리 그림과 이만큼 비슷하면 "중복 가능" 경고
+DEDUP_WARN = 0.90   # 후보가 기존 라이브러리 그림과 이만큼 비슷하면 "중복 가능" 경고
+DEDUP_SKIP = 0.95   # 이만큼 비슷하면 "사실상 동일" → 기본 '사용 안 함'(기존 그림 재사용) 제안
+# 주의: 이미지-이미지 코사인 스케일. PC에서 실제 중복쌍을 보며 조절.
 
 
 def concept_text(item: dict) -> str:
@@ -169,6 +171,9 @@ def build_proposal(slug: str, requests: list[dict], candidates: list[Path],
                 key=lambda kv: -kv[1],
             )[:3]
             dv, ds = ie.nearest_library_image(cv, lib_index)
+            dedup = None
+            if ds >= DEDUP_WARN:
+                dedup = {"variant": dv, "score": round(ds, 4), "skip": ds >= DEDUP_SKIP}
             assignments.append({
                 "candidate_path": str(c),
                 "candidate_name": c.name,
@@ -176,7 +181,7 @@ def build_proposal(slug: str, requests: list[dict], candidates: list[Path],
                 "confidence": round(scores.get((ci, rj), 0.0), 4) if rj is not None else None,
                 "exact_name": False,
                 "alternatives": [{"filename": fn, "score": round(s, 4)} for fn, s in alts],
-                "dedup": ({"variant": dv, "score": round(ds, 4)} if ds >= DEDUP_WARN else None),
+                "dedup": dedup,
             })
     else:
         # 폴백: 시간순 zip 매핑 제안(기존 동작과 동일), 신뢰도 없음

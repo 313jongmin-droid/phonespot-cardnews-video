@@ -38,7 +38,7 @@
 | `forecast` | news, forecast, library | 3 | 010_tip_iphone_call_record |
 | `gemini` | ai, assistant, google, library | 3 | 010_tip_iphone_call_record |
 | `gift_prohibit` | price, security, warning, library | 0 |  |
-| `gift_voucher` | price, subsidy, purchase, library | 2 | 010_tip_iphone_call_record |
+| `gift_voucher` | price, subsidy, purchase, library | 1 | 012_news_galaxy_unpack_july |
 | `handshake` | policy, access, partnership, library | 1 | 001_apple_ondevice_ai_wwdc26 |
 | `health_sensor_watch` | library | 0 |  |
 | `heat_release` | battery, heat, hardware, library | 0 |  |
@@ -73,7 +73,7 @@
 | `secure_app_reregistration` | security, bank, authentication, setup, library | 0 |  |
 | `security_feature_lock` | library | 1 | 010_tip_iphone_call_record |
 | `settings_steps` | library | 0 |  |
-| `shield` | security, privacy, protection, library | 2 | 001_apple_ondevice_ai_wwdc26 |
+| `shield` | security, privacy, protection, library | 3 | 010_tip_iphone_call_record |
 | `smartphone` | device, purchase, cta, library | 3 | 010_tip_iphone_call_record |
 | `smishing_fake_link` | security, smishing, warning, link | 0 |  |
 | `stock_chart` | price, data, market, library | 0 |  |
@@ -87,6 +87,6 @@
 
 ## Recent videos
 
-- `010_tip_iphone_call_record`: phone_settings_toggle, phone_setup_ready, smartphone, device_data_transfer, newspaper, microphone, call_recording_notice, meeting_room, forecast, recording_archive, impersonation_call, chat_backup_restore, call_filter_rules, prohibit, warning, samsung_ai, chatbot, gemini, memory_chip, security_feature_lock, gift_voucher
+- `010_tip_iphone_call_record`: phone_settings_toggle, phone_setup_ready, smartphone, device_data_transfer, newspaper, microphone, call_recording_notice, meeting_room, forecast, recording_archive, impersonation_call, chat_backup_restore, call_filter_rules, prohibit, warning, samsung_ai, chatbot, gemini, memory_chip, shield, security_feature_lock
 - `001_apple_ondevice_ai_wwdc26`: newspaper, chatbot, chart_up, memory_chip, lock, meeting_room, shield, samsung_ai, gemini, final_update, handshake, clock, microphone, forecast, cloud_backup, aluminum_label, appliance, smartphone
 - `012_news_galaxy_unpack_july`: foldable, chatbot, final_update, forecast, smartphone, newspaper, microphone, shield, meeting_room, gift_voucher, memory_chip, samsung_ai, gemini, aluminum_label, appliance

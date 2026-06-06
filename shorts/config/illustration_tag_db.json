@@ -1087,7 +1087,20 @@
       "keywords": [],
       "note": "Reusable editorial illustration.",
       "available": true
+    },
+    "cpt_1a196d6d": {
+      "keywords": [
+        "가입자",
+        "통화",
+        "요약",
+        "번역"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 가입자 통화",
+      "available": false
     }
   },
-  "updated_at": "2026-06-06T19:37:34"
+  "updated_at": "2026-06-06T19:58:02"
 }
