@@ -18,14 +18,14 @@ if (-not $lines) {
   Start-Sleep -Seconds 1
   exit 0
 }
-$pids = @()
+$processIds = @()
 foreach ($line in $lines) {
-  if ($line -match "LISTENING\s+(\d+)$") { $pids += [int]$Matches[1] }
+  if ($line -match "LISTENING\s+(\d+)$") { $processIds += [int]$Matches[1] }
 }
-$pids = $pids | Select-Object -Unique
-foreach ($pid in $pids) {
-  Write-Host "[stop] pid=$pid"
-  taskkill /PID $pid /F | Out-Host
+$processIds = $processIds | Select-Object -Unique
+foreach ($processId in $processIds) {
+  Write-Host "[stop] pid=$processId"
+  taskkill /PID $processId /F | Out-Host
 }
 Write-Host "[OK] Control panel server stopped."
 Start-Sleep -Seconds 1

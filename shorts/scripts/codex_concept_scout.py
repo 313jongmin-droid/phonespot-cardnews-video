@@ -301,6 +301,7 @@ def merge_into_illustration_requests(slug: str, requests: list) -> None:
             "quality_gap": "기존 최근접 " + (req["nearest_existing"] or "-") + " (" + str(req["nearest_score"]) + ")",
             "tags": ["auto", "concept"],
             "concept_label": req["concept_label"],
+            "source_text": req["source_text"],
             "keywords": req["keywords"],
             "prompt": req["prompt"],
             "status": "requested",

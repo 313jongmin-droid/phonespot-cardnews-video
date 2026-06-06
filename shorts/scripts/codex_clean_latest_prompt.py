@@ -44,10 +44,15 @@ def concept_for_item(item: dict, variant: str) -> str:
         return CONCEPTS[variant]
     label = str(item.get("concept_label") or "").strip()
     keywords = [str(k) for k in (item.get("keywords") or []) if str(k).strip()]
-    if label or keywords:
+    source = str(item.get("source_text") or "").strip()
+    if source or label or keywords:
         head = label or variant.replace("_", " ")
-        tail = (" 핵심 요소: " + ", ".join(keywords)) if keywords else ""
-        return head + " 개념을 휴대폰/IT 뉴스에서 반복 사용 가능한 범용 일러스트로 표현." + tail
+        parts = [head + " 개념을 휴대폰/IT 뉴스에서 반복 사용 가능한 범용 일러스트로 표현."]
+        if keywords:
+            parts.append("핵심 요소: " + ", ".join(keywords) + ".")
+        if source:
+            parts.append("아래 문장의 의미를 담되 특정 브랜드/제품명/숫자/날짜는 빼고 일반화하세요: \"" + source + "\"")
+        return " ".join(parts)
     return concept_for(variant)
 
 
@@ -89,22 +94,3 @@ def main() -> int:
             lines.append("")
     else:
         lines.append("## 신규 GPT 이미지 요청 없음")
-        lines.append("")
-        lines.append("현재 라이브러리 안에서 렌더링할 수 있습니다.")
-        lines.append("")
-    if gaps:
-        lines.append("## 문맥 약한 매핑 경고")
-        lines.append("")
-        lines.append("새 이미지 요청은 없지만 아래 항목은 문맥 적합도가 낮을 수 있습니다.")
-        lines.append("반복되면 Codex에게 범용 일러스트 규칙 확장을 요청하세요.")
-        lines.append("")
-        for item in gaps[:20]:
-            lines.append(f"- `{item.get('section')}` 청크 {int(item.get('chunk_index', 0)) + 1}: `{item.get('variant')}`")
-    out = DESK / "LATEST_PROMPT.md"
-    out.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    print(f"[clean_prompt] wrote {out}")
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
