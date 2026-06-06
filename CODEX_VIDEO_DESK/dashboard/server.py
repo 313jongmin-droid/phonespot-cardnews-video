@@ -37,7 +37,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v9"
+PANEL_VERSION = "phonespot-web-v10"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -1333,6 +1333,7 @@ class Handler(BaseHTTPRequestHandler):
             online_workers = [worker for worker in workers.values() if worker.get("online")]
             json_response(self, {
                 "root": str(ROOT),
+                "version": PANEL_VERSION,
                 "desk": str(DESK),
                 "latestSlug": latest_slug(),
                 "requests": len(payload.get("requests", []) or []),
@@ -1915,7 +1916,7 @@ INDEX_HTML = r"""<!doctype html>
   </style>
 </head>
 <body>
-  <header><div><strong>폰스팟 통합 제작 패널</strong> <span>카드뉴스 + 숏폼 영상</span></div><span id="rootText"></span></header>
+  <header><div><strong>폰스팟 통합 제작 패널</strong> <span>카드뉴스 + 숏폼 영상</span> <span id="panelVersion" class="small" style="opacity:0.65"></span></div><span id="rootText"></span></header>
   <div class="runtime-strip">
     <div class="runtime-card" id="runtimeMode"><span>실행 위치</span><b id="runtimeModeText">확인 중</b><select class="runtime-select" id="targetWorker"><option value="">자동 배정</option></select></div>
     <div class="runtime-card" id="runtimeSync"><span>카드뉴스 동기화</span><b id="runtimeSyncText">확인 중</b></div>
@@ -2287,6 +2288,8 @@ INDEX_HTML = r"""<!doctype html>
       const data = await api("/api/state");
       lastState = data;
       document.getElementById("rootText").textContent = data.root;
+      const pv = document.getElementById("panelVersion");
+      if (pv) pv.textContent = data.version ? ("· " + data.version) : "";
       const sync = data.sync || {};
       document.getElementById("runtimeModeText").textContent = `${sync.rootMode || "-"} · 렌더 PC ${data.readyWorkers || 0}/${data.onlineWorkers || 0}대 준비`;
       const workerSelect = document.getElementById("targetWorker");

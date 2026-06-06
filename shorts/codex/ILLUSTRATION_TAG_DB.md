@@ -16,7 +16,7 @@
 | `chart_down` | price, data, decrease, library | 1 | 011_qa_combo_discount_check |
 | `chart_up` | price, data, increase, library | 2 | 011_qa_combo_discount_check |
 | `chat_backup_restore` | messenger, backup, restore, tips, library | 2 | 011_qa_combo_discount_check |
-| `chatbot` | ai, assistant, software, library | 4 | 012_news_galaxy_unpack_july |
+| `chatbot` | ai, assistant, software, library | 4 | 011_qa_combo_discount_check |
 | `clock` | time, tips, library | 2 | 011_qa_combo_discount_check |
 | `cloud_backup` | security, privacy, cloud, library | 2 | 011_qa_combo_discount_check |
 | `cover_screen_widgets` | library | 1 | 011_qa_combo_discount_check |
@@ -44,12 +44,12 @@
 | `display_ratio_change` | library | 1 | 011_qa_combo_discount_check |
 | `emergency_account_freeze` | security, bank, response, golden-time, library | 1 | 011_qa_combo_discount_check |
 | `fake_government_page` | security, smishing, government, warning | 0 |  |
-| `final_update` | software, update, library | 3 | 012_news_galaxy_unpack_july |
+| `final_update` | software, update, library | 3 | 011_qa_combo_discount_check |
 | `foldable` | hardware, foldable, library | 1 | 012_news_galaxy_unpack_july |
 | `forecast` | news, forecast, library | 3 | 012_news_galaxy_unpack_july |
 | `gemini` | ai, assistant, google, library | 2 | 010_tip_iphone_call_record |
 | `gift_prohibit` | price, security, warning, library | 0 |  |
-| `gift_voucher` | price, subsidy, purchase, library | 3 | 012_news_galaxy_unpack_july |
+| `gift_voucher` | price, subsidy, purchase, library | 3 | 011_qa_combo_discount_check |
 | `handshake` | policy, access, partnership, library | 1 | 001_apple_ondevice_ai_wwdc26 |
 | `health_sensor_watch` | library | 1 | 012_news_galaxy_unpack_july |
 | `heat_release` | battery, heat, hardware, library | 0 |  |
@@ -85,10 +85,10 @@
 | `security_feature_lock` | library | 0 |  |
 | `settings_steps` | library | 1 | 011_qa_combo_discount_check |
 | `shield` | security, privacy, protection, library | 3 | 012_news_galaxy_unpack_july |
-| `smartphone` | device, purchase, cta, library | 4 | 012_news_galaxy_unpack_july |
+| `smartphone` | device, purchase, cta, library | 4 | 011_qa_combo_discount_check |
 | `smishing_fake_link` | security, smishing, warning, link | 0 |  |
 | `stock_chart` | price, data, market, library | 0 |  |
-| `store` | store, purchase, cta, library | 2 | 012_news_galaxy_unpack_july |
+| `store` | store, purchase, cta, library | 2 | 011_qa_combo_discount_check |
 | `telecom_discount_compare` | price, subsidy, compare, telecom, library | 1 | 012_news_galaxy_unpack_july |
 | `theft_auto_lock` | security, privacy, theft | 0 |  |
 | `ti_decrease` | materials, hardware, decrease, library | 1 | 011_qa_combo_discount_check |
@@ -98,7 +98,7 @@
 
 ## Recent videos
 
-- `012_news_galaxy_unpack_july`: smartphone, newspaper, microphone, shield, meeting_room, forecast, foldable, final_update, phone_settings_toggle, phone_setup_ready, health_sensor_watch, gift_voucher, chatbot, telecom_discount_compare, store
 - `011_qa_combo_discount_check`: chart_down, settings_steps, clock, gift_voucher, chart_up, chat_backup_restore, chatbot, aluminum_label, appliance, cloud_backup, cover_screen_widgets, device_data_transfer, display_ratio_change, store, ti_decrease, smartphone, emergency_account_freeze, final_update, battery_charge_range, battery_overheat, biometric
+- `012_news_galaxy_unpack_july`: smartphone, newspaper, microphone, shield, meeting_room, forecast, foldable, final_update, phone_settings_toggle, phone_setup_ready, health_sensor_watch, gift_voucher, chatbot, telecom_discount_compare, store
 - `010_tip_iphone_call_record`: phone_settings_toggle, phone_setup_ready, smartphone, device_data_transfer, newspaper, microphone, shield, call_recording_notice, meeting_room, forecast, recording_archive, impersonation_call, chat_backup_restore, prohibit, warning, samsung_ai, chatbot, gemini, memory_chip, gift_voucher
 - `001_apple_ondevice_ai_wwdc26`: newspaper, chatbot, chart_up, memory_chip, lock, meeting_room, shield, samsung_ai, gemini, final_update, handshake, clock, microphone, forecast, cloud_backup, aluminum_label, appliance, smartphone
