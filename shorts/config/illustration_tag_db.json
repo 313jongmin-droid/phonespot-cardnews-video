@@ -1100,7 +1100,133 @@
       ],
       "note": "자동 발굴 개념: 가입자 통화",
       "available": false
+    },
+    "cpt_64b80bba": {
+      "keywords": [
+        "값이",
+        "진짜"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 값이 진짜",
+      "available": false
+    },
+    "cpt_313e9e00": {
+      "keywords": [
+        "가족결합",
+        "핵심",
+        "변수",
+        "회선",
+        "수와"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 가족결합 핵심",
+      "available": false
+    },
+    "cpt_f7997fd3": {
+      "keywords": [
+        "묶을",
+        "있고",
+        "회선당",
+        "원이"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 묶을 있고",
+      "available": false
+    },
+    "cpt_8b587f6c": {
+      "keywords": [
+        "가족",
+        "명이라도",
+        "알뜰폰이나",
+        "자급제",
+        "회선이면"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 가족 명이라도",
+      "available": false
+    },
+    "cpt_6174b190": {
+      "keywords": [
+        "인터넷",
+        "결합",
+        "핵심",
+        "변수",
+        "약정"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 인터넷 결합",
+      "available": false
+    },
+    "cpt_a0d7df46": {
+      "keywords": [
+        "코앞"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 코앞",
+      "available": false
+    },
+    "cpt_f35df68f": {
+      "keywords": [
+        "폴더블",
+        "신제품인",
+        "폴드",
+        "플립"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 폴더블 신제품인",
+      "available": false
+    },
+    "cpt_f5cc7e27": {
+      "keywords": [
+        "워치",
+        "시리즈"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 워치 시리즈",
+      "available": false
+    },
+    "cpt_6ec7317d": {
+      "keywords": [
+        "사전예약",
+        "보통",
+        "언팩",
+        "며칠",
+        "안에"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 사전예약 보통",
+      "available": false
+    },
+    "cpt_8d09d703": {
+      "keywords": [
+        "정식",
+        "출시",
+        "초로"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 정식 출시",
+      "available": false
     }
   },
-  "updated_at": "2026-06-06T19:58:02"
+  "updated_at": "2026-06-06T20:55:46"
 }

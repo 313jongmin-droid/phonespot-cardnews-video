@@ -122,7 +122,17 @@ if exist "!RAWFILE!" del /q "!RAWFILE!" >nul 2>nul
 echo  Raw: !RAWFILE!
 set "RENDERLOG=!RESULTDIR!\remotion_raw_render.log"
 echo  Log: !RENDERLOG!
-call npx remotion render src/index.ts CasualShort "!RAWFILE!" --concurrency=2 --pixel-format=yuv420p --crf=18 > "!RENDERLOG!" 2>&1
+if "%PHONESPOT_RENDER_CONCURRENCY%"=="" set "PHONESPOT_RENDER_CONCURRENCY=50%%"
+if "%PHONESPOT_RAW_CRF%"=="" set "PHONESPOT_RAW_CRF=23"
+if "%PHONESPOT_RAW_PRESET%"=="" set "PHONESPOT_RAW_PRESET=veryfast"
+echo  Concurrency: !PHONESPOT_RENDER_CONCURRENCY!  (raw crf=!PHONESPOT_RAW_CRF! preset=!PHONESPOT_RAW_PRESET!)
+rem Fast path: reuse webpack bundle across renders (#3) + tunable concurrency (#1)
+rem + cheap intermediate encode (#2; Step 6 finalize is the quality gate).
+call node scripts\render_remotion_fast.mjs CasualShort "!RAWFILE!" > "!RENDERLOG!" 2>&1
+if errorlevel 1 (
+    echo  [WARN] fast render path failed - falling back to Remotion CLI. See log.
+    call npx remotion render src/index.ts CasualShort "!RAWFILE!" --concurrency=!PHONESPOT_RENDER_CONCURRENCY! --pixel-format=yuv420p --crf=!PHONESPOT_RAW_CRF! --x264-preset=!PHONESPOT_RAW_PRESET! >> "!RENDERLOG!" 2>&1
+)
 if errorlevel 1 (
     echo [ERROR] Remotion raw render command failed. See:
     echo !RENDERLOG!
@@ -152,6 +162,11 @@ echo  Output: !OUTFILE!
 python scripts\finalize_sns_video.py "!RAWFILE!" "!OUTFILE!"
 if errorlevel 1 goto :fail
 del /q "!RAWFILE!" >nul 2>nul
+
+rem Guarantee the source script + captions sit next to the final MP4, even if
+rem Step 7 packaging fails or Google Drive sync lags (so the script is never "lost").
+if exist "..\cardnews\output\!SLUG!\shorts_script.json" copy /Y "..\cardnews\output\!SLUG!\shorts_script.json" "!RESULTDIR!\" >nul 2>nul
+if exist "..\cardnews\output\!SLUG!\captions.md" copy /Y "..\cardnews\output\!SLUG!\captions.md" "!RESULTDIR!\" >nul 2>nul
 
 echo.
 echo ----- Step 7/7: Quality check + result package -----

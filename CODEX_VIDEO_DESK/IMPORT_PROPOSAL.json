@@ -1,8 +1,60 @@
 {
-  "slug": "010_tip_iphone_call_record",
+  "slug": "012_news_galaxy_unpack_july",
   "engine": "none",
-  "generated_at": 1780745456.6795568,
-  "requests": [],
+  "generated_at": 1780747501.81781,
+  "requests": [
+    {
+      "filename": "cpt_a0d7df46.png",
+      "variant": "cpt_a0d7df46",
+      "section": "hook",
+      "chunk_index": 3,
+      "concept_label": "코앞",
+      "optional": true,
+      "concept_text": "코앞 cpt a0d7df46 코앞 auto concept 코앞으로 다가왔습니다"
+    },
+    {
+      "filename": "cpt_f35df68f.png",
+      "variant": "cpt_f35df68f",
+      "section": "fact_1",
+      "chunk_index": 2,
+      "concept_label": "폴더블 신제품인",
+      "optional": true,
+      "concept_text": "폴더블 신제품인 cpt f35df68f 폴더블 신제품인 폴드 플립 auto concept 폴더블 신제품인 갤럭시 Z 폴드8과 Z 플립8,"
+    },
+    {
+      "filename": "cpt_f5cc7e27.png",
+      "variant": "cpt_f5cc7e27",
+      "section": "fact_1",
+      "chunk_index": 3,
+      "concept_label": "워치 시리즈",
+      "optional": true,
+      "concept_text": "워치 시리즈 cpt f5cc7e27 워치 시리즈 auto concept 그리고 갤럭시 워치9 시리즈를 공개합니다"
+    },
+    {
+      "filename": "cpt_6ec7317d.png",
+      "variant": "cpt_6ec7317d",
+      "section": "fact_1",
+      "chunk_index": 4,
+      "concept_label": "사전예약 보통",
+      "optional": true,
+      "concept_text": "사전예약 보통 cpt 6ec7317d 사전예약 보통 언팩 며칠 안에 auto concept 사전예약은 보통 언팩 이후 며칠 안에 시작되어 7월 말,"
+    },
+    {
+      "filename": "cpt_8d09d703.png",
+      "variant": "cpt_8d09d703",
+      "section": "fact_1",
+      "chunk_index": 5,
+      "concept_label": "정식 출시",
+      "optional": true,
+      "concept_text": "정식 출시 cpt 8d09d703 정식 출시 초로 auto concept 정식 출시는 8월 초로 예상됩니다"
+    }
+  ],
   "assignments": [],
-  "unmatched_requests": []
+  "unmatched_requests": [
+    "cpt_a0d7df46.png",
+    "cpt_f35df68f.png",
+    "cpt_f5cc7e27.png",
+    "cpt_6ec7317d.png",
+    "cpt_8d09d703.png"
+  ]
 }

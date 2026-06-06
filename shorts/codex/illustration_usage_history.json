@@ -28,24 +28,24 @@
       ]
     },
     "012_news_galaxy_unpack_july": {
-      "used_at": "2026-06-06T14:35:30",
-      "source": "codex_enhance",
+      "used_at": "2026-06-06T21:05:43",
+      "source": "unique_illustration_guard",
       "illustrations": [
-        "foldable",
-        "chatbot",
-        "final_update",
-        "forecast",
         "smartphone",
         "newspaper",
         "microphone",
         "shield",
         "meeting_room",
+        "forecast",
+        "foldable",
+        "final_update",
+        "phone_settings_toggle",
+        "phone_setup_ready",
+        "health_sensor_watch",
         "gift_voucher",
-        "memory_chip",
-        "samsung_ai",
-        "gemini",
-        "aluminum_label",
-        "appliance"
+        "chatbot",
+        "telecom_discount_compare",
+        "store"
       ]
     },
     "001_apple_ondevice_ai_wwdc26": {
@@ -71,16 +71,43 @@
         "appliance",
         "smartphone"
       ]
+    },
+    "011_qa_combo_discount_check": {
+      "used_at": "2026-06-06T20:54:45",
+      "source": "codex_enhance",
+      "illustrations": [
+        "chart_down",
+        "settings_steps",
+        "clock",
+        "gift_voucher",
+        "chart_up",
+        "chat_backup_restore",
+        "chatbot",
+        "aluminum_label",
+        "appliance",
+        "cloud_backup",
+        "cover_screen_widgets",
+        "device_data_transfer",
+        "display_ratio_change",
+        "store",
+        "ti_decrease",
+        "smartphone",
+        "emergency_account_freeze",
+        "final_update",
+        "battery_charge_range",
+        "battery_overheat",
+        "biometric"
+      ]
     }
   },
-  "updated_at": "2026-06-06T20:31:55",
+  "updated_at": "2026-06-06T21:05:43",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-06T20:31:55",
       "variants": []
     },
     "012_news_galaxy_unpack_july": {
-      "updated_at": "2026-06-06T14:35:31",
+      "updated_at": "2026-06-06T21:05:43",
       "variants": []
     },
     "001_apple_ondevice_ai_wwdc26": {
@@ -88,6 +115,10 @@
       "variants": [
         "security_feature_lock"
       ]
+    },
+    "011_qa_combo_discount_check": {
+      "updated_at": "2026-06-06T20:54:46",
+      "variants": []
     }
   }
 }

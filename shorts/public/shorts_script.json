@@ -1,44 +1,54 @@
 {
-  "slug": "010_tip_iphone_call_record",
-  "title_short": "아이폰 통화 녹음 17년 만에 도입",
-  "video_title": "아이폰 통화 녹음 17년 만에 도입",
-  "publication_date": "2026.05.31",
-  "sources": "Apple iOS 18.1 공식 + SKT 에이닷 + LGU+ 익시오 + 폰스팟 광교점 자료",
+  "slug": "012_news_galaxy_unpack_july",
+  "title_short": "갤럭시 언팩 2026",
+  "video_title": "갤럭시 언팩 2026",
+  "publication_date": "2026.06.03",
+  "sources": "삼성 뉴스룸·다음 · 2026.5.12 보도 + 7/22 일정 확정",
   "channel_name": "폰스팟",
   "channel_tagline": "광교 미니 IT 브리핑",
   "opening": {
     "line1": "광교 미니 IT 브리핑",
-    "line2": "아이폰 통화 녹음 17년 만에 도입"
+    "line2": "갤럭시 언팩 2026"
   },
   "hook": {
-    "tts": "아이폰에도 통화 녹음이 17년 만에 정식으로 들어왔습니다. iOS 18.1 활용법과 갤럭시와의 차이를 정리합니다.",
+    "tts": "갤럭시 언팩이 다음 달 22일 영국 런던에서 열립니다. 오늘 기준 D-49이고, 폴더블 신제품의 사전예약 골든타임이 코앞으로 다가왔습니다.",
     "caption_body": [
-      "아이폰 통화 녹음",
-      "17년 만에 정식 도입"
+      "갤럭시 언팩",
+      "7월 22일 런던"
     ],
     "caption_emphasis": [
-      "17년 만에"
+      "7월 22일"
     ],
     "headline_lines": [
       {
-        "text": "아이폰 통화 녹음"
+        "text": "갤럭시 언팩"
       },
       {
-        "text": "17년 만에 정식 도입",
+        "text": "7월 22일 런던",
         "accent": true
       }
     ],
-    "meta": "출처: Apple iOS 18.1 / 전자신문",
+    "meta": "출처: 삼성 뉴스룸·다음 2026.5.12",
     "topic": "뉴스",
     "background_image": "1.png",
     "caption_chunks": [
-      "아이폰에도 통화 녹음이 17년 만에 정식으로 들어왔습니다.",
-      "iOS 18.1 활용법과 갤럭시와의 차이를 정리합니다."
+      "갤럭시 언팩이 다음 달 22일 영국 런던에서 열립니다.",
+      "오늘 기준 D-49이고,",
+      "폴더블 신제품의 사전예약 골든타임이",
+      "코앞으로 다가왔습니다."
     ],
     "chunk_visuals": [
       {
         "type": "image",
         "value": "1.png"
+      },
+      {
+        "type": "image",
+        "value": "5.png"
+      },
+      {
+        "type": "image",
+        "value": "2.png"
       },
       {
         "type": "image",
@@ -52,195 +62,91 @@
     },
     "_codex_narration_source": "captions.md#intro",
     "display_chunks": [
-      "아이폰에도 통화 녹음이 17년 만에 정식으로 들어왔습니다",
-      "iOS 18.1 활용법과 갤럭시와의 차이를 정리합니다"
+      "갤럭시 언팩이 다음 달 22일 영국 런던에서 열립니다",
+      "오늘 기준 D-49이고,",
+      "폴더블 신제품의 사전예약 골든타임이",
+      "코앞으로 다가왔습니다"
     ],
     "_codex_caption_lockstep": {
       "version": 2,
       "compiler": "korean_caption_compiler_v2",
       "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-      "chunk_count": 2
+      "chunk_count": 4
     },
     "_codex_contextual_narrative": true,
     "_codex_sync_mode": "global999_tts_caption_lockstep",
     "tts_chunk_weights": [
-      3468.29,
-      3353.88
+      3415.5,
+      1681.33,
+      1258.79,
+      1698.96
     ],
     "_tts_timing": {
       "mode": "word_boundary_snap",
       "windows": [
         {
           "start_ms": 0.0,
-          "end_ms": 3468.29,
-          "duration_ms": 3468.29
+          "end_ms": 3415.5,
+          "duration_ms": 3415.5
         },
         {
-          "start_ms": 3468.29,
-          "end_ms": 6822.17,
-          "duration_ms": 3353.88
+          "start_ms": 3415.5,
+          "end_ms": 5096.83,
+          "duration_ms": 1681.33
+        },
+        {
+          "start_ms": 5096.83,
+          "end_ms": 6355.62,
+          "duration_ms": 1258.79
+        },
+        {
+          "start_ms": 6355.62,
+          "end_ms": 8054.58,
+          "duration_ms": 1698.96
         }
       ],
-      "boundary_count": 15,
+      "boundary_count": 18,
       "min_chunk_ms": 1100
     }
   },
   "facts": [
     {
-      "tts": "2024년 10월 28일 iOS 18.1 업데이트로 아이폰에 통화 녹음 기능이 처음으로 정식 도입됐습니다. 사용 방법은 단순합니다. 통화 중 화면 왼쪽 상단의 녹음 아이콘을 누르면 시작되고, 시작 직후 자동으로 고지 멘트가 양쪽 통화자에게 송출됩니다.",
+      "tts": "삼성전자가 2026년 7월 22일 현지 시각으로 영국 런던에서 갤럭시 언팩 행사를 열고, 폴더블 신제품인 갤럭시 Z 폴드8과 Z 플립8, 그리고 갤럭시 워치9 시리즈를 공개합니다. 사전예약은 보통 언팩 이후 며칠 안에 시작되어 7월 말, 정식 출시는 8월 초로 예상됩니다.",
       "caption_body": [
-        "아이폰",
-        "왼쪽 상단 아이콘 수동 녹음"
+        "갤럭시 Z 폴드8",
+        "와이드 화면 모형 등장"
       ],
       "caption_emphasis": [
-        "왼쪽 상단 아이콘"
+        "와이드 화면"
       ],
       "headline_lines": [
         {
-          "text": "아이폰"
+          "text": "갤럭시 Z 폴드8"
         },
         {
-          "text": "왼쪽 상단 아이콘 수동 녹음",
+          "text": "와이드 화면 모형 등장",
           "accent": true
         }
       ],
-      "meta": "출처: Apple iOS 18.1 가이드",
+      "meta": "출처: ZDNet 2026.5.29~6.2",
       "topic": "뉴스",
       "background_image": "2.png",
       "caption_chunks": [
-        "2024년 10월 28일 iOS 18.1",
-        "업데이트로 아이폰에 통화 녹음 기능이",
-        "처음으로 정식 도입됐습니다.",
-        "사용 방법은 단순합니다.",
-        "통화 중 화면 왼쪽 상단의 녹음 아이콘을 누르면 시작되고,",
-        "시작 직후 자동으로 고지 멘트가 양쪽 통화자에게 송출됩니다."
+        "삼성전자가 2026년 7월 22일 현지",
+        "시각으로 영국 런던에서 갤럭시 언팩 행사를 열고,",
+        "폴더블 신제품인 갤럭시 Z 폴드8과 Z 플립8,",
+        "그리고 갤럭시 워치9 시리즈를 공개합니다.",
+        "사전예약은 보통 언팩 이후 며칠 안에 시작되어 7월 말,",
+        "정식 출시는 8월 초로 예상됩니다."
       ],
       "chunk_visuals": [
-        {
-          "type": "image",
-          "value": "2.png"
-        },
         {
           "type": "image",
           "value": "3.png"
         },
         {
-          "type": "image",
-          "value": "5.png"
-        },
-        {
-          "type": "illust",
-          "value": "phone_settings_toggle"
-        },
-        {
-          "type": "illust",
-          "value": "phone_setup_ready"
-        },
-        {
           "type": "illust",
           "value": "smartphone"
-        }
-      ],
-      "stat": {
-        "label": "",
-        "value": "",
-        "note": ""
-      },
-      "id": "fact_1",
-      "_codex_narration_source": "captions.md#body",
-      "display_chunks": [
-        "2024년 10월 28일 iOS 18.1",
-        "업데이트로 아이폰에 통화 녹음 기능이",
-        "처음으로 정식 도입됐습니다",
-        "사용 방법은 단순합니다",
-        "통화 중 화면 왼쪽 상단의 녹음 아이콘을 누르면 시작되고,",
-        "시작 직후 자동으로 고지 멘트가 양쪽 통화자에게 송출됩니다"
-      ],
-      "_codex_caption_lockstep": {
-        "version": 2,
-        "compiler": "korean_caption_compiler_v2",
-        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 6
-      },
-      "_codex_contextual_narrative": true,
-      "_codex_sync_mode": "global999_tts_caption_lockstep",
-      "tts_chunk_weights": [
-        2550.0,
-        1751.75,
-        1983.46,
-        1936.62,
-        2869.71,
-        3221.83
-      ],
-      "_tts_timing": {
-        "mode": "word_boundary_snap",
-        "windows": [
-          {
-            "start_ms": 0.0,
-            "end_ms": 2550.0,
-            "duration_ms": 2550.0
-          },
-          {
-            "start_ms": 2550.0,
-            "end_ms": 4301.75,
-            "duration_ms": 1751.75
-          },
-          {
-            "start_ms": 4301.75,
-            "end_ms": 6285.21,
-            "duration_ms": 1983.46
-          },
-          {
-            "start_ms": 6285.21,
-            "end_ms": 8221.83,
-            "duration_ms": 1936.62
-          },
-          {
-            "start_ms": 8221.83,
-            "end_ms": 11091.54,
-            "duration_ms": 2869.71
-          },
-          {
-            "start_ms": 11091.54,
-            "end_ms": 14313.37,
-            "duration_ms": 3221.83
-          }
-        ],
-        "boundary_count": 33,
-        "min_chunk_ms": 1100
-      }
-    },
-    {
-      "tts": "녹음본은 메모 앱과 전화 기록에 저장됩니다. 다만 iPhone XS 이후 모델과 iOS 18.1 이상 버전에서만 사용 가능합니다. 갤럭시는 처음부터 자동 녹음 기능을 제공합니다.",
-      "caption_body": [
-        "갤럭시",
-        "자동 녹음 + 특정 번호 옵션"
-      ],
-      "caption_emphasis": [
-        "자동 녹음"
-      ],
-      "headline_lines": [
-        {
-          "text": "갤럭시"
-        },
-        {
-          "text": "자동 녹음 + 특정 번호 옵션",
-          "accent": true
-        }
-      ],
-      "meta": "출처: Samsung Members 공식",
-      "topic": "뉴스",
-      "background_image": "3.png",
-      "caption_chunks": [
-        "녹음본은 메모 앱과 전화 기록에 저장됩니다.",
-        "다만 iPhone XS 이후",
-        "모델과 iOS 18.1 이상 버전에서만 사용 가능합니다.",
-        "갤럭시는 처음부터 자동 녹음 기능을 제공합니다."
-      ],
-      "chunk_visuals": [
-        {
-          "type": "illust",
-          "value": "device_data_transfer"
         },
         {
           "type": "illust",
@@ -253,6 +159,134 @@
         {
           "type": "illust",
           "value": "shield"
+        },
+        {
+          "type": "illust",
+          "value": "meeting_room"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_1",
+      "_codex_narration_source": "captions.md#body",
+      "display_chunks": [
+        "삼성전자가 2026년 7월 22일 현지",
+        "시각으로 영국 런던에서 갤럭시 언팩 행사를 열고,",
+        "폴더블 신제품인 갤럭시 Z 폴드8과 Z 플립8,",
+        "그리고 갤럭시 워치9 시리즈를 공개합니다",
+        "사전예약은 보통 언팩 이후 며칠 안에 시작되어 7월 말,",
+        "정식 출시는 8월 초로 예상됩니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 6
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        2197.88,
+        2772.91,
+        2966.54,
+        2687.67,
+        2887.33,
+        1857.38
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_snap",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 2197.88,
+            "duration_ms": 2197.88
+          },
+          {
+            "start_ms": 2197.88,
+            "end_ms": 4970.79,
+            "duration_ms": 2772.91
+          },
+          {
+            "start_ms": 4970.79,
+            "end_ms": 7937.33,
+            "duration_ms": 2966.54
+          },
+          {
+            "start_ms": 7937.33,
+            "end_ms": 10625.0,
+            "duration_ms": 2687.67
+          },
+          {
+            "start_ms": 10625.0,
+            "end_ms": 13512.33,
+            "duration_ms": 2887.33
+          },
+          {
+            "start_ms": 13512.33,
+            "end_ms": 15369.71,
+            "duration_ms": 1857.38
+          }
+        ],
+        "boundary_count": 38,
+        "min_chunk_ms": 1100
+      }
+    },
+    {
+      "tts": "폴드8은 화면 비율을 변경한 와이드 모형이 공개됐고, 외부 화면이 더 넓어지며 5천만 화소 메인 카메라 탑재 가능성이 거론됩니다. 플립8은 폴드를 닫은 상태에서 사용하는 외부 디스플레이가 확장되고 위젯과 앱 호환이 강화될 전망입니다.",
+      "caption_body": [
+        "갤럭시 Z 플립8",
+        "외부 디스플레이 확장"
+      ],
+      "caption_emphasis": [
+        "외부 디스플레이"
+      ],
+      "headline_lines": [
+        {
+          "text": "갤럭시 Z 플립8"
+        },
+        {
+          "text": "외부 디스플레이 확장",
+          "accent": true
+        }
+      ],
+      "meta": "출처: 삼성·매체 종합",
+      "topic": "뉴스",
+      "background_image": "3.png",
+      "caption_chunks": [
+        "폴드8은 화면 비율을 변경한 와이드 모형이 공개됐고,",
+        "외부 화면이 더 넓어지며 5천만 화소 메인",
+        "카메라 탑재 가능성이 거론됩니다.",
+        "플립8은 폴드를 닫은 상태에서 사용하는",
+        "외부 디스플레이가 확장되고",
+        "위젯과 앱 호환이 강화될 전망입니다."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "forecast"
+        },
+        {
+          "type": "illust",
+          "value": "foldable"
+        },
+        {
+          "type": "mascot",
+          "value": "suspicious"
+        },
+        {
+          "type": "illust",
+          "value": "final_update"
+        },
+        {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        {
+          "type": "illust",
+          "value": "phone_setup_ready"
         }
       ],
       "stat": {
@@ -263,112 +297,111 @@
       "id": "fact_2",
       "_codex_narration_source": "captions.md#body",
       "display_chunks": [
-        "녹음본은 메모 앱과 전화 기록에 저장됩니다",
-        "다만 iPhone XS 이후",
-        "모델과 iOS 18.1 이상 버전에서만 사용 가능합니다",
-        "갤럭시는 처음부터 자동 녹음 기능을 제공합니다"
+        "폴드8은 화면 비율을 변경한 와이드 모형이 공개됐고,",
+        "외부 화면이 더 넓어지며 5천만 화소 메인",
+        "카메라 탑재 가능성이 거론됩니다",
+        "플립8은 폴드를 닫은 상태에서 사용하는",
+        "외부 디스플레이가 확장되고",
+        "위젯과 앱 호환이 강화될 전망입니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 4
+        "chunk_count": 6
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        2957.75,
-        1338.04,
-        3776.38,
-        2482.41
+        2884.5,
+        2068.67,
+        2273.95,
+        1769.34,
+        1329.25,
+        2130.29
       ],
       "_tts_timing": {
         "mode": "word_boundary_snap",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 2957.75,
-            "duration_ms": 2957.75
+            "end_ms": 2884.5,
+            "duration_ms": 2884.5
           },
           {
-            "start_ms": 2957.75,
-            "end_ms": 4295.79,
-            "duration_ms": 1338.04
+            "start_ms": 2884.5,
+            "end_ms": 4953.17,
+            "duration_ms": 2068.67
           },
           {
-            "start_ms": 4295.79,
-            "end_ms": 8072.17,
-            "duration_ms": 3776.38
+            "start_ms": 4953.17,
+            "end_ms": 7227.12,
+            "duration_ms": 2273.95
           },
           {
-            "start_ms": 8072.17,
-            "end_ms": 10554.58,
-            "duration_ms": 2482.41
+            "start_ms": 7227.12,
+            "end_ms": 8996.46,
+            "duration_ms": 1769.34
+          },
+          {
+            "start_ms": 8996.46,
+            "end_ms": 10325.71,
+            "duration_ms": 1329.25
+          },
+          {
+            "start_ms": 10325.71,
+            "end_ms": 12456.0,
+            "duration_ms": 2130.29
           }
         ],
-        "boundary_count": 25,
+        "boundary_count": 33,
         "min_chunk_ms": 1100
       }
     },
     {
-      "tts": "전화 앱의 설정에서 통화 녹음 메뉴로 들어가면 자동 녹음을 켤 수 있고, 모든 통화·국제 전화 제외·특정 번호만 자동 녹음 등 세부 설정도 가능합니다. 녹음본은 내 파일의 Call 폴더에 저장됩니다. 고지 멘트 없이 녹음하시려면 SKT 에이닷 전화나 LGU+ 익시오 같은 통신사 서버 기반 서비스를 활용하실 수 있습니다.",
+      "tts": "갤럭시 워치9 시리즈는 새 디자인과 향상된 건강 측정 센서를 탑재할 것으로 보입니다. 사전예약 혜택은 과거 패턴 기준 저장공간 한 단계 업그레이드, 워치와 버즈 같은 액세서리 무료 또는 할인이 보통 붙고, 통신3사 별 혜택에 차이가 있습니다.",
       "caption_body": [
-        "고지 없이",
-        "에이닷·익시오 활용"
+        "갤럭시 워치9",
+        "새 디자인·건강 측정"
       ],
       "caption_emphasis": [
-        "에이닷·익시오"
+        "새 디자인"
       ],
       "headline_lines": [
         {
-          "text": "고지 없이"
+          "text": "갤럭시 워치9"
         },
         {
-          "text": "에이닷·익시오 활용",
+          "text": "새 디자인·건강 측정",
           "accent": true
         }
       ],
-      "meta": "출처: SKT·LGU+ 공식",
+      "meta": "출처: 삼성 뉴스룸",
       "topic": "뉴스",
       "background_image": "4.png",
       "caption_chunks": [
-        "전화 앱의 설정에서 통화 녹음 메뉴로 들어가면",
-        "자동 녹음을 켤 수 있고,",
-        "모든 통화·국제 전화 제외·특정 번호만",
-        "자동 녹음 등 세부 설정도 가능합니다.",
-        "녹음본은 내 파일의 Call 폴더에 저장됩니다.",
-        "고지 멘트 없이 녹음하시려면 SKT",
-        "에이닷 전화나 LGU+ 익시오 같은",
-        "통신사 서버 기반 서비스를 활용하실 수 있습니다."
+        "갤럭시 워치9 시리즈는 새 디자인과",
+        "향상된 건강 측정 센서를 탑재할 것으로 보입니다.",
+        "사전예약 혜택은 과거 패턴 기준 저장공간 한 단계 업그레이드,",
+        "워치와 버즈 같은 액세서리 무료 또는 할인이 보통 붙고,",
+        "통신3사 별 혜택에 차이가 있습니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "call_recording_notice"
+          "value": "health_sensor_watch"
         },
         {
           "type": "illust",
-          "value": "meeting_room"
+          "value": "gift_voucher"
         },
         {
           "type": "illust",
-          "value": "forecast"
+          "value": "chatbot"
         },
         {
           "type": "illust",
-          "value": "recording_archive"
-        },
-        {
-          "type": "illust",
-          "value": "impersonation_call"
-        },
-        {
-          "type": "illust",
-          "value": "chat_backup_restore"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
+          "value": "telecom_discount_compare"
         },
         {
           "type": "illust",
@@ -383,154 +416,103 @@
       "id": "fact_3",
       "_codex_narration_source": "captions.md#body",
       "display_chunks": [
-        "전화 앱의 설정에서 통화 녹음 메뉴로 들어가면",
-        "자동 녹음을 켤 수 있고,",
-        "모든 통화·국제 전화 제외·특정 번호만",
-        "자동 녹음 등 세부 설정도 가능합니다",
-        "녹음본은 내 파일의 Call 폴더에 저장됩니다",
-        "고지 멘트 없이 녹음하시려면 SKT",
-        "에이닷 전화나 LGU+ 익시오 같은",
-        "통신사 서버 기반 서비스를 활용하실 수 있습니다"
+        "갤럭시 워치9 시리즈는 새 디자인과",
+        "향상된 건강 측정 센서를 탑재할 것으로 보입니다",
+        "사전예약 혜택은 과거 패턴 기준 저장공간 한 단계 업그레이드,",
+        "워치와 버즈 같은 액세서리 무료 또는 할인이 보통 붙고,",
+        "통신3사 별 혜택에 차이가 있습니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 8
+        "chunk_count": 5
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        2523.58,
-        1320.42,
-        1875.0,
-        2229.96,
-        2869.71,
-        1663.71,
-        1769.37,
-        2755.29
+        1889.79,
+        3101.42,
+        3195.41,
+        2790.5,
+        1795.75
       ],
       "_tts_timing": {
         "mode": "word_boundary_snap",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 2523.58,
-            "duration_ms": 2523.58
+            "end_ms": 1889.79,
+            "duration_ms": 1889.79
           },
           {
-            "start_ms": 2523.58,
-            "end_ms": 3844.0,
-            "duration_ms": 1320.42
+            "start_ms": 1889.79,
+            "end_ms": 4991.21,
+            "duration_ms": 3101.42
           },
           {
-            "start_ms": 3844.0,
-            "end_ms": 5719.0,
-            "duration_ms": 1875.0
+            "start_ms": 4991.21,
+            "end_ms": 8186.62,
+            "duration_ms": 3195.41
           },
           {
-            "start_ms": 5719.0,
-            "end_ms": 7948.96,
-            "duration_ms": 2229.96
+            "start_ms": 8186.62,
+            "end_ms": 10977.12,
+            "duration_ms": 2790.5
           },
           {
-            "start_ms": 7948.96,
-            "end_ms": 10818.67,
-            "duration_ms": 2869.71
-          },
-          {
-            "start_ms": 10818.67,
-            "end_ms": 12482.38,
-            "duration_ms": 1663.71
-          },
-          {
-            "start_ms": 12482.38,
-            "end_ms": 14251.75,
-            "duration_ms": 1769.37
-          },
-          {
-            "start_ms": 14251.75,
-            "end_ms": 17007.04,
-            "duration_ms": 2755.29
+            "start_ms": 10977.12,
+            "end_ms": 12772.87,
+            "duration_ms": 1795.75
           }
         ],
-        "boundary_count": 51,
+        "boundary_count": 36,
         "min_chunk_ms": 1100
       }
     },
     {
-      "tts": "KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 함께 사용할 수 있습니다. 법적으로는 통신비밀보호법 제3조 단서에 따라 한국에서는 본인이 참여한 통화의 녹음은 합법입니다. 다만 본인이 참여하지 않은 타인끼리의 통화 녹음은 위법이며, 해외에서는 양쪽 동의가 필요한 나라가 많으므로 출장이나 여행 시 현지 법을 확인하시기 바랍니다.",
+      "tts": "특히 6월에 약정만료가 되는 분이라면, 7월 사전예약 갈아타기가 가장 유리한 타이밍입니다. 위약금 부담 없이 신규 사전예약 혜택을 풀로 받을 수 있어, 약정 시점 1개월에서 2개월 차이로 수만 원이 좌우됩니다.",
       "caption_body": [
-        "법적 주의",
-        "한국은 합법, 해외 X"
+        "사전예약",
+        "7월 말 시작 예상"
       ],
       "caption_emphasis": [
-        "한국은 합법"
+        "7월 말"
       ],
       "headline_lines": [
         {
-          "text": "법적 주의"
+          "text": "사전예약"
         },
         {
-          "text": "한국은 합법, 해외 X",
+          "text": "7월 말 시작 예상",
           "accent": true
         }
       ],
-      "meta": "출처: 통신비밀보호법 제3조",
+      "meta": "출처: 삼성 공식 + 폰스팟 1차",
       "topic": "뉴스",
       "background_image": "5.png",
       "caption_chunks": [
-        "KT는 현재 자체 서비스가",
-        "미지원이지만, SKT와 LGU+",
-        "가입자는 AI 통화 요약과 번역 기능까지",
-        "함께 사용할 수 있습니다.",
-        "법적으로는 통신비밀보호법 제3조",
-        "단서에 따라 한국에서는 본인이 참여한",
-        "통화의 녹음은 합법입니다.",
-        "다만 본인이 참여하지 않은 타인끼리의 통화 녹음은 위법이며,",
-        "해외에서는 양쪽 동의가 필요한 나라가",
-        "많으므로 출장이나 여행 시 현지 법을 확인하시기 바랍니다."
+        "특히 6월에 약정만료가 되는 분이라면, 7월",
+        "사전예약 갈아타기가 가장 유리한 타이밍입니다.",
+        "위약금 부담 없이 신규 사전예약 혜택을 풀로 받을 수 있어,",
+        "약정 시점 1개월에서 2개월 차이로 수만 원이 좌우됩니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "prohibit"
+          "value": "smartphone"
         },
         {
           "type": "illust",
-          "value": "warning"
+          "value": "smartphone"
         },
         {
           "type": "illust",
-          "value": "samsung_ai"
-        },
-        {
-          "type": "illust",
-          "value": "chatbot"
+          "value": "smartphone"
         },
         {
           "type": "mascot",
           "value": "serious"
-        },
-        {
-          "type": "illust",
-          "value": "gemini"
-        },
-        {
-          "type": "illust",
-          "value": "memory_chip"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
         }
       ],
       "stat": {
@@ -541,92 +523,50 @@
       "id": "fact_4",
       "_codex_narration_source": "captions.md#body",
       "display_chunks": [
-        "KT는 현재 자체 서비스가",
-        "미지원이지만, SKT와 LGU+",
-        "가입자는 AI 통화 요약과 번역 기능까지",
-        "함께 사용할 수 있습니다",
-        "법적으로는 통신비밀보호법 제3조",
-        "단서에 따라 한국에서는 본인이 참여한",
-        "통화의 녹음은 합법입니다",
-        "다만 본인이 참여하지 않은 타인끼리의 통화 녹음은 위법이며,",
-        "해외에서는 양쪽 동의가 필요한 나라가",
-        "많으므로 출장이나 여행 시 현지 법을 확인하시기 바랍니다"
+        "특히 6월에 약정만료가 되는 분이라면, 7월",
+        "사전예약 갈아타기가 가장 유리한 타이밍입니다",
+        "위약금 부담 없이 신규 사전예약 혜택을 풀로 받을 수 있어,",
+        "약정 시점 1개월에서 2개월 차이로 수만 원이 좌우됩니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 10
+        "chunk_count": 4
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        1476.04,
-        1769.38,
-        2156.7,
-        1161.96,
-        2441.21,
-        1487.67,
-        1346.83,
-        3485.92,
-        2244.71,
-        3037.0
+        2338.75,
+        2872.5,
+        2376.79,
+        3265.83
       ],
       "_tts_timing": {
         "mode": "word_boundary_snap",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 1476.04,
-            "duration_ms": 1476.04
+            "end_ms": 2338.75,
+            "duration_ms": 2338.75
           },
           {
-            "start_ms": 1476.04,
-            "end_ms": 3245.42,
-            "duration_ms": 1769.38
+            "start_ms": 2338.75,
+            "end_ms": 5211.25,
+            "duration_ms": 2872.5
           },
           {
-            "start_ms": 3245.42,
-            "end_ms": 5402.12,
-            "duration_ms": 2156.7
+            "start_ms": 5211.25,
+            "end_ms": 7588.04,
+            "duration_ms": 2376.79
           },
           {
-            "start_ms": 5402.12,
-            "end_ms": 6564.08,
-            "duration_ms": 1161.96
-          },
-          {
-            "start_ms": 6564.08,
-            "end_ms": 9005.29,
-            "duration_ms": 2441.21
-          },
-          {
-            "start_ms": 9005.29,
-            "end_ms": 10492.96,
-            "duration_ms": 1487.67
-          },
-          {
-            "start_ms": 10492.96,
-            "end_ms": 11839.79,
-            "duration_ms": 1346.83
-          },
-          {
-            "start_ms": 11839.79,
-            "end_ms": 15325.71,
-            "duration_ms": 3485.92
-          },
-          {
-            "start_ms": 15325.71,
-            "end_ms": 17570.42,
-            "duration_ms": 2244.71
-          },
-          {
-            "start_ms": 17570.42,
-            "end_ms": 20607.42,
-            "duration_ms": 3037.0
+            "start_ms": 7588.04,
+            "end_ms": 10853.87,
+            "duration_ms": 3265.83
           }
         ],
-        "boundary_count": 54,
+        "boundary_count": 29,
         "min_chunk_ms": 1100
       }
     }
@@ -659,7 +599,7 @@
     "chunk_visuals": [
       {
         "type": "illust",
-        "value": "gift_voucher"
+        "value": "store"
       },
       {
         "type": "logo",
@@ -714,48 +654,12 @@
   "_chunk_logic_v2": true,
   "_note": "build_script.py 자동 생성 (v2 로직): 시퀀스 내 이미지 순환 + 마스코트 짝수 시퀀스만.",
   "_codex_uses_captions_md_narration": true,
-  "_codex_captions_md_narration_path": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\010_tip_iphone_call_record\\captions.md",
+  "_codex_captions_md_narration_path": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\012_news_galaxy_unpack_july\\captions.md",
   "_codex_narration_policy": "tts_only_chunks_visuals_preserved",
   "_codex_unique_source_images": {
     "version": 1,
     "policy": "non-illustration image visuals are used at most once across one video",
     "replacements": [
-      {
-        "section": "fact_3",
-        "chunk": 8,
-        "from": {
-          "type": "image",
-          "value": "1.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "aluminum_label"
-        }
-      },
-      {
-        "section": "fact_4",
-        "chunk": 9,
-        "from": {
-          "type": "image",
-          "value": "1.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "appliance"
-        }
-      },
-      {
-        "section": "fact_4",
-        "chunk": 10,
-        "from": {
-          "type": "image",
-          "value": "2.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "battery_charge_range"
-        }
-      },
       {
         "section": "cta",
         "chunk": 3,
@@ -779,17 +683,12 @@
     {
       "section": "fact_2",
       "chunk": 4,
-      "variant": "phone_settings_toggle"
+      "variant": "cover_screen_widgets"
     },
     {
       "section": "fact_3",
-      "chunk": 8,
-      "variant": "call_filter_rules"
-    },
-    {
-      "section": "fact_4",
-      "chunk": 10,
-      "variant": "security_feature_lock"
+      "chunk": 1,
+      "variant": "health_sensor_watch"
     }
   ],
   "_codex_semantic_visual_match": {
@@ -797,22 +696,218 @@
     "policy": "Match chunks to GPT source images using prompt.md descriptions, then fallback to tagged reusable illustrations.",
     "changes": [
       {
-        "section": "fact_3",
-        "chunk": 5,
+        "section": "hook",
+        "chunk": 4,
         "from": {
           "type": "illust",
-          "value": "impersonation_call"
+          "value": "foldable"
+        },
+        "to": {
+          "type": "image",
+          "value": "4.png"
+        },
+        "context": "폴더블 신제품의 사전예약 골든타임이 코앞으로 다가왔습니다 갤럭시 언팩 7월 22일 런던 ['갤럭시 언팩', '7월 22일 런던'] 뉴스",
+        "reason": "unused source image (no semantic match, img score 0.397)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 2,
+        "from": {
+          "type": "image",
+          "value": "4.png"
         },
         "to": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "자동 녹음 등 세부 설정도 가능합니다 녹음본은 내 파일의 Call 폴더에 저장됩니다 고지 멘트 없이 녹음하시려면 SKT 고지 없이 에이닷·익시오 활용 ['고지 없이', '에이닷·익시오 활용'] 뉴스",
+        "context": "삼성전자가 2026년 7월 22일 현지 시각으로 영국 런던에서 갤럭시 언팩 행사를 열고, 폴더블 신제품인 갤럭시 Z 폴드8과 Z 플립8, 갤럭시 Z 폴드8 와이드 화면 모형 등장 ['갤럭시 Z 폴드8', '와이드 화",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "chatbot"
+        },
+        "to": {
+          "type": "illust",
+          "value": "newspaper"
+        },
+        "context": "시각으로 영국 런던에서 갤럭시 언팩 행사를 열고, 폴더블 신제품인 갤럭시 Z 폴드8과 Z 플립8, 그리고 갤럭시 워치9 시리즈를 공개합니다 갤럭시 Z 폴드8 와이드 화면 모형 등장 ['갤럭시 Z 폴드8', '와이드 ",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "final_update"
+        },
+        "to": {
+          "type": "illust",
+          "value": "microphone"
+        },
+        "context": "폴더블 신제품인 갤럭시 Z 폴드8과 Z 플립8, 그리고 갤럭시 워치9 시리즈를 공개합니다 사전예약은 보통 언팩 이후 며칠 안에 시작되어 7월 말, 갤럭시 Z 폴드8 와이드 화면 모형 등장 ['갤럭시 Z 폴드8', '",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 5,
+        "from": {
+          "type": "illust",
+          "value": "forecast"
+        },
+        "to": {
+          "type": "illust",
+          "value": "shield"
+        },
+        "context": "그리고 갤럭시 워치9 시리즈를 공개합니다 사전예약은 보통 언팩 이후 며칠 안에 시작되어 7월 말, 정식 출시는 8월 초로 예상됩니다 갤럭시 Z 폴드8 와이드 화면 모형 등장 ['갤럭시 Z 폴드8', '와이드 화면 모",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 6,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "meeting_room"
+        },
+        "context": "사전예약은 보통 언팩 이후 며칠 안에 시작되어 7월 말, 정식 출시는 8월 초로 예상됩니다 갤럭시 Z 폴드8 와이드 화면 모형 등장 ['갤럭시 Z 폴드8', '와이드 화면 모형 등장'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "newspaper"
+        },
+        "to": {
+          "type": "illust",
+          "value": "forecast"
+        },
+        "context": "폴드8은 화면 비율을 변경한 와이드 모형이 공개됐고, 외부 화면이 더 넓어지며 5천만 화소 메인 갤럭시 Z 플립8 외부 디스플레이 확장 ['갤럭시 Z 플립8', '외부 디스플레이 확장'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "microphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "폴드8은 화면 비율을 변경한 와이드 모형이 공개됐고, 외부 화면이 더 넓어지며 5천만 화소 메인 카메라 탑재 가능성이 거론됩니다 갤럭시 Z 플립8 외부 디스플레이 확장 ['갤럭시 Z 플립8', '외부 디스플레이 확장",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "shield"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "카메라 탑재 가능성이 거론됩니다 플립8은 폴드를 닫은 상태에서 사용하는 외부 디스플레이가 확장되고 갤럭시 Z 플립8 외부 디스플레이 확장 ['갤럭시 Z 플립8', '외부 디스플레이 확장'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 5,
+        "from": {
+          "type": "illust",
+          "value": "meeting_room"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "플립8은 폴드를 닫은 상태에서 사용하는 외부 디스플레이가 확장되고 위젯과 앱 호환이 강화될 전망입니다 갤럭시 Z 플립8 외부 디스플레이 확장 ['갤럭시 Z 플립8', '외부 디스플레이 확장'] 뉴스",
+        "reason": "illust score 0.429"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 6,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "외부 디스플레이가 확장되고 위젯과 앱 호환이 강화될 전망입니다 갤럭시 Z 플립8 외부 디스플레이 확장 ['갤럭시 Z 플립8', '외부 디스플레이 확장'] 뉴스",
+        "reason": "illust score 0.435"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "gift_voucher"
+        },
+        "to": {
+          "type": "illust",
+          "value": "health_sensor_watch"
+        },
+        "context": "갤럭시 워치9 시리즈는 새 디자인과 향상된 건강 측정 센서를 탑재할 것으로 보입니다 갤럭시 워치9 새 디자인·건강 측정 ['갤럭시 워치9', '새 디자인·건강 측정'] 뉴스",
+        "reason": "illust score 0.448"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "memory_chip"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "갤럭시 워치9 시리즈는 새 디자인과 향상된 건강 측정 센서를 탑재할 것으로 보입니다 사전예약 혜택은 과거 패턴 기준 저장공간 한 단계 업그레이드, 갤럭시 워치9 새 디자인·건강 측정 ['갤럭시 워치9', '새 디자인",
         "reason": "neutral filler (no semantic match)"
       },
       {
         "section": "fact_3",
-        "chunk": 8,
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "samsung_ai"
+        },
+        "to": {
+          "type": "illust",
+          "value": "telecom_discount_compare"
+        },
+        "context": "사전예약 혜택은 과거 패턴 기준 저장공간 한 단계 업그레이드, 워치와 버즈 같은 액세서리 무료 또는 할인이 보통 붙고, 통신3사 별 혜택에 차이가 있습니다 갤럭시 워치9 새 디자인·건강 측정 ['갤럭시 워치9', '",
+        "reason": "illust score 0.438"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 5,
+        "from": {
+          "type": "illust",
+          "value": "gemini"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "워치와 버즈 같은 액세서리 무료 또는 할인이 보통 붙고, 통신3사 별 혜택에 차이가 있습니다 갤럭시 워치9 새 디자인·건강 측정 ['갤럭시 워치9', '새 디자인·건강 측정'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 2,
         "from": {
           "type": "illust",
           "value": "aluminum_label"
@@ -821,96 +916,12 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "에이닷 전화나 LGU+ 익시오 같은 통신사 서버 기반 서비스를 활용하실 수 있습니다 고지 없이 에이닷·익시오 활용 ['고지 없이', '에이닷·익시오 활용'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "prohibit"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "warning"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
+        "context": "특히 6월에 약정만료가 되는 분이라면, 7월 사전예약 갈아타기가 가장 유리한 타이밍입니다 위약금 부담 없이 신규 사전예약 혜택을 풀로 받을 수 있어, 사전예약 7월 말 시작 예상 ['사전예약', '7월 말 시작 예상",
         "reason": "neutral filler (no semantic match)"
       },
       {
         "section": "fact_4",
         "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "samsung_ai"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 함께 사용할 수 있습니다 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "chatbot"
-        },
-        "to": {
-          "type": "illust",
-          "value": "samsung_ai"
-        },
-        "context": "가입자는 AI 통화 요약과 번역 기능까지 함께 사용할 수 있습니다 법적으로는 통신비밀보호법 제3조 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
-        "reason": "illust score 0.453"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 6,
-        "from": {
-          "type": "illust",
-          "value": "gemini"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "법적으로는 통신비밀보호법 제3조 단서에 따라 한국에서는 본인이 참여한 통화의 녹음은 합법입니다 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 7,
-        "from": {
-          "type": "illust",
-          "value": "memory_chip"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "단서에 따라 한국에서는 본인이 참여한 통화의 녹음은 합법입니다 다만 본인이 참여하지 않은 타인끼리의 통화 녹음은 위법이며, 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 9,
         "from": {
           "type": "illust",
           "value": "appliance"
@@ -919,145 +930,164 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "다만 본인이 참여하지 않은 타인끼리의 통화 녹음은 위법이며, 해외에서는 양쪽 동의가 필요한 나라가 많으므로 출장이나 여행 시 현지 법을 확인하시기 바랍니다 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 10,
-        "from": {
-          "type": "illust",
-          "value": "battery_charge_range"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "해외에서는 양쪽 동의가 필요한 나라가 많으므로 출장이나 여행 시 현지 법을 확인하시기 바랍니다 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
+        "context": "사전예약 갈아타기가 가장 유리한 타이밍입니다 위약금 부담 없이 신규 사전예약 혜택을 풀로 받을 수 있어, 약정 시점 1개월에서 2개월 차이로 수만 원이 좌우됩니다 사전예약 7월 말 시작 예상 ['사전예약', '7월 ",
         "reason": "neutral filler (no semantic match)"
       }
     ],
     "weak": [
       {
         "section": "hook",
-        "chunk": 1,
-        "current": {
-          "type": "image",
-          "value": "1.png"
-        },
-        "context": "아이폰에도 통화 녹음이 17년 만에 정식으로 들어왔습니다 iOS 18.1 활용법과 갤럭시와의 차이를 정리합니다 아이폰 통화 녹음 17년 만에 정식 도입 ['아이폰 통화 녹음', '17년 만에 정식 도입'] 뉴스",
-        "best_image_score": 0.354,
-        "best_illust_score": 0.267
-      },
-      {
-        "section": "hook",
         "chunk": 2,
         "current": {
           "type": "image",
-          "value": "4.png"
+          "value": "5.png"
         },
-        "context": "아이폰에도 통화 녹음이 17년 만에 정식으로 들어왔습니다 iOS 18.1 활용법과 갤럭시와의 차이를 정리합니다 아이폰 통화 녹음 17년 만에 정식 도입 ['아이폰 통화 녹음', '17년 만에 정식 도입'] 뉴스",
-        "best_image_score": 0.34,
-        "best_illust_score": 0.267
+        "context": "갤럭시 언팩이 다음 달 22일 영국 런던에서 열립니다 오늘 기준 D-49이고, 폴더블 신제품의 사전예약 골든타임이 갤럭시 언팩 7월 22일 런던 ['갤럭시 언팩', '7월 22일 런던'] 뉴스",
+        "best_image_score": 0.336,
+        "best_illust_score": 0.259
       },
       {
-        "section": "fact_1",
-        "chunk": 1,
+        "section": "hook",
+        "chunk": 3,
         "current": {
           "type": "image",
           "value": "2.png"
         },
-        "context": "2024년 10월 28일 iOS 18.1 업데이트로 아이폰에 통화 녹음 기능이 아이폰 왼쪽 상단 아이콘 수동 녹음 ['아이폰', '왼쪽 상단 아이콘 수동 녹음'] 뉴스",
-        "best_image_score": 0.396,
-        "best_illust_score": 0.346
+        "context": "오늘 기준 D-49이고, 폴더블 신제품의 사전예약 골든타임이 코앞으로 다가왔습니다 갤럭시 언팩 7월 22일 런던 ['갤럭시 언팩', '7월 22일 런던'] 뉴스",
+        "best_image_score": 0.388,
+        "best_illust_score": 0.34
+      },
+      {
+        "section": "hook",
+        "chunk": 4,
+        "current": {
+          "type": "image",
+          "value": "4.png"
+        },
+        "context": "폴더블 신제품의 사전예약 골든타임이 코앞으로 다가왔습니다 갤럭시 언팩 7월 22일 런던 ['갤럭시 언팩', '7월 22일 런던'] 뉴스",
+        "best_image_score": 0.397,
+        "best_illust_score": 0.342
       },
       {
         "section": "fact_1",
         "chunk": 2,
         "current": {
-          "type": "image",
-          "value": "3.png"
+          "type": "illust",
+          "value": "smartphone"
         },
-        "context": "2024년 10월 28일 iOS 18.1 업데이트로 아이폰에 통화 녹음 기능이 처음으로 정식 도입됐습니다 아이폰 왼쪽 상단 아이콘 수동 녹음 ['아이폰', '왼쪽 상단 아이콘 수동 녹음'] 뉴스",
-        "best_image_score": 0.389,
-        "best_illust_score": 0.31
+        "context": "삼성전자가 2026년 7월 22일 현지 시각으로 영국 런던에서 갤럭시 언팩 행사를 열고, 폴더블 신제품인 갤럭시 Z 폴드8과 Z 플립8, 갤럭시 Z 폴드8 와이드 화면 모형 등장 ['갤럭시 Z 폴드8', '와이드 화면 모형 등장'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.349
       },
       {
         "section": "fact_1",
         "chunk": 3,
         "current": {
-          "type": "image",
-          "value": "5.png"
+          "type": "illust",
+          "value": "newspaper"
         },
-        "context": "업데이트로 아이폰에 통화 녹음 기능이 처음으로 정식 도입됐습니다 사용 방법은 단순합니다 아이폰 왼쪽 상단 아이콘 수동 녹음 ['아이폰', '왼쪽 상단 아이콘 수동 녹음'] 뉴스",
-        "best_image_score": 0.311,
-        "best_illust_score": 0.396
+        "context": "시각으로 영국 런던에서 갤럭시 언팩 행사를 열고, 폴더블 신제품인 갤럭시 Z 폴드8과 Z 플립8, 그리고 갤럭시 워치9 시리즈를 공개합니다 갤럭시 Z 폴드8 와이드 화면 모형 등장 ['갤럭시 Z 폴드8', '와이드 화면 모형 등장'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.365
+      },
+      {
+        "section": "fact_1",
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "microphone"
+        },
+        "context": "폴더블 신제품인 갤럭시 Z 폴드8과 Z 플립8, 그리고 갤럭시 워치9 시리즈를 공개합니다 사전예약은 보통 언팩 이후 며칠 안에 시작되어 7월 말, 갤럭시 Z 폴드8 와이드 화면 모형 등장 ['갤럭시 Z 폴드8', '와이드 화면 모형 등장'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.22
+      },
+      {
+        "section": "fact_1",
+        "chunk": 5,
+        "current": {
+          "type": "illust",
+          "value": "shield"
+        },
+        "context": "그리고 갤럭시 워치9 시리즈를 공개합니다 사전예약은 보통 언팩 이후 며칠 안에 시작되어 7월 말, 정식 출시는 8월 초로 예상됩니다 갤럭시 Z 폴드8 와이드 화면 모형 등장 ['갤럭시 Z 폴드8', '와이드 화면 모형 등장'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.214
       },
       {
         "section": "fact_1",
         "chunk": 6,
         "current": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "meeting_room"
         },
-        "context": "통화 중 화면 왼쪽 상단의 녹음 아이콘을 누르면 시작되고, 시작 직후 자동으로 고지 멘트가 양쪽 통화자에게 송출됩니다 아이폰 왼쪽 상단 아이콘 수동 녹음 ['아이폰', '왼쪽 상단 아이콘 수동 녹음'] 뉴스",
+        "context": "사전예약은 보통 언팩 이후 며칠 안에 시작되어 7월 말, 정식 출시는 8월 초로 예상됩니다 갤럭시 Z 폴드8 와이드 화면 모형 등장 ['갤럭시 Z 폴드8', '와이드 화면 모형 등장'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.414
+        "best_illust_score": 0.205
+      },
+      {
+        "section": "fact_2",
+        "chunk": 1,
+        "current": {
+          "type": "illust",
+          "value": "forecast"
+        },
+        "context": "폴드8은 화면 비율을 변경한 와이드 모형이 공개됐고, 외부 화면이 더 넓어지며 5천만 화소 메인 갤럭시 Z 플립8 외부 디스플레이 확장 ['갤럭시 Z 플립8', '외부 디스플레이 확장'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.361
       },
       {
         "section": "fact_2",
         "chunk": 2,
         "current": {
           "type": "illust",
-          "value": "newspaper"
+          "value": "smartphone"
         },
-        "context": "녹음본은 메모 앱과 전화 기록에 저장됩니다 다만 iPhone XS 이후 모델과 iOS 18.1 이상 버전에서만 사용 가능합니다 갤럭시 자동 녹음 + 특정 번호 옵션 ['갤럭시', '자동 녹음 + 특정 번호 옵션'] 뉴스",
+        "context": "폴드8은 화면 비율을 변경한 와이드 모형이 공개됐고, 외부 화면이 더 넓어지며 5천만 화소 메인 카메라 탑재 가능성이 거론됩니다 갤럭시 Z 플립8 외부 디스플레이 확장 ['갤럭시 Z 플립8', '외부 디스플레이 확장'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.358
+        "best_illust_score": 0.352
       },
       {
         "section": "fact_2",
         "chunk": 3,
         "current": {
-          "type": "illust",
-          "value": "microphone"
+          "type": "mascot",
+          "value": "suspicious"
         },
-        "context": "다만 iPhone XS 이후 모델과 iOS 18.1 이상 버전에서만 사용 가능합니다 갤럭시는 처음부터 자동 녹음 기능을 제공합니다 갤럭시 자동 녹음 + 특정 번호 옵션 ['갤럭시', '자동 녹음 + 특정 번호 옵션'] 뉴스",
+        "context": "외부 화면이 더 넓어지며 5천만 화소 메인 카메라 탑재 가능성이 거론됩니다 플립8은 폴드를 닫은 상태에서 사용하는 갤럭시 Z 플립8 외부 디스플레이 확장 ['갤럭시 Z 플립8', '외부 디스플레이 확장'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.284
+        "best_illust_score": 0.311
       },
       {
         "section": "fact_2",
         "chunk": 4,
         "current": {
           "type": "illust",
-          "value": "shield"
+          "value": "smartphone"
         },
-        "context": "모델과 iOS 18.1 이상 버전에서만 사용 가능합니다 갤럭시는 처음부터 자동 녹음 기능을 제공합니다 갤럭시 자동 녹음 + 특정 번호 옵션 ['갤럭시', '자동 녹음 + 특정 번호 옵션'] 뉴스",
+        "context": "카메라 탑재 가능성이 거론됩니다 플립8은 폴드를 닫은 상태에서 사용하는 외부 디스플레이가 확장되고 갤럭시 Z 플립8 외부 디스플레이 확장 ['갤럭시 Z 플립8', '외부 디스플레이 확장'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.307
+        "best_illust_score": 0.342
       },
       {
         "section": "fact_3",
         "chunk": 2,
         "current": {
           "type": "illust",
-          "value": "meeting_room"
+          "value": "smartphone"
         },
-        "context": "전화 앱의 설정에서 통화 녹음 메뉴로 들어가면 자동 녹음을 켤 수 있고, 모든 통화·국제 전화 제외·특정 번호만 고지 없이 에이닷·익시오 활용 ['고지 없이', '에이닷·익시오 활용'] 뉴스",
+        "context": "갤럭시 워치9 시리즈는 새 디자인과 향상된 건강 측정 센서를 탑재할 것으로 보입니다 사전예약 혜택은 과거 패턴 기준 저장공간 한 단계 업그레이드, 갤럭시 워치9 새 디자인·건강 측정 ['갤럭시 워치9', '새 디자인·건강 측정'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.331
+        "best_illust_score": 0.368
       },
       {
         "section": "fact_3",
         "chunk": 3,
         "current": {
           "type": "illust",
-          "value": "forecast"
+          "value": "smartphone"
         },
-        "context": "자동 녹음을 켤 수 있고, 모든 통화·국제 전화 제외·특정 번호만 자동 녹음 등 세부 설정도 가능합니다 고지 없이 에이닷·익시오 활용 ['고지 없이', '에이닷·익시오 활용'] 뉴스",
+        "context": "향상된 건강 측정 센서를 탑재할 것으로 보입니다 사전예약 혜택은 과거 패턴 기준 저장공간 한 단계 업그레이드, 워치와 버즈 같은 액세서리 무료 또는 할인이 보통 붙고, 갤럭시 워치9 새 디자인·건강 측정 ['갤럭시 워치9', '새 디자인·건강 측정'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.367
+        "best_illust_score": 0.401
       },
       {
         "section": "fact_3",
@@ -1066,31 +1096,9 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "자동 녹음 등 세부 설정도 가능합니다 녹음본은 내 파일의 Call 폴더에 저장됩니다 고지 멘트 없이 녹음하시려면 SKT 고지 없이 에이닷·익시오 활용 ['고지 없이', '에이닷·익시오 활용'] 뉴스",
+        "context": "워치와 버즈 같은 액세서리 무료 또는 할인이 보통 붙고, 통신3사 별 혜택에 차이가 있습니다 갤럭시 워치9 새 디자인·건강 측정 ['갤럭시 워치9', '새 디자인·건강 측정'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.393
-      },
-      {
-        "section": "fact_3",
-        "chunk": 7,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "고지 멘트 없이 녹음하시려면 SKT 에이닷 전화나 LGU+ 익시오 같은 통신사 서버 기반 서비스를 활용하실 수 있습니다 고지 없이 에이닷·익시오 활용 ['고지 없이', '에이닷·익시오 활용'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.335
-      },
-      {
-        "section": "fact_3",
-        "chunk": 8,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "에이닷 전화나 LGU+ 익시오 같은 통신사 서버 기반 서비스를 활용하실 수 있습니다 고지 없이 에이닷·익시오 활용 ['고지 없이', '에이닷·익시오 활용'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.385
+        "best_illust_score": 0.342
       },
       {
         "section": "fact_4",
@@ -1099,9 +1107,9 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
+        "context": "특히 6월에 약정만료가 되는 분이라면, 7월 사전예약 갈아타기가 가장 유리한 타이밍입니다 사전예약 7월 말 시작 예상 ['사전예약', '7월 말 시작 예상'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.218
+        "best_illust_score": 0.209
       },
       {
         "section": "fact_4",
@@ -1110,9 +1118,9 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
+        "context": "특히 6월에 약정만료가 되는 분이라면, 7월 사전예약 갈아타기가 가장 유리한 타이밍입니다 위약금 부담 없이 신규 사전예약 혜택을 풀로 받을 수 있어, 사전예약 7월 말 시작 예상 ['사전예약', '7월 말 시작 예상'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.254
+        "best_illust_score": 0.131
       },
       {
         "section": "fact_4",
@@ -1121,75 +1129,20 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 함께 사용할 수 있습니다 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
+        "context": "사전예약 갈아타기가 가장 유리한 타이밍입니다 위약금 부담 없이 신규 사전예약 혜택을 풀로 받을 수 있어, 약정 시점 1개월에서 2개월 차이로 수만 원이 좌우됩니다 사전예약 7월 말 시작 예상 ['사전예약', '7월 말 시작 예상'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.351
+        "best_illust_score": 0.145
       },
       {
         "section": "fact_4",
-        "chunk": 5,
+        "chunk": 4,
         "current": {
           "type": "mascot",
           "value": "serious"
         },
-        "context": "함께 사용할 수 있습니다 법적으로는 통신비밀보호법 제3조 단서에 따라 한국에서는 본인이 참여한 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
+        "context": "위약금 부담 없이 신규 사전예약 혜택을 풀로 받을 수 있어, 약정 시점 1개월에서 2개월 차이로 수만 원이 좌우됩니다 사전예약 7월 말 시작 예상 ['사전예약', '7월 말 시작 예상'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.288
-      },
-      {
-        "section": "fact_4",
-        "chunk": 6,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "법적으로는 통신비밀보호법 제3조 단서에 따라 한국에서는 본인이 참여한 통화의 녹음은 합법입니다 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.259
-      },
-      {
-        "section": "fact_4",
-        "chunk": 7,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "단서에 따라 한국에서는 본인이 참여한 통화의 녹음은 합법입니다 다만 본인이 참여하지 않은 타인끼리의 통화 녹음은 위법이며, 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.208
-      },
-      {
-        "section": "fact_4",
-        "chunk": 8,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "통화의 녹음은 합법입니다 다만 본인이 참여하지 않은 타인끼리의 통화 녹음은 위법이며, 해외에서는 양쪽 동의가 필요한 나라가 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.193
-      },
-      {
-        "section": "fact_4",
-        "chunk": 9,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "다만 본인이 참여하지 않은 타인끼리의 통화 녹음은 위법이며, 해외에서는 양쪽 동의가 필요한 나라가 많으므로 출장이나 여행 시 현지 법을 확인하시기 바랍니다 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.19
-      },
-      {
-        "section": "fact_4",
-        "chunk": 10,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "해외에서는 양쪽 동의가 필요한 나라가 많으므로 출장이나 여행 시 현지 법을 확인하시기 바랍니다 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.193
+        "best_illust_score": 0.214
       }
     ]
   },
@@ -1198,33 +1151,7 @@
     "policy": "Illustrations and mascots should not repeat inside one video. CTA logo is exempt.",
     "replacements": [
       {
-        "section": "fact_3",
-        "chunk": 5,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "impersonation_call"
-        },
-        "context": "자동 녹음 등 세부 설정도 가능합니다 녹음본은 내 파일의 Call 폴더에 저장됩니다 고지 멘트 없이 녹음하시려면 SKT 고지 없이 에이닷·익시오 활용 전화 앱의 설정에서 통화 녹음 메뉴로 들어가면 자동 녹음을 켤 수 있고, 모든 통화·국제 전화 제외·특정 번호만 자동 녹음 등 세부 설정"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "prohibit"
-        },
-        "context": "KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 법적 주의 한국은 합법, 해외 X KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 함께 사용할 수 있습니다. 법적으로는 통신비밀보호법 제3조 단서에 따라 한국에서는 본인이 참여"
-      },
-      {
-        "section": "fact_4",
+        "section": "fact_2",
         "chunk": 2,
         "from": {
           "type": "illust",
@@ -1232,12 +1159,38 @@
         },
         "to": {
           "type": "illust",
-          "value": "warning"
+          "value": "foldable"
         },
-        "context": "KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 법적 주의 한국은 합법, 해외 X KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 함께 사용할 수 있습니다. 법적으로는 통신비밀보호법 "
+        "context": "폴드8은 화면 비율을 변경한 와이드 모형이 공개됐고, 외부 화면이 더 넓어지며 5천만 화소 메인 카메라 탑재 가능성이 거론됩니다 갤럭시 Z 플립8 외부 디스플레이 확장 폴드8은 화면 비율을 변경한 와이드 모형이 공개됐고, 외부 화면이 더 넓어지며 5천만 화소 메인 카메라 탑재 가능성이 "
       },
       {
-        "section": "fact_4",
+        "section": "fact_2",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "final_update"
+        },
+        "context": "카메라 탑재 가능성이 거론됩니다 플립8은 폴드를 닫은 상태에서 사용하는 외부 디스플레이가 확장되고 갤럭시 Z 플립8 외부 디스플레이 확장 폴드8은 화면 비율을 변경한 와이드 모형이 공개됐고, 외부 화면이 더 넓어지며 5천만 화소 메인 카메라 탑재 가능성이 거론됩니다. 플립8은 폴드를 닫"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "gift_voucher"
+        },
+        "context": "갤럭시 워치9 시리즈는 새 디자인과 향상된 건강 측정 센서를 탑재할 것으로 보입니다 사전예약 혜택은 과거 패턴 기준 저장공간 한 단계 업그레이드, 갤럭시 워치9 새 디자인·건강 측정 갤럭시 워치9 시리즈는 새 디자인과 향상된 건강 측정 센서를 탑재할 것으로 보입니다. 사전예약 혜택은 과"
+      },
+      {
+        "section": "fact_3",
         "chunk": 3,
         "from": {
           "type": "illust",
@@ -1245,48 +1198,9 @@
         },
         "to": {
           "type": "illust",
-          "value": "samsung_ai"
-        },
-        "context": "미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 함께 사용할 수 있습니다 법적 주의 한국은 합법, 해외 X KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 함께 사용할 수 있습니다. 법적으로는 통신비밀보호법 제"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "samsung_ai"
-        },
-        "to": {
-          "type": "illust",
           "value": "chatbot"
         },
-        "context": "가입자는 AI 통화 요약과 번역 기능까지 함께 사용할 수 있습니다 법적으로는 통신비밀보호법 제3조 법적 주의 한국은 합법, 해외 X KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 함께 사용할 수 있습니다. 법적으로는 통신비밀보호법 제"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 6,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "gemini"
-        },
-        "context": "법적으로는 통신비밀보호법 제3조 단서에 따라 한국에서는 본인이 참여한 통화의 녹음은 합법입니다 법적 주의 한국은 합법, 해외 X KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 함께 사용할 수 있습니다. 법적으로는 통신비밀보호법 제3조"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 7,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "memory_chip"
-        },
-        "context": "단서에 따라 한국에서는 본인이 참여한 통화의 녹음은 합법입니다 다만 본인이 참여하지 않은 타인끼리의 통화 녹음은 위법이며, 법적 주의 한국은 합법, 해외 X KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 함께 사용할 수 있습니다. 법"
+        "context": "향상된 건강 측정 센서를 탑재할 것으로 보입니다 사전예약 혜택은 과거 패턴 기준 저장공간 한 단계 업그레이드, 워치와 버즈 같은 액세서리 무료 또는 할인이 보통 붙고, 갤럭시 워치9 새 디자인·건강 측정 갤럭시 워치9 시리즈는 새 디자인과 향상된 건강 측정 센서를 탑재할 것으로 보입니다"
       },
       {
         "section": "cta",
@@ -1297,7 +1211,7 @@
         },
         "to": {
           "type": "illust",
-          "value": "gift_voucher"
+          "value": "store"
         },
         "context": "휴대폰 구매할 땐? 지원금부터 무료로 조회해보세요 휴대폰 구매할 땐? 지원금부터 무료로 조회해보세요 휴대폰 구매할 땐? 지원금부터 무료로 조회해보세요."
       }
@@ -1305,48 +1219,39 @@
     "weak": [
       {
         "section": "fact_3",
-        "chunk": 7,
+        "chunk": 5,
         "duplicate": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "고지 멘트 없이 녹음하시려면 SKT 에이닷 전화나 LGU+ 익시오 같은 통신사 서버 기반 서비스를 활용하실 수 있습니다 고지 없이 에이닷·익시오 활용 전화 앱의 설정에서 통화 녹음 메뉴로 들어가면 자동 녹음을 켤 수 있고, 모든 통화·국제 전화 제외·특정 번호만 자동 녹음 등 세부 설정"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 8,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "에이닷 전화나 LGU+ 익시오 같은 통신사 서버 기반 서비스를 활용하실 수 있습니다 고지 없이 에이닷·익시오 활용 전화 앱의 설정에서 통화 녹음 메뉴로 들어가면 자동 녹음을 켤 수 있고, 모든 통화·국제 전화 제외·특정 번호만 자동 녹음 등 세부 설정도 가능합니다. 녹음본은 내 파일의 "
+        "context": "워치와 버즈 같은 액세서리 무료 또는 할인이 보통 붙고, 통신3사 별 혜택에 차이가 있습니다 갤럭시 워치9 새 디자인·건강 측정 갤럭시 워치9 시리즈는 새 디자인과 향상된 건강 측정 센서를 탑재할 것으로 보입니다. 사전예약 혜택은 과거 패턴 기준 저장공간 한 단계 업그레이드, 워치와 버"
       },
       {
         "section": "fact_4",
-        "chunk": 8,
+        "chunk": 1,
         "duplicate": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "통화의 녹음은 합법입니다 다만 본인이 참여하지 않은 타인끼리의 통화 녹음은 위법이며, 해외에서는 양쪽 동의가 필요한 나라가 법적 주의 한국은 합법, 해외 X KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 함께 사용할 수 있습니다. 법"
+        "context": "특히 6월에 약정만료가 되는 분이라면, 7월 사전예약 갈아타기가 가장 유리한 타이밍입니다 사전예약 7월 말 시작 예상 특히 6월에 약정만료가 되는 분이라면, 7월 사전예약 갈아타기가 가장 유리한 타이밍입니다. 위약금 부담 없이 신규 사전예약 혜택을 풀로 받을 수 있어, 약정 시점 1개월"
       },
       {
         "section": "fact_4",
-        "chunk": 9,
+        "chunk": 2,
         "duplicate": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "다만 본인이 참여하지 않은 타인끼리의 통화 녹음은 위법이며, 해외에서는 양쪽 동의가 필요한 나라가 많으므로 출장이나 여행 시 현지 법을 확인하시기 바랍니다 법적 주의 한국은 합법, 해외 X KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까"
+        "context": "특히 6월에 약정만료가 되는 분이라면, 7월 사전예약 갈아타기가 가장 유리한 타이밍입니다 위약금 부담 없이 신규 사전예약 혜택을 풀로 받을 수 있어, 사전예약 7월 말 시작 예상 특히 6월에 약정만료가 되는 분이라면, 7월 사전예약 갈아타기가 가장 유리한 타이밍입니다. 위약금 부담 없이"
       },
       {
         "section": "fact_4",
-        "chunk": 10,
+        "chunk": 3,
         "duplicate": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "해외에서는 양쪽 동의가 필요한 나라가 많으므로 출장이나 여행 시 현지 법을 확인하시기 바랍니다 법적 주의 한국은 합법, 해외 X KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 함께 사용할 수 있습니다. 법적으로는 통신비밀보호법 제3조"
+        "context": "사전예약 갈아타기가 가장 유리한 타이밍입니다 위약금 부담 없이 신규 사전예약 혜택을 풀로 받을 수 있어, 약정 시점 1개월에서 2개월 차이로 수만 원이 좌우됩니다 사전예약 7월 말 시작 예상 특히 6월에 약정만료가 되는 분이라면, 7월 사전예약 갈아타기가 가장 유리한 타이밍입니다. 위약"
       }
     ]
   }
