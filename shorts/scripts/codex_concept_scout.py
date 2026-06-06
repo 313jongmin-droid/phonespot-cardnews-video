@@ -336,7 +336,8 @@ def merge_into_illustration_requests(slug: str, requests: list) -> None:
     md = mpath.read_text(encoding="utf-8", errors="replace") if mpath.exists() else ""
     if START in md and END in md:
         md = md.split(START)[0].rstrip() + md.split(END, 1)[1]
-    lines = [START, "", "## 추가 범용 일러스트 요청(개념 발굴)"]
+    engine = "embedding" if ce.available() else "lexical-fallback"
+    lines = [START, "", "## 추가 범용 일러스트 요청(개념 발굴)  [engine: " + engine + "]"]
     if not requests:
         lines.append("- 신규 개념 없음 (라이브러리가 이미 충분히 커버).")
     for i, req in enumerate(requests, 1):

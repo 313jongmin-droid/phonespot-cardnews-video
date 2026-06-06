@@ -3,9 +3,9 @@ setlocal
 chcp 65001 >nul
 title PhoneSpot - Embedding Setup (run once per PC)
 
-rem Installs the free local embedding engine (fastembed + multilingual MiniLM).
-rem First run downloads the model (~220MB), then works offline.
-rem If it fails, the pipeline still works in lexical fallback mode.
+rem Installs the free local embedding engine into the SAME python the panel uses.
+rem The panel (start_hidden.ps1) prefers .phonespot_runtime\Scripts\python.exe,
+rem so we install there first. Otherwise it falls back to system python.
 
 pushd "%~dp0" >nul 2>nul
 if errorlevel 1 (
@@ -14,10 +14,12 @@ if errorlevel 1 (
   exit /b 1
 )
 
-rem ---- detect python command: python -> py -3 -> python3 ----
+rem ---- prefer the panel runtime venv python (matches start_hidden.ps1) ----
 set "PY="
-where python >nul 2>nul && set "PY=python"
-if not defined PY ( where py >nul 2>nul && set "PY=py -3" )
+set "RUNTIME=%~dp0..\.phonespot_runtime\Scripts\python.exe"
+if exist "%RUNTIME%" set "PY=%RUNTIME%"
+if not defined PY ( where python >nul 2>nul && set "PY=python" )
+if not defined PY ( where py >nul 2>nul && set "PY=py" )
 if not defined PY ( where python3 >nul 2>nul && set "PY=python3" )
 if not defined PY (
   echo [ERROR] Python not found. Install Python and run again.
@@ -26,23 +28,24 @@ if not defined PY (
   exit /b 1
 )
 echo Using Python: %PY%
+echo (this MUST be the same python the panel runs - the runtime venv if present)
 
 echo.
 echo ===== 1/3: install fastembed / numpy / socksio =====
-%PY% -m pip install --upgrade fastembed numpy socksio
+"%PY%" -m pip install --upgrade fastembed numpy socksio
 if errorlevel 1 (
   echo [WARN] normal install failed - retry with --user
-  %PY% -m pip install --user --upgrade fastembed numpy socksio
+  "%PY%" -m pip install --user --upgrade fastembed numpy socksio
 )
 
 echo.
 echo ===== 2/3: download model + self-test =====
 echo (first run downloads the model, may take 1-2 minutes)
-%PY% scripts\codex_illust_embed.py selftest
+"%PY%" scripts\codex_illust_embed.py selftest
 
 echo.
 echo ===== 3/3: final check =====
-%PY% scripts\codex_illust_embed.py check
+"%PY%" scripts\codex_illust_embed.py check
 if errorlevel 1 (
   echo.
   echo [RESULT] Embedding NOT available ^(FALSE^).
