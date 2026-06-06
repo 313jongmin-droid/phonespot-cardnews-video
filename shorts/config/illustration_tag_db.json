@@ -1063,7 +1063,31 @@
       ],
       "note": "자동 발굴 개념: 미지원이지 SKT",
       "available": false
+    },
+    "call_filter_rules": {
+      "tags": [
+        "library"
+      ],
+      "keywords": [],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "phone_settings_toggle": {
+      "tags": [
+        "library"
+      ],
+      "keywords": [],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "security_feature_lock": {
+      "tags": [
+        "library"
+      ],
+      "keywords": [],
+      "note": "Reusable editorial illustration.",
+      "available": true
     }
   },
-  "updated_at": "2026-06-06T15:48:47"
+  "updated_at": "2026-06-06T19:37:34"
 }

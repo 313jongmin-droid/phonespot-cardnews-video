@@ -2,33 +2,30 @@
   "version": 1,
   "videos": {
     "010_tip_iphone_call_record": {
-      "used_at": "2026-06-06T15:48:46",
-      "source": "codex_enhance",
+      "used_at": "2026-06-06T19:38:15",
+      "source": "uploaded_illustrations",
       "illustrations": [
+        "phone_settings_toggle",
+        "phone_setup_ready",
+        "smartphone",
+        "device_data_transfer",
+        "newspaper",
+        "microphone",
         "call_recording_notice",
-        "final_update",
-        "settings_steps",
+        "meeting_room",
         "forecast",
-        "biometric",
-        "chart_down",
         "recording_archive",
         "impersonation_call",
-        "chart_up",
         "chat_backup_restore",
-        "chatbot",
-        "clock",
-        "aluminum_label",
-        "appliance",
-        "battery_charge_range",
-        "samsung_ai",
-        "shield",
-        "memory_chip",
-        "gemini",
-        "cloud_backup",
+        "call_filter_rules",
         "prohibit",
         "warning",
-        "battery_overheat",
-        "smartphone"
+        "samsung_ai",
+        "chatbot",
+        "gemini",
+        "memory_chip",
+        "security_feature_lock",
+        "gift_voucher"
       ]
     },
     "012_news_galaxy_unpack_july": {
@@ -77,15 +74,11 @@
       ]
     }
   },
-  "updated_at": "2026-06-06T15:48:46",
+  "updated_at": "2026-06-06T19:38:16",
   "requests": {
     "010_tip_iphone_call_record": {
-      "updated_at": "2026-06-06T15:48:46",
-      "variants": [
-        "phone_settings_toggle",
-        "call_filter_rules",
-        "security_feature_lock"
-      ]
+      "updated_at": "2026-06-06T19:38:16",
+      "variants": []
     },
     "012_news_galaxy_unpack_july": {
       "updated_at": "2026-06-06T14:35:31",
