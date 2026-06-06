@@ -19,6 +19,8 @@
 | 작업 | 첫 진입 |
 |------|--------|
 | **운영 매뉴얼 확인** (매일/주간 루틴, 트러블슈팅) | `MANUAL.md` |
+| **메타 API + GA4 + UTM 매핑 자동화** ★ | `META_AUTOMATION.md` → `code/apps_script/meta-sync.gs` |
+| **UTM_매핑 시트 설계** | `data/utm_mapping_design.md` |
 | **Apps Script 코드 수정/백업** | `code/apps_script/Code.gs` + `code/apps_script/functions.md` |
 | **시트 구조·컬럼 확인** | `data/sheet_structure.md` |
 | **카드뉴스/쇼츠 데이터 → 시트 동기화** | `bridges/README.md` |
@@ -33,15 +35,20 @@
 ads/
 ├── README_FOR_AI.md       지금 이 파일
 ├── MANUAL.md              운영 매뉴얼 (사람용)
+├── META_AUTOMATION.md ★   메타 API + GA4 + UTM 매핑 통합 가이드 (2026-06-05)
 │
 ├── code/                  📝 시트 측 코드 (Apps Script)
 │   └── apps_script/
-│       ├── Code.gs        현재 배포된 코드 백업
-│       └── functions.md   함수 인덱스 (역할/입력/출력)
+│       ├── Code.gs            시트 자동화 (KPI/매트릭스/SNS)
+│       ├── meta-sync.gs   ★   메타 API 자동 동기화 (campaign/소재/UTM)
+│       ├── weeklyBackup.gs    주간 백업 트리거
+│       ├── youtube_sync.gs    유튜브 데이터 동기화
+│       └── functions.md       함수 인덱스
 │
 ├── data/                  📊 시트 구조·스냅샷
-│   ├── sheet_structure.md   각 시트 컬럼 정의·룰
-│   └── snapshots/         주기적 xlsx/csv 백업
+│   ├── sheet_structure.md      각 시트 컬럼 정의·룰
+│   ├── utm_mapping_design.md ★ UTM_매핑 시트 설계 (2026-06-05)
+│   └── snapshots/              주기적 xlsx/csv 백업
 │
 ├── bridges/               🔗 같은 폴더 내 다른 모듈과 정보 교환
 │   ├── README.md

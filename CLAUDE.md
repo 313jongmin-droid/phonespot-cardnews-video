@@ -30,7 +30,11 @@
 | "텔레그램으로 쏴줘" | `AUTOMATION_OVERVIEW.md` outbox watcher 룰 → `_state/outbox/<날짜>_<주제>.txt` 떨굼 |
 | "렌더 돌려줘" / "run_pngs" | `AUTOMATION_OVERVIEW.md` run_pngs 흐름 + 슬러그 NNN 셀렉트 |
 | "영상 만들어줘" | `INSTRUCTIONS_SHORTS.md` Read 후 shorts 측 빌드 |
+| "홍보영상" / "promo" / "타이포 영상" / "광고소재" | `shorts/promo/README.md` Read 후 promo 트랙 빌드 (`run_promo.bat`). 카드뉴스 영상과 다른 결(타이포/모션그래픽, 나레이션 없음·효과음+음악) |
 | "매커니즘 알려줘" / "이게 어떻게 돌아가" | `AUTOMATION_OVERVIEW.md` 직참조 |
+| "관리대장" / "광고운영" / "광고 시트" / "KPI" | `ads/README_FOR_AI.md` → `ads/MANUAL.md` |
+| "메타 자동화" / "캠페인별 통합" / "UTM 매핑" / "GA4 매핑" | `ads/META_AUTOMATION.md` |
+| "KT다이렉트샵" / "KT 관리대장" | `ads_kt/README_FOR_AI.md` |
 
 ---
 
@@ -51,8 +55,12 @@
 | 셀렉트 렌더 | `cardnews/run_pngs.bat` | 슬러그 셀렉트 + 18 JPG 생성 |
 | 텔레그램 listener | `automation/scripts/telegram_listener.py` | 폰 → PC 명령 + outbox 푸시 |
 | 텔레그램 송신 헬퍼 | `automation/scripts/tg_send.py` | 1회 송신 CLI |
-| 영상 빌드 | `shorts/` 디렉터리 + Remotion | 60초 영상 |
+| 영상 빌드 | `shorts/` 디렉터리 + Remotion | 카드뉴스 기반 영상(casual/newsroom) |
+| **홍보영상(promo)** | `shorts/promo/README.md` → `run_promo.bat` | 타이포/모션그래픽 홍보 쇼츠 (Remotion 기생, 나레이션 없음·효과음+음악·스타일별 SFX·무드 음악풀) |
 | 코덱스 영상 데스크 | `CODEX_VIDEO_DESK/` | 별도 task |
+| **광고운영 관리대장** | `ads/README_FOR_AI.md` → `ads/MANUAL.md` | 폰스팟 시트·KPI·메타·GA4 자동화 |
+| **메타 API 자동화** | `ads/code/apps_script/meta-sync.gs` + `ads/META_AUTOMATION.md` | 메타 광고 + GA4 통합 |
+| **KT다이렉트샵 관리대장** | `ads_kt/README_FOR_AI.md` | KT 별도 시트 |
 
 ---
 
@@ -82,9 +90,21 @@ phonespot_cardnews/
 │   ├── webui/                    Flask 패널
 │   ├── scripts/                  렌더·도구
 │   └── _state/                   카드뉴스 사이클 메모
-├── shorts/                       영상 (Remotion)
+├── shorts/                       영상 (Remotion: casual/newsroom 카드뉴스영상)
+│   └── promo/                    ★ 타이포/모션그래픽 홍보영상 (진입점 README.md, run_promo.bat)
 ├── automation/                   listener·자동화 스크립트
 ├── CODEX_VIDEO_DESK/             코덱스 영상 task (별도)
+├── ads/                          ★ 광고운영 관리대장 (폰스팟)
+│   ├── README_FOR_AI.md          AI 진입점 — Sheet ID + 자동화 흐름
+│   ├── MANUAL.md                 매일/주간/월간 운영 매뉴얼
+│   ├── META_AUTOMATION.md        메타 API + GA4 + UTM 매핑 통합 가이드
+│   ├── code/apps_script/
+│   │   ├── Code.gs               시트 자동화 (KPI/매트릭스/SNS)
+│   │   └── meta-sync.gs          메타 API 자동 동기화 (campaign/소재/UTM)
+│   └── data/
+│       ├── sheet_structure.md    시트 컬럼 구조
+│       └── utm_mapping_design.md UTM_매핑 시트 설계
+├── ads_kt/                       ★ KT다이렉트샵 관리대장 (별도 시트)
 └── upload/                       SNS 업로드 자료
 ```
 
@@ -105,5 +125,7 @@ phonespot_cardnews/
 ## STEP 7 — 변경 이력 (CLAUDE.md 자체)
 
 - 2026-06-04: 신설. STEP 1~7 박음. 6 가이드 진입점 정렬. 하네스 시작.
+- 2026-06-05: ads/ + ads_kt/ + 메타 자동화 합류. STEP 2 명령 패턴 3개 추가, STEP 4 진입점 3개 추가, STEP 5 폴더 구조에 ads/ ads_kt/ 박음.
+- 2026-06-07: promo(홍보영상) 트랙 하네스 합류. STEP 2 명령 패턴 + STEP 4 진입점 + STEP 5 폴더에 등록. 진입점=`shorts/promo/README.md`(Remotion 기생, 나레이션 없음·효과음+음악·스타일별 SFX·무드 음악풀). ※ `_docs/INSTRUCTIONS_SHORTS.md`는 옛 MoviePy/Typecast 설계라 현행 Remotion과 불일치 — 갱신 필요(미정).
 
 이 파일이 업그레이드되면 변경 이력 1줄 추가. 가이드 추가·제거 시 STEP 1 리스트 동기화.

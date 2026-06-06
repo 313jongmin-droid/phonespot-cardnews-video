@@ -1,7 +1,12 @@
 # 폰스팟 카드뉴스 프로젝트 지침
 
-> 이 파일은 폰스팟 카드뉴스 작업의 소스 룰 문서. 새 세션 시작 시 Cowork이 이 파일을 자동 읽는지 검증 필요.
-> 자동 X면 `프로젝트 지침 (복사용)` 코드블록을 Cowork UI Instructions 필드에 1회 붙여넣기.
+> ★ 진입점은 루트의 `CLAUDE.md` (마스터 부트스트랩). 새 클로드 세션은 폴더 열면 `CLAUDE.md` → STEP 1 가이드 일괄 Read.
+> 이 파일은 카드뉴스 시스템·자동화·후보 수집·발행 룰의 **마스터 매뉴얼** (단일 소스).
+> 같이 봐야 하는 가이드:
+> - `cardnews/templates/caption_template.md` — 5채널 카피·캡션·후킹 룰
+> - `_docs/CARDNEWS_BUILD.md` — 카드뉴스 1건 빌드 전체 워크플로
+> - `_docs/AUTOMATION_OVERVIEW.md` — webui·listener·outbox·run_pngs 매커니즘
+> - `_docs/INSTRUCTIONS_SHORTS.md` — 영상(shorts) 빌드 매뉴얼
 > 변경 이력·옛 디자인·옛 코드 패턴은 BACKUP.md 참조.
 
 ---
