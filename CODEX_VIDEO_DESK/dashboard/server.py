@@ -37,7 +37,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v6"
+PANEL_VERSION = "phonespot-web-v8"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -356,7 +356,13 @@ def prompt_payload() -> dict:
     if not path.exists():
         return {"requests": [], "uncovered_gaps": []}
     try:
-        return json.loads(path.read_text(encoding="utf-8", errors="replace"))
+        txt = path.read_bytes().decode("utf-8-sig", errors="replace").replace("\x00", " ")
+        try:
+            return json.loads(txt)
+        except json.JSONDecodeError:
+            # NUL/꼬리 쓰레기(부분 쓰기·동기화 사고)가 붙어도 첫 JSON 객체를 복원.
+            obj, _ = json.JSONDecoder().raw_decode(txt.lstrip())
+            return obj
     except Exception:
         return {"requests": [], "uncovered_gaps": [], "parse_error": True}
 
@@ -2426,13 +2432,22 @@ INDEX_HTML = r"""<!doctype html>
         reqs.map(r => `<option value="${escapeHtml(r.filename)}">${r.optional ? "[자동발굴] " : ""}${escapeHtml(r.filename)}${r.concept_label ? " · " + escapeHtml(r.concept_label) : ""}</option>`)
       ).join("");
       let html = `<div class='pad small'>엔진: <b>${escapeHtml(engineLabel)}</b> · 후보 ${assigns.length}장 · 요청 ${reqs.length}건</div>`;
+      if (!reqs.length) {
+        html += "<div class='pad small'>이 영상은 새로 그릴 이미지가 없습니다(누락 요청 0건). 바로 렌더하면 됩니다.</div>";
+        html += "<div class='pad'><button class='btn primary' onclick='renderNowFromReview()'>이미지 없이 바로 렌더</button></div>";
+        rows.innerHTML = html; btn.style.display = "none"; return;
+      }
       if (!assigns.length) {
         html += "<div class='pad small'>가져올 그림 후보가 없습니다. GPT 이미지를 ILLUSTRATION_DROP 또는 다운로드 폴더에 저장한 뒤 다시 누르세요.</div>";
         rows.innerHTML = html; btn.style.display = "none"; return;
       }
       assigns.forEach((a, idx) => {
         const conf = (a.confidence === null || a.confidence === undefined) ? "" : `<span class='pill ${a.confidence >= 0.30 ? "ok" : "warn"}'>신뢰도 ${(a.confidence).toFixed(2)}</span>`;
-        const dedup = a.dedup ? `<span class='pill warn'>중복 가능: ${escapeHtml(a.dedup.variant)} (${(a.dedup.score).toFixed(2)})</span>` : "";
+        const dedup = a.dedup
+          ? (a.dedup.skip
+              ? `<span class='pill warn'>기존 '${escapeHtml(a.dedup.variant)}'와 거의 동일 (${(a.dedup.score).toFixed(2)}) · 안 넣어도 자동 재사용 → 기본 '사용 안 함'</span>`
+              : `<span class='pill warn'>중복 가능: ${escapeHtml(a.dedup.variant)} (${(a.dedup.score).toFixed(2)})</span>`)
+          : "";
         const exact = a.exact_name ? "<span class='pill ok'>정확한 파일명</span>" : "";
         const thumb = `/api/illust-thumb?path=${encodeURIComponent(a.candidate_path)}`;
         html += `<div class='import-row' style='display:flex;gap:12px;align-items:center;padding:8px;border-bottom:1px solid #eee'>
@@ -2450,9 +2465,19 @@ INDEX_HTML = r"""<!doctype html>
       rows.innerHTML = html;
       assigns.forEach((a, idx) => {
         const sel = document.getElementById("importSel_" + idx);
-        if (sel && a.proposed_filename) sel.value = a.proposed_filename;
+        if (!sel) return;
+        if (a.dedup && a.dedup.skip) sel.value = "";              // 거의 동일 → 기본 건너뛰기
+        else if (a.proposed_filename) sel.value = a.proposed_filename;
       });
       btn.style.display = "inline-block";
+    }
+    async function renderNowFromReview() {
+      if (!confirm("새 이미지 없이 현재 영상을 렌더 대기열에 등록합니다.")) return;
+      try {
+        const r = await api("/api/action", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({action:"video_render_selected", slug:selected}) });
+        alert(r.message || (r.ok ? "렌더 대기열에 등록했습니다." : "실패했습니다."));
+        if (r.ok) { document.getElementById("importPanel").style.display = "none"; await loadState(); await loadJobHistory(); }
+      } catch (err) { alert(String(err)); }
     }
     async function confirmImport() {
       const p = window.__importProposal || {};
@@ -2625,6 +2650,17 @@ def main() -> int:
     host = os.environ.get("PHONESPOT_PANEL_HOST", "0.0.0.0")
     server = ThreadingHTTPServer((host, PORT), Handler)
     start_local_worker()
+    # 5-1: 임베딩 캐시 백그라운드 워밍 - 첫 버튼2/렌더가 라이브러리 전체를 임베딩하느라
+    # 기다리지 않도록 미리 캐시를 채운다. 실패해도 무해(폴백).
+    try:
+        subprocess.Popen(
+            [sys.executable, str(SCRIPTS / "codex_warm_embeddings.py")],
+            cwd=str(SHORTS),
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+            creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),
+        )
+    except Exception:
+        pass
     url = f"http://localhost:{PORT}/"
     print("=" * 60)
     print(" 폰스팟 통합 제작 패널")

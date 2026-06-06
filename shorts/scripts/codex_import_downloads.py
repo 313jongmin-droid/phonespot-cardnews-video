@@ -28,6 +28,17 @@ def run(script: str, *args: str) -> None:
         raise SystemExit(result.returncode)
 
 
+def load_json_lenient(path: Path) -> dict:
+    """NUL/꼬리 쓰레기(부분 쓰기·동기화 사고)가 붙어도 첫 JSON 객체를 복원."""
+    raw = path.read_bytes()
+    txt = raw.decode("utf-8-sig", errors="replace").replace("\x00", " ")
+    try:
+        return json.loads(txt)
+    except json.JSONDecodeError:
+        obj, _ = json.JSONDecoder().raw_decode(txt.lstrip())
+        return obj
+
+
 def warm_image_fingerprints() -> None:
     """새로 들어온 그림의 내용 지문을 캐시에 채운다(렌더 매칭이 내용 기준으로 동작).
     모델 없거나 실패해도 치명적이지 않다(렌더가 텍스트/lexical 로 폴백)."""
@@ -142,7 +153,7 @@ def main() -> int:
         return apply_confirmed(slug, confirmed)
 
     # 2) (폴백) 확정 매핑이 없으면 기존 동작: 최근 다운로드를 시간순으로 매핑
-    payload = json.loads(report_path.read_text(encoding="utf-8"))
+    payload = load_json_lenient(report_path)
     requests = [
         item for item in payload.get("requests", [])
         if item.get("filename") and not (ILLUST / item["filename"]).exists()

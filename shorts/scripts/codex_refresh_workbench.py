@@ -22,6 +22,32 @@ def write(path: Path, text: str) -> None:
     path.write_text(text, encoding="utf-8")
 
 
+def load_json_lenient(path: Path) -> dict | None:
+    """NUL/꼬리 쓰레기가 붙어 있어도(부분/중단 쓰기, 동기화 사고) 첫 JSON 객체를 복원한다.
+    이게 없으면 깨진 codex_illustration_requests.json 이 LATEST_PROMPT.json 으로 그대로
+    복사돼 propose/import/렌더가 전부 파싱에서 죽는다(2026-06 실제 발생)."""
+    try:
+        raw = path.read_bytes()
+    except OSError:
+        return None
+    txt = raw.decode("utf-8-sig", errors="replace").replace("\x00", " ")
+    try:
+        return json.loads(txt)
+    except json.JSONDecodeError:
+        try:
+            obj, _ = json.JSONDecoder().raw_decode(txt.lstrip())
+            return obj
+        except (json.JSONDecodeError, ValueError):
+            return None
+
+
+def write_json_clean(path: Path, obj: dict) -> None:
+    """임시파일에 쓰고 os.replace 로 원자적 교체 → 부분 쓰기/NUL 꼬리가 절대 안 생긴다."""
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    tmp.write_text(json.dumps(obj, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    os.replace(tmp, path)
+
+
 def is_junction(path: Path) -> bool:
     checker = getattr(path, "is_junction", None)
     return bool(checker and checker())
@@ -92,9 +118,15 @@ def refresh(slug: str | None) -> None:
     else:
         write(DESK / "LATEST_PROMPT.md", f"# Codex Illustration Requests: {selected}\n\nNo new illustration request was generated.\n")
     if source_json.exists():
-        shutil.copy2(source_json, DESK / "LATEST_PROMPT.json")
+        # 원본을 그대로 복사하지 않는다. 관대 파싱 후 깨끗이 재작성해서,
+        # 원본이 깨져 있어도 LATEST_PROMPT.json 은 항상 유효하게 만든다.
+        data = load_json_lenient(source_json)
+        if data is None:
+            print(f"[workbench][WARN] source JSON unreadable, writing empty: {source_json}")
+            data = {"slug": selected, "requests": []}
+        write_json_clean(DESK / "LATEST_PROMPT.json", data)
     else:
-        write(DESK / "LATEST_PROMPT.json", json.dumps({"slug": selected, "requests": []}, ensure_ascii=False, indent=2))
+        write_json_clean(DESK / "LATEST_PROMPT.json", {"slug": selected, "requests": []})
     write(DESK / "LATEST_SLUG.txt", selected + "\n")
     print(f"[workbench] latest slug: {selected}")
     print(f"[workbench] latest prompt: {DESK / 'LATEST_PROMPT.md'}")

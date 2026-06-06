@@ -252,7 +252,7 @@
         },
         {
           "type": "illust",
-          "value": "phone_settings_toggle"
+          "value": "shield"
         }
       ],
       "stat": {
@@ -372,7 +372,7 @@
         },
         {
           "type": "illust",
-          "value": "call_filter_rules"
+          "value": "smartphone"
         }
       ],
       "stat": {
@@ -530,7 +530,7 @@
         },
         {
           "type": "illust",
-          "value": "security_feature_lock"
+          "value": "smartphone"
         }
       ],
       "stat": {
@@ -761,118 +761,6 @@
     "policy": "Match chunks to GPT source images using prompt.md descriptions, then fallback to tagged reusable illustrations.",
     "changes": [
       {
-        "section": "hook",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "call_recording_notice"
-        },
-        "to": {
-          "type": "image",
-          "value": "4.png"
-        },
-        "context": "아이폰에도 통화 녹음이 17년 만에 정식으로 들어왔습니다 iOS 18.1 활용법과 갤럭시와의 차이를 정리합니다 아이폰 통화 녹음 17년 만에 정식 도입 ['아이폰 통화 녹음', '17년 만에 정식 도입'] 뉴스",
-        "reason": "unused source image (no semantic match, img score 0.34)"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 3,
-        "from": {
-          "type": "image",
-          "value": "4.png"
-        },
-        "to": {
-          "type": "image",
-          "value": "5.png"
-        },
-        "context": "업데이트로 아이폰에 통화 녹음 기능이 처음으로 정식 도입됐습니다 사용 방법은 단순합니다 아이폰 왼쪽 상단 아이콘 수동 녹음 ['아이폰', '왼쪽 상단 아이콘 수동 녹음'] 뉴스",
-        "reason": "unused source image (no semantic match, img score 0.311)"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "final_update"
-        },
-        "to": {
-          "type": "illust",
-          "value": "phone_settings_toggle"
-        },
-        "context": "처음으로 정식 도입됐습니다 사용 방법은 단순합니다 통화 중 화면 왼쪽 상단의 녹음 아이콘을 누르면 시작되고, 아이폰 왼쪽 상단 아이콘 수동 녹음 ['아이폰', '왼쪽 상단 아이콘 수동 녹음'] 뉴스",
-        "reason": "illust score 0.478"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 5,
-        "from": {
-          "type": "image",
-          "value": "5.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "phone_setup_ready"
-        },
-        "context": "사용 방법은 단순합니다 통화 중 화면 왼쪽 상단의 녹음 아이콘을 누르면 시작되고, 시작 직후 자동으로 고지 멘트가 양쪽 통화자에게 송출됩니다 아이폰 왼쪽 상단 아이콘 수동 녹음 ['아이폰', '왼쪽 상단 아이콘 수동",
-        "reason": "illust score 0.45"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 6,
-        "from": {
-          "type": "illust",
-          "value": "settings_steps"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "통화 중 화면 왼쪽 상단의 녹음 아이콘을 누르면 시작되고, 시작 직후 자동으로 고지 멘트가 양쪽 통화자에게 송출됩니다 아이폰 왼쪽 상단 아이콘 수동 녹음 ['아이폰', '왼쪽 상단 아이콘 수동 녹음'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "forecast"
-        },
-        "to": {
-          "type": "illust",
-          "value": "device_data_transfer"
-        },
-        "context": "녹음본은 메모 앱과 전화 기록에 저장됩니다 다만 iPhone XS 이후 갤럭시 자동 녹음 + 특정 번호 옵션 ['갤럭시', '자동 녹음 + 특정 번호 옵션'] 뉴스",
-        "reason": "illust score 0.469"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "biometric"
-        },
-        "to": {
-          "type": "illust",
-          "value": "newspaper"
-        },
-        "context": "녹음본은 메모 앱과 전화 기록에 저장됩니다 다만 iPhone XS 이후 모델과 iOS 18.1 이상 버전에서만 사용 가능합니다 갤럭시 자동 녹음 + 특정 번호 옵션 ['갤럭시', '자동 녹음 + 특정 번호 옵션'] ",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "chart_down"
-        },
-        "to": {
-          "type": "illust",
-          "value": "microphone"
-        },
-        "context": "다만 iPhone XS 이후 모델과 iOS 18.1 이상 버전에서만 사용 가능합니다 갤럭시는 처음부터 자동 녹음 기능을 제공합니다 갤럭시 자동 녹음 + 특정 번호 옵션 ['갤럭시', '자동 녹음 + 특정 번호 옵션'",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
         "section": "fact_2",
         "chunk": 4,
         "from": {
@@ -888,100 +776,16 @@
       },
       {
         "section": "fact_3",
-        "chunk": 1,
+        "chunk": 5,
         "from": {
           "type": "illust",
           "value": "impersonation_call"
         },
         "to": {
           "type": "illust",
-          "value": "call_recording_notice"
-        },
-        "context": "전화 앱의 설정에서 통화 녹음 메뉴로 들어가면 자동 녹음을 켤 수 있고, 고지 없이 에이닷·익시오 활용 ['고지 없이', '에이닷·익시오 활용'] 뉴스",
-        "reason": "illust score 0.421"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "chart_up"
-        },
-        "to": {
-          "type": "illust",
-          "value": "meeting_room"
-        },
-        "context": "전화 앱의 설정에서 통화 녹음 메뉴로 들어가면 자동 녹음을 켤 수 있고, 모든 통화·국제 전화 제외·특정 번호만 고지 없이 에이닷·익시오 활용 ['고지 없이', '에이닷·익시오 활용'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "chat_backup_restore"
-        },
-        "to": {
-          "type": "illust",
-          "value": "forecast"
-        },
-        "context": "자동 녹음을 켤 수 있고, 모든 통화·국제 전화 제외·특정 번호만 자동 녹음 등 세부 설정도 가능합니다 고지 없이 에이닷·익시오 활용 ['고지 없이', '에이닷·익시오 활용'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "chatbot"
-        },
-        "to": {
-          "type": "illust",
-          "value": "recording_archive"
-        },
-        "context": "모든 통화·국제 전화 제외·특정 번호만 자동 녹음 등 세부 설정도 가능합니다 녹음본은 내 파일의 Call 폴더에 저장됩니다 고지 없이 에이닷·익시오 활용 ['고지 없이', '에이닷·익시오 활용'] 뉴스",
-        "reason": "illust score 0.423"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 5,
-        "from": {
-          "type": "illust",
-          "value": "clock"
-        },
-        "to": {
-          "type": "illust",
           "value": "smartphone"
         },
         "context": "자동 녹음 등 세부 설정도 가능합니다 녹음본은 내 파일의 Call 폴더에 저장됩니다 고지 멘트 없이 녹음하시려면 SKT 고지 없이 에이닷·익시오 활용 ['고지 없이', '에이닷·익시오 활용'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 6,
-        "from": {
-          "type": "illust",
-          "value": "aluminum_label"
-        },
-        "to": {
-          "type": "illust",
-          "value": "chat_backup_restore"
-        },
-        "context": "녹음본은 내 파일의 Call 폴더에 저장됩니다 고지 멘트 없이 녹음하시려면 SKT 에이닷 전화나 LGU+ 익시오 같은 고지 없이 에이닷·익시오 활용 ['고지 없이', '에이닷·익시오 활용'] 뉴스",
-        "reason": "illust score 0.422"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 7,
-        "from": {
-          "type": "illust",
-          "value": "appliance"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "고지 멘트 없이 녹음하시려면 SKT 에이닷 전화나 LGU+ 익시오 같은 통신사 서버 기반 서비스를 활용하실 수 있습니다 고지 없이 에이닷·익시오 활용 ['고지 없이', '에이닷·익시오 활용'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
@@ -1003,7 +807,7 @@
         "chunk": 1,
         "from": {
           "type": "illust",
-          "value": "samsung_ai"
+          "value": "prohibit"
         },
         "to": {
           "type": "illust",
@@ -1017,7 +821,7 @@
         "chunk": 2,
         "from": {
           "type": "illust",
-          "value": "shield"
+          "value": "warning"
         },
         "to": {
           "type": "illust",
@@ -1031,7 +835,7 @@
         "chunk": 3,
         "from": {
           "type": "illust",
-          "value": "memory_chip"
+          "value": "samsung_ai"
         },
         "to": {
           "type": "illust",
@@ -1045,7 +849,7 @@
         "chunk": 4,
         "from": {
           "type": "illust",
-          "value": "gemini"
+          "value": "chatbot"
         },
         "to": {
           "type": "illust",
@@ -1059,7 +863,7 @@
         "chunk": 6,
         "from": {
           "type": "illust",
-          "value": "cloud_backup"
+          "value": "gemini"
         },
         "to": {
           "type": "illust",
@@ -1073,7 +877,7 @@
         "chunk": 7,
         "from": {
           "type": "illust",
-          "value": "prohibit"
+          "value": "memory_chip"
         },
         "to": {
           "type": "illust",
@@ -1084,24 +888,10 @@
       },
       {
         "section": "fact_4",
-        "chunk": 8,
-        "from": {
-          "type": "illust",
-          "value": "warning"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "통화의 녹음은 합법입니다 다만 본인이 참여하지 않은 타인끼리의 통화 녹음은 위법이며, 해외에서는 양쪽 동의가 필요한 나라가 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
         "chunk": 9,
         "from": {
           "type": "illust",
-          "value": "battery_charge_range"
+          "value": "shield"
         },
         "to": {
           "type": "illust",

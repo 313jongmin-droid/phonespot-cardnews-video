@@ -2,8 +2,8 @@
   "version": 1,
   "videos": {
     "010_tip_iphone_call_record": {
-      "used_at": "2026-06-06T19:57:30",
-      "source": "codex_enhance",
+      "used_at": "2026-06-06T20:06:15",
+      "source": "unique_illustration_guard",
       "illustrations": [
         "phone_settings_toggle",
         "phone_setup_ready",
@@ -11,21 +11,20 @@
         "device_data_transfer",
         "newspaper",
         "microphone",
+        "shield",
         "call_recording_notice",
         "meeting_room",
         "forecast",
         "recording_archive",
         "impersonation_call",
         "chat_backup_restore",
-        "call_filter_rules",
         "prohibit",
         "warning",
         "samsung_ai",
         "chatbot",
         "gemini",
         "memory_chip",
-        "shield",
-        "security_feature_lock"
+        "gift_voucher"
       ]
     },
     "012_news_galaxy_unpack_july": {
@@ -74,10 +73,10 @@
       ]
     }
   },
-  "updated_at": "2026-06-06T19:57:39",
+  "updated_at": "2026-06-06T20:06:16",
   "requests": {
     "010_tip_iphone_call_record": {
-      "updated_at": "2026-06-06T19:57:39",
+      "updated_at": "2026-06-06T20:06:16",
       "variants": []
     },
     "012_news_galaxy_unpack_july": {
