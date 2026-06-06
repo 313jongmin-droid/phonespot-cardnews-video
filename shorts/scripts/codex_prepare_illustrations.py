@@ -66,10 +66,11 @@ def main() -> int:
     run("codex_enhance_script.py", slug)
     run("codex_apply_uploaded_illustrations.py", slug)
     run("codex_illustration_scout.py", slug)
-    run("codex_refresh_workbench.py", slug)
     # 개념 발굴형 스카우트(2단계): 라이브러리에 없는 갭을 범용 개념으로 발굴해
-    # codex_illustration_requests.json/.md 에 병합한다. 실패해도 준비는 계속된다.
+    # codex_illustration_requests.json/.md 에 병합한다. workbench 가 LATEST_PROMPT 로
+    # 복사하기 '전'에 실행해야 리포트/패널에 함께 보인다. 실패해도 준비는 계속된다.
     run_optional("codex_concept_scout.py", slug)
+    run("codex_refresh_workbench.py", slug)
     prompt = DESK / "LATEST_PROMPT.md"
     if prompt.exists() and os.environ.get("PHONESPOT_NO_OPEN") != "1":
         try:

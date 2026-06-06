@@ -37,6 +37,20 @@ def concept_for(variant: str) -> str:
     return CONCEPTS.get(variant, f"{variant.replace('_', ' ')} 개념을 휴대폰/IT 뉴스에서 반복 사용 가능한 범용 일러스트로 표현.")
 
 
+def concept_for_item(item: dict, variant: str) -> str:
+    """요청 항목 기준 핵심 콘셉트. 알려진 variant 는 사전 사용,
+    개념 스카우트(cpt_*)는 라벨/키워드로 의미 있는 문구를 만든다."""
+    if variant in CONCEPTS:
+        return CONCEPTS[variant]
+    label = str(item.get("concept_label") or "").strip()
+    keywords = [str(k) for k in (item.get("keywords") or []) if str(k).strip()]
+    if label or keywords:
+        head = label or variant.replace("_", " ")
+        tail = (" 핵심 요소: " + ", ".join(keywords)) if keywords else ""
+        return head + " 개념을 휴대폰/IT 뉴스에서 반복 사용 가능한 범용 일러스트로 표현." + tail
+    return concept_for(variant)
+
+
 def main() -> int:
     slug = sys.argv[1] if len(sys.argv) > 1 else ""
     path = DESK / "LATEST_PROMPT.json"
@@ -60,7 +74,8 @@ def main() -> int:
             filename = item.get("filename") or f"{variant}.png"
             section = item.get("section", "")
             chunk_index = int(item.get("chunk_index", 0)) + 1
-            lines.append(f"## {idx}. {filename}")
+            badge = " (자동 발굴)" if item.get("source") == "concept_scout" else ""
+            lines.append(f"## {idx}. {filename}{badge}")
             lines.append("")
             lines.append(f"- 적용 위치: `{section}` 청크 {chunk_index}")
             lines.append(f"- 재사용 태그: {', '.join(item.get('tags', []) or [])}")
@@ -69,7 +84,7 @@ def main() -> int:
             lines.append(BASE_STYLE)
             lines.append("")
             lines.append("핵심 콘셉트:")
-            lines.append(concept_for(variant))
+            lines.append(concept_for_item(item, variant))
             lines.append("```")
             lines.append("")
     else:

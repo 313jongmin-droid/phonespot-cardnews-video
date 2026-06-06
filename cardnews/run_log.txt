@@ -1,4 +1,4 @@
-=== start 2026-06-06 12:52:36.76 
+=== start 2026-06-06 14:30:58.57 
  
 [probe] where py: 
 C:\Windows\py.exe
@@ -11,8 +11,50 @@ BASE: C:\Users\di898\Documents\phonespot_cardnews\cardnews
 SLUG: 012_news_galaxy_unpack_july
 OUT : C:\Users\di898\Documents\phonespot_cardnews\cardnews\output\012_news_galaxy_unpack_july
 ============================================================
-[ERROR] Playwright is not installed.
-[ERROR] Run the PC setup once, then retry card rendering.
+[slug] SLUG='012_news_galaxy_unpack_july'  IMG_DIR=C:\Users\di898\Documents\phonespot_cardnews\cardnews\images\012_news_galaxy_unpack_july
+[v9 magazine mode] 6 cards loaded + schema OK
+
+=== 1x1 (1080x1080) ===
+  OK card_1.jpg
+  OK card_2.jpg
+  OK card_3.jpg
+  OK card_4.jpg
+  OK card_5.jpg
+  OK card_6.jpg
+
+=== 4x5 (1080x1350) ===
+  OK card_1.jpg
+  OK card_2.jpg
+  OK card_3.jpg
+  OK card_4.jpg
+  OK card_5.jpg
+  OK card_6.jpg
+
+=== 9x16 (1080x1920) ===
+  OK card_1.jpg
+  OK card_2.jpg
+  OK card_3.jpg
+  OK card_4.jpg
+  OK card_5.jpg
+  OK card_6.jpg
+
+Render time: 17.1s
+
+=== JPG result ===
+  18 files / 2461 KB total (2 MB)
+
+OK captions.md (loaded from articles/012_news_galaxy_unpack_july.json) + narration_md (535 chars)
+
+============================================================
+Images: 18
+Total size: 2 MB (2471 KB)
+============================================================
+
+[verify] start
+[verify OK] 18 cards + captions OK, no prior-article leak
+============================================================
+
+[backup] 1 backups kept (max 5)
  
  
-=== done 2026-06-06 12:52:38.60 
+=== done 2026-06-06 14:31:18.04 

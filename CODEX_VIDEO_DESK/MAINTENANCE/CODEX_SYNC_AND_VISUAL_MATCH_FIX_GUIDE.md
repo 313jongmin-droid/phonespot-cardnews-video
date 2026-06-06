@@ -127,8 +127,12 @@
 
 ### 2단계 — 패널 버튼 연결 (적용됨)
 - 패널 **"1. 영상용 프롬프트 준비"** 버튼 → server.py `video_prepare` → `codex_prepare_illustrations.py` 실행.
-- 그 준비 체인 끝(workbench 다음)에 `codex_concept_scout.py`를 **비차단**으로 추가했다(`run_optional`).
-  실패해도 준비는 계속되고, 모델이 없으면 lexical 폴백으로 동작한다.
+- 그 준비 체인에서 `codex_illustration_scout.py` 다음, **`codex_refresh_workbench.py`(LATEST_PROMPT 복사) 앞**에
+  `codex_concept_scout.py`를 **비차단**으로 추가했다(`run_optional`). 순서가 중요: workbench가 요청 파일을
+  LATEST_PROMPT로 복사하기 '전'에 병합돼야 자동 열리는 리포트에 개념 요청이 보인다.
+  실패해도 준비는 계속되고, **numpy/모델이 없어도 lexical 폴백으로 동작**한다(numpy는 선택적 import).
+- 최종 리포트(`codex_clean_latest_prompt.py`)가 `cpt_*` 변형을 의미 없는 이름으로 렌더하던 문제를
+  `concept_label`/`keywords` 기반으로 고쳐, 개념 요청이 '핵심 요소: ...'로 의미 있게 표시된다.
 - 개념 요청은 패널이 읽는 `codex_illustration_requests.json/.md` 에 **멱등 병합**된다
   (`source=concept_scout` 마커로 기존 일러스트 스카우트 요청은 보존, 개념 요청만 교체).
   → 버튼 1 후 패널의 일러스트 요청 화면에 기존 + 개념 요청이 함께 뜬다.

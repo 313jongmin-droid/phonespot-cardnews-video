@@ -2,8 +2,9 @@
 chcp 65001 >nul
 setlocal
 cd /d "%~dp0"
+set "PLAYWRIGHT_BROWSERS_PATH=%~dp0..\.playwright"
 if exist "%~dp0..\.phonespot_runtime\Scripts\python.exe" (
-  set "PATH=%~dp0..\.phonespot_runtime\Scripts;%PATH%"
+  for %%I in ("%~dp0..\.phonespot_runtime\Scripts") do set "PATH=%%~fI;%PATH%"
 )
 
 if "%PHONESPOT_PANEL_URL%"=="" (

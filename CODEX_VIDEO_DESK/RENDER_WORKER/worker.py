@@ -58,6 +58,9 @@ def readiness() -> dict:
     for module, label in required_modules.items():
         if importlib.util.find_spec(module) is None:
             issues.append(f"{label} 미설치")
+    browser_root = ROOT / ".playwright"
+    if not any(browser_root.glob("chromium-*")):
+        issues.append("Playwright Chromium 미설치")
     if not (SHORTS / "run_codex_casual.bat").exists():
         issues.append("영상 실행 파일 없음")
     if checks["disk_free_gb"] < 2:

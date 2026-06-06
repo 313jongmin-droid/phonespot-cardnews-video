@@ -3,7 +3,7 @@ chcp 65001 > nul
 cd /d "%~dp0"
 setlocal enabledelayedexpansion
 if exist "%~dp0..\.phonespot_runtime\Scripts\python.exe" (
-    set "PATH=%~dp0..\.phonespot_runtime\Scripts;%PATH%"
+    for %%I in ("%~dp0..\.phonespot_runtime\Scripts") do set "PATH=%%~fI;%PATH%"
 )
 set "EXITCODE=0"
 set "SLUG=%~1"

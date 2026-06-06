@@ -57,6 +57,9 @@ def append_log(text: str) -> None:
 
 
 def telegram_send(message: str) -> bool:
+    if os.environ.get("PHONESPOT_DISABLE_TELEGRAM") == "1":
+        append_log("[telegram] disabled for this server.\n")
+        return False
     if not TELEGRAM_TOKEN_FILE.exists() or not TELEGRAM_CHAT_ID_FILE.exists():
         append_log("[telegram] token/chat_id missing; skipped.\n")
         return False
@@ -124,6 +127,9 @@ def run_job(name: str, commands: list[list[str]], cwd: Path, stdin_text: str | N
                 append_log(f"----- command {index}/{len(commands)} -----\n")
                 append_log(" ".join(command) + "\n")
                 use_stdin = stdin_text if index == 1 and stdin_text is not None else None
+                process_env = os.environ.copy()
+                process_env["PYTHONIOENCODING"] = "utf-8"
+                process_env["PYTHONUTF8"] = "1"
                 process = subprocess.Popen(
                     command,
                     cwd=str(cwd),
@@ -133,6 +139,7 @@ def run_job(name: str, commands: list[list[str]], cwd: Path, stdin_text: str | N
                     text=True,
                     encoding="utf-8",
                     errors="replace",
+                    env=process_env,
                 )
                 if use_stdin is not None and process.stdin is not None:
                     process.stdin.write(use_stdin)
@@ -157,6 +164,24 @@ def run_job(name: str, commands: list[list[str]], cwd: Path, stdin_text: str | N
 
     threading.Thread(target=worker, daemon=True).start()
     return True
+
+
+def select_panel_job(local_job: dict, remote_job: dict | None) -> dict:
+    if local_job.get("running"):
+        return local_job
+    if remote_job and remote_job.get("running"):
+        return remote_job
+    remote_ended = 0.0
+    if remote_job:
+        remote_stamp = remote_job.get("ended") or remote_job.get("started") or ""
+        try:
+            remote_ended = datetime.fromisoformat(str(remote_stamp)).timestamp()
+        except (TypeError, ValueError):
+            pass
+    local_ended = float(local_job.get("ended") or local_job.get("started") or 0)
+    if local_job.get("name") and local_ended >= remote_ended:
+        return local_job
+    return remote_job or local_job
 
 
 def run_capture(command: list[str], cwd: Path = SHORTS) -> str:
@@ -316,12 +341,14 @@ def results_list() -> list[dict]:
     for folder in root.iterdir():
         if folder.is_dir():
             mp4s = sorted(folder.glob("*.mp4"), key=lambda p: p.stat().st_mtime, reverse=True)
+            if not mp4s:
+                continue
             rows.append({
                 "name": folder.name,
-                "mp4": mp4s[0].name if mp4s else "",
-                "mtime": folder.stat().st_mtime,
+                "mp4": mp4s[0].name,
+                "mtime": mp4s[0].stat().st_mtime,
             })
-    rows.sort(key=slug_sort_key)
+    rows.sort(key=lambda item: float(item.get("mtime") or 0), reverse=True)
     return rows[:30]
 
 
@@ -894,6 +921,18 @@ def bytes_response(
     handler.wfile.write(payload)
 
 
+def file_response(handler: BaseHTTPRequestHandler, path: Path, content_type: str) -> None:
+    handler.send_response(200)
+    handler.send_header("Content-Type", content_type)
+    handler.send_header("Content-Disposition", f'attachment; filename="{path.name}"')
+    cors_headers(handler)
+    handler.send_header("Content-Length", str(path.stat().st_size))
+    handler.end_headers()
+    with path.open("rb") as source:
+        while chunk := source.read(1024 * 1024):
+            handler.wfile.write(chunk)
+
+
 def read_body(handler: BaseHTTPRequestHandler) -> dict:
     length = int(handler.headers.get("Content-Length", "0") or "0")
     if length <= 0:
@@ -1041,20 +1080,7 @@ class Handler(BaseHTTPRequestHandler):
             with STATE_LOCK:
                 local_job = dict(JOB)
             remote_job = REMOTE_QUEUE.panel_job()
-            if local_job.get("running"):
-                job = local_job
-            elif remote_job and remote_job.get("running"):
-                job = remote_job
-            else:
-                remote_ended = 0.0
-                if remote_job:
-                    remote_stamp = remote_job.get("ended") or remote_job.get("started") or ""
-                    try:
-                        remote_ended = datetime.fromisoformat(str(remote_stamp)).timestamp()
-                    except (TypeError, ValueError):
-                        remote_ended = 0.0
-                local_ended = float(local_job.get("ended") or local_job.get("started") or 0)
-                job = local_job if local_job.get("name") and local_ended >= remote_ended else (remote_job or local_job)
+            job = select_panel_job(local_job, remote_job)
             workers = REMOTE_QUEUE.workers()
             online_workers = [worker for worker in workers.values() if worker.get("online")]
             json_response(self, {
@@ -1136,8 +1162,20 @@ class Handler(BaseHTTPRequestHandler):
             remote_job = REMOTE_QUEUE.panel_job()
             with STATE_LOCK:
                 local_job = dict(JOB)
-            job = remote_job if remote_job and (remote_job.get("running") or not local_job.get("running")) else local_job
+            job = select_panel_job(local_job, remote_job)
             json_response(self, {"job": job})
+            return
+        if parsed.path == "/api/result":
+            query = urllib.parse.parse_qs(parsed.query)
+            folder_name = validate_slug((query.get("folder") or [""])[0])
+            file_name = Path((query.get("file") or [""])[0]).name
+            if not file_name.lower().endswith(".mp4"):
+                raise RuntimeError("MP4 파일만 다운로드할 수 있습니다.")
+            result_root = (DESK / "RESULTS").resolve()
+            path = (result_root / folder_name / file_name).resolve()
+            if result_root not in path.parents or not path.is_file():
+                raise RuntimeError("결과 파일이 없습니다.")
+            file_response(self, path, "video/mp4")
             return
         if parsed.path == "/api/worker/package":
             query = urllib.parse.parse_qs(parsed.query)
@@ -1161,6 +1199,28 @@ class Handler(BaseHTTPRequestHandler):
                 filename = self.headers.get("X-File-Name", "result.mp4")
                 path = REMOTE_QUEUE.save_result(job_id, filename, self.rfile.read(length))
                 json_response(self, {"ok": True, "path": str(path)})
+                return
+            if parsed.path == "/api/upload":
+                query = urllib.parse.parse_qs(parsed.query)
+                kind = (query.get("kind") or [""])[0]
+                slug = (query.get("slug") or [""])[0]
+                length = int(self.headers.get("Content-Length", "0") or "0")
+                if length <= 0 or length > 30 * 1024 * 1024:
+                    raise RuntimeError("이미지 파일은 30MB 이하만 업로드할 수 있습니다.")
+                filename = Path(self.headers.get("X-File-Name", "")).name
+                suffix = Path(filename).suffix.lower()
+                if not filename or suffix not in {".png", ".jpg", ".jpeg", ".webp"}:
+                    raise RuntimeError("PNG, JPG, JPEG, WEBP 이미지만 업로드할 수 있습니다.")
+                if kind == "card":
+                    target_dir = CARD_IMAGES / validate_slug(slug)
+                elif kind == "illustration":
+                    target_dir = DESK / "ILLUSTRATION_DROP"
+                else:
+                    raise RuntimeError("알 수 없는 업로드 종류입니다.")
+                target_dir.mkdir(parents=True, exist_ok=True)
+                target = target_dir / filename
+                target.write_bytes(self.rfile.read(length))
+                json_response(self, {"ok": True, "name": filename, "path": str(target)})
                 return
             data = read_body(self)
             if parsed.path == "/api/worker/register":
@@ -1452,7 +1512,7 @@ INDEX_HTML = r"""<!doctype html>
     .btn.primary { background:var(--orange); color:white; border-color:var(--orange); }
     .btn strong { display:block; font-size:15px; margin-bottom:6px; } .btn span { font-size:12px; color:inherit; opacity:.82; line-height:1.35; }
     .runtime-strip { max-width:1520px; margin:14px auto 0; padding:0 18px; display:grid; grid-template-columns:1.05fr 1.25fr .9fr .9fr; gap:10px; box-sizing:border-box; }
-    .runtime-card { border:1px solid var(--line); border-radius:10px; background:white; padding:10px 12px; min-height:62px; }
+    .runtime-card { border:1px solid var(--line); border-radius:10px; background:white; padding:10px 12px; min-height:62px; min-width:0; }
     .runtime-card span { display:block; font-size:11px; color:#64748b; margin-bottom:5px; }
     .runtime-card b { display:block; font-size:15px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
     .runtime-card.good { border-color:#86efac; background:#f0fdf4; }
@@ -1468,6 +1528,8 @@ INDEX_HTML = r"""<!doctype html>
     .warn { color:var(--red); } .ok { color:var(--green); }
     .log { height:390px; overflow:auto; background:#0b1020; color:#dbeafe; padding:14px; font-family:Consolas,monospace; font-size:12px; white-space:pre-wrap; }
     .results { max-height:170px; overflow:auto; font-size:13px; } .result-row { display:flex; justify-content:space-between; gap:10px; padding:7px 0; border-bottom:1px solid #eef1f5; }
+    .result-row > * { min-width:0; }
+    .result-row a { overflow-wrap:anywhere; word-break:break-word; }
     .preflight-panel { display:none; border-top:1px solid var(--line); background:#f8fafc; }
     .preflight-list { display:grid; gap:8px; }
     .preflight-item { border:1px solid var(--line); border-radius:8px; padding:8px 10px; background:white; font-size:13px; line-height:1.45; }
@@ -1489,6 +1551,16 @@ INDEX_HTML = r"""<!doctype html>
     .chunk-table th { background:#edf5ff; color:#17345f; position:sticky; top:0; }
     .chunk-text { white-space:pre-wrap; line-height:1.45; }
     @media (max-width:1080px) { main { grid-template-columns:1fr; } .grid,.status { grid-template-columns:1fr 1fr; } }
+    @media (max-width:700px) {
+      header { padding:12px 14px; flex-wrap:wrap; }
+      header > span { width:100%; }
+      main { padding:10px; }
+      .runtime-strip { grid-template-columns:minmax(0,1fr) minmax(0,1fr); padding:0 10px; }
+      .grid,.status { grid-template-columns:1fr; }
+      .action-head { align-items:stretch; flex-direction:column; }
+      .selected-badge { min-width:0; width:100%; }
+      .result-row { flex-direction:column; }
+    }
   </style>
 </head>
 <body>
@@ -1522,6 +1594,7 @@ INDEX_HTML = r"""<!doctype html>
           <button class="btn" onclick="runAction('open_results')"><strong>영상 결과 폴더</strong><span>완성 MP4와 발행 패키지 폴더를 엽니다.</span></button>
           <button class="btn" onclick="runAction('system_update')"><strong>시스템 업데이트</strong><span>GitHub에서 최신 코드만 받아옵니다. 렌더 결과물은 건드리지 않습니다.</span></button>
           <button class="btn" onclick="runAction('open_illustrations')"><strong>일러스트 폴더</strong><span>재사용 일러스트 라이브러리와 드롭 폴더를 엽니다.</span></button>
+          <button class="btn" onclick="chooseUpload('illustration')"><strong>일러스트 웹 업로드</strong><span>다른 PC에서도 생성한 일러스트를 드롭 폴더에 바로 올립니다.</span></button>
           <button class="btn" onclick="showChunks()"><strong>7. 청크 경계 편집</strong><span>문구 내용과 TTS는 유지하고 줄바꿈, 앞뒤 합치기, 자동 분할만 조정합니다.</span></button>
         </div>
         <div id="cardActions" class="pad grid" style="display:none">
@@ -1529,6 +1602,7 @@ INDEX_HTML = r"""<!doctype html>
           <button class="btn" onclick="runAction('telegram_card_summary')"><strong>후보 현황 텔레그램</strong><span>현재 카드뉴스 후보와 상태를 텔레그램으로 보냅니다.</span></button>
           <button class="btn primary" onclick="openCardPrompt()"><strong>2. 이미지 프롬프트 보기</strong><span>선택한 카드뉴스의 images/&lt;slug&gt;/prompt.md를 브라우저에서 확인합니다.</span></button>
           <button class="btn" onclick="runAction('open_card_images')"><strong>3. 이미지 업로드 폴더</strong><span>1.png~5.png를 넣을 카드뉴스 이미지 폴더를 엽니다.</span></button>
+          <button class="btn" onclick="chooseUpload('card')"><strong>3-1. 이미지 웹 업로드</strong><span>다른 PC에서도 카드 이미지를 선택 항목에 바로 올립니다.</span></button>
           <button class="btn primary" onclick="runAction('card_render')"><strong>4. 카드뉴스 생성</strong><span>기존 카드뉴스 렌더러를 실행해 1x1, 4x5, 9x16 카드와 captions.md를 생성합니다.</span></button>
           <button class="btn" onclick="runAction('open_card_result')"><strong>5. 카드뉴스 결과 확인</strong><span>완성된 카드뉴스 output 폴더를 엽니다.</span></button>
           <button class="btn primary" onclick="runAction('card_to_video')"><strong>6. 영상으로 넘기기</strong><span>완성된 카드뉴스를 Codex 숏폼 영상 준비 단계로 넘깁니다.</span></button>
@@ -1577,6 +1651,8 @@ INDEX_HTML = r"""<!doctype html>
       <section><div class="head"><h2>최근 영상 결과</h2><button onclick="runAction('open_results')">결과 폴더 열기</button></div><div class="pad results" id="results"></div></section>
     </div>
   </main>
+  <input id="cardUploadInput" type="file" accept=".png,.jpg,.jpeg,.webp" multiple hidden>
+  <input id="illustrationUploadInput" type="file" accept=".png,.jpg,.jpeg,.webp" multiple hidden>
   <script>
     let selected = "";
     let selectedCard = "";
@@ -1586,6 +1662,40 @@ INDEX_HTML = r"""<!doctype html>
     let lastState = null;
     let currentRemoteJob = null;
     async function api(path, options) { const res = await fetch(path, options); if (!res.ok) throw new Error(await res.text()); return await res.json(); }
+    function chooseUpload(kind) {
+      if (kind === "card" && !selectedCard) {
+        alert("카드뉴스 항목을 먼저 선택하세요.");
+        return;
+      }
+      document.getElementById(kind === "card" ? "cardUploadInput" : "illustrationUploadInput").click();
+    }
+    async function uploadSelectedFiles(kind, files) {
+      if (!files.length) return;
+      const slug = kind === "card" ? selectedCard : "";
+      let uploaded = 0;
+      try {
+        for (const file of files) {
+          const result = await api(`/api/upload?kind=${encodeURIComponent(kind)}&slug=${encodeURIComponent(slug)}`, {
+            method: "POST",
+            headers: {"Content-Type": file.type || "application/octet-stream", "X-File-Name": file.name},
+            body: file
+          });
+          if (result.ok) uploaded += 1;
+        }
+        alert(`${uploaded}개 이미지 업로드 완료`);
+        await reloadLists();
+      } catch (err) {
+        alert("이미지 업로드 실패: " + String(err));
+      }
+    }
+    document.getElementById("cardUploadInput").addEventListener("change", event => {
+      uploadSelectedFiles("card", [...event.target.files]);
+      event.target.value = "";
+    });
+    document.getElementById("illustrationUploadInput").addEventListener("change", event => {
+      uploadSelectedFiles("illustration", [...event.target.files]);
+      event.target.value = "";
+    });
     function setMode(next) {
       mode = next;
       document.getElementById("tabVideo").classList.toggle("active", next === "video");
@@ -1765,7 +1875,6 @@ INDEX_HTML = r"""<!doctype html>
       lastState = data;
       document.getElementById("rootText").textContent = data.root;
       const sync = data.sync || {};
-      document.getElementById("runtimeModeText").textContent = `${sync.rootMode || "-"} · 렌더 PC ${data.onlineWorkers || 0}대`;
       document.getElementById("runtimeModeText").textContent = `${sync.rootMode || "-"} · 렌더 PC ${data.readyWorkers || 0}/${data.onlineWorkers || 0}대 준비`;
       const workerSelect = document.getElementById("targetWorker");
       const selectedWorker = workerSelect.value;
@@ -1811,7 +1920,15 @@ INDEX_HTML = r"""<!doctype html>
       retryButton.style.display = job.remote && !job.running && job.exit_code !== 0 ? "" : "none";
       document.getElementById("jobText").textContent = job.running ? `실행 중: ${job.name}` : (job.exit_code === null ? "대기 중" : `마지막 종료 코드: ${job.exit_code}`);
       const log = document.getElementById("log"); log.textContent = job.log || ""; log.scrollTop = log.scrollHeight;
-      const results = document.getElementById("results"); results.innerHTML = ""; (data.results || []).forEach(r => { const div = document.createElement("div"); div.className = "result-row"; div.innerHTML = `<span>${r.name}</span><span class="small">${r.mp4 || ""}</span>`; results.appendChild(div); });
+      const results = document.getElementById("results"); results.innerHTML = ""; (data.results || []).forEach(r => {
+        const div = document.createElement("div");
+        div.className = "result-row";
+        const link = r.mp4
+          ? `<a href="/api/result?folder=${encodeURIComponent(r.name)}&file=${encodeURIComponent(r.mp4)}">${escapeHtml(r.mp4)}</a>`
+          : "";
+        div.innerHTML = `<span>${escapeHtml(r.name)}</span><span class="small">${link}</span>`;
+        results.appendChild(div);
+      });
     }
 
     async function runGithubAction(event, action, label) {

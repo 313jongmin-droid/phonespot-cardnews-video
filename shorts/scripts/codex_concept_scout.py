@@ -256,6 +256,7 @@ def merge_into_illustration_requests(slug: str, requests: list) -> None:
             "reason": "자동 발굴 범용 개념: " + req["concept_label"],
             "quality_gap": "기존 최근접 " + (req["nearest_existing"] or "-") + " (" + str(req["nearest_score"]) + ")",
             "tags": ["auto", "concept"],
+            "concept_label": req["concept_label"],
             "keywords": req["keywords"],
             "prompt": req["prompt"],
             "status": "requested",

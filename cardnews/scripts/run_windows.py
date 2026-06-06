@@ -221,8 +221,11 @@ if captions_path.exists() and (BASE / 'articles').exists():
     captions_text = captions_path.read_text(encoding='utf-8')
     other_articles = [p for p in (BASE / 'articles').glob('*.json') if p.stem != SLUG]
     # 일반 토큰 제외 리스트
-    _generic = {'2026', '2025', '2024', 'iOS', '아이폰', '갤럭시', '애플', '삼성', 'AI', '폰',
-                '/', '+', '·', '&', 'vs', 'VS', 'A', 'B', 'C', '/'}
+    _generic = {
+        '2026', '2025', '2024', 'iOS', '아이폰', '갤럭시', '애플', '삼성', 'AI', '폰',
+        '통신3사', '약정만료', '골든타임', '사전예약', '지원금', '공개', '예정',
+        '/', '+', '·', '&', 'vs', 'VS', 'A', 'B', 'C',
+    }
     for other in other_articles:
         try:
             other_data = _json.loads(other.read_text(encoding='utf-8'))
@@ -233,7 +236,12 @@ if captions_path.exists() and (BASE / 'articles').exists():
                 continue
             # 2차: title에서 distinct 토큰 (4자 이상 + 일반어 제외)
             other_title = other_data.get('title', '').strip()
-            other_tokens = [t for t in other_title.split() if len(t) >= 4 and t not in _generic]
+            other_tokens = [
+                t for t in other_title.split()
+                if len(t) >= 4
+                and t not in _generic
+                and any(ch.isalpha() or '\uac00' <= ch <= '\ud7a3' for ch in t)
+            ]
             # 그 중 다른 슬러그 title에 없는 unique 토큰만
             for tok in other_tokens:
                 if tok in captions_text and tok not in _data_pre.get('title', ''):

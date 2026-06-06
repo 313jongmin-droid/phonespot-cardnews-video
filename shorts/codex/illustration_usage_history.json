@@ -30,15 +30,70 @@
         "battery_overheat",
         "smartphone"
       ]
+    },
+    "012_news_galaxy_unpack_july": {
+      "used_at": "2026-06-06T14:35:30",
+      "source": "codex_enhance",
+      "illustrations": [
+        "foldable",
+        "chatbot",
+        "final_update",
+        "forecast",
+        "smartphone",
+        "newspaper",
+        "microphone",
+        "shield",
+        "meeting_room",
+        "gift_voucher",
+        "memory_chip",
+        "samsung_ai",
+        "gemini",
+        "aluminum_label",
+        "appliance"
+      ]
+    },
+    "001_apple_ondevice_ai_wwdc26": {
+      "used_at": "2026-06-06T14:50:05",
+      "source": "codex_enhance",
+      "illustrations": [
+        "newspaper",
+        "chatbot",
+        "chart_up",
+        "memory_chip",
+        "lock",
+        "meeting_room",
+        "shield",
+        "samsung_ai",
+        "gemini",
+        "final_update",
+        "handshake",
+        "clock",
+        "microphone",
+        "forecast",
+        "cloud_backup",
+        "aluminum_label",
+        "appliance",
+        "smartphone"
+      ]
     }
   },
-  "updated_at": "2026-06-06T14:12:17",
+  "updated_at": "2026-06-06T14:50:05",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-06T14:12:17",
       "variants": [
         "phone_settings_toggle",
         "call_filter_rules",
+        "security_feature_lock"
+      ]
+    },
+    "012_news_galaxy_unpack_july": {
+      "updated_at": "2026-06-06T14:35:31",
+      "variants": []
+    },
+    "001_apple_ondevice_ai_wwdc26": {
+      "updated_at": "2026-06-06T14:50:05",
+      "variants": [
         "security_feature_lock"
       ]
     }

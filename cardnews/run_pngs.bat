@@ -2,8 +2,9 @@
 cd /d %~dp0
 set PYTHONIOENCODING=utf-8
 set "ERR=0"
+set "PLAYWRIGHT_BROWSERS_PATH=%~dp0..\.playwright"
 if exist "%~dp0..\.phonespot_runtime\Scripts\python.exe" (
-    set "PATH=%~dp0..\.phonespot_runtime\Scripts;%PATH%"
+    for %%I in ("%~dp0..\.phonespot_runtime\Scripts") do set "PATH=%%~fI;%PATH%"
 )
 
 if "%~1"=="" goto select_mode

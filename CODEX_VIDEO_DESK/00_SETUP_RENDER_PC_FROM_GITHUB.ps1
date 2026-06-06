@@ -113,6 +113,7 @@ if (-not (Test-Path $runtimePython)) {
 }
 & $runtimePython -m pip install -q edge-tts mutagen pillow requests playwright
 if ($LASTEXITCODE -ne 0) { throw "Python package install failed." }
+$env:PLAYWRIGHT_BROWSERS_PATH = Join-Path $targetPath ".playwright"
 & $runtimePython -m playwright install chromium
 if ($LASTEXITCODE -ne 0) { throw "Playwright Chromium install failed." }
 

@@ -28,7 +28,10 @@ import sys
 from pathlib import Path
 from typing import Callable, Iterable
 
-import numpy as np
+try:
+    import numpy as np
+except Exception:  # numpy 미설치 시에도 lexical 폴백으로 동작
+    np = None
 
 # 같은 폴더의 일러스트 태그 DB (개념 텍스트 소스 + lexical 폴백)
 import codex_illustration_db as db_mod
@@ -100,7 +103,7 @@ def _embedder() -> Callable[[list[str]], np.ndarray] | None:
 
 def available() -> bool:
     """의미 임베딩이 실제로 가능한지(모델 로드 성공) 여부."""
-    return _embedder() is not None
+    return np is not None and _embedder() is not None
 
 
 # --------------------------------------------------------------------------- #
