@@ -37,7 +37,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v11"
+PANEL_VERSION = "phonespot-web-v12"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -1216,7 +1216,7 @@ class Handler(BaseHTTPRequestHandler):
             # 검수 모달용 썸네일. 허용된 폴더(DROP/Downloads/일러스트) 안의 이미지만 제공.
             query = urllib.parse.parse_qs(parsed.query)
             raw = (query.get("path") or [""])[0]
-            roots = (DESK / "ILLUSTRATION_DROP", DOWNLOADS, SHORTS / "public" / "assets" / "illustrations")
+            roots = (DESK / "ILLUSTRATION_DROP", DOWNLOADS, SHORTS / "public" / "assets" / "illustrations", CARD_IMAGES)
             try:
                 target = Path(unquote(raw)).resolve()
             except Exception:
@@ -1629,6 +1629,72 @@ class Handler(BaseHTTPRequestHandler):
                     "message": f"{len(mapping)}장 확정 → 가져오고 렌더 대기열에 등록했습니다.",
                 })
                 return
+            if action == "card_import_propose":
+                # 카드뉴스: 다운로드 그림을 슬라이드 내용(CLIP)으로 N.png 에 자동 배정 '제안'.
+                slug_now = validate_slug(slug)
+                proc = subprocess.run(
+                    [sys.executable, str(SCRIPTS / "cardnews_import_propose.py"), slug_now],
+                    cwd=str(SHORTS), text=True, encoding="utf-8", errors="replace",
+                    capture_output=True,
+                )
+                proposal_path = DESK / "CARD_IMPORT_PROPOSAL.json"
+                if proposal_path.exists():
+                    try:
+                        proposal = json.loads(proposal_path.read_text(encoding="utf-8"))
+                    except (OSError, json.JSONDecodeError) as exc:
+                        json_response(self, {"ok": False, "message": f"제안 파일을 읽지 못했습니다: {exc}"})
+                        return
+                else:
+                    json_response(self, {"ok": False, "message": "제안을 생성하지 못했습니다.\n" + (proc.stdout or "")[-400:]})
+                    return
+                json_response(self, {"ok": True, "proposal": proposal})
+                return
+            if action == "card_import_confirm":
+                # 사람이 확정한 매핑대로 카드 이미지 폴더에 N.png 로 복사(렌더 큐 안 씀).
+                slug_now = validate_slug(slug)
+                raw_mapping = data.get("mapping") or []
+                img_dir = CARD_IMAGES / slug_now
+                roots = (CARD_IMAGES, DOWNLOADS)
+                allowed_ext = {".png", ".jpg", ".jpeg", ".webp"}
+                plan = []
+                seen_fn = set()
+                for entry in raw_mapping:
+                    fn = str((entry or {}).get("filename") or "").strip()
+                    src_raw = str((entry or {}).get("candidate_path") or "").strip()
+                    if not fn or not src_raw:
+                        continue
+                    if not re.fullmatch(r"\d+\.png", fn):
+                        json_response(self, {"ok": False, "message": f"잘못된 슬라이드 파일명: {fn}"})
+                        return
+                    if fn in seen_fn:
+                        json_response(self, {"ok": False, "message": f"같은 슬라이드가 두 번 선택됐습니다: {fn}"})
+                        return
+                    try:
+                        src = Path(src_raw).resolve()
+                    except OSError:
+                        json_response(self, {"ok": False, "message": "잘못된 경로"})
+                        return
+                    ok_root = False
+                    for root in roots:
+                        try:
+                            src.relative_to(root.resolve())
+                            ok_root = True
+                            break
+                        except (ValueError, OSError):
+                            continue
+                    if not ok_root or not src.is_file() or src.suffix.lower() not in allowed_ext:
+                        json_response(self, {"ok": False, "message": f"허용되지 않은 파일: {src_raw}"})
+                        return
+                    seen_fn.add(fn)
+                    plan.append((src, img_dir / fn))
+                if not plan:
+                    json_response(self, {"ok": False, "message": "확정할 매핑이 없습니다. 최소 한 장은 배정하세요."})
+                    return
+                img_dir.mkdir(parents=True, exist_ok=True)
+                for src, dst in plan:
+                    dst.write_bytes(src.read_bytes())
+                json_response(self, {"ok": True, "message": f"{len(plan)}장 배정 완료. 이제 '4. 카드뉴스 생성'을 누르세요."})
+                return
             if action == "video_import_render":
                 slug_now = validate_slug(slug)
                 job = REMOTE_QUEUE.enqueue(
@@ -1955,6 +2021,7 @@ INDEX_HTML = r"""<!doctype html>
           <button class="btn primary" onclick="openCardPrompt()"><strong>2. 이미지 프롬프트 보기</strong><span>선택한 카드뉴스의 images/&lt;slug&gt;/prompt.md를 브라우저에서 확인합니다.</span></button>
           <button class="btn" onclick="runAction('open_card_images')"><strong>3. 이미지 업로드 폴더</strong><span>1.png~5.png를 넣을 카드뉴스 이미지 폴더를 엽니다.</span></button>
           <button class="btn" onclick="chooseUpload('card')"><strong>3-1. 이미지 웹 업로드</strong><span>다른 PC에서도 카드 이미지를 선택 항목에 바로 올립니다.</span></button>
+          <button class="btn primary" onclick="openCardImportReview()"><strong>3-2. 이미지 자동 배정(검수)</strong><span>다운로드한 GPT 이미지를 슬라이드 내용으로 자동 배정 제안 → 확인하고 1~5.png로 넣습니다.</span></button>
           <button class="btn primary" onclick="runAction('card_render')"><strong>4. 카드뉴스 생성</strong><span>기존 카드뉴스 렌더러를 실행해 1x1, 4x5, 9x16 카드와 captions.md를 생성합니다.</span></button>
           <button class="btn" onclick="runAction('open_card_result')"><strong>5. 카드뉴스 결과 확인</strong><span>완성된 카드뉴스 output 폴더를 엽니다.</span></button>
           <button class="btn primary" onclick="runAction('card_to_video')"><strong>6. 영상으로 넘기기</strong><span>완성된 카드뉴스를 Codex 숏폼 영상 준비 단계로 넘깁니다.</span></button>
@@ -2415,8 +2482,25 @@ INDEX_HTML = r"""<!doctype html>
       const panel = document.getElementById("importPanel");
       panel.style.display = panel.style.display === "block" ? "none" : "block";
     }
+    async function openCardImportReview() {
+      if (!selected) { alert("먼저 카드뉴스를 선택하세요."); return; }
+      window.__importKind = "card";
+      const panel = document.getElementById("importPanel");
+      const rows = document.getElementById("importRows");
+      const btn = document.getElementById("importConfirmBtn");
+      panel.style.display = "block";
+      btn.style.display = "none";
+      rows.innerHTML = "<div class='pad small'>슬라이드 내용으로 자동 배정 중입니다...</div>";
+      let result;
+      try {
+        result = await api("/api/action", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({action:"card_import_propose", slug:selected}) });
+      } catch (err) { rows.innerHTML = "<div class='pad small'>제안 생성 실패: " + escapeHtml(String(err)) + "</div>"; return; }
+      if (!result.ok) { rows.innerHTML = "<div class='pad small'>" + escapeHtml(result.message || "제안을 생성하지 못했습니다.") + "</div>"; return; }
+      renderImportProposal(result.proposal || {});
+    }
     async function openImportReview() {
       if (!selected) { alert("먼저 슬러그를 선택하세요."); return; }
+      window.__importKind = "video";
       const panel = document.getElementById("importPanel");
       const rows = document.getElementById("importRows");
       const btn = document.getElementById("importConfirmBtn");
@@ -2442,8 +2526,12 @@ INDEX_HTML = r"""<!doctype html>
       ).join("");
       let html = `<div class='pad small'>엔진: <b>${escapeHtml(engineLabel)}</b> · 후보 ${assigns.length}장 · 요청 ${reqs.length}건</div>`;
       if (!reqs.length) {
-        html += "<div class='pad small'>이 영상은 새로 그릴 이미지가 없습니다(누락 요청 0건). 바로 렌더하면 됩니다.</div>";
-        html += "<div class='pad'><button class='btn primary' onclick='renderNowFromReview()'>이미지 없이 바로 렌더</button></div>";
+        if ((window.__importKind || "video") === "card") {
+          html += "<div class='pad small'>슬라이드 설명(prompt.md)을 읽지 못했습니다. '2. 이미지 프롬프트 보기'로 prompt.md가 있는지 확인하세요.</div>";
+        } else {
+          html += "<div class='pad small'>이 영상은 새로 그릴 이미지가 없습니다(누락 요청 0건). 바로 렌더하면 됩니다.</div>";
+          html += "<div class='pad'><button class='btn primary' onclick='renderNowFromReview()'>이미지 없이 바로 렌더</button></div>";
+        }
         rows.innerHTML = html; btn.style.display = "none"; return;
       }
       if (!assigns.length) {
@@ -2502,11 +2590,15 @@ INDEX_HTML = r"""<!doctype html>
         mapping.push({ candidate_path: assigns[idx].candidate_path, filename: fn });
       }
       if (!mapping.length) { alert("최소 한 장은 파일명을 배정하세요."); return; }
-      const msg = "이 매핑대로 라이브러리에 넣고 렌더 대기열에 등록합니다.\n파일명이 그림 내용과 맞는지 확인했나요? (" + mapping.length + "장)";
+      const kind = window.__importKind || "video";
+      const action = kind === "card" ? "card_import_confirm" : "video_import_confirm";
+      const msg = (kind === "card")
+        ? ("이 매핑대로 카드 이미지 폴더에 1~5.png로 넣습니다.\n슬라이드 내용과 맞는지 확인했나요? (" + mapping.length + "장)")
+        : ("이 매핑대로 라이브러리에 넣고 렌더 대기열에 등록합니다.\n파일명이 그림 내용과 맞는지 확인했나요? (" + mapping.length + "장)");
       if (!confirm(msg)) return;
       let result;
       try {
-        result = await api("/api/action", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({action:"video_import_confirm", slug:selected, mapping}) });
+        result = await api("/api/action", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({action, slug:selected, mapping}) });
       } catch (err) { alert("확정 실패: " + String(err)); return; }
       alert(result.message || (result.ok ? "확정했습니다." : "실패했습니다."));
       if (result.ok) {

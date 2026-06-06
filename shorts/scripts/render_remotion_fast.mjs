@@ -101,7 +101,7 @@ console.log(
   `concurrency=${concurrency} crf=${crf} preset=${x264Preset}`
 );
 let lastPc = -1;
-await renderMedia({
+const renderOpts = {
   serveUrl,
   composition,
   codec: "h264",
@@ -114,5 +114,15 @@ await renderMedia({
     const pc = Math.round(progress * 100);
     if (pc >= lastPc + 10) { lastPc = pc; console.log("[render] " + pc + "%"); }
   },
-});
+};
+// GPU 가속(옵트인): blur/box-shadow/gradient 가 많은 컴포지션은 GPU 로 프레임당 비용이 크게 준다.
+// 기본 미설정 = 기존(CPU/swiftshader) 동작 그대로. 테스트: set PHONESPOT_GL=angle
+const gl = (process.env.PHONESPOT_GL || "").trim();
+if (gl) {
+  renderOpts.chromiumOptions = { gl };
+  const chromeMode = (process.env.PHONESPOT_CHROME_MODE || "chrome-for-testing").trim();
+  if (chromeMode) renderOpts.chromeMode = chromeMode; // 헤드리스에서 GPU 디스플레이 사용
+  console.log(`[render] GPU mode: gl=${gl} chromeMode=${renderOpts.chromeMode || "-"}`);
+}
+await renderMedia(renderOpts);
 console.log(`[render] done in ${((Date.now() - t0) / 1000).toFixed(1)}s -> ${outPath}`);

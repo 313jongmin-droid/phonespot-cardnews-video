@@ -56,6 +56,11 @@ def common_prefix(ffmpeg: str, src: Path) -> list[str]:
     ]
 
 
+# 화질은 비트레이트(1.5Mbps)로 고정돼 있어 프리셋을 빠르게 해도 차이가 미미하고
+# 인코딩은 2~3배 빨라진다. 아티팩트가 보이면 PHONESPOT_FINAL_PRESET=faster/medium 으로.
+FINAL_PRESET = os.getenv("PHONESPOT_FINAL_PRESET", "veryfast")
+
+
 def h264_balanced_args() -> list[str]:
     return [
         "-c:v",
@@ -67,7 +72,7 @@ def h264_balanced_args() -> list[str]:
         "-bufsize",
         "4400k",
         "-preset",
-        "medium",
+        FINAL_PRESET,
         "-profile:v",
         "high",
         "-level",

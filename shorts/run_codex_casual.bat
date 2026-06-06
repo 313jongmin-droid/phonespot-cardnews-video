@@ -125,13 +125,18 @@ echo  Log: !RENDERLOG!
 if "%PHONESPOT_RENDER_CONCURRENCY%"=="" set "PHONESPOT_RENDER_CONCURRENCY=50%%"
 if "%PHONESPOT_RAW_CRF%"=="" set "PHONESPOT_RAW_CRF=23"
 if "%PHONESPOT_RAW_PRESET%"=="" set "PHONESPOT_RAW_PRESET=veryfast"
-echo  Concurrency: !PHONESPOT_RENDER_CONCURRENCY!  (raw crf=!PHONESPOT_RAW_CRF! preset=!PHONESPOT_RAW_PRESET!)
+rem GPU(옵트인): blur/box-shadow/gradient 많은 컴포지션 가속. 기본 미설정=기존 CPU 동작.
+rem 테스트:  set PHONESPOT_GL=angle  (필요시 set PHONESPOT_CHROME_MODE=chrome-for-testing)
+set "GLARGS="
+if not "%PHONESPOT_GL%"=="" set "GLARGS=--gl=%PHONESPOT_GL%"
+if not "%PHONESPOT_CHROME_MODE%"=="" set "GLARGS=!GLARGS! --chrome-mode=%PHONESPOT_CHROME_MODE%"
+echo  Concurrency: !PHONESPOT_RENDER_CONCURRENCY!  (raw crf=!PHONESPOT_RAW_CRF! preset=!PHONESPOT_RAW_PRESET!)  GPU: !GLARGS!
 rem Fast path: reuse webpack bundle across renders (#3) + tunable concurrency (#1)
 rem + cheap intermediate encode (#2; Step 6 finalize is the quality gate).
 call node scripts\render_remotion_fast.mjs CasualShort "!RAWFILE!" > "!RENDERLOG!" 2>&1
 if errorlevel 1 (
     echo  [WARN] fast render path failed - falling back to Remotion CLI. See log.
-    call npx remotion render src/index.ts CasualShort "!RAWFILE!" --concurrency=!PHONESPOT_RENDER_CONCURRENCY! --pixel-format=yuv420p --crf=!PHONESPOT_RAW_CRF! --x264-preset=!PHONESPOT_RAW_PRESET! >> "!RENDERLOG!" 2>&1
+    call npx remotion render src/index.ts CasualShort "!RAWFILE!" --concurrency=!PHONESPOT_RENDER_CONCURRENCY! --pixel-format=yuv420p --crf=!PHONESPOT_RAW_CRF! --x264-preset=!PHONESPOT_RAW_PRESET! !GLARGS! >> "!RENDERLOG!" 2>&1
 )
 if errorlevel 1 (
     echo [ERROR] Remotion raw render command failed. See:
