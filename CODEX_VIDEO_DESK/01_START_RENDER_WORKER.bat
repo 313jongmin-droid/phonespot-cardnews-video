@@ -2,6 +2,9 @@
 chcp 65001 >nul
 setlocal
 cd /d "%~dp0"
+if exist "%~dp0..\.phonespot_runtime\Scripts\python.exe" (
+  set "PATH=%~dp0..\.phonespot_runtime\Scripts;%PATH%"
+)
 
 if "%PHONESPOT_PANEL_URL%"=="" (
   if exist "%~dp0RENDER_WORKER\panel_url.txt" (

@@ -102,10 +102,16 @@ if (Test-Path (Join-Path $shorts "package.json")) {
   Pop-Location
 }
 
-Write-Host "[deps] Python packages"
-python -m pip install -q edge-tts mutagen pillow requests playwright
+Write-Host "[deps] Project Python runtime"
+$runtime = Join-Path $targetPath ".phonespot_runtime"
+$runtimePython = Join-Path $runtime "Scripts\python.exe"
+if (-not (Test-Path $runtimePython)) {
+  python -m venv $runtime
+  if ($LASTEXITCODE -ne 0) { throw "Python runtime creation failed." }
+}
+& $runtimePython -m pip install -q edge-tts mutagen pillow requests playwright
 if ($LASTEXITCODE -ne 0) { throw "Python package install failed." }
-python -m playwright install chromium
+& $runtimePython -m playwright install chromium
 if ($LASTEXITCODE -ne 0) { throw "Playwright Chromium install failed." }
 
 $desk = Join-Path $targetPath "CODEX_VIDEO_DESK"

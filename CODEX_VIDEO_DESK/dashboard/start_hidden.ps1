@@ -54,6 +54,8 @@ if (-not (Test-PanelHealth)) {
   $stdoutLog = Join-Path $logDir "panel_${stamp}.out.log"
   $stderrLog = Join-Path $logDir "panel_${stamp}.err.log"
   $server = Join-Path $PSScriptRoot "server.py"
+  $runtimePython = Join-Path $root ".phonespot_runtime\Scripts\python.exe"
+  $python = if (Test-Path $runtimePython) { $runtimePython } else { "python" }
   $launcher = Join-Path $tempRoot "launch_panel.cmd"
   @"
 @echo off
@@ -61,7 +63,7 @@ set "PHONESPOT_PANEL_PORT=$port"
 set "PHONESPOT_PANEL_NO_BROWSER=1"
 set "PHONESPOT_PANEL_HOST=0.0.0.0"
 cd /d "$desk"
-start "" /b python "$server" 1>>"$stdoutLog" 2>>"$stderrLog"
+start "" /b "$python" "$server" 1>>"$stdoutLog" 2>>"$stderrLog"
 "@ | Set-Content -Path $launcher -Encoding ascii
   cmd.exe /c call "$launcher"
 

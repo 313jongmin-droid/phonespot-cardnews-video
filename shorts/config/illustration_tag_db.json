@@ -976,7 +976,74 @@
       ],
       "note": "Reusable editorial illustration.",
       "available": true
+    },
+    "cpt_91af2e72": {
+      "keywords": [
+        "정리합니다",
+        "활용법과",
+        "iOS",
+        "차이를",
+        "와의"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 정리합니다 활용법과",
+      "available": false
+    },
+    "cpt_04ecdb93": {
+      "keywords": [
+        "단순합니다",
+        "방법은"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 단순합니다 방법은",
+      "available": false
+    },
+    "cpt_aa1c84b0": {
+      "keywords": [
+        "통화자에게",
+        "송출됩니다",
+        "자동으로",
+        "멘트가",
+        "시작"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 통화자에게 송출됩니다",
+      "available": false
+    },
+    "cpt_e035fe4a": {
+      "keywords": [
+        "저장됩니다",
+        "녹음본은",
+        "기록에",
+        "메모",
+        "앱과"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 저장됩니다 녹음본은",
+      "available": false
+    },
+    "cpt_bcb2873e": {
+      "keywords": [
+        "설정에서",
+        "들어가면",
+        "메뉴로",
+        "전화",
+        "앱의"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 설정에서 들어가면",
+      "available": false
     }
   },
-  "updated_at": "2026-06-06T12:47:38"
-}\n
+  "updated_at": "2026-06-06T14:12:20"
+}

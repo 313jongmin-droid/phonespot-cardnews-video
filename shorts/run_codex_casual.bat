@@ -2,6 +2,9 @@
 chcp 65001 > nul
 cd /d "%~dp0"
 setlocal enabledelayedexpansion
+if exist "%~dp0..\.phonespot_runtime\Scripts\python.exe" (
+    set "PATH=%~dp0..\.phonespot_runtime\Scripts;%PATH%"
+)
 set "EXITCODE=0"
 set "SLUG=%~1"
 if not "!SLUG!"=="" goto :slug_selected

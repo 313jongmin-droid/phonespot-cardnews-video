@@ -94,6 +94,7 @@ telegram_chat_id.txt
 __pycache__/
 *.pyc
 .pytest_cache/
+.phonespot_runtime/
 node_modules/
 **/node_modules/
 shorts/node_modules/

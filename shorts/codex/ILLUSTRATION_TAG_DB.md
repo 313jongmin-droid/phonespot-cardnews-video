@@ -1,1 +1,80 @@
-# Codex Illustration Tag DB\n\n자동 추천은 본문 의미와 태그를 먼저 보고, 최근 사용 횟수가 적은 일러스트를 우선합니다.\n수동으로 다듬은 `chunk_visuals`는 변경하지 않습니다.\n\n| illustration | tags | use count | last slug |\n|---|---|---:|---|\n| `aluminum_label` | materials, hardware, library | 0 |  |\n| `appliance` | hardware, device, library | 0 |  |\n| `battery_charge_range` | battery, charging, tips, library | 0 |  |\n| `battery_health_check` | battery, health, tips | 0 |  |\n| `battery_overheat` | battery, heat, warning, library | 0 |  |\n| `biometric` | security, privacy, authentication, library | 0 |  |\n| `call_recording_notice` | library | 0 |  |\n| `chart_down` | price, data, decrease, library | 0 |  |\n| `chart_up` | price, data, increase, library | 0 |  |\n| `chat_backup_restore` | messenger, backup, restore, tips, library | 0 |  |\n| `chatbot` | ai, assistant, software, library | 0 |  |\n| `clock` | time, tips, library | 0 |  |\n| `cloud_backup` | security, privacy, cloud, library | 0 |  |\n| `cover_screen_widgets` | library | 0 |  |\n| `device_data_transfer` | device, migration, backup, tips, library | 0 |  |\n| `device_os_requirement` | library | 0 |  |\n| `device_price_rise` | price, increase, device | 0 |  |\n| `display_ratio_change` | library | 0 |  |\n| `emergency_account_freeze` | security, bank, response, golden-time, library | 0 |  |\n| `fake_government_page` | security, smishing, government, warning | 0 |  |\n| `final_update` | software, update, library | 0 |  |\n| `foldable` | hardware, foldable, library | 0 |  |\n| `forecast` | news, forecast, library | 0 |  |\n| `gemini` | ai, assistant, google, library | 0 |  |\n| `gift_prohibit` | price, security, warning, library | 0 |  |\n| `gift_voucher` | price, subsidy, purchase, library | 0 |  |\n| `handshake` | policy, access, partnership, library | 0 |  |\n| `health_sensor_watch` | library | 0 |  |\n| `heat_release` | battery, heat, hardware, library | 0 |  |\n| `impersonation_call` | security, voice-phishing, call, warning, library | 0 |  |\n| `launch_event` | library | 0 |  |\n| `liquid_titanium` | materials, hardware, library | 0 |  |\n| `lock` | security, privacy, lock, library | 0 |  |\n| `logout` | security, privacy, account, library | 0 |  |\n| `market_cap` | price, data, market, library | 0 |  |\n| `meeting_room` | policy, news, strategy, library | 0 |  |\n| `memory_chip` | ai, hardware, chip, library | 0 |  |\n| `microphone` | news, quote, library | 0 |  |\n| `module_install` | library | 0 |  |\n| `newspaper` | news, source, library | 0 |  |\n| `nfc_open_access` | payment, nfc, access | 0 |  |\n| `nfc_pay` | payment, nfc, access, library | 0 |  |\n| `official_site_check` | security, official-site, check | 0 |  |\n| `ondevice_ai_chip` | ai, hardware, privacy | 0 |  |\n| `optimized_charging` | battery, charging, tips, library | 0 |  |\n| `password` | security, privacy, authentication, library | 0 |  |\n| `personal_data_leak` | security, privacy, leak | 0 |  |\n| `phone_setup_ready` | library | 0 |  |\n| `plan_price_tier_compare` | price, plan, compare, telecom | 0 |  |\n| `price_hike` | price, increase, library | 0 |  |\n| `prohibit` | security, warning, restriction, library | 0 |  |\n| `recording_archive` | library | 0 |  |\n| `release_calendar` | library | 0 |  |\n| `repair_privacy` | security, privacy, repair | 0 |  |\n| `reset` | security, privacy, software, library | 0 |  |\n| `samsung_ai` | ai, assistant, software, library | 0 |  |\n| `secure_app_reregistration` | security, bank, authentication, setup, library | 0 |  |\n| `settings_steps` | library | 0 |  |\n| `shield` | security, privacy, protection, library | 0 |  |\n| `smartphone` | device, purchase, cta, library | 0 |  |\n| `smishing_fake_link` | security, smishing, warning, link | 0 |  |\n| `stock_chart` | price, data, market, library | 0 |  |\n| `store` | store, purchase, cta, library | 0 |  |\n| `telecom_discount_compare` | price, subsidy, compare, telecom, library | 0 |  |\n| `theft_auto_lock` | security, privacy, theft | 0 |  |\n| `ti_decrease` | materials, hardware, decrease, library | 0 |  |\n| `transfer_interruption_warning` | library | 0 |  |\n| `transfer_path_steps` | library | 0 |  |\n| `warning` | security, warning, library | 0 |  |\n\n## Recent videos\n\n- 아직 기록된 영상이 없습니다.\n
+# Codex Illustration Tag DB
+
+자동 추천은 본문 의미와 태그를 먼저 보고, 최근 사용 횟수가 적은 일러스트를 우선합니다.
+수동으로 다듬은 `chunk_visuals`는 변경하지 않습니다.
+
+| illustration | tags | use count | last slug |
+|---|---|---:|---|
+| `aluminum_label` | materials, hardware, library | 1 | 010_tip_iphone_call_record |
+| `appliance` | hardware, device, library | 1 | 010_tip_iphone_call_record |
+| `battery_charge_range` | battery, charging, tips, library | 1 | 010_tip_iphone_call_record |
+| `battery_health_check` | battery, health, tips | 0 |  |
+| `battery_overheat` | battery, heat, warning, library | 1 | 010_tip_iphone_call_record |
+| `biometric` | security, privacy, authentication, library | 1 | 010_tip_iphone_call_record |
+| `call_recording_notice` | library | 1 | 010_tip_iphone_call_record |
+| `chart_down` | price, data, decrease, library | 1 | 010_tip_iphone_call_record |
+| `chart_up` | price, data, increase, library | 1 | 010_tip_iphone_call_record |
+| `chat_backup_restore` | messenger, backup, restore, tips, library | 1 | 010_tip_iphone_call_record |
+| `chatbot` | ai, assistant, software, library | 1 | 010_tip_iphone_call_record |
+| `clock` | time, tips, library | 1 | 010_tip_iphone_call_record |
+| `cloud_backup` | security, privacy, cloud, library | 1 | 010_tip_iphone_call_record |
+| `cover_screen_widgets` | library | 0 |  |
+| `device_data_transfer` | device, migration, backup, tips, library | 0 |  |
+| `device_os_requirement` | library | 0 |  |
+| `device_price_rise` | price, increase, device | 0 |  |
+| `display_ratio_change` | library | 0 |  |
+| `emergency_account_freeze` | security, bank, response, golden-time, library | 0 |  |
+| `fake_government_page` | security, smishing, government, warning | 0 |  |
+| `final_update` | software, update, library | 1 | 010_tip_iphone_call_record |
+| `foldable` | hardware, foldable, library | 0 |  |
+| `forecast` | news, forecast, library | 1 | 010_tip_iphone_call_record |
+| `gemini` | ai, assistant, google, library | 1 | 010_tip_iphone_call_record |
+| `gift_prohibit` | price, security, warning, library | 0 |  |
+| `gift_voucher` | price, subsidy, purchase, library | 0 |  |
+| `handshake` | policy, access, partnership, library | 0 |  |
+| `health_sensor_watch` | library | 0 |  |
+| `heat_release` | battery, heat, hardware, library | 0 |  |
+| `impersonation_call` | security, voice-phishing, call, warning, library | 1 | 010_tip_iphone_call_record |
+| `launch_event` | library | 0 |  |
+| `liquid_titanium` | materials, hardware, library | 0 |  |
+| `lock` | security, privacy, lock, library | 0 |  |
+| `logout` | security, privacy, account, library | 0 |  |
+| `market_cap` | price, data, market, library | 0 |  |
+| `meeting_room` | policy, news, strategy, library | 0 |  |
+| `memory_chip` | ai, hardware, chip, library | 1 | 010_tip_iphone_call_record |
+| `microphone` | news, quote, library | 0 |  |
+| `module_install` | library | 0 |  |
+| `newspaper` | news, source, library | 0 |  |
+| `nfc_open_access` | payment, nfc, access | 0 |  |
+| `nfc_pay` | payment, nfc, access, library | 0 |  |
+| `official_site_check` | security, official-site, check | 0 |  |
+| `ondevice_ai_chip` | ai, hardware, privacy | 0 |  |
+| `optimized_charging` | battery, charging, tips, library | 0 |  |
+| `password` | security, privacy, authentication, library | 0 |  |
+| `personal_data_leak` | security, privacy, leak | 0 |  |
+| `phone_setup_ready` | library | 0 |  |
+| `plan_price_tier_compare` | price, plan, compare, telecom | 0 |  |
+| `price_hike` | price, increase, library | 0 |  |
+| `prohibit` | security, warning, restriction, library | 1 | 010_tip_iphone_call_record |
+| `recording_archive` | library | 1 | 010_tip_iphone_call_record |
+| `release_calendar` | library | 0 |  |
+| `repair_privacy` | security, privacy, repair | 0 |  |
+| `reset` | security, privacy, software, library | 0 |  |
+| `samsung_ai` | ai, assistant, software, library | 1 | 010_tip_iphone_call_record |
+| `secure_app_reregistration` | security, bank, authentication, setup, library | 0 |  |
+| `settings_steps` | library | 1 | 010_tip_iphone_call_record |
+| `shield` | security, privacy, protection, library | 1 | 010_tip_iphone_call_record |
+| `smartphone` | device, purchase, cta, library | 1 | 010_tip_iphone_call_record |
+| `smishing_fake_link` | security, smishing, warning, link | 0 |  |
+| `stock_chart` | price, data, market, library | 0 |  |
+| `store` | store, purchase, cta, library | 0 |  |
+| `telecom_discount_compare` | price, subsidy, compare, telecom, library | 0 |  |
+| `theft_auto_lock` | security, privacy, theft | 0 |  |
+| `ti_decrease` | materials, hardware, decrease, library | 0 |  |
+| `transfer_interruption_warning` | library | 0 |  |
+| `transfer_path_steps` | library | 0 |  |
+| `warning` | security, warning, library | 1 | 010_tip_iphone_call_record |
+
+## Recent videos
+
+- `010_tip_iphone_call_record`: call_recording_notice, final_update, settings_steps, forecast, biometric, chart_down, recording_archive, impersonation_call, chart_up, chat_backup_restore, chatbot, clock, aluminum_label, appliance, battery_charge_range, samsung_ai, shield, memory_chip, gemini, cloud_backup, prohibit, warning, battery_overheat, smartphone

@@ -107,8 +107,37 @@
    비교해 임계 이상 유사하면 **재사용(생성 안 함)**. 이게 라이브러리 크기를 수렴시킨다.
 3. 모델 미사용 상태에서도 `rank()`는 lexical로 동작해야 한다(안전).
 
+### 1단계 — 개념 발굴형 스카우트 (적용됨)
+- `shorts/scripts/codex_concept_scout.py` (새 파일, 라이브 파이프라인 미수정).
+- 동작: 라이브러리에 마땅한 그림이 없는 **갭 청크**를 찾아 →
+  청크에서 **1회용 디테일(숫자/날짜/금액/모델명/브랜드)을 제거**해 범용 개념 키워드를 추출 →
+  `codex_illust_embed.cover()`로 **기존 라이브러리와 의미 중복제거**(충분히 비슷하면 재사용, 생성 안 함) →
+  **신규 개념만** 태그 DB에 등록(available=false)하고 재사용 가능한 GPT 프롬프트를 만든다.
+- 개념 ID는 키워드 해시라, **영상이 달라도 같은 개념이면 같은 ID** → 자연 중복제거 + 수렴.
+- 상한: `MAX_NEW_CONCEPTS`(기본 5)로 영상당 신규 개념 폭증 방지.
+- 사용: `python scripts/codex_concept_scout.py <slug>` (미리보기는 `--dry-run`).
+- 검증: 갭탐지/1회용 제거/중복제거 재사용/상한/DB 영속(라운드트립)/요청파일 생성 단위테스트 통과.
+
+#### (함께 고친 잠복 버그) DB 영속성
+- `codex_illustration_db.py`의 `write_json`/`write_report`가 파일 끝에 **literal `\n`(역슬래시+n)**을
+  붙여, 같은 파일을 `read_json`이 못 읽고 매번 SEED 기본값으로 폴백하고 있었다.
+  (= 태그 DB·사용기록이 저장돼도 되읽기 실패 → 사실상 영속 안 됨)
+- 이를 진짜 줄바꿈(`\n`)으로 고쳐 **DB·기록이 정상 저장/로드**되게 했다. 이게 안 고쳐지면 개념이 안 쌓인다.
+- 백업: `shorts/scripts/codex_illustration_db.py.bak_newline_fix_*`
+
+### 2단계 — 패널 버튼 연결 (적용됨)
+- 패널 **"1. 영상용 프롬프트 준비"** 버튼 → server.py `video_prepare` → `codex_prepare_illustrations.py` 실행.
+- 그 준비 체인 끝(workbench 다음)에 `codex_concept_scout.py`를 **비차단**으로 추가했다(`run_optional`).
+  실패해도 준비는 계속되고, 모델이 없으면 lexical 폴백으로 동작한다.
+- 개념 요청은 패널이 읽는 `codex_illustration_requests.json/.md` 에 **멱등 병합**된다
+  (`source=concept_scout` 마커로 기존 일러스트 스카우트 요청은 보존, 개념 요청만 교체).
+  → 버튼 1 후 패널의 일러스트 요청 화면에 기존 + 개념 요청이 함께 뜬다.
+- **server.py / 패널 / run_codex_casual.bat 은 건드리지 않았다.** 데이터 파일 병합 + prepare 체인 한 줄만 추가.
+- 백업: `shorts/scripts/codex_prepare_illustrations.py.bak_concept_scout_*`
+- 검증: 기존 요청 보존 + 개념 요청 병합 + md 마커 + 멱등(2회 실행 무중복) 단위테스트 통과.
+
 ### 다음 단계 (미적용)
-- **1단계:** 스카우트를 13개 고정 규칙 → "갭 청크에서 범용 개념 추출 → DB 신규 개념 등록 → 프롬프트 생성"으로 확장.
-- **2단계:** 위 2번(임베딩 중복제거)을 스카우트에 연결.
 - **3단계:** 렌더 매칭(`codex_semantic_visual_match.py`)의 lexical 점수를 `rank()` 임베딩으로 교체.
   (라이브 매처 수정이라 백업 후 원자적으로, 폴백 유지)
+- 자산 루프: 등록된 신규 개념 png를 사람이 GPT로 그려 `shorts/public/assets/illustrations/`에 넣으면
+  available로 승격되어 다음 영상부터 매칭 후보가 된다.

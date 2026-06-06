@@ -118,7 +118,7 @@ def read_json(path: Path, fallback: dict) -> dict:
     return fallback
 
 def write_json(path: Path, value: dict) -> None:
-    payload = json.dumps(value, ensure_ascii=False, indent=2) + "\\n"
+    payload = json.dumps(value, ensure_ascii=False, indent=2) + "\n"
     try:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(payload, encoding="utf-8")
@@ -337,7 +337,7 @@ def write_report() -> None:
     for slug, item in videos:
         used = ", ".join(item.get("illustrations", []) or []) or "-"
         lines.append(f"- `{slug}`: {used}")
-    payload = "\\n".join(lines) + "\\n"
+    payload = "\n".join(lines) + "\n"
     try:
         REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
         REPORT_PATH.write_text(payload, encoding="utf-8")

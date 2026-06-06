@@ -1,11 +1,46 @@
 {
   "version": 1,
-  "videos": {},
-  "requests": {
-    "012_news_galaxy_unpack_july": {
-      "updated_at": "2026-06-06T12:47:37",
-      "variants": []
+  "videos": {
+    "010_tip_iphone_call_record": {
+      "used_at": "2026-06-06T14:12:16",
+      "source": "codex_enhance",
+      "illustrations": [
+        "call_recording_notice",
+        "final_update",
+        "settings_steps",
+        "forecast",
+        "biometric",
+        "chart_down",
+        "recording_archive",
+        "impersonation_call",
+        "chart_up",
+        "chat_backup_restore",
+        "chatbot",
+        "clock",
+        "aluminum_label",
+        "appliance",
+        "battery_charge_range",
+        "samsung_ai",
+        "shield",
+        "memory_chip",
+        "gemini",
+        "cloud_backup",
+        "prohibit",
+        "warning",
+        "battery_overheat",
+        "smartphone"
+      ]
     }
   },
-  "updated_at": "2026-06-06T12:47:37"
-}\n
+  "updated_at": "2026-06-06T14:12:17",
+  "requests": {
+    "010_tip_iphone_call_record": {
+      "updated_at": "2026-06-06T14:12:17",
+      "variants": [
+        "phone_settings_toggle",
+        "call_filter_rules",
+        "security_feature_lock"
+      ]
+    }
+  }
+}

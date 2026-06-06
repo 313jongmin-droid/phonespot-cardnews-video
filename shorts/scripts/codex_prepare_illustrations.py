@@ -20,6 +20,14 @@ def run(script: str, *args: str) -> None:
         raise SystemExit(result.returncode)
 
 
+def run_optional(script: str, *args: str) -> None:
+    """실패해도 전체 준비를 중단하지 않는 보조 단계용 러너."""
+    command = [sys.executable, str(SCRIPTS / script), *args]
+    result = subprocess.run(command)
+    if result.returncode:
+        print(f"[prepare] (참고) {script} 종료코드 {result.returncode} - 계속 진행합니다.")
+
+
 def select_slug() -> str:
     result = subprocess.run(
         [sys.executable, str(SCRIPTS / "list_slugs.py")],
@@ -59,6 +67,9 @@ def main() -> int:
     run("codex_apply_uploaded_illustrations.py", slug)
     run("codex_illustration_scout.py", slug)
     run("codex_refresh_workbench.py", slug)
+    # 개념 발굴형 스카우트(2단계): 라이브러리에 없는 갭을 범용 개념으로 발굴해
+    # codex_illustration_requests.json/.md 에 병합한다. 실패해도 준비는 계속된다.
+    run_optional("codex_concept_scout.py", slug)
     prompt = DESK / "LATEST_PROMPT.md"
     if prompt.exists() and os.environ.get("PHONESPOT_NO_OPEN") != "1":
         try:

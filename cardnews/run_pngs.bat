@@ -2,6 +2,9 @@
 cd /d %~dp0
 set PYTHONIOENCODING=utf-8
 set "ERR=0"
+if exist "%~dp0..\.phonespot_runtime\Scripts\python.exe" (
+    set "PATH=%~dp0..\.phonespot_runtime\Scripts;%PATH%"
+)
 
 if "%~1"=="" goto select_mode
 goto arg_mode
