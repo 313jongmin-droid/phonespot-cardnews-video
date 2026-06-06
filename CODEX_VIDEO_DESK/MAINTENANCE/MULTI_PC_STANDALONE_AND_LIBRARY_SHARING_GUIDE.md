@@ -16,14 +16,19 @@
 
 ## A. 새 PC 를 독립 생산기로 만들기 (1회)
 
-각 PC 에서:
+### 권장: 원샷 설치
+1. 코드 받기(저장소가 없으면): `00_SETUP_RENDER_PC_FROM_GITHUB.bat` (git clone).
+   이미 코드가 있으면 건너뜀.
+2. **`SETUP_FULL_PRODUCER.bat` 더블클릭** — 한 번에 다 깔고 검증합니다:
+   - npm install(Remotion) + python deps(edge-tts/pillow/mutagen/requests/playwright/**flask**/fastembed/numpy)
+   - playwright chromium + 임베딩 모델(text + CLIP image) 1회 다운로드
+   - 마지막에 `codex_producer_check.py` 로 **PASS/FAIL 점검표** 출력.
+3. `00_PHONE_SPOT_PANEL.bat` 실행. 카드 생성은 `cardnews\webui\start.bat`.
 
-1. 코드 받기: `00_SETUP_RENDER_PC_FROM_GITHUB.bat` (git clone + npm install + playwright +
-   edge-tts/pillow/mutagen/requests/playwright 설치).
-2. 임베딩 켜기: `shorts\SETUP_EMBED.bat` (fastembed/numpy/pillow + jina-clip/MiniLM 모델 1회 다운로드).
-3. 패널 실행: `00_PHONE_SPOT_PANEL.bat`.
-4. 카드뉴스 생성 도구: `cardnews\webui\start.bat`(웹UI) 또는 `cardnews\run_all.bat` /
-   `run_pngs.bat`. (폰트·템플릿은 repo 에 포함.)
+점검만 따로: `shorts\scripts\codex_producer_check.py` (치명 항목 0이면 준비 완료).
+
+### 수동(단계별)도 가능
+`00_SETUP_RENDER_PC_FROM_GITHUB.bat` → `shorts\SETUP_EMBED.bat` → (Flask 설치) → 패널 실행.
 
 이러면 그 PC 는 인터넷이 막혀도(모델·deps 설치만 끝났으면) 혼자 생산·렌더가 됩니다.
 
@@ -70,6 +75,37 @@
   안 보일 수 있습니다. 드라이브 동기화가 끝난 뒤 실행하세요.
 
 ---
+
+## C. 라이브러리 중복 정리 (수렴 유지)
+
+공유는 비파괴라 시간이 지나면 "같은 개념, 다른 이름" 그림이 허브에 쌓입니다. 이걸 주기적으로
+정리해야 라이브러리가 비대해지지 않고 "한 개념 = 한 그림"으로 수렴합니다.
+
+도구: `codex_library_dedup.py` — CLIP 이미지-이미지 유사도로 근접중복을 군집화.
+
+- **점검(읽기전용, 안전)**: 패널 **"라이브러리 중복 점검"** 버튼 → 실행 로그 + 리포트
+  `shorts/codex/library_dedup_report.md`(군집별 대표/중복 후보·유사도).
+- **정리(삭제+병합)**: `CODEX_VIDEO_DESK\라이브러리_중복정리.bat --apply`
+  - 각 군집에서 **대표 1개만 남기고** 나머지 png 삭제 + 태그DB를 대표로 병합.
+  - 대표 선택: 사람이 붙인 이름(비-cpt_) 우선 → 짧은 이름 → 알파벳.
+  - 임계값 `PHONESPOT_DEDUP_SIM`(기본 0.92). 낮출수록 더 많이 묶음(과합치기 주의).
+- 권장 순서: ① 라이브러리 공유 동기화(백업 겸) → ② 중복 점검(리포트 확인) → ③ 필요시 `--apply`
+  → ④ 다시 공유 동기화로 정리 결과 전파.
+- 주의: `--apply`는 파일 삭제. 리포트로 먼저 확인하고, 허브/깃 백업이 있는 상태에서 실행.
+
+## D. 라이브러리 백업/스냅샷 (안전망)
+
+라이브러리는 가장 중요한 자산입니다. 실수 삭제·중복정리(--apply) 사고·드라이브 NUL 손상에 대비해
+타임스탬프 스냅샷을 떠 둡니다.
+
+도구: `codex_library_backup.py`
+- 패널 **"라이브러리 백업"** 버튼 또는 `CODEX_VIDEO_DESK\라이브러리_백업.bat`.
+- 대상: 로컬 라이브러리(일러스트+태그DB+사용이력). 허브(`PHONESPOT_LIBRARY_SHARE`) 설정 시 허브도 함께.
+- 보관 위치: `PHONESPOT_LIBRARY_BACKUP`(없으면 저장소 옆 `phonespot_library_backups`). 깃/동기화 밖.
+- 회전 보관: 최근 `PHONESPOT_LIBRARY_BACKUP_KEEP`(기본 10)개만 유지.
+- 무결성: 0바이트/NUL 손상 의심 파일을 경고로 표시(스냅샷은 그대로 떠서 타임라인 보존).
+- 복원: 스냅샷 폴더의 `illustrations/*.png` 와 json 을 원위치로 복사(수동).
+- 권장: 중복정리 `--apply` 전, 그리고 주기적으로(자동화하려면 스케줄 작업으로 매일 1회 가능).
 
 ## 공유 안 하는 것 (의도적)
 - 임베딩 캐시(image_embed_cache 등): 각 PC 자동 재생성.
