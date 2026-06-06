@@ -721,6 +721,42 @@
     "policy": "non-illustration image visuals are used at most once across one video",
     "replacements": [
       {
+        "section": "fact_3",
+        "chunk": 8,
+        "from": {
+          "type": "image",
+          "value": "1.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "aluminum_label"
+        }
+      },
+      {
+        "section": "fact_4",
+        "chunk": 9,
+        "from": {
+          "type": "image",
+          "value": "1.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "appliance"
+        }
+      },
+      {
+        "section": "fact_4",
+        "chunk": 10,
+        "from": {
+          "type": "image",
+          "value": "2.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "battery_charge_range"
+        }
+      },
+      {
         "section": "cta",
         "chunk": 3,
         "from": {
@@ -761,20 +797,6 @@
     "policy": "Match chunks to GPT source images using prompt.md descriptions, then fallback to tagged reusable illustrations.",
     "changes": [
       {
-        "section": "fact_2",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "phone_settings_toggle"
-        },
-        "to": {
-          "type": "illust",
-          "value": "shield"
-        },
-        "context": "모델과 iOS 18.1 이상 버전에서만 사용 가능합니다 갤럭시는 처음부터 자동 녹음 기능을 제공합니다 갤럭시 자동 녹음 + 특정 번호 옵션 ['갤럭시', '자동 녹음 + 특정 번호 옵션'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
         "section": "fact_3",
         "chunk": 5,
         "from": {
@@ -793,7 +815,7 @@
         "chunk": 8,
         "from": {
           "type": "illust",
-          "value": "call_filter_rules"
+          "value": "aluminum_label"
         },
         "to": {
           "type": "illust",
@@ -891,7 +913,7 @@
         "chunk": 9,
         "from": {
           "type": "illust",
-          "value": "shield"
+          "value": "appliance"
         },
         "to": {
           "type": "illust",
@@ -905,7 +927,7 @@
         "chunk": 10,
         "from": {
           "type": "illust",
-          "value": "security_feature_lock"
+          "value": "battery_charge_range"
         },
         "to": {
           "type": "illust",

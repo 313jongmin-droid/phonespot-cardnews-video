@@ -37,7 +37,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v8"
+PANEL_VERSION = "phonespot-web-v9"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -1502,6 +1502,12 @@ class Handler(BaseHTTPRequestHandler):
                 return
             if parsed.path == "/api/worker/check":
                 job_id = str(data.get("job_id") or "").strip()
+                worker_id = str(data.get("worker_id") or "").strip()
+                # 워커가 5초마다 보내는 이 핑으로 job 리스를 갱신한다. 이게 없으면
+                # Remotion 렌더가 90초 넘게 조용한 구간(번들링/프레임)에서 리스가 만료돼
+                # 살아있는 워커의 렌더가 헛되이 재시작된다(worker lease expired; retry).
+                if worker_id and job_id:
+                    REMOTE_QUEUE.heartbeat(worker_id, "running", job_id)
                 json_response(self, {
                     "ok": True,
                     "cancel_requested": REMOTE_QUEUE.is_cancel_requested(job_id),
@@ -1999,7 +2005,7 @@ INDEX_HTML = r"""<!doctype html>
           </div>
         </div>
       </section>
-      <section><div class="head"><h2>실행 로그</h2><span class="small">실패하면 이 로그를 복사해서 보내면 됩니다.</span></div><div id="log" class="log"></div></section>
+      <section><div class="head"><h2>실행 로그</h2><div style="display:flex;gap:8px;align-items:center"><span class="small">실패하면 이 로그를 복사해서 보내면 됩니다.</span><button class="mini-btn" onclick="copyLog()">로그 복사</button></div></div><div id="log" class="log"></div></section>
       <section>
         <div class="head"><h2>최근 작업 기록</h2><button onclick="loadJobHistory()">새로고침</button></div>
         <div class="history-scroll">
@@ -2625,6 +2631,20 @@ INDEX_HTML = r"""<!doctype html>
       } catch (err) {
         if (message) message.textContent = "저장하지 못했습니다.";
         alert("청크 조정 실패\n" + String(err));
+      }
+    }
+    async function copyLog() {
+      const el = document.getElementById("log");
+      const text = el ? el.innerText : "";
+      if (!text.trim()) { alert("복사할 로그가 없습니다."); return; }
+      try {
+        await navigator.clipboard.writeText(text);
+        alert("실행 로그를 전체 복사했습니다.");
+      } catch (e) {
+        const t = document.createElement("textarea");
+        t.value = text; document.body.appendChild(t); t.select();
+        try { document.execCommand("copy"); alert("실행 로그를 전체 복사했습니다."); }
+        finally { t.remove(); }
       }
     }
     function escapeHtml(s) {

@@ -2,7 +2,7 @@
   "version": 1,
   "videos": {
     "010_tip_iphone_call_record": {
-      "used_at": "2026-06-06T20:06:15",
+      "used_at": "2026-06-06T20:31:54",
       "source": "unique_illustration_guard",
       "illustrations": [
         "phone_settings_toggle",
@@ -73,10 +73,10 @@
       ]
     }
   },
-  "updated_at": "2026-06-06T20:06:16",
+  "updated_at": "2026-06-06T20:31:55",
   "requests": {
     "010_tip_iphone_call_record": {
-      "updated_at": "2026-06-06T20:06:16",
+      "updated_at": "2026-06-06T20:31:55",
       "variants": []
     },
     "012_news_galaxy_unpack_july": {
