@@ -37,7 +37,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v12"
+PANEL_VERSION = "phonespot-web-v13"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -1546,6 +1546,15 @@ class Handler(BaseHTTPRequestHandler):
                 else:
                     json_response(self, {"ok": True})
                 return
+            if action == "library_sync":
+                # 일러스트 라이브러리 공유 허브와 양방향 추가병합(비파괴). 결과는 실행 로그에.
+                ok = run_job("일러스트 라이브러리 공유 동기화",
+                             [[sys.executable, str(SCRIPTS / "codex_library_sync.py")]], SHORTS)
+                if not ok:
+                    json_response(self, {"ok": False, "busy": True, "message": "이미 다른 작업이 실행 중입니다. 끝난 뒤 다시 눌러주세요."})
+                else:
+                    json_response(self, {"ok": True, "message": "라이브러리 동기화 실행 — 실행 로그에서 가져옴/올림 개수를 확인하세요."})
+                return
             if action == "video_prepare":
                 slug = validate_slug(slug)
                 commands = [
@@ -2013,6 +2022,7 @@ INDEX_HTML = r"""<!doctype html>
           <button class="btn" onclick="runAction('system_update')"><strong>시스템 업데이트</strong><span>GitHub에서 최신 코드만 받아옵니다. 렌더 결과물은 건드리지 않습니다.</span></button>
           <button class="btn" onclick="runAction('open_illustrations')"><strong>일러스트 폴더</strong><span>재사용 일러스트 라이브러리와 드롭 폴더를 엽니다.</span></button>
           <button class="btn" onclick="chooseUpload('illustration')"><strong>일러스트 웹 업로드</strong><span>다른 PC에서도 생성한 일러스트를 드롭 폴더에 바로 올립니다.</span></button>
+          <button class="btn" onclick="runAction('library_sync')"><strong>일러스트 라이브러리 공유</strong><span>공유 허브와 양방향 병합(추가, 비파괴). 먼저 허브 경로를 설정하세요. 결과는 아래 실행 로그에서 확인합니다.</span></button>
           <button class="btn" onclick="showChunks()"><strong>7. 청크 경계 편집</strong><span>문구 내용과 TTS는 유지하고 줄바꿈, 앞뒤 합치기, 자동 분할만 조정합니다.</span></button>
         </div>
         <div id="cardActions" class="pad grid" style="display:none">
