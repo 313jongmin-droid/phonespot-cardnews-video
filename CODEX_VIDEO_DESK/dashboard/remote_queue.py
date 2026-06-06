@@ -143,6 +143,7 @@ class RemoteQueue:
                 "name": payload.get("name") or worker_id,
                 "root": payload.get("root") or "",
                 "version": payload.get("version") or "",
+                "instance_id": payload.get("instance_id") or previous.get("instance_id") or "",
                 "capabilities": payload.get("capabilities") or ["remotion"],
                 "ready": bool(payload.get("ready", True)),
                 "issues": payload.get("issues") or [],
@@ -175,12 +176,15 @@ class RemoteQueue:
                         break
                 self._save_jobs(jobs)
 
-    def claim(self, worker_id: str) -> dict | None:
+    def claim(self, worker_id: str, instance_id: str = "") -> dict | None:
         with LOCK:
             self.recover_stale_jobs()
             self.heartbeat(worker_id)
             worker = self.workers().get(worker_id, {})
             if not worker.get("online") or not worker.get("ready", True):
+                return None
+            active_instance = str(worker.get("instance_id") or "")
+            if active_instance and instance_id != active_instance:
                 return None
             jobs = self.jobs()
             claimed = None

@@ -123,24 +123,23 @@ if (-not $NoWorker) {
     @"
 @echo off
 set "PHONESPOT_PANEL_URL=http://127.0.0.1:$port"
+set "PHONESPOT_WORKER_PID_FILE=$workerPidFile"
 set "PLAYWRIGHT_BROWSERS_PATH=$root\.playwright"
 set "PYTHONUNBUFFERED=1"
 cd /d "$desk"
 start "" /b "$python" "$workerScript" 1>>"$workerOut" 2>>"$workerErr"
 "@ | Set-Content -Path $workerLauncher -Encoding ascii
     cmd.exe /c call "$workerLauncher"
-    Start-Sleep -Milliseconds 700
-    try {
-      $workerProcess = Get-CimInstance Win32_Process |
-        Where-Object { $_.CommandLine -and $_.CommandLine.Contains($workerScript) } |
-        Sort-Object CreationDate -Descending |
-        Select-Object -First 1
-      if ($workerProcess) {
-        $workerProcess.ProcessId | Set-Content -Path $workerPidFile -Encoding ascii
+    for ($i = 0; $i -lt 20; $i++) {
+      Start-Sleep -Milliseconds 250
+      if (Test-Path $workerPidFile) {
+        break
       }
-    } catch {}
+    }
+    Write-Host "[worker] local render worker started."
+  } else {
+    Write-Host "[worker] local render worker already running."
   }
-  Write-Host "[worker] local render worker started."
 }
 
 if (-not $NoBrowser) {

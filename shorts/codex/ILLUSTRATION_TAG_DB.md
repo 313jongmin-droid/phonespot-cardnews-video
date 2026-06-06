@@ -5,19 +5,19 @@
 
 | illustration | tags | use count | last slug |
 |---|---|---:|---|
-| `aluminum_label` | materials, hardware, library | 3 | 001_apple_ondevice_ai_wwdc26 |
-| `appliance` | hardware, device, library | 3 | 001_apple_ondevice_ai_wwdc26 |
+| `aluminum_label` | materials, hardware, library | 3 | 010_tip_iphone_call_record |
+| `appliance` | hardware, device, library | 3 | 010_tip_iphone_call_record |
 | `battery_charge_range` | battery, charging, tips, library | 1 | 010_tip_iphone_call_record |
 | `battery_health_check` | battery, health, tips | 0 |  |
 | `battery_overheat` | battery, heat, warning, library | 1 | 010_tip_iphone_call_record |
 | `biometric` | security, privacy, authentication, library | 1 | 010_tip_iphone_call_record |
 | `call_recording_notice` | library | 1 | 010_tip_iphone_call_record |
 | `chart_down` | price, data, decrease, library | 1 | 010_tip_iphone_call_record |
-| `chart_up` | price, data, increase, library | 2 | 001_apple_ondevice_ai_wwdc26 |
+| `chart_up` | price, data, increase, library | 2 | 010_tip_iphone_call_record |
 | `chat_backup_restore` | messenger, backup, restore, tips, library | 1 | 010_tip_iphone_call_record |
-| `chatbot` | ai, assistant, software, library | 3 | 001_apple_ondevice_ai_wwdc26 |
-| `clock` | time, tips, library | 2 | 001_apple_ondevice_ai_wwdc26 |
-| `cloud_backup` | security, privacy, cloud, library | 2 | 001_apple_ondevice_ai_wwdc26 |
+| `chatbot` | ai, assistant, software, library | 3 | 010_tip_iphone_call_record |
+| `clock` | time, tips, library | 2 | 010_tip_iphone_call_record |
+| `cloud_backup` | security, privacy, cloud, library | 2 | 010_tip_iphone_call_record |
 | `cover_screen_widgets` | library | 0 |  |
 | `cpt_04ecdb93` | auto | 0 |  |
 | `cpt_91af2e72` | auto | 0 |  |
@@ -30,10 +30,10 @@
 | `display_ratio_change` | library | 0 |  |
 | `emergency_account_freeze` | security, bank, response, golden-time, library | 0 |  |
 | `fake_government_page` | security, smishing, government, warning | 0 |  |
-| `final_update` | software, update, library | 3 | 001_apple_ondevice_ai_wwdc26 |
+| `final_update` | software, update, library | 3 | 010_tip_iphone_call_record |
 | `foldable` | hardware, foldable, library | 1 | 012_news_galaxy_unpack_july |
-| `forecast` | news, forecast, library | 3 | 001_apple_ondevice_ai_wwdc26 |
-| `gemini` | ai, assistant, google, library | 3 | 001_apple_ondevice_ai_wwdc26 |
+| `forecast` | news, forecast, library | 3 | 010_tip_iphone_call_record |
+| `gemini` | ai, assistant, google, library | 3 | 010_tip_iphone_call_record |
 | `gift_prohibit` | price, security, warning, library | 0 |  |
 | `gift_voucher` | price, subsidy, purchase, library | 1 | 012_news_galaxy_unpack_july |
 | `handshake` | policy, access, partnership, library | 1 | 001_apple_ondevice_ai_wwdc26 |
@@ -46,7 +46,7 @@
 | `logout` | security, privacy, account, library | 0 |  |
 | `market_cap` | price, data, market, library | 0 |  |
 | `meeting_room` | policy, news, strategy, library | 2 | 001_apple_ondevice_ai_wwdc26 |
-| `memory_chip` | ai, hardware, chip, library | 3 | 001_apple_ondevice_ai_wwdc26 |
+| `memory_chip` | ai, hardware, chip, library | 3 | 010_tip_iphone_call_record |
 | `microphone` | news, quote, library | 2 | 001_apple_ondevice_ai_wwdc26 |
 | `module_install` | library | 0 |  |
 | `newspaper` | news, source, library | 2 | 001_apple_ondevice_ai_wwdc26 |
@@ -65,11 +65,11 @@
 | `release_calendar` | library | 0 |  |
 | `repair_privacy` | security, privacy, repair | 0 |  |
 | `reset` | security, privacy, software, library | 0 |  |
-| `samsung_ai` | ai, assistant, software, library | 3 | 001_apple_ondevice_ai_wwdc26 |
+| `samsung_ai` | ai, assistant, software, library | 3 | 010_tip_iphone_call_record |
 | `secure_app_reregistration` | security, bank, authentication, setup, library | 0 |  |
 | `settings_steps` | library | 1 | 010_tip_iphone_call_record |
-| `shield` | security, privacy, protection, library | 3 | 001_apple_ondevice_ai_wwdc26 |
-| `smartphone` | device, purchase, cta, library | 3 | 001_apple_ondevice_ai_wwdc26 |
+| `shield` | security, privacy, protection, library | 3 | 010_tip_iphone_call_record |
+| `smartphone` | device, purchase, cta, library | 3 | 010_tip_iphone_call_record |
 | `smishing_fake_link` | security, smishing, warning, link | 0 |  |
 | `stock_chart` | price, data, market, library | 0 |  |
 | `store` | store, purchase, cta, library | 0 |  |
@@ -82,6 +82,6 @@
 
 ## Recent videos
 
+- `010_tip_iphone_call_record`: call_recording_notice, final_update, settings_steps, forecast, biometric, chart_down, recording_archive, impersonation_call, chart_up, chat_backup_restore, chatbot, clock, aluminum_label, appliance, battery_charge_range, samsung_ai, shield, memory_chip, gemini, cloud_backup, prohibit, warning, battery_overheat, smartphone
 - `001_apple_ondevice_ai_wwdc26`: newspaper, chatbot, chart_up, memory_chip, lock, meeting_room, shield, samsung_ai, gemini, final_update, handshake, clock, microphone, forecast, cloud_backup, aluminum_label, appliance, smartphone
 - `012_news_galaxy_unpack_july`: foldable, chatbot, final_update, forecast, smartphone, newspaper, microphone, shield, meeting_room, gift_voucher, memory_chip, samsung_ai, gemini, aluminum_label, appliance
-- `010_tip_iphone_call_record`: call_recording_notice, final_update, settings_steps, forecast, biometric, chart_down, recording_archive, impersonation_call, chart_up, chat_backup_restore, chatbot, clock, aluminum_label, appliance, battery_charge_range, samsung_ai, shield, memory_chip, gemini, cloud_backup, prohibit, warning, battery_overheat, smartphone

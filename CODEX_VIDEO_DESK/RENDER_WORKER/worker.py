@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
+import atexit
 import importlib.util
 import json
 import os
@@ -16,6 +17,7 @@ import urllib.parse
 import urllib.request
 import zipfile
 from pathlib import Path
+from uuid import uuid4
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -26,6 +28,24 @@ SAVED_URL = URL_FILE.read_text(encoding="utf-8-sig", errors="replace").strip() i
 SERVER = (os.environ.get("PHONESPOT_PANEL_URL") or SAVED_URL or "http://127.0.0.1:4901").rstrip("/")
 WORKER_ID = os.environ.get("PHONESPOT_WORKER_ID") or socket.gethostname()
 VERSION = "render-worker-v2"
+INSTANCE_ID = uuid4().hex
+PID_FILE = Path(os.environ["PHONESPOT_WORKER_PID_FILE"]) if os.environ.get("PHONESPOT_WORKER_PID_FILE") else None
+
+
+def register_pid() -> None:
+    if not PID_FILE:
+        return
+    PID_FILE.parent.mkdir(parents=True, exist_ok=True)
+    PID_FILE.write_text(str(os.getpid()), encoding="ascii")
+
+    def cleanup() -> None:
+        try:
+            if PID_FILE.exists() and PID_FILE.read_text(encoding="ascii").strip() == str(os.getpid()):
+                PID_FILE.unlink()
+        except OSError:
+            pass
+
+    atexit.register(cleanup)
 
 
 def readiness() -> dict:
@@ -75,6 +95,7 @@ def registration_payload(status: dict | None = None) -> dict:
         "name": socket.gethostname(),
         "root": str(ROOT),
         "version": VERSION,
+        "instance_id": INSTANCE_ID,
         "capabilities": ["remotion"],
         **status,
     }
@@ -240,6 +261,7 @@ def run_job(job: dict) -> tuple[bool, int, str]:
 
 
 def main() -> int:
+    register_pid()
     print("=" * 60)
     print("PhoneSpot Render Worker")
     print("=" * 60)
@@ -261,7 +283,10 @@ def main() -> int:
             if not status["ready"]:
                 time.sleep(5)
                 continue
-            response = json_request("/api/worker/claim", {"worker_id": WORKER_ID})
+            response = json_request("/api/worker/claim", {
+                "worker_id": WORKER_ID,
+                "instance_id": INSTANCE_ID,
+            })
             job = response.get("job")
             if not job:
                 time.sleep(3)

@@ -2,7 +2,7 @@
   "version": 1,
   "videos": {
     "010_tip_iphone_call_record": {
-      "used_at": "2026-06-06T14:12:16",
+      "used_at": "2026-06-06T14:51:07",
       "source": "codex_enhance",
       "illustrations": [
         "call_recording_notice",
@@ -53,7 +53,7 @@
       ]
     },
     "001_apple_ondevice_ai_wwdc26": {
-      "used_at": "2026-06-06T14:50:05",
+      "used_at": "2026-06-06T14:50:53",
       "source": "codex_enhance",
       "illustrations": [
         "newspaper",
@@ -77,10 +77,10 @@
       ]
     }
   },
-  "updated_at": "2026-06-06T14:50:05",
+  "updated_at": "2026-06-06T14:51:08",
   "requests": {
     "010_tip_iphone_call_record": {
-      "updated_at": "2026-06-06T14:12:17",
+      "updated_at": "2026-06-06T14:51:08",
       "variants": [
         "phone_settings_toggle",
         "call_filter_rules",
@@ -92,7 +92,7 @@
       "variants": []
     },
     "001_apple_ondevice_ai_wwdc26": {
-      "updated_at": "2026-06-06T14:50:05",
+      "updated_at": "2026-06-06T14:50:54",
       "variants": [
         "security_feature_lock"
       ]

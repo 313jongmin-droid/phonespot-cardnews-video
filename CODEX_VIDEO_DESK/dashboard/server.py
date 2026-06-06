@@ -1234,7 +1234,7 @@ class Handler(BaseHTTPRequestHandler):
                 worker_id = str(data.get("worker_id") or "").strip()
                 if not worker_id:
                     raise RuntimeError("worker_id is required")
-                job = REMOTE_QUEUE.claim(worker_id)
+                job = REMOTE_QUEUE.claim(worker_id, str(data.get("instance_id") or ""))
                 json_response(self, {"ok": True, "job": job})
                 return
             if parsed.path == "/api/worker/check":
