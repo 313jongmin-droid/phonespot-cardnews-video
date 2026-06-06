@@ -70,6 +70,12 @@ def main() -> int:
     lines = []
     lines.append(f"# Codex GPT Illustration Prompt: {data.get('slug') or slug or 'latest'}")
     lines.append("")
+    lines.append("## ⚠️ 먼저 읽기: 각 항목을 **개별 이미지로 한 장씩** 생성하세요")
+    lines.append("")
+    lines.append(f"- 아래 항목은 총 {len(requests)}개입니다. **한 항목당 정확히 1장**, 총 {len(requests)}장의 PNG를 따로 만드세요.")
+    lines.append("- 여러 항목을 **한 장에 모아 그리지 마세요.** 콜라주/그리드/한 캔버스에 여러 컷으로 묶는 것 금지.")
+    lines.append("- 1번 1장 → 2번 1장 → ... 순서대로 하나씩 생성하고, 각각 따로 다운로드하세요.")
+    lines.append("")
     lines.append("아래 순서대로 GPT Plus에서 이미지를 생성한 뒤, 그대로 다운로드하세요.")
     lines.append("다운로드가 끝나면 `02_IMPORT_DOWNLOADS_AND_RENDER.bat` 또는 웹 패널의 `2. 가져오고 렌더`를 실행하세요.")
     lines.append("")

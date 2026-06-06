@@ -111,3 +111,33 @@ shorts\SETUP_EMBED.bat
 - 확정 매핑(`IMPORT_CONFIRMED.json`)은 24시간·동일 slug 일 때만 사용하고, 쓰고 나면
   `.used.json` 으로 치워 재사용을 막는다(다른 영상에 잘못 적용 방지).
 - 썸네일 GET 은 DROP/Downloads/illustrations 안의 이미지 파일만 제공한다(경로 탈출 차단).
+
+---
+
+## 8. 패널 코드를 바꾼 뒤 재시작(껐다 켜기) 없이 반영하기
+
+무엇을 바꿨느냐에 따라 다르다.
+
+- **스크립트(`shorts/scripts/codex_*.py`, 프롬프트 문구 등)**: 패널이 버튼을 누를 때마다
+  새 프로세스로 실행하므로 **재시작 불필요**. 파일만 바뀌면 다음 클릭에 바로 반영된다.
+  (프롬프트 문구는 버튼 1 을 다시 눌러 LATEST_PROMPT.md 를 새로 만들면 반영.)
+- **패널 본체(`dashboard/server.py` = 웹 UI/JS/API)**: 계속 떠 있는 파이썬 프로세스라
+  메모리에 올라간 코드를 핫리로드하지 못한다 → 프로세스를 다시 띄워야 한다.
+
+수동으로 끌 필요는 없다. 런처 `dashboard/start_hidden.ps1` 가 **버전 게이트**로 자동
+재시작한다:
+- `/api/health` 의 버전이 런처가 기대하는 `$expectedVersion` 과 다르면, 옛 패널을 죽이고
+  새로 띄운다.
+
+그래서 **server.py 를 바꿀 때 규칙**:
+1. `server.py` 의 `PANEL_VERSION` 을 한 칸 올린다. 예: `phonespot-web-v6` → `phonespot-web-v7`.
+2. `start_hidden.ps1` 의 `$expectedVersion` 을 **똑같이** 올린다.
+3. `00_PHONE_SPOT_PANEL.bat` 을 다시 더블클릭 → 버전 불일치 감지 → 옛 패널 자동 종료 →
+   새 코드로 자동 재시작.
+4. 브라우저 탭 새로고침(캐시까지: Ctrl+Shift+R).
+
+두 값을 같이 올리지 않으면:
+- 둘 다 그대로면 런처가 "정상"으로 보고 **재시작을 건너뛰어 새 코드가 안 올라온다**(가장 흔한 실수).
+- 한쪽만 올리면 매번 불필요하게 재시작한다.
+
+현재 버전: `phonespot-web-v6` (이미지 검수 기능 반영본).

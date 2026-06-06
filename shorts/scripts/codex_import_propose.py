@@ -65,16 +65,24 @@ def load_payload() -> tuple[str, dict, float]:
 
 
 def pending_requests(payload: dict) -> list[dict]:
-    """렌더를 막는(반드시 채워야 하는) 누락 요청. 자동발굴(concept_scout)은 선택이라 제외."""
-    out = []
+    """검수에서 그림을 배정할 수 있는 누락 요청 목록.
+    자동발굴(concept_scout)도 사람이 그렸으면 배정할 수 있게 포함하되 optional 로 표시한다.
+    (렌더를 막지는 않는다 - 그건 codex_import_downloads.py 가 따로 처리.)
+    필수 요청을 먼저, 선택(자동발굴) 요청을 뒤에 둔다."""
+    mandatory: list[dict] = []
+    optional: list[dict] = []
     for item in payload.get("requests", []) or []:
         fn = item.get("filename")
         if not fn or (ILLUST / fn).exists():
             continue
+        row = dict(item)
         if item.get("source") == "concept_scout":
-            continue
-        out.append(item)
-    return out
+            row["optional"] = True
+            optional.append(row)
+        else:
+            row["optional"] = False
+            mandatory.append(row)
+    return mandatory + optional
 
 
 def gather_candidates(threshold: float, exclude: set[Path]) -> list[Path]:
@@ -119,6 +127,7 @@ def build_proposal(slug: str, requests: list[dict], candidates: list[Path],
         "section": r.get("section", ""),
         "chunk_index": int(r.get("chunk_index", 0)),
         "concept_label": r.get("concept_label") or "",
+        "optional": bool(r.get("optional")),
         "concept_text": concept_text(r),
     } for r in requests]
 

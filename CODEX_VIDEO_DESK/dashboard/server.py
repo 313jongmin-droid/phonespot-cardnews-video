@@ -37,7 +37,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v4"
+PANEL_VERSION = "phonespot-web-v6"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -711,6 +711,10 @@ def strip_display_period(text: str) -> str:
     return str(text or "").strip().rstrip(".。.!?！？").strip()
 
 
+def flatten_chunk_text(text: str) -> str:
+    return " ".join(str(text or "").replace("\\n", " ").replace("\n", " ").split())
+
+
 def chunk_source(sec: dict) -> list[str]:
     chunks = sec.get("caption_chunks")
     if not isinstance(chunks, list) or not chunks:
@@ -785,14 +789,21 @@ def chunk_rows_for_slug(slug: str) -> list[dict]:
                 "chunk": index + 1,
                 "text": strip_display_period(chunk),
                 "visual": f"{visual.get('type', '-')}: {visual.get('value', '-')}",
-                "chars": len(str(chunk).replace("\\n", "")),
+                "chars": len(flatten_chunk_text(chunk).replace(" ", "")),
                 "override": bool(sec.get("_codex_chunk_override")),
+                "can_merge_prev": index > 0 and len(
+                    re.sub(r"\s+", "", flatten_chunk_text(chunks[index - 1]) + flatten_chunk_text(chunk))
+                ) <= 42,
+                "can_merge_next": index < len(chunks) - 1 and len(
+                    re.sub(r"\s+", "", flatten_chunk_text(chunk) + flatten_chunk_text(chunks[index + 1]))
+                ) <= 42,
+                "can_split": best_split_index(chunk) >= 0,
             })
     return rows
 
 
 def best_split_index(text: str) -> int:
-    plain = " ".join(str(text or "").replace("\\n", " ").split())
+    plain = flatten_chunk_text(text)
     if len(plain) < 18:
         return -1
     preferred = [" 그리고 ", " 또한 ", " 다만 ", " 때문에 ", " 기준 ", " 경우 ", "이며 ", "하고 ", ", "]
@@ -821,7 +832,7 @@ def best_split_index(text: str) -> int:
 
 
 def auto_linebreak(text: str) -> str:
-    plain = " ".join(str(text or "").replace("\\n", " ").split())
+    plain = flatten_chunk_text(text)
     if len(plain) <= 18:
         return strip_display_period(plain)
     idx = best_split_index(plain)
@@ -831,7 +842,7 @@ def auto_linebreak(text: str) -> str:
     right = plain[idx:].strip(" ,")
     if not left or not right:
         return strip_display_period(plain)
-    return strip_display_period(left) + "\\n" + strip_display_period(right)
+    return strip_display_period(left) + "\n" + strip_display_period(right)
 
 
 def adjust_chunk_boundary(slug: str, section: str, chunk_index: int, op: str) -> Path:
@@ -856,19 +867,27 @@ def adjust_chunk_boundary(slug: str, section: str, chunk_index: int, op: str) ->
     elif op == "merge_prev":
         if chunk_index <= 0:
             raise RuntimeError("first chunk cannot merge previous")
-        chunks[chunk_index - 1] = (chunks[chunk_index - 1].replace("\\n", " ").rstrip(" ,") + " " + chunks[chunk_index].replace("\\n", " ").lstrip()).strip()
+        chunks[chunk_index - 1] = (
+            flatten_chunk_text(chunks[chunk_index - 1]).rstrip(" ,")
+            + " "
+            + flatten_chunk_text(chunks[chunk_index]).lstrip()
+        ).strip()
         del chunks[chunk_index]
         if len(visuals) > chunk_index:
             del visuals[chunk_index]
     elif op == "merge_next":
         if chunk_index >= len(chunks) - 1:
             raise RuntimeError("last chunk cannot merge next")
-        chunks[chunk_index] = (chunks[chunk_index].replace("\\n", " ").rstrip(" ,") + " " + chunks[chunk_index + 1].replace("\\n", " ").lstrip()).strip()
+        chunks[chunk_index] = (
+            flatten_chunk_text(chunks[chunk_index]).rstrip(" ,")
+            + " "
+            + flatten_chunk_text(chunks[chunk_index + 1]).lstrip()
+        ).strip()
         del chunks[chunk_index + 1]
         if len(visuals) > chunk_index + 1:
             del visuals[chunk_index + 1]
     elif op == "split_auto":
-        plain = " ".join(chunks[chunk_index].replace("\\n", " ").split())
+        plain = flatten_chunk_text(chunks[chunk_index])
         split = best_split_index(plain)
         if split < 0:
             raise RuntimeError("this chunk is too short or has no safe split point")
@@ -1864,6 +1883,7 @@ INDEX_HTML = r"""<!doctype html>
     .weak-table select,.weak-table input { width:100%; border:1px solid #e7b9a8; border-radius:6px; padding:6px; font-size:12px; background:white; }
     .mini-btn { border:1px solid var(--orange); color:var(--orange); background:white; border-radius:6px; padding:6px 8px; cursor:pointer; font-size:12px; margin:2px; }
     .mini-btn:hover { background:#fff0e8; }
+    .mini-btn:disabled { border-color:#cbd5e1; color:#94a3b8; background:#f8fafc; cursor:not-allowed; }
     .chunk-panel { display:none; border-top:1px solid var(--line); background:#f8fbff; }
     .chunk-table { width:100%; border-collapse:collapse; font-size:12px; }
     .chunk-table th,.chunk-table td { border-bottom:1px solid #dbe7f5; padding:8px; vertical-align:top; text-align:left; }
@@ -1964,6 +1984,7 @@ INDEX_HTML = r"""<!doctype html>
         <div id="chunkPanel" class="chunk-panel">
           <div class="head"><h2>청크 경계 편집</h2><button onclick="toggleChunkPanel()">닫기</button></div>
           <div class="pad small">문장 내용과 TTS는 바꾸지 않습니다. 화면에 보이는 청크 경계와 줄바꿈만 조정합니다.</div>
+          <div class="pad small" id="chunkMessage"></div>
           <div class="weak-scroll">
             <table class="chunk-table">
               <thead><tr><th>구간</th><th>청크 문구</th><th>visual</th><th>작업</th></tr></thead>
@@ -2402,7 +2423,7 @@ INDEX_HTML = r"""<!doctype html>
       const assigns = p.assignments || [];
       const engineLabel = p.engine === "image-embedding" ? "그림 내용 매칭" : (p.engine === "fallback-mtime" ? "시간순 추정(모델 없음 — 꼭 확인)" : "후보 없음");
       const optionsHtml = ["<option value=''>— 사용 안 함 —</option>"].concat(
-        reqs.map(r => `<option value="${escapeHtml(r.filename)}">${escapeHtml(r.filename)}${r.concept_label ? " · " + escapeHtml(r.concept_label) : ""}</option>`)
+        reqs.map(r => `<option value="${escapeHtml(r.filename)}">${r.optional ? "[자동발굴] " : ""}${escapeHtml(r.filename)}${r.concept_label ? " · " + escapeHtml(r.concept_label) : ""}</option>`)
       ).join("");
       let html = `<div class='pad small'>엔진: <b>${escapeHtml(engineLabel)}</b> · 후보 ${assigns.length}장 · 요청 ${reqs.length}건</div>`;
       if (!assigns.length) {
@@ -2537,14 +2558,17 @@ INDEX_HTML = r"""<!doctype html>
         rows.forEach((r) => {
           const tr = document.createElement("tr");
           const overrideBadge = r.override ? "<br><span class='pill ok'>편집본</span>" : "";
+          const mergePrevDisabled = r.can_merge_prev ? "" : "disabled title='첫 청크이거나 합친 문장이 너무 깁니다.'";
+          const mergeNextDisabled = r.can_merge_next ? "" : "disabled title='마지막 청크이거나 합친 문장이 너무 깁니다.'";
+          const splitDisabled = r.can_split ? "" : "disabled title='안전하게 나눌 수 있을 만큼 길지 않습니다.'";
           tr.innerHTML = `<td>${escapeHtml(r.section)}<br>청크 ${Number(r.chunk) || 0}<br>${Number(r.chars) || 0}자${overrideBadge}</td>
             <td class="chunk-text">${escapeHtml(r.text || "")}</td>
             <td>${escapeHtml(r.visual || "-")}</td>
             <td>
-              <button class="mini-btn" onclick="adjustChunk('${escapeJs(r.section)}', ${Number(r.chunk_index)||0}, 'linebreak')">줄바꿈 정리</button>
-              <button class="mini-btn" onclick="adjustChunk('${escapeJs(r.section)}', ${Number(r.chunk_index)||0}, 'merge_prev')">앞과 합치기</button>
-              <button class="mini-btn" onclick="adjustChunk('${escapeJs(r.section)}', ${Number(r.chunk_index)||0}, 'merge_next')">뒤와 합치기</button>
-              <button class="mini-btn" onclick="adjustChunk('${escapeJs(r.section)}', ${Number(r.chunk_index)||0}, 'split_auto')">자동 둘로 나누기</button>
+              <button class="mini-btn" onclick="adjustChunk('${escapeJs(r.section)}', ${Number(r.chunk_index)||0}, 'linebreak')">자동 줄바꿈</button>
+              <button class="mini-btn" ${mergePrevDisabled} onclick="adjustChunk('${escapeJs(r.section)}', ${Number(r.chunk_index)||0}, 'merge_prev')">앞과 합치기</button>
+              <button class="mini-btn" ${mergeNextDisabled} onclick="adjustChunk('${escapeJs(r.section)}', ${Number(r.chunk_index)||0}, 'merge_next')">뒤와 합치기</button>
+              <button class="mini-btn" ${splitDisabled} onclick="adjustChunk('${escapeJs(r.section)}', ${Number(r.chunk_index)||0}, 'split_auto')">자동 둘로 나누기</button>
             </td>`;
           body.appendChild(tr);
         });
@@ -2558,7 +2582,9 @@ INDEX_HTML = r"""<!doctype html>
       panel.style.display = panel.style.display === "block" ? "none" : "block";
     }
     async function adjustChunk(section, chunkIndex, op) {
+      const message = document.getElementById("chunkMessage");
       try {
+        if (message) message.textContent = "청크를 저장하는 중입니다.";
         const result = await api("/api/action", {
           method:"POST",
           headers:{"Content-Type":"application/json"},
@@ -2566,10 +2592,13 @@ INDEX_HTML = r"""<!doctype html>
         });
         if (!result.ok) {
           alert(result.message || "청크 조정에 실패했습니다.");
+          if (message) message.textContent = result.message || "청크 조정에 실패했습니다.";
           return;
         }
         await showChunks();
+        if (message) message.textContent = "저장했습니다. 다음 렌더부터 자동으로 반영됩니다.";
       } catch (err) {
+        if (message) message.textContent = "저장하지 못했습니다.";
         alert("청크 조정 실패\n" + String(err));
       }
     }
