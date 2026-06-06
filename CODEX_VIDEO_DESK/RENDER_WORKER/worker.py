@@ -311,7 +311,7 @@ def main() -> int:
             })
             job = response.get("job")
             if not job:
-                time.sleep(3)
+                time.sleep(1)
                 continue
             print(f"[claim] {job['id']} {job['action']} {job['slug']}")
             try:

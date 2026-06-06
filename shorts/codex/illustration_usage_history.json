@@ -73,34 +73,26 @@
       ]
     },
     "011_qa_combo_discount_check": {
-      "used_at": "2026-06-06T21:12:12",
-      "source": "codex_enhance",
+      "used_at": "2026-06-06T21:13:20",
+      "source": "unique_illustration_guard",
       "illustrations": [
-        "chart_down",
-        "settings_steps",
+        "smartphone",
+        "newspaper",
+        "telecom_discount_compare",
+        "microphone",
+        "shield",
+        "meeting_room",
+        "forecast",
         "clock",
         "gift_voucher",
-        "chart_up",
-        "chat_backup_restore",
-        "chatbot",
-        "aluminum_label",
-        "appliance",
-        "cloud_backup",
-        "cover_screen_widgets",
-        "device_data_transfer",
-        "display_ratio_change",
-        "store",
+        "chart_down",
         "ti_decrease",
-        "smartphone",
-        "emergency_account_freeze",
-        "final_update",
-        "battery_charge_range",
-        "battery_overheat",
-        "biometric"
+        "store",
+        "health_sensor_watch"
       ]
     }
   },
-  "updated_at": "2026-06-06T21:12:12",
+  "updated_at": "2026-06-06T21:13:20",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-06T20:31:55",
@@ -117,7 +109,7 @@
       ]
     },
     "011_qa_combo_discount_check": {
-      "updated_at": "2026-06-06T20:54:46",
+      "updated_at": "2026-06-06T21:13:20",
       "variants": []
     }
   }
