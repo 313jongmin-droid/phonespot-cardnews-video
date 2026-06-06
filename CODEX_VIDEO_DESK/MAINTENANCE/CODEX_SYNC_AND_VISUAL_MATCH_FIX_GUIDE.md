@@ -25,8 +25,14 @@
 2. `getChunkWindows`는 항상 `sum(windows.duration) == durFrames`, 연속(빈틈/겹침 없음)이어야 합니다.
 3. 가중치(`tts_chunk_weights`)는 가능하면 **WordBoundary 기반(`word_boundary_snap`)** 이어야 정확합니다.
 
-### 남은 주의 (별도 개선 후보)
-- 구버전 edge-tts면 `generate_tts.py`가 WordBoundary 없이 `character_weight_fallback`(글자수 비례)로 떨어집니다. `verify_tts_timing.py`는 이를 **경고만** 합니다. PC마다 edge-tts 버전을 맞추고, 원하면 이 경고를 에러로 승격하세요. (글자수 폴백도 이번 수정으로 50%+ 비중이 반영되어 종전보다 낫지만, WordBoundary가 정답입니다.)
+### WordBoundary 폴백 차단 (적용됨)
+- 구버전 edge-tts면 `generate_tts.py`가 WordBoundary 없이 `character_weight_fallback`(글자수 비례)로 떨어져 싱크가 어긋납니다.
+- 이제 `verify_tts_timing.py`가 이 상태를 **에러로 처리해 렌더를 막습니다**(종전엔 경고만 했음). 메시지에서 `pip install -U edge-tts`로 업그레이드하라고 안내합니다.
+- 정말 그대로 진행해야 하면 `--allow-char-fallback` 옵션으로 경고로 낮출 수 있습니다.
+- **게이트 확인됨:** `shorts/run_codex_casual.bat`가 Step 4에서 `verify_tts_timing.py`를 호출하고 바로 `if errorlevel 1 goto :fail`로 체크합니다(줄 93-94). 따라서 폴백이면 Step 5 Remotion 렌더 전에 실제로 중단됩니다.
+- 참고: 같은 배치 Step 2(줄 59)가 매 실행마다 `pip install --upgrade edge-tts`를 돌려 edge-tts를 최신화합니다. 그래서 인터넷 되는 PC면 폴백이 잘 안 납니다. 이 에러 게이트는 **그 업그레이드가 실패하는 PC(오프라인/망분리)** 를 잡는 안전망입니다.
+- 모든 PC의 edge-tts 버전을 최신으로 통일하는 것이 근본책입니다. (글자수 폴백도 이번 버그1 수정으로 50%+ 비중이 반영돼 종전보단 낫지만, WordBoundary가 정답입니다.)
+- 백업: `shorts/scripts/verify_tts_timing.py.bak_wordboundary_strict_*`
 - `loudnorm` 재인코딩은 윈도우 계산(정규화 전) 이후라 미세 오차가 남습니다. 큰 문제는 아니나 인지해 둘 것.
 
 ---

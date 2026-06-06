@@ -11,16 +11,8 @@ $url = "http://127.0.0.1:$port"
 $tempRoot = Join-Path $desk "TEMP\panel"
 $pidFile = Join-Path $tempRoot "panel_server.pid"
 $logDir = Join-Path $tempRoot "panel_logs"
-$authFile = Join-Path $root "_secrets\panel_auth.txt"
-$accessInfo = Join-Path $desk "TEMP\PANEL_ACCESS_INFO.txt"
-$firstSecuritySetup = -not (Test-Path $authFile)
 
 New-Item -ItemType Directory -Force -Path $logDir | Out-Null
-
-python (Join-Path $PSScriptRoot "init_security.py")
-if ($LASTEXITCODE -ne 0) {
-  throw "Panel security initialization failed."
-}
 
 function Test-PanelHealth {
   try {
@@ -101,12 +93,6 @@ start "" /b python "$server" 1>>"$stdoutLog" 2>>"$stderrLog"
 
 Write-Host "[OK] PhoneSpot panel is running."
 Write-Host "[local] http://localhost:$port/"
-Write-Host "[access info] $accessInfo"
-
-if ($firstSecuritySetup -and (Test-Path $accessInfo)) {
-  cmd.exe /c "start `"`" notepad.exe `"$accessInfo`""
-}
-
 if (-not $NoBrowser) {
   cmd.exe /c "start `"`" `"http://localhost:$port/`""
 }

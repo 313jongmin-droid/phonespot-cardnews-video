@@ -1,9 +1,7 @@
 param(
   [string]$TargetDir = "C:\PhoneSpot\phonespot_cardnews",
   [Parameter(Mandatory=$true)]
-  [string]$PanelUrl,
-  [Parameter(Mandatory=$true)]
-  [string]$WorkerKey
+  [string]$PanelUrl
 )
 
 $ErrorActionPreference = "Stop"
@@ -115,7 +113,6 @@ $workerDir = Join-Path $desk "RENDER_WORKER"
 $worker = Join-Path $desk "01_START_RENDER_WORKER.bat"
 if ((Test-Path $workerDir) -and (Test-Path $worker)) {
   $PanelUrl.TrimEnd("/") | Set-Content -Path (Join-Path $workerDir "panel_url.txt") -Encoding utf8
-  $WorkerKey.Trim() | Set-Content -Path (Join-Path $workerDir "worker_api_key.txt") -Encoding utf8
   Write-Host "[OK] Setup complete."
   Write-Host "[panel] $PanelUrl"
   Write-Host "[worker] $worker"

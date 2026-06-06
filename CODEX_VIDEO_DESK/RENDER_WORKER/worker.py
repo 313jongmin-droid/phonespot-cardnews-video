@@ -20,11 +20,7 @@ ROOT = Path(__file__).resolve().parents[2]
 SHORTS = ROOT / "shorts"
 RESULTS = ROOT / "CODEX_VIDEO_DESK" / "RESULTS"
 URL_FILE = Path(__file__).resolve().parent / "panel_url.txt"
-KEY_FILE = Path(__file__).resolve().parent / "worker_api_key.txt"
 SAVED_URL = URL_FILE.read_text(encoding="utf-8-sig", errors="replace").strip() if URL_FILE.exists() else ""
-LOCAL_KEY_FILE = ROOT / "_secrets" / "worker_api_key.txt"
-ACTIVE_KEY_FILE = KEY_FILE if KEY_FILE.exists() else LOCAL_KEY_FILE
-WORKER_KEY = ACTIVE_KEY_FILE.read_text(encoding="utf-8-sig", errors="replace").strip() if ACTIVE_KEY_FILE.exists() else ""
 SERVER = (os.environ.get("PHONESPOT_PANEL_URL") or SAVED_URL or "http://127.0.0.1:4901").rstrip("/")
 WORKER_ID = os.environ.get("PHONESPOT_WORKER_ID") or socket.gethostname()
 VERSION = "render-worker-v1"
@@ -38,8 +34,6 @@ def json_request(path: str, payload: dict | None = None, timeout: int = 30) -> d
         body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
         headers["Content-Type"] = "application/json"
         method = "POST"
-    if WORKER_KEY:
-        headers["X-Worker-Key"] = WORKER_KEY
     request = urllib.request.Request(SERVER + path, data=body, headers=headers, method=method)
     with urllib.request.urlopen(request, timeout=timeout) as response:
         return json.loads(response.read().decode("utf-8", errors="replace"))
@@ -70,10 +64,7 @@ def safe_extract(zip_path: Path) -> None:
 def download_package(job: dict) -> None:
     with tempfile.TemporaryDirectory(prefix="phonespot_render_") as temp:
         target = Path(temp) / "job.zip"
-        request = urllib.request.Request(
-            SERVER + f"/api/worker/package?job_id={urllib.parse.quote(job['id'])}",
-            headers={"X-Worker-Key": WORKER_KEY},
-        )
+        request = urllib.request.Request(SERVER + f"/api/worker/package?job_id={urllib.parse.quote(job['id'])}")
         with urllib.request.urlopen(request, timeout=180) as response:
             target.write_bytes(response.read())
         safe_extract(target)
@@ -99,7 +90,6 @@ def upload_result(job_id: str, path: Path) -> None:
         headers={"Content-Type": "video/mp4", "X-File-Name": path.name},
         method="POST",
     )
-    request.add_header("X-Worker-Key", WORKER_KEY)
     with urllib.request.urlopen(request, timeout=600) as response:
         response.read()
 
@@ -208,10 +198,6 @@ def main() -> int:
     print(f"Worker : {WORKER_ID}")
     print(f"Panel  : {SERVER}")
     print(f"Root   : {ROOT}")
-    if not WORKER_KEY:
-        print("[ERROR] Render worker API key is missing.")
-        print("[NEXT] Run 00_SETUP_RENDER_PC_FROM_GITHUB.bat again.")
-        return 2
     while True:
         try:
             json_request("/api/worker/register", {

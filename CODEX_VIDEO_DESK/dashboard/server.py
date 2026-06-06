@@ -2,8 +2,6 @@
 from __future__ import annotations
 
 import html
-import base64
-import hmac
 import json
 import os
 import re
@@ -33,8 +31,6 @@ CARD_ARTICLES = CARDNEWS / "articles"
 SECRETS = ROOT / "_secrets"
 TELEGRAM_TOKEN_FILE = SECRETS / "telegram_token.txt"
 TELEGRAM_CHAT_ID_FILE = SECRETS / "telegram_chat_id.txt"
-PANEL_AUTH_FILE = SECRETS / "panel_auth.txt"
-WORKER_API_KEY_FILE = SECRETS / "worker_api_key.txt"
 DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
@@ -849,7 +845,7 @@ def cors_headers(handler: BaseHTTPRequestHandler) -> None:
         handler.send_header("Access-Control-Allow-Origin", origin)
         handler.send_header("Vary", "Origin")
     handler.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-    handler.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Worker-Key")
+    handler.send_header("Access-Control-Allow-Headers", "Content-Type")
 
 
 def origin_allowed(handler: BaseHTTPRequestHandler, origin: str) -> bool:
@@ -859,41 +855,6 @@ def origin_allowed(handler: BaseHTTPRequestHandler, origin: str) -> bool:
     if origin in {f"http://{host}", f"https://{host}"}:
         return True
     return origin.startswith("https://script.google.com") or origin.endswith(".googleusercontent.com")
-
-
-def read_secret(path: Path) -> str:
-    return path.read_text(encoding="utf-8-sig", errors="replace").strip() if path.exists() else ""
-
-
-def panel_authorized(handler: BaseHTTPRequestHandler) -> bool:
-    expected = read_secret(PANEL_AUTH_FILE)
-    if not expected:
-        return handler.client_address[0] in {"127.0.0.1", "::1"}
-    header = handler.headers.get("Authorization", "")
-    if not header.startswith("Basic "):
-        return False
-    try:
-        supplied = base64.b64decode(header[6:]).decode("utf-8")
-    except Exception:
-        return False
-    return hmac.compare_digest(supplied, expected)
-
-
-def worker_authorized(handler: BaseHTTPRequestHandler) -> bool:
-    expected = read_secret(WORKER_API_KEY_FILE)
-    supplied = handler.headers.get("X-Worker-Key", "")
-    return bool(expected and supplied and hmac.compare_digest(supplied, expected))
-
-
-def unauthorized_response(handler: BaseHTTPRequestHandler, worker: bool = False) -> None:
-    payload = json.dumps({"ok": False, "error": "unauthorized"}).encode("utf-8")
-    handler.send_response(401)
-    handler.send_header("Content-Type", "application/json; charset=utf-8")
-    if not worker:
-        handler.send_header("WWW-Authenticate", 'Basic realm="PhoneSpot Panel"')
-    handler.send_header("Content-Length", str(len(payload)))
-    handler.end_headers()
-    handler.wfile.write(payload)
 
 
 def json_response(handler: BaseHTTPRequestHandler, data: dict, status: int = 200) -> None:
@@ -990,13 +951,6 @@ class Handler(BaseHTTPRequestHandler):
         parsed = urlparse(self.path)
         if parsed.path == "/api/health":
             json_response(self, {"ok": True, "service": "phonespot-panel"})
-            return
-        if parsed.path.startswith("/api/worker/"):
-            if not worker_authorized(self):
-                unauthorized_response(self, worker=True)
-                return
-        elif not panel_authorized(self):
-            unauthorized_response(self)
             return
         if parsed.path == "/":
             html_response(self, INDEX_HTML)
@@ -1184,13 +1138,6 @@ class Handler(BaseHTTPRequestHandler):
             origin = self.headers.get("Origin", "")
             if origin and not origin_allowed(self, origin):
                 json_response(self, {"ok": False, "error": "origin not allowed"}, 403)
-                return
-            if parsed.path.startswith("/api/worker/"):
-                if not worker_authorized(self):
-                    unauthorized_response(self, worker=True)
-                    return
-            elif not panel_authorized(self):
-                unauthorized_response(self)
                 return
             if parsed.path == "/api/worker/result":
                 query = urllib.parse.parse_qs(parsed.query)
