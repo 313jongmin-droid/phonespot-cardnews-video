@@ -1,5 +1,7 @@
 param(
-  [string]$TargetDir = "C:\PhoneSpot\phonespot_cardnews"
+  [string]$TargetDir = "C:\PhoneSpot\phonespot_cardnews",
+  [Parameter(Mandatory=$true)]
+  [string]$PanelUrl
 )
 
 $ErrorActionPreference = "Stop"
@@ -107,11 +109,14 @@ python -m pip install -q edge-tts mutagen pillow requests
 if ($LASTEXITCODE -ne 0) { throw "Python package install failed." }
 
 $desk = Join-Path $targetPath "CODEX_VIDEO_DESK"
-$panel = Join-Path $desk "00_PHONE_SPOT_PANEL.bat"
-if (Test-Path $panel) {
+$workerDir = Join-Path $desk "RENDER_WORKER"
+$worker = Join-Path $desk "01_START_RENDER_WORKER.bat"
+if ((Test-Path $workerDir) -and (Test-Path $worker)) {
+  $PanelUrl.TrimEnd("/") | Set-Content -Path (Join-Path $workerDir "panel_url.txt") -Encoding utf8
   Write-Host "[OK] Setup complete."
-  Write-Host "[panel] $panel"
-  Start-Process -FilePath $panel -WorkingDirectory $desk
+  Write-Host "[panel] $PanelUrl"
+  Write-Host "[worker] $worker"
+  Start-Process -FilePath $worker -WorkingDirectory $desk
 } else {
-  throw "Panel launcher was not found after clone."
+  throw "Render worker launcher was not found after clone."
 }

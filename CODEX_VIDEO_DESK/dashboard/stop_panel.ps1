@@ -1,8 +1,8 @@
 $ErrorActionPreference = "SilentlyContinue"
-$port = 4878
+$port = 4901
 $lines = cmd /c "netstat -ano | findstr :$port"
 if (-not $lines) {
-  Write-Host "[OK] Control panel server is not running on 4878."
+  Write-Host "[OK] Control panel server is not running on 4901."
   Start-Sleep -Seconds 1
   exit 0
 }

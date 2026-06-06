@@ -6,9 +6,9 @@ $ErrorActionPreference = "Continue"
 $desk = Split-Path -Parent $PSScriptRoot
 $port = 4901
 
-# Keep volatile panel state on the local assistant PC.
-# Network shares may deny writes to TEMP, and PID/log files are machine-local anyway.
-$localRoot = Join-Path $env:LOCALAPPDATA "PhoneSpotCodexVideo\panel"
+# Keep volatile panel state beside the local project.
+# CODEX_VIDEO_DESK\TEMP is already runtime-only and ignored by Git.
+$localRoot = Join-Path $desk "TEMP\panel"
 $pidFile = Join-Path $localRoot "panel_server.pid"
 $logDir = Join-Path $localRoot "panel_logs"
 New-Item -ItemType Directory -Force -Path $logDir | Out-Null

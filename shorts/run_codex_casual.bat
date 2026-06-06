@@ -166,6 +166,8 @@ echo [ERROR] Codex Remotion build failed.
 
 :hold
 echo.
+if "!PHONESPOT_NO_PAUSE!"=="1" goto :end
 echo Press any key to close this window...
 pause >nul
+:end
 exit /b !EXITCODE!

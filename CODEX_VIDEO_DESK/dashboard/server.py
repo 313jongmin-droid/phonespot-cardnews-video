@@ -18,6 +18,8 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import unquote, urlparse
 
+from remote_queue import RemoteQueue
+
 ROOT = Path(__file__).resolve().parent.parent.parent
 DESK = ROOT / "CODEX_VIDEO_DESK"
 SHORTS = ROOT / "shorts"
@@ -34,6 +36,7 @@ CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
+REMOTE_QUEUE = RemoteQueue(ROOT)
 
 STATE_LOCK = threading.Lock()
 JOB = {
@@ -864,6 +867,23 @@ def html_response(handler: BaseHTTPRequestHandler, page: str, status: int = 200)
     handler.wfile.write(payload)
 
 
+def bytes_response(
+    handler: BaseHTTPRequestHandler,
+    payload: bytes,
+    content_type: str,
+    status: int = 200,
+    filename: str = "",
+) -> None:
+    handler.send_response(status)
+    handler.send_header("Content-Type", content_type)
+    cors_headers(handler)
+    if filename:
+        handler.send_header("Content-Disposition", f'attachment; filename="{filename}"')
+    handler.send_header("Content-Length", str(len(payload)))
+    handler.end_headers()
+    handler.wfile.write(payload)
+
+
 def read_body(handler: BaseHTTPRequestHandler) -> dict:
     length = int(handler.headers.get("Content-Length", "0") or "0")
     if length <= 0:
@@ -1006,7 +1026,10 @@ class Handler(BaseHTTPRequestHandler):
             missing = missing_requests(payload)
             gaps = payload.get("uncovered_gaps", []) or []
             with STATE_LOCK:
-                job = dict(JOB)
+                local_job = dict(JOB)
+            remote_job = REMOTE_QUEUE.panel_job()
+            job = remote_job if remote_job and (remote_job.get("running") or not local_job.get("running")) else local_job
+            workers = REMOTE_QUEUE.workers()
             json_response(self, {
                 "root": str(ROOT),
                 "desk": str(DESK),
@@ -1017,6 +1040,8 @@ class Handler(BaseHTTPRequestHandler):
                 "weakMappings": len(gaps),
                 "canImport": len(missing) == 0,
                 "job": job,
+                "workers": workers,
+                "onlineWorkers": len([worker for worker in workers.values() if worker.get("online")]),
                 "results": results_list(),
                 "sync": sync_status(),
                 "github": github_status(),
@@ -1080,14 +1105,65 @@ class Handler(BaseHTTPRequestHandler):
             json_response(self, {"slug": slug, "rows": chunk_rows_for_slug(slug)})
             return
         if parsed.path == "/api/job":
+            remote_job = REMOTE_QUEUE.panel_job()
             with STATE_LOCK:
-                json_response(self, {"job": dict(JOB)})
+                local_job = dict(JOB)
+            job = remote_job if remote_job and (remote_job.get("running") or not local_job.get("running")) else local_job
+            json_response(self, {"job": job})
+            return
+        if parsed.path == "/api/worker/package":
+            query = urllib.parse.parse_qs(parsed.query)
+            job_id = (query.get("job_id") or [""])[0]
+            payload = REMOTE_QUEUE.package_bytes(job_id)
+            bytes_response(self, payload, "application/zip", filename=f"phonespot_job_{job_id}.zip")
             return
         json_response(self, {"error": "not found"}, 404)
 
     def do_POST(self) -> None:
         try:
+            parsed = urlparse(self.path)
+            if parsed.path == "/api/worker/result":
+                query = urllib.parse.parse_qs(parsed.query)
+                job_id = (query.get("job_id") or [""])[0]
+                length = int(self.headers.get("Content-Length", "0") or "0")
+                filename = self.headers.get("X-File-Name", "result.mp4")
+                path = REMOTE_QUEUE.save_result(job_id, filename, self.rfile.read(length))
+                json_response(self, {"ok": True, "path": str(path)})
+                return
             data = read_body(self)
+            if parsed.path == "/api/worker/register":
+                worker_id = str(data.get("worker_id") or "").strip()
+                if not worker_id:
+                    raise RuntimeError("worker_id is required")
+                worker = REMOTE_QUEUE.register(worker_id, data)
+                json_response(self, {"ok": True, "worker": worker})
+                return
+            if parsed.path == "/api/worker/claim":
+                worker_id = str(data.get("worker_id") or "").strip()
+                if not worker_id:
+                    raise RuntimeError("worker_id is required")
+                job = REMOTE_QUEUE.claim(worker_id)
+                json_response(self, {"ok": True, "job": job})
+                return
+            if parsed.path == "/api/worker/log":
+                worker_id = str(data.get("worker_id") or "").strip()
+                job_id = str(data.get("job_id") or "").strip()
+                REMOTE_QUEUE.append_log(job_id, str(data.get("text") or ""))
+                if worker_id:
+                    REMOTE_QUEUE.heartbeat(worker_id, "running", job_id)
+                json_response(self, {"ok": True})
+                return
+            if parsed.path == "/api/worker/complete":
+                job = REMOTE_QUEUE.complete(
+                    str(data.get("job_id") or ""),
+                    str(data.get("worker_id") or ""),
+                    bool(data.get("ok")),
+                    int(data.get("exit_code") or 0),
+                    str(data.get("message") or ""),
+                )
+                telegram_send(telegram_job_message(f"remote render: {job.get('slug')}", int(job.get("exit_code") or 0)))
+                json_response(self, {"ok": True, "job": job})
+                return
             action = data.get("action")
             slug = (data.get("slug") or latest_slug()).strip()
             if action == "sync_cardnews":
@@ -1115,23 +1191,23 @@ class Handler(BaseHTTPRequestHandler):
                 return
             if action == "video_import_render":
                 slug_now = validate_slug(slug)
-                commands = [
-                    [sys.executable, str(SCRIPTS / "codex_import_downloads.py")],
-                    cmd_video_runner(slug_now),
-                ]
-                ok = run_job("이미지 가져오기 + 영상 렌더", commands, SHORTS, stdin_text="Y\n")
-                if not ok:
-                    json_response(self, {"ok": False, "busy": True, "message": "이미 다른 작업이 실행 중입니다. 현재 작업이 끝난 뒤 다시 눌러주세요."})
-                else:
-                    json_response(self, {"ok": True})
+                job = REMOTE_QUEUE.enqueue("video_import_render", slug_now)
+                json_response(self, {
+                    "ok": True,
+                    "queued": True,
+                    "job": job,
+                    "message": "렌더 작업을 대기열에 등록했습니다.",
+                })
                 return
             if action == "video_render_selected":
                 slug = validate_slug(slug)
-                ok = run_job(f"영상 렌더: {slug}", [cmd_video_runner(slug)], SHORTS)
-                if not ok:
-                    json_response(self, {"ok": False, "busy": True, "message": "이미 다른 작업이 실행 중입니다. 현재 작업이 끝난 뒤 다시 눌러주세요."})
-                else:
-                    json_response(self, {"ok": True})
+                job = REMOTE_QUEUE.enqueue("video_render_selected", slug)
+                json_response(self, {
+                    "ok": True,
+                    "queued": True,
+                    "job": job,
+                    "message": "선택 영상 렌더를 대기열에 등록했습니다.",
+                })
                 return
             if action == "card_render":
                 slug = validate_slug(slug)
@@ -1632,7 +1708,7 @@ INDEX_HTML = r"""<!doctype html>
       lastState = data;
       document.getElementById("rootText").textContent = data.root;
       const sync = data.sync || {};
-      document.getElementById("runtimeModeText").textContent = `${sync.rootMode || "-"} · ${data.root || ""}`;
+      document.getElementById("runtimeModeText").textContent = `${sync.rootMode || "-"} · 렌더 PC ${data.onlineWorkers || 0}대`;
       document.getElementById("runtimeMode").className = `runtime-card ${sync.rootOk ? "good" : "bad"}`;
       document.getElementById("runtimeSyncText").textContent = `${sync.ok ? "성공" : "확인 필요"} · ${sync.endedAt || sync.message || "-"}`;
       document.getElementById("runtimeSync").className = `runtime-card ${sync.ok ? "good" : "bad"}`;
@@ -1842,7 +1918,8 @@ def main() -> int:
     if not SHORTS.exists():
         print(f"[ERROR] shorts folder missing: {SHORTS}")
         return 1
-    server = ThreadingHTTPServer(("127.0.0.1", PORT), Handler)
+    host = os.environ.get("PHONESPOT_PANEL_HOST", "0.0.0.0")
+    server = ThreadingHTTPServer((host, PORT), Handler)
     url = f"http://localhost:{PORT}/"
     print("=" * 60)
     print(" 폰스팟 통합 제작 패널")
