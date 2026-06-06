@@ -21,6 +21,8 @@
 | `cover_screen_widgets` | library | 0 |  |
 | `cpt_3317f8c6` | auto | 0 |  |
 | `cpt_7a87dd35` | auto | 0 |  |
+| `cpt_bf3a83cf` | auto | 0 |  |
+| `cpt_ca558dbc` | auto | 0 |  |
 | `cpt_d877aced` | auto | 0 |  |
 | `cpt_dff91a6d` | auto | 0 |  |
 | `cpt_f14977dc` | auto | 0 |  |

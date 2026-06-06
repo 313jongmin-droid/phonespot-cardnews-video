@@ -2,11 +2,14 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 import sys
 from pathlib import Path
 
 from codex_illustration_db import load_db, library_variants, record_usage_snapshot, semantic_score
+import codex_illust_embed as ce
+import codex_image_embed as ie  # image-content (CLIP) matching
 
 
 ROOT = Path(__file__).resolve().parent.parent.parent
@@ -25,6 +28,19 @@ MIN_ILLUST_SCORE = 12
 # Topic-neutral editorial illustrations that are never "wrong" on a phone/IT
 # news short. Used as filler when nothing matches, instead of random library art.
 NEUTRAL_FILLERS = ["smartphone", "newspaper", "microphone", "shield", "meeting_room", "forecast"]
+
+# 임베딩(의미) 모드 임계: 코사인 0~1 스케일. 모델 없으면 위 lexical 임계 사용.
+# 필요하면 이 두 값만 조절(올리면 더 엄격, 무관 매칭↓ / 내리면 더 관대).
+EMBED_MIN_IMAGE = 0.42
+EMBED_MIN_ILLUST = 0.42
+
+# 그림 "내용"(CLIP) 매칭 임계: 청크 텍스트 ↔ 라이브러리 그림 픽셀의 교차모달 코사인.
+# 이름/태그가 아니라 실제 그림이 무엇을 그렸는지로 재사용 → 파일명이 틀려도 안전.
+# 주의: 교차모달 코사인은 텍스트끼리(MiniLM)보다 절대값이 낮다. 보수적으로 시작하고
+# PC 에서 렌더 결과를 보며 PHONESPOT_IMG_MATCH_MIN 으로 조절(올리면 엄격/내리면 관대).
+# 이 신호는 '확신 있는 텍스트 매칭이 없을 때, 중립 필러 대신' 쓰는 보조 신호다.
+# 즉 잘 맞던 매칭을 덮어쓰지 않으므로 기존 품질을 떨어뜨리지 않는다.
+EMBED_MIN_ILLUST_IMG = float(os.getenv("PHONESPOT_IMG_MATCH_MIN", "0.28"))
 
 
 ALIASES = {
@@ -183,6 +199,52 @@ def visual_key(visual: dict) -> str:
     return f"{visual.get('type')}:{visual.get('value')}"
 
 
+def _image_desc_embeddings(prompt_map: dict) -> dict:
+    if not ce.available() or not prompt_map:
+        return {}
+    names = list(prompt_map.keys())
+    vecs = ce.embed([prompt_map[n] for n in names])
+    if vecs is None:
+        return {}
+    return {n: vecs[i] for i, n in enumerate(names)}
+
+
+def _embed_image_candidates(slug, cvec, used_images, prompt_map, desc_emb):
+    rows = []
+    for image in list_images(slug):
+        if image in used_images:
+            continue
+        vec = desc_emb.get(image)
+        score = ce.cosine(cvec, vec) if (cvec is not None and vec is not None) else 0.0
+        rows.append((round(float(score), 3), image, prompt_map.get(image, "")))
+    rows.sort(key=lambda row: (-row[0], row[1]))
+    return rows
+
+
+def _embed_illust_candidates(cvec, lib_index, used_visuals):
+    rows = []
+    for variant, vec in lib_index.items():
+        if f"illust:{variant}" in used_visuals:
+            continue
+        score = ce.cosine(cvec, vec) if cvec is not None else 0.0
+        rows.append((round(float(score), 3), variant))
+    rows.sort(key=lambda row: (-row[0], row[1]))
+    return rows
+
+
+def _imgcontent_best(context, img_index, used_visuals):
+    """청크 텍스트 ↔ 라이브러리 그림 '내용'(CLIP)으로 가장 가까운 (score, variant).
+    이름/태그가 아니라 실제 그림 픽셀 기준 → 파일명이 틀려도 올바른 그림을 찾는다."""
+    if not img_index:
+        return (0.0, "")
+    rows = ie.rank_for_text(context, index=img_index)
+    for variant, score in rows:
+        if f"illust:{variant}" in used_visuals:
+            continue
+        return (round(float(score), 3), variant)
+    return (0.0, "")
+
+
 def semantic_match(data: dict, slug: str) -> bool:
     if data.get("_codex_manual_visuals"):
         print("[semantic_visual] manual visuals: skip")
@@ -197,6 +259,17 @@ def semantic_match(data: dict, slug: str) -> bool:
     used_visuals: set[str] = set()
     changes = []
     weak = []
+
+    # 3단계: 임베딩(의미) 매칭. 모델 없으면 lexical 폴백(min_img/min_ill 자동 전환).
+    use_embed = ce.available()
+    min_img = EMBED_MIN_IMAGE if use_embed else MIN_IMAGE_SCORE
+    min_ill = EMBED_MIN_ILLUST if use_embed else MIN_ILLUST_SCORE
+    desc_emb = _image_desc_embeddings(prompt_map) if use_embed else {}
+    lib_index = ce.build_index(available_only=True) if use_embed else {}
+    # 그림 내용(CLIP) 인덱스: 있으면 확신 매칭이 없을 때 중립 필러 대신 내용으로 채운다.
+    img_index = ie.library_image_index() if ie.available() else {}
+    img_engine = f", image-content={len(img_index)}장(min={EMBED_MIN_ILLUST_IMG})" if img_index else ""
+    print(f"[semantic_visual] engine={'embedding' if use_embed else 'lexical'} (min_img={min_img}, min_ill={min_ill}){img_engine}")
 
     for section_name, section in section_items(data):
         chunks = section_chunks(section)
@@ -218,17 +291,23 @@ def semantic_match(data: dict, slug: str) -> bool:
                 continue
 
             context = context_for(section, idx)
-            imgs = image_candidates(slug, context, used_images, prompt_map)
-            ills = illustration_candidates(context, used_visuals)
+            if use_embed:
+                cvec_mat = ce.embed([context])
+                cvec = cvec_mat[0] if (cvec_mat is not None and len(cvec_mat)) else None
+                imgs = _embed_image_candidates(slug, cvec, used_images, prompt_map, desc_emb)
+                ills = _embed_illust_candidates(cvec, lib_index, used_visuals)
+            else:
+                imgs = image_candidates(slug, context, used_images, prompt_map)
+                ills = illustration_candidates(context, used_visuals)
             best_img = imgs[0] if imgs else (0, "", "")
             best_ill = ills[0] if ills else (0, "")
 
             chosen = None
             reason = ""
-            if best_img[0] >= MIN_IMAGE_SCORE and best_img[0] >= best_ill[0]:
+            if best_img[0] >= min_img and best_img[0] >= best_ill[0]:
                 chosen = {"type": "image", "value": best_img[1]}
                 reason = f"image score {best_img[0]}: {best_img[2][:80]}"
-            elif best_ill[0] >= MIN_ILLUST_SCORE:
+            elif best_ill[0] >= min_ill:
                 chosen = {"type": "illust", "value": best_ill[1]}
                 reason = f"illust score {best_ill[0]}"
             elif current.get("type") == "image" and current.get("value") not in used_images:
@@ -245,16 +324,26 @@ def semantic_match(data: dict, slug: str) -> bool:
                 chosen = {"type": "image", "value": best_img[1]}
                 reason = f"unused source image (no semantic match, img score {best_img[0]})"
             else:
-                # No source image left and no confident match. Use a topic-neutral
-                # filler instead of a random library illustration - that fallback
-                # was what put battery/foldable art on unrelated scripts.
-                neutral = pick_neutral(used_visuals)
-                if neutral:
-                    chosen = {"type": "illust", "value": neutral}
-                    reason = "neutral filler (no semantic match)"
+                # No source image left and no confident TEXT match. Before falling
+                # back to a topic-neutral filler, try matching by the actual picture
+                # CONTENT (CLIP). This reuses the right library art even if its
+                # filename/tags are wrong - and only fires when text matching gave
+                # up, so it never overrides a good match (no regression risk).
+                img_best = _imgcontent_best(context, img_index, used_visuals)
+                if img_best[0] >= EMBED_MIN_ILLUST_IMG and img_best[1]:
+                    chosen = {"type": "illust", "value": img_best[1]}
+                    reason = f"image-content match {img_best[0]}"
                 else:
-                    chosen = current
-                    reason = "kept current (no neutral available)"
+                    # Use a topic-neutral filler instead of a random library
+                    # illustration - that fallback was what put battery/foldable
+                    # art on unrelated scripts.
+                    neutral = pick_neutral(used_visuals)
+                    if neutral:
+                        chosen = {"type": "illust", "value": neutral}
+                        reason = "neutral filler (no semantic match)"
+                    else:
+                        chosen = current
+                        reason = "kept current (no neutral available)"
 
             if chosen.get("type") == "image":
                 used_images.add(str(chosen.get("value") or ""))
@@ -270,7 +359,7 @@ def semantic_match(data: dict, slug: str) -> bool:
                     "context": context[:120],
                     "reason": reason,
                 })
-            if (best_img[0] < MIN_IMAGE_SCORE and best_ill[0] < MIN_ILLUST_SCORE and section_name != "cta"):
+            if (best_img[0] < min_img and best_ill[0] < min_ill and section_name != "cta"):
                 weak.append({
                     "section": section_name,
                     "chunk": idx + 1,

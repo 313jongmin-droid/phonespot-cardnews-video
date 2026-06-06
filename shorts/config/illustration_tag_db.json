@@ -1040,7 +1040,30 @@
       ],
       "note": "자동 발굴 개념: 모델",
       "available": false
+    },
+    "cpt_bf3a83cf": {
+      "keywords": [
+        "현재",
+        "자체",
+        "서비스"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 현재 자체",
+      "available": false
+    },
+    "cpt_ca558dbc": {
+      "keywords": [
+        "미지원이지",
+        "SKT"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 미지원이지 SKT",
+      "available": false
     }
   },
-  "updated_at": "2026-06-06T15:31:40"
+  "updated_at": "2026-06-06T15:48:47"
 }

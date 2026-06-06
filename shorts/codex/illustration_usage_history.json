@@ -2,7 +2,7 @@
   "version": 1,
   "videos": {
     "010_tip_iphone_call_record": {
-      "used_at": "2026-06-06T15:31:39",
+      "used_at": "2026-06-06T15:48:46",
       "source": "codex_enhance",
       "illustrations": [
         "call_recording_notice",
@@ -77,10 +77,10 @@
       ]
     }
   },
-  "updated_at": "2026-06-06T15:31:39",
+  "updated_at": "2026-06-06T15:48:46",
   "requests": {
     "010_tip_iphone_call_record": {
-      "updated_at": "2026-06-06T15:31:39",
+      "updated_at": "2026-06-06T15:48:46",
       "variants": [
         "phone_settings_toggle",
         "call_filter_rules",

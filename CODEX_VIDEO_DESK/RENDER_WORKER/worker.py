@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import atexit
+import http.client
 import importlib.util
 import json
 import os
@@ -27,7 +28,7 @@ URL_FILE = Path(__file__).resolve().parent / "panel_url.txt"
 SAVED_URL = URL_FILE.read_text(encoding="utf-8-sig", errors="replace").strip() if URL_FILE.exists() else ""
 SERVER = (os.environ.get("PHONESPOT_PANEL_URL") or SAVED_URL or "http://127.0.0.1:4901").rstrip("/")
 WORKER_ID = os.environ.get("PHONESPOT_WORKER_ID") or socket.gethostname()
-VERSION = "render-worker-v2"
+VERSION = "render-worker-v3"
 INSTANCE_ID = uuid4().hex
 PID_FILE = Path(os.environ["PHONESPOT_WORKER_PID_FILE"]) if os.environ.get("PHONESPOT_WORKER_PID_FILE") else None
 
@@ -159,14 +160,35 @@ def result_after(slug: str, started: float) -> Path | None:
 
 
 def upload_result(job_id: str, path: Path) -> None:
-    request = urllib.request.Request(
-        SERVER + f"/api/worker/result?job_id={urllib.parse.quote(job_id)}",
-        data=path.read_bytes(),
-        headers={"Content-Type": "video/mp4", "X-File-Name": path.name},
-        method="POST",
-    )
-    with urllib.request.urlopen(request, timeout=600) as response:
-        response.read()
+    parsed = urllib.parse.urlsplit(SERVER)
+    connection_class = http.client.HTTPSConnection if parsed.scheme == "https" else http.client.HTTPConnection
+    connection = connection_class(parsed.hostname, parsed.port, timeout=600)
+    base_path = parsed.path.rstrip("/")
+    request_path = f"{base_path}/api/worker/result?job_id={urllib.parse.quote(job_id)}"
+    total = path.stat().st_size
+    sent = 0
+    progress_step = 0
+    try:
+        connection.putrequest("POST", request_path)
+        connection.putheader("Content-Type", "video/mp4")
+        connection.putheader("X-File-Name", path.name)
+        connection.putheader("Content-Length", str(total))
+        connection.endheaders()
+        with path.open("rb") as source:
+            while chunk := source.read(1024 * 1024):
+                connection.send(chunk)
+                sent += len(chunk)
+                next_step = min(10, int(sent * 10 / total)) if total else 10
+                if next_step > progress_step:
+                    progress_step = next_step
+                    send_log(job_id, f"[UPLOAD] {next_step * 10}% ({sent}/{total} bytes)\n")
+        response = connection.getresponse()
+        body = response.read()
+        if not 200 <= response.status < 300:
+            detail = body.decode("utf-8", errors="replace")
+            raise RuntimeError(f"result upload failed: HTTP {response.status} {detail}")
+    finally:
+        connection.close()
 
 
 def commands_for(job: dict) -> list[list[str]]:

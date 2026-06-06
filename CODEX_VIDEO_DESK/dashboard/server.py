@@ -5,6 +5,7 @@ import html
 import json
 import os
 import re
+import socket
 import subprocess
 import sys
 import threading
@@ -17,6 +18,7 @@ from datetime import datetime
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import unquote, urlparse
+from uuid import uuid4
 
 from remote_queue import RemoteQueue
 
@@ -35,21 +37,53 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v3"
+PANEL_VERSION = "phonespot-web-v4"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
+LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
 LOCAL_WORKER_PROCESS: subprocess.Popen | None = None
 LOCAL_WORKER_STREAMS: list = []
 
 STATE_LOCK = threading.Lock()
+LOCAL_HISTORY_LOCK = threading.RLock()
 JOB = {
+    "job_id": "",
     "running": False,
     "name": "",
+    "worker_id": socket.gethostname(),
     "started": 0.0,
     "ended": 0.0,
     "exit_code": None,
     "log": "",
 }
+
+
+def read_local_history() -> list[dict]:
+    with LOCAL_HISTORY_LOCK:
+        if not LOCAL_HISTORY_PATH.exists():
+            return []
+        try:
+            payload = json.loads(LOCAL_HISTORY_PATH.read_text(encoding="utf-8", errors="replace"))
+            return payload.get("jobs", []) if isinstance(payload, dict) else []
+        except Exception:
+            return []
+
+
+def update_local_history(job_id: str, changes: dict) -> None:
+    with LOCAL_HISTORY_LOCK:
+        jobs = read_local_history()
+        job = next((item for item in jobs if item.get("id") == job_id), None)
+        if job is None:
+            job = {"id": job_id}
+            jobs.append(job)
+        job.update(changes)
+        LOCAL_HISTORY_PATH.parent.mkdir(parents=True, exist_ok=True)
+        temp = LOCAL_HISTORY_PATH.with_suffix(LOCAL_HISTORY_PATH.suffix + ".tmp")
+        temp.write_text(
+            json.dumps({"version": 1, "jobs": jobs[-100:]}, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        temp.replace(LOCAL_HISTORY_PATH)
 
 
 def append_log(text: str) -> None:
@@ -158,17 +192,33 @@ def telegram_job_message(name: str, exit_code: int) -> str:
 
 
 def run_job(name: str, commands: list[list[str]], cwd: Path, stdin_text: str | None = None) -> bool:
+    job_id = uuid4().hex[:12]
+    started = time.time()
     with STATE_LOCK:
         if JOB["running"]:
             return False
         JOB.update({
+            "job_id": job_id,
             "running": True,
             "name": name,
-            "started": time.time(),
+            "worker_id": socket.gethostname(),
+            "started": started,
             "ended": 0.0,
             "exit_code": None,
             "log": f"[START] {name}\n",
         })
+    update_local_history(job_id, {
+        "kind": "local",
+        "name": name,
+        "status": "running",
+        "worker_id": socket.gethostname(),
+        "created_at": datetime.fromtimestamp(started).isoformat(timespec="seconds"),
+        "started_at": datetime.fromtimestamp(started).isoformat(timespec="seconds"),
+        "finished_at": "",
+        "exit_code": None,
+        "message": "",
+        "result_files": [],
+    })
 
     def worker() -> None:
         exit_code = 0
@@ -206,11 +256,18 @@ def run_job(name: str, commands: list[list[str]], cwd: Path, stdin_text: str | N
             exit_code = 99
             append_log(f"\n[SERVER ERROR] {exc}\n")
         finally:
+            ended = time.time()
             with STATE_LOCK:
                 JOB["running"] = False
-                JOB["ended"] = time.time()
+                JOB["ended"] = ended
                 JOB["exit_code"] = exit_code
                 JOB["log"] += "\n[DONE]\n" if exit_code == 0 else "\n[FAILED]\n"
+            update_local_history(job_id, {
+                "status": "done" if exit_code == 0 else "failed",
+                "finished_at": datetime.fromtimestamp(ended).isoformat(timespec="seconds"),
+                "exit_code": exit_code,
+                "message": "완료" if exit_code == 0 else f"종료 코드 {exit_code}",
+            })
             telegram_send(telegram_job_message(name, exit_code))
 
     threading.Thread(target=worker, daemon=True).start()
@@ -401,6 +458,94 @@ def results_list() -> list[dict]:
             })
     rows.sort(key=lambda item: float(item.get("mtime") or 0), reverse=True)
     return rows[:30]
+
+
+def timestamp_value(value) -> float:
+    if isinstance(value, (int, float)):
+        return float(value)
+    if not value:
+        return 0.0
+    try:
+        return datetime.fromisoformat(str(value)).timestamp()
+    except (TypeError, ValueError):
+        return 0.0
+
+
+def history_result_files(paths: list[str]) -> list[dict]:
+    result_root = (DESK / "RESULTS").resolve()
+    rows = []
+    for raw_path in paths:
+        try:
+            path = Path(raw_path).resolve()
+            if result_root not in path.parents or not path.is_file():
+                continue
+            rows.append({"name": path.name, "folder": path.parent.name, "file": path.name})
+        except OSError:
+            continue
+    return rows
+
+
+def job_history(limit: int = 50) -> list[dict]:
+    action_names = {
+        "video_import_render": "이미지 가져오기 + 렌더",
+        "video_render_selected": "선택 영상만 렌더",
+    }
+    rows = []
+    for job in REMOTE_QUEUE.jobs():
+        action = str(job.get("action") or "원격 작업")
+        slug = str(job.get("slug") or "")
+        started_at = job.get("started_at") or ""
+        finished_at = job.get("finished_at") or ""
+        started_epoch = timestamp_value(started_at)
+        finished_epoch = timestamp_value(finished_at)
+        duration = None
+        if started_epoch:
+            duration = max(0, round((finished_epoch or time.time()) - started_epoch))
+        rows.append({
+            "id": job.get("id") or "",
+            "kind": "remote",
+            "name": f"{action_names.get(action, action)}: {slug}" if slug else action_names.get(action, action),
+            "status": job.get("status") or "pending",
+            "worker_id": job.get("worker_id") or job.get("target_worker") or "",
+            "created_at": job.get("created_at") or "",
+            "started_at": started_at,
+            "finished_at": finished_at,
+            "duration_seconds": duration,
+            "exit_code": job.get("exit_code"),
+            "message": job.get("message") or "",
+            "retry_count": int(job.get("retry_count") or 0),
+            "result_files": history_result_files(job.get("result_files") or []),
+        })
+    for job in read_local_history():
+        started_at = job.get("started_at") or job.get("created_at") or ""
+        finished_at = job.get("finished_at") or ""
+        started_epoch = timestamp_value(started_at)
+        finished_epoch = timestamp_value(finished_at)
+        duration = None
+        if started_epoch:
+            duration = max(0, round((finished_epoch or time.time()) - started_epoch))
+        rows.append({
+            "id": job.get("id") or "",
+            "kind": "local",
+            "name": job.get("name") or "로컬 작업",
+            "status": job.get("status") or "done",
+            "worker_id": job.get("worker_id") or socket.gethostname(),
+            "created_at": job.get("created_at") or "",
+            "started_at": started_at,
+            "finished_at": finished_at,
+            "duration_seconds": duration,
+            "exit_code": job.get("exit_code"),
+            "message": job.get("message") or "",
+            "retry_count": 0,
+            "result_files": history_result_files(job.get("result_files") or []),
+        })
+    rows.sort(
+        key=lambda item: timestamp_value(
+            item.get("finished_at") or item.get("started_at") or item.get("created_at")
+        ),
+        reverse=True,
+    )
+    return rows[:max(1, min(limit, 100))]
 
 
 def count_files(root: Path, patterns: tuple[str, ...], recursive: bool = True) -> int:
@@ -1042,6 +1187,33 @@ class Handler(BaseHTTPRequestHandler):
         if parsed.path == "/api/health":
             json_response(self, {"ok": True, "service": "phonespot-panel", "version": PANEL_VERSION})
             return
+        if parsed.path == "/api/illust-thumb":
+            # 검수 모달용 썸네일. 허용된 폴더(DROP/Downloads/일러스트) 안의 이미지만 제공.
+            query = urllib.parse.parse_qs(parsed.query)
+            raw = (query.get("path") or [""])[0]
+            roots = (DESK / "ILLUSTRATION_DROP", DOWNLOADS, SHORTS / "public" / "assets" / "illustrations")
+            try:
+                target = Path(unquote(raw)).resolve()
+            except Exception:
+                json_response(self, {"ok": False, "error": "bad path"}, 400)
+                return
+            allowed = False
+            for root in roots:
+                try:
+                    target.relative_to(root.resolve())
+                    allowed = True
+                    break
+                except (ValueError, OSError):
+                    continue
+            if (not allowed) or (not target.is_file()) or target.suffix.lower() not in {".png", ".jpg", ".jpeg", ".webp"}:
+                json_response(self, {"ok": False, "error": "not allowed"}, 403)
+                return
+            ctype = {"png": "image/png", "jpg": "image/jpeg", "jpeg": "image/jpeg", "webp": "image/webp"}.get(target.suffix.lower().lstrip("."), "application/octet-stream")
+            try:
+                bytes_response(self, target.read_bytes(), ctype)
+            except OSError:
+                json_response(self, {"ok": False, "error": "read fail"}, 404)
+            return
         if parsed.path == "/":
             html_response(self, INDEX_HTML)
             return
@@ -1216,6 +1388,14 @@ class Handler(BaseHTTPRequestHandler):
             job = select_panel_job(local_job, remote_job)
             json_response(self, {"job": job})
             return
+        if parsed.path == "/api/jobs":
+            query = urllib.parse.parse_qs(parsed.query)
+            try:
+                limit = int((query.get("limit") or ["50"])[0])
+            except ValueError:
+                limit = 50
+            json_response(self, {"rows": job_history(limit)})
+            return
         if parsed.path == "/api/result":
             query = urllib.parse.parse_qs(parsed.query)
             folder_name = validate_slug((query.get("folder") or [""])[0])
@@ -1255,7 +1435,7 @@ class Handler(BaseHTTPRequestHandler):
                 job_id = (query.get("job_id") or [""])[0]
                 length = int(self.headers.get("Content-Length", "0") or "0")
                 filename = self.headers.get("X-File-Name", "result.mp4")
-                path = REMOTE_QUEUE.save_result(job_id, filename, self.rfile.read(length))
+                path = REMOTE_QUEUE.save_result_stream(job_id, filename, self.rfile, length)
                 json_response(self, {"ok": True, "path": str(path)})
                 return
             if parsed.path == "/api/upload":
@@ -1345,6 +1525,77 @@ class Handler(BaseHTTPRequestHandler):
                     json_response(self, {"ok": False, "busy": True, "message": "이미 다른 작업이 실행 중입니다. 현재 작업이 끝난 뒤 다시 눌러주세요."})
                 else:
                     json_response(self, {"ok": True})
+                return
+            if action == "video_import_propose":
+                # 그림 내용(CLIP)으로 후보 -> 요청 자동 배정을 '제안'만 한다(파일 미이동).
+                slug_now = validate_slug(slug)
+                proc = subprocess.run(
+                    [sys.executable, str(SCRIPTS / "codex_import_propose.py"), slug_now],
+                    cwd=str(SHORTS), text=True, encoding="utf-8", errors="replace",
+                    capture_output=True,
+                )
+                proposal_path = DESK / "IMPORT_PROPOSAL.json"
+                proposal = {}
+                if proposal_path.exists():
+                    try:
+                        proposal = json.loads(proposal_path.read_text(encoding="utf-8"))
+                    except (OSError, json.JSONDecodeError) as exc:
+                        json_response(self, {"ok": False, "message": f"제안 파일을 읽지 못했습니다: {exc}"})
+                        return
+                else:
+                    json_response(self, {"ok": False, "message": "제안을 생성하지 못했습니다.\n" + (proc.stdout or "")[-400:]})
+                    return
+                json_response(self, {"ok": True, "proposal": proposal})
+                return
+            if action == "video_import_confirm":
+                # 사람이 패널에서 확정한 매핑을 기록한 뒤, 기존 렌더 대기열에 등록.
+                slug_now = validate_slug(slug)
+                raw_mapping = data.get("mapping") or []
+                roots = (DESK / "ILLUSTRATION_DROP", DOWNLOADS, SHORTS / "public" / "assets" / "illustrations")
+                allowed_ext = {".png", ".jpg", ".jpeg", ".webp"}
+                mapping = []
+                seen_fn = set()
+                for entry in raw_mapping:
+                    fn = str((entry or {}).get("filename") or "").strip()
+                    src_raw = str((entry or {}).get("candidate_path") or "").strip()
+                    if not fn or not src_raw:
+                        continue
+                    if fn != Path(fn).name or Path(fn).suffix.lower() not in allowed_ext:
+                        json_response(self, {"ok": False, "message": f"잘못된 대상 파일명: {fn}"})
+                        return
+                    if fn in seen_fn:
+                        json_response(self, {"ok": False, "message": f"같은 파일명이 두 번 선택됐습니다: {fn}"})
+                        return
+                    try:
+                        src = Path(src_raw).resolve()
+                    except OSError:
+                        json_response(self, {"ok": False, "message": "잘못된 경로"})
+                        return
+                    ok_root = False
+                    for root in roots:
+                        try:
+                            src.relative_to(root.resolve())
+                            ok_root = True
+                            break
+                        except (ValueError, OSError):
+                            continue
+                    if not ok_root or not src.is_file() or src.suffix.lower() not in allowed_ext:
+                        json_response(self, {"ok": False, "message": f"허용되지 않은 파일: {src_raw}"})
+                        return
+                    seen_fn.add(fn)
+                    mapping.append({"candidate_path": str(src), "filename": fn})
+                if not mapping:
+                    json_response(self, {"ok": False, "message": "확정할 매핑이 없습니다. 최소 한 장은 배정하세요."})
+                    return
+                confirmed = {"slug": slug_now, "generated_at": time.time(), "mapping": mapping}
+                (DESK / "IMPORT_CONFIRMED.json").write_text(
+                    json.dumps(confirmed, ensure_ascii=False, indent=2), encoding="utf-8")
+                job = REMOTE_QUEUE.enqueue(
+                    "video_import_render", slug_now, str(data.get("target_worker") or ""))
+                json_response(self, {
+                    "ok": True, "queued": True, "job": job,
+                    "message": f"{len(mapping)}장 확정 → 가져오고 렌더 대기열에 등록했습니다.",
+                })
                 return
             if action == "video_import_render":
                 slug_now = validate_slug(slug)
@@ -1588,6 +1839,16 @@ INDEX_HTML = r"""<!doctype html>
     .results { max-height:170px; overflow:auto; font-size:13px; } .result-row { display:flex; justify-content:space-between; gap:10px; padding:7px 0; border-bottom:1px solid #eef1f5; }
     .result-row > * { min-width:0; }
     .result-row a { overflow-wrap:anywhere; word-break:break-word; }
+    .history-scroll { max-height:340px; overflow:auto; }
+    .history-table { width:100%; min-width:820px; border-collapse:collapse; font-size:12px; }
+    .history-table th,.history-table td { padding:9px 10px; border-bottom:1px solid #e5e7eb; text-align:left; vertical-align:top; }
+    .history-table th { position:sticky; top:0; z-index:1; background:#f8fafc; color:#475569; }
+    .history-table td:nth-child(2) { max-width:340px; overflow-wrap:anywhere; }
+    .history-status { font-weight:800; white-space:nowrap; }
+    .history-status.done { color:var(--green); }
+    .history-status.failed,.history-status.cancelled { color:var(--red); }
+    .history-status.running,.history-status.pending { color:#b45309; }
+    .history-result a { display:block; max-width:190px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
     .preflight-panel { display:none; border-top:1px solid var(--line); background:#f8fafc; }
     .preflight-list { display:grid; gap:8px; }
     .preflight-item { border:1px solid var(--line); border-radius:8px; padding:8px 10px; background:white; font-size:13px; line-height:1.45; }
@@ -1644,7 +1905,7 @@ INDEX_HTML = r"""<!doctype html>
         <div class="head action-head"><h2 id="actionTitle">영상 작업</h2><div class="selected-badge"><span id="selectedModeLabel">선택 항목</span><b id="selectedSlug">없음</b></div></div>
         <div id="videoActions" class="pad grid">
           <button class="btn primary" onclick="runAction('video_prepare')"><strong>1. 영상용 프롬프트 준비</strong><span>선택한 카드뉴스 결과를 숏폼 영상 스크립트와 일러스트 요청으로 변환합니다.</span></button>
-          <button class="btn primary" onclick="runAction('video_import_render')"><strong>2. 이미지 가져오기 + 렌더</strong><span>다운로드한 GPT 이미지를 반영하고 최신 영상 작업물을 렌더합니다.</span></button>
+          <button class="btn primary" onclick="openImportReview()"><strong>2. 이미지 가져오기 + 렌더</strong><span>다운로드한 GPT 이미지를 그림 내용으로 자동 배정 제안 → 패널에서 확인하고 확정합니다.</span></button>
           <button class="btn" onclick="runPreflight()"><strong>렌더 전 사전검사</strong><span>이미지, 스크립트, CTA, 한글 문장, 중복 사용을 먼저 확인합니다.</span></button>
           <button class="btn" onclick="runAction('video_render_selected')"><strong>3. 선택 영상만 렌더</strong><span>추가 이미지 없이 현재 선택한 슬러그를 다시 렌더합니다.</span></button>
           <button class="btn" onclick="window.open('/prompt','_blank')"><strong>영상 이미지 프롬프트 보기</strong><span>최신 영상용 GPT 프롬프트를 브라우저에서 엽니다.</span></button>
@@ -1684,6 +1945,12 @@ INDEX_HTML = r"""<!doctype html>
           </div>
         </div>
         <div id="illustrationRequestNote" class="pad small"></div>
+        <div id="importPanel" class="weak-panel">
+          <div class="head"><h2>이미지 가져오기 검수</h2><button onclick="toggleImportPanel()">닫기</button></div>
+          <div class="pad small" id="importNote">다운로드한 그림을 그림 <b>내용</b>으로 자동 배정한 제안입니다. 썸네일을 보고 파일명이 맞는지 확인한 뒤 확정하세요. 파일명이 틀린 채로 확정하면 라이브러리가 잘못된 그림으로 채워집니다.</div>
+          <div class="weak-scroll"><div id="importRows"></div></div>
+          <div class="pad"><button class="btn primary" id="importConfirmBtn" onclick="confirmImport()" style="display:none">확정 → 가져오고 렌더</button></div>
+        </div>
         <div id="weakPanel" class="weak-panel">
           <div class="head"><h2>약한 매핑 상세</h2><button onclick="toggleWeakPanel()">닫기</button></div>
           <div class="pad small">이미지/일러스트가 청크 문맥과 약하게 연결된 항목입니다. 10개 이상이면 렌더 전 재매핑을 권장합니다.</div>
@@ -1706,6 +1973,15 @@ INDEX_HTML = r"""<!doctype html>
         </div>
       </section>
       <section><div class="head"><h2>실행 로그</h2><span class="small">실패하면 이 로그를 복사해서 보내면 됩니다.</span></div><div id="log" class="log"></div></section>
+      <section>
+        <div class="head"><h2>최근 작업 기록</h2><button onclick="loadJobHistory()">새로고침</button></div>
+        <div class="history-scroll">
+          <table class="history-table">
+            <thead><tr><th>상태</th><th>작업</th><th>실행 PC</th><th>시작</th><th>소요 시간</th><th>결과</th></tr></thead>
+            <tbody id="jobHistoryRows"><tr><td colspan="6">기록을 불러오는 중입니다.</td></tr></tbody>
+          </table>
+        </div>
+      </section>
       <section><div class="head"><h2>최근 영상 결과</h2><button onclick="runAction('open_results')">결과 폴더 열기</button></div><div class="pad results" id="results"></div></section>
     </div>
   </main>
@@ -1928,6 +2204,52 @@ INDEX_HTML = r"""<!doctype html>
         document.getElementById("advice").innerHTML = `<div class="status-note">왼쪽 목록에서 작업할 항목을 선택하세요.</div>`;
       }
     }
+    function formatHistoryTime(value) {
+      if (!value) return "-";
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return String(value);
+      return date.toLocaleString("ko-KR", {month:"2-digit", day:"2-digit", hour:"2-digit", minute:"2-digit", second:"2-digit"});
+    }
+    function formatDuration(seconds) {
+      if (seconds === null || seconds === undefined) return "-";
+      const total = Math.max(0, Number(seconds) || 0);
+      const hours = Math.floor(total / 3600);
+      const minutes = Math.floor((total % 3600) / 60);
+      const secs = total % 60;
+      if (hours) return `${hours}시간 ${minutes}분 ${secs}초`;
+      if (minutes) return `${minutes}분 ${secs}초`;
+      return `${secs}초`;
+    }
+    async function loadJobHistory() {
+      const body = document.getElementById("jobHistoryRows");
+      try {
+        const data = await api("/api/jobs?limit=50");
+        const rows = data.rows || [];
+        if (!rows.length) {
+          body.innerHTML = "<tr><td colspan='6'>아직 실행 기록이 없습니다.</td></tr>";
+          return;
+        }
+        const statusLabels = {pending:"대기", running:"실행 중", done:"성공", failed:"실패", cancelled:"취소"};
+        body.innerHTML = rows.map(row => {
+          const status = ["pending", "running", "done", "failed", "cancelled"].includes(row.status) ? row.status : "failed";
+          const results = (row.result_files || []).map(file =>
+            `<a href="/api/result?folder=${encodeURIComponent(file.folder)}&file=${encodeURIComponent(file.file)}">${escapeHtml(file.name)}</a>`
+          ).join("");
+          const worker = row.worker_id || (row.kind === "local" ? "패널 PC" : "배정 대기");
+          const detail = row.message ? ` title="${escapeHtml(row.message)}"` : "";
+          return `<tr${detail}>
+            <td><span class="history-status ${status}">${statusLabels[row.status] || escapeHtml(row.status || "-")}</span></td>
+            <td>${escapeHtml(row.name || "-")}</td>
+            <td>${escapeHtml(worker)}</td>
+            <td>${formatHistoryTime(row.started_at || row.created_at)}</td>
+            <td>${formatDuration(row.duration_seconds)}</td>
+            <td class="history-result">${results || "-"}</td>
+          </tr>`;
+        }).join("");
+      } catch (err) {
+        body.innerHTML = `<tr><td colspan="6">작업 기록을 불러오지 못했습니다: ${escapeHtml(String(err))}</td></tr>`;
+      }
+    }
     async function loadState() {
       const data = await api("/api/state");
       lastState = data;
@@ -2010,6 +2332,7 @@ INDEX_HTML = r"""<!doctype html>
           alert(result.message || result.error || label + "을 시작하지 못했습니다.");
         }
         await loadState();
+        await loadJobHistory();
       } catch (err) {
         alert("GitHub " + label + " 버튼 오류: " + String(err));
       } finally {
@@ -2033,21 +2356,109 @@ INDEX_HTML = r"""<!doctype html>
           alert(result.message || "작업을 시작하지 못했습니다. 실행 로그를 확인해주세요.");
         }
         await loadState();
+        await loadJobHistory();
       } catch (err) { alert(String(err)); }
     }
     async function cancelRemoteJob() {
       if (!currentRemoteJob?.job_id) return;
       await api("/api/action", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({action:"remote_job_cancel", job_id:currentRemoteJob.job_id})});
       await loadState();
+      await loadJobHistory();
     }
     async function retryRemoteJob() {
       if (!currentRemoteJob?.job_id) return;
       await api("/api/action", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({action:"remote_job_retry", job_id:currentRemoteJob.job_id})});
       await loadState();
+      await loadJobHistory();
     }
     function toggleWeakPanel() {
       const panel = document.getElementById("weakPanel");
       panel.style.display = panel.style.display === "block" ? "none" : "block";
+    }
+    function toggleImportPanel() {
+      const panel = document.getElementById("importPanel");
+      panel.style.display = panel.style.display === "block" ? "none" : "block";
+    }
+    async function openImportReview() {
+      if (!selected) { alert("먼저 슬러그를 선택하세요."); return; }
+      const panel = document.getElementById("importPanel");
+      const rows = document.getElementById("importRows");
+      const btn = document.getElementById("importConfirmBtn");
+      panel.style.display = "block";
+      btn.style.display = "none";
+      rows.innerHTML = "<div class='pad small'>그림 내용을 분석해 자동 배정 중입니다...</div>";
+      let result;
+      try {
+        result = await api("/api/action", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({action:"video_import_propose", slug:selected}) });
+      } catch (err) { rows.innerHTML = "<div class='pad small'>제안 생성 실패: " + escapeHtml(String(err)) + "</div>"; return; }
+      if (!result.ok) { rows.innerHTML = "<div class='pad small'>" + escapeHtml(result.message || "제안을 생성하지 못했습니다.") + "</div>"; return; }
+      renderImportProposal(result.proposal || {});
+    }
+    function renderImportProposal(p) {
+      window.__importProposal = p;
+      const rows = document.getElementById("importRows");
+      const btn = document.getElementById("importConfirmBtn");
+      const reqs = p.requests || [];
+      const assigns = p.assignments || [];
+      const engineLabel = p.engine === "image-embedding" ? "그림 내용 매칭" : (p.engine === "fallback-mtime" ? "시간순 추정(모델 없음 — 꼭 확인)" : "후보 없음");
+      const optionsHtml = ["<option value=''>— 사용 안 함 —</option>"].concat(
+        reqs.map(r => `<option value="${escapeHtml(r.filename)}">${escapeHtml(r.filename)}${r.concept_label ? " · " + escapeHtml(r.concept_label) : ""}</option>`)
+      ).join("");
+      let html = `<div class='pad small'>엔진: <b>${escapeHtml(engineLabel)}</b> · 후보 ${assigns.length}장 · 요청 ${reqs.length}건</div>`;
+      if (!assigns.length) {
+        html += "<div class='pad small'>가져올 그림 후보가 없습니다. GPT 이미지를 ILLUSTRATION_DROP 또는 다운로드 폴더에 저장한 뒤 다시 누르세요.</div>";
+        rows.innerHTML = html; btn.style.display = "none"; return;
+      }
+      assigns.forEach((a, idx) => {
+        const conf = (a.confidence === null || a.confidence === undefined) ? "" : `<span class='pill ${a.confidence >= 0.30 ? "ok" : "warn"}'>신뢰도 ${(a.confidence).toFixed(2)}</span>`;
+        const dedup = a.dedup ? `<span class='pill warn'>중복 가능: ${escapeHtml(a.dedup.variant)} (${(a.dedup.score).toFixed(2)})</span>` : "";
+        const exact = a.exact_name ? "<span class='pill ok'>정확한 파일명</span>" : "";
+        const thumb = `/api/illust-thumb?path=${encodeURIComponent(a.candidate_path)}`;
+        html += `<div class='import-row' style='display:flex;gap:12px;align-items:center;padding:8px;border-bottom:1px solid #eee'>
+          <img src="${thumb}" alt="" style="width:96px;height:72px;object-fit:cover;border:1px solid #ddd;border-radius:6px;background:#fafafa" onerror="this.style.opacity=0.2"/>
+          <div style='flex:1;min-width:0'>
+            <div class='small' style='word-break:break-all'>${escapeHtml(a.candidate_name)}</div>
+            <div style='margin:4px 0'>${conf} ${exact} ${dedup}</div>
+            <select id="importSel_${idx}">${optionsHtml}</select>
+          </div>
+        </div>`;
+      });
+      if ((p.unmatched_requests || []).length) {
+        html += `<div class='pad small'>아직 후보가 없는 요청: ${ (p.unmatched_requests).map(escapeHtml).join(", ") }</div>`;
+      }
+      rows.innerHTML = html;
+      assigns.forEach((a, idx) => {
+        const sel = document.getElementById("importSel_" + idx);
+        if (sel && a.proposed_filename) sel.value = a.proposed_filename;
+      });
+      btn.style.display = "inline-block";
+    }
+    async function confirmImport() {
+      const p = window.__importProposal || {};
+      const assigns = p.assignments || [];
+      const mapping = [];
+      const usedFn = new Set();
+      for (let idx = 0; idx < assigns.length; idx++) {
+        const sel = document.getElementById("importSel_" + idx);
+        const fn = sel ? sel.value : "";
+        if (!fn) continue;
+        if (usedFn.has(fn)) { alert("같은 파일명이 두 번 선택됐습니다: " + fn + "\n하나만 남겨주세요."); return; }
+        usedFn.add(fn);
+        mapping.push({ candidate_path: assigns[idx].candidate_path, filename: fn });
+      }
+      if (!mapping.length) { alert("최소 한 장은 파일명을 배정하세요."); return; }
+      const msg = "이 매핑대로 라이브러리에 넣고 렌더 대기열에 등록합니다.\n파일명이 그림 내용과 맞는지 확인했나요? (" + mapping.length + "장)";
+      if (!confirm(msg)) return;
+      let result;
+      try {
+        result = await api("/api/action", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({action:"video_import_confirm", slug:selected, mapping}) });
+      } catch (err) { alert("확정 실패: " + String(err)); return; }
+      alert(result.message || (result.ok ? "확정했습니다." : "실패했습니다."));
+      if (result.ok) {
+        document.getElementById("importPanel").style.display = "none";
+        await loadState();
+        await loadJobHistory();
+      }
     }
     async function showWeakMappings() {
       const data = await api("/api/weak-mappings");
@@ -2172,7 +2583,7 @@ INDEX_HTML = r"""<!doctype html>
       if (!selected) { alert("카드뉴스를 먼저 선택하세요."); return; }
       window.open("/card-prompt/" + encodeURIComponent(selected), "_blank");
     }
-    reloadLists(); loadState(); setInterval(loadState, 1500); setInterval(loadCardnews, 10000);
+    reloadLists(); loadState(); loadJobHistory(); setInterval(loadState, 1500); setInterval(loadJobHistory, 5000); setInterval(loadCardnews, 10000);
   </script>
 </body>
 </html>"""

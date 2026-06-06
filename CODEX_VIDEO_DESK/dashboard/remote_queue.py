@@ -300,7 +300,9 @@ class RemoteQueue:
             zf.writestr("remote_job.json", json.dumps(job, ensure_ascii=False, indent=2))
         return buf.getvalue()
 
-    def save_result(self, job_id: str, filename: str, data: bytes) -> Path:
+    def save_result_stream(self, job_id: str, filename: str, source, length: int) -> Path:
+        if length <= 0:
+            raise RuntimeError("result file is empty")
         with LOCK:
             jobs = self.jobs()
             job = next((item for item in jobs if item.get("id") == job_id), None)
@@ -310,8 +312,38 @@ class RemoteQueue:
             folder = self.results / f"remote_{job_id}_{job['slug']}"
             folder.mkdir(parents=True, exist_ok=True)
             target = folder / safe_name
-            target.write_bytes(data)
-            job.setdefault("result_files", []).append(str(target))
+            temp = target.with_suffix(target.suffix + ".uploading")
+
+        received = 0
+        try:
+            with temp.open("wb") as output:
+                remaining = length
+                while remaining:
+                    chunk = source.read(min(1024 * 1024, remaining))
+                    if not chunk:
+                        raise RuntimeError(
+                            f"result upload ended early: received {received} of {length} bytes"
+                        )
+                    output.write(chunk)
+                    received += len(chunk)
+                    remaining -= len(chunk)
+            temp.replace(target)
+        except Exception:
+            temp.unlink(missing_ok=True)
+            raise
+
+        with LOCK:
+            jobs = self.jobs()
+            job = next((item for item in jobs if item.get("id") == job_id), None)
+            if not job:
+                target.unlink(missing_ok=True)
+                raise RuntimeError("remote job not found")
+            result_files = job.setdefault("result_files", [])
+            target_text = str(target)
+            if target_text not in result_files:
+                result_files.append(target_text)
+            job["result_size"] = received
+            job["result_uploaded_at"] = self.now()
             job["updated_at"] = self.now()
             self._save_jobs(jobs)
             return target
