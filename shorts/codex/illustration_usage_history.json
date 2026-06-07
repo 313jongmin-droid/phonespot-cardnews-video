@@ -126,9 +126,36 @@
         "forecast",
         "gift_voucher"
       ]
+    },
+    "015_qa_msafer_pass_identity_block": {
+      "used_at": "2026-06-08T01:21:35",
+      "source": "uploaded_illustrations",
+      "illustrations": [
+        "cpt_7b7a2f91",
+        "cpt_b5a15155",
+        "cpt_8bffef74",
+        "cpt_a1caaea6",
+        "cpt_4729c912",
+        "phone_settings_toggle",
+        "cpt_6a2e9678",
+        "meeting_room",
+        "forecast",
+        "newspaper",
+        "microphone",
+        "shield",
+        "prohibit",
+        "impersonation_call",
+        "lock",
+        "secure_app_reregistration",
+        "emergency_account_freeze",
+        "smartphone",
+        "logout",
+        "security_feature_lock",
+        "gift_voucher"
+      ]
     }
   },
-  "updated_at": "2026-06-07T16:17:26",
+  "updated_at": "2026-06-08T01:21:36",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -154,6 +181,10 @@
     },
     "013_tip_galaxy_camera_hidden": {
       "updated_at": "2026-06-07T15:34:59",
+      "variants": []
+    },
+    "015_qa_msafer_pass_identity_block": {
+      "updated_at": "2026-06-08T01:21:36",
       "variants": []
     }
   }

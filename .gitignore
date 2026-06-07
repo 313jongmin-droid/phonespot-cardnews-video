@@ -49,6 +49,7 @@ _secrets/
 
 # Per-PC local config (PC마다 경로 다름 → 공유 금지)
 shorts/config/library_share_path.txt
+shorts/config/concept_name_cache.json
 
 # Cardnews generated data (output·images는 재생성 가능 → 무시.
 # articles(주제 JSON)는 작고 누적가치가 커서 git 추적 = 부사수 전파 + 중복방지 DB)

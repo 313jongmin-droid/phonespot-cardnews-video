@@ -26,8 +26,10 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import re
 import sys
+import urllib.request
 from pathlib import Path
 
 import codex_illustration_db as db_mod
@@ -129,6 +131,81 @@ def concept_id(keywords: list[str]) -> str:
     """개념 키워드로 결정적 ID 생성 → 영상이 달라도 같은 개념이면 같은 ID(자연 중복제거)."""
     key = " ".join(sorted(k.lower() for k in keywords)) or "empty"
     return "cpt_" + hashlib.sha1(key.encode("utf-8")).hexdigest()[:8]
+
+
+# ── 읽기 쉬운 파일명: <영어슬러그>_<hash8>.png ──────────────────────────────
+# 영어 슬러그는 '보이는 이름'일 뿐, 개념 동일성은 항상 hash8(키워드 해시)가 보장한다.
+# Gemini로 번역(키 있을 때) → 실패/키없음이면 cpt_<hash8> 로 폴백(기존과 동일, 무해).
+# 슬러그가 PC/실행마다 달라도 의미 중복제거(ce.cover)가 같은 개념을 재사용하므로 안전.
+_REPO_ROOT = Path(__file__).resolve().parents[2]
+_GEMINI_KEY_FILE = _REPO_ROOT / "_secrets" / "gemini_key.txt"
+_NAME_CACHE_FILE = _REPO_ROOT / "shorts" / "config" / "concept_name_cache.json"
+_GEMINI_TEXT_MODEL = os.environ.get("PHONESPOT_GEMINI_TEXT_MODEL", "gemini-2.5-flash")
+
+
+def _slugify_ascii(text: str) -> str:
+    s = re.sub(r"[^a-zA-Z0-9]+", "_", (text or "").strip().lower())
+    s = re.sub(r"_+", "_", s).strip("_")
+    return s[:40]
+
+
+def _load_name_cache() -> dict:
+    try:
+        return json.loads(_NAME_CACHE_FILE.read_text(encoding="utf-8-sig"))
+    except Exception:
+        return {}
+
+
+def _save_name_cache(cache: dict) -> None:
+    try:
+        _NAME_CACHE_FILE.parent.mkdir(parents=True, exist_ok=True)
+        tmp = _NAME_CACHE_FILE.with_suffix(".json.tmp")
+        tmp.write_text(json.dumps(cache, ensure_ascii=False, indent=2), encoding="utf-8")
+        os.replace(tmp, _NAME_CACHE_FILE)
+    except Exception:
+        pass
+
+
+def _gemini_english_slug(label: str, keywords: list[str]) -> str | None:
+    """개념을 1~3단어 영문 snake_case 슬러그로 번역. 키없음/오류/타임아웃이면 None."""
+    try:
+        key = _GEMINI_KEY_FILE.read_text(encoding="utf-8").strip()
+    except Exception:
+        return None
+    if not key.startswith("AIza"):
+        return None
+    prompt = (
+        "Convert this Korean illustration concept into a short English filename slug. "
+        "Rules: 1-3 words, lowercase, snake_case, ASCII letters only, no digits, describe "
+        "the general reusable visual concept. Output ONLY the slug.\n"
+        "Concept: " + (label or "") + "\nKeywords: " + ", ".join(keywords)
+    )
+    url = ("https://generativelanguage.googleapis.com/v1beta/models/"
+           + _GEMINI_TEXT_MODEL + ":generateContent?key=" + key)
+    payload = {"contents": [{"parts": [{"text": prompt}]}]}
+    try:
+        req = urllib.request.Request(
+            url, data=json.dumps(payload).encode("utf-8"),
+            headers={"Content-Type": "application/json"}, method="POST")
+        with urllib.request.urlopen(req, timeout=8) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+        text = data["candidates"][0]["content"]["parts"][0]["text"]
+        return _slugify_ascii(text) or None
+    except Exception:
+        return None
+
+
+def readable_variant(label: str, keywords: list[str]) -> str:
+    """<영어슬러그>_<hash8> 반환. 번역 불가 시 cpt_<hash8>(기존). 캐시로 재번역/변동 최소화."""
+    hash8 = concept_id(keywords)[4:]  # 'cpt_' 제거
+    cache = _load_name_cache()
+    slug = cache.get(hash8)
+    if not slug:
+        slug = _gemini_english_slug(label, keywords)
+        if slug:
+            cache[hash8] = slug
+            _save_name_cache(cache)
+    return (slug + "_" + hash8) if slug else ("cpt_" + hash8)
 
 
 def cover_threshold() -> float:
@@ -250,7 +327,7 @@ def scout_concepts(slug: str, dry_run: bool = False) -> dict:
         concept = extract_concept(gap["text"], "")
         if not concept["keywords"]:
             continue
-        variant = concept_id(concept["keywords"])
+        variant = readable_variant(concept["label"], concept["keywords"])
         # 이미 이번 실행에서 만든 개념이면 스킵(영상 내 중복)
         if variant in minted_ids:
             continue

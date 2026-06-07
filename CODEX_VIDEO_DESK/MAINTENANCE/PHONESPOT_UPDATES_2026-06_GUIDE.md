@@ -281,7 +281,18 @@
 - **tag DB 복구**: `shorts/config/illustration_tag_db.json` 끝 NUL 648바이트(드라이브 부분동기화 손상)
   제거, 101개 일러스트 항목 보존. 평소엔 관대 로더가 버팀.
 
-### 7. 점검 메모(정직)
+### 7. 개념 일러스트(C 시리즈) 파일명 = 읽기 쉬운 영어
+
+- `codex_concept_scout.py`: 개념 파일명을 `cpt_<hash>` → **`<영어슬러그>_<hash8>.png`**(예
+  `operate_msafer_b5a15155.png`). 영어 슬러그는 Gemini 번역(기존 `_secrets/gemini_key.txt` 사용),
+  결과는 `shorts/config/concept_name_cache.json`(git 제외, PC별)에 캐시.
+- **안전장치**: 개념 동일성은 여전히 **hash8(키워드 해시)** 가 보장 + 의미 중복제거(ce.cover)가 슬러그와
+  무관하게 같은 개념 재사용 → 슬러그가 PC/실행마다 달라도 중복 안 생김. **키 없음/번역 실패/모델오류면
+  `cpt_<hash8>` 로 폴백**(기존과 동일, 무해). 모델 변경: env `PHONESPOT_GEMINI_TEXT_MODEL`.
+- 기존 `cpt_*` 파일은 그대로(이름 변경은 **앞으로 발굴되는 개념부터**). 적용은 다음 "영상 프롬프트 준비"
+  실행부터(패널 재시작 불필요).
+
+### 8. 점검 메모(정직)
 
 - 작업트리에 EOL(CRLF/LF) 차이로 다수 파일이 "수정"으로 보일 수 있음(이전 커밋과의 줄바꿈 차이, 내용 동일).
   `기사_깃에_올리기.bat`은 스코프가 articles+.gitignore라 이 EOL 노이즈를 커밋하지 않음.

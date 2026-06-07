@@ -1,46 +1,47 @@
 {
-  "slug": "014_scam_voicephishing_zero_relief",
-  "title_short": "보이스피싱 피해자 지원 6월 1일 재개",
-  "video_title": "보이스피싱 피해자 지원 6월 1일 재개",
-  "publication_date": "2026.06.03",
-  "sources": "신한은행 보이스피싱제로 3차년도 9차 + 정책브리핑 + 폰스팟 광교점 자료",
+  "slug": "015_qa_msafer_pass_identity_block",
+  "title_short": "내 명의로 폰 몇 대 개통됐나",
+  "video_title": "내 명의로 폰 몇 대 개통됐나",
+  "publication_date": "2026.06.04",
+  "sources": "KISA Msafer + 정책브리핑 PASS 명의도용방지 + 폰스팟 광교점 자료",
   "channel_name": "폰스팟",
   "channel_tagline": "광교 미니 IT 브리핑",
   "opening": {
     "line1": "광교 미니 IT 브리핑",
-    "line2": "보이스피싱 피해자 지원 6월 1일 재개"
+    "line2": "내 명의로 폰 몇 대 개통됐나"
   },
   "hook": {
-    "tts": "혹시 보이스피싱 피해를 입으셨거나 주변에 그런 분이 계신가요? 혼자 끙끙 앓지 마시고, 6월 1일부터 다시 시작된 지원 사업을 확인하시기 바랍니다.",
+    "tts": "혹시 내 명의로 휴대폰이 몇 대 개통돼 있는지 확인해보신 적 있으신가요? 사기범이 신분증을 도용해 몰래 개통한 회선이 있을 수 있습니다. 1분 안에 점검하실 수 있습니다.",
     "caption_body": [
-      "보이스피싱 피해",
-      "혼자 끙끙 마세요"
+      "내 명의로",
+      "몇 대 개통됐을까?"
     ],
     "caption_emphasis": [
-      "혼자 끙끙"
+      "몇 대"
     ],
     "headline_lines": [
       {
-        "text": "보이스피싱 피해"
+        "text": "내 명의로"
       },
       {
-        "text": "혼자 끙끙 마세요",
+        "text": "몇 대 개통됐을까?",
         "accent": true
       }
     ],
-    "meta": "출처: 신한은행 보이스피싱제로 3차년도",
+    "meta": "출처: KISA 명의도용방지서비스",
     "topic": "뉴스",
     "background_image": "1.png",
     "caption_chunks": [
-      "혹시 보이스피싱 피해를 입으셨거나",
-      "주변에 그런 분이 계신가요?",
-      "혼자 끙끙 앓지 마시고, 6월 1일부터",
-      "다시 시작된 지원 사업을 확인하시기 바랍니다."
+      "혹시 내 명의로 휴대폰이 몇 대 개통돼 있는지",
+      "확인해보신 적 있으신가요?",
+      "사기범이 신분증을 도용해 몰래 개통한",
+      "회선이 있을 수 있습니다.",
+      "1분 안에 점검하실 수 있습니다."
     ],
     "chunk_visuals": [
       {
-        "type": "illust",
-        "value": "impersonation_call"
+        "type": "image",
+        "value": "1.png"
       },
       {
         "type": "image",
@@ -51,8 +52,12 @@
         "value": "3.png"
       },
       {
-        "type": "illust",
-        "value": "cpt_fd9edf65"
+        "type": "mascot",
+        "value": "surprised"
+      },
+      {
+        "type": "image",
+        "value": "4.png"
       }
     ],
     "stat": {
@@ -62,112 +67,114 @@
     },
     "_codex_narration_source": "captions.md#intro",
     "display_chunks": [
-      "혹시 보이스피싱 피해를 입으셨거나",
-      "주변에 그런 분이 계신가요?",
-      "혼자 끙끙 앓지 마시고, 6월 1일부터",
-      "다시 시작된 지원 사업을 확인하시기 바랍니다"
+      "혹시 내 명의로 휴대폰이 몇 대 개통돼 있는지",
+      "확인해보신 적 있으신가요?",
+      "사기범이 신분증을 도용해 몰래 개통한",
+      "회선이 있을 수 있습니다",
+      "1분 안에 점검하실 수 있습니다"
     ],
     "_codex_caption_lockstep": {
       "version": 2,
       "compiler": "korean_caption_compiler_v2",
       "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-      "chunk_count": 4
+      "chunk_count": 5
     },
     "_codex_contextual_narrative": true,
     "_codex_sync_mode": "global999_tts_caption_lockstep",
     "tts_chunk_weights": [
-      1625.71,
-      1851.41,
-      1989.42,
-      2112.67
+      2233.08,
+      1860.21,
+      1734.17,
+      1760.58,
+      1584.51
     ],
     "_tts_timing": {
       "mode": "word_boundary_text_align",
       "windows": [
         {
           "start_ms": 0.0,
-          "end_ms": 1625.71,
-          "duration_ms": 1625.71
+          "end_ms": 2233.08,
+          "duration_ms": 2233.08
         },
         {
-          "start_ms": 1625.71,
-          "end_ms": 3477.12,
-          "duration_ms": 1851.41
+          "start_ms": 2233.08,
+          "end_ms": 4093.29,
+          "duration_ms": 1860.21
         },
         {
-          "start_ms": 3477.12,
-          "end_ms": 5466.54,
-          "duration_ms": 1989.42
+          "start_ms": 4093.29,
+          "end_ms": 5827.46,
+          "duration_ms": 1734.17
         },
         {
-          "start_ms": 5466.54,
-          "end_ms": 7579.21,
-          "duration_ms": 2112.67
+          "start_ms": 5827.46,
+          "end_ms": 7588.04,
+          "duration_ms": 1760.58
+        },
+        {
+          "start_ms": 7588.04,
+          "end_ms": 9172.55,
+          "duration_ms": 1584.51
         }
       ],
-      "boundary_count": 19,
-      "caption_signature": "e1fa4ba7d645c5bc3357fbed8710a9d19acd38093704a5929c0af9aa8131f458"
+      "boundary_count": 25,
+      "caption_signature": "658c76cd1054ed9f00898f39fa13df24fe820bde2ea7bc5392d3084d2eddaa42"
     }
   },
   "facts": [
     {
-      "tts": "2026년 6월 1일 월요일 오전 10시부터 신한은행 보이스피싱제로 3차년도 9차 지원이 시작됐습니다. 이 사업은 신한은행이 금융감독원, 경찰청, 사회복지공동모금회, 굿네이버스와 함께 전기통신 금융사기 피해자의 일상회복을 돕기 위해 운영하는 지원 사업입니다.",
+      "tts": "KISA와 SKT, KT, LGU+가 함께 운영하는 Msafer 명의도용방지서비스를 활용하시면, 본인 명의로 개통된 모든 휴대폰 회선을 무료로 확인하고 추가 개통을 사전에 차단할 수 있습니다. 신청은 두 가지 경로가 있습니다.",
       "caption_body": [
-        "6월 1일 시작",
-        "3차년도 9차 지원"
+        "Msafer + PASS",
+        "무료 통합 서비스"
       ],
       "caption_emphasis": [
-        "3차년도 9차"
+        "무료"
       ],
       "headline_lines": [
         {
-          "text": "6월 1일 시작"
+          "text": "Msafer + PASS"
         },
         {
-          "text": "3차년도 9차 지원",
+          "text": "무료 통합 서비스",
           "accent": true
         }
       ],
-      "meta": "출처: 보이스피싱제로 공식 공지",
+      "meta": "출처: msafer.or.kr 운영 안내",
       "topic": "뉴스",
       "background_image": "2.png",
       "caption_chunks": [
-        "2026년 6월 1일 월요일 오전 10시부터",
-        "신한은행 보이스피싱제로 3차년도 9차",
-        "지원이 시작됐습니다.",
-        "이 사업은 신한은행이 금융감독원,",
-        "경찰청, 사회복지공동모금회,",
-        "굿네이버스와 함께 전기통신 금융사기",
-        "피해자의 일상회복을 돕기 위해 운영하는 지원 사업입니다."
+        "KISA와 SKT, KT, LGU+가",
+        "함께 운영하는 Msafer",
+        "명의도용방지서비스를 활용하시면,",
+        "본인 명의로 개통된 모든 휴대폰 회선을 무료로 확인하고",
+        "추가 개통을 사전에 차단할 수 있습니다.",
+        "신청은 두 가지 경로가 있습니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "cpt_75c6eba6"
+          "value": "cpt_7b7a2f91"
+        },
+        {
+          "type": "illust",
+          "value": "cpt_b5a15155"
+        },
+        {
+          "type": "illust",
+          "value": "cpt_8bffef74"
         },
         {
           "type": "image",
-          "value": "4.png"
-        },
-        {
-          "type": "image",
-          "value": "1.png"
+          "value": "5.png"
         },
         {
           "type": "illust",
-          "value": "cpt_6a2e9678"
+          "value": "cpt_a1caaea6"
         },
         {
           "type": "illust",
-          "value": "cpt_ea7bc1d6"
-        },
-        {
-          "type": "illust",
-          "value": "cpt_83fa1e9f"
-        },
-        {
-          "type": "illust",
-          "value": "microphone"
+          "value": "cpt_4729c912"
         }
       ],
       "stat": {
@@ -178,108 +185,112 @@
       "id": "fact_1",
       "_codex_narration_source": "captions.md#body",
       "display_chunks": [
-        "2026년 6월 1일 월요일 오전 10시부터",
-        "신한은행 보이스피싱제로 3차년도 9차",
-        "지원이 시작됐습니다",
-        "이 사업은 신한은행이 금융감독원,",
-        "경찰청, 사회복지공동모금회,",
-        "굿네이버스와 함께 전기통신 금융사기",
-        "피해자의 일상회복을 돕기 위해 운영하는 지원 사업입니다"
+        "KISA와 SKT, KT, LGU+가",
+        "함께 운영하는 Msafer",
+        "명의도용방지서비스를 활용하시면,",
+        "본인 명의로 개통된 모든 휴대폰 회선을 무료로 확인하고",
+        "추가 개통을 사전에 차단할 수 있습니다",
+        "신청은 두 가지 경로가 있습니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 7
+        "chunk_count": 6
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        2145.08,
-        2112.67,
-        1622.54,
-        1998.25,
-        2042.25,
-        1883.79,
-        2658.42
+        3034.17,
+        1117.95,
+        1760.55,
+        2561.62,
+        2458.79,
+        1637.34
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 2145.08,
-            "duration_ms": 2145.08
+            "end_ms": 3034.17,
+            "duration_ms": 3034.17
           },
           {
-            "start_ms": 2145.08,
-            "end_ms": 4257.75,
-            "duration_ms": 2112.67
+            "start_ms": 3034.17,
+            "end_ms": 4152.12,
+            "duration_ms": 1117.95
           },
           {
-            "start_ms": 4257.75,
-            "end_ms": 5880.29,
-            "duration_ms": 1622.54
+            "start_ms": 4152.12,
+            "end_ms": 5912.67,
+            "duration_ms": 1760.55
           },
           {
-            "start_ms": 5880.29,
-            "end_ms": 7878.54,
-            "duration_ms": 1998.25
+            "start_ms": 5912.67,
+            "end_ms": 8474.29,
+            "duration_ms": 2561.62
           },
           {
-            "start_ms": 7878.54,
-            "end_ms": 9920.79,
-            "duration_ms": 2042.25
+            "start_ms": 8474.29,
+            "end_ms": 10933.08,
+            "duration_ms": 2458.79
           },
           {
-            "start_ms": 9920.79,
-            "end_ms": 11804.58,
-            "duration_ms": 1883.79
-          },
-          {
-            "start_ms": 11804.58,
-            "end_ms": 14463.0,
-            "duration_ms": 2658.42
+            "start_ms": 10933.08,
+            "end_ms": 12570.42,
+            "duration_ms": 1637.34
           }
         ],
-        "boundary_count": 26,
-        "caption_signature": "e1be8dbdeba49e7f4b605af980ce08639a7cf2225fdd6b541dd3cae80622c277"
+        "boundary_count": 32,
+        "caption_signature": "4575f01c8bf2bb426cd2a919d5f3b47c69ac53ff106958247b7eeba99ca8c50d"
       }
     },
     {
-      "tts": "1차와 2차 누적 실적을 보면 취약계층 피해자 5,211명에게 150억 원의 생활비가 지급됐고, 법률상담과 소송지원 1,064건, 심리상담 635명, 예방교육 13,954명, 피해예방 무료보험 2,732명이 추가로 지원됐습니다. 받을 수 있는 항목은 다섯 가지입니다.",
+      "tts": "모바일에서는 PASS 앱을 설치하신 후 본인확인을 거쳐 명의도용방지 메뉴로 들어가시면 됩니다. PC에서는 msafer.or.kr 에 접속하셔서 공동인증서 또는 카카오, PASS, 네이버 간편인증으로 본인확인을 진행하시면 됩니다. 기능은 세 가지입니다.",
       "caption_body": [
-        "1·2차 누적",
-        "5,211명 150억 지원"
+        "기능 1",
+        "가입사실현황조회"
       ],
       "caption_emphasis": [
-        "5,211명 150억"
+        "가입사실현황조회"
       ],
       "headline_lines": [
         {
-          "text": "1·2차 누적"
+          "text": "기능 1"
         },
         {
-          "text": "5,211명 150억 지원",
+          "text": "가입사실현황조회",
           "accent": true
         }
       ],
-      "meta": "출처: 신한은행 보이스피싱제로",
+      "meta": "출처: Msafer 가입사실현황",
       "topic": "뉴스",
       "background_image": "3.png",
       "caption_chunks": [
-        "1차와 2차 누적 실적을 보면",
-        "취약계층 피해자 5,211명에게 150억",
-        "원의 생활비가 지급됐고,",
-        "법률상담과 소송지원 1,064건,",
-        "심리상담 635명, 예방교육 13,954명,",
-        "피해예방 무료보험 2,732명이 추가로 지원됐습니다.",
-        "받을 수 있는 항목은 다섯 가지입니다."
+        "모바일에서는 PASS 앱을 설치하신",
+        "후 본인확인을 거쳐 명의도용방지 메뉴로 들어가시면",
+        "됩니다. PC에서는 msafer.or.kr",
+        "에 접속하셔서 공동인증서 또는 카카오, PASS,",
+        "네이버 간편인증으로 본인확인을 진행하시면 됩니다.",
+        "기능은 세 가지입니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "shield"
+          "value": "phone_settings_toggle"
+        },
+        {
+          "type": "illust",
+          "value": "cpt_4729c912"
+        },
+        {
+          "type": "illust",
+          "value": "cpt_8bffef74"
+        },
+        {
+          "type": "illust",
+          "value": "cpt_6a2e9678"
         },
         {
           "type": "illust",
@@ -288,22 +299,6 @@
         {
           "type": "illust",
           "value": "forecast"
-        },
-        {
-          "type": "illust",
-          "value": "cpt_fd9edf65"
-        },
-        {
-          "type": "illust",
-          "value": "market_cap"
-        },
-        {
-          "type": "mascot",
-          "value": "suspicious"
-        },
-        {
-          "type": "illust",
-          "value": "store"
         }
       ],
       "stat": {
@@ -314,109 +309,137 @@
       "id": "fact_2",
       "_codex_narration_source": "captions.md#body",
       "display_chunks": [
-        "1차와 2차 누적 실적을 보면",
-        "취약계층 피해자 5,211명에게 150억",
-        "원의 생활비가 지급됐고,",
-        "법률상담과 소송지원 1,064건,",
-        "심리상담 635명, 예방교육 13,954명,",
-        "피해예방 무료보험 2,732명이 추가로 지원됐습니다",
-        "받을 수 있는 항목은 다섯 가지입니다"
+        "모바일에서는 PASS 앱을 설치하신",
+        "후 본인확인을 거쳐 명의도용방지 메뉴로 들어가시면",
+        "됩니다 PC에서는 msafer.or.kr",
+        "에 접속하셔서 공동인증서 또는 카카오, PASS,",
+        "네이버 간편인증으로 본인확인을 진행하시면 됩니다",
+        "기능은 세 가지입니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 7
+        "chunk_count": 6
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        1616.92,
-        2227.08,
-        1311.62,
-        2156.71,
-        3365.5,
-        3705.96,
-        1707.76
+        2004.21,
+        2482.41,
+        2890.13,
+        3204.25,
+        2852.08,
+        1073.97
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 1616.92,
-            "duration_ms": 1616.92
+            "end_ms": 2004.21,
+            "duration_ms": 2004.21
           },
           {
-            "start_ms": 1616.92,
-            "end_ms": 3844.0,
-            "duration_ms": 2227.08
+            "start_ms": 2004.21,
+            "end_ms": 4486.62,
+            "duration_ms": 2482.41
           },
           {
-            "start_ms": 3844.0,
-            "end_ms": 5155.62,
-            "duration_ms": 1311.62
+            "start_ms": 4486.62,
+            "end_ms": 7376.75,
+            "duration_ms": 2890.13
           },
           {
-            "start_ms": 5155.62,
-            "end_ms": 7312.33,
-            "duration_ms": 2156.71
+            "start_ms": 7376.75,
+            "end_ms": 10581.0,
+            "duration_ms": 3204.25
           },
           {
-            "start_ms": 7312.33,
-            "end_ms": 10677.83,
-            "duration_ms": 3365.5
+            "start_ms": 10581.0,
+            "end_ms": 13433.08,
+            "duration_ms": 2852.08
           },
           {
-            "start_ms": 10677.83,
-            "end_ms": 14383.79,
-            "duration_ms": 3705.96
-          },
-          {
-            "start_ms": 14383.79,
-            "end_ms": 16091.55,
-            "duration_ms": 1707.76
+            "start_ms": 13433.08,
+            "end_ms": 14507.05,
+            "duration_ms": 1073.97
           }
         ],
-        "boundary_count": 30,
-        "caption_signature": "c212674806181808fee589aff3ff92ea4543ac5b1b383e6f2533680e33f052be"
+        "boundary_count": 27,
+        "caption_signature": "1630e05087fe18d4a00d23925790fb5b135ce4e414d67fc97d69c4b1ca9e6a9c"
       }
     },
     {
-      "tts": "첫째 생활비, 둘째 법률상담과 소송지원, 셋째 심리상담, 넷째 예방교육, 다섯째 피해예방 무료보험입니다. 본인 상황에 맞는 항목을 골라 신청하실 수 있습니다.",
+      "tts": "첫째, 가입사실현황조회로 본인 명의로 개통된 전체 회선을 1분 안에 조회하실 수 있습니다. 모르는 회선이 떠 있다면 해당 통신사 고객센터에 즉시 정지와 해지를 신청하시고, 경찰 112 또는 전기통신금융사기 통합대응센터에 신고하시고, 거래 은행에 본인계좌 일괄지급정지를 신청하시기 바랍니다. 둘째, 가입제한 서비스로 본인 동의 없이 이뤄지는 신규 가입, 번호이동, 기기변경, 명의변경을 통신사 단계에서 사전 차단할 수 있습니다.",
       "caption_body": [
-        "받을 수 있는",
-        "5가지 지원"
+        "기능 2",
+        "가입제한 사전 차단"
       ],
       "caption_emphasis": [
-        "5가지"
+        "가입제한"
       ],
       "headline_lines": [
         {
-          "text": "받을 수 있는"
+          "text": "기능 2"
         },
         {
-          "text": "5가지 지원",
+          "text": "가입제한 사전 차단",
           "accent": true
         }
       ],
-      "meta": "출처: 보이스피싱제로 운영 안내",
+      "meta": "출처: KISA 가입제한 서비스",
       "topic": "뉴스",
       "background_image": "4.png",
       "caption_chunks": [
-        "첫째 생활비, 둘째 법률상담과 소송지원,",
-        "셋째 심리상담, 넷째 예방교육,",
-        "다섯째 피해예방 무료보험입니다.",
-        "본인 상황에 맞는 항목을 골라 신청하실 수 있습니다."
+        "첫째, 가입사실현황조회로 본인 명의로",
+        "개통된 전체 회선을 1분 안에 조회하실 수 있습니다.",
+        "모르는 회선이 떠 있다면",
+        "해당 통신사 고객센터에 즉시 정지와 해지를 신청하시고,",
+        "경찰 112 또는 전기통신금융사기",
+        "통합대응센터에 신고하시고,",
+        "거래 은행에 본인계좌 일괄지급정지를 신청하시기 바랍니다.",
+        "둘째, 가입제한 서비스로 본인 동의 없이",
+        "이뤄지는 신규 가입, 번호이동,",
+        "기기변경, 명의변경을 통신사 단계에서",
+        "사전 차단할 수 있습니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "smartphone"
+          "value": "newspaper"
         },
         {
           "type": "illust",
-          "value": "smartphone"
+          "value": "microphone"
+        },
+        {
+          "type": "illust",
+          "value": "shield"
+        },
+        {
+          "type": "illust",
+          "value": "cpt_a1caaea6"
+        },
+        {
+          "type": "illust",
+          "value": "prohibit"
+        },
+        {
+          "type": "illust",
+          "value": "impersonation_call"
+        },
+        {
+          "type": "illust",
+          "value": "lock"
+        },
+        {
+          "type": "illust",
+          "value": "secure_app_reregistration"
+        },
+        {
+          "type": "illust",
+          "value": "emergency_account_freeze"
         },
         {
           "type": "illust",
@@ -435,96 +458,135 @@
       "id": "fact_3",
       "_codex_narration_source": "captions.md#body",
       "display_chunks": [
-        "첫째 생활비, 둘째 법률상담과 소송지원,",
-        "셋째 심리상담, 넷째 예방교육,",
-        "다섯째 피해예방 무료보험입니다",
-        "본인 상황에 맞는 항목을 골라 신청하실 수 있습니다"
+        "첫째, 가입사실현황조회로 본인 명의로",
+        "개통된 전체 회선을 1분 안에 조회하실 수 있습니다",
+        "모르는 회선이 떠 있다면",
+        "해당 통신사 고객센터에 즉시 정지와 해지를 신청하시고,",
+        "경찰 112 또는 전기통신금융사기",
+        "통합대응센터에 신고하시고,",
+        "거래 은행에 본인계좌 일괄지급정지를 신청하시기 바랍니다",
+        "둘째, 가입제한 서비스로 본인 동의 없이",
+        "이뤄지는 신규 가입, 번호이동,",
+        "기기변경, 명의변경을 통신사 단계에서",
+        "사전 차단할 수 있습니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 4
+        "chunk_count": 11
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        2752.46,
-        2042.25,
-        2273.96,
-        2447.16
+        2118.67,
+        3207.04,
+        1091.54,
+        3151.42,
+        1813.37,
+        1549.29,
+        3371.5,
+        2051.05,
+        1927.83,
+        2218.29,
+        1205.95
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 2752.46,
-            "duration_ms": 2752.46
+            "end_ms": 2118.67,
+            "duration_ms": 2118.67
           },
           {
-            "start_ms": 2752.46,
-            "end_ms": 4794.71,
-            "duration_ms": 2042.25
+            "start_ms": 2118.67,
+            "end_ms": 5325.71,
+            "duration_ms": 3207.04
           },
           {
-            "start_ms": 4794.71,
-            "end_ms": 7068.67,
-            "duration_ms": 2273.96
+            "start_ms": 5325.71,
+            "end_ms": 6417.25,
+            "duration_ms": 1091.54
           },
           {
-            "start_ms": 7068.67,
-            "end_ms": 9515.83,
-            "duration_ms": 2447.16
+            "start_ms": 6417.25,
+            "end_ms": 9568.67,
+            "duration_ms": 3151.42
+          },
+          {
+            "start_ms": 9568.67,
+            "end_ms": 11382.04,
+            "duration_ms": 1813.37
+          },
+          {
+            "start_ms": 11382.04,
+            "end_ms": 12931.33,
+            "duration_ms": 1549.29
+          },
+          {
+            "start_ms": 12931.33,
+            "end_ms": 16302.83,
+            "duration_ms": 3371.5
+          },
+          {
+            "start_ms": 16302.83,
+            "end_ms": 18353.88,
+            "duration_ms": 2051.05
+          },
+          {
+            "start_ms": 18353.88,
+            "end_ms": 20281.71,
+            "duration_ms": 1927.83
+          },
+          {
+            "start_ms": 20281.71,
+            "end_ms": 22500.0,
+            "duration_ms": 2218.29
+          },
+          {
+            "start_ms": 22500.0,
+            "end_ms": 23705.95,
+            "duration_ms": 1205.95
           }
         ],
-        "boundary_count": 20,
-        "caption_signature": "69aadf79f405360ea9c3672bd0bc5a070c8ee5f9710b2a52523126cfc3d48345"
+        "boundary_count": 53,
+        "caption_signature": "8d6670be645563fea1dee56db974641bebd49b01c6338448f03fd1c2c8964528"
       }
     },
     {
-      "tts": "신청은 보이스피싱제로 공식 사이트 voicephisingzero.co.kr 에서, 추가 신고는 경찰청 전기통신금융사기 통합대응센터 counterscam112.go.kr 에서 가능합니다. 만약 송금이 이뤄진 직후라면, 거래 은행에 지급정지 신청과 경찰 112, 금감원 1332에 동시 신고하시는 것이 가장 빠른 골든타임 대응입니다.",
+      "tts": "본인이 직접 개통하실 일이 있을 때만 일시 해제하시면 됩니다. 셋째, 번호도용문자 차단 부가서비스로 내 번호를 도용한 스미싱과 광고 문자도 무료로 차단할 수 있습니다. 가입한 통신사 홈페이지에서 부가서비스로 직접 신청하실 수 있습니다.",
       "caption_body": [
-        "신청·신고",
-        "3개 채널 동시 활용"
+        "기능 3",
+        "번호도용문자 차단"
       ],
       "caption_emphasis": [
-        "3개 채널"
+        "번호도용문자"
       ],
       "headline_lines": [
         {
-          "text": "신청·신고"
+          "text": "기능 3"
         },
         {
-          "text": "3개 채널 동시 활용",
+          "text": "번호도용문자 차단",
           "accent": true
         }
       ],
-      "meta": "출처: 경찰청·금감원 가이드",
+      "meta": "출처: KISA·이통3사 부가서비스",
       "topic": "뉴스",
       "background_image": "5.png",
       "caption_chunks": [
-        "신청은 보이스피싱제로 공식",
-        "사이트 voicephisingzero.co.kr",
-        "에서, 추가 신고는 경찰청 전기통신금융사기",
-        "통합대응센터 counterscam112.go.kr",
-        "에서 가능합니다. 만약 송금이 이뤄진 직후라면,",
-        "거래 은행에 지급정지 신청과 경찰 112,",
-        "금감원 1332에 동시 신고하시는 것이",
-        "가장 빠른 골든타임 대응입니다."
+        "본인이 직접 개통하실 일이 있을 때만 일시 해제하시면",
+        "됩니다. 셋째, 번호도용문자 차단",
+        "부가서비스로 내 번호를 도용한 스미싱과 광고",
+        "문자도 무료로 차단할 수 있습니다.",
+        "가입한 통신사 홈페이지에서 부가서비스로",
+        "직접 신청하실 수 있습니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "emergency_account_freeze"
-        },
-        {
-          "type": "illust",
-          "value": "cpt_83fa1e9f"
-        },
-        {
-          "type": "illust",
-          "value": "cpt_ea7bc1d6"
+          "value": "smartphone"
         },
         {
           "type": "illust",
@@ -535,16 +597,16 @@
           "value": "smartphone"
         },
         {
-          "type": "mascot",
-          "value": "serious"
+          "type": "illust",
+          "value": "logout"
+        },
+        {
+          "type": "illust",
+          "value": "security_feature_lock"
         },
         {
           "type": "illust",
           "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "handshake"
         }
       ],
       "stat": {
@@ -555,79 +617,65 @@
       "id": "fact_4",
       "_codex_narration_source": "captions.md#body",
       "display_chunks": [
-        "신청은 보이스피싱제로 공식",
-        "사이트 voicephisingzero.co.kr",
-        "에서, 추가 신고는 경찰청 전기통신금융사기",
-        "통합대응센터 counterscam112.go.kr",
-        "에서 가능합니다 만약 송금이 이뤄진 직후라면,",
-        "거래 은행에 지급정지 신청과 경찰 112,",
-        "금감원 1332에 동시 신고하시는 것이",
-        "가장 빠른 골든타임 대응입니다"
+        "본인이 직접 개통하실 일이 있을 때만 일시 해제하시면",
+        "됩니다 셋째, 번호도용문자 차단",
+        "부가서비스로 내 번호를 도용한 스미싱과 광고",
+        "문자도 무료로 차단할 수 있습니다",
+        "가입한 통신사 홈페이지에서 부가서비스로",
+        "직접 신청하실 수 있습니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 8
+        "chunk_count": 6
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        1564.08,
-        1804.59,
-        2693.66,
-        2288.71,
-        2969.38,
-        2438.37,
-        2271.13,
-        1751.75
+        2682.04,
+        2414.79,
+        2139.09,
+        2341.54,
+        2042.25,
+        1426.04
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 1564.08,
-            "duration_ms": 1564.08
+            "end_ms": 2682.04,
+            "duration_ms": 2682.04
           },
           {
-            "start_ms": 1564.08,
-            "end_ms": 3368.67,
-            "duration_ms": 1804.59
+            "start_ms": 2682.04,
+            "end_ms": 5096.83,
+            "duration_ms": 2414.79
           },
           {
-            "start_ms": 3368.67,
-            "end_ms": 6062.33,
-            "duration_ms": 2693.66
+            "start_ms": 5096.83,
+            "end_ms": 7235.92,
+            "duration_ms": 2139.09
           },
           {
-            "start_ms": 6062.33,
-            "end_ms": 8351.04,
-            "duration_ms": 2288.71
+            "start_ms": 7235.92,
+            "end_ms": 9577.46,
+            "duration_ms": 2341.54
           },
           {
-            "start_ms": 8351.04,
-            "end_ms": 11320.42,
-            "duration_ms": 2969.38
+            "start_ms": 9577.46,
+            "end_ms": 11619.71,
+            "duration_ms": 2042.25
           },
           {
-            "start_ms": 11320.42,
-            "end_ms": 13758.79,
-            "duration_ms": 2438.37
-          },
-          {
-            "start_ms": 13758.79,
-            "end_ms": 16029.92,
-            "duration_ms": 2271.13
-          },
-          {
-            "start_ms": 16029.92,
-            "end_ms": 17781.67,
-            "duration_ms": 1751.75
+            "start_ms": 11619.71,
+            "end_ms": 13045.75,
+            "duration_ms": 1426.04
           }
         ],
-        "boundary_count": 33,
-        "caption_signature": "4443522158f5c85d91f8c974bb4a4ab36dbbd26c04577c87ebdaa3b558c3485c"
+        "boundary_count": 31,
+        "caption_signature": "e6c1ceb933a54e0096f91da8e7bad6533cc6128b53b53acaa6ca7b9d1ce800bc"
       }
     }
   ],
@@ -683,7 +731,7 @@
       "version": 2,
       "compiler": "korean_caption_compiler_v2",
       "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-      "chunk_count": 4
+      "chunk_count": 6
     },
     "_codex_contextual_narrative": true,
     "_codex_sync_mode": "global999_tts_caption_lockstep",
@@ -714,7 +762,7 @@
   "_chunk_logic_v2": true,
   "_note": "build_script.py 자동 생성 (v2 로직): 시퀀스 내 이미지 순환 + 마스코트 짝수 시퀀스만.",
   "_codex_uses_captions_md_narration": true,
-  "_codex_captions_md_narration_path": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\014_scam_voicephishing_zero_relief\\captions.md",
+  "_codex_captions_md_narration_path": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\015_qa_msafer_pass_identity_block\\captions.md",
   "_codex_narration_policy": "tts_only_chunks_visuals_preserved",
   "_codex_unique_source_images": {
     "version": 1,
@@ -729,7 +777,7 @@
         },
         "to": {
           "type": "illust",
-          "value": "shield"
+          "value": "store"
         }
       },
       {
@@ -741,7 +789,31 @@
         },
         "to": {
           "type": "illust",
-          "value": "lock"
+          "value": "prohibit"
+        }
+      },
+      {
+        "section": "cta",
+        "chunk": 5,
+        "from": {
+          "type": "image",
+          "value": "3.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "shield"
+        }
+      },
+      {
+        "section": "cta",
+        "chunk": 6,
+        "from": {
+          "type": "image",
+          "value": "4.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "gift_voucher"
         }
       }
     ]
@@ -753,29 +825,29 @@
   "_codex_common_quality_note": "Global 001-999 rule: screen chunks are rebuilt as an ordered, lossless partition of captions.md narration; curated visuals are rebalanced without discarding quality rules.",
   "_codex_uploaded_illustrations": [
     {
-      "section": "hook",
-      "chunk": 4,
-      "variant": "cpt_fd9edf65"
-    },
-    {
       "section": "fact_1",
       "chunk": 1,
-      "variant": "cpt_75c6eba6"
+      "variant": "cpt_7b7a2f91"
     },
     {
       "section": "fact_1",
-      "chunk": 4,
-      "variant": "cpt_6a2e9678"
+      "chunk": 2,
+      "variant": "cpt_b5a15155"
+    },
+    {
+      "section": "fact_1",
+      "chunk": 3,
+      "variant": "cpt_8bffef74"
     },
     {
       "section": "fact_1",
       "chunk": 5,
-      "variant": "cpt_ea7bc1d6"
+      "variant": "cpt_a1caaea6"
     },
     {
       "section": "fact_1",
       "chunk": 6,
-      "variant": "cpt_83fa1e9f"
+      "variant": "cpt_4729c912"
     }
   ],
   "_codex_semantic_visual_match": {
@@ -783,78 +855,134 @@
     "policy": "Match chunks to GPT source images using prompt.md descriptions, then fallback to tagged reusable illustrations.",
     "changes": [
       {
-        "section": "hook",
-        "chunk": 1,
-        "from": {
-          "type": "image",
-          "value": "1.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "impersonation_call"
-        },
-        "context": "혹시 보이스피싱 피해를 입으셨거나 주변에 그런 분이 계신가요? 보이스피싱 피해 혼자 끙끙 마세요 ['보이스피싱 피해', '혼자 끙끙 마세요'] 뉴스",
-        "reason": "illust score 0.457"
-      },
-      {
-        "section": "hook",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "cpt_fd9edf65"
-        },
-        "to": {
-          "type": "image",
-          "value": "5.png"
-        },
-        "context": "혼자 끙끙 앓지 마시고, 6월 1일부터 다시 시작된 지원 사업을 확인하시기 바랍니다 보이스피싱 피해 혼자 끙끙 마세요 ['보이스피싱 피해', '혼자 끙끙 마세요'] 뉴스",
-        "reason": "unused source image (no semantic match, img score 0.218)"
-      },
-      {
         "section": "fact_1",
         "chunk": 3,
         "from": {
-          "type": "image",
-          "value": "5.png"
-        },
-        "to": {
-          "type": "image",
-          "value": "1.png"
-        },
-        "context": "신한은행 보이스피싱제로 3차년도 9차 지원이 시작됐습니다 이 사업은 신한은행이 금융감독원, 6월 1일 시작 3차년도 9차 지원 ['6월 1일 시작', '3차년도 9차 지원'] 뉴스",
-        "reason": "unused source image (no semantic match, img score 0.055)"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 4,
-        "from": {
           "type": "illust",
-          "value": "cpt_6a2e9678"
+          "value": "cpt_8bffef74"
         },
         "to": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "cpt_83fa1e9f"
         },
-        "context": "지원이 시작됐습니다 이 사업은 신한은행이 금융감독원, 경찰청, 사회복지공동모금회, 6월 1일 시작 3차년도 9차 지원 ['6월 1일 시작', '3차년도 9차 지원'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
+        "context": "함께 운영하는 Msafer 명의도용방지서비스를 활용하시면, 본인 명의로 개통된 모든 휴대폰 회선을 무료로 확인하고 Msafer + PASS 무료 통합 서비스 ['Msafer + PASS', '무료 통합 서비스'] 뉴",
+        "reason": "illust score 0.435"
       },
       {
         "section": "fact_1",
         "chunk": 5,
         "from": {
           "type": "illust",
-          "value": "cpt_ea7bc1d6"
+          "value": "cpt_a1caaea6"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "본인 명의로 개통된 모든 휴대폰 회선을 무료로 확인하고 추가 개통을 사전에 차단할 수 있습니다 신청은 두 가지 경로가 있습니다 Msafer + PASS 무료 통합 서비스 ['Msafer + PASS', '무료 통합 ",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 6,
+        "from": {
+          "type": "illust",
+          "value": "cpt_4729c912"
+        },
+        "to": {
+          "type": "illust",
+          "value": "handshake"
+        },
+        "context": "추가 개통을 사전에 차단할 수 있습니다 신청은 두 가지 경로가 있습니다 Msafer + PASS 무료 통합 서비스 ['Msafer + PASS', '무료 통합 서비스'] 뉴스",
+        "reason": "illust score 0.449"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "secure_app_reregistration"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "모바일에서는 PASS 앱을 설치하신 후 본인확인을 거쳐 명의도용방지 메뉴로 들어가시면 기능 1 가입사실현황조회 ['기능 1', '가입사실현황조회'] 뉴스",
+        "reason": "illust score 0.468"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "chart_down"
+        },
+        "to": {
+          "type": "illust",
+          "value": "cpt_4729c912"
+        },
+        "context": "모바일에서는 PASS 앱을 설치하신 후 본인확인을 거쳐 명의도용방지 메뉴로 들어가시면 됩니다 PC에서는 msafer.or.kr 기능 1 가입사실현황조회 ['기능 1', '가입사실현황조회'] 뉴스",
+        "reason": "illust score 0.5"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "chart_up"
+        },
+        "to": {
+          "type": "illust",
+          "value": "cpt_8bffef74"
+        },
+        "context": "후 본인확인을 거쳐 명의도용방지 메뉴로 들어가시면 됩니다 PC에서는 msafer.or.kr 에 접속하셔서 공동인증서 또는 카카오, PASS, 기능 1 가입사실현황조회 ['기능 1', '가입사실현황조회'] 뉴스",
+        "reason": "illust score 0.522"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 4,
+        "from": {
+          "type": "mascot",
+          "value": "suspicious"
         },
         "to": {
           "type": "illust",
           "value": "cpt_6a2e9678"
         },
-        "context": "이 사업은 신한은행이 금융감독원, 경찰청, 사회복지공동모금회, 굿네이버스와 함께 전기통신 금융사기 6월 1일 시작 3차년도 9차 지원 ['6월 1일 시작', '3차년도 9차 지원'] 뉴스",
-        "reason": "illust score 0.432"
+        "context": "됩니다 PC에서는 msafer.or.kr 에 접속하셔서 공동인증서 또는 카카오, PASS, 네이버 간편인증으로 본인확인을 진행하시면 됩니다 기능 1 가입사실현황조회 ['기능 1', '가입사실현황조회'] 뉴스",
+        "reason": "illust score 0.49"
       },
       {
-        "section": "fact_1",
+        "section": "fact_2",
+        "chunk": 5,
+        "from": {
+          "type": "illust",
+          "value": "chat_backup_restore"
+        },
+        "to": {
+          "type": "illust",
+          "value": "meeting_room"
+        },
+        "context": "에 접속하셔서 공동인증서 또는 카카오, PASS, 네이버 간편인증으로 본인확인을 진행하시면 됩니다 기능은 세 가지입니다 기능 1 가입사실현황조회 ['기능 1', '가입사실현황조회'] 뉴스",
+        "reason": "illust score 0.444"
+      },
+      {
+        "section": "fact_2",
         "chunk": 6,
+        "from": {
+          "type": "illust",
+          "value": "chatbot"
+        },
+        "to": {
+          "type": "illust",
+          "value": "forecast"
+        },
+        "context": "네이버 간편인증으로 본인확인을 진행하시면 됩니다 기능은 세 가지입니다 기능 1 가입사실현황조회 ['기능 1', '가입사실현황조회'] 뉴스",
+        "reason": "illust score 0.464"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 1,
         "from": {
           "type": "illust",
           "value": "cpt_83fa1e9f"
@@ -863,11 +991,81 @@
           "type": "illust",
           "value": "newspaper"
         },
-        "context": "경찰청, 사회복지공동모금회, 굿네이버스와 함께 전기통신 금융사기 피해자의 일상회복을 돕기 위해 운영하는 지원 사업입니다 6월 1일 시작 3차년도 9차 지원 ['6월 1일 시작', '3차년도 9차 지원'] 뉴스",
+        "context": "첫째, 가입사실현황조회로 본인 명의로 개통된 전체 회선을 1분 안에 조회하실 수 있습니다 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
-        "section": "fact_1",
+        "section": "fact_3",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "emergency_account_freeze"
+        },
+        "to": {
+          "type": "illust",
+          "value": "microphone"
+        },
+        "context": "첫째, 가입사실현황조회로 본인 명의로 개통된 전체 회선을 1분 안에 조회하실 수 있습니다 모르는 회선이 떠 있다면 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "clock"
+        },
+        "to": {
+          "type": "illust",
+          "value": "shield"
+        },
+        "context": "개통된 전체 회선을 1분 안에 조회하실 수 있습니다 모르는 회선이 떠 있다면 해당 통신사 고객센터에 즉시 정지와 해지를 신청하시고, 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "cloud_backup"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "모르는 회선이 떠 있다면 해당 통신사 고객센터에 즉시 정지와 해지를 신청하시고, 경찰 112 또는 전기통신금융사기 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 5,
+        "from": {
+          "type": "illust",
+          "value": "cover_screen_widgets"
+        },
+        "to": {
+          "type": "illust",
+          "value": "prohibit"
+        },
+        "context": "해당 통신사 고객센터에 즉시 정지와 해지를 신청하시고, 경찰 112 또는 전기통신금융사기 통합대응센터에 신고하시고, 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
+        "reason": "illust score 0.477"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 6,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "impersonation_call"
+        },
+        "context": "경찰 112 또는 전기통신금융사기 통합대응센터에 신고하시고, 거래 은행에 본인계좌 일괄지급정지를 신청하시기 바랍니다 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
+        "reason": "illust score 0.447"
+      },
+      {
+        "section": "fact_3",
         "chunk": 7,
         "from": {
           "type": "illust",
@@ -875,70 +1073,42 @@
         },
         "to": {
           "type": "illust",
-          "value": "microphone"
+          "value": "lock"
         },
-        "context": "굿네이버스와 함께 전기통신 금융사기 피해자의 일상회복을 돕기 위해 운영하는 지원 사업입니다 6월 1일 시작 3차년도 9차 지원 ['6월 1일 시작', '3차년도 9차 지원'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
+        "context": "통합대응센터에 신고하시고, 거래 은행에 본인계좌 일괄지급정지를 신청하시기 바랍니다 둘째, 가입제한 서비스로 본인 동의 없이 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
+        "reason": "illust score 0.425"
       },
       {
-        "section": "fact_2",
-        "chunk": 1,
+        "section": "fact_3",
+        "chunk": 8,
         "from": {
           "type": "illust",
-          "value": "store"
+          "value": "battery_charge_range"
         },
         "to": {
           "type": "illust",
-          "value": "shield"
+          "value": "secure_app_reregistration"
         },
-        "context": "1차와 2차 누적 실적을 보면 취약계층 피해자 5,211명에게 150억 1·2차 누적 5,211명 150억 지원 ['1·2차 누적', '5,211명 150억 지원'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
+        "context": "거래 은행에 본인계좌 일괄지급정지를 신청하시기 바랍니다 둘째, 가입제한 서비스로 본인 동의 없이 이뤄지는 신규 가입, 번호이동, 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
+        "reason": "illust score 0.423"
       },
       {
-        "section": "fact_2",
-        "chunk": 2,
+        "section": "fact_3",
+        "chunk": 9,
         "from": {
           "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "meeting_room"
-        },
-        "context": "1차와 2차 누적 실적을 보면 취약계층 피해자 5,211명에게 150억 원의 생활비가 지급됐고, 1·2차 누적 5,211명 150억 지원 ['1·2차 누적', '5,211명 150억 지원'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "market_cap"
-        },
-        "to": {
-          "type": "illust",
-          "value": "forecast"
-        },
-        "context": "취약계층 피해자 5,211명에게 150억 원의 생활비가 지급됐고, 법률상담과 소송지원 1,064건, 1·2차 누적 5,211명 150억 지원 ['1·2차 누적', '5,211명 150억 지원'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "gift_voucher"
+          "value": "battery_overheat"
         },
         "to": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "원의 생활비가 지급됐고, 법률상담과 소송지원 1,064건, 심리상담 635명, 예방교육 13,954명, 1·2차 누적 5,211명 150억 지원 ['1·2차 누적', '5,211명 150억 지원'] 뉴스",
+        "context": "둘째, 가입제한 서비스로 본인 동의 없이 이뤄지는 신규 가입, 번호이동, 기기변경, 명의변경을 통신사 단계에서 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
-        "section": "fact_2",
-        "chunk": 5,
+        "section": "fact_3",
+        "chunk": 10,
         "from": {
           "type": "illust",
           "value": "biometric"
@@ -947,77 +1117,21 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "법률상담과 소송지원 1,064건, 심리상담 635명, 예방교육 13,954명, 피해예방 무료보험 2,732명이 추가로 지원됐습니다 1·2차 누적 5,211명 150억 지원 ['1·2차 누적', '5,211명 150억",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 7,
-        "from": {
-          "type": "illust",
-          "value": "aluminum_label"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "피해예방 무료보험 2,732명이 추가로 지원됐습니다 받을 수 있는 항목은 다섯 가지입니다 1·2차 누적 5,211명 150억 지원 ['1·2차 누적', '5,211명 150억 지원'] 뉴스",
+        "context": "이뤄지는 신규 가입, 번호이동, 기기변경, 명의변경을 통신사 단계에서 사전 차단할 수 있습니다 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
         "section": "fact_3",
-        "chunk": 1,
+        "chunk": 11,
         "from": {
           "type": "illust",
-          "value": "chart_down"
+          "value": "call_filter_rules"
         },
         "to": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "첫째 생활비, 둘째 법률상담과 소송지원, 셋째 심리상담, 넷째 예방교육, 받을 수 있는 5가지 지원 ['받을 수 있는', '5가지 지원'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "chart_up"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "첫째 생활비, 둘째 법률상담과 소송지원, 셋째 심리상담, 넷째 예방교육, 다섯째 피해예방 무료보험입니다 받을 수 있는 5가지 지원 ['받을 수 있는', '5가지 지원'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "chat_backup_restore"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "셋째 심리상담, 넷째 예방교육, 다섯째 피해예방 무료보험입니다 본인 상황에 맞는 항목을 골라 신청하실 수 있습니다 받을 수 있는 5가지 지원 ['받을 수 있는', '5가지 지원'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "chatbot"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "다섯째 피해예방 무료보험입니다 본인 상황에 맞는 항목을 골라 신청하실 수 있습니다 받을 수 있는 5가지 지원 ['받을 수 있는', '5가지 지원'] 뉴스",
+        "context": "기기변경, 명의변경을 통신사 단계에서 사전 차단할 수 있습니다 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
@@ -1025,13 +1139,13 @@
         "chunk": 1,
         "from": {
           "type": "illust",
-          "value": "emergency_account_freeze"
+          "value": "cpt_6a2e9678"
         },
         "to": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "신청은 보이스피싱제로 공식 사이트 voicephisingzero.co.kr 신청·신고 3개 채널 동시 활용 ['신청·신고', '3개 채널 동시 활용'] 뉴스",
+        "context": "본인이 직접 개통하실 일이 있을 때만 일시 해제하시면 됩니다 셋째, 번호도용문자 차단 기능 3 번호도용문자 차단 ['기능 3', '번호도용문자 차단'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
@@ -1039,13 +1153,13 @@
         "chunk": 2,
         "from": {
           "type": "illust",
-          "value": "clock"
+          "value": "cpt_75c6eba6"
         },
         "to": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "신청은 보이스피싱제로 공식 사이트 voicephisingzero.co.kr 에서, 추가 신고는 경찰청 전기통신금융사기 신청·신고 3개 채널 동시 활용 ['신청·신고', '3개 채널 동시 활용'] 뉴스",
+        "context": "본인이 직접 개통하실 일이 있을 때만 일시 해제하시면 됩니다 셋째, 번호도용문자 차단 부가서비스로 내 번호를 도용한 스미싱과 광고 기능 3 번호도용문자 차단 ['기능 3', '번호도용문자 차단'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
@@ -1053,32 +1167,46 @@
         "chunk": 3,
         "from": {
           "type": "illust",
-          "value": "cloud_backup"
-        },
-        "to": {
-          "type": "illust",
-          "value": "cpt_83fa1e9f"
-        },
-        "context": "사이트 voicephisingzero.co.kr 에서, 추가 신고는 경찰청 전기통신금융사기 통합대응센터 counterscam112.go.kr 신청·신고 3개 채널 동시 활용 ['신청·신고', '3개 채널 동시 활용'",
-        "reason": "illust score 0.424"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "cover_screen_widgets"
+          "value": "cpt_ea7bc1d6"
         },
         "to": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "에서, 추가 신고는 경찰청 전기통신금융사기 통합대응센터 counterscam112.go.kr 에서 가능합니다 만약 송금이 이뤄진 직후라면, 신청·신고 3개 채널 동시 활용 ['신청·신고', '3개 채널 동시 활용']",
+        "context": "됩니다 셋째, 번호도용문자 차단 부가서비스로 내 번호를 도용한 스미싱과 광고 문자도 무료로 차단할 수 있습니다 기능 3 번호도용문자 차단 ['기능 3', '번호도용문자 차단'] 뉴스",
         "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 4,
+        "from": {
+          "type": "mascot",
+          "value": "serious"
+        },
+        "to": {
+          "type": "illust",
+          "value": "logout"
+        },
+        "context": "부가서비스로 내 번호를 도용한 스미싱과 광고 문자도 무료로 차단할 수 있습니다 가입한 통신사 홈페이지에서 부가서비스로 기능 3 번호도용문자 차단 ['기능 3', '번호도용문자 차단'] 뉴스",
+        "reason": "illust score 0.427"
       },
       {
         "section": "fact_4",
         "chunk": 5,
+        "from": {
+          "type": "illust",
+          "value": "cpt_fd9edf65"
+        },
+        "to": {
+          "type": "illust",
+          "value": "security_feature_lock"
+        },
+        "context": "문자도 무료로 차단할 수 있습니다 가입한 통신사 홈페이지에서 부가서비스로 직접 신청하실 수 있습니다 기능 3 번호도용문자 차단 ['기능 3', '번호도용문자 차단'] 뉴스",
+        "reason": "illust score 0.433"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 6,
         "from": {
           "type": "illust",
           "value": "device_data_transfer"
@@ -1087,39 +1215,22 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "통합대응센터 counterscam112.go.kr 에서 가능합니다 만약 송금이 이뤄진 직후라면, 거래 은행에 지급정지 신청과 경찰 112, 신청·신고 3개 채널 동시 활용 ['신청·신고', '3개 채널 동시 활용']",
+        "context": "가입한 통신사 홈페이지에서 부가서비스로 직접 신청하실 수 있습니다 기능 3 번호도용문자 차단 ['기능 3', '번호도용문자 차단'] 뉴스",
         "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 7,
-        "from": {
-          "type": "illust",
-          "value": "aluminum_label"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "거래 은행에 지급정지 신청과 경찰 112, 금감원 1332에 동시 신고하시는 것이 가장 빠른 골든타임 대응입니다 신청·신고 3개 채널 동시 활용 ['신청·신고', '3개 채널 동시 활용'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 8,
-        "from": {
-          "type": "illust",
-          "value": "appliance"
-        },
-        "to": {
-          "type": "illust",
-          "value": "handshake"
-        },
-        "context": "금감원 1332에 동시 신고하시는 것이 가장 빠른 골든타임 대응입니다 신청·신고 3개 채널 동시 활용 ['신청·신고', '3개 채널 동시 활용'] 뉴스",
-        "reason": "illust score 0.433"
       }
     ],
     "weak": [
+      {
+        "section": "hook",
+        "chunk": 1,
+        "current": {
+          "type": "image",
+          "value": "1.png"
+        },
+        "context": "혹시 내 명의로 휴대폰이 몇 대 개통돼 있는지 확인해보신 적 있으신가요? 내 명의로 몇 대 개통됐을까? ['내 명의로', '몇 대 개통됐을까?'] 뉴스",
+        "best_image_score": 0.371,
+        "best_illust_score": 0.297
+      },
       {
         "section": "hook",
         "chunk": 2,
@@ -1127,9 +1238,9 @@
           "type": "image",
           "value": "2.png"
         },
-        "context": "혹시 보이스피싱 피해를 입으셨거나 주변에 그런 분이 계신가요? 혼자 끙끙 앓지 마시고, 6월 1일부터 보이스피싱 피해 혼자 끙끙 마세요 ['보이스피싱 피해', '혼자 끙끙 마세요'] 뉴스",
-        "best_image_score": 0.194,
-        "best_illust_score": 0.251
+        "context": "혹시 내 명의로 휴대폰이 몇 대 개통돼 있는지 확인해보신 적 있으신가요? 사기범이 신분증을 도용해 몰래 개통한 내 명의로 몇 대 개통됐을까? ['내 명의로', '몇 대 개통됐을까?'] 뉴스",
+        "best_image_score": 0.361,
+        "best_illust_score": 0.361
       },
       {
         "section": "hook",
@@ -1138,262 +1249,174 @@
           "type": "image",
           "value": "3.png"
         },
-        "context": "주변에 그런 분이 계신가요? 혼자 끙끙 앓지 마시고, 6월 1일부터 다시 시작된 지원 사업을 확인하시기 바랍니다 보이스피싱 피해 혼자 끙끙 마세요 ['보이스피싱 피해', '혼자 끙끙 마세요'] 뉴스",
-        "best_image_score": 0.218,
-        "best_illust_score": 0.31
+        "context": "확인해보신 적 있으신가요? 사기범이 신분증을 도용해 몰래 개통한 회선이 있을 수 있습니다 내 명의로 몇 대 개통됐을까? ['내 명의로', '몇 대 개통됐을까?'] 뉴스",
+        "best_image_score": 0.221,
+        "best_illust_score": 0.302
       },
       {
         "section": "hook",
         "chunk": 4,
         "current": {
-          "type": "image",
-          "value": "5.png"
+          "type": "mascot",
+          "value": "surprised"
         },
-        "context": "혼자 끙끙 앓지 마시고, 6월 1일부터 다시 시작된 지원 사업을 확인하시기 바랍니다 보이스피싱 피해 혼자 끙끙 마세요 ['보이스피싱 피해', '혼자 끙끙 마세요'] 뉴스",
-        "best_image_score": 0.218,
-        "best_illust_score": 0.316
+        "context": "사기범이 신분증을 도용해 몰래 개통한 회선이 있을 수 있습니다 1분 안에 점검하실 수 있습니다 내 명의로 몇 대 개통됐을까? ['내 명의로', '몇 대 개통됐을까?'] 뉴스",
+        "best_image_score": 0.242,
+        "best_illust_score": 0.286
       },
       {
-        "section": "fact_1",
-        "chunk": 2,
+        "section": "hook",
+        "chunk": 5,
         "current": {
           "type": "image",
           "value": "4.png"
         },
-        "context": "2026년 6월 1일 월요일 오전 10시부터 신한은행 보이스피싱제로 3차년도 9차 지원이 시작됐습니다 6월 1일 시작 3차년도 9차 지원 ['6월 1일 시작', '3차년도 9차 지원'] 뉴스",
-        "best_image_score": 0.072,
-        "best_illust_score": 0.275
-      },
-      {
-        "section": "fact_1",
-        "chunk": 3,
-        "current": {
-          "type": "image",
-          "value": "1.png"
-        },
-        "context": "신한은행 보이스피싱제로 3차년도 9차 지원이 시작됐습니다 이 사업은 신한은행이 금융감독원, 6월 1일 시작 3차년도 9차 지원 ['6월 1일 시작', '3차년도 9차 지원'] 뉴스",
-        "best_image_score": 0.055,
-        "best_illust_score": 0.368
+        "context": "회선이 있을 수 있습니다 1분 안에 점검하실 수 있습니다 내 명의로 몇 대 개통됐을까? ['내 명의로', '몇 대 개통됐을까?'] 뉴스",
+        "best_image_score": 0.216,
+        "best_illust_score": 0.236
       },
       {
         "section": "fact_1",
         "chunk": 4,
         "current": {
-          "type": "illust",
-          "value": "smartphone"
+          "type": "image",
+          "value": "5.png"
         },
-        "context": "지원이 시작됐습니다 이 사업은 신한은행이 금융감독원, 경찰청, 사회복지공동모금회, 6월 1일 시작 3차년도 9차 지원 ['6월 1일 시작', '3차년도 9차 지원'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.375
+        "context": "명의도용방지서비스를 활용하시면, 본인 명의로 개통된 모든 휴대폰 회선을 무료로 확인하고 추가 개통을 사전에 차단할 수 있습니다 Msafer + PASS 무료 통합 서비스 ['Msafer + PASS', '무료 통합 서비스'] 뉴스",
+        "best_image_score": 0.327,
+        "best_illust_score": 0.373
       },
       {
         "section": "fact_1",
-        "chunk": 6,
+        "chunk": 5,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "본인 명의로 개통된 모든 휴대폰 회선을 무료로 확인하고 추가 개통을 사전에 차단할 수 있습니다 신청은 두 가지 경로가 있습니다 Msafer + PASS 무료 통합 서비스 ['Msafer + PASS', '무료 통합 서비스'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.377
+      },
+      {
+        "section": "fact_3",
+        "chunk": 1,
         "current": {
           "type": "illust",
           "value": "newspaper"
         },
-        "context": "경찰청, 사회복지공동모금회, 굿네이버스와 함께 전기통신 금융사기 피해자의 일상회복을 돕기 위해 운영하는 지원 사업입니다 6월 1일 시작 3차년도 9차 지원 ['6월 1일 시작', '3차년도 9차 지원'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.305
-      },
-      {
-        "section": "fact_1",
-        "chunk": 7,
-        "current": {
-          "type": "illust",
-          "value": "microphone"
-        },
-        "context": "굿네이버스와 함께 전기통신 금융사기 피해자의 일상회복을 돕기 위해 운영하는 지원 사업입니다 6월 1일 시작 3차년도 9차 지원 ['6월 1일 시작', '3차년도 9차 지원'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.354
-      },
-      {
-        "section": "fact_2",
-        "chunk": 1,
-        "current": {
-          "type": "illust",
-          "value": "shield"
-        },
-        "context": "1차와 2차 누적 실적을 보면 취약계층 피해자 5,211명에게 150억 1·2차 누적 5,211명 150억 지원 ['1·2차 누적', '5,211명 150억 지원'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.362
-      },
-      {
-        "section": "fact_2",
-        "chunk": 2,
-        "current": {
-          "type": "illust",
-          "value": "meeting_room"
-        },
-        "context": "1차와 2차 누적 실적을 보면 취약계층 피해자 5,211명에게 150억 원의 생활비가 지급됐고, 1·2차 누적 5,211명 150억 지원 ['1·2차 누적', '5,211명 150억 지원'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.35
-      },
-      {
-        "section": "fact_2",
-        "chunk": 3,
-        "current": {
-          "type": "illust",
-          "value": "forecast"
-        },
-        "context": "취약계층 피해자 5,211명에게 150억 원의 생활비가 지급됐고, 법률상담과 소송지원 1,064건, 1·2차 누적 5,211명 150억 지원 ['1·2차 누적', '5,211명 150억 지원'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.242
-      },
-      {
-        "section": "fact_2",
-        "chunk": 4,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "원의 생활비가 지급됐고, 법률상담과 소송지원 1,064건, 심리상담 635명, 예방교육 13,954명, 1·2차 누적 5,211명 150억 지원 ['1·2차 누적', '5,211명 150억 지원'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.274
-      },
-      {
-        "section": "fact_2",
-        "chunk": 5,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "법률상담과 소송지원 1,064건, 심리상담 635명, 예방교육 13,954명, 피해예방 무료보험 2,732명이 추가로 지원됐습니다 1·2차 누적 5,211명 150억 지원 ['1·2차 누적', '5,211명 150억 지원'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.238
-      },
-      {
-        "section": "fact_2",
-        "chunk": 6,
-        "current": {
-          "type": "mascot",
-          "value": "suspicious"
-        },
-        "context": "심리상담 635명, 예방교육 13,954명, 피해예방 무료보험 2,732명이 추가로 지원됐습니다 받을 수 있는 항목은 다섯 가지입니다 1·2차 누적 5,211명 150억 지원 ['1·2차 누적', '5,211명 150억 지원'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.247
-      },
-      {
-        "section": "fact_2",
-        "chunk": 7,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "피해예방 무료보험 2,732명이 추가로 지원됐습니다 받을 수 있는 항목은 다섯 가지입니다 1·2차 누적 5,211명 150억 지원 ['1·2차 누적', '5,211명 150억 지원'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.282
-      },
-      {
-        "section": "fact_3",
-        "chunk": 1,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "첫째 생활비, 둘째 법률상담과 소송지원, 셋째 심리상담, 넷째 예방교육, 받을 수 있는 5가지 지원 ['받을 수 있는', '5가지 지원'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.296
-      },
-      {
-        "section": "fact_3",
-        "chunk": 2,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "첫째 생활비, 둘째 법률상담과 소송지원, 셋째 심리상담, 넷째 예방교육, 다섯째 피해예방 무료보험입니다 받을 수 있는 5가지 지원 ['받을 수 있는', '5가지 지원'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.282
-      },
-      {
-        "section": "fact_3",
-        "chunk": 3,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "셋째 심리상담, 넷째 예방교육, 다섯째 피해예방 무료보험입니다 본인 상황에 맞는 항목을 골라 신청하실 수 있습니다 받을 수 있는 5가지 지원 ['받을 수 있는', '5가지 지원'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.291
-      },
-      {
-        "section": "fact_3",
-        "chunk": 4,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "다섯째 피해예방 무료보험입니다 본인 상황에 맞는 항목을 골라 신청하실 수 있습니다 받을 수 있는 5가지 지원 ['받을 수 있는', '5가지 지원'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.311
-      },
-      {
-        "section": "fact_4",
-        "chunk": 1,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "신청은 보이스피싱제로 공식 사이트 voicephisingzero.co.kr 신청·신고 3개 채널 동시 활용 ['신청·신고', '3개 채널 동시 활용'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.358
-      },
-      {
-        "section": "fact_4",
-        "chunk": 2,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "신청은 보이스피싱제로 공식 사이트 voicephisingzero.co.kr 에서, 추가 신고는 경찰청 전기통신금융사기 신청·신고 3개 채널 동시 활용 ['신청·신고', '3개 채널 동시 활용'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.388
-      },
-      {
-        "section": "fact_4",
-        "chunk": 4,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "에서, 추가 신고는 경찰청 전기통신금융사기 통합대응센터 counterscam112.go.kr 에서 가능합니다 만약 송금이 이뤄진 직후라면, 신청·신고 3개 채널 동시 활용 ['신청·신고', '3개 채널 동시 활용'] 뉴스",
+        "context": "첫째, 가입사실현황조회로 본인 명의로 개통된 전체 회선을 1분 안에 조회하실 수 있습니다 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0.386
       },
       {
-        "section": "fact_4",
-        "chunk": 5,
+        "section": "fact_3",
+        "chunk": 2,
+        "current": {
+          "type": "illust",
+          "value": "microphone"
+        },
+        "context": "첫째, 가입사실현황조회로 본인 명의로 개통된 전체 회선을 1분 안에 조회하실 수 있습니다 모르는 회선이 떠 있다면 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.335
+      },
+      {
+        "section": "fact_3",
+        "chunk": 3,
+        "current": {
+          "type": "illust",
+          "value": "shield"
+        },
+        "context": "개통된 전체 회선을 1분 안에 조회하실 수 있습니다 모르는 회선이 떠 있다면 해당 통신사 고객센터에 즉시 정지와 해지를 신청하시고, 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.376
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
         "current": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "통합대응센터 counterscam112.go.kr 에서 가능합니다 만약 송금이 이뤄진 직후라면, 거래 은행에 지급정지 신청과 경찰 112, 신청·신고 3개 채널 동시 활용 ['신청·신고', '3개 채널 동시 활용'] 뉴스",
+        "context": "모르는 회선이 떠 있다면 해당 통신사 고객센터에 즉시 정지와 해지를 신청하시고, 경찰 112 또는 전기통신금융사기 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.375
+        "best_illust_score": 0.363
+      },
+      {
+        "section": "fact_3",
+        "chunk": 9,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "둘째, 가입제한 서비스로 본인 동의 없이 이뤄지는 신규 가입, 번호이동, 기기변경, 명의변경을 통신사 단계에서 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.358
+      },
+      {
+        "section": "fact_3",
+        "chunk": 10,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "이뤄지는 신규 가입, 번호이동, 기기변경, 명의변경을 통신사 단계에서 사전 차단할 수 있습니다 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.419
+      },
+      {
+        "section": "fact_3",
+        "chunk": 11,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "기기변경, 명의변경을 통신사 단계에서 사전 차단할 수 있습니다 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.403
+      },
+      {
+        "section": "fact_4",
+        "chunk": 1,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "본인이 직접 개통하실 일이 있을 때만 일시 해제하시면 됩니다 셋째, 번호도용문자 차단 기능 3 번호도용문자 차단 ['기능 3', '번호도용문자 차단'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.396
+      },
+      {
+        "section": "fact_4",
+        "chunk": 2,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "본인이 직접 개통하실 일이 있을 때만 일시 해제하시면 됩니다 셋째, 번호도용문자 차단 부가서비스로 내 번호를 도용한 스미싱과 광고 기능 3 번호도용문자 차단 ['기능 3', '번호도용문자 차단'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.379
+      },
+      {
+        "section": "fact_4",
+        "chunk": 3,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "됩니다 셋째, 번호도용문자 차단 부가서비스로 내 번호를 도용한 스미싱과 광고 문자도 무료로 차단할 수 있습니다 기능 3 번호도용문자 차단 ['기능 3', '번호도용문자 차단'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.408
       },
       {
         "section": "fact_4",
         "chunk": 6,
         "current": {
-          "type": "mascot",
-          "value": "serious"
-        },
-        "context": "에서 가능합니다 만약 송금이 이뤄진 직후라면, 거래 은행에 지급정지 신청과 경찰 112, 금감원 1332에 동시 신고하시는 것이 신청·신고 3개 채널 동시 활용 ['신청·신고', '3개 채널 동시 활용'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.384
-      },
-      {
-        "section": "fact_4",
-        "chunk": 7,
-        "current": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "거래 은행에 지급정지 신청과 경찰 112, 금감원 1332에 동시 신고하시는 것이 가장 빠른 골든타임 대응입니다 신청·신고 3개 채널 동시 활용 ['신청·신고', '3개 채널 동시 활용'] 뉴스",
+        "context": "가입한 통신사 홈페이지에서 부가서비스로 직접 신청하실 수 있습니다 기능 3 번호도용문자 차단 ['기능 3', '번호도용문자 차단'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.418
+        "best_illust_score": 0.415
       }
     ]
   },
@@ -1402,7 +1425,7 @@
     "policy": "Illustrations and mascots should not repeat inside one video. CTA logo is exempt.",
     "replacements": [
       {
-        "section": "fact_2",
+        "section": "fact_3",
         "chunk": 4,
         "from": {
           "type": "illust",
@@ -1410,39 +1433,13 @@
         },
         "to": {
           "type": "illust",
-          "value": "cpt_fd9edf65"
+          "value": "cpt_a1caaea6"
         },
-        "context": "원의 생활비가 지급됐고, 법률상담과 소송지원 1,064건, 심리상담 635명, 예방교육 13,954명, 1·2차 누적 5,211명 150억 지원 1차와 2차 누적 실적을 보면 취약계층 피해자 5,211명에게 150억 원의 생활비가 지급됐고, 법률상담과 소송지원 1,064건, 심리상담 6"
+        "context": "모르는 회선이 떠 있다면 해당 통신사 고객센터에 즉시 정지와 해지를 신청하시고, 경찰 112 또는 전기통신금융사기 기능 2 가입제한 사전 차단 첫째, 가입사실현황조회로 본인 명의로 개통된 전체 회선을 1분 안에 조회하실 수 있습니다. 모르는 회선이 떠 있다면 해당 통신사 고객센터에 즉시"
       },
       {
-        "section": "fact_2",
-        "chunk": 5,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "market_cap"
-        },
-        "context": "법률상담과 소송지원 1,064건, 심리상담 635명, 예방교육 13,954명, 피해예방 무료보험 2,732명이 추가로 지원됐습니다 1·2차 누적 5,211명 150억 지원 1차와 2차 누적 실적을 보면 취약계층 피해자 5,211명에게 150억 원의 생활비가 지급됐고, 법률상담과 소송지원"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 7,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "store"
-        },
-        "context": "피해예방 무료보험 2,732명이 추가로 지원됐습니다 받을 수 있는 항목은 다섯 가지입니다 1·2차 누적 5,211명 150억 지원 1차와 2차 누적 실적을 보면 취약계층 피해자 5,211명에게 150억 원의 생활비가 지급됐고, 법률상담과 소송지원 1,064건, 심리상담 635명, 예방교"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 1,
+        "section": "fact_3",
+        "chunk": 9,
         "from": {
           "type": "illust",
           "value": "smartphone"
@@ -1451,33 +1448,7 @@
           "type": "illust",
           "value": "emergency_account_freeze"
         },
-        "context": "신청은 보이스피싱제로 공식 사이트 voicephisingzero.co.kr 신청·신고 3개 채널 동시 활용 신청은 보이스피싱제로 공식 사이트 voicephisingzero.co.kr 에서, 추가 신고는 경찰청 전기통신금융사기 통합대응센터 counterscam112.go.kr 에서 가능합"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "cpt_83fa1e9f"
-        },
-        "context": "신청은 보이스피싱제로 공식 사이트 voicephisingzero.co.kr 에서, 추가 신고는 경찰청 전기통신금융사기 신청·신고 3개 채널 동시 활용 신청은 보이스피싱제로 공식 사이트 voicephisingzero.co.kr 에서, 추가 신고는 경찰청 전기통신금융사기 통합대응센터 cou"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "cpt_83fa1e9f"
-        },
-        "to": {
-          "type": "illust",
-          "value": "cpt_ea7bc1d6"
-        },
-        "context": "사이트 voicephisingzero.co.kr 에서, 추가 신고는 경찰청 전기통신금융사기 통합대응센터 counterscam112.go.kr 신청·신고 3개 채널 동시 활용 신청은 보이스피싱제로 공식 사이트 voicephisingzero.co.kr 에서, 추가 신고는 경찰청 전기통신금융"
+        "context": "둘째, 가입제한 서비스로 본인 동의 없이 이뤄지는 신규 가입, 번호이동, 기기변경, 명의변경을 통신사 단계에서 기능 2 가입제한 사전 차단 첫째, 가입사실현황조회로 본인 명의로 개통된 전체 회선을 1분 안에 조회하실 수 있습니다. 모르는 회선이 떠 있다면 해당 통신사 고객센터에 즉시 정"
       },
       {
         "section": "cta",
@@ -1496,73 +1467,64 @@
     "weak": [
       {
         "section": "fact_3",
+        "chunk": 10,
+        "duplicate": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "이뤄지는 신규 가입, 번호이동, 기기변경, 명의변경을 통신사 단계에서 사전 차단할 수 있습니다 기능 2 가입제한 사전 차단 첫째, 가입사실현황조회로 본인 명의로 개통된 전체 회선을 1분 안에 조회하실 수 있습니다. 모르는 회선이 떠 있다면 해당 통신사 고객센터에 즉시 정지와 해지를 신청"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 11,
+        "duplicate": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "기기변경, 명의변경을 통신사 단계에서 사전 차단할 수 있습니다 기능 2 가입제한 사전 차단 첫째, 가입사실현황조회로 본인 명의로 개통된 전체 회선을 1분 안에 조회하실 수 있습니다. 모르는 회선이 떠 있다면 해당 통신사 고객센터에 즉시 정지와 해지를 신청하시고, 경찰 112 또는 전기통"
+      },
+      {
+        "section": "fact_4",
         "chunk": 1,
         "duplicate": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "첫째 생활비, 둘째 법률상담과 소송지원, 셋째 심리상담, 넷째 예방교육, 받을 수 있는 5가지 지원 첫째 생활비, 둘째 법률상담과 소송지원, 셋째 심리상담, 넷째 예방교육, 다섯째 피해예방 무료보험입니다. 본인 상황에 맞는 항목을 골라 신청하실 수 있습니다."
+        "context": "본인이 직접 개통하실 일이 있을 때만 일시 해제하시면 됩니다 셋째, 번호도용문자 차단 기능 3 번호도용문자 차단 본인이 직접 개통하실 일이 있을 때만 일시 해제하시면 됩니다. 셋째, 번호도용문자 차단 부가서비스로 내 번호를 도용한 스미싱과 광고 문자도 무료로 차단할 수 있습니다. 가입한"
       },
       {
-        "section": "fact_3",
+        "section": "fact_4",
         "chunk": 2,
         "duplicate": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "첫째 생활비, 둘째 법률상담과 소송지원, 셋째 심리상담, 넷째 예방교육, 다섯째 피해예방 무료보험입니다 받을 수 있는 5가지 지원 첫째 생활비, 둘째 법률상담과 소송지원, 셋째 심리상담, 넷째 예방교육, 다섯째 피해예방 무료보험입니다. 본인 상황에 맞는 항목을 골라 신청하실 수 있습니다"
+        "context": "본인이 직접 개통하실 일이 있을 때만 일시 해제하시면 됩니다 셋째, 번호도용문자 차단 부가서비스로 내 번호를 도용한 스미싱과 광고 기능 3 번호도용문자 차단 본인이 직접 개통하실 일이 있을 때만 일시 해제하시면 됩니다. 셋째, 번호도용문자 차단 부가서비스로 내 번호를 도용한 스미싱과 광"
       },
       {
-        "section": "fact_3",
+        "section": "fact_4",
         "chunk": 3,
         "duplicate": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "셋째 심리상담, 넷째 예방교육, 다섯째 피해예방 무료보험입니다 본인 상황에 맞는 항목을 골라 신청하실 수 있습니다 받을 수 있는 5가지 지원 첫째 생활비, 둘째 법률상담과 소송지원, 셋째 심리상담, 넷째 예방교육, 다섯째 피해예방 무료보험입니다. 본인 상황에 맞는 항목을 골라 신청하실 "
-      },
-      {
-        "section": "fact_3",
-        "chunk": 4,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "다섯째 피해예방 무료보험입니다 본인 상황에 맞는 항목을 골라 신청하실 수 있습니다 받을 수 있는 5가지 지원 첫째 생활비, 둘째 법률상담과 소송지원, 셋째 심리상담, 넷째 예방교육, 다섯째 피해예방 무료보험입니다. 본인 상황에 맞는 항목을 골라 신청하실 수 있습니다."
+        "context": "됩니다 셋째, 번호도용문자 차단 부가서비스로 내 번호를 도용한 스미싱과 광고 문자도 무료로 차단할 수 있습니다 기능 3 번호도용문자 차단 본인이 직접 개통하실 일이 있을 때만 일시 해제하시면 됩니다. 셋째, 번호도용문자 차단 부가서비스로 내 번호를 도용한 스미싱과 광고 문자도 무료로 차"
       },
       {
         "section": "fact_4",
-        "chunk": 4,
+        "chunk": 6,
         "duplicate": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "에서, 추가 신고는 경찰청 전기통신금융사기 통합대응센터 counterscam112.go.kr 에서 가능합니다 만약 송금이 이뤄진 직후라면, 신청·신고 3개 채널 동시 활용 신청은 보이스피싱제로 공식 사이트 voicephisingzero.co.kr 에서, 추가 신고는 경찰청 전기통신금융사"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 5,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "통합대응센터 counterscam112.go.kr 에서 가능합니다 만약 송금이 이뤄진 직후라면, 거래 은행에 지급정지 신청과 경찰 112, 신청·신고 3개 채널 동시 활용 신청은 보이스피싱제로 공식 사이트 voicephisingzero.co.kr 에서, 추가 신고는 경찰청 전기통신금융사"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 7,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "거래 은행에 지급정지 신청과 경찰 112, 금감원 1332에 동시 신고하시는 것이 가장 빠른 골든타임 대응입니다 신청·신고 3개 채널 동시 활용 신청은 보이스피싱제로 공식 사이트 voicephisingzero.co.kr 에서, 추가 신고는 경찰청 전기통신금융사기 통합대응센터 counte"
+        "context": "가입한 통신사 홈페이지에서 부가서비스로 직접 신청하실 수 있습니다 기능 3 번호도용문자 차단 본인이 직접 개통하실 일이 있을 때만 일시 해제하시면 됩니다. 셋째, 번호도용문자 차단 부가서비스로 내 번호를 도용한 스미싱과 광고 문자도 무료로 차단할 수 있습니다. 가입한 통신사 홈페이지에서"
       }
     ]
   },
   "_codex_effective_script": {
     "version": 2,
-    "slug": "014_scam_voicephishing_zero_relief",
-    "source": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\014_scam_voicephishing_zero_relief\\shorts_script.json",
+    "slug": "015_qa_msafer_pass_identity_block",
+    "source": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\015_qa_msafer_pass_identity_block\\shorts_script.json",
     "override_applied": false,
     "override_sections": []
   }

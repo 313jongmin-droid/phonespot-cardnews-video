@@ -1334,7 +1334,68 @@
       ],
       "note": "Reusable editorial illustration.",
       "available": true
+    },
+    "cpt_7b7a2f91": {
+      "keywords": [
+        "KISA"
+      ],
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "note": "자동 발굴 개념: KISA",
+      "available": true
+    },
+    "cpt_b5a15155": {
+      "keywords": [
+        "운영하",
+        "Msafer"
+      ],
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "note": "자동 발굴 개념: 운영하 Msafer",
+      "available": true
+    },
+    "cpt_8bffef74": {
+      "keywords": [
+        "명의도용방지서비스",
+        "활용하시면"
+      ],
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "note": "자동 발굴 개념: 명의도용방지서비스 활용하시면",
+      "available": true
+    },
+    "cpt_a1caaea6": {
+      "keywords": [
+        "추가",
+        "개통",
+        "사전",
+        "차단할"
+      ],
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "note": "자동 발굴 개념: 추가 개통",
+      "available": true
+    },
+    "cpt_4729c912": {
+      "keywords": [
+        "신청",
+        "경로"
+      ],
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "note": "자동 발굴 개념: 신청 경로",
+      "available": true
     }
   },
-  "updated_at": "2026-06-08T00:28:09"
+  "updated_at": "2026-06-08T01:20:55"
 }
