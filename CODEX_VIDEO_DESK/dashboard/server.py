@@ -37,7 +37,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v20"
+PANEL_VERSION = "phonespot-web-v21"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -2507,15 +2507,18 @@ INDEX_HTML = r"""<!doctype html>
       updateSelectedStatus();
       const job = data.job || {};
       currentRemoteJob = job.remote ? job : null;
+      const prog = job.running ? renderProgress(job.log) : "";
       const runtimeJob = document.getElementById("runtimeJob");
       const runtimeJobText = document.getElementById("runtimeJobText");
-      if (runtimeJobText) runtimeJobText.textContent = job.running ? `실행 중 · ${job.name}` : (job.exit_code === null ? "대기 중" : `마지막 종료 ${job.exit_code}`);
+      if (runtimeJobText) runtimeJobText.textContent = job.running ? (`실행 중 · ${job.name}` + (prog ? ` — ${prog}` : "")) : (job.exit_code === null ? "대기 중" : `마지막 종료 ${job.exit_code}`);
       if (runtimeJob) runtimeJob.className = `runtime-card ${job.running ? "warn" : (job.exit_code === 0 ? "good" : (job.exit_code === null ? "" : "bad"))}`;
       const cancelButton = document.getElementById("cancelJobButton");
       const retryButton = document.getElementById("retryJobButton");
       cancelButton.style.display = job.remote && job.running ? "" : "none";
       retryButton.style.display = job.remote && !job.running && job.exit_code !== 0 ? "" : "none";
-      document.getElementById("jobText").textContent = job.running ? `실행 중: ${job.name}` : (job.exit_code === null ? "대기 중" : `마지막 종료 코드: ${job.exit_code}`);
+      const statusCancel = document.getElementById("statusCancelButton");
+      if (statusCancel) statusCancel.style.display = job.remote && job.running ? "" : "none";
+      document.getElementById("jobText").textContent = job.running ? (`실행 중: ${job.name}` + (prog ? ` · ${prog}` : "")) : (job.exit_code === null ? "대기 중" : `마지막 종료 코드: ${job.exit_code}`);
       const log = document.getElementById("log"); log.textContent = job.log || ""; log.scrollTop = log.scrollHeight;
       const results = document.getElementById("results"); results.innerHTML = ""; (data.results || []).forEach(r => {
         const div = document.createElement("div");
