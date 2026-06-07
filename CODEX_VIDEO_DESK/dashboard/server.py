@@ -37,12 +37,24 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v15"
+PANEL_VERSION = "phonespot-web-v16"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
 LOCAL_WORKER_PROCESS: subprocess.Popen | None = None
 LOCAL_WORKER_STREAMS: list = []
+
+if str(SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(SCRIPTS))
+
+from codex_caption_lockstep import ABSOLUTE_MAX_UNITS, forbidden_boundary, split_tts_caption, units
+from codex_chunk_overrides import (
+    apply_overrides as apply_shared_chunk_overrides,
+    display_chunk as normalize_display_chunk,
+    flatten_chunk as normalize_caption_chunk,
+    section_tts_hash,
+    validate_effective_section,
+)
 
 STATE_LOCK = threading.Lock()
 LOCAL_HISTORY_LOCK = threading.RLock()
@@ -637,10 +649,8 @@ def normalize_visual(kind: str, value: str) -> dict:
     value = (value or "").strip()
     if not kind or not value:
         raise RuntimeError("visual type/value is empty")
-    if kind not in {"illust", "image", "logo", "mascot", "none"}:
+    if kind not in {"illust", "image", "logo", "mascot"}:
         raise RuntimeError(f"unsupported visual type: {kind}")
-    if kind == "none":
-        return {"type": "none", "value": "none"}
     if not re.match(r"^[A-Za-z0-9_.:/+-]+$", value):
         raise RuntimeError(f"unsafe visual value: {value}")
     return {"type": kind, "value": value}
@@ -655,7 +665,12 @@ def update_chunk_visual(slug: str, section: str, chunk_index: int, visual_type: 
     if not isinstance(visuals, list):
         raise RuntimeError(f"{section}.chunk_visuals is not a list")
     while len(visuals) <= chunk_index:
-        visuals.append({"type": "none", "value": "none"})
+        if visuals and isinstance(visuals[-1], dict):
+            visuals.append(dict(visuals[-1]))
+        elif sec.get("background_image"):
+            visuals.append({"type": "image", "value": sec["background_image"]})
+        else:
+            visuals.append({"type": "logo", "value": None})
     visuals[chunk_index] = normalize_visual(visual_type, visual_value)
     data["_codex_manual_visual_edit"] = True
     data["_codex_manual_visual_edit_at"] = time.strftime("%Y-%m-%dT%H:%M:%S")
@@ -685,32 +700,7 @@ def section_names(data: dict) -> list[tuple[str, dict]]:
 
 
 def apply_chunk_overrides(data: dict, slug: str) -> None:
-    path = override_path_for_slug(slug)
-    if not path.exists():
-        return
-    try:
-        payload = json.loads(path.read_text(encoding="utf-8", errors="replace"))
-    except Exception:
-        return
-    sections = payload.get("sections") or {}
-    if not isinstance(sections, dict):
-        return
-    for section_name, override in sections.items():
-        if not isinstance(override, dict):
-            continue
-        try:
-            sec = get_section_obj(data, section_name)
-        except Exception:
-            continue
-        chunks = [str(x).strip() for x in (override.get("chunks") or []) if str(x).strip()]
-        if chunks:
-            sec["caption_chunks"] = chunks
-            sec["display_chunks"] = [strip_display_period(chunk) for chunk in chunks]
-            sec["_codex_chunk_override"] = True
-        visuals = override.get("visuals")
-        if isinstance(visuals, list):
-            sec["chunk_visuals"] = visuals
-    data["_codex_chunk_overrides_applied"] = True
+    apply_shared_chunk_overrides(data, slug, override_path_for_slug(slug), strict=True)
 
 
 def strip_display_period(text: str) -> str:
@@ -735,47 +725,39 @@ def compare_text(text: str) -> str:
     return re.sub(r"[.。,!！?？、，]", "", value)
 
 
-def validate_override_section(section_name: str, sec: dict, chunks: list[str]) -> None:
-    clean = [str(x).strip() for x in chunks if str(x).strip()]
-    if not clean:
-        raise RuntimeError("chunk list is empty")
-    tts = str(sec.get("tts") or "").strip()
-    if tts and compare_text(" ".join(clean)) != compare_text(tts):
-        raise RuntimeError(
-            f"{section_name}: chunks must preserve the TTS sentence. "
-            "Use merge/split only; do not add or remove words."
-        )
-    for idx, chunk in enumerate(clean, 1):
-        units = len(re.sub(r"\s+", "", chunk))
-        if len(clean) > 1 and units < 4:
-            raise RuntimeError(f"{section_name} chunk {idx}: too short")
-        if units > 42:
-            raise RuntimeError(f"{section_name} chunk {idx}: too long")
-    forbidden_end = ("은", "는", "이", "가", "을", "를", "에", "의", "와", "과", "로", "으로")
-    forbidden_start = ("은", "는", "이", "가", "을", "를", "에", "의", "와", "과", "로", "으로")
-    for left, right in zip(clean, clean[1:]):
-        lword = left.split()[-1] if left.split() else ""
-        rword = right.split()[0] if right.split() else ""
-        if lword in forbidden_end or rword in forbidden_start:
-            raise RuntimeError(f"{section_name}: unnatural Korean boundary near `{lword} | {rword}`")
-
-
-def save_chunk_override(slug: str, section: str, sec: dict, chunks: list[str], visuals: list[dict]) -> Path:
-    validate_override_section(section, sec, chunks)
+def save_chunk_override(
+    slug: str,
+    section: str,
+    sec: dict,
+    chunks: list[str],
+    display_chunks: list[str],
+    visuals: list[dict],
+) -> Path:
+    clean_chunks = [normalize_caption_chunk(value) for value in chunks if normalize_caption_chunk(value)]
+    clean_display = [normalize_display_chunk(value) for value in display_chunks if normalize_display_chunk(value)]
+    candidate = dict(sec)
+    candidate["caption_chunks"] = clean_chunks
+    candidate["display_chunks"] = clean_display
+    candidate["chunk_visuals"] = visuals
+    errors = validate_effective_section(section, candidate)
+    if errors:
+        raise RuntimeError("청크 편집 검증 실패\n- " + "\n- ".join(errors))
     CHUNK_OVERRIDES.mkdir(parents=True, exist_ok=True)
     path = override_path_for_slug(slug)
     if path.exists():
         payload = json.loads(path.read_text(encoding="utf-8", errors="replace"))
     else:
-        payload = {"version": 1, "slug": slug, "sections": {}}
+        payload = {"version": 2, "slug": slug, "sections": {}}
+    payload["version"] = 2
     payload.setdefault("sections", {})[section] = {
-        "chunks": [str(x).strip() for x in chunks if str(x).strip()],
-        "display_chunks": [strip_display_period(x) for x in chunks if str(x).strip()],
+        "source_tts_sha256": section_tts_hash(sec),
+        "chunks": clean_chunks,
+        "display_chunks": clean_display,
         "visuals": visuals,
         "updated_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
-        "policy": "TTS text is preserved; only screen chunk boundaries are overridden.",
+        "policy": "TTS text is preserved; semantic chunks, locked display lines, and visuals stay aligned.",
     }
-    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
     return path
 
 
@@ -785,24 +767,26 @@ def chunk_rows_for_slug(slug: str) -> list[dict]:
     apply_chunk_overrides(data, slug)
     rows = []
     for section, sec in section_names(data):
-        chunks = chunk_source(sec)
+        chunks = [normalize_caption_chunk(value) for value in sec.get("caption_chunks") or []]
+        display_chunks = sec.get("display_chunks") or chunks
         visuals = sec.get("chunk_visuals") or []
         for index, chunk in enumerate(chunks):
             visual = visuals[index] if index < len(visuals) and isinstance(visuals[index], dict) else {}
+            display_value = display_chunks[index] if index < len(display_chunks) else chunk
+            previous = chunks[index - 1] if index > 0 else ""
+            following = chunks[index + 1] if index + 1 < len(chunks) else ""
             rows.append({
                 "section": section,
                 "chunk_index": index,
                 "chunk": index + 1,
-                "text": strip_display_period(chunk),
+                "text": normalize_display_chunk(display_value),
                 "visual": f"{visual.get('type', '-')}: {visual.get('value', '-')}",
                 "chars": len(flatten_chunk_text(chunk).replace(" ", "")),
                 "override": bool(sec.get("_codex_chunk_override")),
-                "can_merge_prev": index > 0 and len(
-                    re.sub(r"\s+", "", flatten_chunk_text(chunks[index - 1]) + flatten_chunk_text(chunk))
-                ) <= 42,
-                "can_merge_next": index < len(chunks) - 1 and len(
-                    re.sub(r"\s+", "", flatten_chunk_text(chunk) + flatten_chunk_text(chunks[index + 1]))
-                ) <= 42,
+                "section_first": index == 0,
+                "can_merge_prev": index > 0 and units(previous + " " + chunk) <= ABSOLUTE_MAX_UNITS,
+                "can_merge_next": index < len(chunks) - 1
+                and units(chunk + " " + following) <= ABSOLUTE_MAX_UNITS,
                 "can_split": best_split_index(chunk) >= 0,
             })
     return rows
@@ -810,31 +794,23 @@ def chunk_rows_for_slug(slug: str) -> list[dict]:
 
 def best_split_index(text: str) -> int:
     plain = flatten_chunk_text(text)
-    if len(plain) < 18:
+    if units(plain) < 12:
         return -1
-    preferred = [" 그리고 ", " 또한 ", " 다만 ", " 때문에 ", " 기준 ", " 경우 ", "이며 ", "하고 ", ", "]
-    target = len(plain) // 2
-    best = -1
-    best_score = 10_000
-    for token in preferred:
-        start = 0
-        while True:
-            pos = plain.find(token, start)
-            if pos < 0:
-                break
-            split = pos + len(token)
-            score = abs(split - target)
-            if 7 <= split <= len(plain) - 7 and score < best_score:
-                best = split
-                best_score = score
-            start = pos + 1
-    if best >= 0:
-        return best
-    spaces = [m.start() for m in re.finditer(r"\s+", plain)]
-    if not spaces:
-        return -1
-    split = min(spaces, key=lambda x: abs(x - target))
-    return split if 7 <= split <= len(plain) - 7 else -1
+    candidates: list[tuple[int, int]] = []
+    for match in re.finditer(r"\s+", plain):
+        split = match.end()
+        left = plain[:split].strip()
+        right = plain[split:].strip()
+        if min(units(left), units(right)) < 4:
+            continue
+        if max(units(left), units(right)) > ABSOLUTE_MAX_UNITS:
+            continue
+        left_word = left.split()[-1] if left.split() else ""
+        right_word = right.split()[0] if right.split() else ""
+        if forbidden_boundary(left_word, right_word):
+            continue
+        candidates.append((abs(units(left) - units(right)), split))
+    return min(candidates)[1] if candidates else -1
 
 
 def auto_linebreak(text: str) -> str:
@@ -851,25 +827,66 @@ def auto_linebreak(text: str) -> str:
     return strip_display_period(left) + "\n" + strip_display_period(right)
 
 
+def fallback_visual(sec: dict, visuals: list[dict], index: int) -> dict:
+    if 0 <= index < len(visuals) and isinstance(visuals[index], dict):
+        return dict(visuals[index])
+    if visuals and isinstance(visuals[-1], dict):
+        return dict(visuals[-1])
+    background = sec.get("background_image")
+    if background:
+        return {"type": "image", "value": background}
+    return {"type": "logo", "value": None}
+
+
+def remap_visuals(
+    sec: dict,
+    old_chunks: list[str],
+    old_visuals: list[dict],
+    new_chunks: list[str],
+) -> list[dict]:
+    if not old_chunks:
+        return [fallback_visual(sec, old_visuals, 0) for _ in new_chunks]
+    old_ends: list[int] = []
+    running = 0
+    for chunk in old_chunks:
+        running += max(1, units(chunk))
+        old_ends.append(running)
+    result: list[dict] = []
+    new_cursor = 0
+    for chunk in new_chunks:
+        length = max(1, units(chunk))
+        midpoint = new_cursor + (length / 2)
+        old_index = next((idx for idx, end in enumerate(old_ends) if midpoint <= end), len(old_ends) - 1)
+        result.append(fallback_visual(sec, old_visuals, old_index))
+        new_cursor += length
+    return result
+
+
 def adjust_chunk_boundary(slug: str, section: str, chunk_index: int, op: str) -> Path:
     path = script_path_for_slug(slug)
     data = json.loads(path.read_text(encoding="utf-8", errors="replace"))
     apply_chunk_overrides(data, slug)
     sec = get_section_obj(data, section)
-    chunks = chunk_source(sec)
+    chunks = [normalize_caption_chunk(value) for value in sec.get("caption_chunks") or []]
     if not chunks:
         raise RuntimeError(f"{section} has no chunks")
     if not (0 <= chunk_index < len(chunks)):
         raise RuntimeError(f"chunk index out of range: {chunk_index}")
+    display_chunks = [
+        normalize_display_chunk(value)
+        for value in (sec.get("display_chunks") or chunks)
+    ]
+    if len(display_chunks) != len(chunks):
+        display_chunks = [normalize_display_chunk(value) for value in chunks]
     visuals = sec.setdefault("chunk_visuals", [])
     if not isinstance(visuals, list):
         visuals = []
-    visuals = [dict(v) if isinstance(v, dict) else {"type": "none", "value": "none"} for v in visuals]
+    visuals = [dict(v) if isinstance(v, dict) else fallback_visual(sec, [], 0) for v in visuals]
     while len(visuals) < len(chunks):
-        visuals.append({"type": "none", "value": "none"})
+        visuals.append(fallback_visual(sec, visuals, len(visuals)))
 
     if op == "linebreak":
-        chunks[chunk_index] = auto_linebreak(chunks[chunk_index])
+        display_chunks[chunk_index] = auto_linebreak(display_chunks[chunk_index])
     elif op == "merge_prev":
         if chunk_index <= 0:
             raise RuntimeError("first chunk cannot merge previous")
@@ -878,7 +895,9 @@ def adjust_chunk_boundary(slug: str, section: str, chunk_index: int, op: str) ->
             + " "
             + flatten_chunk_text(chunks[chunk_index]).lstrip()
         ).strip()
+        display_chunks[chunk_index - 1] = normalize_display_chunk(chunks[chunk_index - 1])
         del chunks[chunk_index]
+        del display_chunks[chunk_index]
         if len(visuals) > chunk_index:
             del visuals[chunk_index]
     elif op == "merge_next":
@@ -889,7 +908,9 @@ def adjust_chunk_boundary(slug: str, section: str, chunk_index: int, op: str) ->
             + " "
             + flatten_chunk_text(chunks[chunk_index + 1]).lstrip()
         ).strip()
+        display_chunks[chunk_index] = normalize_display_chunk(chunks[chunk_index])
         del chunks[chunk_index + 1]
+        del display_chunks[chunk_index + 1]
         if len(visuals) > chunk_index + 1:
             del visuals[chunk_index + 1]
     elif op == "split_auto":
@@ -901,15 +922,23 @@ def adjust_chunk_boundary(slug: str, section: str, chunk_index: int, op: str) ->
         right = plain[split:].strip(" ,")
         chunks[chunk_index] = left
         chunks.insert(chunk_index + 1, right)
-        visuals.insert(chunk_index + 1, {"type": "none", "value": "none"})
+        display_chunks[chunk_index] = normalize_display_chunk(left)
+        display_chunks.insert(chunk_index + 1, normalize_display_chunk(right))
+        visuals.insert(chunk_index + 1, fallback_visual(sec, visuals, chunk_index))
     elif op == "rebalance_section":
-        chunks = [auto_linebreak(x) for x in chunks]
+        narration = str(sec.get("tts") or "").strip()
+        if not narration:
+            raise RuntimeError(f"{section} has no TTS narration")
+        new_chunks = split_tts_caption(narration)
+        visuals = remap_visuals(sec, chunks, visuals, new_chunks)
+        chunks = new_chunks
+        display_chunks = [normalize_display_chunk(value) for value in chunks]
     else:
         raise RuntimeError(f"unknown chunk operation: {op}")
 
     while len(visuals) > len(chunks):
         visuals.pop()
-    return save_chunk_override(slug, section, sec, chunks, visuals)
+    return save_chunk_override(slug, section, sec, chunks, display_chunks, visuals)
 
 
 def cardnews_summary(limit: int = 12) -> str:
@@ -2093,7 +2122,7 @@ INDEX_HTML = r"""<!doctype html>
         </div>
         <div id="chunkPanel" class="chunk-panel">
           <div class="head"><h2>청크 경계 편집</h2><button onclick="toggleChunkPanel()">닫기</button></div>
-          <div class="pad small">문장 내용과 TTS는 바꾸지 않습니다. 화면에 보이는 청크 경계와 줄바꿈만 조정합니다.</div>
+          <div class="pad small">문장 내용과 TTS는 유지합니다. 자동 보정은 한국어 문맥 기준으로 청크를 다시 나누고, 렌더 때 실제 TTS 단어 시간에 다시 맞춥니다.</div>
           <div class="pad small" id="chunkMessage"></div>
           <div class="weak-scroll">
             <table class="chunk-table">
@@ -2714,6 +2743,9 @@ INDEX_HTML = r"""<!doctype html>
         rows.forEach((r) => {
           const tr = document.createElement("tr");
           const overrideBadge = r.override ? "<br><span class='pill ok'>편집본</span>" : "";
+          const rebalanceButton = r.section_first
+            ? `<button class="mini-btn" onclick="adjustChunk('${escapeJs(r.section)}', 0, 'rebalance_section')">구간 자동 보정</button>`
+            : "";
           const mergePrevDisabled = r.can_merge_prev ? "" : "disabled title='첫 청크이거나 합친 문장이 너무 깁니다.'";
           const mergeNextDisabled = r.can_merge_next ? "" : "disabled title='마지막 청크이거나 합친 문장이 너무 깁니다.'";
           const splitDisabled = r.can_split ? "" : "disabled title='안전하게 나눌 수 있을 만큼 길지 않습니다.'";
@@ -2721,6 +2753,7 @@ INDEX_HTML = r"""<!doctype html>
             <td class="chunk-text">${escapeHtml(r.text || "")}</td>
             <td>${escapeHtml(r.visual || "-")}</td>
             <td>
+              ${rebalanceButton}
               <button class="mini-btn" onclick="adjustChunk('${escapeJs(r.section)}', ${Number(r.chunk_index)||0}, 'linebreak')">자동 줄바꿈</button>
               <button class="mini-btn" ${mergePrevDisabled} onclick="adjustChunk('${escapeJs(r.section)}', ${Number(r.chunk_index)||0}, 'merge_prev')">앞과 합치기</button>
               <button class="mini-btn" ${mergeNextDisabled} onclick="adjustChunk('${escapeJs(r.section)}', ${Number(r.chunk_index)||0}, 'merge_next')">뒤와 합치기</button>

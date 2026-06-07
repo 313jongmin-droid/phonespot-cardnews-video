@@ -9,6 +9,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from codex_chunk_overrides import apply_overrides, validate_effective_script
+
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 CARDNEWS = ROOT / "cardnews"
@@ -48,9 +50,9 @@ def all_visuals(data: dict):
 def visual_label(visual: dict) -> str:
     kind = str(visual.get("type") or visual.get("kind") or "")
     if kind == "image":
-        return str(visual.get("path") or visual.get("src") or visual.get("image") or "")
+        return str(visual.get("value") or visual.get("path") or visual.get("src") or visual.get("image") or "")
     if kind in {"illust", "illustration"}:
-        return str(visual.get("variant") or visual.get("name") or "")
+        return str(visual.get("value") or visual.get("variant") or visual.get("name") or "")
     if kind == "logo":
         return str(visual.get("name") or visual.get("path") or "logo")
     return kind or "unknown"
@@ -116,6 +118,25 @@ def check(slug: str) -> dict:
         add(items, "ERROR", "shorts_script.json 문법 오류", str(exc))
         return finish(slug, items)
 
+    try:
+        override_report = apply_overrides(data, slug, strict=True)
+        effective_errors = validate_effective_script(data)
+        if effective_errors:
+            add(items, "ERROR", "최종 렌더 청크 검증 실패", "\n".join(effective_errors))
+            return finish(slug, items)
+        if override_report["applied"]:
+            add(
+                items,
+                "OK",
+                "청크 편집본을 포함한 최종 렌더 스크립트 검증 통과",
+                ", ".join(override_report["sections"]),
+            )
+        else:
+            add(items, "OK", "최종 렌더 스크립트 청크 검증 통과")
+    except Exception as exc:
+        add(items, "ERROR", "청크 편집본을 최종 렌더 스크립트에 적용할 수 없습니다.", str(exc))
+        return finish(slug, items)
+
     facts = data.get("facts") or []
     if isinstance(data.get("hook"), dict) and isinstance(data.get("cta"), dict) and len(facts) >= 3:
         add(items, "OK", f"영상 섹션 구조 정상: facts {len(facts)}개")
@@ -135,7 +156,7 @@ def check(slug: str) -> dict:
     else:
         add(items, "WARN", "CTA 고정 문구가 보이지 않습니다.", cta_text[:160])
 
-    source_images: dict[str, str] = {}
+    source_images: dict[str, tuple[str, int]] = {}
     duplicates: list[str] = []
     missing_visuals: list[str] = []
     for section, idx, visual in all_visuals(data):
@@ -145,9 +166,12 @@ def check(slug: str) -> dict:
         if kind == "image":
             if label:
                 if label in source_images:
-                    duplicates.append(f"{where}: {label} (first: {source_images[label]})")
-                else:
-                    source_images[label] = where
+                    previous_section, previous_index = source_images[label]
+                    if previous_section != section or previous_index != idx - 1:
+                        duplicates.append(
+                            f"{where}: {label} (first: {previous_section} #{previous_index})"
+                        )
+                source_images[label] = (section, idx)
                 if not (img / label).exists() and not (out / label).exists() and not (ASSETS / label).exists():
                     missing_visuals.append(f"{where}: image {label}")
         elif kind in {"illust", "illustration"}:
@@ -175,7 +199,7 @@ def check(slug: str) -> dict:
         chunks = obj.get("display_chunks") or obj.get("caption_chunks") or []
         for idx, chunk in enumerate(chunks, 1):
             text = str(chunk or "").strip()
-            if len(text) > 42:
+            if len(re.sub(r"\s+", "", text)) > 26:
                 long_chunks.append(f"{section} #{idx}: {text[:64]}")
             if 0 < len(text) < 6:
                 short_chunks.append(f"{section} #{idx}: {text}")

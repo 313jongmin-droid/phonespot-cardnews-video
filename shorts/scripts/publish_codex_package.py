@@ -25,6 +25,7 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 CARDNEWS_OUTPUT = ROOT / "cardnews" / "output"
 DESK = ROOT / "CODEX_VIDEO_DESK"
 RESULTS = DESK / "RESULTS"
+RUNTIME_SCRIPT = ROOT / "shorts" / "public" / "shorts_script.json"
 
 
 def read_text(path: Path) -> str:
@@ -91,6 +92,16 @@ def script_data(slug: str) -> dict:
         return json.loads(read_text(path))
     except json.JSONDecodeError:
         return {}
+
+
+def matching_runtime_script(slug: str) -> Path | None:
+    if not RUNTIME_SCRIPT.exists():
+        return None
+    try:
+        data = json.loads(read_text(RUNTIME_SCRIPT))
+    except json.JSONDecodeError:
+        return None
+    return RUNTIME_SCRIPT if str(data.get("slug") or "") == slug else None
 
 
 def preferred_title(slug: str, data: dict) -> str:
@@ -294,6 +305,8 @@ def package_for(video: Path, slug: str, date_text: str | None = None) -> Path:
 
     captions_path = CARDNEWS_OUTPUT / slug / "captions.md"
     script_path = CARDNEWS_OUTPUT / slug / "shorts_script.json"
+    override_path = DESK / "CHUNK_OVERRIDES" / f"{slug}.json"
+    effective_script_path = matching_runtime_script(slug)
     captions = read_text(captions_path)
     sections = sections_from_captions(captions)
     data = script_data(slug)
@@ -332,9 +345,15 @@ def package_for(video: Path, slug: str, date_text: str | None = None) -> Path:
 
     illustration_md = CARDNEWS_OUTPUT / slug / "codex_illustration_requests.md"
     illustration_json = CARDNEWS_OUTPUT / slug / "codex_illustration_requests.json"
-    for source in (captions_path, script_path, illustration_md, illustration_json):
+    for source in (captions_path, illustration_md, illustration_json):
         if source.exists():
             shutil.copy2(source, package / source.name)
+    if script_path.exists():
+        shutil.copy2(script_path, package / "shorts_script.source.json")
+    if effective_script_path:
+        shutil.copy2(effective_script_path, package / "shorts_script.effective.json")
+    if override_path.exists():
+        shutil.copy2(override_path, package / "chunk_override.json")
 
     write_text(
         package / "source_manifest.txt",
@@ -351,6 +370,8 @@ def package_for(video: Path, slug: str, date_text: str | None = None) -> Path:
                 source_line(video),
                 source_line(captions_path),
                 source_line(script_path),
+                source_line(override_path),
+                source_line(effective_script_path) if effective_script_path else "- missing: matching effective script",
                 source_line(illustration_md),
                 source_line(illustration_json),
             ]
@@ -359,7 +380,7 @@ def package_for(video: Path, slug: str, date_text: str | None = None) -> Path:
     write_json(
         package / "publish.json",
         {
-            "version": 3,
+            "version": 4,
             "generated_at": datetime.now().isoformat(timespec="seconds"),
             "slug": slug,
             "title": title,
@@ -369,6 +390,9 @@ def package_for(video: Path, slug: str, date_text: str | None = None) -> Path:
             "upload_copy": "UPLOAD_COPY.txt",
             "master_mode": master_mode,
             "master_video_sha256": sha256(master),
+            "source_script_sha256": sha256(script_path) if script_path.exists() else "",
+            "effective_script_sha256": sha256(effective_script_path) if effective_script_path else "",
+            "chunk_override_sha256": sha256(override_path) if override_path.exists() else "",
             "hashtags": keyword_hashtags("\n".join([slug, title, youtube_description, instagram, tiktok])),
             "channels": {
                 "youtube_shorts": {
@@ -386,8 +410,8 @@ def package_for(video: Path, slug: str, date_text: str | None = None) -> Path:
             },
         },
     )
-    print(f"[result-package-v3] folder: {package}")
-    print(f"[result-package-v3] master: {master.name} ({master_mode})")
+    print(f"[result-package-v4] folder: {package}")
+    print(f"[result-package-v4] master: {master.name} ({master_mode})")
     return package
 
 

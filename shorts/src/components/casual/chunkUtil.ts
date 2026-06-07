@@ -339,7 +339,21 @@ export const stripDisplaySentencePeriods = (value: string) =>
   value.replace(/\.(?=(?:["'”’)]*)?(?:\s|$))/g, "");
 
 export function formatCaptionLines(text: string, _maxLineChars = 18, maxLines = 3): string {
-  const clean = stripDisplaySentencePeriods(text).replace(/\n/g, " ").trim();
+  const stripped = stripDisplaySentencePeriods(text).trim();
+  const manualLines = stripped
+    .split(/\n+/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+  if (
+    text.includes("\n") &&
+    manualLines.length > 0 &&
+    manualLines.length <= maxLines &&
+    manualLines.every((line) => measureCaptionPixels(line) <= CAPTION_MAX_LINE_PIXELS)
+  ) {
+    return manualLines.join("\n");
+  }
+
+  const clean = stripped.replace(/\n/g, " ").trim();
   if (!clean) {
     return clean;
   }

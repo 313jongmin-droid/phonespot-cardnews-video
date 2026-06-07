@@ -62,7 +62,17 @@ def main() -> int:
         add("그림 내용 임베딩(CLIP) 사용가능", False, str(exc)[:40], critical=False)
 
     add("영상 실행 파일", (SHORTS / "run_codex_casual.bat").exists(), "run_codex_casual.bat")
-    add("카드뉴스 webui", (ROOT / "cardnews" / "webui" / "app.py").exists(), "cardnews/webui/app.py")
+
+    # ----- 카드뉴스 렌더 자원(이게 있어야 새 PC에서 카드까지 찍힘) -----
+    CN = ROOT / "cardnews"
+    add("카드뉴스 webui", (CN / "webui" / "app.py").exists(), "cardnews/webui/app.py")
+    add("카드 렌더 실행기", (CN / "scripts" / "run_windows.py").exists(), "cardnews/scripts/run_windows.py")
+    add("카드 렌더러", (CN / "scripts" / "cardnews_renderer_v2.py").exists(), "cardnews/scripts/cardnews_renderer_v2.py")
+    fonts = list((CN / "fonts").glob("*.woff")) if (CN / "fonts").exists() else []
+    add("카드 폰트(Pretendard woff)", len(fonts) >= 1, f"{len(fonts)}개 in {CN / 'fonts'}")
+    if 0 < len(fonts) < 9:
+        add("카드 폰트 9종 완비", False, f"{len(fonts)}/9 (일부 굵기 누락 가능)", critical=False)
+    add("카드 실행 배치", (CN / "run_pngs.bat").exists() or (CN / "run_all.bat").exists(), "run_pngs.bat / run_all.bat")
 
     print("=" * 60)
     print(" PhoneSpot 풀-생산기 점검")

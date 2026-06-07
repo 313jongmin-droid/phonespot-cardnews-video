@@ -528,7 +528,51 @@ function exportCreativesAsJSON() {
 }
 
 // ============ C1: Meta Ad Library API (벤치마크/경쟁사 광고 수집) ============
+// 운영 일수 + 게재 위치 수 기반 자동 ★등급 부여 (2026-06-XX 추가)
+// ⚠️ Ad Library API는 신원 인증 필요 (facebook.com/ads/library/api). 인증 전엔 호출 시 400 에러
 const SHEET_BM_CP = '벤치마크_경쟁사_광고';
+
+function evaluateAdLibraryItem_(ad, today) {
+  const startStr = ad.ad_delivery_start_time;
+  let days = 0;
+  if (startStr) {
+    const startDate = new Date(startStr);
+    if (!isNaN(startDate.getTime())) {
+      days = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+    }
+  }
+  const platforms = (ad.publisher_platforms || []).length;
+  let score = 0;
+  // 운영 일수 점수
+  if (days >= 90) score += 3;
+  else if (days >= 30) score += 2;
+  else if (days >= 7) score += 1;
+  // 게재 위치 점수
+  if (platforms >= 4) score += 2;
+  else if (platforms >= 2) score += 1;
+  // 등급 산정
+  let grade;
+  if (score >= 4) grade = '★★★ 검증됨';
+  else if (score >= 2) grade = '★★ 양호';
+  else if (score >= 1) grade = '★ 신규';
+  else grade = '평가 보류';
+  return { days, platforms, score, grade };
+}
+
+function applyAdLibraryGradeFormatting_(sheet) {
+  const range = sheet.getRange('L3:L1000');
+  const rules = [
+    SpreadsheetApp.newConditionalFormatRule()
+      .whenTextContains('★★★').setBackground('#c8e6c9').setFontColor('#1b5e20').setBold(true).setRanges([range]).build(),
+    SpreadsheetApp.newConditionalFormatRule()
+      .whenTextContains('★★').setBackground('#fff9c4').setFontColor('#5d4e00').setRanges([range]).build(),
+    SpreadsheetApp.newConditionalFormatRule()
+      .whenTextContains('★').setBackground('#e1f5fe').setFontColor('#01579b').setRanges([range]).build(),
+    SpreadsheetApp.newConditionalFormatRule()
+      .whenTextEqualTo('평가 보류').setBackground('#f5f5f5').setFontColor('#9e9e9e').setRanges([range]).build()
+  ];
+  sheet.setConditionalFormatRules(rules);
+}
 
 function syncMetaAdLibrary(searchTerm, idPrefix) {
   if (!searchTerm) {
@@ -556,15 +600,28 @@ function syncMetaAdLibrary(searchTerm, idPrefix) {
     if (!sheet) {
       sheet = ss.insertSheet(SHEET_BM_CP);
       sheet.appendRow(['벤치마크·경쟁사 광고 라이브러리 (Meta Ad Library 자동 수집)']);
-      sheet.appendRow(['ID', '구분', '페이지명', '헤드라인', '본문', '설명', '게재 시작일', '게재 위치', 'Ad Library URL', '검색 키워드', '수집일']);
-      sheet.getRange(2, 1, 1, 11).setBackground('#f5f5f7').setFontWeight('bold');
+      sheet.appendRow([
+        'ID', '구분', '페이지명', '헤드라인', '본문', '설명',
+        '게재 시작일', '게재 위치',
+        '운영 일수', '위치 수', '점수', '등급',
+        'Ad Library URL', '검색 키워드', '수집일'
+      ]);
+      sheet.getRange(2, 1, 1, 15).setBackground('#1F4E78').setFontColor('#FFFFFF').setFontWeight('bold');
+      sheet.setColumnWidths(1, 15, 110);
+      sheet.setColumnWidth(4, 200);
+      sheet.setColumnWidth(5, 200);
+      sheet.setColumnWidth(13, 280);
     }
-    const nowStr = Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyy-MM-dd');
+    const today = new Date();
+    const nowStr = Utilities.formatDate(today, 'Asia/Seoul', 'yyyy-MM-dd');
     let added = 0;
+    let goodCount = 0;
     data.data.forEach(ad => {
+      // 중복 체크 (광고 ID 끝 6자리 기준)
       if (sheet.getLastRow() >= 3) {
         const ids = sheet.getRange(3, 1, sheet.getLastRow() - 2, 1).getValues();
-        const exists = ids.some((r, i) => String(r[0]).endsWith(ad.id));
+        const adIdSuffix = ad.id.slice(-6);
+        const exists = ids.some(r => String(r[0]).endsWith(adIdSuffix));
         if (exists) return;
       }
       const id = `${idPrefix}-${String((sheet.getLastRow() - 1) + added + 1).padStart(3, '0')}_${ad.id.slice(-6)}`;
@@ -572,11 +629,17 @@ function syncMetaAdLibrary(searchTerm, idPrefix) {
       const body = (ad.ad_creative_bodies || [])[0] || '-';
       const desc = (ad.ad_creative_link_descriptions || [])[0] || '-';
       const platforms = (ad.publisher_platforms || []).join(', ');
+      const evalRes = evaluateAdLibraryItem_(ad, today);
+      if (evalRes.score >= 4) goodCount++;
       sheet.appendRow([
         id, idPrefix, ad.page_name || '-',
         headline, body, desc,
         ad.ad_delivery_start_time || '-',
         platforms,
+        evalRes.days,
+        evalRes.platforms,
+        evalRes.score,
+        evalRes.grade,
         ad.ad_snapshot_url || '-',
         searchTerm,
         nowStr
@@ -584,8 +647,15 @@ function syncMetaAdLibrary(searchTerm, idPrefix) {
       added++;
       Utilities.sleep(100);
     });
-    SpreadsheetApp.getUi().alert(`✅ ${searchTerm} 검색: ${data.data.length}건 중 신규 ${added}건 추가`);
-    logSync_('syncMetaAdLibrary', `${searchTerm}: 신규 ${added}`);
+    applyAdLibraryGradeFormatting_(sheet);
+    SpreadsheetApp.getUi().alert(
+      `✅ "${searchTerm}" 수집 완료\n\n` +
+      `· 검색 결과: ${data.data.length}건\n` +
+      `· 신규 추가: ${added}건\n` +
+      `· ★★★ 검증됨: ${goodCount}건\n\n` +
+      `시트(${SHEET_BM_CP}) → L열 등급 필터로 우수 광고만 보기 가능`
+    );
+    logSync_('syncMetaAdLibrary', `${searchTerm}: 신규 ${added} / 검증 ${goodCount}`);
   } catch (e) {
     SpreadsheetApp.getUi().alert(`❌ 실패: ${e.message}`);
     logSync_('syncMetaAdLibrary', 'FAIL: ' + e.message);

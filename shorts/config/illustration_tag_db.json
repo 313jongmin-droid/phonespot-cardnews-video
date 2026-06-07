@@ -1226,7 +1226,66 @@
       ],
       "note": "자동 발굴 개념: 정식 출시",
       "available": false
+    },
+    "cpt_fd9edf65": {
+      "keywords": [
+        "시작된",
+        "지원",
+        "사업"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 시작된 지원",
+      "available": false
+    },
+    "cpt_75c6eba6": {
+      "keywords": [
+        "월요일",
+        "오전",
+        "시부터"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 월요일 오전",
+      "available": false
+    },
+    "cpt_6a2e9678": {
+      "keywords": [
+        "사업",
+        "신한은행",
+        "금융감독원"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 사업 신한은행",
+      "available": false
+    },
+    "cpt_ea7bc1d6": {
+      "keywords": [
+        "경찰청",
+        "사회복지공동모금회"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 경찰청 사회복지공동모금회",
+      "available": false
+    },
+    "cpt_83fa1e9f": {
+      "keywords": [
+        "굿네이버스",
+        "전기통신",
+        "금융사기"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 굿네이버스 전기통신",
+      "available": false
     }
   },
-  "updated_at": "2026-06-06T20:55:46"
+  "updated_at": "2026-06-07T10:56:43"
 }

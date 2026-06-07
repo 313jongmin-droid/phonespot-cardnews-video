@@ -12,6 +12,8 @@ import shutil
 import sys
 from pathlib import Path
 
+from codex_chunk_overrides import write_effective_script
+
 try:
     sys.stdout.reconfigure(encoding="utf-8")
 except Exception:
@@ -26,57 +28,6 @@ project_root = Path(__file__).parent.parent
 repo_root = project_root.parent  # phonespot_cardnews/
 cardnews_root = repo_root / "cardnews"  # phonespot_cardnews/cardnews/
 
-
-override_dir = repo_root / "CODEX_VIDEO_DESK" / "CHUNK_OVERRIDES"
-
-
-def _get_section(data, section):
-    if section == "hook":
-        return data.get("hook") if isinstance(data.get("hook"), dict) else None
-    if section == "cta":
-        return data.get("cta") if isinstance(data.get("cta"), dict) else None
-    if section.startswith("fact_"):
-        try:
-            idx = int(section.split("_", 1)[1]) - 1
-        except Exception:
-            return None
-        facts = data.get("facts") or []
-        return facts[idx] if 0 <= idx < len(facts) and isinstance(facts[idx], dict) else None
-    return None
-
-
-def _strip_display_period(text):
-    return str(text or "").strip().rstrip(".。.!?！？").strip()
-
-
-def apply_chunk_overrides(script, slug):
-    path = override_dir / f"{slug}.json"
-    if not path.exists():
-        return False
-    try:
-        payload = json.loads(path.read_text(encoding="utf-8", errors="replace"))
-    except Exception as exc:
-        print(f"[WARN] chunk override ignored: {exc}")
-        return False
-    changed = False
-    for section_name, override in (payload.get("sections") or {}).items():
-        section = _get_section(script, section_name)
-        if not section or not isinstance(override, dict):
-            continue
-        chunks = [str(x).strip() for x in (override.get("chunks") or []) if str(x).strip()]
-        if chunks:
-            section["caption_chunks"] = chunks
-            section["display_chunks"] = [_strip_display_period(x) for x in chunks]
-            section["_codex_chunk_override"] = True
-            changed = True
-        visuals = override.get("visuals")
-        if isinstance(visuals, list):
-            section["chunk_visuals"] = visuals
-            changed = True
-    if changed:
-        script["_codex_chunk_overrides_applied"] = True
-        print(f"[OVERRIDE] applied chunk overrides: {path}")
-    return changed
 
 script_src = cardnews_root / "output" / slug / "shorts_script.json"
 public_dir = project_root / "public"
@@ -100,13 +51,19 @@ if cleaned:
     print(f"[0] Cleaned {cleaned} stale files in public/assets/ (folders preserved)")
 
 print(f"[1] Copying shorts_script.json -> public/")
-with open(script_src, encoding="utf-8") as f:
-    script = json.load(f)
-apply_chunk_overrides(script, slug)
-(public_dir / "shorts_script.json").write_text(
-    json.dumps(script, ensure_ascii=False, indent=2) + "\n",
-    encoding="utf-8",
+script, override_report = write_effective_script(
+    slug,
+    public_dir / "shorts_script.json",
+    source_path=script_src,
 )
+if override_report["applied"]:
+    print(f"[OVERRIDE] applied: {', '.join(override_report['sections'])}")
+if override_report["legacy_sections"]:
+    print(
+        "[WARN] legacy chunk override without source hash: "
+        + ", ".join(override_report["legacy_sections"])
+        + " (next panel edit upgrades it)"
+    )
 print(f"    OK")
 
 ai_image_dir = cardnews_root / "images" / slug

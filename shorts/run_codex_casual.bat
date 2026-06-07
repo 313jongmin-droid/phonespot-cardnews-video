@@ -90,6 +90,8 @@ python scripts\sync_codex_illustrations.py
 if errorlevel 1 goto :fail
 python scripts\copy_assets.py !SLUG!
 if errorlevel 1 goto :fail
+python scripts\validate_effective_script.py !SLUG!
+if errorlevel 1 goto :fail
 
 echo.
 echo ----- Step 4/7: Generate normalized TTS -----
@@ -168,9 +170,10 @@ python scripts\finalize_sns_video.py "!RAWFILE!" "!OUTFILE!"
 if errorlevel 1 goto :fail
 del /q "!RAWFILE!" >nul 2>nul
 
-rem Guarantee the source script + captions sit next to the final MP4, even if
-rem Step 7 packaging fails or Google Drive sync lags (so the script is never "lost").
-if exist "..\cardnews\output\!SLUG!\shorts_script.json" copy /Y "..\cardnews\output\!SLUG!\shorts_script.json" "!RESULTDIR!\" >nul 2>nul
+rem Keep source, manual override, and the exact rendered script next to the MP4.
+if exist "..\cardnews\output\!SLUG!\shorts_script.json" copy /Y "..\cardnews\output\!SLUG!\shorts_script.json" "!RESULTDIR!\shorts_script.source.json" >nul 2>nul
+if exist "public\shorts_script.json" copy /Y "public\shorts_script.json" "!RESULTDIR!\shorts_script.effective.json" >nul 2>nul
+if exist "..\CODEX_VIDEO_DESK\CHUNK_OVERRIDES\!SLUG!.json" copy /Y "..\CODEX_VIDEO_DESK\CHUNK_OVERRIDES\!SLUG!.json" "!RESULTDIR!\chunk_override.json" >nul 2>nul
 if exist "..\cardnews\output\!SLUG!\captions.md" copy /Y "..\cardnews\output\!SLUG!\captions.md" "!RESULTDIR!\" >nul 2>nul
 
 echo.

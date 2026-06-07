@@ -78,11 +78,11 @@
     "tts_chunk_weights": [
       3415.5,
       1681.33,
-      1258.79,
-      1698.96
+      1831.0,
+      1126.75
     ],
     "_tts_timing": {
-      "mode": "word_boundary_snap",
+      "mode": "word_boundary_text_align",
       "windows": [
         {
           "start_ms": 0.0,
@@ -96,17 +96,17 @@
         },
         {
           "start_ms": 5096.83,
-          "end_ms": 6355.62,
-          "duration_ms": 1258.79
+          "end_ms": 6927.83,
+          "duration_ms": 1831.0
         },
         {
-          "start_ms": 6355.62,
+          "start_ms": 6927.83,
           "end_ms": 8054.58,
-          "duration_ms": 1698.96
+          "duration_ms": 1126.75
         }
       ],
       "boundary_count": 18,
-      "min_chunk_ms": 1100
+      "caption_signature": "a4d7386fe04b283185ccafb4f53dbfad9c07223f8e34f488884d96fe0531e6b5"
     }
   },
   "facts": [
@@ -197,7 +197,7 @@
         1857.38
       ],
       "_tts_timing": {
-        "mode": "word_boundary_snap",
+        "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
@@ -231,7 +231,7 @@
           }
         ],
         "boundary_count": 38,
-        "min_chunk_ms": 1100
+        "caption_signature": "0ffbe852e097ed9e6bebc328d72a3269663154f9dde2d1f0a96cceba2d9073fe"
       }
     },
     {
@@ -321,7 +321,7 @@
         2130.29
       ],
       "_tts_timing": {
-        "mode": "word_boundary_snap",
+        "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
@@ -355,7 +355,7 @@
           }
         ],
         "boundary_count": 33,
-        "min_chunk_ms": 1100
+        "caption_signature": "e216df4cdc0e7b0991cc9102975bbcce7623d8ebfd82eae86749f0f1df44660f"
       }
     },
     {
@@ -438,7 +438,7 @@
         1795.75
       ],
       "_tts_timing": {
-        "mode": "word_boundary_snap",
+        "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
@@ -467,7 +467,7 @@
           }
         ],
         "boundary_count": 36,
-        "min_chunk_ms": 1100
+        "caption_signature": "63a340f667576bca87c66c68987d90f354062ca18d810e1a57ecdf16e0c59520"
       }
     },
     {
@@ -539,11 +539,11 @@
       "tts_chunk_weights": [
         2338.75,
         2872.5,
-        2376.79,
-        3265.83
+        2878.54,
+        2764.08
       ],
       "_tts_timing": {
-        "mode": "word_boundary_snap",
+        "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
@@ -557,17 +557,17 @@
           },
           {
             "start_ms": 5211.25,
-            "end_ms": 7588.04,
-            "duration_ms": 2376.79
+            "end_ms": 8089.79,
+            "duration_ms": 2878.54
           },
           {
-            "start_ms": 7588.04,
+            "start_ms": 8089.79,
             "end_ms": 10853.87,
-            "duration_ms": 3265.83
+            "duration_ms": 2764.08
           }
         ],
         "boundary_count": 29,
-        "min_chunk_ms": 1100
+        "caption_signature": "34c6de5d53ec4f7813c38052e4ed3bcd61b53b79b4a1f303f85125930be4e0cd"
       }
     }
   ],
@@ -633,7 +633,7 @@
       1804.54
     ],
     "_tts_timing": {
-      "mode": "word_boundary_snap",
+      "mode": "word_boundary_text_align",
       "windows": [
         {
           "start_ms": 0.0,
@@ -647,7 +647,7 @@
         }
       ],
       "boundary_count": 6,
-      "min_chunk_ms": 1100
+      "caption_signature": "db4c57a05254654841d0c63b2eea20bad43e358510298ef607bf41bcae3b9e5d"
     }
   },
   "_auto_generated": true,
@@ -1124,5 +1124,12 @@
         "context": "사전예약 갈아타기가 가장 유리한 타이밍입니다 위약금 부담 없이 신규 사전예약 혜택을 풀로 받을 수 있어, 약정 시점 1개월에서 2개월 차이로 수만 원이 좌우됩니다 사전예약 7월 말 시작 예상 특히 6월에 약정만료가 되는 분이라면, 7월 사전예약 갈아타기가 가장 유리한 타이밍입니다. 위약"
       }
     ]
+  },
+  "_codex_effective_script": {
+    "version": 2,
+    "slug": "012_news_galaxy_unpack_july",
+    "source": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\012_news_galaxy_unpack_july\\shorts_script.json",
+    "override_applied": false,
+    "override_sections": []
   }
 }

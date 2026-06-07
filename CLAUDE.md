@@ -7,7 +7,7 @@
 
 ## STEP 1 — 작업 시작 전 가이드 일괄 Read (필수)
 
-다음 6개 파일을 **순서대로 Read**. 어떤 작업이든 이 6개 다 읽기 전 코드·JSON·이미지 생성 금지.
+**공통 (항상 Read, 6개):**
 
 1. `_docs/INSTRUCTIONS_CARDNEWS.md` — 시스템·자동화·후보 수집·발행 룰 마스터
 2. `cardnews/templates/caption_template.md` — 5채널 + 나레이션 카피·캡션·후킹 룰
@@ -16,7 +16,13 @@
 5. `_docs/INSTRUCTIONS_SHORTS.md` — 영상(shorts) 빌드 매뉴얼
 6. `cardnews/_state/content_guide.md` — 매 사이클 학습되는 시즌·트렌드 메모 (존재 시)
 
-각 Read 결과는 다음 작업의 컨텍스트로 직접 활용. 사장님이 "수집해줘" / "발행해줘" / "매커니즘 알려줘" 같은 짧은 명령만 줘도 위 6개 가이드로 모든 형식·룰을 자동 적용해야 함.
+**조건부 (작업 유형 따라 추가 Read):**
+
+- 실사 AI 광고 영상 (Higgsfield, Claude 담당): `shorts/promo_ai/README.md` + `shorts/promo_ai/WORKFLOW.md`
+- 타이포 광고 영상 (Remotion, 수동/코덱스): `shorts/promo/README.md` + `shorts/promo/GUIDE_TYPOGRAPHY.md`
+- 카드뉴스 → 캐주얼 숏폼 (코덱스 담당): `CODEX_VIDEO_DESK/README.txt`
+
+각 Read 결과는 다음 작업의 컨텍스트로 직접 활용. 사장님이 "수집해줘" / "발행해줘" / "매커니즘 알려줘" 같은 짧은 명령만 줘도 위 가이드로 모든 형식·룰을 자동 적용해야 함.
 
 ---
 
@@ -31,6 +37,7 @@
 | "렌더 돌려줘" / "run_pngs" | `AUTOMATION_OVERVIEW.md` run_pngs 흐름 + 슬러그 NNN 셀렉트 |
 | "영상 만들어줘" | `INSTRUCTIONS_SHORTS.md` Read 후 shorts 측 빌드 |
 | "홍보영상" / "promo" / "타이포 영상" / "광고소재" | `shorts/promo/README.md` Read 후 promo 트랙 빌드 (`run_promo.bat`). 카드뉴스 영상과 다른 결(타이포/모션그래픽, 나레이션 없음·효과음+음악) |
+| "실사 광고" / "AI 광고" / "Higgsfield" / "promo_ai" / "광교점 실사" | `shorts/promo_ai/README.md` + `WORKFLOW.md` Read → Higgsfield MCP (Kling 3.0 우선) 호출 → ffmpeg 합치기. **결제 상태 + balance 점검 필수**. 15초 9:16 광고 |
 | "매커니즘 알려줘" / "이게 어떻게 돌아가" | `AUTOMATION_OVERVIEW.md` 직참조 |
 | "관리대장" / "광고운영" / "광고 시트" / "KPI" | `ads/README_FOR_AI.md` → `ads/MANUAL.md` |
 | "메타 자동화" / "캠페인별 통합" / "UTM 매핑" / "GA4 매핑" | `ads/META_AUTOMATION.md` |
@@ -57,6 +64,7 @@
 | 텔레그램 송신 헬퍼 | `automation/scripts/tg_send.py` | 1회 송신 CLI |
 | 영상 빌드 | `shorts/` 디렉터리 + Remotion | 카드뉴스 기반 영상(casual/newsroom) |
 | **홍보영상(promo)** | `shorts/promo/README.md` → `run_promo.bat` | 타이포/모션그래픽 홍보 쇼츠 (Remotion 기생, 나레이션 없음·효과음+음악·스타일별 SFX·무드 음악풀) |
+| **실사 AI 광고(promo_ai)** | `shorts/promo_ai/README.md` + `WORKFLOW.md` | 15초 9:16 실사 광고. Higgsfield MCP (Kling 3.0 1순위 / Seedance 2순위) → ffmpeg 합치기. Claude 담당 |
 | 코덱스 영상 데스크 | `CODEX_VIDEO_DESK/` | 별도 task |
 | **광고운영 관리대장** | `ads/README_FOR_AI.md` → `ads/MANUAL.md` | 폰스팟 시트·KPI·메타·GA4 자동화 |
 | **메타 API 자동화** | `ads/code/apps_script/meta-sync.gs` + `ads/META_AUTOMATION.md` | 메타 광고 + GA4 통합 |
@@ -91,7 +99,8 @@ phonespot_cardnews/
 │   ├── scripts/                  렌더·도구
 │   └── _state/                   카드뉴스 사이클 메모
 ├── shorts/                       영상 (Remotion: casual/newsroom 카드뉴스영상)
-│   └── promo/                    ★ 타이포/모션그래픽 홍보영상 (진입점 README.md, run_promo.bat)
+│   ├── promo/                    ★ 타이포/모션그래픽 홍보영상 (진입점 README.md, run_promo.bat)
+│   └── promo_ai/                 ★ 실사 AI 광고영상 (진입점 README.md + WORKFLOW.md, Higgsfield Kling 3.0/Seedance, ffmpeg 합치기, Claude 담당)
 ├── automation/                   listener·자동화 스크립트
 ├── CODEX_VIDEO_DESK/             코덱스 영상 task (별도)
 ├── ads/                          ★ 광고운영 관리대장 (폰스팟)
@@ -127,5 +136,6 @@ phonespot_cardnews/
 - 2026-06-04: 신설. STEP 1~7 박음. 6 가이드 진입점 정렬. 하네스 시작.
 - 2026-06-05: ads/ + ads_kt/ + 메타 자동화 합류. STEP 2 명령 패턴 3개 추가, STEP 4 진입점 3개 추가, STEP 5 폴더 구조에 ads/ ads_kt/ 박음.
 - 2026-06-07: promo(홍보영상) 트랙 하네스 합류. STEP 2 명령 패턴 + STEP 4 진입점 + STEP 5 폴더에 등록. 진입점=`shorts/promo/README.md`(Remotion 기생, 나레이션 없음·효과음+음악·스타일별 SFX·무드 음악풀). ※ `_docs/INSTRUCTIONS_SHORTS.md`는 옛 MoviePy/Typecast 설계라 현행 Remotion과 불일치 — 갱신 필요(미정).
+- 2026-06-08: promo_ai(실사 AI 광고) 트랙 하네스 합류. STEP 1 조건부 Read 섹션 신설 + STEP 2 명령 패턴 + STEP 4 진입점 + STEP 5 폴더에 등록. 진입점=`shorts/promo_ai/README.md` + `WORKFLOW.md`(Higgsfield MCP Kling 3.0 1순위 / Seedance 2순위 / ffmpeg 합치기, Claude 담당, 15초 9:16). 결제 상태: Higgsfield Free 3 credits (결제 검토 중, STARTER $19/월·연납 또는 PLUS $39-49/월).
 
 이 파일이 업그레이드되면 변경 이력 1줄 추가. 가이드 추가·제거 시 STEP 1 리스트 동기화.

@@ -6,6 +6,8 @@ import json
 import sys
 from pathlib import Path
 
+from codex_chunk_overrides import chunk_signature
+
 ROOT = Path(__file__).parent.parent
 SCRIPT = ROOT / "public" / "shorts_script.json"
 MANIFEST = ROOT / "public" / "audio" / "tts_manifest.json"
@@ -33,6 +35,11 @@ def main() -> int:
 
     data = json.loads(SCRIPT.read_text(encoding="utf-8"))
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    reports = {
+        str(item.get("key") or ""): item
+        for item in manifest.get("jobs", [])
+        if item.get("key")
+    }
     errors: list[str] = []
     warnings: list[str] = []
 
@@ -40,6 +47,13 @@ def main() -> int:
         chunks = [str(value).strip() for value in section.get("caption_chunks", []) or [] if str(value).strip()]
         weights = section.get("tts_chunk_weights", []) or []
         timing = section.get("_tts_timing", {}) or {}
+        report = reports.get(key) or {}
+        expected_signature = chunk_signature(chunks)
+        report_signature = str(report.get("caption_signature") or (report.get("timing") or {}).get("caption_signature") or "")
+        if report_signature != expected_signature:
+            errors.append(f"{key}: TTS timing manifest does not match current chunks")
+        if timing.get("mode") != "word_boundary_text_align":
+            errors.append(f"{key}: exact WordBoundary text alignment is missing")
         if chunks and len(weights) != len(chunks):
             errors.append(f"{key}: timing weight count {len(weights)} != chunk count {len(chunks)}")
             continue
@@ -55,6 +69,16 @@ def main() -> int:
                 warnings.append(message)
             else:
                 errors.append(message)
+        windows = timing.get("windows") or []
+        if len(windows) != len(chunks):
+            errors.append(f"{key}: timing window count {len(windows)} != chunk count {len(chunks)}")
+        previous_end = 0.0
+        for idx, window in enumerate(windows, 1):
+            start = float(window.get("start_ms") or 0)
+            end = float(window.get("end_ms") or 0)
+            if start < previous_end - 0.5 or end <= start:
+                errors.append(f"{key}.chunk[{idx}]: invalid timing window {start:.0f}-{end:.0f}ms")
+            previous_end = end
         for idx, value in enumerate(weights, 1):
             visible_ms = float(value)
             if visible_ms < 650:

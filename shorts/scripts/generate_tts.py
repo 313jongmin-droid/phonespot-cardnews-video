@@ -20,6 +20,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from codex_chunk_overrides import chunk_signature
+
 try:
     sys.stdout.reconfigure(encoding="utf-8")
 except Exception:
@@ -142,7 +144,50 @@ def text_weight(value: str) -> int:
     return max(1, len(re.sub(r"\s+", "", value or "")))
 
 
-def build_chunk_timing(chunks: list[str], boundaries: list[dict[str, Any]]) -> dict[str, Any]:
+def timing_text(value: str) -> str:
+    return re.sub(r"[\W_]+", "", str(value or ""), flags=re.UNICODE).lower()
+
+
+def aligned_boundary_cuts(
+    chunks: list[str],
+    boundaries: list[dict[str, Any]],
+    spoken: str,
+    pronunciation_entries: list[dict[str, Any]],
+) -> list[float]:
+    usable = [item for item in boundaries if timing_text(item.get("text", ""))]
+    boundary_text = "".join(timing_text(item.get("text", "")) for item in usable)
+    spoken_text = timing_text(spoken)
+    if boundary_text != spoken_text:
+        raise RuntimeError(
+            "WordBoundary text does not match spoken TTS; exact chunk timing cannot be guaranteed"
+        )
+
+    cumulative: dict[int, float] = {}
+    length = 0
+    for idx, item in enumerate(usable):
+        length += len(timing_text(item.get("text", "")))
+        if idx + 1 < len(usable):
+            cumulative[length] = float(usable[idx + 1]["offset_ms"])
+
+    cuts: list[float] = []
+    for idx in range(1, len(chunks)):
+        prefix = " ".join(chunks[:idx])
+        spoken_prefix, _ = apply_pronunciation(prefix, pronunciation_entries)
+        target = len(timing_text(spoken_prefix))
+        if target not in cumulative:
+            raise RuntimeError(
+                f"chunk {idx} does not end on a TTS WordBoundary; adjust the chunk at a word boundary"
+            )
+        cuts.append(cumulative[target])
+    return cuts
+
+
+def build_chunk_timing(
+    chunks: list[str],
+    boundaries: list[dict[str, Any]],
+    spoken: str = "",
+    pronunciation_entries: list[dict[str, Any]] | None = None,
+) -> dict[str, Any]:
     safe_chunks = [str(chunk).strip() for chunk in chunks if str(chunk).strip()] or [""]
     fallback_weights = [text_weight(chunk) for chunk in safe_chunks]
     if not boundaries:
@@ -159,35 +204,20 @@ def build_chunk_timing(chunks: list[str], boundaries: list[dict[str, Any]]) -> d
     )
     if len(safe_chunks) == 1 or total_ms <= 0:
         return {
-            "mode": "word_boundary_snap",
+            "mode": "word_boundary_text_align",
             "weights": [max(1.0, total_ms)],
             "windows": [{"start_ms": 0.0, "end_ms": round(total_ms, 2), "duration_ms": round(total_ms, 2)}],
             "boundary_count": len(boundaries),
+            "caption_signature": chunk_signature(safe_chunks),
         }
 
-    cumulative_weights: list[int] = []
-    running = 0
-    for weight in fallback_weights:
-        running += weight
-        cumulative_weights.append(running)
-    total_weight = cumulative_weights[-1] or 1
-
-    offsets = sorted({float(item["offset_ms"]) for item in boundaries if float(item["offset_ms"]) > 0})
-    min_ms = MIN_CHUNK_MS if total_ms >= len(safe_chunks) * MIN_CHUNK_MS else max(300, int(total_ms / len(safe_chunks) * 0.58))
-    cuts = [0.0]
-
-    for idx in range(len(safe_chunks) - 1):
-        target = total_ms * cumulative_weights[idx] / total_weight
-        remaining_chunks = len(safe_chunks) - idx - 1
-        low = cuts[-1] + min_ms
-        high = total_ms - remaining_chunks * min_ms
-        allowed = [value for value in offsets if low <= value <= high]
-        if allowed:
-            chosen = min(allowed, key=lambda value: abs(value - target))
-        else:
-            chosen = max(cuts[-1] + 1.0, min(target, total_ms - remaining_chunks))
-        cuts.append(chosen)
-    cuts.append(total_ms)
+    exact_cuts = aligned_boundary_cuts(
+        safe_chunks,
+        boundaries,
+        spoken,
+        pronunciation_entries or [],
+    )
+    cuts = [0.0, *exact_cuts, total_ms]
 
     windows: list[dict[str, float]] = []
     weights: list[float] = []
@@ -202,11 +232,11 @@ def build_chunk_timing(chunks: list[str], boundaries: list[dict[str, Any]]) -> d
         )
         weights.append(round(duration, 2))
     return {
-        "mode": "word_boundary_snap",
+        "mode": "word_boundary_text_align",
         "weights": weights,
         "windows": windows,
         "boundary_count": len(boundaries),
-        "min_chunk_ms": min_ms,
+        "caption_signature": chunk_signature(safe_chunks),
     }
 
 
@@ -257,6 +287,7 @@ def restore_matching_cache(script: dict[str, Any], jobs: list[tuple[str, dict[st
         if item.get("key")
     }
     changed = False
+    manifest_changed = False
     for key, section in jobs:
         report = reports.get(key)
         audio = audio_dir / f"{key}.mp3"
@@ -268,7 +299,20 @@ def restore_matching_cache(script: dict[str, Any], jobs: list[tuple[str, dict[st
             return False
         if str(report.get("spoken_tts", "")).strip() != spoken:
             return False
-        timing = report.get("timing") or {}
+        metadata = audio_dir / f"{key}.metadata.jsonl"
+        boundaries = load_word_boundaries(metadata)
+        if not boundaries:
+            return False
+        timing = build_chunk_timing(
+            section.get("caption_chunks", []) or [],
+            boundaries,
+            spoken,
+            entries,
+        )
+        if report.get("timing") != timing:
+            report["timing"] = timing
+            report["caption_signature"] = timing.get("caption_signature")
+            manifest_changed = True
         weights = timing.get("weights")
         if not isinstance(weights, list) or not weights:
             return False
@@ -282,6 +326,8 @@ def restore_matching_cache(script: dict[str, Any], jobs: list[tuple[str, dict[st
 
     if changed:
         script_path.write_text(json.dumps(script, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    if manifest_changed:
+        manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"[OK] Existing TTS cache matches this script. Reusing {len(jobs)} audio files.")
     return True
 
@@ -329,7 +375,12 @@ async def gen_one(key: str, section: dict[str, Any]) -> tuple[Path, dict[str, An
     normalize_audio(out)
 
     boundaries = load_word_boundaries(metadata)
-    timing = build_chunk_timing(section.get("caption_chunks", []) or [], boundaries)
+    timing = build_chunk_timing(
+        section.get("caption_chunks", []) or [],
+        boundaries,
+        spoken,
+        entries,
+    )
     section["tts_chunk_weights"] = timing["weights"]
     section["_tts_timing"] = {
         key: value
@@ -341,6 +392,7 @@ async def gen_one(key: str, section: dict[str, Any]) -> tuple[Path, dict[str, An
         "original_tts": original,
         "spoken_tts": spoken,
         "dictionary_applied": applied,
+        "caption_signature": timing.get("caption_signature"),
         "timing": timing,
     }
 
