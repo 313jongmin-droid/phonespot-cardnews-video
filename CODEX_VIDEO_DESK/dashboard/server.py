@@ -37,7 +37,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v16"
+PANEL_VERSION = "phonespot-web-v17"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -2060,19 +2060,23 @@ INDEX_HTML = r"""<!doctype html>
         <div class="head action-head"><h2 id="actionTitle">영상 작업</h2><div class="selected-badge"><span id="selectedModeLabel">선택 항목</span><b id="selectedSlug">없음</b></div></div>
         <div id="videoActions" class="pad grid">
           <button class="btn primary" onclick="runAction('video_prepare')"><strong>1. 영상용 프롬프트 준비</strong><span>선택한 카드뉴스 결과를 숏폼 영상 스크립트와 일러스트 요청으로 변환합니다.</span></button>
-          <button class="btn primary" onclick="openImportReview()"><strong>2. 이미지 가져오기 + 렌더</strong><span>다운로드한 GPT 이미지를 그림 내용으로 자동 배정 제안 → 패널에서 확인하고 확정합니다.</span></button>
-          <button class="btn" onclick="runPreflight()"><strong>렌더 전 사전검사</strong><span>이미지, 스크립트, CTA, 한글 문장, 중복 사용을 먼저 확인합니다.</span></button>
-          <button class="btn" onclick="runAction('video_render_selected')"><strong>3. 선택 영상만 렌더</strong><span>추가 이미지 없이 현재 선택한 슬러그를 다시 렌더합니다.</span></button>
-          <button class="btn" onclick="window.open('/prompt','_blank')"><strong>영상 이미지 프롬프트 보기</strong><span>최신 영상용 GPT 프롬프트를 브라우저에서 엽니다.</span></button>
-          <button class="btn" onclick="openIllustrationRequests()"><strong>신규 일러스트 요청서</strong><span>선택한 영상의 범용 일러스트 추천과 GPT 프롬프트를 엽니다.</span></button>
+          <button class="btn primary" onclick="openImportReview()"><strong>2. 이미지 가져오기 + 렌더</strong><span>다운로드한 GPT 이미지를 그림 내용으로 자동 배정 제안 → 확인하고 확정합니다.</span></button>
+          <button class="btn primary" onclick="runAction('video_render_selected')"><strong>3. 선택 영상만 렌더</strong><span>추가 이미지 없이 현재 선택한 슬러그를 다시 렌더합니다.</span></button>
+          <div style="grid-column:1/-1;font-size:12px;color:#64748b;margin-top:2px">보기 · 편집</div>
+          <button class="btn" onclick="runPreflight()"><strong>렌더 전 사전검사</strong><span>이미지·스크립트·CTA·한글·중복 사용을 먼저 확인합니다.</span></button>
+          <button class="btn" onclick="window.open('/prompt','_blank')"><strong>영상 프롬프트 보기</strong><span>최신 영상용 GPT 프롬프트를 브라우저에서 엽니다.</span></button>
+          <button class="btn" onclick="openIllustrationRequests()"><strong>신규 일러스트 요청서</strong><span>이 영상의 범용 일러스트 추천과 GPT 프롬프트.</span></button>
           <button class="btn" onclick="runAction('open_results')"><strong>영상 결과 폴더</strong><span>완성 MP4와 발행 패키지 폴더를 엽니다.</span></button>
-          <button class="btn" onclick="runAction('system_update')"><strong>시스템 업데이트</strong><span>GitHub에서 최신 코드만 받아옵니다. 렌더 결과물은 건드리지 않습니다.</span></button>
-          <button class="btn" onclick="runAction('open_illustrations')"><strong>일러스트 폴더</strong><span>재사용 일러스트 라이브러리와 드롭 폴더를 엽니다.</span></button>
-          <button class="btn" onclick="chooseUpload('illustration')"><strong>일러스트 웹 업로드</strong><span>다른 PC에서도 생성한 일러스트를 드롭 폴더에 바로 올립니다.</span></button>
-          <button class="btn" onclick="runAction('library_sync')"><strong>일러스트 라이브러리 공유</strong><span>공유 허브와 양방향 병합(추가, 비파괴). 먼저 허브 경로를 설정하세요. 결과는 아래 실행 로그에서 확인합니다.</span></button>
-          <button class="btn" onclick="runAction('library_dedup')"><strong>라이브러리 중복 점검</strong><span>비슷한 그림을 찾아 리포트(읽기전용). 실제 정리는 라이브러리_중복정리.bat 의 --apply.</span></button>
-          <button class="btn" onclick="runAction('library_backup')"><strong>라이브러리 백업</strong><span>일러스트+태그DB를 타임스탬프 스냅샷으로 백업(회전보관). 손상/실수 대비.</span></button>
-          <button class="btn" onclick="showChunks()"><strong>7. 청크 경계 편집</strong><span>문구 내용과 TTS는 유지하고 줄바꿈, 앞뒤 합치기, 자동 분할만 조정합니다.</span></button>
+          <button class="btn" onclick="runAction('open_illustrations')"><strong>일러스트 폴더</strong><span>재사용 일러스트 라이브러리와 드롭 폴더.</span></button>
+          <button class="btn" onclick="showChunks()"><strong>청크 경계 편집</strong><span>내용·TTS는 유지하고 줄바꿈·합치기·분할만 조정합니다.</span></button>
+          <button class="btn" id="manageToggle" style="grid-column:1/-1;min-height:0;padding:9px 12px;background:#f3f4f6;text-align:center" onclick="toggleManage()"><strong style="margin:0;font-size:13px">＋ 라이브러리 · 시스템 관리</strong></button>
+          <div id="manageActions" style="display:none;grid-column:1/-1;gap:12px;grid-template-columns:repeat(3,minmax(160px,1fr))">
+            <button class="btn" onclick="runAction('library_sync')"><strong>일러스트 라이브러리 공유</strong><span>공유 허브와 양방향 병합(비파괴). 허브 경로 먼저 설정. 결과는 실행 로그.</span></button>
+            <button class="btn" onclick="runAction('library_dedup')"><strong>라이브러리 중복 점검</strong><span>비슷한 그림 리포트(읽기전용). 정리는 라이브러리_중복정리.bat --apply.</span></button>
+            <button class="btn" onclick="runAction('library_backup')"><strong>라이브러리 백업</strong><span>일러스트+태그DB 타임스탬프 스냅샷(회전보관).</span></button>
+            <button class="btn" onclick="chooseUpload('illustration')"><strong>일러스트 웹 업로드</strong><span>다른 PC에서 만든 일러스트를 드롭 폴더에 올립니다.</span></button>
+            <button class="btn" onclick="runAction('system_update')"><strong>시스템 업데이트</strong><span>GitHub에서 최신 코드만 받아옵니다(결과물 안 건드림).</span></button>
+          </div>
         </div>
         <div id="cardActions" class="pad grid" style="display:none">
           <button class="btn" onclick="reloadLists()"><strong>1. 후보 새로고침</strong><span>cardnews/articles, images, output 폴더를 다시 스캔합니다. 외부 뉴스 수집 실행은 아직 붙이지 않았습니다.</span></button>
@@ -2540,6 +2544,13 @@ INDEX_HTML = r"""<!doctype html>
     function toggleImportPanel() {
       const panel = document.getElementById("importPanel");
       panel.style.display = panel.style.display === "block" ? "none" : "block";
+    }
+    function toggleManage() {
+      const m = document.getElementById("manageActions");
+      const t = document.getElementById("manageToggle");
+      const open = m.style.display === "grid";
+      m.style.display = open ? "none" : "grid";
+      if (t) { const s = t.querySelector("strong"); if (s) s.textContent = (open ? "＋" : "－") + " 라이브러리 · 시스템 관리"; }
     }
     async function openCardImportReview() {
       if (!selected) { alert("먼저 카드뉴스를 선택하세요."); return; }
