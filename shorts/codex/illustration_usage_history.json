@@ -116,9 +116,36 @@
         "cover_screen_widgets",
         "device_data_transfer"
       ]
+    },
+    "013_tip_galaxy_camera_hidden": {
+      "used_at": "2026-06-07T15:32:05",
+      "source": "codex_enhance",
+      "illustrations": [
+        "foldable",
+        "chatbot",
+        "aluminum_label",
+        "appliance",
+        "battery_overheat",
+        "biometric",
+        "chart_down",
+        "chart_up",
+        "chat_backup_restore",
+        "clock",
+        "cloud_backup",
+        "device_data_transfer",
+        "emergency_account_freeze",
+        "final_update",
+        "battery_charge_range",
+        "forecast",
+        "gemini",
+        "gift_prohibit",
+        "gift_voucher",
+        "handshake",
+        "smartphone"
+      ]
     }
   },
-  "updated_at": "2026-06-07T15:07:42",
+  "updated_at": "2026-06-07T15:32:06",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -140,6 +167,10 @@
     },
     "014_scam_voicephishing_zero_relief": {
       "updated_at": "2026-06-07T10:56:41",
+      "variants": []
+    },
+    "013_tip_galaxy_camera_hidden": {
+      "updated_at": "2026-06-07T15:32:06",
       "variants": []
     }
   }

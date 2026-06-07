@@ -1295,7 +1295,65 @@
       ],
       "note": "자동 발굴 개념: 사용할",
       "available": false
+    },
+    "cpt_fa7ce644": {
+      "keywords": [
+        "핵심",
+        "굿락",
+        "안에",
+        "있는",
+        "카메라"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 핵심 굿락",
+      "available": false
+    },
+    "cpt_ea93eb2b": {
+      "keywords": [
+        "지원",
+        "기종"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 지원 기종",
+      "available": false
+    },
+    "cpt_0ddb8d80": {
+      "keywords": [
+        "폴드",
+        "플립"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 폴드 플립",
+      "available": false
+    },
+    "cpt_5cd81fce": {
+      "keywords": [
+        "노트",
+        "시리즈"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 노트 시리즈",
+      "available": false
+    },
+    "cpt_0a1ac199": {
+      "keywords": [
+        "첫째",
+        "버튼"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 첫째 버튼",
+      "available": false
     }
   },
-  "updated_at": "2026-06-07T15:05:12"
+  "updated_at": "2026-06-07T15:32:07"
 }
