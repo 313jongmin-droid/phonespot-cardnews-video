@@ -27,6 +27,8 @@ RESULTS = ROOT / "CODEX_VIDEO_DESK" / "RESULTS"
 URL_FILE = Path(__file__).resolve().parent / "panel_url.txt"
 SAVED_URL = URL_FILE.read_text(encoding="utf-8-sig", errors="replace").strip() if URL_FILE.exists() else ""
 SERVER = (os.environ.get("PHONESPOT_PANEL_URL") or SAVED_URL or "http://127.0.0.1:4901").rstrip("/")
+# 로컬 패널이면 결과가 이미 RESULTS/<키>/ 에 있으므로 업로드/패키지 다운로드(=remote_ 폴더) 불필요
+LOCAL_PANEL = ("127.0.0.1" in SERVER) or ("localhost" in SERVER)
 WORKER_ID = os.environ.get("PHONESPOT_WORKER_ID") or socket.gethostname()
 VERSION = "render-worker-v3"
 INSTANCE_ID = uuid4().hex
@@ -226,7 +228,8 @@ def run_job(job: dict) -> tuple[bool, int, str]:
     heartbeat_thread.start()
     send_log(job_id, f"[WORKER] {WORKER_ID}\n[DOWNLOAD] {slug}\n")
     try:
-        download_package(job)
+        if not LOCAL_PANEL:
+            download_package(job)
         started = time.time()
         env = os.environ.copy()
         env["PYTHONIOENCODING"] = "utf-8"
@@ -274,8 +277,11 @@ def run_job(job: dict) -> tuple[bool, int, str]:
         result = result_after(slug, started)
         if not result:
             return False, 1, "render completed but result mp4 was not found"
-        send_log(job_id, f"[UPLOAD] {result.name}\n")
-        upload_result(job_id, result)
+        if LOCAL_PANEL:
+            send_log(job_id, f"[LOCAL] 결과 보관: {result.name} (업로드/remote 폴더 생성 생략)\n")
+        else:
+            send_log(job_id, f"[UPLOAD] {result.name}\n")
+            upload_result(job_id, result)
         return True, 0, result.name
     finally:
         heartbeat_stop.set()

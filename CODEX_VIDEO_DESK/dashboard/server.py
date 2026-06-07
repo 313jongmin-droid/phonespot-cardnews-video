@@ -37,7 +37,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v18"
+PANEL_VERSION = "phonespot-web-v19"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -1936,11 +1936,11 @@ INDEX_HTML = r"""<!doctype html>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>폰스팟 통합 제작 패널</title>
   <style>
-    :root { --bg:#f5f6f8; --panel:#fff; --ink:#15181d; --muted:#667085; --line:#dde2ea; --orange:#f74b0b; --blue:#17345f; --red:#b42318; --green:#027a48; }
+    :root { --bg:#f7f8fa; --panel:#fff; --ink:#1a1d23; --muted:#6b7280; --line:#e7eaf0; --orange:#f74b0b; --orange-soft:#fff3ee; --blue:#17345f; --red:#b42318; --green:#027a48; --r:10px; }
     * { box-sizing:border-box; }
     body { margin:0; background:var(--bg); color:var(--ink); font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif; }
-    header { min-height:64px; display:flex; align-items:center; justify-content:space-between; padding:12px 24px; background:#111827; color:white; gap:16px; }
-    header strong { font-size:20px; } header span { color:#cbd5e1; font-size:13px; word-break:break-all; }
+    header { min-height:60px; display:flex; align-items:center; justify-content:space-between; padding:12px 22px; background:#fff; color:var(--ink); border-bottom:1px solid var(--line); gap:16px; }
+    header strong { font-size:18px; font-weight:700; } header span { color:var(--muted); font-size:13px; word-break:break-all; }
     main { display:grid; grid-template-columns:400px 1fr; gap:16px; padding:16px; max-width:1540px; margin:0 auto; }
     section { background:var(--panel); border:1px solid var(--line); border-radius:8px; overflow:hidden; }
     .head { display:flex; align-items:center; justify-content:space-between; padding:13px 15px; border-bottom:1px solid var(--line); background:#fbfcfd; gap:10px; }
@@ -1948,7 +1948,8 @@ INDEX_HTML = r"""<!doctype html>
     .pad { padding:14px 16px; }
     .tabs { display:flex; gap:8px; padding:10px; background:#fff; border-bottom:1px solid var(--line); }
     .tab { flex:1; border:1px solid var(--line); background:#fff; border-radius:7px; padding:9px; cursor:pointer; font-weight:700; }
-    .tab.active { background:#fff0e8; border-color:var(--orange); color:var(--orange); }
+    .tab { font-weight:600; }
+    .tab.active { background:var(--orange); border-color:var(--orange); color:#fff; }
     .list { max-height:715px; overflow:auto; }
     .row { width:100%; border:0; border-bottom:1px solid #eef1f5; background:white; text-align:left; padding:10px 12px; cursor:pointer; display:grid; gap:8px; align-items:center; font-size:13px; }
     .row.video { grid-template-columns:44px 82px 58px 92px minmax(0,1fr); }
@@ -1966,14 +1967,17 @@ INDEX_HTML = r"""<!doctype html>
     .stage-pill.muted { background:#f1f5f9; border-color:#cbd5e1; color:#64748b; }
     .grid { display:grid; grid-template-columns:repeat(3, minmax(160px,1fr)); gap:12px; }
     .action-head { align-items:flex-start; }
-    .selected-badge { min-width:360px; max-width:720px; padding:10px 14px; border:2px solid var(--orange); border-radius:10px; background:#fff7f3; color:#111827; box-shadow:0 6px 20px rgba(247,75,11,.12); }
-    .selected-badge span { display:block; font-size:12px; color:#9a3412; font-weight:700; margin-bottom:4px; }
-    .selected-badge b { display:block; font-size:22px; line-height:1.18; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .selected-badge { min-width:300px; max-width:720px; padding:9px 13px; border:1px solid var(--orange); border-radius:var(--r); background:var(--orange-soft); color:var(--ink); }
+    .selected-badge span { display:block; font-size:12px; color:#9a3412; font-weight:600; margin-bottom:3px; }
+    .selected-badge b { display:block; font-size:15px; line-height:1.3; white-space:normal; word-break:break-all; }
     .status-note { margin-top:8px; padding:10px 12px; background:#f8fafc; border:1px solid var(--line); border-radius:8px; line-height:1.45; }
-    .btn { border:1px solid var(--line); background:white; border-radius:8px; min-height:84px; padding:12px; cursor:pointer; text-align:left; }
-    .btn:hover { border-color:var(--orange); box-shadow:0 2px 12px rgba(0,0,0,.06); }
-    .btn.primary { background:var(--orange); color:white; border-color:var(--orange); }
-    .btn strong { display:block; font-size:15px; margin-bottom:6px; } .btn span { font-size:12px; color:inherit; opacity:.82; line-height:1.35; }
+    .btn { border:1px solid var(--line); background:white; color:var(--ink); border-radius:var(--r); min-height:78px; padding:12px; cursor:pointer; text-align:left; transition:background .12s,border-color .12s,color .12s; }
+    .btn:hover, .btn:focus-visible { background:var(--orange); border-color:var(--orange); color:#fff; }
+    .btn.primary { border-color:var(--orange); }
+    .btn.compact { min-height:0; padding:9px 12px; }
+    .btn.compact strong { margin-bottom:0; font-size:13px; } .btn.compact span { display:none; }
+    .btn strong { display:block; font-size:14px; margin-bottom:6px; } .btn span { font-size:12px; color:var(--muted); line-height:1.35; }
+    .btn:hover span, .btn:focus-visible span { color:#fff; }
     .runtime-strip { max-width:1520px; margin:14px auto 0; padding:0 18px; display:grid; grid-template-columns:1.05fr 1.25fr .9fr .9fr; gap:10px; box-sizing:border-box; }
     .runtime-card { border:1px solid var(--line); border-radius:10px; background:white; padding:10px 12px; min-height:62px; min-width:0; }
     .runtime-card span { display:block; font-size:11px; color:#64748b; margin-bottom:5px; }
@@ -1987,7 +1991,8 @@ INDEX_HTML = r"""<!doctype html>
     .runtime-actions .runtime-action { margin-top:8px; }
     .runtime-select { width:100%; margin-top:7px; border:1px solid var(--line); border-radius:6px; padding:5px 7px; background:white; font-size:11px; }
     .status { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; }
-    .metric { border:1px solid var(--line); border-radius:8px; padding:12px; background:white; min-height:76px; } .metric b { display:block; font-size:20px; margin-top:4px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .metric { border:1px solid var(--line); border-radius:var(--r); padding:12px; background:var(--bg); min-height:72px; } .metric b { display:block; font-size:19px; margin-top:4px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .metric.slug b { font-size:13px; white-space:normal; word-break:break-all; line-height:1.3; }
     .warn { color:var(--red); } .ok { color:var(--green); }
     .log { height:390px; overflow:auto; background:#0b1020; color:#dbeafe; padding:14px; font-family:Consolas,monospace; font-size:12px; white-space:pre-wrap; }
     .results { max-height:170px; overflow:auto; font-size:13px; } .result-row { display:flex; justify-content:space-between; gap:10px; padding:7px 0; border-bottom:1px solid #eef1f5; }
@@ -2063,12 +2068,12 @@ INDEX_HTML = r"""<!doctype html>
           <button class="btn primary" onclick="openImportReview()"><strong>2. 이미지 가져오기 + 렌더</strong><span>다운로드한 GPT 이미지를 그림 내용으로 자동 배정 제안 → 확인하고 확정합니다.</span></button>
           <button class="btn primary" onclick="runAction('video_render_selected')"><strong>3. 선택 영상만 렌더</strong><span>추가 이미지 없이 현재 선택한 슬러그를 다시 렌더합니다.</span></button>
           <div style="grid-column:1/-1;font-size:12px;color:#64748b;margin-top:2px">보기 · 편집</div>
-          <button class="btn" onclick="runPreflight()"><strong>렌더 전 사전검사</strong><span>이미지·스크립트·CTA·한글·중복 사용을 먼저 확인합니다.</span></button>
-          <button class="btn" onclick="window.open('/prompt','_blank')"><strong>영상 프롬프트 보기</strong><span>최신 영상용 GPT 프롬프트를 브라우저에서 엽니다.</span></button>
-          <button class="btn" onclick="openIllustrationRequests()"><strong>신규 일러스트 요청서</strong><span>이 영상의 범용 일러스트 추천과 GPT 프롬프트.</span></button>
-          <button class="btn" onclick="runAction('open_results')"><strong>영상 결과 폴더</strong><span>완성 MP4와 발행 패키지 폴더를 엽니다.</span></button>
-          <button class="btn" onclick="runAction('open_illustrations')"><strong>일러스트 폴더</strong><span>재사용 일러스트 라이브러리와 드롭 폴더.</span></button>
-          <button class="btn" onclick="showChunks()"><strong>청크 경계 편집</strong><span>내용·TTS는 유지하고 줄바꿈·합치기·분할만 조정합니다.</span></button>
+          <button class="btn compact" onclick="runPreflight()"><strong>렌더 전 사전검사</strong><span>이미지·스크립트·CTA·한글·중복 사용을 먼저 확인합니다.</span></button>
+          <button class="btn compact" onclick="window.open('/prompt','_blank')"><strong>영상 프롬프트 보기</strong><span>최신 영상용 GPT 프롬프트를 브라우저에서 엽니다.</span></button>
+          <button class="btn compact" onclick="openIllustrationRequests()"><strong>신규 일러스트 요청서</strong><span>이 영상의 범용 일러스트 추천과 GPT 프롬프트.</span></button>
+          <button class="btn compact" onclick="runAction('open_results')"><strong>영상 결과 폴더</strong><span>완성 MP4와 발행 패키지 폴더를 엽니다.</span></button>
+          <button class="btn compact" onclick="runAction('open_illustrations')"><strong>일러스트 폴더</strong><span>재사용 일러스트 라이브러리와 드롭 폴더.</span></button>
+          <button class="btn compact" onclick="showChunks()"><strong>청크 경계 편집</strong><span>내용·TTS는 유지하고 줄바꿈·합치기·분할만 조정합니다.</span></button>
           <button class="btn" id="manageToggle" style="grid-column:1/-1;min-height:0;padding:9px 12px;background:#f3f4f6;text-align:center" onclick="toggleManage()"><strong style="margin:0;font-size:13px">＋ 라이브러리 · 시스템 관리</strong></button>
           <div id="manageActions" style="display:none;grid-column:1/-1;gap:12px;grid-template-columns:repeat(3,minmax(160px,1fr))">
             <button class="btn" onclick="runAction('library_sync')"><strong>일러스트 라이브러리 공유</strong><span>공유 허브와 양방향 병합(비파괴). 허브 경로 먼저 설정. 결과는 실행 로그.</span></button>
@@ -2094,7 +2099,7 @@ INDEX_HTML = r"""<!doctype html>
       <section>
         <div class="head"><h2>상태</h2><span class="small" id="jobText">대기 중</span></div>
         <div class="pad status">
-          <div class="metric"><span class="small" id="metric1Label">선택 슬러그</span><b id="latestSlug">-</b></div>
+          <div class="metric slug"><span class="small" id="metric1Label">선택 슬러그</span><b id="latestSlug">-</b></div>
           <div class="metric"><span class="small" id="metric2Label">상태</span><b id="requestCount">-</b></div>
           <div class="metric"><span class="small" id="metric3Label">이미지</span><b id="missingCount">-</b></div>
           <div class="metric"><span class="small" id="metric4Label">카드</span><b id="downloadCount">-</b></div>
