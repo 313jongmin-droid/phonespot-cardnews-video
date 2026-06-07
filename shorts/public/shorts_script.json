@@ -1,39 +1,40 @@
 {
-  "slug": "010_tip_iphone_call_record",
-  "title_short": "아이폰 통화 녹음 17년 만에 도입",
-  "video_title": "아이폰 통화 녹음 17년 만에 도입",
-  "publication_date": "2026.05.31",
-  "sources": "Apple iOS 18.1 공식 + SKT 에이닷 + LGU+ 익시오 + 폰스팟 광교점 자료",
+  "slug": "013_tip_galaxy_camera_hidden",
+  "title_short": "갤럭시 카메라 95%가 모르는 숨은 기능 5가지",
+  "video_title": "갤럭시 카메라 95%가 모르는 숨은 기능 5가지",
+  "publication_date": "2026.06.03",
+  "sources": "Samsung Members 공식 + 폰스팟 광교점 1차 자료",
   "channel_name": "폰스팟",
   "channel_tagline": "광교 미니 IT 브리핑",
   "opening": {
     "line1": "광교 미니 IT 브리핑",
-    "line2": "아이폰 통화 녹음 17년 만에 도입"
+    "line2": "갤럭시 카메라 95%가 모르는 숨은 기능 5가지"
   },
   "hook": {
-    "tts": "아이폰에도 통화 녹음이 17년 만에 정식으로 들어왔습니다. iOS 18.1 활용법과 갤럭시와의 차이를 정리합니다.",
+    "tts": "갤럭시 사용자의 95퍼센트가 모르는 카메라 숨은 기능 5가지를 알려드립니다. 같은 폰으로 사진 품질이 한 단계 올라갑니다.",
     "caption_body": [
-      "아이폰 통화 녹음",
-      "17년 만에 정식 도입"
+      "갤럭시 사용자",
+      "95%가 모르는 카메라 설정"
     ],
     "caption_emphasis": [
-      "17년 만에"
+      "95%가 모르는"
     ],
     "headline_lines": [
       {
-        "text": "아이폰 통화 녹음"
+        "text": "갤럭시 사용자"
       },
       {
-        "text": "17년 만에 정식 도입",
+        "text": "95%가 모르는 카메라 설정",
         "accent": true
       }
     ],
-    "meta": "출처: Apple iOS 18.1 / 전자신문",
+    "meta": "출처: Samsung Members 공식",
     "topic": "뉴스",
     "background_image": "1.png",
     "caption_chunks": [
-      "아이폰에도 통화 녹음이 17년 만에 정식으로 들어왔습니다.",
-      "iOS 18.1 활용법과 갤럭시와의 차이를 정리합니다."
+      "갤럭시 사용자의 95퍼센트가 모르는",
+      "카메라 숨은 기능 5가지를 알려드립니다.",
+      "같은 폰으로 사진 품질이 한 단계 올라갑니다."
     ],
     "chunk_visuals": [
       {
@@ -43,6 +44,10 @@
       {
         "type": "image",
         "value": "4.png"
+      },
+      {
+        "type": "image",
+        "value": "5.png"
       }
     ],
     "stat": {
@@ -52,68 +57,76 @@
     },
     "_codex_narration_source": "captions.md#intro",
     "display_chunks": [
-      "아이폰에도 통화 녹음이 17년 만에 정식으로 들어왔습니다",
-      "iOS 18.1 활용법과 갤럭시와의 차이를 정리합니다"
+      "갤럭시 사용자의 95퍼센트가 모르는",
+      "카메라 숨은 기능 5가지를 알려드립니다",
+      "같은 폰으로 사진 품질이 한 단계 올라갑니다"
     ],
     "_codex_caption_lockstep": {
       "version": 2,
       "compiler": "korean_caption_compiler_v2",
       "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-      "chunk_count": 2
+      "chunk_count": 3
     },
     "_codex_contextual_narrative": true,
     "_codex_sync_mode": "global999_tts_caption_lockstep",
     "tts_chunk_weights": [
-      3468.29,
-      3353.88
+      1986.62,
+      2652.46,
+      2174.29
     ],
     "_tts_timing": {
       "mode": "word_boundary_text_align",
       "windows": [
         {
           "start_ms": 0.0,
-          "end_ms": 3468.29,
-          "duration_ms": 3468.29
+          "end_ms": 1986.62,
+          "duration_ms": 1986.62
         },
         {
-          "start_ms": 3468.29,
-          "end_ms": 6822.17,
-          "duration_ms": 3353.88
+          "start_ms": 1986.62,
+          "end_ms": 4639.08,
+          "duration_ms": 2652.46
+        },
+        {
+          "start_ms": 4639.08,
+          "end_ms": 6813.37,
+          "duration_ms": 2174.29
         }
       ],
-      "boundary_count": 15,
-      "caption_signature": "8e18d1f54988218e25714fb6f9108c6d6e1e261988c0a5934fe7da94a05849ed"
+      "boundary_count": 16,
+      "caption_signature": "8e0b65c3923562fbc49e9f2b801aee7f32bdea1d8d5c64d6044266247efe1a82"
     }
   },
   "facts": [
     {
-      "tts": "2024년 10월 28일 iOS 18.1 업데이트로 아이폰에 통화 녹음 기능이 처음으로 정식 도입됐습니다. 사용 방법은 단순합니다. 통화 중 화면 왼쪽 상단의 녹음 아이콘을 누르면 시작되고, 시작 직후 자동으로 고지 멘트가 양쪽 통화자에게 송출됩니다.",
+      "tts": "핵심은 굿락 앱 안에 있는 카메라 어시스턴트 모듈입니다. Galaxy Store에서 굿락을 설치한 뒤, 그 안에서 카메라 어시스턴트 모듈을 추가하면 기본 카메라 앱에 숨겨진 고급 설정을 모두 켤 수 있습니다. 지원 기종은 갤럭시 S22 이상, Z 폴드와 플립 2 이상, 노트 20, FE 시리즈 One UI 6.0 이상입니다.",
       "caption_body": [
-        "아이폰",
-        "왼쪽 상단 아이콘 수동 녹음"
+        "1단계",
+        "굿락 → 카메라 어시스턴트 설치"
       ],
       "caption_emphasis": [
-        "왼쪽 상단 아이콘"
+        "굿락"
       ],
       "headline_lines": [
         {
-          "text": "아이폰"
+          "text": "1단계"
         },
         {
-          "text": "왼쪽 상단 아이콘 수동 녹음",
+          "text": "굿락 → 카메라 어시스턴트 설치",
           "accent": true
         }
       ],
-      "meta": "출처: Apple iOS 18.1 가이드",
+      "meta": "출처: Samsung Members 가이드",
       "topic": "뉴스",
       "background_image": "2.png",
       "caption_chunks": [
-        "2024년 10월 28일 iOS 18.1",
-        "업데이트로 아이폰에 통화 녹음 기능이",
-        "처음으로 정식 도입됐습니다.",
-        "사용 방법은 단순합니다.",
-        "통화 중 화면 왼쪽 상단의 녹음 아이콘을 누르면 시작되고,",
-        "시작 직후 자동으로 고지 멘트가 양쪽 통화자에게 송출됩니다."
+        "핵심은 굿락 앱 안에 있는 카메라 어시스턴트 모듈입니다.",
+        "Galaxy Store에서 굿락을 설치한 뒤,",
+        "그 안에서 카메라 어시스턴트 모듈을 추가하면",
+        "기본 카메라 앱에 숨겨진 고급 설정을 모두 켤 수 있습니다.",
+        "지원 기종은 갤럭시 S22 이상,",
+        "Z 폴드와 플립 2 이상,",
+        "노트 20, FE 시리즈 One UI 6.0 이상입니다."
       ],
       "chunk_visuals": [
         {
@@ -125,122 +138,12 @@
           "value": "3.png"
         },
         {
-          "type": "image",
-          "value": "5.png"
-        },
-        {
           "type": "illust",
           "value": "phone_settings_toggle"
         },
         {
           "type": "illust",
-          "value": "phone_setup_ready"
-        },
-        {
-          "type": "illust",
           "value": "smartphone"
-        }
-      ],
-      "stat": {
-        "label": "",
-        "value": "",
-        "note": ""
-      },
-      "id": "fact_1",
-      "_codex_narration_source": "captions.md#body",
-      "display_chunks": [
-        "2024년 10월 28일 iOS 18.1",
-        "업데이트로 아이폰에 통화 녹음 기능이",
-        "처음으로 정식 도입됐습니다",
-        "사용 방법은 단순합니다",
-        "통화 중 화면 왼쪽 상단의 녹음 아이콘을 누르면 시작되고,",
-        "시작 직후 자동으로 고지 멘트가 양쪽 통화자에게 송출됩니다"
-      ],
-      "_codex_caption_lockstep": {
-        "version": 2,
-        "compiler": "korean_caption_compiler_v2",
-        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 6
-      },
-      "_codex_contextual_narrative": true,
-      "_codex_sync_mode": "global999_tts_caption_lockstep",
-      "tts_chunk_weights": [
-        2550.0,
-        1751.75,
-        1983.46,
-        1936.62,
-        2869.71,
-        3221.83
-      ],
-      "_tts_timing": {
-        "mode": "word_boundary_text_align",
-        "windows": [
-          {
-            "start_ms": 0.0,
-            "end_ms": 2550.0,
-            "duration_ms": 2550.0
-          },
-          {
-            "start_ms": 2550.0,
-            "end_ms": 4301.75,
-            "duration_ms": 1751.75
-          },
-          {
-            "start_ms": 4301.75,
-            "end_ms": 6285.21,
-            "duration_ms": 1983.46
-          },
-          {
-            "start_ms": 6285.21,
-            "end_ms": 8221.83,
-            "duration_ms": 1936.62
-          },
-          {
-            "start_ms": 8221.83,
-            "end_ms": 11091.54,
-            "duration_ms": 2869.71
-          },
-          {
-            "start_ms": 11091.54,
-            "end_ms": 14313.37,
-            "duration_ms": 3221.83
-          }
-        ],
-        "boundary_count": 33,
-        "caption_signature": "1339a0dbb8c8645c79d7923631cced8e22ded595f367d7097545033337c30b41"
-      }
-    },
-    {
-      "tts": "녹음본은 메모 앱과 전화 기록에 저장됩니다. 다만 iPhone XS 이후 모델과 iOS 18.1 이상 버전에서만 사용 가능합니다. 갤럭시는 처음부터 자동 녹음 기능을 제공합니다.",
-      "caption_body": [
-        "갤럭시",
-        "자동 녹음 + 특정 번호 옵션"
-      ],
-      "caption_emphasis": [
-        "자동 녹음"
-      ],
-      "headline_lines": [
-        {
-          "text": "갤럭시"
-        },
-        {
-          "text": "자동 녹음 + 특정 번호 옵션",
-          "accent": true
-        }
-      ],
-      "meta": "출처: Samsung Members 공식",
-      "topic": "뉴스",
-      "background_image": "3.png",
-      "caption_chunks": [
-        "녹음본은 메모 앱과 전화 기록에 저장됩니다.",
-        "다만 iPhone XS 이후",
-        "모델과 iOS 18.1 이상 버전에서만 사용 가능합니다.",
-        "갤럭시는 처음부터 자동 녹음 기능을 제공합니다."
-      ],
-      "chunk_visuals": [
-        {
-          "type": "illust",
-          "value": "device_data_transfer"
         },
         {
           "type": "illust",
@@ -260,92 +163,107 @@
         "value": "",
         "note": ""
       },
-      "id": "fact_2",
+      "id": "fact_1",
       "_codex_narration_source": "captions.md#body",
       "display_chunks": [
-        "녹음본은 메모 앱과 전화 기록에 저장됩니다",
-        "다만 iPhone XS 이후",
-        "모델과 iOS 18.1 이상 버전에서만 사용 가능합니다",
-        "갤럭시는 처음부터 자동 녹음 기능을 제공합니다"
+        "핵심은 굿락 앱 안에 있는 카메라 어시스턴트 모듈입니다",
+        "Galaxy Store에서 굿락을 설치한 뒤,",
+        "그 안에서 카메라 어시스턴트 모듈을 추가하면",
+        "기본 카메라 앱에 숨겨진 고급 설정을 모두 켤 수 있습니다",
+        "지원 기종은 갤럭시 S22 이상,",
+        "Z 폴드와 플립 2 이상,",
+        "노트 20, FE 시리즈 One UI 6.0 이상입니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 4
+        "chunk_count": 7
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        2957.75,
-        1338.04,
-        3776.38,
-        2482.41
+        3248.25,
+        1936.63,
+        1875.0,
+        3494.7,
+        2165.5,
+        1417.25,
+        2676.04
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 2957.75,
-            "duration_ms": 2957.75
+            "end_ms": 3248.25,
+            "duration_ms": 3248.25
           },
           {
-            "start_ms": 2957.75,
-            "end_ms": 4295.79,
-            "duration_ms": 1338.04
+            "start_ms": 3248.25,
+            "end_ms": 5184.88,
+            "duration_ms": 1936.63
           },
           {
-            "start_ms": 4295.79,
-            "end_ms": 8072.17,
-            "duration_ms": 3776.38
+            "start_ms": 5184.88,
+            "end_ms": 7059.88,
+            "duration_ms": 1875.0
           },
           {
-            "start_ms": 8072.17,
+            "start_ms": 7059.88,
             "end_ms": 10554.58,
-            "duration_ms": 2482.41
+            "duration_ms": 3494.7
+          },
+          {
+            "start_ms": 10554.58,
+            "end_ms": 12720.08,
+            "duration_ms": 2165.5
+          },
+          {
+            "start_ms": 12720.08,
+            "end_ms": 14137.33,
+            "duration_ms": 1417.25
+          },
+          {
+            "start_ms": 14137.33,
+            "end_ms": 16813.37,
+            "duration_ms": 2676.04
           }
         ],
-        "boundary_count": 25,
-        "caption_signature": "eddbde616b7ea6b85358cbc2f819c6f72c7c9de2d162f1ef7e2f1c62ffbbdd2d"
+        "boundary_count": 47,
+        "caption_signature": "6472a866f74ab25a061d8c53dd2929ce19092b73067242800c26ae6f56b9aa66"
       }
     },
     {
-      "tts": "전화 앱의 설정에서 통화 녹음 메뉴로 들어가면 자동 녹음을 켤 수 있고, 모든 통화·국제 전화 제외·특정 번호만 자동 녹음 등 세부 설정도 가능합니다. 녹음본은 내 파일의 Call 폴더에 저장됩니다. 고지 멘트 없이 녹음하시려면 SKT 에이닷 전화나 LGU+ 익시오 같은 통신사 서버 기반 서비스를 활용하실 수 있습니다.",
+      "tts": "첫째, 2배 줌 버튼을 활성화하시기 바랍니다. 카메라 어시스턴트 줌 버튼 메뉴에서 2배 줌을 켜면 줌 버튼에 2배가 추가되고, 인물 사진에서 가장 자연스러운 화각이 만들어집니다. 3배 망원 렌즈로 찍는 것보다 화질이 좋은 경우가 많습니다. 둘째, 촬영 속도를 속도 우선으로 바꾸시기 바랍니다.",
       "caption_body": [
-        "고지 없이",
-        "에이닷·익시오 활용"
+        "설정 1",
+        "2배 줌 버튼 활성화"
       ],
       "caption_emphasis": [
-        "에이닷·익시오"
+        "2배 줌"
       ],
       "headline_lines": [
         {
-          "text": "고지 없이"
+          "text": "설정 1"
         },
         {
-          "text": "에이닷·익시오 활용",
+          "text": "2배 줌 버튼 활성화",
           "accent": true
         }
       ],
-      "meta": "출처: SKT·LGU+ 공식",
+      "meta": "출처: Samsung Members 카메라 가이드",
       "topic": "뉴스",
-      "background_image": "4.png",
+      "background_image": "3.png",
       "caption_chunks": [
-        "전화 앱의 설정에서 통화 녹음 메뉴로 들어가면",
-        "자동 녹음을 켤 수 있고,",
-        "모든 통화·국제 전화 제외·특정 번호만",
-        "자동 녹음 등 세부 설정도 가능합니다.",
-        "녹음본은 내 파일의 Call 폴더에 저장됩니다.",
-        "고지 멘트 없이 녹음하시려면 SKT",
-        "에이닷 전화나 LGU+ 익시오 같은",
-        "통신사 서버 기반 서비스를 활용하실 수 있습니다."
+        "첫째, 2배 줌 버튼을 활성화하시기 바랍니다.",
+        "카메라 어시스턴트 줌 버튼 메뉴에서 2배 줌을 켜면",
+        "줌 버튼에 2배가 추가되고,",
+        "인물 사진에서 가장 자연스러운 화각이 만들어집니다.",
+        "3배 망원 렌즈로 찍는 것보다 화질이 좋은 경우가 많습니다.",
+        "둘째, 촬영 속도를 속도 우선으로 바꾸시기 바랍니다."
       ],
       "chunk_visuals": [
-        {
-          "type": "illust",
-          "value": "call_recording_notice"
-        },
         {
           "type": "illust",
           "value": "meeting_room"
@@ -355,16 +273,146 @@
           "value": "forecast"
         },
         {
-          "type": "illust",
-          "value": "recording_archive"
+          "type": "mascot",
+          "value": "suspicious"
         },
         {
           "type": "illust",
-          "value": "impersonation_call"
+          "value": "smartphone"
         },
         {
           "type": "illust",
-          "value": "chat_backup_restore"
+          "value": "smartphone"
+        },
+        {
+          "type": "illust",
+          "value": "smartphone"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_2",
+      "_codex_narration_source": "captions.md#body",
+      "display_chunks": [
+        "첫째, 2배 줌 버튼을 활성화하시기 바랍니다",
+        "카메라 어시스턴트 줌 버튼 메뉴에서 2배 줌을 켜면",
+        "줌 버튼에 2배가 추가되고,",
+        "인물 사진에서 가장 자연스러운 화각이 만들어집니다",
+        "3배 망원 렌즈로 찍는 것보다 화질이 좋은 경우가 많습니다",
+        "둘째, 촬영 속도를 속도 우선으로 바꾸시기 바랍니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 6
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        3001.75,
+        2244.71,
+        1434.87,
+        3098.59,
+        3397.91,
+        2860.88
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 3001.75,
+            "duration_ms": 3001.75
+          },
+          {
+            "start_ms": 3001.75,
+            "end_ms": 5246.46,
+            "duration_ms": 2244.71
+          },
+          {
+            "start_ms": 5246.46,
+            "end_ms": 6681.33,
+            "duration_ms": 1434.87
+          },
+          {
+            "start_ms": 6681.33,
+            "end_ms": 9779.92,
+            "duration_ms": 3098.59
+          },
+          {
+            "start_ms": 9779.92,
+            "end_ms": 13177.83,
+            "duration_ms": 3397.91
+          },
+          {
+            "start_ms": 13177.83,
+            "end_ms": 16038.71,
+            "duration_ms": 2860.88
+          }
+        ],
+        "boundary_count": 40,
+        "caption_signature": "0964d3b887433b6e846df7e90f39ee9e784cc5577322949fe92c4f27e7e17c80"
+      }
+    },
+    {
+      "tts": "카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 놓치지 않습니다. 셋째, HDR을 직접 제어하시기 바랍니다. HDR이 자동으로 적용되면서 색감이 이상해지는 문제를 끄거나 항상 켬으로 직접 조절할 수 있습니다.",
+      "caption_body": [
+        "설정 2",
+        "촬영 속도 속도 우선"
+      ],
+      "caption_emphasis": [
+        "촬영 속도"
+      ],
+      "headline_lines": [
+        {
+          "text": "설정 2"
+        },
+        {
+          "text": "촬영 속도 속도 우선",
+          "accent": true
+        }
+      ],
+      "meta": "출처: Samsung Members 공식",
+      "topic": "뉴스",
+      "background_image": "4.png",
+      "caption_chunks": [
+        "카메라 설정의 고급 인텔리전스 옵션 촬영",
+        "속도 메뉴에서 속도 우선을 선택하시면,",
+        "아이와 반려동물, 스포츠처럼 움직이는",
+        "피사체에서 타이밍을 놓치지 않습니다.",
+        "셋째, HDR을 직접 제어하시기 바랍니다.",
+        "HDR이 자동으로 적용되면서",
+        "색감이 이상해지는 문제를 끄거나 항상",
+        "켬으로 직접 조절할 수 있습니다."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        {
+          "type": "illust",
+          "value": "smartphone"
         },
         {
           "type": "illust",
@@ -383,14 +431,14 @@
       "id": "fact_3",
       "_codex_narration_source": "captions.md#body",
       "display_chunks": [
-        "전화 앱의 설정에서 통화 녹음 메뉴로 들어가면",
-        "자동 녹음을 켤 수 있고,",
-        "모든 통화·국제 전화 제외·특정 번호만",
-        "자동 녹음 등 세부 설정도 가능합니다",
-        "녹음본은 내 파일의 Call 폴더에 저장됩니다",
-        "고지 멘트 없이 녹음하시려면 SKT",
-        "에이닷 전화나 LGU+ 익시오 같은",
-        "통신사 서버 기반 서비스를 활용하실 수 있습니다"
+        "카메라 설정의 고급 인텔리전스 옵션 촬영",
+        "속도 메뉴에서 속도 우선을 선택하시면,",
+        "아이와 반려동물, 스포츠처럼 움직이는",
+        "피사체에서 타이밍을 놓치지 않습니다",
+        "셋째, HDR을 직접 제어하시기 바랍니다",
+        "HDR이 자동으로 적용되면서",
+        "색감이 이상해지는 문제를 끄거나 항상",
+        "켬으로 직접 조절할 수 있습니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
@@ -401,128 +449,113 @@
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        2206.71,
-        1338.0,
-        1883.83,
-        2520.42,
-        2869.71,
-        1945.41,
-        1786.96,
-        2456.0
+        2057.04,
+        2174.29,
+        2007.05,
+        2388.37,
+        3169.04,
+        1478.88,
+        1875.0,
+        1672.49
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 2206.71,
-            "duration_ms": 2206.71
+            "end_ms": 2057.04,
+            "duration_ms": 2057.04
           },
           {
-            "start_ms": 2206.71,
-            "end_ms": 3544.71,
-            "duration_ms": 1338.0
+            "start_ms": 2057.04,
+            "end_ms": 4231.33,
+            "duration_ms": 2174.29
           },
           {
-            "start_ms": 3544.71,
-            "end_ms": 5428.54,
-            "duration_ms": 1883.83
+            "start_ms": 4231.33,
+            "end_ms": 6238.38,
+            "duration_ms": 2007.05
           },
           {
-            "start_ms": 5428.54,
-            "end_ms": 7948.96,
-            "duration_ms": 2520.42
+            "start_ms": 6238.38,
+            "end_ms": 8626.75,
+            "duration_ms": 2388.37
           },
           {
-            "start_ms": 7948.96,
-            "end_ms": 10818.67,
-            "duration_ms": 2869.71
+            "start_ms": 8626.75,
+            "end_ms": 11795.79,
+            "duration_ms": 3169.04
           },
           {
-            "start_ms": 10818.67,
-            "end_ms": 12764.08,
-            "duration_ms": 1945.41
+            "start_ms": 11795.79,
+            "end_ms": 13274.67,
+            "duration_ms": 1478.88
           },
           {
-            "start_ms": 12764.08,
-            "end_ms": 14551.04,
-            "duration_ms": 1786.96
+            "start_ms": 13274.67,
+            "end_ms": 15149.67,
+            "duration_ms": 1875.0
           },
           {
-            "start_ms": 14551.04,
-            "end_ms": 17007.04,
-            "duration_ms": 2456.0
+            "start_ms": 15149.67,
+            "end_ms": 16822.16,
+            "duration_ms": 1672.49
           }
         ],
-        "boundary_count": 51,
-        "caption_signature": "4ae7312660496b0ef0af3ffcf7e3541637ff6f0ad101a2d4488dd3cdb80c8a8f"
+        "boundary_count": 37,
+        "caption_signature": "e0e3979d5a0c5526430ba04d87e18f2c0ec0a14109286b8145d7e664866dedf2"
       }
     },
     {
-      "tts": "KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 함께 사용할 수 있습니다. 법적으로는 통신비밀보호법 제3조 단서에 따라 한국에서는 본인이 참여한 통화의 녹음은 합법입니다. 다만 본인이 참여하지 않은 타인끼리의 통화 녹음은 위법이며, 해외에서는 양쪽 동의가 필요한 나라가 많으므로 출장이나 여행 시 현지 법을 확인하시기 바랍니다.",
+      "tts": "넷째, 렌즈 자동 전환을 끄시기 바랍니다. 줌을 조작할 때 망원과 초광각이 멋대로 바뀌는 문제가 해결되고, 원하는 렌즈로 고정해 촬영하실 수 있습니다. 다섯째, 셔터 지연을 없애시기 바랍니다. 사진이 늦게 찍히는 문제가 해결되어, 셔터를 누르는 순간 즉시 캡처됩니다.",
       "caption_body": [
-        "법적 주의",
-        "한국은 합법, 해외 X"
+        "설정 3·4·5",
+        "HDR·렌즈·셔터 직접 제어"
       ],
       "caption_emphasis": [
-        "한국은 합법"
+        "HDR·렌즈·셔터"
       ],
       "headline_lines": [
         {
-          "text": "법적 주의"
+          "text": "설정 3·4·5"
         },
         {
-          "text": "한국은 합법, 해외 X",
+          "text": "HDR·렌즈·셔터 직접 제어",
           "accent": true
         }
       ],
-      "meta": "출처: 통신비밀보호법 제3조",
+      "meta": "출처: Samsung Members 종합",
       "topic": "뉴스",
       "background_image": "5.png",
       "caption_chunks": [
-        "KT는 현재 자체 서비스가",
-        "미지원이지만, SKT와 LGU+",
-        "가입자는 AI 통화 요약과 번역 기능까지",
-        "함께 사용할 수 있습니다.",
-        "법적으로는 통신비밀보호법 제3조",
-        "단서에 따라 한국에서는 본인이 참여한",
-        "통화의 녹음은 합법입니다.",
-        "다만 본인이 참여하지 않은 타인끼리의 통화 녹음은 위법이며,",
-        "해외에서는 양쪽 동의가 필요한 나라가",
-        "많으므로 출장이나 여행 시 현지 법을 확인하시기 바랍니다."
+        "넷째, 렌즈 자동 전환을 끄시기 바랍니다.",
+        "줌을 조작할 때 망원과 초광각이 멋대로",
+        "바뀌는 문제가 해결되고,",
+        "원하는 렌즈로 고정해 촬영하실 수 있습니다.",
+        "다섯째, 셔터 지연을 없애시기 바랍니다.",
+        "사진이 늦게 찍히는 문제가 해결되어,",
+        "셔터를 누르는 순간 즉시 캡처됩니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "samsung_ai"
-        },
-        {
-          "type": "illust",
-          "value": "prohibit"
-        },
-        {
-          "type": "illust",
-          "value": "warning"
-        },
-        {
-          "type": "illust",
-          "value": "gemini"
-        },
-        {
-          "type": "mascot",
-          "value": "serious"
-        },
-        {
-          "type": "illust",
-          "value": "memory_chip"
-        },
-        {
-          "type": "illust",
-          "value": "chatbot"
+          "value": "smartphone"
         },
         {
           "type": "illust",
           "value": "smartphone"
+        },
+        {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        {
+          "type": "mascot",
+          "value": "serious"
         },
         {
           "type": "illust",
@@ -541,93 +574,72 @@
       "id": "fact_4",
       "_codex_narration_source": "captions.md#body",
       "display_chunks": [
-        "KT는 현재 자체 서비스가",
-        "미지원이지만, SKT와 LGU+",
-        "가입자는 AI 통화 요약과 번역 기능까지",
-        "함께 사용할 수 있습니다",
-        "법적으로는 통신비밀보호법 제3조",
-        "단서에 따라 한국에서는 본인이 참여한",
-        "통화의 녹음은 합법입니다",
-        "다만 본인이 참여하지 않은 타인끼리의 통화 녹음은 위법이며,",
-        "해외에서는 양쪽 동의가 필요한 나라가",
-        "많으므로 출장이나 여행 시 현지 법을 확인하시기 바랍니다"
+        "넷째, 렌즈 자동 전환을 끄시기 바랍니다",
+        "줌을 조작할 때 망원과 초광각이 멋대로",
+        "바뀌는 문제가 해결되고,",
+        "원하는 렌즈로 고정해 촬영하실 수 있습니다",
+        "다섯째, 셔터 지연을 없애시기 바랍니다",
+        "사진이 늦게 찍히는 문제가 해결되어,",
+        "셔터를 누르는 순간 즉시 캡처됩니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 10
+        "chunk_count": 7
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        1476.04,
-        2165.5,
-        2191.92,
-        1780.96,
-        1742.96,
-        1848.62,
-        1866.17,
-        2957.75,
-        1813.37,
-        2764.13
+        3001.75,
+        2042.25,
+        1399.67,
+        2570.41,
+        2711.25,
+        1910.25,
+        1875.01
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 1476.04,
-            "duration_ms": 1476.04
+            "end_ms": 3001.75,
+            "duration_ms": 3001.75
           },
           {
-            "start_ms": 1476.04,
-            "end_ms": 3641.54,
-            "duration_ms": 2165.5
+            "start_ms": 3001.75,
+            "end_ms": 5044.0,
+            "duration_ms": 2042.25
           },
           {
-            "start_ms": 3641.54,
-            "end_ms": 5833.46,
-            "duration_ms": 2191.92
+            "start_ms": 5044.0,
+            "end_ms": 6443.67,
+            "duration_ms": 1399.67
           },
           {
-            "start_ms": 5833.46,
-            "end_ms": 7614.42,
-            "duration_ms": 1780.96
+            "start_ms": 6443.67,
+            "end_ms": 9014.08,
+            "duration_ms": 2570.41
           },
           {
-            "start_ms": 7614.42,
-            "end_ms": 9357.38,
-            "duration_ms": 1742.96
+            "start_ms": 9014.08,
+            "end_ms": 11725.33,
+            "duration_ms": 2711.25
           },
           {
-            "start_ms": 9357.38,
-            "end_ms": 11206.0,
-            "duration_ms": 1848.62
+            "start_ms": 11725.33,
+            "end_ms": 13635.58,
+            "duration_ms": 1910.25
           },
           {
-            "start_ms": 11206.0,
-            "end_ms": 13072.17,
-            "duration_ms": 1866.17
-          },
-          {
-            "start_ms": 13072.17,
-            "end_ms": 16029.92,
-            "duration_ms": 2957.75
-          },
-          {
-            "start_ms": 16029.92,
-            "end_ms": 17843.29,
-            "duration_ms": 1813.37
-          },
-          {
-            "start_ms": 17843.29,
-            "end_ms": 20607.42,
-            "duration_ms": 2764.13
+            "start_ms": 13635.58,
+            "end_ms": 15510.59,
+            "duration_ms": 1875.01
           }
         ],
-        "boundary_count": 54,
-        "caption_signature": "520ac7db7cb976b2ffe0b0f65d004fbeed744ae8f838e66561e5a3f42a4fd4d9"
+        "boundary_count": 36,
+        "caption_signature": "3b1543a86b22052479f41db1daccc223ea1d43631cf40b7a4a3d9a24eb112cbc"
       }
     }
   ],
@@ -683,7 +695,7 @@
       "version": 2,
       "compiler": "korean_caption_compiler_v2",
       "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-      "chunk_count": 3
+      "chunk_count": 2
     },
     "_codex_contextual_narrative": true,
     "_codex_sync_mode": "global999_tts_caption_lockstep",
@@ -714,14 +726,122 @@
   "_chunk_logic_v2": true,
   "_note": "build_script.py 자동 생성 (v2 로직): 시퀀스 내 이미지 순환 + 마스코트 짝수 시퀀스만.",
   "_codex_uses_captions_md_narration": true,
-  "_codex_captions_md_narration_path": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\010_tip_iphone_call_record\\captions.md",
+  "_codex_captions_md_narration_path": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\013_tip_galaxy_camera_hidden\\captions.md",
   "_codex_narration_policy": "tts_only_chunks_visuals_preserved",
   "_codex_unique_source_images": {
     "version": 1,
     "policy": "non-illustration image visuals are used at most once across one video",
     "replacements": [
       {
-        "section": "cta",
+        "section": "fact_1",
+        "chunk": 1,
+        "from": {
+          "type": "image",
+          "value": "2.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "foldable"
+        }
+      },
+      {
+        "section": "fact_1",
+        "chunk": 5,
+        "from": {
+          "type": "image",
+          "value": "1.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "chatbot"
+        }
+      },
+      {
+        "section": "fact_2",
+        "chunk": 1,
+        "from": {
+          "type": "image",
+          "value": "3.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "battery_overheat"
+        }
+      },
+      {
+        "section": "fact_2",
+        "chunk": 2,
+        "from": {
+          "type": "image",
+          "value": "4.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "biometric"
+        }
+      },
+      {
+        "section": "fact_2",
+        "chunk": 4,
+        "from": {
+          "type": "image",
+          "value": "1.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "chart_down"
+        }
+      },
+      {
+        "section": "fact_2",
+        "chunk": 5,
+        "from": {
+          "type": "image",
+          "value": "2.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "chart_up"
+        }
+      },
+      {
+        "section": "fact_2",
+        "chunk": 6,
+        "from": {
+          "type": "image",
+          "value": "5.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "chat_backup_restore"
+        }
+      },
+      {
+        "section": "fact_3",
+        "chunk": 1,
+        "from": {
+          "type": "image",
+          "value": "4.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "clock"
+        }
+      },
+      {
+        "section": "fact_3",
+        "chunk": 2,
+        "from": {
+          "type": "image",
+          "value": "5.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "cloud_backup"
+        }
+      },
+      {
+        "section": "fact_3",
         "chunk": 3,
         "from": {
           "type": "image",
@@ -729,7 +849,103 @@
         },
         "to": {
           "type": "illust",
-          "value": "store"
+          "value": "device_data_transfer"
+        }
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "from": {
+          "type": "image",
+          "value": "2.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "emergency_account_freeze"
+        }
+      },
+      {
+        "section": "fact_3",
+        "chunk": 5,
+        "from": {
+          "type": "image",
+          "value": "3.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "final_update"
+        }
+      },
+      {
+        "section": "fact_4",
+        "chunk": 1,
+        "from": {
+          "type": "image",
+          "value": "5.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "forecast"
+        }
+      },
+      {
+        "section": "fact_4",
+        "chunk": 2,
+        "from": {
+          "type": "image",
+          "value": "1.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "gemini"
+        }
+      },
+      {
+        "section": "fact_4",
+        "chunk": 3,
+        "from": {
+          "type": "image",
+          "value": "2.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "gift_prohibit"
+        }
+      },
+      {
+        "section": "fact_4",
+        "chunk": 4,
+        "from": {
+          "type": "image",
+          "value": "3.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "gift_voucher"
+        }
+      },
+      {
+        "section": "fact_4",
+        "chunk": 6,
+        "from": {
+          "type": "image",
+          "value": "4.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "handshake"
+        }
+      },
+      {
+        "section": "cta",
+        "chunk": 1,
+        "from": {
+          "type": "image",
+          "value": "1.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
         }
       }
     ]
@@ -739,44 +955,265 @@
   "_codex_sync_quality_logic": true,
   "_codex_captions_narration_priority": true,
   "_codex_common_quality_note": "Global 001-999 rule: screen chunks are rebuilt as an ordered, lossless partition of captions.md narration; curated visuals are rebalanced without discarding quality rules.",
-  "_codex_uploaded_illustrations": [
-    {
-      "section": "fact_2",
-      "chunk": 4,
-      "variant": "phone_settings_toggle"
-    },
-    {
-      "section": "fact_3",
-      "chunk": 8,
-      "variant": "call_filter_rules"
-    },
-    {
-      "section": "fact_4",
-      "chunk": 10,
-      "variant": "security_feature_lock"
-    }
-  ],
   "_codex_semantic_visual_match": {
     "version": 1,
     "policy": "Match chunks to GPT source images using prompt.md descriptions, then fallback to tagged reusable illustrations.",
     "changes": [
       {
-        "section": "fact_3",
-        "chunk": 5,
+        "section": "hook",
+        "chunk": 2,
+        "from": {
+          "type": "image",
+          "value": "2.png"
+        },
+        "to": {
+          "type": "image",
+          "value": "4.png"
+        },
+        "context": "갤럭시 사용자의 95퍼센트가 모르는 카메라 숨은 기능 5가지를 알려드립니다 같은 폰으로 사진 품질이 한 단계 올라갑니다 갤럭시 사용자 95%가 모르는 카메라 설정 ['갤럭시 사용자', '95%가 모르는 카메라 설정'",
+        "reason": "image score 0.433: 촬영 속도 속도 우선 A top-down flat lay on a soft cream desk. A modern smartphone in the"
+      },
+      {
+        "section": "hook",
+        "chunk": 3,
+        "from": {
+          "type": "mascot",
+          "value": "surprised"
+        },
+        "to": {
+          "type": "image",
+          "value": "5.png"
+        },
+        "context": "카메라 숨은 기능 5가지를 알려드립니다 같은 폰으로 사진 품질이 한 단계 올라갑니다 갤럭시 사용자 95%가 모르는 카메라 설정 ['갤럭시 사용자', '95%가 모르는 카메라 설정'] 뉴스",
+        "reason": "image score 0.47: HDR 렌즈 셔터 직접 제어 A still life on a warm white surface. A modern smartphone screen"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 1,
         "from": {
           "type": "illust",
-          "value": "impersonation_call"
+          "value": "foldable"
+        },
+        "to": {
+          "type": "image",
+          "value": "2.png"
+        },
+        "context": "핵심은 굿락 앱 안에 있는 카메라 어시스턴트 모듈입니다 Galaxy Store에서 굿락을 설치한 뒤, 1단계 굿락 → 카메라 어시스턴트 설치 ['1단계', '굿락 → 카메라 어시스턴트 설치'] 뉴스",
+        "reason": "image score 0.529: 굿락 카메라 어시스턴트 설치 A top-down flat lay on a warm white surface. A modern smartphone"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 3,
+        "from": {
+          "type": "image",
+          "value": "4.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "Galaxy Store에서 굿락을 설치한 뒤, 그 안에서 카메라 어시스턴트 모듈을 추가하면 기본 카메라 앱에 숨겨진 고급 설정을 모두 켤 수 있습니다 1단계 굿락 → 카메라 어시스턴트 설치 ['1단계', '굿락 → ",
+        "reason": "illust score 0.428"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 4,
+        "from": {
+          "type": "image",
+          "value": "5.png"
         },
         "to": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "자동 녹음 등 세부 설정도 가능합니다 녹음본은 내 파일의 Call 폴더에 저장됩니다 고지 멘트 없이 녹음하시려면 SKT 고지 없이 에이닷·익시오 활용 ['고지 없이', '에이닷·익시오 활용'] 뉴스",
+        "context": "그 안에서 카메라 어시스턴트 모듈을 추가하면 기본 카메라 앱에 숨겨진 고급 설정을 모두 켤 수 있습니다 지원 기종은 갤럭시 S22 이상, 1단계 굿락 → 카메라 어시스턴트 설치 ['1단계', '굿락 → 카메라 어시스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 5,
+        "from": {
+          "type": "illust",
+          "value": "chatbot"
+        },
+        "to": {
+          "type": "illust",
+          "value": "newspaper"
+        },
+        "context": "기본 카메라 앱에 숨겨진 고급 설정을 모두 켤 수 있습니다 지원 기종은 갤럭시 S22 이상, Z 폴드와 플립 2 이상, 1단계 굿락 → 카메라 어시스턴트 설치 ['1단계', '굿락 → 카메라 어시스턴트 설치'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 6,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "microphone"
+        },
+        "context": "지원 기종은 갤럭시 S22 이상, Z 폴드와 플립 2 이상, 노트 20, FE 시리즈 One UI 6.0 이상입니다 1단계 굿락 → 카메라 어시스턴트 설치 ['1단계', '굿락 → 카메라 어시스턴트 설치'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 7,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "shield"
+        },
+        "context": "Z 폴드와 플립 2 이상, 노트 20, FE 시리즈 One UI 6.0 이상입니다 1단계 굿락 → 카메라 어시스턴트 설치 ['1단계', '굿락 → 카메라 어시스턴트 설치'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "battery_overheat"
+        },
+        "to": {
+          "type": "illust",
+          "value": "meeting_room"
+        },
+        "context": "첫째, 2배 줌 버튼을 활성화하시기 바랍니다 카메라 어시스턴트 줌 버튼 메뉴에서 2배 줌을 켜면 설정 1 2배 줌 버튼 활성화 ['설정 1', '2배 줌 버튼 활성화'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "biometric"
+        },
+        "to": {
+          "type": "illust",
+          "value": "forecast"
+        },
+        "context": "첫째, 2배 줌 버튼을 활성화하시기 바랍니다 카메라 어시스턴트 줌 버튼 메뉴에서 2배 줌을 켜면 줌 버튼에 2배가 추가되고, 설정 1 2배 줌 버튼 활성화 ['설정 1', '2배 줌 버튼 활성화'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "chart_down"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "줌 버튼에 2배가 추가되고, 인물 사진에서 가장 자연스러운 화각이 만들어집니다 3배 망원 렌즈로 찍는 것보다 화질이 좋은 경우가 많습니다 설정 1 2배 줌 버튼 활성화 ['설정 1', '2배 줌 버튼 활성화'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 5,
+        "from": {
+          "type": "illust",
+          "value": "chart_up"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "인물 사진에서 가장 자연스러운 화각이 만들어집니다 3배 망원 렌즈로 찍는 것보다 화질이 좋은 경우가 많습니다 둘째, 촬영 속도를 속도 우선으로 바꾸시기 바랍니다 설정 1 2배 줌 버튼 활성화 ['설정 1', '2배 ",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 6,
+        "from": {
+          "type": "illust",
+          "value": "chat_backup_restore"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "3배 망원 렌즈로 찍는 것보다 화질이 좋은 경우가 많습니다 둘째, 촬영 속도를 속도 우선으로 바꾸시기 바랍니다 설정 1 2배 줌 버튼 활성화 ['설정 1', '2배 줌 버튼 활성화'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
         "section": "fact_3",
-        "chunk": 8,
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "clock"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "cloud_backup"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 놓치지 않습니다 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "emergency_account_freeze"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 놓치지 않습니다 셋째, HDR을 직접 제어하시기 바랍니다 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 5,
+        "from": {
+          "type": "illust",
+          "value": "final_update"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "피사체에서 타이밍을 놓치지 않습니다 셋째, HDR을 직접 제어하시기 바랍니다 HDR이 자동으로 적용되면서 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 6,
         "from": {
           "type": "illust",
           "value": "aluminum_label"
@@ -785,96 +1222,12 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "에이닷 전화나 LGU+ 익시오 같은 통신사 서버 기반 서비스를 활용하실 수 있습니다 고지 없이 에이닷·익시오 활용 ['고지 없이', '에이닷·익시오 활용'] 뉴스",
+        "context": "셋째, HDR을 직접 제어하시기 바랍니다 HDR이 자동으로 적용되면서 색감이 이상해지는 문제를 끄거나 항상 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
-        "section": "fact_4",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "prohibit"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "warning"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "samsung_ai"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 함께 사용할 수 있습니다 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "chatbot"
-        },
-        "to": {
-          "type": "illust",
-          "value": "samsung_ai"
-        },
-        "context": "가입자는 AI 통화 요약과 번역 기능까지 함께 사용할 수 있습니다 법적으로는 통신비밀보호법 제3조 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
-        "reason": "illust score 0.453"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 6,
-        "from": {
-          "type": "illust",
-          "value": "gemini"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "법적으로는 통신비밀보호법 제3조 단서에 따라 한국에서는 본인이 참여한 통화의 녹음은 합법입니다 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
+        "section": "fact_3",
         "chunk": 7,
-        "from": {
-          "type": "illust",
-          "value": "memory_chip"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "단서에 따라 한국에서는 본인이 참여한 통화의 녹음은 합법입니다 다만 본인이 참여하지 않은 타인끼리의 통화 녹음은 위법이며, 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 9,
         "from": {
           "type": "illust",
           "value": "appliance"
@@ -883,12 +1236,12 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "다만 본인이 참여하지 않은 타인끼리의 통화 녹음은 위법이며, 해외에서는 양쪽 동의가 필요한 나라가 많으므로 출장이나 여행 시 현지 법을 확인하시기 바랍니다 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은",
+        "context": "HDR이 자동으로 적용되면서 색감이 이상해지는 문제를 끄거나 항상 켬으로 직접 조절할 수 있습니다 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
-        "section": "fact_4",
-        "chunk": 10,
+        "section": "fact_3",
+        "chunk": 8,
         "from": {
           "type": "illust",
           "value": "battery_charge_range"
@@ -897,7 +1250,91 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "해외에서는 양쪽 동의가 필요한 나라가 많으므로 출장이나 여행 시 현지 법을 확인하시기 바랍니다 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
+        "context": "색감이 이상해지는 문제를 끄거나 항상 켬으로 직접 조절할 수 있습니다 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "forecast"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "넷째, 렌즈 자동 전환을 끄시기 바랍니다 줌을 조작할 때 망원과 초광각이 멋대로 설정 3·4·5 HDR·렌즈·셔터 직접 제어 ['설정 3·4·5', 'HDR·렌즈·셔터 직접 제어'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "gemini"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "넷째, 렌즈 자동 전환을 끄시기 바랍니다 줌을 조작할 때 망원과 초광각이 멋대로 바뀌는 문제가 해결되고, 설정 3·4·5 HDR·렌즈·셔터 직접 제어 ['설정 3·4·5', 'HDR·렌즈·셔터 직접 제어'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "gift_prohibit"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "줌을 조작할 때 망원과 초광각이 멋대로 바뀌는 문제가 해결되고, 원하는 렌즈로 고정해 촬영하실 수 있습니다 설정 3·4·5 HDR·렌즈·셔터 직접 제어 ['설정 3·4·5', 'HDR·렌즈·셔터 직접 제어'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "gift_voucher"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "바뀌는 문제가 해결되고, 원하는 렌즈로 고정해 촬영하실 수 있습니다 다섯째, 셔터 지연을 없애시기 바랍니다 설정 3·4·5 HDR·렌즈·셔터 직접 제어 ['설정 3·4·5', 'HDR·렌즈·셔터 직접 제어'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 6,
+        "from": {
+          "type": "illust",
+          "value": "handshake"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "다섯째, 셔터 지연을 없애시기 바랍니다 사진이 늦게 찍히는 문제가 해결되어, 셔터를 누르는 순간 즉시 캡처됩니다 설정 3·4·5 HDR·렌즈·셔터 직접 제어 ['설정 3·4·5', 'HDR·렌즈·셔터 직접 제어'] ",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 7,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "사진이 늦게 찍히는 문제가 해결되어, 셔터를 누르는 순간 즉시 캡처됩니다 설정 3·4·5 HDR·렌즈·셔터 직접 제어 ['설정 3·4·5', 'HDR·렌즈·셔터 직접 제어'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       }
     ],
@@ -909,119 +1346,163 @@
           "type": "image",
           "value": "1.png"
         },
-        "context": "아이폰에도 통화 녹음이 17년 만에 정식으로 들어왔습니다 iOS 18.1 활용법과 갤럭시와의 차이를 정리합니다 아이폰 통화 녹음 17년 만에 정식 도입 ['아이폰 통화 녹음', '17년 만에 정식 도입'] 뉴스",
-        "best_image_score": 0.354,
-        "best_illust_score": 0.267
-      },
-      {
-        "section": "hook",
-        "chunk": 2,
-        "current": {
-          "type": "image",
-          "value": "4.png"
-        },
-        "context": "아이폰에도 통화 녹음이 17년 만에 정식으로 들어왔습니다 iOS 18.1 활용법과 갤럭시와의 차이를 정리합니다 아이폰 통화 녹음 17년 만에 정식 도입 ['아이폰 통화 녹음', '17년 만에 정식 도입'] 뉴스",
-        "best_image_score": 0.34,
-        "best_illust_score": 0.267
+        "context": "갤럭시 사용자의 95퍼센트가 모르는 카메라 숨은 기능 5가지를 알려드립니다 갤럭시 사용자 95%가 모르는 카메라 설정 ['갤럭시 사용자', '95%가 모르는 카메라 설정'] 뉴스",
+        "best_image_score": 0.356,
+        "best_illust_score": 0.291
       },
       {
         "section": "fact_1",
-        "chunk": 1,
+        "chunk": 4,
         "current": {
-          "type": "image",
-          "value": "2.png"
+          "type": "illust",
+          "value": "smartphone"
         },
-        "context": "2024년 10월 28일 iOS 18.1 업데이트로 아이폰에 통화 녹음 기능이 아이폰 왼쪽 상단 아이콘 수동 녹음 ['아이폰', '왼쪽 상단 아이콘 수동 녹음'] 뉴스",
-        "best_image_score": 0.396,
-        "best_illust_score": 0.346
+        "context": "그 안에서 카메라 어시스턴트 모듈을 추가하면 기본 카메라 앱에 숨겨진 고급 설정을 모두 켤 수 있습니다 지원 기종은 갤럭시 S22 이상, 1단계 굿락 → 카메라 어시스턴트 설치 ['1단계', '굿락 → 카메라 어시스턴트 설치'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.36
       },
       {
         "section": "fact_1",
-        "chunk": 2,
+        "chunk": 5,
         "current": {
-          "type": "image",
-          "value": "3.png"
+          "type": "illust",
+          "value": "newspaper"
         },
-        "context": "2024년 10월 28일 iOS 18.1 업데이트로 아이폰에 통화 녹음 기능이 처음으로 정식 도입됐습니다 아이폰 왼쪽 상단 아이콘 수동 녹음 ['아이폰', '왼쪽 상단 아이콘 수동 녹음'] 뉴스",
-        "best_image_score": 0.389,
-        "best_illust_score": 0.31
-      },
-      {
-        "section": "fact_1",
-        "chunk": 3,
-        "current": {
-          "type": "image",
-          "value": "5.png"
-        },
-        "context": "업데이트로 아이폰에 통화 녹음 기능이 처음으로 정식 도입됐습니다 사용 방법은 단순합니다 아이폰 왼쪽 상단 아이콘 수동 녹음 ['아이폰', '왼쪽 상단 아이콘 수동 녹음'] 뉴스",
-        "best_image_score": 0.311,
-        "best_illust_score": 0.396
+        "context": "기본 카메라 앱에 숨겨진 고급 설정을 모두 켤 수 있습니다 지원 기종은 갤럭시 S22 이상, Z 폴드와 플립 2 이상, 1단계 굿락 → 카메라 어시스턴트 설치 ['1단계', '굿락 → 카메라 어시스턴트 설치'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.312
       },
       {
         "section": "fact_1",
         "chunk": 6,
         "current": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "microphone"
         },
-        "context": "통화 중 화면 왼쪽 상단의 녹음 아이콘을 누르면 시작되고, 시작 직후 자동으로 고지 멘트가 양쪽 통화자에게 송출됩니다 아이폰 왼쪽 상단 아이콘 수동 녹음 ['아이폰', '왼쪽 상단 아이콘 수동 녹음'] 뉴스",
+        "context": "지원 기종은 갤럭시 S22 이상, Z 폴드와 플립 2 이상, 노트 20, FE 시리즈 One UI 6.0 이상입니다 1단계 굿락 → 카메라 어시스턴트 설치 ['1단계', '굿락 → 카메라 어시스턴트 설치'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.414
+        "best_illust_score": 0.404
+      },
+      {
+        "section": "fact_1",
+        "chunk": 7,
+        "current": {
+          "type": "illust",
+          "value": "shield"
+        },
+        "context": "Z 폴드와 플립 2 이상, 노트 20, FE 시리즈 One UI 6.0 이상입니다 1단계 굿락 → 카메라 어시스턴트 설치 ['1단계', '굿락 → 카메라 어시스턴트 설치'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.401
+      },
+      {
+        "section": "fact_2",
+        "chunk": 1,
+        "current": {
+          "type": "illust",
+          "value": "meeting_room"
+        },
+        "context": "첫째, 2배 줌 버튼을 활성화하시기 바랍니다 카메라 어시스턴트 줌 버튼 메뉴에서 2배 줌을 켜면 설정 1 2배 줌 버튼 활성화 ['설정 1', '2배 줌 버튼 활성화'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.33
       },
       {
         "section": "fact_2",
         "chunk": 2,
         "current": {
           "type": "illust",
-          "value": "newspaper"
+          "value": "forecast"
         },
-        "context": "녹음본은 메모 앱과 전화 기록에 저장됩니다 다만 iPhone XS 이후 모델과 iOS 18.1 이상 버전에서만 사용 가능합니다 갤럭시 자동 녹음 + 특정 번호 옵션 ['갤럭시', '자동 녹음 + 특정 번호 옵션'] 뉴스",
+        "context": "첫째, 2배 줌 버튼을 활성화하시기 바랍니다 카메라 어시스턴트 줌 버튼 메뉴에서 2배 줌을 켜면 줌 버튼에 2배가 추가되고, 설정 1 2배 줌 버튼 활성화 ['설정 1', '2배 줌 버튼 활성화'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.358
+        "best_illust_score": 0.318
       },
       {
         "section": "fact_2",
         "chunk": 3,
         "current": {
-          "type": "illust",
-          "value": "microphone"
+          "type": "mascot",
+          "value": "suspicious"
         },
-        "context": "다만 iPhone XS 이후 모델과 iOS 18.1 이상 버전에서만 사용 가능합니다 갤럭시는 처음부터 자동 녹음 기능을 제공합니다 갤럭시 자동 녹음 + 특정 번호 옵션 ['갤럭시', '자동 녹음 + 특정 번호 옵션'] 뉴스",
+        "context": "카메라 어시스턴트 줌 버튼 메뉴에서 2배 줌을 켜면 줌 버튼에 2배가 추가되고, 인물 사진에서 가장 자연스러운 화각이 만들어집니다 설정 1 2배 줌 버튼 활성화 ['설정 1', '2배 줌 버튼 활성화'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.284
+        "best_illust_score": 0.374
       },
       {
         "section": "fact_2",
         "chunk": 4,
         "current": {
           "type": "illust",
-          "value": "shield"
+          "value": "smartphone"
         },
-        "context": "모델과 iOS 18.1 이상 버전에서만 사용 가능합니다 갤럭시는 처음부터 자동 녹음 기능을 제공합니다 갤럭시 자동 녹음 + 특정 번호 옵션 ['갤럭시', '자동 녹음 + 특정 번호 옵션'] 뉴스",
+        "context": "줌 버튼에 2배가 추가되고, 인물 사진에서 가장 자연스러운 화각이 만들어집니다 3배 망원 렌즈로 찍는 것보다 화질이 좋은 경우가 많습니다 설정 1 2배 줌 버튼 활성화 ['설정 1', '2배 줌 버튼 활성화'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.307
+        "best_illust_score": 0.366
+      },
+      {
+        "section": "fact_2",
+        "chunk": 5,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "인물 사진에서 가장 자연스러운 화각이 만들어집니다 3배 망원 렌즈로 찍는 것보다 화질이 좋은 경우가 많습니다 둘째, 촬영 속도를 속도 우선으로 바꾸시기 바랍니다 설정 1 2배 줌 버튼 활성화 ['설정 1', '2배 줌 버튼 활성화'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.301
+      },
+      {
+        "section": "fact_2",
+        "chunk": 6,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "3배 망원 렌즈로 찍는 것보다 화질이 좋은 경우가 많습니다 둘째, 촬영 속도를 속도 우선으로 바꾸시기 바랍니다 설정 1 2배 줌 버튼 활성화 ['설정 1', '2배 줌 버튼 활성화'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.248
+      },
+      {
+        "section": "fact_3",
+        "chunk": 1,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.269
       },
       {
         "section": "fact_3",
         "chunk": 2,
         "current": {
           "type": "illust",
-          "value": "meeting_room"
+          "value": "smartphone"
         },
-        "context": "전화 앱의 설정에서 통화 녹음 메뉴로 들어가면 자동 녹음을 켤 수 있고, 모든 통화·국제 전화 제외·특정 번호만 고지 없이 에이닷·익시오 활용 ['고지 없이', '에이닷·익시오 활용'] 뉴스",
+        "context": "카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.331
+        "best_illust_score": 0.266
       },
       {
         "section": "fact_3",
         "chunk": 3,
         "current": {
           "type": "illust",
-          "value": "forecast"
+          "value": "smartphone"
         },
-        "context": "자동 녹음을 켤 수 있고, 모든 통화·국제 전화 제외·특정 번호만 자동 녹음 등 세부 설정도 가능합니다 고지 없이 에이닷·익시오 활용 ['고지 없이', '에이닷·익시오 활용'] 뉴스",
+        "context": "속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 놓치지 않습니다 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.367
+        "best_illust_score": 0.352
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 놓치지 않습니다 셋째, HDR을 직접 제어하시기 바랍니다 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.364
       },
       {
         "section": "fact_3",
@@ -1030,9 +1511,20 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "자동 녹음 등 세부 설정도 가능합니다 녹음본은 내 파일의 Call 폴더에 저장됩니다 고지 멘트 없이 녹음하시려면 SKT 고지 없이 에이닷·익시오 활용 ['고지 없이', '에이닷·익시오 활용'] 뉴스",
+        "context": "피사체에서 타이밍을 놓치지 않습니다 셋째, HDR을 직접 제어하시기 바랍니다 HDR이 자동으로 적용되면서 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.393
+        "best_illust_score": 0.315
+      },
+      {
+        "section": "fact_3",
+        "chunk": 6,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "셋째, HDR을 직접 제어하시기 바랍니다 HDR이 자동으로 적용되면서 색감이 이상해지는 문제를 끄거나 항상 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.281
       },
       {
         "section": "fact_3",
@@ -1041,9 +1533,9 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "고지 멘트 없이 녹음하시려면 SKT 에이닷 전화나 LGU+ 익시오 같은 통신사 서버 기반 서비스를 활용하실 수 있습니다 고지 없이 에이닷·익시오 활용 ['고지 없이', '에이닷·익시오 활용'] 뉴스",
+        "context": "HDR이 자동으로 적용되면서 색감이 이상해지는 문제를 끄거나 항상 켬으로 직접 조절할 수 있습니다 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.335
+        "best_illust_score": 0.308
       },
       {
         "section": "fact_3",
@@ -1052,9 +1544,9 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "에이닷 전화나 LGU+ 익시오 같은 통신사 서버 기반 서비스를 활용하실 수 있습니다 고지 없이 에이닷·익시오 활용 ['고지 없이', '에이닷·익시오 활용'] 뉴스",
+        "context": "색감이 이상해지는 문제를 끄거나 항상 켬으로 직접 조절할 수 있습니다 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.385
+        "best_illust_score": 0.329
       },
       {
         "section": "fact_4",
@@ -1063,9 +1555,9 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
+        "context": "넷째, 렌즈 자동 전환을 끄시기 바랍니다 줌을 조작할 때 망원과 초광각이 멋대로 설정 3·4·5 HDR·렌즈·셔터 직접 제어 ['설정 3·4·5', 'HDR·렌즈·셔터 직접 제어'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.218
+        "best_illust_score": 0.287
       },
       {
         "section": "fact_4",
@@ -1074,9 +1566,9 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
+        "context": "넷째, 렌즈 자동 전환을 끄시기 바랍니다 줌을 조작할 때 망원과 초광각이 멋대로 바뀌는 문제가 해결되고, 설정 3·4·5 HDR·렌즈·셔터 직접 제어 ['설정 3·4·5', 'HDR·렌즈·셔터 직접 제어'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.254
+        "best_illust_score": 0.278
       },
       {
         "section": "fact_4",
@@ -1085,9 +1577,20 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 함께 사용할 수 있습니다 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
+        "context": "줌을 조작할 때 망원과 초광각이 멋대로 바뀌는 문제가 해결되고, 원하는 렌즈로 고정해 촬영하실 수 있습니다 설정 3·4·5 HDR·렌즈·셔터 직접 제어 ['설정 3·4·5', 'HDR·렌즈·셔터 직접 제어'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.351
+        "best_illust_score": 0.3
+      },
+      {
+        "section": "fact_4",
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "바뀌는 문제가 해결되고, 원하는 렌즈로 고정해 촬영하실 수 있습니다 다섯째, 셔터 지연을 없애시기 바랍니다 설정 3·4·5 HDR·렌즈·셔터 직접 제어 ['설정 3·4·5', 'HDR·렌즈·셔터 직접 제어'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.372
       },
       {
         "section": "fact_4",
@@ -1096,9 +1599,9 @@
           "type": "mascot",
           "value": "serious"
         },
-        "context": "함께 사용할 수 있습니다 법적으로는 통신비밀보호법 제3조 단서에 따라 한국에서는 본인이 참여한 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
+        "context": "원하는 렌즈로 고정해 촬영하실 수 있습니다 다섯째, 셔터 지연을 없애시기 바랍니다 사진이 늦게 찍히는 문제가 해결되어, 설정 3·4·5 HDR·렌즈·셔터 직접 제어 ['설정 3·4·5', 'HDR·렌즈·셔터 직접 제어'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.288
+        "best_illust_score": 0.358
       },
       {
         "section": "fact_4",
@@ -1107,9 +1610,9 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "법적으로는 통신비밀보호법 제3조 단서에 따라 한국에서는 본인이 참여한 통화의 녹음은 합법입니다 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
+        "context": "다섯째, 셔터 지연을 없애시기 바랍니다 사진이 늦게 찍히는 문제가 해결되어, 셔터를 누르는 순간 즉시 캡처됩니다 설정 3·4·5 HDR·렌즈·셔터 직접 제어 ['설정 3·4·5', 'HDR·렌즈·셔터 직접 제어'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.259
+        "best_illust_score": 0.347
       },
       {
         "section": "fact_4",
@@ -1118,42 +1621,9 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "단서에 따라 한국에서는 본인이 참여한 통화의 녹음은 합법입니다 다만 본인이 참여하지 않은 타인끼리의 통화 녹음은 위법이며, 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
+        "context": "사진이 늦게 찍히는 문제가 해결되어, 셔터를 누르는 순간 즉시 캡처됩니다 설정 3·4·5 HDR·렌즈·셔터 직접 제어 ['설정 3·4·5', 'HDR·렌즈·셔터 직접 제어'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.208
-      },
-      {
-        "section": "fact_4",
-        "chunk": 8,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "통화의 녹음은 합법입니다 다만 본인이 참여하지 않은 타인끼리의 통화 녹음은 위법이며, 해외에서는 양쪽 동의가 필요한 나라가 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.193
-      },
-      {
-        "section": "fact_4",
-        "chunk": 9,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "다만 본인이 참여하지 않은 타인끼리의 통화 녹음은 위법이며, 해외에서는 양쪽 동의가 필요한 나라가 많으므로 출장이나 여행 시 현지 법을 확인하시기 바랍니다 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.19
-      },
-      {
-        "section": "fact_4",
-        "chunk": 10,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "해외에서는 양쪽 동의가 필요한 나라가 많으므로 출장이나 여행 시 현지 법을 확인하시기 바랍니다 법적 주의 한국은 합법, 해외 X ['법적 주의', '한국은 합법, 해외 X'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.193
+        "best_illust_score": 0.365
       }
     ]
   },
@@ -1161,97 +1631,6 @@
     "version": 1,
     "policy": "Illustrations and mascots should not repeat inside one video. CTA logo is exempt.",
     "replacements": [
-      {
-        "section": "fact_3",
-        "chunk": 5,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "impersonation_call"
-        },
-        "context": "자동 녹음 등 세부 설정도 가능합니다 녹음본은 내 파일의 Call 폴더에 저장됩니다 고지 멘트 없이 녹음하시려면 SKT 고지 없이 에이닷·익시오 활용 전화 앱의 설정에서 통화 녹음 메뉴로 들어가면 자동 녹음을 켤 수 있고, 모든 통화·국제 전화 제외·특정 번호만 자동 녹음 등 세부 설정"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "samsung_ai"
-        },
-        "context": "KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 법적 주의 한국은 합법, 해외 X KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 함께 사용할 수 있습니다. 법적으로는 통신비밀보호법 제3조 단서에 따라 한국에서는 본인이 참여"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "prohibit"
-        },
-        "context": "KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 법적 주의 한국은 합법, 해외 X KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 함께 사용할 수 있습니다. 법적으로는 통신비밀보호법 "
-      },
-      {
-        "section": "fact_4",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "warning"
-        },
-        "context": "미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 함께 사용할 수 있습니다 법적 주의 한국은 합법, 해외 X KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 함께 사용할 수 있습니다. 법적으로는 통신비밀보호법 제"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "samsung_ai"
-        },
-        "to": {
-          "type": "illust",
-          "value": "gemini"
-        },
-        "context": "가입자는 AI 통화 요약과 번역 기능까지 함께 사용할 수 있습니다 법적으로는 통신비밀보호법 제3조 법적 주의 한국은 합법, 해외 X KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 함께 사용할 수 있습니다. 법적으로는 통신비밀보호법 제"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 6,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "memory_chip"
-        },
-        "context": "법적으로는 통신비밀보호법 제3조 단서에 따라 한국에서는 본인이 참여한 통화의 녹음은 합법입니다 법적 주의 한국은 합법, 해외 X KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 함께 사용할 수 있습니다. 법적으로는 통신비밀보호법 제3조"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 7,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "chatbot"
-        },
-        "context": "단서에 따라 한국에서는 본인이 참여한 통화의 녹음은 합법입니다 다만 본인이 참여하지 않은 타인끼리의 통화 녹음은 위법이며, 법적 주의 한국은 합법, 해외 X KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 함께 사용할 수 있습니다. 법"
-      },
       {
         "section": "cta",
         "chunk": 1,
@@ -1268,13 +1647,94 @@
     ],
     "weak": [
       {
+        "section": "fact_2",
+        "chunk": 4,
+        "duplicate": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "줌 버튼에 2배가 추가되고, 인물 사진에서 가장 자연스러운 화각이 만들어집니다 3배 망원 렌즈로 찍는 것보다 화질이 좋은 경우가 많습니다 설정 1 2배 줌 버튼 활성화 첫째, 2배 줌 버튼을 활성화하시기 바랍니다. 카메라 어시스턴트 줌 버튼 메뉴에서 2배 줌을 켜면 줌 버튼에 2배가 추"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 5,
+        "duplicate": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "인물 사진에서 가장 자연스러운 화각이 만들어집니다 3배 망원 렌즈로 찍는 것보다 화질이 좋은 경우가 많습니다 둘째, 촬영 속도를 속도 우선으로 바꾸시기 바랍니다 설정 1 2배 줌 버튼 활성화 첫째, 2배 줌 버튼을 활성화하시기 바랍니다. 카메라 어시스턴트 줌 버튼 메뉴에서 2배 줌을 켜"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 6,
+        "duplicate": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "3배 망원 렌즈로 찍는 것보다 화질이 좋은 경우가 많습니다 둘째, 촬영 속도를 속도 우선으로 바꾸시기 바랍니다 설정 1 2배 줌 버튼 활성화 첫째, 2배 줌 버튼을 활성화하시기 바랍니다. 카메라 어시스턴트 줌 버튼 메뉴에서 2배 줌을 켜면 줌 버튼에 2배가 추가되고, 인물 사진에서 가장"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 1,
+        "duplicate": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 설정 2 촬영 속도 속도 우선 카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 놓치지 않습니다. 셋째, HDR을 직접"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 2,
+        "duplicate": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 설정 2 촬영 속도 속도 우선 카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 "
+      },
+      {
+        "section": "fact_3",
+        "chunk": 3,
+        "duplicate": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 놓치지 않습니다 설정 2 촬영 속도 속도 우선 카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 놓치지"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "duplicate": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 놓치지 않습니다 셋째, HDR을 직접 제어하시기 바랍니다 설정 2 촬영 속도 속도 우선 카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 놓치"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 5,
+        "duplicate": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "피사체에서 타이밍을 놓치지 않습니다 셋째, HDR을 직접 제어하시기 바랍니다 HDR이 자동으로 적용되면서 설정 2 촬영 속도 속도 우선 카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 놓치지 않습니"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 6,
+        "duplicate": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "셋째, HDR을 직접 제어하시기 바랍니다 HDR이 자동으로 적용되면서 색감이 이상해지는 문제를 끄거나 항상 설정 2 촬영 속도 속도 우선 카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 놓치지 않습"
+      },
+      {
         "section": "fact_3",
         "chunk": 7,
         "duplicate": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "고지 멘트 없이 녹음하시려면 SKT 에이닷 전화나 LGU+ 익시오 같은 통신사 서버 기반 서비스를 활용하실 수 있습니다 고지 없이 에이닷·익시오 활용 전화 앱의 설정에서 통화 녹음 메뉴로 들어가면 자동 녹음을 켤 수 있고, 모든 통화·국제 전화 제외·특정 번호만 자동 녹음 등 세부 설정"
+        "context": "HDR이 자동으로 적용되면서 색감이 이상해지는 문제를 끄거나 항상 켬으로 직접 조절할 수 있습니다 설정 2 촬영 속도 속도 우선 카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 놓치지 않습니다. 셋"
       },
       {
         "section": "fact_3",
@@ -1283,41 +1743,68 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "에이닷 전화나 LGU+ 익시오 같은 통신사 서버 기반 서비스를 활용하실 수 있습니다 고지 없이 에이닷·익시오 활용 전화 앱의 설정에서 통화 녹음 메뉴로 들어가면 자동 녹음을 켤 수 있고, 모든 통화·국제 전화 제외·특정 번호만 자동 녹음 등 세부 설정도 가능합니다. 녹음본은 내 파일의 "
+        "context": "색감이 이상해지는 문제를 끄거나 항상 켬으로 직접 조절할 수 있습니다 설정 2 촬영 속도 속도 우선 카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 놓치지 않습니다. 셋째, HDR을 직접 제어하시기"
       },
       {
         "section": "fact_4",
-        "chunk": 8,
+        "chunk": 1,
         "duplicate": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "통화의 녹음은 합법입니다 다만 본인이 참여하지 않은 타인끼리의 통화 녹음은 위법이며, 해외에서는 양쪽 동의가 필요한 나라가 법적 주의 한국은 합법, 해외 X KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 함께 사용할 수 있습니다. 법"
+        "context": "넷째, 렌즈 자동 전환을 끄시기 바랍니다 줌을 조작할 때 망원과 초광각이 멋대로 설정 3·4·5 HDR·렌즈·셔터 직접 제어 넷째, 렌즈 자동 전환을 끄시기 바랍니다. 줌을 조작할 때 망원과 초광각이 멋대로 바뀌는 문제가 해결되고, 원하는 렌즈로 고정해 촬영하실 수 있습니다. 다섯째, "
       },
       {
         "section": "fact_4",
-        "chunk": 9,
+        "chunk": 2,
         "duplicate": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "다만 본인이 참여하지 않은 타인끼리의 통화 녹음은 위법이며, 해외에서는 양쪽 동의가 필요한 나라가 많으므로 출장이나 여행 시 현지 법을 확인하시기 바랍니다 법적 주의 한국은 합법, 해외 X KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까"
+        "context": "넷째, 렌즈 자동 전환을 끄시기 바랍니다 줌을 조작할 때 망원과 초광각이 멋대로 바뀌는 문제가 해결되고, 설정 3·4·5 HDR·렌즈·셔터 직접 제어 넷째, 렌즈 자동 전환을 끄시기 바랍니다. 줌을 조작할 때 망원과 초광각이 멋대로 바뀌는 문제가 해결되고, 원하는 렌즈로 고정해 촬영하실"
       },
       {
         "section": "fact_4",
-        "chunk": 10,
+        "chunk": 3,
         "duplicate": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "해외에서는 양쪽 동의가 필요한 나라가 많으므로 출장이나 여행 시 현지 법을 확인하시기 바랍니다 법적 주의 한국은 합법, 해외 X KT는 현재 자체 서비스가 미지원이지만, SKT와 LGU+ 가입자는 AI 통화 요약과 번역 기능까지 함께 사용할 수 있습니다. 법적으로는 통신비밀보호법 제3조"
+        "context": "줌을 조작할 때 망원과 초광각이 멋대로 바뀌는 문제가 해결되고, 원하는 렌즈로 고정해 촬영하실 수 있습니다 설정 3·4·5 HDR·렌즈·셔터 직접 제어 넷째, 렌즈 자동 전환을 끄시기 바랍니다. 줌을 조작할 때 망원과 초광각이 멋대로 바뀌는 문제가 해결되고, 원하는 렌즈로 고정해 촬영하"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 4,
+        "duplicate": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "바뀌는 문제가 해결되고, 원하는 렌즈로 고정해 촬영하실 수 있습니다 다섯째, 셔터 지연을 없애시기 바랍니다 설정 3·4·5 HDR·렌즈·셔터 직접 제어 넷째, 렌즈 자동 전환을 끄시기 바랍니다. 줌을 조작할 때 망원과 초광각이 멋대로 바뀌는 문제가 해결되고, 원하는 렌즈로 고정해 촬영하"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 6,
+        "duplicate": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "다섯째, 셔터 지연을 없애시기 바랍니다 사진이 늦게 찍히는 문제가 해결되어, 셔터를 누르는 순간 즉시 캡처됩니다 설정 3·4·5 HDR·렌즈·셔터 직접 제어 넷째, 렌즈 자동 전환을 끄시기 바랍니다. 줌을 조작할 때 망원과 초광각이 멋대로 바뀌는 문제가 해결되고, 원하는 렌즈로 고정해 "
+      },
+      {
+        "section": "fact_4",
+        "chunk": 7,
+        "duplicate": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "사진이 늦게 찍히는 문제가 해결되어, 셔터를 누르는 순간 즉시 캡처됩니다 설정 3·4·5 HDR·렌즈·셔터 직접 제어 넷째, 렌즈 자동 전환을 끄시기 바랍니다. 줌을 조작할 때 망원과 초광각이 멋대로 바뀌는 문제가 해결되고, 원하는 렌즈로 고정해 촬영하실 수 있습니다. 다섯째, 셔터 지"
       }
     ]
   },
   "_codex_effective_script": {
     "version": 2,
-    "slug": "010_tip_iphone_call_record",
-    "source": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\010_tip_iphone_call_record\\shorts_script.json",
+    "slug": "013_tip_galaxy_camera_hidden",
+    "source": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\013_tip_galaxy_camera_hidden\\shorts_script.json",
     "override_applied": false,
     "override_sections": []
   }

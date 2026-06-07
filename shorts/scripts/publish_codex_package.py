@@ -70,9 +70,31 @@ def compact_text(value: str, fallback: str = "") -> str:
     return value or fallback
 
 
+def strip_youtube_extra_sections(text: str) -> str:
+    """유튜브 설명에서 ▶타임스탬프 · ▶핵심 데이터 · ▶출처 블록을 제거한다.
+    제목 + ▶영상 요약 + ▶폰스팟 광교점 + 사전승낙서 + 해시태그만 남긴다."""
+    drops = ("타임스탬프", "핵심 데이터", "핵심데이터", "출처")
+    out = []
+    skipping = False
+    for line in re.sub(r"\r\n?", "\n", text or "").split("\n"):
+        st = line.strip()
+        if st.startswith("▶"):
+            name = st[1:].strip()
+            skipping = any(name.startswith(d) for d in drops)
+            if skipping:
+                continue
+        elif st.startswith("[사전승낙서]") or st.startswith("#"):
+            skipping = False
+        if skipping:
+            continue
+        out.append(line)
+    return re.sub(r"\n{3,}", "\n\n", "\n".join(out)).strip()
+
+
 def clean_youtube_description(value: str) -> str:
     if not value:
         return ""
+    value = strip_youtube_extra_sections(value)
     value = compact_text(value)
     if "#Shorts" not in value and "#shorts" not in value:
         value = value.rstrip() + "\n\n#Shorts"

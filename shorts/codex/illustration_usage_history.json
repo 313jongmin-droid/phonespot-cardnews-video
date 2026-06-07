@@ -118,34 +118,21 @@
       ]
     },
     "013_tip_galaxy_camera_hidden": {
-      "used_at": "2026-06-07T15:32:05",
-      "source": "codex_enhance",
+      "used_at": "2026-06-07T15:34:58",
+      "source": "unique_illustration_guard",
       "illustrations": [
-        "foldable",
-        "chatbot",
-        "aluminum_label",
-        "appliance",
-        "battery_overheat",
-        "biometric",
-        "chart_down",
-        "chart_up",
-        "chat_backup_restore",
-        "clock",
-        "cloud_backup",
-        "device_data_transfer",
-        "emergency_account_freeze",
-        "final_update",
-        "battery_charge_range",
+        "phone_settings_toggle",
+        "smartphone",
+        "newspaper",
+        "microphone",
+        "shield",
+        "meeting_room",
         "forecast",
-        "gemini",
-        "gift_prohibit",
-        "gift_voucher",
-        "handshake",
-        "smartphone"
+        "gift_voucher"
       ]
     }
   },
-  "updated_at": "2026-06-07T15:32:06",
+  "updated_at": "2026-06-07T15:34:59",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -170,7 +157,7 @@
       "variants": []
     },
     "013_tip_galaxy_camera_hidden": {
-      "updated_at": "2026-06-07T15:32:06",
+      "updated_at": "2026-06-07T15:34:59",
       "variants": []
     }
   }
