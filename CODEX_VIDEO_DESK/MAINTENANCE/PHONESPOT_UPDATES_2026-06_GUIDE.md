@@ -99,9 +99,11 @@
 
 ## 적용/재시작 규칙
 
-- **패널 코드(server.py)** 변경 → 핫리로드 불가. `PANEL_VERSION` 과 `start_hidden.ps1` 의
-  `$expectedVersion` 을 **같이 한 칸 올린 뒤** `00_PHONE_SPOT_PANEL.bat` 더블클릭 → 버전 불일치로
-  자동 재시작 → 브라우저 Ctrl+Shift+R. 헤더 배지로 반영 확인. 현재: `phonespot-web-v12`.
+- **패널 코드(server.py)** 변경 → 핫리로드 불가. **server.py 의 `PANEL_VERSION` 한 곳만** 올린 뒤
+  `00_PHONE_SPOT_PANEL.bat` 더블클릭 → 버전 불일치로 자동 재시작 → 브라우저 Ctrl+Shift+R.
+  헤더 배지로 반영 확인. 현재: `phonespot-web-v22`.
+  - (2026-06-07~) `start_hidden.ps1` 이 server.py 의 `PANEL_VERSION` 을 직접 읽으므로 ps1 은 손댈 필요
+    없음. 파싱 실패 시에만 ps1 의 폴백 값 사용.
 - **스크립트/배치(codex_*.py, run_codex_casual.bat, render_remotion_fast.mjs)** 변경 → 재시작 불필요,
   다음 실행부터 적용. 단 워커 환경변수(GPU 등)는 워커 재시작해야 상속.
 
@@ -122,3 +124,91 @@
   임시 제안 `IMPORT_PROPOSAL.json`(재생성됨), `__pycache__` 2개.
 - 보존(불확실): `*.bak_*` 약 189개(집 규칙 백업/복원점), `src` 의 `*.tsxbak*`,
   멀티PC 구글시트 관련 미적용 파일. GitHub 이력이 있으니 필요시 .bak 일괄 정리 가능.
+
+---
+
+## 변경 2026-06-07 (멀티PC 독립화 · 캡션 · 청크 · 패널)
+
+세부 멀티PC/라이브러리 공유는 같은 폴더
+`MULTI_PC_STANDALONE_AND_LIBRARY_SHARING_GUIDE.md` 참고.
+
+### 1. 멀티PC = 완전 독립 로컬 생산 (원격 렌더 큐 폐기)
+
+- 결정: 각 PC가 **카드 수집 → 매칭 → 렌더 → 출력**까지 혼자 끝내는 독립 생산기.
+  공유는 **일러스트 라이브러리만**(원하면 opt-in), 그 외 PC간 의존성 없음.
+- 원격 렌더 실패 원인(2번 PC에서 edge-tts pip 가 방화벽 WinError 10013 로 막힘)을
+  우회하려다 복잡해지는 대신, 각 PC 풀셋업으로 단순화.
+- 풀셋업 1회: `CODEX_VIDEO_DESK\SETUP_FULL_PRODUCER.bat`
+  (npm install + pip 의존성 + playwright chromium + 임베딩 셀프테스트 + 자원점검).
+- 자원 점검기: `shorts/scripts/codex_producer_check.py`
+  (node/npm/remotion/ffmpeg/chromium/python deps/임베딩/카드자원[웹UI·렌더러·폰트] PASS·FAIL).
+  - (2026-06-07~) 패널 "관리" 그룹에 **"환경 점검" 버튼** 추가 → 결과는 실행 로그에 PASS/FAIL 표시.
+- 라이브러리 공유 도구(신규):
+  `codex_library_sync.py`(허브와 양방향 가산 병합, 비파괴),
+  `codex_library_dedup.py`(CLIP 이미지-이미지 군집, 기본 리포트/`--apply` 시 정리),
+  `codex_library_backup.py`(타임스탬프 스냅샷, 회전 KEEP=10).
+- 패널 버튼: 라이브러리 동기화/중복정리/백업(영상탭 "관리" 접이식 그룹 안).
+
+### 2. 코드 자동전파 — 옵트인 자동 git pull (2026-06-07 재도입)
+
+- 1차 시도(ps1 안에서 직접 git pull + `*>> (식)` 리다이렉트)는 **패널이 안 켜지는 파싱 오류**로
+  전량 롤백했었음. 이번엔 **git pull 을 별도 배치로 격리**해 안전하게 복구.
+- 동작: 수신(부사수) PC에서 `00_PHONE_SPOT_PANEL.bat` 실행 시 패널이 켜지기 전에
+  `dashboard\auto_update.cmd` 가 `git pull --ff-only` 만 수행. 출력은 **로그 파일로만** 기록하고
+  **항상 exit 0** → 패널 시작에 절대 영향 없음. pull 로 `PANEL_VERSION` 이 바뀌면 곧바로
+  버전 불일치 → 패널 자동 재시작(=새 코드 반영).
+- 가볍게 pull 만 함. npm/pip 의존성까지 갱신하려면 기존 **"시스템 업데이트" 버튼
+  (`codex_github_update.py`)** 사용(이건 dev 로컬 변경 있으면 거부하는 보호 로직 있음).
+- **옵트인(수신 PC만)**: `수신PC_자동업데이트_켜기.bat` 실행 → 마커
+  `CODEX_VIDEO_DESK\TEMP\panel\auto_update.on` 생성. 끄기: `수신PC_자동업데이트_끄기.bat`.
+  **대표(개발) PC 에서는 켜지 말 것**(작업 중 원치 않는 pull 방지). 마커 없으면 아무 일도 안 함.
+- 로그: `CODEX_VIDEO_DESK\TEMP\panel\panel_logs\auto_update.log`.
+- 안전성: `--ff-only` 라 분기/충돌 시 pull 이 그냥 실패만 하고(데이터 손상 없음) 패널은 정상 가동.
+  git/.git 없으면 조용히 skip.
+
+### 3. 렌더 출력 폴더 1개만 (remote_* 제거)
+
+- 로컬 렌더는 `remote_<key>` 중복 폴더를 만들지 않음.
+- `RENDER_WORKER/worker.py`: `LOCAL_PANEL`(127.0.0.1/localhost) 판정 추가 →
+  로컬이면 결과 다운로드/업로드 단계를 건너뛰고 원본 결과 폴더 하나만 남김.
+
+### 4. 청크 경계 수동 편집 (TTS·화면 싱크 무영향)
+
+- 자동 분할이 어색할 때 사용자가 직접 끊는 기능.
+- 패널 "청크 보기" → 섹션 첫 줄의 **"✏ 직접 끊기"** → textarea 에서 줄바꿈으로 경계 지정.
+- 저장: `CHUNK_OVERRIDES/<slug>.json`, 렌더 시 `apply_chunk_overrides` 로 반영.
+- 안전장치: `set_section_chunks` 가 **글자(단어) 동일성 검증**
+  (`_norm` = 영문/숫자/한글만 남겨 비교) — 단어를 바꾸면 거부. 그래서 렌더가 edge-tts
+  단어 경계에 자막을 재매핑할 때 **싱크가 깨지지 않음**(경계 위치만 바뀜).
+
+### 5. 렌더 중도 취소 + 진행상황 상단 표시
+
+- 영상 2·3번(렌더) 실행 중: 상단 "실행상태"에 **"중도 취소"** 버튼(`cancelRemoteJob`).
+- 진행률 파싱(`renderProgress`): "단계 X/Y", "프레임 렌더 N%", "인코딩 N프레임", 준비/정리/마무리
+  단계를 실행상태 줄에 표시. 취소 버튼은 `job.remote && job.running` 일 때만 노출.
+
+### 6. 패널 UI 리디자인 (v21)
+
+- 헤더 흰색, 주황은 **선택/hover 시에만**(상시 주황 제거), 선택 시 주황 채움.
+- 버튼 재편: 영상탭 = 주요 3버튼 + "보기·편집" 동일폭 알약 + 관리 접이식 그룹.
+  카드탭도 같은 무드로 정리.
+- 선택 슬러그 폰트 축소 + 줄바꿈 허용으로 텍스트 더 노출.
+
+### 7. 유튜브 캡션 형식 (타임스탬프·출처 제거 + SEO 제목)
+
+- 렌더 결과 패키지의 유튜브 설명: **제목(특수문자 ?! · ~ 허용) + ▶영상 요약 +
+  ▶폰스팟 광교점 + [사전승낙서] + 해시태그**만. **타임스탬프·핵심 데이터·출처 줄 제거.**
+- `publish_codex_package.py`: `strip_youtube_extra_sections()` 가 ▶타임스탬프/▶핵심 데이터/▶출처
+  블록을 제거(사전승낙서·# 해시태그에서 복귀).
+- `cardnews/templates/caption_template.md`: 채널4(유튜브) 스펙을 위 형식으로 재작성
+  (제목 SEO 후킹 예시 포함, 길이 600~1200자).
+
+### 8. C1~ (자동발굴) 이미지도 임포트 시 자동 네이밍됨
+
+- 이미지 프롬프트 아래의 **C1, C2…** 는 개념발굴(concept scout) 추천 요청으로
+  이미 `cpt_xxxxxxxx.png` 파일명이 배정돼 있음(요청서 `codex_illustration_requests.md`).
+- GPT로 그려 **다운로드만** 해두면 버튼 "2. 이미지 가져오기 + 렌더" 검수창에서
+  **`[자동발굴]`** 으로 그림 내용 매칭 → 확정 시 해당 `cpt_` 이름으로 자동 저장(메인 1·2·3과 동일).
+- 단 C1~ 은 **선택(옵션)** — 안 그려도 렌더 진행. 라벨이 한국어라 매칭이 약할 수 있어 검수 권장.
+- 주의: "남아 있는 문맥 커버리지 경고"(파일명 없는 갭)는 요청이 아니라 안내일 뿐,
+  자동 네이밍 대상이 아님.

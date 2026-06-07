@@ -92,29 +92,25 @@
       ]
     },
     "014_scam_voicephishing_zero_relief": {
-      "used_at": "2026-06-07T16:05:05",
-      "source": "codex_enhance",
+      "used_at": "2026-06-07T16:17:26",
+      "source": "uploaded_illustrations",
       "illustrations": [
-        "device_os_requirement",
         "impersonation_call",
-        "battery_charge_range",
-        "battery_overheat",
-        "aluminum_label",
-        "appliance",
+        "cpt_fd9edf65",
+        "cpt_75c6eba6",
+        "cpt_6a2e9678",
+        "cpt_ea7bc1d6",
+        "cpt_83fa1e9f",
+        "microphone",
+        "shield",
+        "meeting_room",
+        "forecast",
+        "market_cap",
         "store",
         "smartphone",
-        "market_cap",
-        "gift_voucher",
-        "biometric",
-        "chart_down",
-        "chart_up",
-        "chat_backup_restore",
-        "chatbot",
         "emergency_account_freeze",
-        "clock",
-        "cloud_backup",
-        "cover_screen_widgets",
-        "device_data_transfer"
+        "handshake",
+        "gift_voucher"
       ]
     },
     "013_tip_galaxy_camera_hidden": {
@@ -132,7 +128,7 @@
       ]
     }
   },
-  "updated_at": "2026-06-07T16:05:06",
+  "updated_at": "2026-06-07T16:17:26",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -153,7 +149,7 @@
       "variants": []
     },
     "014_scam_voicephishing_zero_relief": {
-      "updated_at": "2026-06-07T16:05:06",
+      "updated_at": "2026-06-07T16:17:26",
       "variants": []
     },
     "013_tip_galaxy_camera_hidden": {

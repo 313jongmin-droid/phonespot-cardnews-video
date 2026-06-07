@@ -1,53 +1,58 @@
 {
-  "slug": "013_tip_galaxy_camera_hidden",
-  "title_short": "갤럭시 카메라 95%가 모르는 숨은 기능 5가지",
-  "video_title": "갤럭시 카메라 95%가 모르는 숨은 기능 5가지",
+  "slug": "014_scam_voicephishing_zero_relief",
+  "title_short": "보이스피싱 피해자 지원 6월 1일 재개",
+  "video_title": "보이스피싱 피해자 지원 6월 1일 재개",
   "publication_date": "2026.06.03",
-  "sources": "Samsung Members 공식 + 폰스팟 광교점 1차 자료",
+  "sources": "신한은행 보이스피싱제로 3차년도 9차 + 정책브리핑 + 폰스팟 광교점 자료",
   "channel_name": "폰스팟",
   "channel_tagline": "광교 미니 IT 브리핑",
   "opening": {
     "line1": "광교 미니 IT 브리핑",
-    "line2": "갤럭시 카메라 95%가 모르는 숨은 기능 5가지"
+    "line2": "보이스피싱 피해자 지원 6월 1일 재개"
   },
   "hook": {
-    "tts": "갤럭시 사용자의 95퍼센트가 모르는 카메라 숨은 기능 5가지를 알려드립니다. 같은 폰으로 사진 품질이 한 단계 올라갑니다.",
+    "tts": "혹시 보이스피싱 피해를 입으셨거나 주변에 그런 분이 계신가요? 혼자 끙끙 앓지 마시고, 6월 1일부터 다시 시작된 지원 사업을 확인하시기 바랍니다.",
     "caption_body": [
-      "갤럭시 사용자",
-      "95%가 모르는 카메라 설정"
+      "보이스피싱 피해",
+      "혼자 끙끙 마세요"
     ],
     "caption_emphasis": [
-      "95%가 모르는"
+      "혼자 끙끙"
     ],
     "headline_lines": [
       {
-        "text": "갤럭시 사용자"
+        "text": "보이스피싱 피해"
       },
       {
-        "text": "95%가 모르는 카메라 설정",
+        "text": "혼자 끙끙 마세요",
         "accent": true
       }
     ],
-    "meta": "출처: Samsung Members 공식",
+    "meta": "출처: 신한은행 보이스피싱제로 3차년도",
     "topic": "뉴스",
     "background_image": "1.png",
     "caption_chunks": [
-      "갤럭시 사용자의 95퍼센트가 모르는",
-      "카메라 숨은 기능 5가지를 알려드립니다.",
-      "같은 폰으로 사진 품질이 한 단계 올라갑니다."
+      "혹시 보이스피싱 피해를 입으셨거나",
+      "주변에 그런 분이 계신가요?",
+      "혼자 끙끙 앓지 마시고, 6월 1일부터",
+      "다시 시작된 지원 사업을 확인하시기 바랍니다."
     ],
     "chunk_visuals": [
       {
-        "type": "image",
-        "value": "1.png"
+        "type": "illust",
+        "value": "impersonation_call"
       },
       {
         "type": "image",
-        "value": "4.png"
+        "value": "2.png"
       },
       {
         "type": "image",
-        "value": "5.png"
+        "value": "3.png"
+      },
+      {
+        "type": "illust",
+        "value": "cpt_fd9edf65"
       }
     ],
     "stat": {
@@ -57,105 +62,112 @@
     },
     "_codex_narration_source": "captions.md#intro",
     "display_chunks": [
-      "갤럭시 사용자의 95퍼센트가 모르는",
-      "카메라 숨은 기능 5가지를 알려드립니다",
-      "같은 폰으로 사진 품질이 한 단계 올라갑니다"
+      "혹시 보이스피싱 피해를 입으셨거나",
+      "주변에 그런 분이 계신가요?",
+      "혼자 끙끙 앓지 마시고, 6월 1일부터",
+      "다시 시작된 지원 사업을 확인하시기 바랍니다"
     ],
     "_codex_caption_lockstep": {
       "version": 2,
       "compiler": "korean_caption_compiler_v2",
       "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-      "chunk_count": 3
+      "chunk_count": 4
     },
     "_codex_contextual_narrative": true,
     "_codex_sync_mode": "global999_tts_caption_lockstep",
     "tts_chunk_weights": [
-      1986.62,
-      2652.46,
-      2174.29
+      1625.71,
+      1851.41,
+      1989.42,
+      2112.67
     ],
     "_tts_timing": {
       "mode": "word_boundary_text_align",
       "windows": [
         {
           "start_ms": 0.0,
-          "end_ms": 1986.62,
-          "duration_ms": 1986.62
+          "end_ms": 1625.71,
+          "duration_ms": 1625.71
         },
         {
-          "start_ms": 1986.62,
-          "end_ms": 4639.08,
-          "duration_ms": 2652.46
+          "start_ms": 1625.71,
+          "end_ms": 3477.12,
+          "duration_ms": 1851.41
         },
         {
-          "start_ms": 4639.08,
-          "end_ms": 6813.37,
-          "duration_ms": 2174.29
+          "start_ms": 3477.12,
+          "end_ms": 5466.54,
+          "duration_ms": 1989.42
+        },
+        {
+          "start_ms": 5466.54,
+          "end_ms": 7579.21,
+          "duration_ms": 2112.67
         }
       ],
-      "boundary_count": 16,
-      "caption_signature": "8e0b65c3923562fbc49e9f2b801aee7f32bdea1d8d5c64d6044266247efe1a82"
+      "boundary_count": 19,
+      "caption_signature": "e1fa4ba7d645c5bc3357fbed8710a9d19acd38093704a5929c0af9aa8131f458"
     }
   },
   "facts": [
     {
-      "tts": "핵심은 굿락 앱 안에 있는 카메라 어시스턴트 모듈입니다. Galaxy Store에서 굿락을 설치한 뒤, 그 안에서 카메라 어시스턴트 모듈을 추가하면 기본 카메라 앱에 숨겨진 고급 설정을 모두 켤 수 있습니다. 지원 기종은 갤럭시 S22 이상, Z 폴드와 플립 2 이상, 노트 20, FE 시리즈 One UI 6.0 이상입니다.",
+      "tts": "2026년 6월 1일 월요일 오전 10시부터 신한은행 보이스피싱제로 3차년도 9차 지원이 시작됐습니다. 이 사업은 신한은행이 금융감독원, 경찰청, 사회복지공동모금회, 굿네이버스와 함께 전기통신 금융사기 피해자의 일상회복을 돕기 위해 운영하는 지원 사업입니다.",
       "caption_body": [
-        "1단계",
-        "굿락 → 카메라 어시스턴트 설치"
+        "6월 1일 시작",
+        "3차년도 9차 지원"
       ],
       "caption_emphasis": [
-        "굿락"
+        "3차년도 9차"
       ],
       "headline_lines": [
         {
-          "text": "1단계"
+          "text": "6월 1일 시작"
         },
         {
-          "text": "굿락 → 카메라 어시스턴트 설치",
+          "text": "3차년도 9차 지원",
           "accent": true
         }
       ],
-      "meta": "출처: Samsung Members 가이드",
+      "meta": "출처: 보이스피싱제로 공식 공지",
       "topic": "뉴스",
       "background_image": "2.png",
       "caption_chunks": [
-        "핵심은 굿락 앱 안에 있는 카메라 어시스턴트 모듈입니다.",
-        "Galaxy Store에서 굿락을 설치한 뒤,",
-        "그 안에서 카메라 어시스턴트 모듈을 추가하면",
-        "기본 카메라 앱에 숨겨진 고급 설정을 모두 켤 수 있습니다.",
-        "지원 기종은 갤럭시 S22 이상,",
-        "Z 폴드와 플립 2 이상,",
-        "노트 20, FE 시리즈 One UI 6.0 이상입니다."
+        "2026년 6월 1일 월요일 오전 10시부터",
+        "신한은행 보이스피싱제로 3차년도 9차",
+        "지원이 시작됐습니다.",
+        "이 사업은 신한은행이 금융감독원,",
+        "경찰청, 사회복지공동모금회,",
+        "굿네이버스와 함께 전기통신 금융사기",
+        "피해자의 일상회복을 돕기 위해 운영하는 지원 사업입니다."
       ],
       "chunk_visuals": [
         {
+          "type": "illust",
+          "value": "cpt_75c6eba6"
+        },
+        {
           "type": "image",
-          "value": "2.png"
+          "value": "4.png"
         },
         {
           "type": "image",
-          "value": "3.png"
+          "value": "1.png"
         },
         {
           "type": "illust",
-          "value": "phone_settings_toggle"
+          "value": "cpt_6a2e9678"
         },
         {
           "type": "illust",
-          "value": "smartphone"
+          "value": "cpt_ea7bc1d6"
         },
         {
           "type": "illust",
-          "value": "newspaper"
+          "value": "cpt_83fa1e9f"
         },
         {
           "type": "illust",
           "value": "microphone"
-        },
-        {
-          "type": "illust",
-          "value": "shield"
         }
       ],
       "stat": {
@@ -166,13 +178,13 @@
       "id": "fact_1",
       "_codex_narration_source": "captions.md#body",
       "display_chunks": [
-        "핵심은 굿락 앱 안에 있는 카메라 어시스턴트 모듈입니다",
-        "Galaxy Store에서 굿락을 설치한 뒤,",
-        "그 안에서 카메라 어시스턴트 모듈을 추가하면",
-        "기본 카메라 앱에 숨겨진 고급 설정을 모두 켤 수 있습니다",
-        "지원 기종은 갤럭시 S22 이상,",
-        "Z 폴드와 플립 2 이상,",
-        "노트 20, FE 시리즈 One UI 6.0 이상입니다"
+        "2026년 6월 1일 월요일 오전 10시부터",
+        "신한은행 보이스피싱제로 3차년도 9차",
+        "지원이 시작됐습니다",
+        "이 사업은 신한은행이 금융감독원,",
+        "경찰청, 사회복지공동모금회,",
+        "굿네이버스와 함께 전기통신 금융사기",
+        "피해자의 일상회복을 돕기 위해 운영하는 지원 사업입니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
@@ -183,87 +195,92 @@
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        3248.25,
-        1936.63,
-        1875.0,
-        3494.7,
-        2165.5,
-        1417.25,
-        2676.04
+        2145.08,
+        2112.67,
+        1622.54,
+        1998.25,
+        2042.25,
+        1883.79,
+        2658.42
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 3248.25,
-            "duration_ms": 3248.25
+            "end_ms": 2145.08,
+            "duration_ms": 2145.08
           },
           {
-            "start_ms": 3248.25,
-            "end_ms": 5184.88,
-            "duration_ms": 1936.63
+            "start_ms": 2145.08,
+            "end_ms": 4257.75,
+            "duration_ms": 2112.67
           },
           {
-            "start_ms": 5184.88,
-            "end_ms": 7059.88,
-            "duration_ms": 1875.0
+            "start_ms": 4257.75,
+            "end_ms": 5880.29,
+            "duration_ms": 1622.54
           },
           {
-            "start_ms": 7059.88,
-            "end_ms": 10554.58,
-            "duration_ms": 3494.7
+            "start_ms": 5880.29,
+            "end_ms": 7878.54,
+            "duration_ms": 1998.25
           },
           {
-            "start_ms": 10554.58,
-            "end_ms": 12720.08,
-            "duration_ms": 2165.5
+            "start_ms": 7878.54,
+            "end_ms": 9920.79,
+            "duration_ms": 2042.25
           },
           {
-            "start_ms": 12720.08,
-            "end_ms": 14137.33,
-            "duration_ms": 1417.25
+            "start_ms": 9920.79,
+            "end_ms": 11804.58,
+            "duration_ms": 1883.79
           },
           {
-            "start_ms": 14137.33,
-            "end_ms": 16813.37,
-            "duration_ms": 2676.04
+            "start_ms": 11804.58,
+            "end_ms": 14463.0,
+            "duration_ms": 2658.42
           }
         ],
-        "boundary_count": 47,
-        "caption_signature": "6472a866f74ab25a061d8c53dd2929ce19092b73067242800c26ae6f56b9aa66"
+        "boundary_count": 26,
+        "caption_signature": "e1be8dbdeba49e7f4b605af980ce08639a7cf2225fdd6b541dd3cae80622c277"
       }
     },
     {
-      "tts": "첫째, 2배 줌 버튼을 활성화하시기 바랍니다. 카메라 어시스턴트 줌 버튼 메뉴에서 2배 줌을 켜면 줌 버튼에 2배가 추가되고, 인물 사진에서 가장 자연스러운 화각이 만들어집니다. 3배 망원 렌즈로 찍는 것보다 화질이 좋은 경우가 많습니다. 둘째, 촬영 속도를 속도 우선으로 바꾸시기 바랍니다.",
+      "tts": "1차와 2차 누적 실적을 보면 취약계층 피해자 5,211명에게 150억 원의 생활비가 지급됐고, 법률상담과 소송지원 1,064건, 심리상담 635명, 예방교육 13,954명, 피해예방 무료보험 2,732명이 추가로 지원됐습니다. 받을 수 있는 항목은 다섯 가지입니다.",
       "caption_body": [
-        "설정 1",
-        "2배 줌 버튼 활성화"
+        "1·2차 누적",
+        "5,211명 150억 지원"
       ],
       "caption_emphasis": [
-        "2배 줌"
+        "5,211명 150억"
       ],
       "headline_lines": [
         {
-          "text": "설정 1"
+          "text": "1·2차 누적"
         },
         {
-          "text": "2배 줌 버튼 활성화",
+          "text": "5,211명 150억 지원",
           "accent": true
         }
       ],
-      "meta": "출처: Samsung Members 카메라 가이드",
+      "meta": "출처: 신한은행 보이스피싱제로",
       "topic": "뉴스",
       "background_image": "3.png",
       "caption_chunks": [
-        "첫째, 2배 줌 버튼을 활성화하시기 바랍니다.",
-        "카메라 어시스턴트 줌 버튼 메뉴에서 2배 줌을 켜면",
-        "줌 버튼에 2배가 추가되고,",
-        "인물 사진에서 가장 자연스러운 화각이 만들어집니다.",
-        "3배 망원 렌즈로 찍는 것보다 화질이 좋은 경우가 많습니다.",
-        "둘째, 촬영 속도를 속도 우선으로 바꾸시기 바랍니다."
+        "1차와 2차 누적 실적을 보면",
+        "취약계층 피해자 5,211명에게 150억",
+        "원의 생활비가 지급됐고,",
+        "법률상담과 소송지원 1,064건,",
+        "심리상담 635명, 예방교육 13,954명,",
+        "피해예방 무료보험 2,732명이 추가로 지원됐습니다.",
+        "받을 수 있는 항목은 다섯 가지입니다."
       ],
       "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "shield"
+        },
         {
           "type": "illust",
           "value": "meeting_room"
@@ -273,20 +290,20 @@
           "value": "forecast"
         },
         {
+          "type": "illust",
+          "value": "cpt_fd9edf65"
+        },
+        {
+          "type": "illust",
+          "value": "market_cap"
+        },
+        {
           "type": "mascot",
           "value": "suspicious"
         },
         {
           "type": "illust",
-          "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
+          "value": "store"
         }
       ],
       "stat": {
@@ -297,115 +314,102 @@
       "id": "fact_2",
       "_codex_narration_source": "captions.md#body",
       "display_chunks": [
-        "첫째, 2배 줌 버튼을 활성화하시기 바랍니다",
-        "카메라 어시스턴트 줌 버튼 메뉴에서 2배 줌을 켜면",
-        "줌 버튼에 2배가 추가되고,",
-        "인물 사진에서 가장 자연스러운 화각이 만들어집니다",
-        "3배 망원 렌즈로 찍는 것보다 화질이 좋은 경우가 많습니다",
-        "둘째, 촬영 속도를 속도 우선으로 바꾸시기 바랍니다"
+        "1차와 2차 누적 실적을 보면",
+        "취약계층 피해자 5,211명에게 150억",
+        "원의 생활비가 지급됐고,",
+        "법률상담과 소송지원 1,064건,",
+        "심리상담 635명, 예방교육 13,954명,",
+        "피해예방 무료보험 2,732명이 추가로 지원됐습니다",
+        "받을 수 있는 항목은 다섯 가지입니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 6
+        "chunk_count": 7
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        3001.75,
-        2244.71,
-        1434.87,
-        3098.59,
-        3397.91,
-        2860.88
+        1616.92,
+        2227.08,
+        1311.62,
+        2156.71,
+        3365.5,
+        3705.96,
+        1707.76
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 3001.75,
-            "duration_ms": 3001.75
+            "end_ms": 1616.92,
+            "duration_ms": 1616.92
           },
           {
-            "start_ms": 3001.75,
-            "end_ms": 5246.46,
-            "duration_ms": 2244.71
+            "start_ms": 1616.92,
+            "end_ms": 3844.0,
+            "duration_ms": 2227.08
           },
           {
-            "start_ms": 5246.46,
-            "end_ms": 6681.33,
-            "duration_ms": 1434.87
+            "start_ms": 3844.0,
+            "end_ms": 5155.62,
+            "duration_ms": 1311.62
           },
           {
-            "start_ms": 6681.33,
-            "end_ms": 9779.92,
-            "duration_ms": 3098.59
+            "start_ms": 5155.62,
+            "end_ms": 7312.33,
+            "duration_ms": 2156.71
           },
           {
-            "start_ms": 9779.92,
-            "end_ms": 13177.83,
-            "duration_ms": 3397.91
+            "start_ms": 7312.33,
+            "end_ms": 10677.83,
+            "duration_ms": 3365.5
           },
           {
-            "start_ms": 13177.83,
-            "end_ms": 16038.71,
-            "duration_ms": 2860.88
+            "start_ms": 10677.83,
+            "end_ms": 14383.79,
+            "duration_ms": 3705.96
+          },
+          {
+            "start_ms": 14383.79,
+            "end_ms": 16091.55,
+            "duration_ms": 1707.76
           }
         ],
-        "boundary_count": 40,
-        "caption_signature": "0964d3b887433b6e846df7e90f39ee9e784cc5577322949fe92c4f27e7e17c80"
+        "boundary_count": 30,
+        "caption_signature": "c212674806181808fee589aff3ff92ea4543ac5b1b383e6f2533680e33f052be"
       }
     },
     {
-      "tts": "카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 놓치지 않습니다. 셋째, HDR을 직접 제어하시기 바랍니다. HDR이 자동으로 적용되면서 색감이 이상해지는 문제를 끄거나 항상 켬으로 직접 조절할 수 있습니다.",
+      "tts": "첫째 생활비, 둘째 법률상담과 소송지원, 셋째 심리상담, 넷째 예방교육, 다섯째 피해예방 무료보험입니다. 본인 상황에 맞는 항목을 골라 신청하실 수 있습니다.",
       "caption_body": [
-        "설정 2",
-        "촬영 속도 속도 우선"
+        "받을 수 있는",
+        "5가지 지원"
       ],
       "caption_emphasis": [
-        "촬영 속도"
+        "5가지"
       ],
       "headline_lines": [
         {
-          "text": "설정 2"
+          "text": "받을 수 있는"
         },
         {
-          "text": "촬영 속도 속도 우선",
+          "text": "5가지 지원",
           "accent": true
         }
       ],
-      "meta": "출처: Samsung Members 공식",
+      "meta": "출처: 보이스피싱제로 운영 안내",
       "topic": "뉴스",
       "background_image": "4.png",
       "caption_chunks": [
-        "카메라 설정의 고급 인텔리전스 옵션 촬영",
-        "속도 메뉴에서 속도 우선을 선택하시면,",
-        "아이와 반려동물, 스포츠처럼 움직이는",
-        "피사체에서 타이밍을 놓치지 않습니다.",
-        "셋째, HDR을 직접 제어하시기 바랍니다.",
-        "HDR이 자동으로 적용되면서",
-        "색감이 이상해지는 문제를 끄거나 항상",
-        "켬으로 직접 조절할 수 있습니다."
+        "첫째 생활비, 둘째 법률상담과 소송지원,",
+        "셋째 심리상담, 넷째 예방교육,",
+        "다섯째 피해예방 무료보험입니다.",
+        "본인 상황에 맞는 항목을 골라 신청하실 수 있습니다."
       ],
       "chunk_visuals": [
-        {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
-        },
         {
           "type": "illust",
           "value": "smartphone"
@@ -431,119 +435,96 @@
       "id": "fact_3",
       "_codex_narration_source": "captions.md#body",
       "display_chunks": [
-        "카메라 설정의 고급 인텔리전스 옵션 촬영",
-        "속도 메뉴에서 속도 우선을 선택하시면,",
-        "아이와 반려동물, 스포츠처럼 움직이는",
-        "피사체에서 타이밍을 놓치지 않습니다",
-        "셋째, HDR을 직접 제어하시기 바랍니다",
-        "HDR이 자동으로 적용되면서",
-        "색감이 이상해지는 문제를 끄거나 항상",
-        "켬으로 직접 조절할 수 있습니다"
+        "첫째 생활비, 둘째 법률상담과 소송지원,",
+        "셋째 심리상담, 넷째 예방교육,",
+        "다섯째 피해예방 무료보험입니다",
+        "본인 상황에 맞는 항목을 골라 신청하실 수 있습니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 8
+        "chunk_count": 4
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        2057.04,
-        2174.29,
-        2007.05,
-        2388.37,
-        3169.04,
-        1478.88,
-        1875.0,
-        1672.49
+        2752.46,
+        2042.25,
+        2273.96,
+        2447.16
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 2057.04,
-            "duration_ms": 2057.04
+            "end_ms": 2752.46,
+            "duration_ms": 2752.46
           },
           {
-            "start_ms": 2057.04,
-            "end_ms": 4231.33,
-            "duration_ms": 2174.29
+            "start_ms": 2752.46,
+            "end_ms": 4794.71,
+            "duration_ms": 2042.25
           },
           {
-            "start_ms": 4231.33,
-            "end_ms": 6238.38,
-            "duration_ms": 2007.05
+            "start_ms": 4794.71,
+            "end_ms": 7068.67,
+            "duration_ms": 2273.96
           },
           {
-            "start_ms": 6238.38,
-            "end_ms": 8626.75,
-            "duration_ms": 2388.37
-          },
-          {
-            "start_ms": 8626.75,
-            "end_ms": 11795.79,
-            "duration_ms": 3169.04
-          },
-          {
-            "start_ms": 11795.79,
-            "end_ms": 13274.67,
-            "duration_ms": 1478.88
-          },
-          {
-            "start_ms": 13274.67,
-            "end_ms": 15149.67,
-            "duration_ms": 1875.0
-          },
-          {
-            "start_ms": 15149.67,
-            "end_ms": 16822.16,
-            "duration_ms": 1672.49
+            "start_ms": 7068.67,
+            "end_ms": 9515.83,
+            "duration_ms": 2447.16
           }
         ],
-        "boundary_count": 37,
-        "caption_signature": "e0e3979d5a0c5526430ba04d87e18f2c0ec0a14109286b8145d7e664866dedf2"
+        "boundary_count": 20,
+        "caption_signature": "69aadf79f405360ea9c3672bd0bc5a070c8ee5f9710b2a52523126cfc3d48345"
       }
     },
     {
-      "tts": "넷째, 렌즈 자동 전환을 끄시기 바랍니다. 줌을 조작할 때 망원과 초광각이 멋대로 바뀌는 문제가 해결되고, 원하는 렌즈로 고정해 촬영하실 수 있습니다. 다섯째, 셔터 지연을 없애시기 바랍니다. 사진이 늦게 찍히는 문제가 해결되어, 셔터를 누르는 순간 즉시 캡처됩니다.",
+      "tts": "신청은 보이스피싱제로 공식 사이트 voicephisingzero.co.kr 에서, 추가 신고는 경찰청 전기통신금융사기 통합대응센터 counterscam112.go.kr 에서 가능합니다. 만약 송금이 이뤄진 직후라면, 거래 은행에 지급정지 신청과 경찰 112, 금감원 1332에 동시 신고하시는 것이 가장 빠른 골든타임 대응입니다.",
       "caption_body": [
-        "설정 3·4·5",
-        "HDR·렌즈·셔터 직접 제어"
+        "신청·신고",
+        "3개 채널 동시 활용"
       ],
       "caption_emphasis": [
-        "HDR·렌즈·셔터"
+        "3개 채널"
       ],
       "headline_lines": [
         {
-          "text": "설정 3·4·5"
+          "text": "신청·신고"
         },
         {
-          "text": "HDR·렌즈·셔터 직접 제어",
+          "text": "3개 채널 동시 활용",
           "accent": true
         }
       ],
-      "meta": "출처: Samsung Members 종합",
+      "meta": "출처: 경찰청·금감원 가이드",
       "topic": "뉴스",
       "background_image": "5.png",
       "caption_chunks": [
-        "넷째, 렌즈 자동 전환을 끄시기 바랍니다.",
-        "줌을 조작할 때 망원과 초광각이 멋대로",
-        "바뀌는 문제가 해결되고,",
-        "원하는 렌즈로 고정해 촬영하실 수 있습니다.",
-        "다섯째, 셔터 지연을 없애시기 바랍니다.",
-        "사진이 늦게 찍히는 문제가 해결되어,",
-        "셔터를 누르는 순간 즉시 캡처됩니다."
+        "신청은 보이스피싱제로 공식",
+        "사이트 voicephisingzero.co.kr",
+        "에서, 추가 신고는 경찰청 전기통신금융사기",
+        "통합대응센터 counterscam112.go.kr",
+        "에서 가능합니다. 만약 송금이 이뤄진 직후라면,",
+        "거래 은행에 지급정지 신청과 경찰 112,",
+        "금감원 1332에 동시 신고하시는 것이",
+        "가장 빠른 골든타임 대응입니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "smartphone"
+          "value": "emergency_account_freeze"
         },
         {
           "type": "illust",
-          "value": "smartphone"
+          "value": "cpt_83fa1e9f"
+        },
+        {
+          "type": "illust",
+          "value": "cpt_ea7bc1d6"
         },
         {
           "type": "illust",
@@ -563,7 +544,7 @@
         },
         {
           "type": "illust",
-          "value": "smartphone"
+          "value": "handshake"
         }
       ],
       "stat": {
@@ -574,72 +555,79 @@
       "id": "fact_4",
       "_codex_narration_source": "captions.md#body",
       "display_chunks": [
-        "넷째, 렌즈 자동 전환을 끄시기 바랍니다",
-        "줌을 조작할 때 망원과 초광각이 멋대로",
-        "바뀌는 문제가 해결되고,",
-        "원하는 렌즈로 고정해 촬영하실 수 있습니다",
-        "다섯째, 셔터 지연을 없애시기 바랍니다",
-        "사진이 늦게 찍히는 문제가 해결되어,",
-        "셔터를 누르는 순간 즉시 캡처됩니다"
+        "신청은 보이스피싱제로 공식",
+        "사이트 voicephisingzero.co.kr",
+        "에서, 추가 신고는 경찰청 전기통신금융사기",
+        "통합대응센터 counterscam112.go.kr",
+        "에서 가능합니다 만약 송금이 이뤄진 직후라면,",
+        "거래 은행에 지급정지 신청과 경찰 112,",
+        "금감원 1332에 동시 신고하시는 것이",
+        "가장 빠른 골든타임 대응입니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 7
+        "chunk_count": 8
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        3001.75,
-        2042.25,
-        1399.67,
-        2570.41,
-        2711.25,
-        1910.25,
-        1875.01
+        1564.08,
+        1804.59,
+        2693.66,
+        2288.71,
+        2969.38,
+        2438.37,
+        2271.13,
+        1751.75
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 3001.75,
-            "duration_ms": 3001.75
+            "end_ms": 1564.08,
+            "duration_ms": 1564.08
           },
           {
-            "start_ms": 3001.75,
-            "end_ms": 5044.0,
-            "duration_ms": 2042.25
+            "start_ms": 1564.08,
+            "end_ms": 3368.67,
+            "duration_ms": 1804.59
           },
           {
-            "start_ms": 5044.0,
-            "end_ms": 6443.67,
-            "duration_ms": 1399.67
+            "start_ms": 3368.67,
+            "end_ms": 6062.33,
+            "duration_ms": 2693.66
           },
           {
-            "start_ms": 6443.67,
-            "end_ms": 9014.08,
-            "duration_ms": 2570.41
+            "start_ms": 6062.33,
+            "end_ms": 8351.04,
+            "duration_ms": 2288.71
           },
           {
-            "start_ms": 9014.08,
-            "end_ms": 11725.33,
-            "duration_ms": 2711.25
+            "start_ms": 8351.04,
+            "end_ms": 11320.42,
+            "duration_ms": 2969.38
           },
           {
-            "start_ms": 11725.33,
-            "end_ms": 13635.58,
-            "duration_ms": 1910.25
+            "start_ms": 11320.42,
+            "end_ms": 13758.79,
+            "duration_ms": 2438.37
           },
           {
-            "start_ms": 13635.58,
-            "end_ms": 15510.59,
-            "duration_ms": 1875.01
+            "start_ms": 13758.79,
+            "end_ms": 16029.92,
+            "duration_ms": 2271.13
+          },
+          {
+            "start_ms": 16029.92,
+            "end_ms": 17781.67,
+            "duration_ms": 1751.75
           }
         ],
-        "boundary_count": 36,
-        "caption_signature": "3b1543a86b22052479f41db1daccc223ea1d43631cf40b7a4a3d9a24eb112cbc"
+        "boundary_count": 33,
+        "caption_signature": "4443522158f5c85d91f8c974bb4a4ab36dbbd26c04577c87ebdaa3b558c3485c"
       }
     }
   ],
@@ -695,7 +683,7 @@
       "version": 2,
       "compiler": "korean_caption_compiler_v2",
       "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-      "chunk_count": 2
+      "chunk_count": 4
     },
     "_codex_contextual_narrative": true,
     "_codex_sync_mode": "global999_tts_caption_lockstep",
@@ -726,122 +714,14 @@
   "_chunk_logic_v2": true,
   "_note": "build_script.py 자동 생성 (v2 로직): 시퀀스 내 이미지 순환 + 마스코트 짝수 시퀀스만.",
   "_codex_uses_captions_md_narration": true,
-  "_codex_captions_md_narration_path": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\013_tip_galaxy_camera_hidden\\captions.md",
+  "_codex_captions_md_narration_path": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\014_scam_voicephishing_zero_relief\\captions.md",
   "_codex_narration_policy": "tts_only_chunks_visuals_preserved",
   "_codex_unique_source_images": {
     "version": 1,
     "policy": "non-illustration image visuals are used at most once across one video",
     "replacements": [
       {
-        "section": "fact_1",
-        "chunk": 1,
-        "from": {
-          "type": "image",
-          "value": "2.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "foldable"
-        }
-      },
-      {
-        "section": "fact_1",
-        "chunk": 5,
-        "from": {
-          "type": "image",
-          "value": "1.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "chatbot"
-        }
-      },
-      {
-        "section": "fact_2",
-        "chunk": 1,
-        "from": {
-          "type": "image",
-          "value": "3.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "battery_overheat"
-        }
-      },
-      {
-        "section": "fact_2",
-        "chunk": 2,
-        "from": {
-          "type": "image",
-          "value": "4.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "biometric"
-        }
-      },
-      {
-        "section": "fact_2",
-        "chunk": 4,
-        "from": {
-          "type": "image",
-          "value": "1.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "chart_down"
-        }
-      },
-      {
-        "section": "fact_2",
-        "chunk": 5,
-        "from": {
-          "type": "image",
-          "value": "2.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "chart_up"
-        }
-      },
-      {
-        "section": "fact_2",
-        "chunk": 6,
-        "from": {
-          "type": "image",
-          "value": "5.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "chat_backup_restore"
-        }
-      },
-      {
-        "section": "fact_3",
-        "chunk": 1,
-        "from": {
-          "type": "image",
-          "value": "4.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "clock"
-        }
-      },
-      {
-        "section": "fact_3",
-        "chunk": 2,
-        "from": {
-          "type": "image",
-          "value": "5.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "cloud_backup"
-        }
-      },
-      {
-        "section": "fact_3",
+        "section": "cta",
         "chunk": 3,
         "from": {
           "type": "image",
@@ -849,103 +729,19 @@
         },
         "to": {
           "type": "illust",
-          "value": "device_data_transfer"
-        }
-      },
-      {
-        "section": "fact_3",
-        "chunk": 4,
-        "from": {
-          "type": "image",
-          "value": "2.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "emergency_account_freeze"
-        }
-      },
-      {
-        "section": "fact_3",
-        "chunk": 5,
-        "from": {
-          "type": "image",
-          "value": "3.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "final_update"
-        }
-      },
-      {
-        "section": "fact_4",
-        "chunk": 1,
-        "from": {
-          "type": "image",
-          "value": "5.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "forecast"
-        }
-      },
-      {
-        "section": "fact_4",
-        "chunk": 2,
-        "from": {
-          "type": "image",
-          "value": "1.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "gemini"
-        }
-      },
-      {
-        "section": "fact_4",
-        "chunk": 3,
-        "from": {
-          "type": "image",
-          "value": "2.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "gift_prohibit"
-        }
-      },
-      {
-        "section": "fact_4",
-        "chunk": 4,
-        "from": {
-          "type": "image",
-          "value": "3.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "gift_voucher"
-        }
-      },
-      {
-        "section": "fact_4",
-        "chunk": 6,
-        "from": {
-          "type": "image",
-          "value": "4.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "handshake"
+          "value": "shield"
         }
       },
       {
         "section": "cta",
-        "chunk": 1,
+        "chunk": 4,
         "from": {
           "type": "image",
-          "value": "1.png"
+          "value": "2.png"
         },
         "to": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "lock"
         }
       }
     ]
@@ -955,78 +751,91 @@
   "_codex_sync_quality_logic": true,
   "_codex_captions_narration_priority": true,
   "_codex_common_quality_note": "Global 001-999 rule: screen chunks are rebuilt as an ordered, lossless partition of captions.md narration; curated visuals are rebalanced without discarding quality rules.",
+  "_codex_uploaded_illustrations": [
+    {
+      "section": "hook",
+      "chunk": 4,
+      "variant": "cpt_fd9edf65"
+    },
+    {
+      "section": "fact_1",
+      "chunk": 1,
+      "variant": "cpt_75c6eba6"
+    },
+    {
+      "section": "fact_1",
+      "chunk": 4,
+      "variant": "cpt_6a2e9678"
+    },
+    {
+      "section": "fact_1",
+      "chunk": 5,
+      "variant": "cpt_ea7bc1d6"
+    },
+    {
+      "section": "fact_1",
+      "chunk": 6,
+      "variant": "cpt_83fa1e9f"
+    }
+  ],
   "_codex_semantic_visual_match": {
     "version": 1,
     "policy": "Match chunks to GPT source images using prompt.md descriptions, then fallback to tagged reusable illustrations.",
     "changes": [
       {
         "section": "hook",
-        "chunk": 2,
+        "chunk": 1,
         "from": {
           "type": "image",
-          "value": "2.png"
+          "value": "1.png"
         },
         "to": {
-          "type": "image",
-          "value": "4.png"
+          "type": "illust",
+          "value": "impersonation_call"
         },
-        "context": "갤럭시 사용자의 95퍼센트가 모르는 카메라 숨은 기능 5가지를 알려드립니다 같은 폰으로 사진 품질이 한 단계 올라갑니다 갤럭시 사용자 95%가 모르는 카메라 설정 ['갤럭시 사용자', '95%가 모르는 카메라 설정'",
-        "reason": "image score 0.433: 촬영 속도 속도 우선 A top-down flat lay on a soft cream desk. A modern smartphone in the"
+        "context": "혹시 보이스피싱 피해를 입으셨거나 주변에 그런 분이 계신가요? 보이스피싱 피해 혼자 끙끙 마세요 ['보이스피싱 피해', '혼자 끙끙 마세요'] 뉴스",
+        "reason": "illust score 0.457"
       },
       {
         "section": "hook",
-        "chunk": 3,
+        "chunk": 4,
         "from": {
-          "type": "mascot",
-          "value": "surprised"
+          "type": "illust",
+          "value": "cpt_fd9edf65"
         },
         "to": {
           "type": "image",
           "value": "5.png"
         },
-        "context": "카메라 숨은 기능 5가지를 알려드립니다 같은 폰으로 사진 품질이 한 단계 올라갑니다 갤럭시 사용자 95%가 모르는 카메라 설정 ['갤럭시 사용자', '95%가 모르는 카메라 설정'] 뉴스",
-        "reason": "image score 0.47: HDR 렌즈 셔터 직접 제어 A still life on a warm white surface. A modern smartphone screen"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "foldable"
-        },
-        "to": {
-          "type": "image",
-          "value": "2.png"
-        },
-        "context": "핵심은 굿락 앱 안에 있는 카메라 어시스턴트 모듈입니다 Galaxy Store에서 굿락을 설치한 뒤, 1단계 굿락 → 카메라 어시스턴트 설치 ['1단계', '굿락 → 카메라 어시스턴트 설치'] 뉴스",
-        "reason": "image score 0.529: 굿락 카메라 어시스턴트 설치 A top-down flat lay on a warm white surface. A modern smartphone"
+        "context": "혼자 끙끙 앓지 마시고, 6월 1일부터 다시 시작된 지원 사업을 확인하시기 바랍니다 보이스피싱 피해 혼자 끙끙 마세요 ['보이스피싱 피해', '혼자 끙끙 마세요'] 뉴스",
+        "reason": "unused source image (no semantic match, img score 0.218)"
       },
       {
         "section": "fact_1",
         "chunk": 3,
         "from": {
           "type": "image",
-          "value": "4.png"
+          "value": "5.png"
         },
         "to": {
-          "type": "illust",
-          "value": "phone_settings_toggle"
+          "type": "image",
+          "value": "1.png"
         },
-        "context": "Galaxy Store에서 굿락을 설치한 뒤, 그 안에서 카메라 어시스턴트 모듈을 추가하면 기본 카메라 앱에 숨겨진 고급 설정을 모두 켤 수 있습니다 1단계 굿락 → 카메라 어시스턴트 설치 ['1단계', '굿락 → ",
-        "reason": "illust score 0.428"
+        "context": "신한은행 보이스피싱제로 3차년도 9차 지원이 시작됐습니다 이 사업은 신한은행이 금융감독원, 6월 1일 시작 3차년도 9차 지원 ['6월 1일 시작', '3차년도 9차 지원'] 뉴스",
+        "reason": "unused source image (no semantic match, img score 0.055)"
       },
       {
         "section": "fact_1",
         "chunk": 4,
         "from": {
-          "type": "image",
-          "value": "5.png"
+          "type": "illust",
+          "value": "cpt_6a2e9678"
         },
         "to": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "그 안에서 카메라 어시스턴트 모듈을 추가하면 기본 카메라 앱에 숨겨진 고급 설정을 모두 켤 수 있습니다 지원 기종은 갤럭시 S22 이상, 1단계 굿락 → 카메라 어시스턴트 설치 ['1단계', '굿락 → 카메라 어시스",
+        "context": "지원이 시작됐습니다 이 사업은 신한은행이 금융감독원, 경찰청, 사회복지공동모금회, 6월 1일 시작 3차년도 9차 지원 ['6월 1일 시작', '3차년도 9차 지원'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
@@ -1034,269 +843,87 @@
         "chunk": 5,
         "from": {
           "type": "illust",
-          "value": "chatbot"
+          "value": "cpt_ea7bc1d6"
+        },
+        "to": {
+          "type": "illust",
+          "value": "cpt_6a2e9678"
+        },
+        "context": "이 사업은 신한은행이 금융감독원, 경찰청, 사회복지공동모금회, 굿네이버스와 함께 전기통신 금융사기 6월 1일 시작 3차년도 9차 지원 ['6월 1일 시작', '3차년도 9차 지원'] 뉴스",
+        "reason": "illust score 0.432"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 6,
+        "from": {
+          "type": "illust",
+          "value": "cpt_83fa1e9f"
         },
         "to": {
           "type": "illust",
           "value": "newspaper"
         },
-        "context": "기본 카메라 앱에 숨겨진 고급 설정을 모두 켤 수 있습니다 지원 기종은 갤럭시 S22 이상, Z 폴드와 플립 2 이상, 1단계 굿락 → 카메라 어시스턴트 설치 ['1단계', '굿락 → 카메라 어시스턴트 설치'] 뉴스",
+        "context": "경찰청, 사회복지공동모금회, 굿네이버스와 함께 전기통신 금융사기 피해자의 일상회복을 돕기 위해 운영하는 지원 사업입니다 6월 1일 시작 3차년도 9차 지원 ['6월 1일 시작', '3차년도 9차 지원'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
         "section": "fact_1",
-        "chunk": 6,
+        "chunk": 7,
         "from": {
           "type": "illust",
-          "value": "aluminum_label"
+          "value": "appliance"
         },
         "to": {
           "type": "illust",
           "value": "microphone"
         },
-        "context": "지원 기종은 갤럭시 S22 이상, Z 폴드와 플립 2 이상, 노트 20, FE 시리즈 One UI 6.0 이상입니다 1단계 굿락 → 카메라 어시스턴트 설치 ['1단계', '굿락 → 카메라 어시스턴트 설치'] 뉴스",
+        "context": "굿네이버스와 함께 전기통신 금융사기 피해자의 일상회복을 돕기 위해 운영하는 지원 사업입니다 6월 1일 시작 3차년도 9차 지원 ['6월 1일 시작', '3차년도 9차 지원'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
-        "section": "fact_1",
-        "chunk": 7,
+        "section": "fact_2",
+        "chunk": 1,
         "from": {
           "type": "illust",
-          "value": "appliance"
+          "value": "store"
         },
         "to": {
           "type": "illust",
           "value": "shield"
         },
-        "context": "Z 폴드와 플립 2 이상, 노트 20, FE 시리즈 One UI 6.0 이상입니다 1단계 굿락 → 카메라 어시스턴트 설치 ['1단계', '굿락 → 카메라 어시스턴트 설치'] 뉴스",
+        "context": "1차와 2차 누적 실적을 보면 취약계층 피해자 5,211명에게 150억 1·2차 누적 5,211명 150억 지원 ['1·2차 누적', '5,211명 150억 지원'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
         "section": "fact_2",
-        "chunk": 1,
+        "chunk": 2,
         "from": {
           "type": "illust",
-          "value": "battery_overheat"
+          "value": "smartphone"
         },
         "to": {
           "type": "illust",
           "value": "meeting_room"
         },
-        "context": "첫째, 2배 줌 버튼을 활성화하시기 바랍니다 카메라 어시스턴트 줌 버튼 메뉴에서 2배 줌을 켜면 설정 1 2배 줌 버튼 활성화 ['설정 1', '2배 줌 버튼 활성화'] 뉴스",
+        "context": "1차와 2차 누적 실적을 보면 취약계층 피해자 5,211명에게 150억 원의 생활비가 지급됐고, 1·2차 누적 5,211명 150억 지원 ['1·2차 누적', '5,211명 150억 지원'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
         "section": "fact_2",
-        "chunk": 2,
+        "chunk": 3,
         "from": {
           "type": "illust",
-          "value": "biometric"
+          "value": "market_cap"
         },
         "to": {
           "type": "illust",
           "value": "forecast"
         },
-        "context": "첫째, 2배 줌 버튼을 활성화하시기 바랍니다 카메라 어시스턴트 줌 버튼 메뉴에서 2배 줌을 켜면 줌 버튼에 2배가 추가되고, 설정 1 2배 줌 버튼 활성화 ['설정 1', '2배 줌 버튼 활성화'] 뉴스",
+        "context": "취약계층 피해자 5,211명에게 150억 원의 생활비가 지급됐고, 법률상담과 소송지원 1,064건, 1·2차 누적 5,211명 150억 지원 ['1·2차 누적', '5,211명 150억 지원'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
         "section": "fact_2",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "chart_down"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "줌 버튼에 2배가 추가되고, 인물 사진에서 가장 자연스러운 화각이 만들어집니다 3배 망원 렌즈로 찍는 것보다 화질이 좋은 경우가 많습니다 설정 1 2배 줌 버튼 활성화 ['설정 1', '2배 줌 버튼 활성화'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 5,
-        "from": {
-          "type": "illust",
-          "value": "chart_up"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "인물 사진에서 가장 자연스러운 화각이 만들어집니다 3배 망원 렌즈로 찍는 것보다 화질이 좋은 경우가 많습니다 둘째, 촬영 속도를 속도 우선으로 바꾸시기 바랍니다 설정 1 2배 줌 버튼 활성화 ['설정 1', '2배 ",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 6,
-        "from": {
-          "type": "illust",
-          "value": "chat_backup_restore"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "3배 망원 렌즈로 찍는 것보다 화질이 좋은 경우가 많습니다 둘째, 촬영 속도를 속도 우선으로 바꾸시기 바랍니다 설정 1 2배 줌 버튼 활성화 ['설정 1', '2배 줌 버튼 활성화'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "clock"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "cloud_backup"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "device_data_transfer"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 놓치지 않습니다 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "emergency_account_freeze"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 놓치지 않습니다 셋째, HDR을 직접 제어하시기 바랍니다 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 5,
-        "from": {
-          "type": "illust",
-          "value": "final_update"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "피사체에서 타이밍을 놓치지 않습니다 셋째, HDR을 직접 제어하시기 바랍니다 HDR이 자동으로 적용되면서 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 6,
-        "from": {
-          "type": "illust",
-          "value": "aluminum_label"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "셋째, HDR을 직접 제어하시기 바랍니다 HDR이 자동으로 적용되면서 색감이 이상해지는 문제를 끄거나 항상 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 7,
-        "from": {
-          "type": "illust",
-          "value": "appliance"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "HDR이 자동으로 적용되면서 색감이 이상해지는 문제를 끄거나 항상 켬으로 직접 조절할 수 있습니다 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 8,
-        "from": {
-          "type": "illust",
-          "value": "battery_charge_range"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "색감이 이상해지는 문제를 끄거나 항상 켬으로 직접 조절할 수 있습니다 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "forecast"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "넷째, 렌즈 자동 전환을 끄시기 바랍니다 줌을 조작할 때 망원과 초광각이 멋대로 설정 3·4·5 HDR·렌즈·셔터 직접 제어 ['설정 3·4·5', 'HDR·렌즈·셔터 직접 제어'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "gemini"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "넷째, 렌즈 자동 전환을 끄시기 바랍니다 줌을 조작할 때 망원과 초광각이 멋대로 바뀌는 문제가 해결되고, 설정 3·4·5 HDR·렌즈·셔터 직접 제어 ['설정 3·4·5', 'HDR·렌즈·셔터 직접 제어'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "gift_prohibit"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "줌을 조작할 때 망원과 초광각이 멋대로 바뀌는 문제가 해결되고, 원하는 렌즈로 고정해 촬영하실 수 있습니다 설정 3·4·5 HDR·렌즈·셔터 직접 제어 ['설정 3·4·5', 'HDR·렌즈·셔터 직접 제어'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
         "chunk": 4,
         "from": {
           "type": "illust",
@@ -1306,21 +933,161 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "바뀌는 문제가 해결되고, 원하는 렌즈로 고정해 촬영하실 수 있습니다 다섯째, 셔터 지연을 없애시기 바랍니다 설정 3·4·5 HDR·렌즈·셔터 직접 제어 ['설정 3·4·5', 'HDR·렌즈·셔터 직접 제어'] 뉴스",
+        "context": "원의 생활비가 지급됐고, 법률상담과 소송지원 1,064건, 심리상담 635명, 예방교육 13,954명, 1·2차 누적 5,211명 150억 지원 ['1·2차 누적', '5,211명 150억 지원'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
-        "section": "fact_4",
-        "chunk": 6,
+        "section": "fact_2",
+        "chunk": 5,
         "from": {
           "type": "illust",
-          "value": "handshake"
+          "value": "biometric"
         },
         "to": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "다섯째, 셔터 지연을 없애시기 바랍니다 사진이 늦게 찍히는 문제가 해결되어, 셔터를 누르는 순간 즉시 캡처됩니다 설정 3·4·5 HDR·렌즈·셔터 직접 제어 ['설정 3·4·5', 'HDR·렌즈·셔터 직접 제어'] ",
+        "context": "법률상담과 소송지원 1,064건, 심리상담 635명, 예방교육 13,954명, 피해예방 무료보험 2,732명이 추가로 지원됐습니다 1·2차 누적 5,211명 150억 지원 ['1·2차 누적', '5,211명 150억",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 7,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "피해예방 무료보험 2,732명이 추가로 지원됐습니다 받을 수 있는 항목은 다섯 가지입니다 1·2차 누적 5,211명 150억 지원 ['1·2차 누적', '5,211명 150억 지원'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "chart_down"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "첫째 생활비, 둘째 법률상담과 소송지원, 셋째 심리상담, 넷째 예방교육, 받을 수 있는 5가지 지원 ['받을 수 있는', '5가지 지원'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "chart_up"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "첫째 생활비, 둘째 법률상담과 소송지원, 셋째 심리상담, 넷째 예방교육, 다섯째 피해예방 무료보험입니다 받을 수 있는 5가지 지원 ['받을 수 있는', '5가지 지원'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "chat_backup_restore"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "셋째 심리상담, 넷째 예방교육, 다섯째 피해예방 무료보험입니다 본인 상황에 맞는 항목을 골라 신청하실 수 있습니다 받을 수 있는 5가지 지원 ['받을 수 있는', '5가지 지원'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "chatbot"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "다섯째 피해예방 무료보험입니다 본인 상황에 맞는 항목을 골라 신청하실 수 있습니다 받을 수 있는 5가지 지원 ['받을 수 있는', '5가지 지원'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "emergency_account_freeze"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "신청은 보이스피싱제로 공식 사이트 voicephisingzero.co.kr 신청·신고 3개 채널 동시 활용 ['신청·신고', '3개 채널 동시 활용'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "clock"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "신청은 보이스피싱제로 공식 사이트 voicephisingzero.co.kr 에서, 추가 신고는 경찰청 전기통신금융사기 신청·신고 3개 채널 동시 활용 ['신청·신고', '3개 채널 동시 활용'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "cloud_backup"
+        },
+        "to": {
+          "type": "illust",
+          "value": "cpt_83fa1e9f"
+        },
+        "context": "사이트 voicephisingzero.co.kr 에서, 추가 신고는 경찰청 전기통신금융사기 통합대응센터 counterscam112.go.kr 신청·신고 3개 채널 동시 활용 ['신청·신고', '3개 채널 동시 활용'",
+        "reason": "illust score 0.424"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "cover_screen_widgets"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "에서, 추가 신고는 경찰청 전기통신금융사기 통합대응센터 counterscam112.go.kr 에서 가능합니다 만약 송금이 이뤄진 직후라면, 신청·신고 3개 채널 동시 활용 ['신청·신고', '3개 채널 동시 활용']",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 5,
+        "from": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "통합대응센터 counterscam112.go.kr 에서 가능합니다 만약 송금이 이뤄진 직후라면, 거래 은행에 지급정지 신청과 경찰 112, 신청·신고 3개 채널 동시 활용 ['신청·신고', '3개 채널 동시 활용']",
         "reason": "neutral filler (no semantic match)"
       },
       {
@@ -1334,21 +1101,79 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "사진이 늦게 찍히는 문제가 해결되어, 셔터를 누르는 순간 즉시 캡처됩니다 설정 3·4·5 HDR·렌즈·셔터 직접 제어 ['설정 3·4·5', 'HDR·렌즈·셔터 직접 제어'] 뉴스",
+        "context": "거래 은행에 지급정지 신청과 경찰 112, 금감원 1332에 동시 신고하시는 것이 가장 빠른 골든타임 대응입니다 신청·신고 3개 채널 동시 활용 ['신청·신고', '3개 채널 동시 활용'] 뉴스",
         "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 8,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "handshake"
+        },
+        "context": "금감원 1332에 동시 신고하시는 것이 가장 빠른 골든타임 대응입니다 신청·신고 3개 채널 동시 활용 ['신청·신고', '3개 채널 동시 활용'] 뉴스",
+        "reason": "illust score 0.433"
       }
     ],
     "weak": [
       {
         "section": "hook",
-        "chunk": 1,
+        "chunk": 2,
+        "current": {
+          "type": "image",
+          "value": "2.png"
+        },
+        "context": "혹시 보이스피싱 피해를 입으셨거나 주변에 그런 분이 계신가요? 혼자 끙끙 앓지 마시고, 6월 1일부터 보이스피싱 피해 혼자 끙끙 마세요 ['보이스피싱 피해', '혼자 끙끙 마세요'] 뉴스",
+        "best_image_score": 0.194,
+        "best_illust_score": 0.251
+      },
+      {
+        "section": "hook",
+        "chunk": 3,
+        "current": {
+          "type": "image",
+          "value": "3.png"
+        },
+        "context": "주변에 그런 분이 계신가요? 혼자 끙끙 앓지 마시고, 6월 1일부터 다시 시작된 지원 사업을 확인하시기 바랍니다 보이스피싱 피해 혼자 끙끙 마세요 ['보이스피싱 피해', '혼자 끙끙 마세요'] 뉴스",
+        "best_image_score": 0.218,
+        "best_illust_score": 0.31
+      },
+      {
+        "section": "hook",
+        "chunk": 4,
+        "current": {
+          "type": "image",
+          "value": "5.png"
+        },
+        "context": "혼자 끙끙 앓지 마시고, 6월 1일부터 다시 시작된 지원 사업을 확인하시기 바랍니다 보이스피싱 피해 혼자 끙끙 마세요 ['보이스피싱 피해', '혼자 끙끙 마세요'] 뉴스",
+        "best_image_score": 0.218,
+        "best_illust_score": 0.316
+      },
+      {
+        "section": "fact_1",
+        "chunk": 2,
+        "current": {
+          "type": "image",
+          "value": "4.png"
+        },
+        "context": "2026년 6월 1일 월요일 오전 10시부터 신한은행 보이스피싱제로 3차년도 9차 지원이 시작됐습니다 6월 1일 시작 3차년도 9차 지원 ['6월 1일 시작', '3차년도 9차 지원'] 뉴스",
+        "best_image_score": 0.072,
+        "best_illust_score": 0.275
+      },
+      {
+        "section": "fact_1",
+        "chunk": 3,
         "current": {
           "type": "image",
           "value": "1.png"
         },
-        "context": "갤럭시 사용자의 95퍼센트가 모르는 카메라 숨은 기능 5가지를 알려드립니다 갤럭시 사용자 95%가 모르는 카메라 설정 ['갤럭시 사용자', '95%가 모르는 카메라 설정'] 뉴스",
-        "best_image_score": 0.356,
-        "best_illust_score": 0.291
+        "context": "신한은행 보이스피싱제로 3차년도 9차 지원이 시작됐습니다 이 사업은 신한은행이 금융감독원, 6월 1일 시작 3차년도 9차 지원 ['6월 1일 시작', '3차년도 9차 지원'] 뉴스",
+        "best_image_score": 0.055,
+        "best_illust_score": 0.368
       },
       {
         "section": "fact_1",
@@ -1357,196 +1182,152 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "그 안에서 카메라 어시스턴트 모듈을 추가하면 기본 카메라 앱에 숨겨진 고급 설정을 모두 켤 수 있습니다 지원 기종은 갤럭시 S22 이상, 1단계 굿락 → 카메라 어시스턴트 설치 ['1단계', '굿락 → 카메라 어시스턴트 설치'] 뉴스",
+        "context": "지원이 시작됐습니다 이 사업은 신한은행이 금융감독원, 경찰청, 사회복지공동모금회, 6월 1일 시작 3차년도 9차 지원 ['6월 1일 시작', '3차년도 9차 지원'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.36
+        "best_illust_score": 0.375
       },
       {
         "section": "fact_1",
-        "chunk": 5,
+        "chunk": 6,
         "current": {
           "type": "illust",
           "value": "newspaper"
         },
-        "context": "기본 카메라 앱에 숨겨진 고급 설정을 모두 켤 수 있습니다 지원 기종은 갤럭시 S22 이상, Z 폴드와 플립 2 이상, 1단계 굿락 → 카메라 어시스턴트 설치 ['1단계', '굿락 → 카메라 어시스턴트 설치'] 뉴스",
+        "context": "경찰청, 사회복지공동모금회, 굿네이버스와 함께 전기통신 금융사기 피해자의 일상회복을 돕기 위해 운영하는 지원 사업입니다 6월 1일 시작 3차년도 9차 지원 ['6월 1일 시작', '3차년도 9차 지원'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.312
+        "best_illust_score": 0.305
       },
       {
         "section": "fact_1",
-        "chunk": 6,
+        "chunk": 7,
         "current": {
           "type": "illust",
           "value": "microphone"
         },
-        "context": "지원 기종은 갤럭시 S22 이상, Z 폴드와 플립 2 이상, 노트 20, FE 시리즈 One UI 6.0 이상입니다 1단계 굿락 → 카메라 어시스턴트 설치 ['1단계', '굿락 → 카메라 어시스턴트 설치'] 뉴스",
+        "context": "굿네이버스와 함께 전기통신 금융사기 피해자의 일상회복을 돕기 위해 운영하는 지원 사업입니다 6월 1일 시작 3차년도 9차 지원 ['6월 1일 시작', '3차년도 9차 지원'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.404
+        "best_illust_score": 0.354
       },
       {
-        "section": "fact_1",
-        "chunk": 7,
+        "section": "fact_2",
+        "chunk": 1,
         "current": {
           "type": "illust",
           "value": "shield"
         },
-        "context": "Z 폴드와 플립 2 이상, 노트 20, FE 시리즈 One UI 6.0 이상입니다 1단계 굿락 → 카메라 어시스턴트 설치 ['1단계', '굿락 → 카메라 어시스턴트 설치'] 뉴스",
+        "context": "1차와 2차 누적 실적을 보면 취약계층 피해자 5,211명에게 150억 1·2차 누적 5,211명 150억 지원 ['1·2차 누적', '5,211명 150억 지원'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.401
+        "best_illust_score": 0.362
       },
       {
         "section": "fact_2",
-        "chunk": 1,
+        "chunk": 2,
         "current": {
           "type": "illust",
           "value": "meeting_room"
         },
-        "context": "첫째, 2배 줌 버튼을 활성화하시기 바랍니다 카메라 어시스턴트 줌 버튼 메뉴에서 2배 줌을 켜면 설정 1 2배 줌 버튼 활성화 ['설정 1', '2배 줌 버튼 활성화'] 뉴스",
+        "context": "1차와 2차 누적 실적을 보면 취약계층 피해자 5,211명에게 150억 원의 생활비가 지급됐고, 1·2차 누적 5,211명 150억 지원 ['1·2차 누적', '5,211명 150억 지원'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.33
+        "best_illust_score": 0.35
       },
       {
         "section": "fact_2",
-        "chunk": 2,
+        "chunk": 3,
         "current": {
           "type": "illust",
           "value": "forecast"
         },
-        "context": "첫째, 2배 줌 버튼을 활성화하시기 바랍니다 카메라 어시스턴트 줌 버튼 메뉴에서 2배 줌을 켜면 줌 버튼에 2배가 추가되고, 설정 1 2배 줌 버튼 활성화 ['설정 1', '2배 줌 버튼 활성화'] 뉴스",
+        "context": "취약계층 피해자 5,211명에게 150억 원의 생활비가 지급됐고, 법률상담과 소송지원 1,064건, 1·2차 누적 5,211명 150억 지원 ['1·2차 누적', '5,211명 150억 지원'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.318
+        "best_illust_score": 0.242
       },
       {
         "section": "fact_2",
-        "chunk": 3,
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "원의 생활비가 지급됐고, 법률상담과 소송지원 1,064건, 심리상담 635명, 예방교육 13,954명, 1·2차 누적 5,211명 150억 지원 ['1·2차 누적', '5,211명 150억 지원'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.274
+      },
+      {
+        "section": "fact_2",
+        "chunk": 5,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "법률상담과 소송지원 1,064건, 심리상담 635명, 예방교육 13,954명, 피해예방 무료보험 2,732명이 추가로 지원됐습니다 1·2차 누적 5,211명 150억 지원 ['1·2차 누적', '5,211명 150억 지원'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.238
+      },
+      {
+        "section": "fact_2",
+        "chunk": 6,
         "current": {
           "type": "mascot",
           "value": "suspicious"
         },
-        "context": "카메라 어시스턴트 줌 버튼 메뉴에서 2배 줌을 켜면 줌 버튼에 2배가 추가되고, 인물 사진에서 가장 자연스러운 화각이 만들어집니다 설정 1 2배 줌 버튼 활성화 ['설정 1', '2배 줌 버튼 활성화'] 뉴스",
+        "context": "심리상담 635명, 예방교육 13,954명, 피해예방 무료보험 2,732명이 추가로 지원됐습니다 받을 수 있는 항목은 다섯 가지입니다 1·2차 누적 5,211명 150억 지원 ['1·2차 누적', '5,211명 150억 지원'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.374
+        "best_illust_score": 0.247
       },
       {
         "section": "fact_2",
-        "chunk": 4,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "줌 버튼에 2배가 추가되고, 인물 사진에서 가장 자연스러운 화각이 만들어집니다 3배 망원 렌즈로 찍는 것보다 화질이 좋은 경우가 많습니다 설정 1 2배 줌 버튼 활성화 ['설정 1', '2배 줌 버튼 활성화'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.366
-      },
-      {
-        "section": "fact_2",
-        "chunk": 5,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "인물 사진에서 가장 자연스러운 화각이 만들어집니다 3배 망원 렌즈로 찍는 것보다 화질이 좋은 경우가 많습니다 둘째, 촬영 속도를 속도 우선으로 바꾸시기 바랍니다 설정 1 2배 줌 버튼 활성화 ['설정 1', '2배 줌 버튼 활성화'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.301
-      },
-      {
-        "section": "fact_2",
-        "chunk": 6,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "3배 망원 렌즈로 찍는 것보다 화질이 좋은 경우가 많습니다 둘째, 촬영 속도를 속도 우선으로 바꾸시기 바랍니다 설정 1 2배 줌 버튼 활성화 ['설정 1', '2배 줌 버튼 활성화'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.248
-      },
-      {
-        "section": "fact_3",
-        "chunk": 1,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.269
-      },
-      {
-        "section": "fact_3",
-        "chunk": 2,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.266
-      },
-      {
-        "section": "fact_3",
-        "chunk": 3,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 놓치지 않습니다 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.352
-      },
-      {
-        "section": "fact_3",
-        "chunk": 4,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 놓치지 않습니다 셋째, HDR을 직접 제어하시기 바랍니다 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.364
-      },
-      {
-        "section": "fact_3",
-        "chunk": 5,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "피사체에서 타이밍을 놓치지 않습니다 셋째, HDR을 직접 제어하시기 바랍니다 HDR이 자동으로 적용되면서 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.315
-      },
-      {
-        "section": "fact_3",
-        "chunk": 6,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "셋째, HDR을 직접 제어하시기 바랍니다 HDR이 자동으로 적용되면서 색감이 이상해지는 문제를 끄거나 항상 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.281
-      },
-      {
-        "section": "fact_3",
         "chunk": 7,
         "current": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "HDR이 자동으로 적용되면서 색감이 이상해지는 문제를 끄거나 항상 켬으로 직접 조절할 수 있습니다 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
+        "context": "피해예방 무료보험 2,732명이 추가로 지원됐습니다 받을 수 있는 항목은 다섯 가지입니다 1·2차 누적 5,211명 150억 지원 ['1·2차 누적', '5,211명 150억 지원'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.308
+        "best_illust_score": 0.282
       },
       {
         "section": "fact_3",
-        "chunk": 8,
+        "chunk": 1,
         "current": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "색감이 이상해지는 문제를 끄거나 항상 켬으로 직접 조절할 수 있습니다 설정 2 촬영 속도 속도 우선 ['설정 2', '촬영 속도 속도 우선'] 뉴스",
+        "context": "첫째 생활비, 둘째 법률상담과 소송지원, 셋째 심리상담, 넷째 예방교육, 받을 수 있는 5가지 지원 ['받을 수 있는', '5가지 지원'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.329
+        "best_illust_score": 0.296
+      },
+      {
+        "section": "fact_3",
+        "chunk": 2,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "첫째 생활비, 둘째 법률상담과 소송지원, 셋째 심리상담, 넷째 예방교육, 다섯째 피해예방 무료보험입니다 받을 수 있는 5가지 지원 ['받을 수 있는', '5가지 지원'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.282
+      },
+      {
+        "section": "fact_3",
+        "chunk": 3,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "셋째 심리상담, 넷째 예방교육, 다섯째 피해예방 무료보험입니다 본인 상황에 맞는 항목을 골라 신청하실 수 있습니다 받을 수 있는 5가지 지원 ['받을 수 있는', '5가지 지원'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.291
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "다섯째 피해예방 무료보험입니다 본인 상황에 맞는 항목을 골라 신청하실 수 있습니다 받을 수 있는 5가지 지원 ['받을 수 있는', '5가지 지원'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.311
       },
       {
         "section": "fact_4",
@@ -1555,64 +1336,53 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "넷째, 렌즈 자동 전환을 끄시기 바랍니다 줌을 조작할 때 망원과 초광각이 멋대로 설정 3·4·5 HDR·렌즈·셔터 직접 제어 ['설정 3·4·5', 'HDR·렌즈·셔터 직접 제어'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.287
-      },
-      {
-        "section": "fact_4",
-        "chunk": 2,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "넷째, 렌즈 자동 전환을 끄시기 바랍니다 줌을 조작할 때 망원과 초광각이 멋대로 바뀌는 문제가 해결되고, 설정 3·4·5 HDR·렌즈·셔터 직접 제어 ['설정 3·4·5', 'HDR·렌즈·셔터 직접 제어'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.278
-      },
-      {
-        "section": "fact_4",
-        "chunk": 3,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "줌을 조작할 때 망원과 초광각이 멋대로 바뀌는 문제가 해결되고, 원하는 렌즈로 고정해 촬영하실 수 있습니다 설정 3·4·5 HDR·렌즈·셔터 직접 제어 ['설정 3·4·5', 'HDR·렌즈·셔터 직접 제어'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.3
-      },
-      {
-        "section": "fact_4",
-        "chunk": 4,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "바뀌는 문제가 해결되고, 원하는 렌즈로 고정해 촬영하실 수 있습니다 다섯째, 셔터 지연을 없애시기 바랍니다 설정 3·4·5 HDR·렌즈·셔터 직접 제어 ['설정 3·4·5', 'HDR·렌즈·셔터 직접 제어'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.372
-      },
-      {
-        "section": "fact_4",
-        "chunk": 5,
-        "current": {
-          "type": "mascot",
-          "value": "serious"
-        },
-        "context": "원하는 렌즈로 고정해 촬영하실 수 있습니다 다섯째, 셔터 지연을 없애시기 바랍니다 사진이 늦게 찍히는 문제가 해결되어, 설정 3·4·5 HDR·렌즈·셔터 직접 제어 ['설정 3·4·5', 'HDR·렌즈·셔터 직접 제어'] 뉴스",
+        "context": "신청은 보이스피싱제로 공식 사이트 voicephisingzero.co.kr 신청·신고 3개 채널 동시 활용 ['신청·신고', '3개 채널 동시 활용'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0.358
       },
       {
         "section": "fact_4",
-        "chunk": 6,
+        "chunk": 2,
         "current": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "다섯째, 셔터 지연을 없애시기 바랍니다 사진이 늦게 찍히는 문제가 해결되어, 셔터를 누르는 순간 즉시 캡처됩니다 설정 3·4·5 HDR·렌즈·셔터 직접 제어 ['설정 3·4·5', 'HDR·렌즈·셔터 직접 제어'] 뉴스",
+        "context": "신청은 보이스피싱제로 공식 사이트 voicephisingzero.co.kr 에서, 추가 신고는 경찰청 전기통신금융사기 신청·신고 3개 채널 동시 활용 ['신청·신고', '3개 채널 동시 활용'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.347
+        "best_illust_score": 0.388
+      },
+      {
+        "section": "fact_4",
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "에서, 추가 신고는 경찰청 전기통신금융사기 통합대응센터 counterscam112.go.kr 에서 가능합니다 만약 송금이 이뤄진 직후라면, 신청·신고 3개 채널 동시 활용 ['신청·신고', '3개 채널 동시 활용'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.386
+      },
+      {
+        "section": "fact_4",
+        "chunk": 5,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "통합대응센터 counterscam112.go.kr 에서 가능합니다 만약 송금이 이뤄진 직후라면, 거래 은행에 지급정지 신청과 경찰 112, 신청·신고 3개 채널 동시 활용 ['신청·신고', '3개 채널 동시 활용'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.375
+      },
+      {
+        "section": "fact_4",
+        "chunk": 6,
+        "current": {
+          "type": "mascot",
+          "value": "serious"
+        },
+        "context": "에서 가능합니다 만약 송금이 이뤄진 직후라면, 거래 은행에 지급정지 신청과 경찰 112, 금감원 1332에 동시 신고하시는 것이 신청·신고 3개 채널 동시 활용 ['신청·신고', '3개 채널 동시 활용'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.384
       },
       {
         "section": "fact_4",
@@ -1621,9 +1391,9 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "사진이 늦게 찍히는 문제가 해결되어, 셔터를 누르는 순간 즉시 캡처됩니다 설정 3·4·5 HDR·렌즈·셔터 직접 제어 ['설정 3·4·5', 'HDR·렌즈·셔터 직접 제어'] 뉴스",
+        "context": "거래 은행에 지급정지 신청과 경찰 112, 금감원 1332에 동시 신고하시는 것이 가장 빠른 골든타임 대응입니다 신청·신고 3개 채널 동시 활용 ['신청·신고', '3개 채널 동시 활용'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.365
+        "best_illust_score": 0.418
       }
     ]
   },
@@ -1631,6 +1401,84 @@
     "version": 1,
     "policy": "Illustrations and mascots should not repeat inside one video. CTA logo is exempt.",
     "replacements": [
+      {
+        "section": "fact_2",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "cpt_fd9edf65"
+        },
+        "context": "원의 생활비가 지급됐고, 법률상담과 소송지원 1,064건, 심리상담 635명, 예방교육 13,954명, 1·2차 누적 5,211명 150억 지원 1차와 2차 누적 실적을 보면 취약계층 피해자 5,211명에게 150억 원의 생활비가 지급됐고, 법률상담과 소송지원 1,064건, 심리상담 6"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 5,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "market_cap"
+        },
+        "context": "법률상담과 소송지원 1,064건, 심리상담 635명, 예방교육 13,954명, 피해예방 무료보험 2,732명이 추가로 지원됐습니다 1·2차 누적 5,211명 150억 지원 1차와 2차 누적 실적을 보면 취약계층 피해자 5,211명에게 150억 원의 생활비가 지급됐고, 법률상담과 소송지원"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 7,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "store"
+        },
+        "context": "피해예방 무료보험 2,732명이 추가로 지원됐습니다 받을 수 있는 항목은 다섯 가지입니다 1·2차 누적 5,211명 150억 지원 1차와 2차 누적 실적을 보면 취약계층 피해자 5,211명에게 150억 원의 생활비가 지급됐고, 법률상담과 소송지원 1,064건, 심리상담 635명, 예방교"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "emergency_account_freeze"
+        },
+        "context": "신청은 보이스피싱제로 공식 사이트 voicephisingzero.co.kr 신청·신고 3개 채널 동시 활용 신청은 보이스피싱제로 공식 사이트 voicephisingzero.co.kr 에서, 추가 신고는 경찰청 전기통신금융사기 통합대응센터 counterscam112.go.kr 에서 가능합"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "cpt_83fa1e9f"
+        },
+        "context": "신청은 보이스피싱제로 공식 사이트 voicephisingzero.co.kr 에서, 추가 신고는 경찰청 전기통신금융사기 신청·신고 3개 채널 동시 활용 신청은 보이스피싱제로 공식 사이트 voicephisingzero.co.kr 에서, 추가 신고는 경찰청 전기통신금융사기 통합대응센터 cou"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "cpt_83fa1e9f"
+        },
+        "to": {
+          "type": "illust",
+          "value": "cpt_ea7bc1d6"
+        },
+        "context": "사이트 voicephisingzero.co.kr 에서, 추가 신고는 경찰청 전기통신금융사기 통합대응센터 counterscam112.go.kr 신청·신고 3개 채널 동시 활용 신청은 보이스피싱제로 공식 사이트 voicephisingzero.co.kr 에서, 추가 신고는 경찰청 전기통신금융"
+      },
       {
         "section": "cta",
         "chunk": 1,
@@ -1647,40 +1495,13 @@
     ],
     "weak": [
       {
-        "section": "fact_2",
-        "chunk": 4,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "줌 버튼에 2배가 추가되고, 인물 사진에서 가장 자연스러운 화각이 만들어집니다 3배 망원 렌즈로 찍는 것보다 화질이 좋은 경우가 많습니다 설정 1 2배 줌 버튼 활성화 첫째, 2배 줌 버튼을 활성화하시기 바랍니다. 카메라 어시스턴트 줌 버튼 메뉴에서 2배 줌을 켜면 줌 버튼에 2배가 추"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 5,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "인물 사진에서 가장 자연스러운 화각이 만들어집니다 3배 망원 렌즈로 찍는 것보다 화질이 좋은 경우가 많습니다 둘째, 촬영 속도를 속도 우선으로 바꾸시기 바랍니다 설정 1 2배 줌 버튼 활성화 첫째, 2배 줌 버튼을 활성화하시기 바랍니다. 카메라 어시스턴트 줌 버튼 메뉴에서 2배 줌을 켜"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 6,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "3배 망원 렌즈로 찍는 것보다 화질이 좋은 경우가 많습니다 둘째, 촬영 속도를 속도 우선으로 바꾸시기 바랍니다 설정 1 2배 줌 버튼 활성화 첫째, 2배 줌 버튼을 활성화하시기 바랍니다. 카메라 어시스턴트 줌 버튼 메뉴에서 2배 줌을 켜면 줌 버튼에 2배가 추가되고, 인물 사진에서 가장"
-      },
-      {
         "section": "fact_3",
         "chunk": 1,
         "duplicate": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 설정 2 촬영 속도 속도 우선 카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 놓치지 않습니다. 셋째, HDR을 직접"
+        "context": "첫째 생활비, 둘째 법률상담과 소송지원, 셋째 심리상담, 넷째 예방교육, 받을 수 있는 5가지 지원 첫째 생활비, 둘째 법률상담과 소송지원, 셋째 심리상담, 넷째 예방교육, 다섯째 피해예방 무료보험입니다. 본인 상황에 맞는 항목을 골라 신청하실 수 있습니다."
       },
       {
         "section": "fact_3",
@@ -1689,7 +1510,7 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 설정 2 촬영 속도 속도 우선 카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 "
+        "context": "첫째 생활비, 둘째 법률상담과 소송지원, 셋째 심리상담, 넷째 예방교육, 다섯째 피해예방 무료보험입니다 받을 수 있는 5가지 지원 첫째 생활비, 둘째 법률상담과 소송지원, 셋째 심리상담, 넷째 예방교육, 다섯째 피해예방 무료보험입니다. 본인 상황에 맞는 항목을 골라 신청하실 수 있습니다"
       },
       {
         "section": "fact_3",
@@ -1698,7 +1519,7 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 놓치지 않습니다 설정 2 촬영 속도 속도 우선 카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 놓치지"
+        "context": "셋째 심리상담, 넷째 예방교육, 다섯째 피해예방 무료보험입니다 본인 상황에 맞는 항목을 골라 신청하실 수 있습니다 받을 수 있는 5가지 지원 첫째 생활비, 둘째 법률상담과 소송지원, 셋째 심리상담, 넷째 예방교육, 다섯째 피해예방 무료보험입니다. 본인 상황에 맞는 항목을 골라 신청하실 "
       },
       {
         "section": "fact_3",
@@ -1707,88 +1528,25 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 놓치지 않습니다 셋째, HDR을 직접 제어하시기 바랍니다 설정 2 촬영 속도 속도 우선 카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 놓치"
+        "context": "다섯째 피해예방 무료보험입니다 본인 상황에 맞는 항목을 골라 신청하실 수 있습니다 받을 수 있는 5가지 지원 첫째 생활비, 둘째 법률상담과 소송지원, 셋째 심리상담, 넷째 예방교육, 다섯째 피해예방 무료보험입니다. 본인 상황에 맞는 항목을 골라 신청하실 수 있습니다."
       },
       {
-        "section": "fact_3",
+        "section": "fact_4",
+        "chunk": 4,
+        "duplicate": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "에서, 추가 신고는 경찰청 전기통신금융사기 통합대응센터 counterscam112.go.kr 에서 가능합니다 만약 송금이 이뤄진 직후라면, 신청·신고 3개 채널 동시 활용 신청은 보이스피싱제로 공식 사이트 voicephisingzero.co.kr 에서, 추가 신고는 경찰청 전기통신금융사"
+      },
+      {
+        "section": "fact_4",
         "chunk": 5,
         "duplicate": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "피사체에서 타이밍을 놓치지 않습니다 셋째, HDR을 직접 제어하시기 바랍니다 HDR이 자동으로 적용되면서 설정 2 촬영 속도 속도 우선 카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 놓치지 않습니"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 6,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "셋째, HDR을 직접 제어하시기 바랍니다 HDR이 자동으로 적용되면서 색감이 이상해지는 문제를 끄거나 항상 설정 2 촬영 속도 속도 우선 카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 놓치지 않습"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 7,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "HDR이 자동으로 적용되면서 색감이 이상해지는 문제를 끄거나 항상 켬으로 직접 조절할 수 있습니다 설정 2 촬영 속도 속도 우선 카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 놓치지 않습니다. 셋"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 8,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "색감이 이상해지는 문제를 끄거나 항상 켬으로 직접 조절할 수 있습니다 설정 2 촬영 속도 속도 우선 카메라 설정의 고급 인텔리전스 옵션 촬영 속도 메뉴에서 속도 우선을 선택하시면, 아이와 반려동물, 스포츠처럼 움직이는 피사체에서 타이밍을 놓치지 않습니다. 셋째, HDR을 직접 제어하시기"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 1,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "넷째, 렌즈 자동 전환을 끄시기 바랍니다 줌을 조작할 때 망원과 초광각이 멋대로 설정 3·4·5 HDR·렌즈·셔터 직접 제어 넷째, 렌즈 자동 전환을 끄시기 바랍니다. 줌을 조작할 때 망원과 초광각이 멋대로 바뀌는 문제가 해결되고, 원하는 렌즈로 고정해 촬영하실 수 있습니다. 다섯째, "
-      },
-      {
-        "section": "fact_4",
-        "chunk": 2,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "넷째, 렌즈 자동 전환을 끄시기 바랍니다 줌을 조작할 때 망원과 초광각이 멋대로 바뀌는 문제가 해결되고, 설정 3·4·5 HDR·렌즈·셔터 직접 제어 넷째, 렌즈 자동 전환을 끄시기 바랍니다. 줌을 조작할 때 망원과 초광각이 멋대로 바뀌는 문제가 해결되고, 원하는 렌즈로 고정해 촬영하실"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 3,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "줌을 조작할 때 망원과 초광각이 멋대로 바뀌는 문제가 해결되고, 원하는 렌즈로 고정해 촬영하실 수 있습니다 설정 3·4·5 HDR·렌즈·셔터 직접 제어 넷째, 렌즈 자동 전환을 끄시기 바랍니다. 줌을 조작할 때 망원과 초광각이 멋대로 바뀌는 문제가 해결되고, 원하는 렌즈로 고정해 촬영하"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 4,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "바뀌는 문제가 해결되고, 원하는 렌즈로 고정해 촬영하실 수 있습니다 다섯째, 셔터 지연을 없애시기 바랍니다 설정 3·4·5 HDR·렌즈·셔터 직접 제어 넷째, 렌즈 자동 전환을 끄시기 바랍니다. 줌을 조작할 때 망원과 초광각이 멋대로 바뀌는 문제가 해결되고, 원하는 렌즈로 고정해 촬영하"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 6,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "다섯째, 셔터 지연을 없애시기 바랍니다 사진이 늦게 찍히는 문제가 해결되어, 셔터를 누르는 순간 즉시 캡처됩니다 설정 3·4·5 HDR·렌즈·셔터 직접 제어 넷째, 렌즈 자동 전환을 끄시기 바랍니다. 줌을 조작할 때 망원과 초광각이 멋대로 바뀌는 문제가 해결되고, 원하는 렌즈로 고정해 "
+        "context": "통합대응센터 counterscam112.go.kr 에서 가능합니다 만약 송금이 이뤄진 직후라면, 거래 은행에 지급정지 신청과 경찰 112, 신청·신고 3개 채널 동시 활용 신청은 보이스피싱제로 공식 사이트 voicephisingzero.co.kr 에서, 추가 신고는 경찰청 전기통신금융사"
       },
       {
         "section": "fact_4",
@@ -1797,14 +1555,14 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "사진이 늦게 찍히는 문제가 해결되어, 셔터를 누르는 순간 즉시 캡처됩니다 설정 3·4·5 HDR·렌즈·셔터 직접 제어 넷째, 렌즈 자동 전환을 끄시기 바랍니다. 줌을 조작할 때 망원과 초광각이 멋대로 바뀌는 문제가 해결되고, 원하는 렌즈로 고정해 촬영하실 수 있습니다. 다섯째, 셔터 지"
+        "context": "거래 은행에 지급정지 신청과 경찰 112, 금감원 1332에 동시 신고하시는 것이 가장 빠른 골든타임 대응입니다 신청·신고 3개 채널 동시 활용 신청은 보이스피싱제로 공식 사이트 voicephisingzero.co.kr 에서, 추가 신고는 경찰청 전기통신금융사기 통합대응센터 counte"
       }
     ]
   },
   "_codex_effective_script": {
     "version": 2,
-    "slug": "013_tip_galaxy_camera_hidden",
-    "source": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\013_tip_galaxy_camera_hidden\\shorts_script.json",
+    "slug": "014_scam_voicephishing_zero_relief",
+    "source": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\014_scam_voicephishing_zero_relief\\shorts_script.json",
     "override_applied": false,
     "override_sections": []
   }

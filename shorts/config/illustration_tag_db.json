@@ -1234,10 +1234,11 @@
         "사업"
       ],
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "note": "자동 발굴 개념: 시작된 지원",
-      "available": false
+      "available": true
     },
     "cpt_75c6eba6": {
       "keywords": [
@@ -1246,10 +1247,11 @@
         "시부터"
       ],
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "note": "자동 발굴 개념: 월요일 오전",
-      "available": false
+      "available": true
     },
     "cpt_6a2e9678": {
       "keywords": [
@@ -1258,10 +1260,11 @@
         "금융감독원"
       ],
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "note": "자동 발굴 개념: 사업 신한은행",
-      "available": false
+      "available": true
     },
     "cpt_ea7bc1d6": {
       "keywords": [
@@ -1269,10 +1272,11 @@
         "사회복지공동모금회"
       ],
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "note": "자동 발굴 개념: 경찰청 사회복지공동모금회",
-      "available": false
+      "available": true
     },
     "cpt_83fa1e9f": {
       "keywords": [
@@ -1281,10 +1285,11 @@
         "금융사기"
       ],
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "note": "자동 발굴 개념: 굿네이버스 전기통신",
-      "available": false
+      "available": true
     },
     "cpt_55c40fb8": {
       "keywords": [
@@ -1355,5 +1360,5 @@
       "available": false
     }
   },
-  "updated_at": "2026-06-07T16:05:07"
+  "updated_at": "2026-06-07T16:16:59"
 }

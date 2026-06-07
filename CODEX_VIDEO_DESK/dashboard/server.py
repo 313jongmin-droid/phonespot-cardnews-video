@@ -37,7 +37,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v21"
+PANEL_VERSION = "phonespot-web-v22"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -1631,6 +1631,15 @@ class Handler(BaseHTTPRequestHandler):
                 else:
                     json_response(self, {"ok": True, "message": "라이브러리 백업 완료 — 실행 로그에서 위치/개수를 확인하세요."})
                 return
+            if action == "producer_check":
+                # 이 PC가 카드뉴스 생성 + 영상 렌더를 모두 독립으로 할 수 있는지 자원 점검. 결과는 실행 로그에.
+                ok = run_job("환경 점검(풀-생산기 자원)",
+                             [[sys.executable, str(SCRIPTS / "codex_producer_check.py")]], SHORTS)
+                if not ok:
+                    json_response(self, {"ok": False, "busy": True, "message": "이미 다른 작업이 실행 중입니다. 끝난 뒤 다시 눌러주세요."})
+                else:
+                    json_response(self, {"ok": True, "message": "환경 점검 실행 — 실행 로그에서 PASS/FAIL을 확인하세요."})
+                return
             if action == "video_prepare":
                 slug = validate_slug(slug)
                 commands = [
@@ -2117,6 +2126,7 @@ INDEX_HTML = r"""<!doctype html>
             <button class="btn" onclick="runAction('library_dedup')"><strong>라이브러리 중복 점검</strong><span>비슷한 그림 리포트(읽기전용). 정리는 라이브러리_중복정리.bat --apply.</span></button>
             <button class="btn" onclick="runAction('library_backup')"><strong>라이브러리 백업</strong><span>일러스트+태그DB 타임스탬프 스냅샷(회전보관).</span></button>
             <button class="btn" onclick="chooseUpload('illustration')"><strong>일러스트 웹 업로드</strong><span>다른 PC에서 만든 일러스트를 드롭 폴더에 올립니다.</span></button>
+            <button class="btn" onclick="runAction('producer_check')"><strong>환경 점검</strong><span>이 PC가 카드뉴스+영상 렌더를 독립으로 할 수 있는지(노드·렌더러·폰트·임베딩) 확인. 결과는 실행 로그.</span></button>
             <button class="btn" onclick="runAction('system_update')"><strong>시스템 업데이트</strong><span>GitHub에서 최신 코드만 받아옵니다(결과물 안 건드림).</span></button>
           </div>
         </div>

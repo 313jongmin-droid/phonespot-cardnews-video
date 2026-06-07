@@ -1,60 +1,100 @@
 {
-  "slug": "013_tip_galaxy_camera_hidden",
-  "engine": "none",
-  "generated_at": 1780814061.559797,
+  "slug": "014_scam_voicephishing_zero_relief",
+  "engine": "fallback-mtime",
+  "generated_at": 1780816580.3956735,
   "requests": [
     {
-      "filename": "cpt_fa7ce644.png",
-      "variant": "cpt_fa7ce644",
-      "section": "fact_1",
-      "chunk_index": 0,
-      "concept_label": "핵심 굿락",
+      "filename": "cpt_fd9edf65.png",
+      "variant": "cpt_fd9edf65",
+      "section": "hook",
+      "chunk_index": 3,
+      "concept_label": "시작된 지원",
       "optional": true,
-      "concept_text": "핵심 굿락 cpt fa7ce644 핵심 굿락 안에 있는 카메라 auto concept 핵심은 굿락 앱 안에 있는 카메라 어시스턴트 모듈입니다"
+      "concept_text": "시작된 지원 cpt fd9edf65 시작된 지원 사업 auto concept 다시 시작된 지원 사업을 확인하시기 바랍니다"
     },
     {
-      "filename": "cpt_ea93eb2b.png",
-      "variant": "cpt_ea93eb2b",
+      "filename": "cpt_75c6eba6.png",
+      "variant": "cpt_75c6eba6",
+      "section": "fact_1",
+      "chunk_index": 0,
+      "concept_label": "월요일 오전",
+      "optional": true,
+      "concept_text": "월요일 오전 cpt 75c6eba6 월요일 오전 시부터 auto concept 2026년 6월 1일 월요일 오전 10시부터"
+    },
+    {
+      "filename": "cpt_6a2e9678.png",
+      "variant": "cpt_6a2e9678",
+      "section": "fact_1",
+      "chunk_index": 3,
+      "concept_label": "사업 신한은행",
+      "optional": true,
+      "concept_text": "사업 신한은행 cpt 6a2e9678 사업 신한은행 금융감독원 auto concept 이 사업은 신한은행이 금융감독원,"
+    },
+    {
+      "filename": "cpt_ea7bc1d6.png",
+      "variant": "cpt_ea7bc1d6",
       "section": "fact_1",
       "chunk_index": 4,
-      "concept_label": "지원 기종",
+      "concept_label": "경찰청 사회복지공동모금회",
       "optional": true,
-      "concept_text": "지원 기종 cpt ea93eb2b 지원 기종 auto concept 지원 기종은 갤럭시 S22 이상,"
+      "concept_text": "경찰청 사회복지공동모금회 cpt ea7bc1d6 경찰청 사회복지공동모금회 auto concept 경찰청, 사회복지공동모금회,"
     },
     {
-      "filename": "cpt_0ddb8d80.png",
-      "variant": "cpt_0ddb8d80",
+      "filename": "cpt_83fa1e9f.png",
+      "variant": "cpt_83fa1e9f",
       "section": "fact_1",
       "chunk_index": 5,
-      "concept_label": "폴드 플립",
+      "concept_label": "굿네이버스 전기통신",
       "optional": true,
-      "concept_text": "폴드 플립 cpt 0ddb8d80 폴드 플립 auto concept Z 폴드와 플립 2 이상,"
-    },
-    {
-      "filename": "cpt_5cd81fce.png",
-      "variant": "cpt_5cd81fce",
-      "section": "fact_1",
-      "chunk_index": 6,
-      "concept_label": "노트 시리즈",
-      "optional": true,
-      "concept_text": "노트 시리즈 cpt 5cd81fce 노트 시리즈 auto concept 노트 20, FE 시리즈 One UI 6.0 이상입니다"
-    },
-    {
-      "filename": "cpt_0a1ac199.png",
-      "variant": "cpt_0a1ac199",
-      "section": "fact_2",
-      "chunk_index": 0,
-      "concept_label": "첫째 버튼",
-      "optional": true,
-      "concept_text": "첫째 버튼 cpt 0a1ac199 첫째 버튼 auto concept 첫째, 2배 줌 버튼을 활성화하시기 바랍니다"
+      "concept_text": "굿네이버스 전기통신 cpt 83fa1e9f 굿네이버스 전기통신 금융사기 auto concept 굿네이버스와 함께 전기통신 금융사기"
     }
   ],
-  "assignments": [],
-  "unmatched_requests": [
-    "cpt_fa7ce644.png",
-    "cpt_ea93eb2b.png",
-    "cpt_0ddb8d80.png",
-    "cpt_5cd81fce.png",
-    "cpt_0a1ac199.png"
-  ]
+  "assignments": [
+    {
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 7일 오후 04_15_55 (1).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 7일 오후 04_15_55 (1).png",
+      "proposed_filename": "cpt_fd9edf65.png",
+      "confidence": null,
+      "exact_name": false,
+      "alternatives": [],
+      "dedup": null
+    },
+    {
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 7일 오후 04_15_55 (2).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 7일 오후 04_15_55 (2).png",
+      "proposed_filename": "cpt_75c6eba6.png",
+      "confidence": null,
+      "exact_name": false,
+      "alternatives": [],
+      "dedup": null
+    },
+    {
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 7일 오후 04_15_55 (3).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 7일 오후 04_15_55 (3).png",
+      "proposed_filename": "cpt_6a2e9678.png",
+      "confidence": null,
+      "exact_name": false,
+      "alternatives": [],
+      "dedup": null
+    },
+    {
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 7일 오후 04_15_56 (4).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 7일 오후 04_15_56 (4).png",
+      "proposed_filename": "cpt_ea7bc1d6.png",
+      "confidence": null,
+      "exact_name": false,
+      "alternatives": [],
+      "dedup": null
+    },
+    {
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 7일 오후 04_15_56 (5).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 7일 오후 04_15_56 (5).png",
+      "proposed_filename": "cpt_83fa1e9f.png",
+      "confidence": null,
+      "exact_name": false,
+      "alternatives": [],
+      "dedup": null
+    }
+  ],
+  "unmatched_requests": []
 }
