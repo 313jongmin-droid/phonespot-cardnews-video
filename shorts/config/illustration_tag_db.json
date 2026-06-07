@@ -1285,7 +1285,17 @@
       ],
       "note": "자동 발굴 개념: 굿네이버스 전기통신",
       "available": false
+    },
+    "cpt_55c40fb8": {
+      "keywords": [
+        "사용할"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 사용할",
+      "available": false
     }
   },
-  "updated_at": "2026-06-07T10:56:43"
+  "updated_at": "2026-06-07T15:05:12"
 }

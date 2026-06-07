@@ -15,18 +15,22 @@
 | `call_recording_notice` | library | 1 | 010_tip_iphone_call_record |
 | `chart_down` | price, data, decrease, library | 2 | 014_scam_voicephishing_zero_relief |
 | `chart_up` | price, data, increase, library | 2 | 014_scam_voicephishing_zero_relief |
-| `chat_backup_restore` | messenger, backup, restore, tips, library | 2 | 014_scam_voicephishing_zero_relief |
-| `chatbot` | ai, assistant, software, library | 4 | 014_scam_voicephishing_zero_relief |
+| `chat_backup_restore` | messenger, backup, restore, tips, library | 2 | 010_tip_iphone_call_record |
+| `chatbot` | ai, assistant, software, library | 4 | 010_tip_iphone_call_record |
 | `clock` | time, tips, library | 3 | 014_scam_voicephishing_zero_relief |
 | `cloud_backup` | security, privacy, cloud, library | 2 | 014_scam_voicephishing_zero_relief |
 | `cover_screen_widgets` | library | 1 | 014_scam_voicephishing_zero_relief |
 | `cpt_1a196d6d` | auto | 0 |  |
 | `cpt_313e9e00` | auto | 0 |  |
 | `cpt_3317f8c6` | auto | 0 |  |
+| `cpt_55c40fb8` | auto | 0 |  |
 | `cpt_6174b190` | auto | 0 |  |
 | `cpt_64b80bba` | auto | 0 |  |
+| `cpt_6a2e9678` | auto | 0 |  |
 | `cpt_6ec7317d` | auto | 0 |  |
+| `cpt_75c6eba6` | auto | 0 |  |
 | `cpt_7a87dd35` | auto | 0 |  |
+| `cpt_83fa1e9f` | auto | 0 |  |
 | `cpt_8b587f6c` | auto | 0 |  |
 | `cpt_8d09d703` | auto | 0 |  |
 | `cpt_a0d7df46` | auto | 0 |  |
@@ -34,11 +38,13 @@
 | `cpt_ca558dbc` | auto | 0 |  |
 | `cpt_d877aced` | auto | 0 |  |
 | `cpt_dff91a6d` | auto | 0 |  |
+| `cpt_ea7bc1d6` | auto | 0 |  |
 | `cpt_f14977dc` | auto | 0 |  |
 | `cpt_f35df68f` | auto | 0 |  |
 | `cpt_f5cc7e27` | auto | 0 |  |
 | `cpt_f7997fd3` | auto | 0 |  |
-| `device_data_transfer` | device, migration, backup, tips, library | 2 | 014_scam_voicephishing_zero_relief |
+| `cpt_fd9edf65` | auto | 0 |  |
+| `device_data_transfer` | device, migration, backup, tips, library | 2 | 010_tip_iphone_call_record |
 | `device_os_requirement` | library | 1 | 014_scam_voicephishing_zero_relief |
 | `device_price_rise` | price, increase, device | 0 |  |
 | `display_ratio_change` | library | 0 |  |
@@ -46,24 +52,24 @@
 | `fake_government_page` | security, smishing, government, warning | 0 |  |
 | `final_update` | software, update, library | 2 | 012_news_galaxy_unpack_july |
 | `foldable` | hardware, foldable, library | 1 | 012_news_galaxy_unpack_july |
-| `forecast` | news, forecast, library | 4 | 012_news_galaxy_unpack_july |
+| `forecast` | news, forecast, library | 4 | 010_tip_iphone_call_record |
 | `gemini` | ai, assistant, google, library | 2 | 010_tip_iphone_call_record |
 | `gift_prohibit` | price, security, warning, library | 0 |  |
-| `gift_voucher` | price, subsidy, purchase, library | 4 | 014_scam_voicephishing_zero_relief |
+| `gift_voucher` | price, subsidy, purchase, library | 4 | 010_tip_iphone_call_record |
 | `handshake` | policy, access, partnership, library | 1 | 001_apple_ondevice_ai_wwdc26 |
 | `health_sensor_watch` | library | 2 | 012_news_galaxy_unpack_july |
 | `heat_release` | battery, heat, hardware, library | 0 |  |
-| `impersonation_call` | security, voice-phishing, call, warning, library | 2 | 014_scam_voicephishing_zero_relief |
+| `impersonation_call` | security, voice-phishing, call, warning, library | 2 | 010_tip_iphone_call_record |
 | `launch_event` | library | 0 |  |
 | `liquid_titanium` | materials, hardware, library | 0 |  |
 | `lock` | security, privacy, lock, library | 1 | 001_apple_ondevice_ai_wwdc26 |
 | `logout` | security, privacy, account, library | 0 |  |
 | `market_cap` | price, data, market, library | 1 | 014_scam_voicephishing_zero_relief |
-| `meeting_room` | policy, news, strategy, library | 4 | 012_news_galaxy_unpack_july |
+| `meeting_room` | policy, news, strategy, library | 4 | 010_tip_iphone_call_record |
 | `memory_chip` | ai, hardware, chip, library | 2 | 010_tip_iphone_call_record |
-| `microphone` | news, quote, library | 4 | 012_news_galaxy_unpack_july |
+| `microphone` | news, quote, library | 4 | 010_tip_iphone_call_record |
 | `module_install` | library | 0 |  |
-| `newspaper` | news, source, library | 4 | 012_news_galaxy_unpack_july |
+| `newspaper` | news, source, library | 4 | 010_tip_iphone_call_record |
 | `nfc_open_access` | payment, nfc, access | 0 |  |
 | `nfc_pay` | payment, nfc, access, library | 0 |  |
 | `official_site_check` | security, official-site, check | 0 |  |
@@ -71,8 +77,8 @@
 | `optimized_charging` | battery, charging, tips, library | 0 |  |
 | `password` | security, privacy, authentication, library | 0 |  |
 | `personal_data_leak` | security, privacy, leak | 0 |  |
-| `phone_settings_toggle` | library | 2 | 012_news_galaxy_unpack_july |
-| `phone_setup_ready` | library | 2 | 012_news_galaxy_unpack_july |
+| `phone_settings_toggle` | library | 2 | 010_tip_iphone_call_record |
+| `phone_setup_ready` | library | 2 | 010_tip_iphone_call_record |
 | `plan_price_tier_compare` | price, plan, compare, telecom | 0 |  |
 | `price_hike` | price, increase, library | 0 |  |
 | `prohibit` | security, warning, restriction, library | 1 | 010_tip_iphone_call_record |
@@ -84,8 +90,8 @@
 | `secure_app_reregistration` | security, bank, authentication, setup, library | 0 |  |
 | `security_feature_lock` | library | 0 |  |
 | `settings_steps` | library | 0 |  |
-| `shield` | security, privacy, protection, library | 4 | 012_news_galaxy_unpack_july |
-| `smartphone` | device, purchase, cta, library | 5 | 014_scam_voicephishing_zero_relief |
+| `shield` | security, privacy, protection, library | 4 | 010_tip_iphone_call_record |
+| `smartphone` | device, purchase, cta, library | 5 | 010_tip_iphone_call_record |
 | `smishing_fake_link` | security, smishing, warning, link | 0 |  |
 | `stock_chart` | price, data, market, library | 0 |  |
 | `store` | store, purchase, cta, library | 3 | 014_scam_voicephishing_zero_relief |
@@ -98,8 +104,8 @@
 
 ## Recent videos
 
+- `010_tip_iphone_call_record`: phone_settings_toggle, phone_setup_ready, smartphone, device_data_transfer, newspaper, microphone, shield, call_recording_notice, meeting_room, forecast, recording_archive, impersonation_call, chat_backup_restore, samsung_ai, prohibit, warning, gemini, memory_chip, chatbot, gift_voucher
 - `014_scam_voicephishing_zero_relief`: device_os_requirement, impersonation_call, battery_charge_range, battery_overheat, aluminum_label, appliance, store, smartphone, market_cap, gift_voucher, biometric, chart_down, chart_up, chat_backup_restore, chatbot, emergency_account_freeze, clock, cloud_backup, cover_screen_widgets, device_data_transfer
 - `012_news_galaxy_unpack_july`: smartphone, newspaper, microphone, shield, meeting_room, forecast, foldable, final_update, phone_settings_toggle, phone_setup_ready, health_sensor_watch, gift_voucher, chatbot, telecom_discount_compare, store
 - `011_qa_combo_discount_check`: smartphone, newspaper, telecom_discount_compare, microphone, shield, meeting_room, forecast, clock, gift_voucher, chart_down, ti_decrease, store, health_sensor_watch
-- `010_tip_iphone_call_record`: phone_settings_toggle, phone_setup_ready, smartphone, device_data_transfer, newspaper, microphone, shield, call_recording_notice, meeting_room, forecast, recording_archive, impersonation_call, chat_backup_restore, prohibit, warning, samsung_ai, chatbot, gemini, memory_chip, gift_voucher
 - `001_apple_ondevice_ai_wwdc26`: newspaper, chatbot, chart_up, memory_chip, lock, meeting_room, shield, samsung_ai, gemini, final_update, handshake, clock, microphone, forecast, cloud_backup, aluminum_label, appliance, smartphone

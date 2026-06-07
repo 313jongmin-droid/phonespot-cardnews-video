@@ -37,7 +37,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v19"
+PANEL_VERSION = "phonespot-web-v20"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -938,6 +938,35 @@ def adjust_chunk_boundary(slug: str, section: str, chunk_index: int, op: str) ->
 
     while len(visuals) > len(chunks):
         visuals.pop()
+    return save_chunk_override(slug, section, sec, chunks, display_chunks, visuals)
+
+
+def set_section_chunks(slug: str, section: str, raw_text: str) -> Path:
+    """사용자가 직접 끊은 자막 경계를 적용한다. 각 줄 = 자막 1개.
+    글자(단어)는 나레이션과 동일해야 한다 → 렌더가 edge-tts 단어 경계에 다시 맞추므로
+    끊는 위치만 바꾸면 TTS/화면 싱크는 안 깨진다. 글자가 달라지면 거부한다."""
+    path = script_path_for_slug(slug)
+    data = json.loads(path.read_text(encoding="utf-8", errors="replace"))
+    apply_chunk_overrides(data, slug)
+    sec = get_section_obj(data, section)
+    old_chunks = [normalize_caption_chunk(value) for value in sec.get("caption_chunks") or []]
+    new_lines = [ln.strip() for ln in str(raw_text or "").replace("\r", "").split("\n") if ln.strip()]
+    if not new_lines:
+        raise RuntimeError("내용이 비었습니다. 최소 한 줄(=자막 1개)이 필요합니다.")
+
+    def _norm(s: str) -> str:
+        return re.sub(r"[^0-9A-Za-z가-힣]+", "", str(s))
+
+    narration = str(sec.get("tts") or "").strip()
+    ref = narration if narration else " ".join(flatten_chunk_text(c) for c in old_chunks)
+    if _norm("".join(new_lines)) != _norm(ref):
+        raise RuntimeError("글자가 나레이션과 달라졌습니다. 줄바꿈(끊는 위치)만 바꾸고 글자는 그대로 두세요.")
+
+    chunks = new_lines
+    display_chunks = [normalize_display_chunk(value) for value in chunks]
+    visuals = sec.get("chunk_visuals") or []
+    visuals = [dict(v) if isinstance(v, dict) else fallback_visual(sec, [], 0) for v in visuals]
+    visuals = remap_visuals(sec, old_chunks, visuals, chunks)
     return save_chunk_override(slug, section, sec, chunks, display_chunks, visuals)
 
 
@@ -1910,6 +1939,14 @@ class Handler(BaseHTTPRequestHandler):
                 path = adjust_chunk_boundary(slug, section, chunk_index, op)
                 json_response(self, {"ok": True, "path": str(path)})
                 return
+            if action == "set_section_chunks":
+                try:
+                    slug = validate_slug(data.get("slug") or latest_slug())
+                    path = set_section_chunks(slug, data.get("section") or "", data.get("text") or "")
+                    json_response(self, {"ok": True, "path": str(path)})
+                except Exception as exc:  # noqa: BLE001
+                    json_response(self, {"ok": False, "message": str(exc)})
+                return
             if action == "telegram_card_summary":
                 ok = telegram_send(cardnews_summary())
                 if not ok:
@@ -2097,7 +2134,7 @@ INDEX_HTML = r"""<!doctype html>
         </div>
       </section>
       <section>
-        <div class="head"><h2>상태</h2><span class="small" id="jobText">대기 중</span></div>
+        <div class="head"><h2>상태</h2><div style="display:flex;gap:8px;align-items:center"><span class="small" id="jobText">대기 중</span><button class="mini-btn" id="statusCancelButton" onclick="cancelRemoteJob()" style="display:none">중도 취소</button></div></div>
         <div class="pad status">
           <div class="metric slug"><span class="small" id="metric1Label">선택 슬러그</span><b id="latestSlug">-</b></div>
           <div class="metric"><span class="small" id="metric2Label">상태</span><b id="requestCount">-</b></div>
@@ -2132,8 +2169,16 @@ INDEX_HTML = r"""<!doctype html>
         </div>
         <div id="chunkPanel" class="chunk-panel">
           <div class="head"><h2>청크 경계 편집</h2><button onclick="toggleChunkPanel()">닫기</button></div>
-          <div class="pad small">문장 내용과 TTS는 유지합니다. 자동 보정은 한국어 문맥 기준으로 청크를 다시 나누고, 렌더 때 실제 TTS 단어 시간에 다시 맞춥니다.</div>
+          <div class="pad small">문장 내용과 TTS는 유지합니다. "직접 끊기"로 원하는 위치에서 자막을 끊을 수 있고, 렌더 때 실제 TTS 단어 시간에 다시 맞춰져 싱크는 그대로입니다.</div>
           <div class="pad small" id="chunkMessage"></div>
+          <div id="manualSplitBox" class="pad" style="display:none;border-top:1px solid var(--line);background:#fffef7">
+            <div class="small" style="margin-bottom:6px">직접 끊기 — <b id="manualSplitSection"></b> · <b>줄바꿈(Enter)이 자막을 끊는 지점</b>입니다. 글자는 그대로 두고 위치만 바꾸세요.</div>
+            <textarea id="manualSplitText" style="width:100%;min-height:150px;border:1px solid var(--line);border-radius:8px;padding:10px;font-size:13px;line-height:1.7;font-family:inherit"></textarea>
+            <div style="margin-top:8px;display:flex;gap:8px">
+              <button class="mini-btn" onclick="applyManualSplit()">이대로 적용</button>
+              <button class="mini-btn" onclick="cancelManualSplit()">취소</button>
+            </div>
+          </div>
           <div class="weak-scroll">
             <table class="chunk-table">
               <thead><tr><th>구간</th><th>청크 문구</th><th>visual</th><th>작업</th></tr></thead>
@@ -2754,6 +2799,7 @@ INDEX_HTML = r"""<!doctype html>
         const body = document.getElementById("chunkRows");
         body.innerHTML = "";
         const rows = data.rows || [];
+        window.__chunkRows = rows;
         if (!rows.length) {
           body.innerHTML = "<tr><td colspan='4'>청크가 없습니다. 먼저 영상 이미지 프롬프트 준비를 실행하세요.</td></tr>";
         }
@@ -2761,7 +2807,7 @@ INDEX_HTML = r"""<!doctype html>
           const tr = document.createElement("tr");
           const overrideBadge = r.override ? "<br><span class='pill ok'>편집본</span>" : "";
           const rebalanceButton = r.section_first
-            ? `<button class="mini-btn" onclick="adjustChunk('${escapeJs(r.section)}', 0, 'rebalance_section')">구간 자동 보정</button>`
+            ? `<button class="mini-btn" onclick="openManualSplit('${escapeJs(r.section)}')">✏ 직접 끊기</button> <button class="mini-btn" onclick="adjustChunk('${escapeJs(r.section)}', 0, 'rebalance_section')">구간 자동 보정</button>`
             : "";
           const mergePrevDisabled = r.can_merge_prev ? "" : "disabled title='첫 청크이거나 합친 문장이 너무 깁니다.'";
           const mergeNextDisabled = r.can_merge_next ? "" : "disabled title='마지막 청크이거나 합친 문장이 너무 깁니다.'";
@@ -2786,6 +2832,29 @@ INDEX_HTML = r"""<!doctype html>
     function toggleChunkPanel() {
       const panel = document.getElementById("chunkPanel");
       panel.style.display = panel.style.display === "block" ? "none" : "block";
+    }
+    function openManualSplit(section) {
+      const rows = (window.__chunkRows || []).filter(r => r.section === section);
+      const text = rows.map(r => String(r.text || "").replace(/\s+/g, " ").trim()).join("\n");
+      const box = document.getElementById("manualSplitBox");
+      document.getElementById("manualSplitSection").textContent = section;
+      document.getElementById("manualSplitText").value = text;
+      box.dataset.section = section;
+      box.style.display = "block";
+      box.scrollIntoView({ block: "nearest" });
+    }
+    function cancelManualSplit() { document.getElementById("manualSplitBox").style.display = "none"; }
+    async function applyManualSplit() {
+      const box = document.getElementById("manualSplitBox");
+      const section = box.dataset.section || "";
+      const text = document.getElementById("manualSplitText").value;
+      try {
+        const r = await api("/api/action", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({action:"set_section_chunks", slug:selected, section, text}) });
+        if (!r.ok) { alert(r.message || "적용하지 못했습니다."); return; }
+        box.style.display = "none";
+        alert("끊기를 적용했습니다. 다음 렌더부터 반영됩니다.");
+        await showChunks();
+      } catch (err) { alert("적용 실패: " + String(err)); }
     }
     async function adjustChunk(section, chunkIndex, op) {
       const message = document.getElementById("chunkMessage");
@@ -2821,6 +2890,22 @@ INDEX_HTML = r"""<!doctype html>
         try { document.execCommand("copy"); alert("실행 로그를 전체 복사했습니다."); }
         finally { t.remove(); }
       }
+    }
+    function renderProgress(log) {
+      if (!log) return "";
+      let p = "";
+      const lines = String(log).split("\n");
+      for (const ln of lines) {
+        let m;
+        if (m = ln.match(/----- Step (\d+\/\d+)[:：]?\s*(.*?)-----/)) p = "단계 " + m[1] + (m[2] && m[2].trim() ? " · " + m[2].trim() : "");
+        else if (m = ln.match(/\[render\]\s*(\d+)%/)) p = "프레임 렌더 " + m[1] + "%";
+        else if (ln.indexOf("frame=") >= 0 && (m = ln.match(/frame=\s*(\d+)/)) && /speed=\s*([\d.]+x)/.test(ln)) p = "인코딩 " + m[1] + "프레임 (" + ln.match(/speed=\s*([\d.]+x)/)[1] + ")";
+        else if (ln.indexOf("[CLAIMED]") >= 0) p = "워커 배정됨";
+        else if (ln.indexOf("[DOWNLOAD]") >= 0) p = "준비 중";
+        else if (ln.indexOf("[UPLOAD]") >= 0 || ln.indexOf("[LOCAL]") >= 0) p = "결과 정리 중";
+        else if (ln.indexOf("[OK] Final MP4") >= 0 || ln.indexOf("DONE.") >= 0) p = "마무리 중";
+      }
+      return p;
     }
     function escapeHtml(s) {
       return String(s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));

@@ -1,60 +1,60 @@
 {
-  "slug": "014_scam_voicephishing_zero_relief",
+  "slug": "010_tip_iphone_call_record",
   "engine": "none",
-  "generated_at": 1780797479.3174493,
+  "generated_at": 1780812413.6944308,
   "requests": [
     {
-      "filename": "cpt_fd9edf65.png",
-      "variant": "cpt_fd9edf65",
-      "section": "hook",
-      "chunk_index": 3,
-      "concept_label": "시작된 지원",
+      "filename": "cpt_3317f8c6.png",
+      "variant": "cpt_3317f8c6",
+      "section": "fact_2",
+      "chunk_index": 2,
+      "concept_label": "모델",
       "optional": true,
-      "concept_text": "시작된 지원 cpt fd9edf65 시작된 지원 사업 auto concept 다시 시작된 지원 사업을 확인하시기 바랍니다"
+      "concept_text": "모델 cpt 3317f8c6 모델 auto concept 모델과 iOS 18.1 이상 버전에서만 사용 가능합니다"
     },
     {
-      "filename": "cpt_75c6eba6.png",
-      "variant": "cpt_75c6eba6",
-      "section": "fact_1",
+      "filename": "cpt_bf3a83cf.png",
+      "variant": "cpt_bf3a83cf",
+      "section": "fact_4",
       "chunk_index": 0,
-      "concept_label": "월요일 오전",
+      "concept_label": "현재 자체",
       "optional": true,
-      "concept_text": "월요일 오전 cpt 75c6eba6 월요일 오전 시부터 auto concept 2026년 6월 1일 월요일 오전 10시부터"
+      "concept_text": "현재 자체 cpt bf3a83cf 현재 자체 서비스 auto concept KT는 현재 자체 서비스가"
     },
     {
-      "filename": "cpt_6a2e9678.png",
-      "variant": "cpt_6a2e9678",
-      "section": "fact_1",
+      "filename": "cpt_ca558dbc.png",
+      "variant": "cpt_ca558dbc",
+      "section": "fact_4",
+      "chunk_index": 1,
+      "concept_label": "미지원이지 SKT",
+      "optional": true,
+      "concept_text": "미지원이지 SKT cpt ca558dbc 미지원이지 SKT auto concept 미지원이지만, SKT와 LGU+"
+    },
+    {
+      "filename": "cpt_1a196d6d.png",
+      "variant": "cpt_1a196d6d",
+      "section": "fact_4",
+      "chunk_index": 2,
+      "concept_label": "가입자 통화",
+      "optional": true,
+      "concept_text": "가입자 통화 cpt 1a196d6d 가입자 통화 요약 번역 auto concept 가입자는 AI 통화 요약과 번역 기능까지"
+    },
+    {
+      "filename": "cpt_55c40fb8.png",
+      "variant": "cpt_55c40fb8",
+      "section": "fact_4",
       "chunk_index": 3,
-      "concept_label": "사업 신한은행",
+      "concept_label": "사용할",
       "optional": true,
-      "concept_text": "사업 신한은행 cpt 6a2e9678 사업 신한은행 금융감독원 auto concept 이 사업은 신한은행이 금융감독원,"
-    },
-    {
-      "filename": "cpt_ea7bc1d6.png",
-      "variant": "cpt_ea7bc1d6",
-      "section": "fact_1",
-      "chunk_index": 4,
-      "concept_label": "경찰청 사회복지공동모금회",
-      "optional": true,
-      "concept_text": "경찰청 사회복지공동모금회 cpt ea7bc1d6 경찰청 사회복지공동모금회 auto concept 경찰청, 사회복지공동모금회,"
-    },
-    {
-      "filename": "cpt_83fa1e9f.png",
-      "variant": "cpt_83fa1e9f",
-      "section": "fact_1",
-      "chunk_index": 5,
-      "concept_label": "굿네이버스 전기통신",
-      "optional": true,
-      "concept_text": "굿네이버스 전기통신 cpt 83fa1e9f 굿네이버스 전기통신 금융사기 auto concept 굿네이버스와 함께 전기통신 금융사기"
+      "concept_text": "사용할 cpt 55c40fb8 사용할 auto concept 함께 사용할 수 있습니다"
     }
   ],
   "assignments": [],
   "unmatched_requests": [
-    "cpt_fd9edf65.png",
-    "cpt_75c6eba6.png",
-    "cpt_6a2e9678.png",
-    "cpt_ea7bc1d6.png",
-    "cpt_83fa1e9f.png"
+    "cpt_3317f8c6.png",
+    "cpt_bf3a83cf.png",
+    "cpt_ca558dbc.png",
+    "cpt_1a196d6d.png",
+    "cpt_55c40fb8.png"
   ]
 }
