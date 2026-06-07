@@ -37,7 +37,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v17"
+PANEL_VERSION = "phonespot-web-v18"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -2079,15 +2079,16 @@ INDEX_HTML = r"""<!doctype html>
           </div>
         </div>
         <div id="cardActions" class="pad grid" style="display:none">
-          <button class="btn" onclick="reloadLists()"><strong>1. 후보 새로고침</strong><span>cardnews/articles, images, output 폴더를 다시 스캔합니다. 외부 뉴스 수집 실행은 아직 붙이지 않았습니다.</span></button>
-          <button class="btn" onclick="runAction('telegram_card_summary')"><strong>후보 현황 텔레그램</strong><span>현재 카드뉴스 후보와 상태를 텔레그램으로 보냅니다.</span></button>
-          <button class="btn primary" onclick="openCardPrompt()"><strong>2. 이미지 프롬프트 보기</strong><span>선택한 카드뉴스의 images/&lt;slug&gt;/prompt.md를 브라우저에서 확인합니다.</span></button>
-          <button class="btn" onclick="runAction('open_card_images')"><strong>3. 이미지 업로드 폴더</strong><span>1.png~5.png를 넣을 카드뉴스 이미지 폴더를 엽니다.</span></button>
-          <button class="btn" onclick="chooseUpload('card')"><strong>3-1. 이미지 웹 업로드</strong><span>다른 PC에서도 카드 이미지를 선택 항목에 바로 올립니다.</span></button>
-          <button class="btn primary" onclick="openCardImportReview()"><strong>3-2. 이미지 자동 배정(검수)</strong><span>다운로드한 GPT 이미지를 슬라이드 내용으로 자동 배정 제안 → 확인하고 1~5.png로 넣습니다.</span></button>
-          <button class="btn primary" onclick="runAction('card_render')"><strong>4. 카드뉴스 생성</strong><span>기존 카드뉴스 렌더러를 실행해 1x1, 4x5, 9x16 카드와 captions.md를 생성합니다.</span></button>
-          <button class="btn" onclick="runAction('open_card_result')"><strong>5. 카드뉴스 결과 확인</strong><span>완성된 카드뉴스 output 폴더를 엽니다.</span></button>
-          <button class="btn primary" onclick="runAction('card_to_video')"><strong>6. 영상으로 넘기기</strong><span>완성된 카드뉴스를 Codex 숏폼 영상 준비 단계로 넘깁니다.</span></button>
+          <button class="btn" onclick="reloadLists()"><strong>1. 후보 새로고침</strong><span>articles·images·output 폴더를 다시 스캔합니다.</span></button>
+          <button class="btn primary" onclick="openCardPrompt()"><strong>2. 이미지 프롬프트 보기</strong><span>선택한 카드뉴스의 images/&lt;slug&gt;/prompt.md를 엽니다.</span></button>
+          <button class="btn" onclick="runAction('open_card_images')"><strong>3. 이미지 업로드 폴더</strong><span>1.png~5.png를 넣을 카드 이미지 폴더.</span></button>
+          <button class="btn" onclick="chooseUpload('card')"><strong>3-1. 이미지 웹 업로드</strong><span>다른 PC에서도 카드 이미지를 바로 올립니다.</span></button>
+          <button class="btn primary" onclick="openCardImportReview()"><strong>3-2. 이미지 자동 배정(검수)</strong><span>다운로드 그림을 슬라이드 내용으로 1~5.png에 자동 배정.</span></button>
+          <button class="btn primary" onclick="runAction('card_render')"><strong>4. 카드뉴스 생성</strong><span>1x1·4x5·9x16 카드와 captions.md를 생성합니다.</span></button>
+          <button class="btn" onclick="runAction('open_card_result')"><strong>5. 결과 확인</strong><span>완성된 카드뉴스 output 폴더를 엽니다.</span></button>
+          <button class="btn primary" onclick="runAction('card_to_video')"><strong>6. 영상으로 넘기기</strong><span>완성 카드뉴스를 영상 준비 단계로 넘깁니다.</span></button>
+          <div style="grid-column:1/-1;font-size:12px;color:#64748b;margin-top:2px">기타</div>
+          <button class="btn" onclick="runAction('telegram_card_summary')"><strong>후보 현황 텔레그램</strong><span>현재 카드뉴스 후보·상태를 텔레그램으로 보냅니다.</span></button>
         </div>
       </section>
       <section>
