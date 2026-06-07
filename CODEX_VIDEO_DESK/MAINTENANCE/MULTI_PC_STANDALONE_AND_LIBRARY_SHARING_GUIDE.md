@@ -16,19 +16,29 @@
 
 ## A. 새 PC 를 독립 생산기로 만들기 (1회)
 
-### 권장: 원샷 설치
-1. 코드 받기(저장소가 없으면): `00_SETUP_RENDER_PC_FROM_GITHUB.bat` (git clone).
-   이미 코드가 있으면 건너뜀.
-2. **`SETUP_FULL_PRODUCER.bat` 더블클릭** — 한 번에 다 깔고 검증합니다:
-   - npm install(Remotion) + python deps(edge-tts/pillow/mutagen/requests/playwright/**flask**/fastembed/numpy)
-   - playwright chromium + 임베딩 모델(text + CLIP image) 1회 다운로드
-   - 마지막에 `codex_producer_check.py` 로 **PASS/FAIL 점검표** 출력.
-3. `00_PHONE_SPOT_PANEL.bat` 실행. 카드 생성은 `cardnews\webui\start.bat`.
+### 권장: 진짜 원클릭 (2026-06-07~) — 빈 PC에서 파일 1개
 
-점검만 따로: `shorts\scripts\codex_producer_check.py` (치명 항목 0이면 준비 완료).
+**`CODEX_VIDEO_DESK\부사수PC_원클릭_셋업.bat` 하나만** 실행하면 끝.
+이 파일은 클론 전에도 동작하므로, 새 PC에 USB/다운로드로 복사한 뒤 더블클릭하면 됩니다.
+순서대로 자동 수행:
+1. Git / Node.js / Python 설치(winget) — 이미 있으면 건너뜀.
+2. GitHub 에서 `C:\PhoneSpot\phonespot_cardnews` 로 clone(있으면 pull).
+3. `SETUP_FULL_PRODUCER.bat` 호출 → npm + python deps(**flask·fastembed** 포함) +
+   playwright chromium + 임베딩 모델(text+CLIP, ~1GB) + `codex_producer_check.py` 검증.
 
-### 수동(단계별)도 가능
-`00_SETUP_RENDER_PC_FROM_GITHUB.bat` → `shorts\SETUP_EMBED.bat` → (Flask 설치) → 패널 실행.
+끝나면 `00_PHONE_SPOT_PANEL.bat` 실행 → 카드뉴스 생성부터 영상 렌더까지 이 PC 혼자 다 됨.
+
+> 주의: 방금 Git/Python 을 새로 설치했다면 PATH 갱신을 위해 **창을 닫고 한 번 더 실행**해야 할 수
+> 있습니다. 또 OpenAI 등 API 키/토큰은 보안상 GitHub 에 없으므로, 기사 생성에 키가 필요하면
+> 대표 PC 와 동일하게 따로 설정하세요.
+
+### 대안: repo가 이미 있는 PC
+`SETUP_FULL_PRODUCER.bat` 만 더블클릭(위 3번만 수행). 점검만 따로 보려면 패널 "환경 점검" 버튼
+또는 `shorts\scripts\codex_producer_check.py`(치명 0이면 준비 완료).
+
+### 레거시(원격 워커용, 독립생산 아님)
+`00_SETUP_RENDER_PC_FROM_GITHUB.bat` 는 PanelUrl 필수 + 메인 PC 패널을 가리키는 **원격 워커 모델**용이고
+flask·fastembed·임베딩 모델을 안 깔아 **카드뉴스 생성이 안 됩니다.** 독립 생산기에는 위 원클릭을 쓰세요.
 
 이러면 그 PC 는 인터넷이 막혀도(모델·deps 설치만 끝났으면) 혼자 생산·렌더가 됩니다.
 
@@ -45,10 +55,30 @@
 왜: 안 하면 PC 마다 같은 그림을 또 그려서 수렴(생성→0)이 PC별로 따로 일어나고 중복만 는다.
 라이브러리를 함께 쌓아야 "전체적으로 생성이 0 으로 수렴"이 성립한다.
 
-### 공유 허브 정하기
-공유폴더/구글드라이브/USB/네트워크 어디든 한 곳을 허브로 정하고, 각 PC 에 알려준다(둘 중 하나):
-- 환경변수 `PHONESPOT_LIBRARY_SHARE=<허브경로>` (예: `setx PHONESPOT_LIBRARY_SHARE "G:\공유\phonespot_library"`)
-- 또는 파일 `shorts\config\library_share_path.txt` 에 경로 한 줄.
+### 채택: 구글 드라이브 데스크톱 공유 폴더 (2026-06-07)
+
+- 허브 = 소유자(313jongmin) Drive 의 **`PhoneSpot_Library`** 폴더
+  (id `1eR7vucloKftkJ58swoWWV5EfmUSVTyjz`). Drive **데스크톱 앱**이 이걸 각 PC 로컬에 미러링하면,
+  `codex_library_sync` 가 그 로컬 경로로 양방향 병합한다.
+- **이미지는 MCP 업로드 안 씀**: 1MB PNG 를 base64 로 컨텍스트 통과시키는 건 대량에 비현실적.
+  Drive 데스크톱이 로컬 폴더를 자동·무제한 업로드/다운로드하므로 그게 정답. (MCP 는 작은 텍스트 확인용.)
+- **초기 1회**: 로컬 66장 → 허브로 → 데스크톱이 클라우드 업로드(한 번). 이후 **새 그림은 자동 증분**.
+
+#### 각 PC 1회 설정
+1. Google Drive **데스크톱 앱** 로그인. (공유받은 사람은 Drive 웹에서 `PhoneSpot_Library` 를
+   **"내 드라이브에 바로가기 추가"** 해야 데스크톱이 동기화함 — 공유문서함은 기본 미동기화.)
+2. 로컬 경로 확인(예: `G:\내 드라이브\PhoneSpot_Library`).
+3. 경로 등록(둘 중 하나):
+   - `CODEX_VIDEO_DESK\일러스트_공유허브_경로설정.bat` 실행 → 경로 붙여넣기, 또는
+   - 파일 `shorts\config\library_share_path.txt` 에 경로 한 줄(이 파일은 PC마다 달라 git 제외됨),
+   - 또는 환경변수 `PHONESPOT_LIBRARY_SHARE=<로컬경로>`.
+
+#### 다른 사람에게 공유
+- 소유자가 `PhoneSpot_Library` 를 상대 Google 계정에 공유.
+  - **편집 권한** = 상대도 새 그림 되올림(양방향). **보기 권한** = 소비만.
+  - 용량은 **소유자 쿼터** 차감(현재 68MB+, 규모상 무난).
+- 상대: Drive 웹 → 그 폴더 → 내 드라이브에 바로가기 추가 → 데스크톱 동기 → 위 "각 PC 1회 설정" 3번.
+- 그 뒤 상대도 `원클릭 셋업` + 패널 "라이브러리 동기화" 로 합류.
 
 ### 실행 (둘 중 편한 방법)
 - **패널 버튼(권장)**: 영상 모드 작업 목록의 **"일러스트 라이브러리 공유"** 버튼 클릭 →

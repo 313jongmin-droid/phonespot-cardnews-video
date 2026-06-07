@@ -1,0 +1,23 @@
+{
+  "slug": "chrome_auto_test",
+  "title": "Chrome 자동화 검증용 테스트 (실제 발행 X)",
+  "publication_date": "2026.05.28",
+  "source_line": "TEST ONLY",
+  "_note": "이건 chrome_chatgpt.py 자동화 검증용 더미. 실제 발행 X. 검증 끝나면 삭제 OK.",
+  "image_prompts": [
+    "1080x1080, photorealistic editorial. Bright airy, light cream background, soft morning daylight. No black background, no dramatic spotlight. No text on screens, no brand logos, no real human faces. Numbers/dates blurred. Phonespot orange #F74B0B subtle accent.\n\nA single modern flagship smartphone standing upright on a clean light-cream pedestal, screen glowing softly. Dramatic side lighting, warm shadow.",
+    "1080x1080, photorealistic editorial. Bright airy, soft warm white background, gentle daylight. No black, no theatrical lighting. No text, no logos, no faces.\n\nTop-down flat lay: a modern smartphone on a wooden desk beside a small ceramic coffee cup and a folded newspaper edge. Clean editorial composition.",
+    "1080x1080, photorealistic editorial. Bright airy, pale beige surface, soft daylight. No black background, no dramatic spotlight. No text, no logos, no faces.\n\nA modern smartphone in vertical orientation on a clean desk, with a soft pencil sketch of an upward arrow drawn beside it. Minimal, calm tone.",
+    "1080x1080, photorealistic editorial. Bright airy, cream-white background, even soft light. No black, no dramatic lighting. No text, no logos, no faces.\n\nA modern smartphone laid flat on a paper planner page, a small orange #F74B0B sticky marker placed beside it. Clean tabletop scene.",
+    "1080x1080, photorealistic editorial. Bright airy, light neutral background, soft window daylight. No black background, no theatrical lighting. No text, no logos, no faces.\n\nA modern smartphone standing on a small wooden stand, with a faint blurred bokeh of indoor warm lights in the background. Premium product still life mood."
+  ],
+  "cards": [
+    {"image": "card_1.png", "headline": "TEST 1", "body": "검증용", "source": "TEST"},
+    {"image": "card_2.png", "headline": "TEST 2", "body": "검증용", "source": "TEST"},
+    {"image": "card_3.png", "headline": "TEST 3", "body": "검증용", "source": "TEST"},
+    {"image": "card_4.png", "headline": "TEST 4", "body": "검증용", "source": "TEST"},
+    {"image": "card_5.png", "headline": "TEST 5", "body": "검증용", "source": "TEST"},
+    {"image": "card_6.png", "headline": "TEST 6", "body": "검증용", "source": "TEST"}
+  ],
+  "captions_md": "# TEST ONLY\n검증용. 실제 발행 X."
+}

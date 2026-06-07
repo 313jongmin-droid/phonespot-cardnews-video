@@ -93,6 +93,14 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "call_filter_rules": {
+      "tags": [
+        "library"
+      ],
+      "keywords": [],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
     "call_recording_notice": {
       "tags": [
         "library"
@@ -202,6 +210,340 @@
       ],
       "keywords": [],
       "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "cpt_0a1ac199": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "첫째",
+        "버튼"
+      ],
+      "note": "자동 발굴 개념: 첫째 버튼"
+    },
+    "cpt_0ddb8d80": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "폴드",
+        "플립"
+      ],
+      "note": "자동 발굴 개념: 폴드 플립"
+    },
+    "cpt_1a196d6d": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "가입자",
+        "통화",
+        "요약",
+        "번역"
+      ],
+      "note": "자동 발굴 개념: 가입자 통화"
+    },
+    "cpt_313e9e00": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "가족결합",
+        "핵심",
+        "변수",
+        "회선",
+        "수와"
+      ],
+      "note": "자동 발굴 개념: 가족결합 핵심"
+    },
+    "cpt_3317f8c6": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "모델"
+      ],
+      "note": "자동 발굴 개념: 모델"
+    },
+    "cpt_55c40fb8": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "사용할"
+      ],
+      "note": "자동 발굴 개념: 사용할"
+    },
+    "cpt_5cd81fce": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "노트",
+        "시리즈"
+      ],
+      "note": "자동 발굴 개념: 노트 시리즈"
+    },
+    "cpt_6174b190": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "인터넷",
+        "결합",
+        "핵심",
+        "변수",
+        "약정"
+      ],
+      "note": "자동 발굴 개념: 인터넷 결합"
+    },
+    "cpt_64b80bba": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "값이",
+        "진짜"
+      ],
+      "note": "자동 발굴 개념: 값이 진짜"
+    },
+    "cpt_6a2e9678": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "사업",
+        "신한은행",
+        "금융감독원"
+      ],
+      "note": "자동 발굴 개념: 사업 신한은행",
+      "available": true
+    },
+    "cpt_6ec7317d": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "사전예약",
+        "보통",
+        "언팩",
+        "며칠",
+        "안에"
+      ],
+      "note": "자동 발굴 개념: 사전예약 보통"
+    },
+    "cpt_75c6eba6": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "월요일",
+        "오전",
+        "시부터"
+      ],
+      "note": "자동 발굴 개념: 월요일 오전",
+      "available": true
+    },
+    "cpt_7a87dd35": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "자동",
+        "고지",
+        "멘트",
+        "양쪽",
+        "통화자"
+      ],
+      "note": "자동 발굴 개념: 자동 고지"
+    },
+    "cpt_83fa1e9f": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "굿네이버스",
+        "전기통신",
+        "금융사기"
+      ],
+      "note": "자동 발굴 개념: 굿네이버스 전기통신",
+      "available": true
+    },
+    "cpt_8b587f6c": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "가족",
+        "명이라도",
+        "알뜰폰이나",
+        "자급제",
+        "회선이면"
+      ],
+      "note": "자동 발굴 개념: 가족 명이라도"
+    },
+    "cpt_8d09d703": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "정식",
+        "출시",
+        "초로"
+      ],
+      "note": "자동 발굴 개념: 정식 출시"
+    },
+    "cpt_a0d7df46": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "코앞"
+      ],
+      "note": "자동 발굴 개념: 코앞"
+    },
+    "cpt_bf3a83cf": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "현재",
+        "자체",
+        "서비스"
+      ],
+      "note": "자동 발굴 개념: 현재 자체"
+    },
+    "cpt_ca558dbc": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "미지원이지",
+        "SKT"
+      ],
+      "note": "자동 발굴 개념: 미지원이지 SKT"
+    },
+    "cpt_d877aced": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "녹음본",
+        "메모",
+        "앱과",
+        "전화",
+        "기록"
+      ],
+      "note": "자동 발굴 개념: 녹음본 메모"
+    },
+    "cpt_dff91a6d": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "통신사",
+        "서버",
+        "기반",
+        "서비스",
+        "활용하실"
+      ],
+      "note": "자동 발굴 개념: 통신사 서버"
+    },
+    "cpt_ea7bc1d6": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "경찰청",
+        "사회복지공동모금회"
+      ],
+      "note": "자동 발굴 개념: 경찰청 사회복지공동모금회",
+      "available": true
+    },
+    "cpt_ea93eb2b": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "지원",
+        "기종"
+      ],
+      "note": "자동 발굴 개념: 지원 기종"
+    },
+    "cpt_f14977dc": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "활용법",
+        "와의",
+        "차이"
+      ],
+      "note": "자동 발굴 개념: 활용법 와의"
+    },
+    "cpt_f35df68f": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "폴더블",
+        "신제품인",
+        "폴드",
+        "플립"
+      ],
+      "note": "자동 발굴 개념: 폴더블 신제품인"
+    },
+    "cpt_f5cc7e27": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "워치",
+        "시리즈"
+      ],
+      "note": "자동 발굴 개념: 워치 시리즈"
+    },
+    "cpt_f7997fd3": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "묶을",
+        "있고",
+        "회선당",
+        "원이"
+      ],
+      "note": "자동 발굴 개념: 묶을 있고"
+    },
+    "cpt_fa7ce644": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "핵심",
+        "굿락",
+        "안에",
+        "있는",
+        "카메라"
+      ],
+      "note": "자동 발굴 개념: 핵심 굿락"
+    },
+    "cpt_fd9edf65": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "시작된",
+        "지원",
+        "사업"
+      ],
+      "note": "자동 발굴 개념: 시작된 지원",
       "available": true
     },
     "device_data_transfer": {
@@ -677,6 +1019,14 @@
       "note": "Reusable editorial illustration.",
       "available": false
     },
+    "phone_settings_toggle": {
+      "tags": [
+        "library"
+      ],
+      "keywords": [],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
     "phone_setup_ready": {
       "tags": [
         "library"
@@ -809,6 +1159,14 @@
         "기기 인증",
         "재등록"
       ],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "security_feature_lock": {
+      "tags": [
+        "library"
+      ],
+      "keywords": [],
       "note": "Reusable editorial illustration.",
       "available": true
     },
@@ -976,389 +1334,7 @@
       ],
       "note": "Reusable editorial illustration.",
       "available": true
-    },
-    "cpt_f14977dc": {
-      "keywords": [
-        "활용법",
-        "와의",
-        "차이"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 활용법 와의",
-      "available": false
-    },
-    "cpt_7a87dd35": {
-      "keywords": [
-        "자동",
-        "고지",
-        "멘트",
-        "양쪽",
-        "통화자"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 자동 고지",
-      "available": false
-    },
-    "cpt_d877aced": {
-      "keywords": [
-        "녹음본",
-        "메모",
-        "앱과",
-        "전화",
-        "기록"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 녹음본 메모",
-      "available": false
-    },
-    "cpt_dff91a6d": {
-      "keywords": [
-        "통신사",
-        "서버",
-        "기반",
-        "서비스",
-        "활용하실"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 통신사 서버",
-      "available": false
-    },
-    "cpt_3317f8c6": {
-      "keywords": [
-        "모델"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 모델",
-      "available": false
-    },
-    "cpt_bf3a83cf": {
-      "keywords": [
-        "현재",
-        "자체",
-        "서비스"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 현재 자체",
-      "available": false
-    },
-    "cpt_ca558dbc": {
-      "keywords": [
-        "미지원이지",
-        "SKT"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 미지원이지 SKT",
-      "available": false
-    },
-    "call_filter_rules": {
-      "tags": [
-        "library"
-      ],
-      "keywords": [],
-      "note": "Reusable editorial illustration.",
-      "available": true
-    },
-    "phone_settings_toggle": {
-      "tags": [
-        "library"
-      ],
-      "keywords": [],
-      "note": "Reusable editorial illustration.",
-      "available": true
-    },
-    "security_feature_lock": {
-      "tags": [
-        "library"
-      ],
-      "keywords": [],
-      "note": "Reusable editorial illustration.",
-      "available": true
-    },
-    "cpt_1a196d6d": {
-      "keywords": [
-        "가입자",
-        "통화",
-        "요약",
-        "번역"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 가입자 통화",
-      "available": false
-    },
-    "cpt_64b80bba": {
-      "keywords": [
-        "값이",
-        "진짜"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 값이 진짜",
-      "available": false
-    },
-    "cpt_313e9e00": {
-      "keywords": [
-        "가족결합",
-        "핵심",
-        "변수",
-        "회선",
-        "수와"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 가족결합 핵심",
-      "available": false
-    },
-    "cpt_f7997fd3": {
-      "keywords": [
-        "묶을",
-        "있고",
-        "회선당",
-        "원이"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 묶을 있고",
-      "available": false
-    },
-    "cpt_8b587f6c": {
-      "keywords": [
-        "가족",
-        "명이라도",
-        "알뜰폰이나",
-        "자급제",
-        "회선이면"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 가족 명이라도",
-      "available": false
-    },
-    "cpt_6174b190": {
-      "keywords": [
-        "인터넷",
-        "결합",
-        "핵심",
-        "변수",
-        "약정"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 인터넷 결합",
-      "available": false
-    },
-    "cpt_a0d7df46": {
-      "keywords": [
-        "코앞"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 코앞",
-      "available": false
-    },
-    "cpt_f35df68f": {
-      "keywords": [
-        "폴더블",
-        "신제품인",
-        "폴드",
-        "플립"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 폴더블 신제품인",
-      "available": false
-    },
-    "cpt_f5cc7e27": {
-      "keywords": [
-        "워치",
-        "시리즈"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 워치 시리즈",
-      "available": false
-    },
-    "cpt_6ec7317d": {
-      "keywords": [
-        "사전예약",
-        "보통",
-        "언팩",
-        "며칠",
-        "안에"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 사전예약 보통",
-      "available": false
-    },
-    "cpt_8d09d703": {
-      "keywords": [
-        "정식",
-        "출시",
-        "초로"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 정식 출시",
-      "available": false
-    },
-    "cpt_fd9edf65": {
-      "keywords": [
-        "시작된",
-        "지원",
-        "사업"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 시작된 지원",
-      "available": true
-    },
-    "cpt_75c6eba6": {
-      "keywords": [
-        "월요일",
-        "오전",
-        "시부터"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 월요일 오전",
-      "available": true
-    },
-    "cpt_6a2e9678": {
-      "keywords": [
-        "사업",
-        "신한은행",
-        "금융감독원"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 사업 신한은행",
-      "available": true
-    },
-    "cpt_ea7bc1d6": {
-      "keywords": [
-        "경찰청",
-        "사회복지공동모금회"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 경찰청 사회복지공동모금회",
-      "available": true
-    },
-    "cpt_83fa1e9f": {
-      "keywords": [
-        "굿네이버스",
-        "전기통신",
-        "금융사기"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 굿네이버스 전기통신",
-      "available": true
-    },
-    "cpt_55c40fb8": {
-      "keywords": [
-        "사용할"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 사용할",
-      "available": false
-    },
-    "cpt_fa7ce644": {
-      "keywords": [
-        "핵심",
-        "굿락",
-        "안에",
-        "있는",
-        "카메라"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 핵심 굿락",
-      "available": false
-    },
-    "cpt_ea93eb2b": {
-      "keywords": [
-        "지원",
-        "기종"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 지원 기종",
-      "available": false
-    },
-    "cpt_0ddb8d80": {
-      "keywords": [
-        "폴드",
-        "플립"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 폴드 플립",
-      "available": false
-    },
-    "cpt_5cd81fce": {
-      "keywords": [
-        "노트",
-        "시리즈"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 노트 시리즈",
-      "available": false
-    },
-    "cpt_0a1ac199": {
-      "keywords": [
-        "첫째",
-        "버튼"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 첫째 버튼",
-      "available": false
     }
   },
-  "updated_at": "2026-06-07T16:16:59"
+  "updated_at": "2026-06-08T00:28:09"
 }

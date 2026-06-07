@@ -10,17 +10,18 @@ $root = Split-Path -Parent $desk
 $port = $Port
 $url = "http://127.0.0.1:$port"
 
-# (2026-06-07) 옵트인 자동 업데이트: 수신(부사수) PC에서만.
-# 마커 파일이 있으면 git pull 을 별도 cmd 로 먼저 수행한다(출력은 cmd 가 로그 파일로만 기록,
-# 항상 exit 0 → 패널 시작에 절대 영향 없음). 버전 읽기 전에 실행해야 pull 로 바뀐
-# PANEL_VERSION 이 곧바로 재시작 트리거가 된다. 대표 PC 는 마커를 켜지 않으면 아무 일도 안 함.
+# (2026-06-07) Opt-in auto update: receiver (assistant) PCs only.
+# If the marker file exists, run git pull via a separate cmd first
+# (cmd logs to file only, always exits 0, never blocks panel start).
+# Runs before the version read so a pulled PANEL_VERSION triggers restart.
+# Main PC: does nothing unless the marker is turned on.
 $autoUpdateMarker = Join-Path $desk "TEMP\panel\auto_update.on"
 $autoUpdateCmd = Join-Path $PSScriptRoot "auto_update.cmd"
 if ((Test-Path $autoUpdateMarker) -and (Test-Path $autoUpdateCmd)) {
   try { cmd.exe /c call "$autoUpdateCmd" | Out-Null } catch {}
 }
 
-# 버전은 server.py(PANEL_VERSION)를 단일 출처로 읽는다. 파싱 실패 시 아래 폴백 사용.
+# Read version from server.py (PANEL_VERSION) as the single source. Fallback below if parse fails.
 $expectedVersion = "phonespot-web-v21"
 try {
   $serverPy = Join-Path $PSScriptRoot "server.py"

@@ -21,6 +21,9 @@
 - 실사 AI 광고 영상 (Higgsfield, Claude 담당): `shorts/promo_ai/README.md` + `shorts/promo_ai/WORKFLOW.md`
 - 타이포 광고 영상 (Remotion, 수동/코덱스): `shorts/promo/README.md` + `shorts/promo/GUIDE_TYPOGRAPHY.md`
 - 카드뉴스 → 캐주얼 숏폼 (코덱스 담당): `CODEX_VIDEO_DESK/README.txt`
+- **카드뉴스 기사 작성 (Claude 담당, 주제선정→영상/카드뉴스 분기)**: `cardnews/templates/article_authoring_spec.md`
+- **멀티PC 독립생산 + 일러스트 Drive 공유**: `CODEX_VIDEO_DESK/MAINTENANCE/MULTI_PC_STANDALONE_AND_LIBRARY_SHARING_GUIDE.md`
+- **최근(2026-06) 변경 종합**: `CODEX_VIDEO_DESK/MAINTENANCE/PHONESPOT_UPDATES_2026-06_GUIDE.md`
 
 각 Read 결과는 다음 작업의 컨텍스트로 직접 활용. 사장님이 "수집해줘" / "발행해줘" / "매커니즘 알려줘" 같은 짧은 명령만 줘도 위 가이드로 모든 형식·룰을 자동 적용해야 함.
 
@@ -43,6 +46,10 @@
 | "메타 자동화" / "캠페인별 통합" / "UTM 매핑" / "GA4 매핑" | `ads/META_AUTOMATION.md` |
 | "유튜브 학습" / "인사이트" / **스크립트·카피 작성 시** | `ads/YOUTUBE_LEARNING.md` + 시트 "유튜브_인사이트" 탭 Read → 키워드/후킹 자동 반영 |
 | "KT다이렉트샵" / "KT 관리대장" | `ads_kt/README_FOR_AI.md` |
+| "카드뉴스 기사 써줘" / "주제 뽑아줘" / "기사 만들어줘" | `cardnews/templates/article_authoring_spec.md` → 주제제안(content_guide)→사실수집→기사 JSON 저장. 영상만이면 카드이미지·image_prompts 생략 |
+| "부사수 셋업" / "새 PC" / "멀티PC" / "독립 셋업" | `부사수PC_원클릭_셋업.bat`(빈 PC 한 파일) + MULTI_PC 가이드 |
+| "일러스트 공유" / "라이브러리 동기화" / "허브" | 패널 "관리>라이브러리 동기화" 또는 `라이브러리_공유_동기화.bat`. 허브=Drive `PhoneSpot_Library`(데스크톱 동기), 경로파일 `shorts/config/library_share_path.txt` |
+| "주제(기사) 깃에 올려" / "전파" | `기사_깃에_올리기.bat`(대표 push) → 부사수 git pull |
 
 ---
 
@@ -70,6 +77,15 @@
 | **광고운영 관리대장** | `ads/README_FOR_AI.md` → `ads/MANUAL.md` | 폰스팟 시트·KPI·메타·GA4 자동화 |
 | **메타 API 자동화** | `ads/code/apps_script/meta-sync.gs` + `ads/META_AUTOMATION.md` | 메타 광고 + GA4 통합 |
 | **KT다이렉트샵 관리대장** | `ads_kt/README_FOR_AI.md` | KT 별도 시트 |
+| **부사수 PC 원클릭 셋업** | `CODEX_VIDEO_DESK/부사수PC_원클릭_셋업.bat` | 빈 PC 1파일: git/node/python+clone+풀셋업 |
+| **풀 생산기 셋업(클론 후)** | `CODEX_VIDEO_DESK/SETUP_FULL_PRODUCER.bat` | 카드뉴스+영상 의존성+임베딩+검증 |
+| **환경 점검** | 패널 "관리>환경 점검" / `shorts/scripts/codex_producer_check.py` | 자원 PASS/FAIL |
+| **기사 작성 스펙** | `cardnews/templates/article_authoring_spec.md` | Claude 기사 JSON 작성 기준 |
+| **기사 git 전파** | `CODEX_VIDEO_DESK/기사_깃에_올리기.bat` | articles+.gitignore commit&push (articles는 git 추적=중복방지 DB) |
+| **일러스트 공유 동기화** | 패널 "관리>라이브러리 동기화" / `CODEX_VIDEO_DESK/라이브러리_공유_동기화.bat` | Drive 허브 양방향 병합. 렌더 직전 자동 동기화도 됨 |
+| **일러스트 허브 경로설정** | `CODEX_VIDEO_DESK/일러스트_공유허브_경로설정.bat` | PC별 1회, Drive 로컬경로 기입 |
+| **라이브러리 백업/스케줄** | `라이브러리_백업.bat` / `라이브러리_자동백업_스케줄_등록.bat` | 스냅샷(회전10) / 매일 09:00 |
+| **수신 PC 자동 코드 업데이트** | `CODEX_VIDEO_DESK/수신PC_자동업데이트_켜기.bat` | 마커 ON → 패널 시작 시 git pull(부사수만) |
 
 ---
 
@@ -139,5 +155,12 @@ phonespot_cardnews/
 - 2026-06-05: 유튜브 자동 학습 루프 합류. `ads/YOUTUBE_LEARNING.md` + `youtube_sync.gs`의 generateYouTubeInsights (Gemini API 분석, 매일 03:40 자동). 스크립트·카피 작성 시 "유튜브_인사이트" 시트 Read 의무화.
 - 2026-06-07: promo(홍보영상) 트랙 하네스 합류. STEP 2 명령 패턴 + STEP 4 진입점 + STEP 5 폴더에 등록. 진입점=`shorts/promo/README.md`(Remotion 기생, 나레이션 없음·효과음+음악·스타일별 SFX·무드 음악풀). ※ `_docs/INSTRUCTIONS_SHORTS.md`는 옛 MoviePy/Typecast 설계라 현행 Remotion과 불일치 — 갱신 필요(미정).
 - 2026-06-08: promo_ai(실사 AI 광고) 트랙 하네스 합류. STEP 1 조건부 Read 섹션 신설 + STEP 2 명령 패턴 + STEP 4 진입점 + STEP 5 폴더에 등록. 진입점=`shorts/promo_ai/README.md` + `WORKFLOW.md`(Higgsfield MCP Kling 3.0 1순위 / Seedance 2순위 / ffmpeg 합치기, Claude 담당, 15초 9:16). 결제 상태: Higgsfield Free 3 credits (결제 검토 중, STARTER $19/월·연납 또는 PLUS $39-49/월).
+- 2026-06-08: **멀티PC 독립생산 + Claude 기사작성 + Drive 일러스트 공유 합류.** 핵심:
+  - **기사작성=Claude**: `article_authoring_spec.md`(주제선정→사실수집→기사 JSON). 기사 cards 텍스트=영상 대본. 출력 분기: 영상(일러스트 자동매칭, 카드이미지 불필요) vs 카드뉴스(+카드이미지). STEP1/2/4 등록.
+  - **주제 git 추적**: `cardnews/articles/`를 .gitignore에서 해제 → 부사수가 git pull로 주제 수신 + 누적=중복방지 DB. `기사_깃에_올리기.bat`(대표 push).
+  - **일러스트 공유**: Drive 데스크톱 공유폴더 `PhoneSpot_Library`(허브). `codex_library_sync`(양방향 비파괴 병합), 경로=`shorts/config/library_share_path.txt`(git 제외, PC별). **렌더 직전 워커가 자동 동기화**(best-effort, 렌더 안 막음). 패널 "관리>라이브러리 동기화" 버튼도 있음. ※ 대량 이미지는 MCP base64 부적합 → Drive 데스크톱이 정답.
+  - **부사수 1파일 셋업**: `부사수PC_원클릭_셋업.bat`(winget+clone+`SETUP_FULL_PRODUCER`). 코드 자동전파=옵트인 `수신PC_자동업데이트_켜기.bat`(마커 방식; 옛 env `PHONESPOT_AUTO_UPDATE`는 폐기).
+  - **패널 v23**: 버전 단일출처(server.py `PANEL_VERSION`만 올리면 ps1이 읽음), "환경 점검" 버튼, 렌더 취소/진행, 청크 수동분할, remote_ 폴더 제거, 유튜브 캡션(타임스탬프·출처 제거).
+  - **운영 안정화**: 한글 내용 .bat은 UTF-8 BOM 필수(없으면 cmd가 한글 깨뜨려 echo가 명령으로 실행됨) — 한글 bat 전부 BOM+ASCII화. `start_hidden.ps1`은 ASCII 주석만(BOM 없는 PS는 CP949 오독). `illustration_tag_db.json` NUL 손상 복구(101개 유지).
 
 이 파일이 업그레이드되면 변경 이력 1줄 추가. 가이드 추가·제거 시 STEP 1 리스트 동기화.

@@ -238,6 +238,20 @@ def run_job(job: dict) -> tuple[bool, int, str]:
         commands = commands_for(job)
         for index, command in enumerate(commands, 1):
             send_log(job_id, f"\n----- worker command {index} -----\n{' '.join(command)}\n")
+            # (2026-06) 렌더 직전: 공유 허브와 양방향 동기화.
+            #   - 허브에서 최신 일러스트 pull(다른 PC가 올린 그림 반영)
+            #   - 직전 단계(가져오기)에서 새로 들어온 그림은 push
+            # best-effort: 허브 미설정/접근불가/오류여도 잡을 실패시키지 않는다(조용히 건너뜀).
+            if "run_codex_casual" in " ".join(command):
+                try:
+                    sp = subprocess.run(
+                        ["python", str(SHORTS / "scripts" / "codex_library_sync.py")],
+                        cwd=str(SHORTS), text=True, encoding="utf-8", errors="replace",
+                        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=env, timeout=900,
+                    )
+                    send_log(job_id, "\n----- 렌더 전 라이브러리 동기화 -----\n" + (sp.stdout or ""))
+                except Exception as exc:
+                    send_log(job_id, f"\n[lib_sync] 동기화 건너뜀(무해): {exc}\n")
             needs_confirmation = job["action"] == "video_import_render" and index == 1
             process = subprocess.Popen(
                 command,

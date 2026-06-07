@@ -47,10 +47,13 @@ _secrets/
 *.env
 .env
 
-# Cardnews generated data
+# Per-PC local config (PC마다 경로 다름 → 공유 금지)
+shorts/config/library_share_path.txt
+
+# Cardnews generated data (output·images는 재생성 가능 → 무시.
+# articles(주제 JSON)는 작고 누적가치가 커서 git 추적 = 부사수 전파 + 중복방지 DB)
 cardnews/output/
 cardnews/images/
-cardnews/articles/
 
 # Shorts runtime/public generated data
 shorts/public/audio/
@@ -99,10 +102,9 @@ node_modules/
 **/node_modules/
 shorts/node_modules/
 
-# Generated cardnews data
+# Generated cardnews data (articles는 추적 — 위 참고)
 cardnews/output/
 cardnews/images/
-cardnews/articles/
 
 # Generated shorts runtime
 shorts/public/audio/

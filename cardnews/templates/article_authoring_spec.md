@@ -1,0 +1,195 @@
+# 카드뉴스 기사 작성 스펙 (Claude 전용 가이드라인)
+
+> 목적: Claude(코웍)가 **주제 제안 → 사실 수집 → 기사 파일 작성·저장**까지 한 번에 수행하기 위한
+> 단일 기준. 사람이 매번 프롬프트를 새로 쓰지 않도록 스키마·규칙을 여기 고정한다.
+>
+> 호출 예: "이 스펙대로 카드뉴스 기사 만들어줘" (주제는 아래 1단계에서 Claude가 제안).
+>
+> 절대 원칙(사용자 지정): **모르면 모른다고 하고 출처까지 정확히. 추측·과장 금지. 사실 확인된
+> 정보만. 듣고 싶어할 말이 아니라 검증된 사실로.** 숫자·날짜·고유명사는 반드시 1차 출처 확인.
+
+---
+
+## 0. 산출물 (한 번에 2개 파일)
+
+### 출력은 2갈래 — 같은 기사 1개에서 분기
+
+기사 `cards` 의 **글(본문)이 곧 영상 대본**이다(build_script: hook=cards[0], facts=중간,
+cta=cards[-1], 각 구간 TTS=card body). 그래서 기사 JSON 하나가 공통 원천이고, 출력만 갈린다.
+
+| 출력 | 필요한 것 | 안 쓰는 것 |
+|---|---|---|
+| **영상(쇼츠)** ← 기본 | 기사 JSON 텍스트(cards/narration_md/captions_md). 그림은 **일러스트 라이브러리 자동 매칭** | **카드 이미지·image_prompts 불필요**, Gemini 키 불필요 |
+| **카드뉴스(정적)** | 위 + card_1~5 배경 이미지(GPT 웹/Imagen) + image_prompts | — |
+
+> **영상 위주 정책(기본):** `image_prompts` 와 prompt.md 는 **카드뉴스를 만들 때만** 작성한다.
+> 영상만 만들면 **생략**(기사 JSON 텍스트만으로 충분). 영상 품질은 `narration_md`(대사) 품질이 좌우하니
+> narration 을 특히 정성껏.
+
+### 산출 파일
+
+| 파일 | 내용 | 언제 |
+|---|---|---|
+| `cardnews/articles/<slug>.json` | 제목 + cards6(헤드라인·본문·출처) + captions_md(5채널) + narration_md | **항상** |
+| (JSON 내 `image_prompts`) | 카드 1~5 이미지 프롬프트 | 카드뉴스 만들 때만 |
+| `cardnews/images/<slug>/prompt.md` | 위와 동일(그 PC webui 미리보기용, git 비추적) | 선택 |
+
+영상만: 기사 JSON 저장 → (대표) git push → (부사수) pull → 패널에서 렌더(일러스트 자동).
+카드뉴스: + 카드 이미지 생성/업로드 → 렌더.
+
+---
+
+## 1단계. 주제 제안 (Claude가 먼저)
+
+1. `shorts/_state/content_guide.md`(성과 분석, 자동 갱신)를 읽는다.
+2. 후보 3~5개를 제안한다. 각 후보에 **근거**를 붙인다:
+   - 카테고리 리프트(예: `samsung` +24%), 제목 패턴, 시의성(최근 뉴스).
+   - content_guide는 표본 71개로 **가설 단계**다. 법칙이 아니라 힌트로만 쓴다(정직 표기).
+3. 사용자가 1개를 고른다. (사용자가 직접 주제를 주면 이 단계 생략.)
+
+**중복 방지(DB):** 후보를 내기 전에 `cardnews/articles/*.json` 의 기존 `title`/`slug` 를 훑어
+**이미 다룬 주제와 겹치지 않게** 한다. (articles 는 이제 git 추적이라 모든 PC에 누적 = 공동 주제 DB.)
+거의 같은 주제면 새로 만들지 말고 사용자에게 알린다.
+
+회피 경향(현재 표본 기준, 절대 아님): `security`·`telecom`·`info_summary`·`ai`·`price`·`wwdc`
+패턴은 평균 reach가 낮았음. 단 시의성/광교점 연관성이 크면 만들 수 있음 — 판단은 사용자.
+
+---
+
+## 2단계. 사실 수집
+
+1. 고른 주제를 **웹 검색**으로 확인한다(날짜, 수치, 기관명, 공식 발표).
+2. 1차 출처(공식 발표·주요 매체)를 우선한다. 확인 안 되는 수치는 기사에 넣지 않는다.
+3. 출처를 메모해 둔다(아래 source_line / 카드 source 에 사용).
+4. 불확실하면 사용자에게 되묻는다.
+
+---
+
+## 3단계. 기사 JSON 작성 → `cardnews/articles/<slug>.json`
+
+### 스키마(정확히 이 키. 생산 표준 = `cards` 방식)
+
+```json
+{
+  "slug": "019_short_english_slug",
+  "title": "후킹 제목 / 보조어구 / 핵심",
+  "publication_date": "2026.06.07",
+  "source_line": "출처: 매체A·매체B · 2026.6.7",
+  "cards": [
+    { "image": "card_1.png", "headline": "1줄\n<span class=\"hl\">강조어</span> 2줄", "body": "1~3문장 존댓말 설명.", "source": "출처: 매체 2026.6.7" },
+    { "image": "card_2.png", "headline": "...", "body": "...", "source": "..." },
+    { "image": "card_3.png", "headline": "...", "body": "...", "source": "..." },
+    { "image": "card_4.png", "headline": "...", "body": "...", "source": "..." },
+    { "image": "card_5.png", "headline": "...", "body": "...", "source": "..." },
+    { "image": "card_6.png", "headline": "마무리/CTA", "body": "폰스팟 광교점 안내 등.", "source": "" }
+  ],
+  "captions_md": "## 1. 네이버 블로그 ... (5채널, 아래 규칙)",
+  "narration_md": "## 인트로\n...\n## 본문\n...",
+  "image_prompts": [
+    "1.png — <카드1 요지> | <영어 프롬프트(공통룰 포함)>",
+    "2.png — ... | ...",
+    "3.png — ... | ...",
+    "4.png — ... | ...",
+    "5.png — ... | ..."
+  ]
+}
+```
+
+> **중요(다른 PC 전송용):** 이미지 프롬프트는 **반드시 위 `image_prompts` 배열(기사 JSON 안)에** 넣는다.
+> `cardnews/images/<slug>/prompt.md` 는 git 비추적(런타임)이라 다른 PC로 안 넘어간다. 기사 JSON
+> (`cardnews/articles/`)은 git 추적이므로, 프롬프트를 JSON에 넣어야 push/pull 로 부사수 PC까지 간다.
+> card_1~5 만(5개), card_6는 로고라 없음.
+
+### 카드 규칙
+- **정확히 6장.** card_1~5 = GPT 배경 이미지 위에 텍스트 오버레이. **card_6 = 로고 카드**(배경
+  이미지 생성 안 함, 마무리/광교점 CTA).
+- `headline`: 줄바꿈은 `\n`. 강조는 `<span class="hl">키워드</span>`(카드당 1~2개). 짧고 후킹.
+- `body`: **존댓말**, 1~3문장, 한 카드 한 메시지. 검증된 사실만.
+- `source`: 카드별 출처(card_6는 빈 문자열 가능).
+- 한국어 자연스럽게. 외래어·영문 약어는 본문 첫 등장 시 풀어쓰기 권장.
+
+### 제목(title) 규칙
+- 후킹 + SEO 키워드. 특수문자(`?!` `·` `~`) 허용. content_guide의 길이/패턴 참고(맹신 금지).
+
+### captions_md (5채널 SNS)
+- `cardnews/templates/caption_template.md` 를 그대로 따른다(채널 1 네이버, 2 스레드, 3 인스타,
+  4 유튜브, 5 틱톡).
+- **유튜브(채널4)**: 제목(특수문자 OK) + ▶영상 요약 + ▶폰스팟 광교점 + [사전승낙서] + 해시태그.
+  **타임스탬프·핵심 데이터·출처 줄은 넣지 않는다.**
+
+### narration_md (영상 나레이션 = TTS 원천)
+- 구조: `## 인트로` + `## 본문`(카드 흐름과 일치). 존댓말, 자연스러운 구어.
+- 카드 본문과 사실이 어긋나지 않게. 숫자/날짜 동일.
+- 이게 TTS·자막·영상 싱크의 원천이므로 오탈자·이상한 띄어쓰기 금지.
+
+---
+
+## 3단계(병행). 이미지 프롬프트 — **카드뉴스 출력일 때만**
+
+> 영상만 만들면 이 단계 전체를 건너뛴다(영상은 카드 이미지를 안 쓴다).
+
+- **1순위(필수): 기사 JSON 의 `image_prompts` 배열에 넣는다.** (다른 PC로 git 전송되려면 이게 필수)
+- 2순위(선택): 같은 내용을 `cardnews/images/<slug>/prompt.md` 로도 저장하면 그 PC의 webui 미리보기에
+  편하다. 단 prompt.md 는 git 비추적이라 그 PC에만 남는다.
+
+prompt.md 로도 쓸 경우 기존 형식(아래 골격). card_1~5만, 공통룰 먼저.
+
+```
+■ <slug>/1-5.png — 5장 일괄 프롬프트
+
+공통 룰 (5장 모두 적용):
+1080x1080, photorealistic editorial. Bright airy mood, light cream / warm white / pale beige
+background. No black background, no dramatic spotlight, no deep shadow. No text on screens,
+no brand logos, no real human faces. Numbers/dates blurred. Phonespot orange #F74B0B accent if subtle.
+각 이미지는 위 룰을 따르되, 색감·소품·구도는 카드별 독립. 시리즈 통일 톤 지시 금지.
+
+— 1.png — <카드1 헤드라인 요지>
+<영어 프롬프트: 카드1 내용을 사물/정물/손(얼굴 X)으로 은유. 텍스트·로고·실제 얼굴 금지.>
+
+— 2.png — ...
+...
+— 5.png — ...
+```
+
+이미지 프롬프트 규칙(준수): 텍스트/UI/브랜드 로고/실제 얼굴 없음, 숫자·날짜 흐리게, 밝고
+화사한 에디토리얼, 폰스팟 주황 #F74B0B 은은하게. 카드 내용을 직접 묘사하지 말고 은유로.
+
+---
+
+## 4. 슬러그 네이밍 & 저장
+
+- `<NNN>_<주제_영문_슬러그>`: NNN = `cardnews/articles/` 의 최대 번호 +1(현재 최대 018 → 다음 019).
+  영문 슬러그는 소문자+언더스코어, 주제 요약(예: `019_tip_esim_switch`).
+- JSON은 **UTF-8**, 들여쓰기 2칸. `cardnews/images/<slug>/` 폴더가 없으면 만들고 prompt.md 저장.
+
+---
+
+## 5. 완료 후 사람이 할 일 (안내로 출력)
+
+### 같은 PC(대표)에서 바로 렌더할 때
+1. 패널 `00_PHONE_SPOT_PANEL.bat` → 카드뉴스 탭에서 슬러그 선택.
+2. `image_prompts` 로 card_1~5 이미지 생성(GPT 웹 또는 generate_image.py) → `cardnews/images/<slug>/`.
+3. 카드뉴스 렌더 → 결과 확인 → 필요시 영상으로 넘기기.
+
+### 다른 PC(부사수)에서 렌더할 때 — git 중심(추천)
+1. **대표 PC**: 기사 JSON 을 git **commit & push** — `CODEX_VIDEO_DESK\기사_깃에_올리기.bat`
+   더블클릭이면 끝(이미지·prompt.md 는 git 비추적이라 안 올라감, articles 만 올라감).
+2. **부사수 PC**: `git pull`(또는 `수신PC_자동업데이트_켜기.bat`) → 패널 카드뉴스 탭에서 슬러그 선택.
+3. **부사수 PC**: JSON 의 `image_prompts` 를 보고 **GPT 웹에서 card_1~5 이미지 생성·다운로드 →
+   webui 업로드**(또는 `cardnews/images/<slug>/` 에 저장) → 렌더.
+   - 이러면 네트워크 공유·Gemini 키 불필요, 저장소도 이미지로 커지지 않음.
+   - (대안) 두 PC 가 항상 같은 LAN + 대표 상시 켜짐이면 `01_SYNC_CARDNEWS_WORKSPACE_FROM_MAIN_PC.bat`
+     로 images 까지 통째 동기화도 가능. 단 대표 PC 의존이 생김.
+
+---
+
+## 6. 작성 후 자체 검증 체크리스트 (Claude가 스스로 확인)
+
+- [ ] 카드 정확히 6장, card_6는 로고 카드(이미지 프롬프트 없음).
+- [ ] 모든 숫자·날짜·기관명에 출처 있음. 미확인 정보 없음.
+- [ ] headline `\n`/`<span class="hl">` 문법 정상, JSON 유효(파싱됨).
+- [ ] captions_md 5채널 + 유튜브는 타임스탬프·출처 없음.
+- [ ] narration_md 인트로/본문, 카드와 사실 일치.
+- [ ] (카드뉴스 출력 시) 기사 JSON 에 `image_prompts` 5개 포함, 텍스트/얼굴/로고 금지. 영상만이면 생략.
+- [ ] (영상) narration_md 가 자연스러운 대사로 충실(영상 품질의 핵심).
+- [ ] slug 번호 = 기존 최대 +1, 기사 JSON 저장 완료.

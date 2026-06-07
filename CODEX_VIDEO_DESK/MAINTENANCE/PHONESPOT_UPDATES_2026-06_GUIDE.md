@@ -125,6 +125,13 @@
 - 보존(불확실): `*.bak_*` 약 189개(집 규칙 백업/복원점), `src` 의 `*.tsxbak*`,
   멀티PC 구글시트 관련 미적용 파일. GitHub 이력이 있으니 필요시 .bak 일괄 정리 가능.
 
+### .bak 일괄 정리 2026-06-07
+
+- `CODEX_VIDEO_DESK`·`shorts`·`cardnews` 의 `*.bak*` **66개 전량 삭제**(원본은 모두 옆에 존재,
+  git 이력에 실제 버전 보존). 삭제 후 원본 표본(server.py, publish_codex_package.py,
+  caption_template.md, chunkUtil.ts, run_codex_casual.bat) 존재 확인. (이전 추정 189개와 다른 이유:
+  그 사이 1차 정리/아카이브로 이미 줄어 있었음.)
+
 ---
 
 ## 변경 2026-06-07 (멀티PC 독립화 · 캡션 · 청크 · 패널)
@@ -139,15 +146,25 @@
 - 원격 렌더 실패 원인(2번 PC에서 edge-tts pip 가 방화벽 WinError 10013 로 막힘)을
   우회하려다 복잡해지는 대신, 각 PC 풀셋업으로 단순화.
 - 풀셋업 1회: `CODEX_VIDEO_DESK\SETUP_FULL_PRODUCER.bat`
-  (npm install + pip 의존성 + playwright chromium + 임베딩 셀프테스트 + 자원점검).
+  (npm install + pip 의존성 + playwright chromium + 임베딩 셀프테스트 + 자원점검). repo 클론 후 실행.
+- (2026-06-07~) **빈 PC 진짜 원클릭**: `CODEX_VIDEO_DESK\부사수PC_원클릭_셋업.bat` 하나로
+  git/node/python 설치(winget) → clone(`C:\PhoneSpot\phonespot_cardnews`) → SETUP_FULL_PRODUCER
+  까지 자동. 이 파일은 클론 전에도 동작(새 PC에 복사해 더블클릭). 끝나면 카드뉴스 생성~렌더 독립 가능.
+  단, Git/Python 신규설치 직후엔 PATH 갱신 위해 1회 재실행 필요할 수 있음. API 키는 GitHub에 없으니 별도 설정.
 - 자원 점검기: `shorts/scripts/codex_producer_check.py`
   (node/npm/remotion/ffmpeg/chromium/python deps/임베딩/카드자원[웹UI·렌더러·폰트] PASS·FAIL).
   - (2026-06-07~) 패널 "관리" 그룹에 **"환경 점검" 버튼** 추가 → 결과는 실행 로그에 PASS/FAIL 표시.
 - 라이브러리 공유 도구(신규):
   `codex_library_sync.py`(허브와 양방향 가산 병합, 비파괴),
   `codex_library_dedup.py`(CLIP 이미지-이미지 군집, 기본 리포트/`--apply` 시 정리),
-  `codex_library_backup.py`(타임스탬프 스냅샷, 회전 KEEP=10).
+  `codex_library_backup.py`(타임스탬프 스냅샷, 회전 KEEP=10, 기본 위치 `<repo부모>/phonespot_library_backups`).
 - 패널 버튼: 라이브러리 동기화/중복정리/백업(영상탭 "관리" 접이식 그룹 안).
+- (2026-06-07~) **자동 백업 스케줄**: `라이브러리_자동백업_스케줄_등록.bat` 실행 → Windows 작업
+  스케줄러에 "PhoneSpot Library Backup"(매일 09:00) 등록. 패널을 안 열어도 백업됨. 관리자 권한 불필요.
+  내부적으로 `dashboard\run_library_backup.cmd`(항상 exit 0, 로그
+  `TEMP\panel\panel_logs\library_backup_scheduled.log`)를 호출. 해제는 `..._해제.bat`.
+  시간 변경은 작업 스케줄러에서 트리거 수정. (Cowork 스케줄이 아니라 PC 로컬 스케줄 — 라이브러리는
+  PC에 있으므로.)
 
 ### 2. 코드 자동전파 — 옵트인 자동 git pull (2026-06-07 재도입)
 
@@ -212,3 +229,61 @@
 - 단 C1~ 은 **선택(옵션)** — 안 그려도 렌더 진행. 라벨이 한국어라 매칭이 약할 수 있어 검수 권장.
 - 주의: "남아 있는 문맥 커버리지 경고"(파일명 없는 갭)는 요청이 아니라 안내일 뿐,
   자동 네이밍 대상이 아님.
+
+---
+
+## 변경 2026-06-08 (주제 git · Drive 일러스트 공유 · 자동화 마감)
+
+### 1. 주제(기사 JSON) = git 추적 (부사수 수신 + 중복방지 DB)
+
+- `cardnews/articles/`를 .gitignore에서 **해제**(output·images는 계속 제외). 기사 JSON은 KB급 텍스트라
+  git에 두고 코드와 함께 전파. 대표 push → 부사수 `git pull` 로 주제 수신. 누적되면 **중복방지 DB**.
+- 대표 PC: `CODEX_VIDEO_DESK\기사_깃에_올리기.bat`(=`git add cardnews/articles .gitignore` → commit → push, 스코프 한정이라 다른 변경 안 휩쓺).
+- 기사 작성은 Claude: `cardnews/templates/article_authoring_spec.md`. 주제선정(content_guide)→사실수집→
+  기사 JSON. **출력 분기**: 영상(텍스트만, 일러스트 자동매칭) / 카드뉴스(+카드이미지·image_prompts).
+  영상 위주면 카드이미지 단계 생략(영상은 카드이미지 안 씀).
+
+### 2. 일러스트 공유 = Google Drive 데스크톱 허브
+
+- 허브 = Drive `PhoneSpot_Library`(데스크톱이 각 PC 로컬에 미러; 예 `G:\내 드라이브\PhoneSpot_Library`).
+  경로 파일 `shorts/config/library_share_path.txt`(PC별로 다름 → **git 제외**). 설정 도구
+  `일러스트_공유허브_경로설정.bat`.
+- `codex_library_sync`(양방향 비파괴 병합)이 repo 라이브러리 ↔ 허브 폴더를 합치고, Drive 데스크톱이
+  클라우드 업/다운. 협업자는 폴더 공유(편집권한)+"내 드라이브에 바로가기 추가".
+- **이미지는 MCP 업로드 안 씀**: 1MB PNG를 base64로 컨텍스트 통과는 대량에 비현실적 → Drive 데스크톱이 정답.
+
+### 3. 렌더 직전 자동 라이브러리 동기화 (워커)
+
+- `RENDER_WORKER/worker.py`: 렌더 명령(run_codex_casual) **직전**에 `codex_library_sync` 1회.
+  허브에서 최신 일러스트 pull + (가져오기 잡이면 방금 들어온 것 push). **best-effort**(명령 루프 밖,
+  허브 미설정/오류여도 렌더 안 막음). → 부사수가 가져오기 없이 렌더만 해도 항상 최신 그림.
+- 패널 "관리 > 라이브러리 동기화" 수동 버튼도 그대로.
+
+### 4. 버전 단일출처 + 환경 점검 버튼
+
+- `start_hidden.ps1` 이 server.py `PANEL_VERSION`을 직접 읽음 → **버전은 server.py 한 곳만** 올리면 됨
+  (ps1 폴백 보존). 현재 `phonespot-web-v23`.
+- 패널 "관리 > 환경 점검" 버튼 = `codex_producer_check.py`(자원 PASS/FAIL).
+
+### 5. 옵트인 자동 코드 전파 (마커 방식)
+
+- `수신PC_자동업데이트_켜기.bat` → 마커 `TEMP\panel\auto_update.on` → 패널 시작 시 `auto_update.cmd`
+  (git pull --ff-only, 로그만, 항상 exit 0). 대표 PC는 켜지 말 것. **옛 env `PHONESPOT_AUTO_UPDATE`는 폐기**
+  (`2번째PC_자동업데이트_켜기.bat`도 마커 방식으로 교체).
+
+### 6. 운영 안정화 (인코딩·손상 복구)
+
+- **.bat 인코딩**: 한글 내용이 있는 .bat은 **UTF-8 BOM 필수**. BOM 없으면 한국어 Windows cmd가 한글을
+  CP949로 오독 → echo 줄이 명령으로 실행되며 깨짐(`라이브러리_공유_동기화.bat` 실제 증상). 한글 .bat 전부
+  **BOM + 내용 영문화**로 수정. ASCII 내용 .bat(00_패널 등)은 원래 안전 → 미수정.
+- **start_hidden.ps1**: PowerShell 5.1은 BOM 없는 .ps1을 CP949로 읽으므로 **주석을 영문(ASCII)으로** 유지
+  (한글 주석 금지). 패널 실행 안전 최우선.
+- **tag DB 복구**: `shorts/config/illustration_tag_db.json` 끝 NUL 648바이트(드라이브 부분동기화 손상)
+  제거, 101개 일러스트 항목 보존. 평소엔 관대 로더가 버팀.
+
+### 7. 점검 메모(정직)
+
+- 작업트리에 EOL(CRLF/LF) 차이로 다수 파일이 "수정"으로 보일 수 있음(이전 커밋과의 줄바꿈 차이, 내용 동일).
+  `기사_깃에_올리기.bat`은 스코프가 articles+.gitignore라 이 EOL 노이즈를 커밋하지 않음.
+- server.py·worker.py·publish_codex_package.py는 샌드박스 마운트 캐시로 bash `py_compile`이 가짜 실패할 수
+  있음(파일 끝 잘림). 구조는 호스트 실파일로 검증. PC에서 의심되면 `python -m py_compile <file>`.
