@@ -5,6 +5,30 @@
 
 ---
 
+## STEP 0 — 머신 역할 & 업데이트 적용 (★ 최우선 전제, 2026-06-08)
+
+세 역할로 고정. **모든 해결책은 이 구조 안에서만** 준다.
+
+| 머신 | 역할 | git |
+|---|---|---|
+| **노트북** | 개발/편집 전용(Claude 작업). 코드·가이드·articles·.bat 수정 → commit → push | **push only** |
+| **실행 PC** (부사수=사무실, `C:\PhoneSpot\phonespot_cardnews`) | 단독 생산기. 카드뉴스·영상·패널 전부 실행 | **pull only** |
+| 메인 PC (`192.168.0.7`) | 카드 이미지 원본 자산 소스(git 비공유 자산 LAN sync 출처) | — |
+
+### 원칙
+1. 해결 = **노트북 수정 → push → 실행 PC pull → 실행 PC에서 실행.** 노트북 실행 결과 신뢰 ❌(검증은 실행 PC 로그).
+2. **실행 PC는 pull only.** 패널 "GitHub 업로드"(`codex_github_upload`)·자동커밋을 실행 PC에서 쓰면 origin/main 분기 → pull 충돌. **push는 노트북에서만.** ※ `_docs/DEV_LAPTOP_OFFICE_RUN_GITHUB.md`의 "사무실도 push" 모델은 **폐기**(이 STEP 0이 우선).
+3. **git 전파 vs 비전파**(STEP 7 위생 연동): 전파=코드·`.bat/.ps1/.mjs`·`cardnews/articles/*.json`·가이드·`.gitattributes` / 비전파(셋업·LAN sync·Drive로 따로)=`cardnews/images`·`output`·`_secrets`·`node_modules`·`.playwright`·임베딩 1GB·`library_share_path.txt`.
+4. 진단은 실행 PC 로그 기준(노트북에서 못 봄).
+
+### 노트북 업데이트를 실행 PC에 적용 (브랜치 `main`, 원격 origin)
+- **자동(권장,1회)**: 실행 PC `CODEX_VIDEO_DESK\수신PC_자동업데이트_켜기.bat` → 이후 패널 켤 때마다 `git pull --ff-only` 자동.
+- **수동**: `cd C:\PhoneSpot\phonespot_cardnews` → `git pull --ff-only`.
+- **막히면(드리프트)**: `git fetch origin && git reset --hard origin/main` (gitignore 자산은 안 건드림).
+- 코드·.bat·.mjs는 pull 즉시 반영. 의존성(pip/npm/임베딩) 변경 시에만 `SETUP_FULL_PRODUCER.bat`/패널 "시스템 업데이트" 재실행.
+
+---
+
 ## STEP 1 — 작업 시작 전 가이드 일괄 Read (필수)
 
 **공통 (항상 Read, 6개):**
@@ -150,7 +174,31 @@ phonespot_cardnews/
 
 ---
 
-## STEP 7 — 변경 이력 (CLAUDE.md 자체)
+## STEP 7 — 리포 위생: 중복 실행파일·줄끝 오염 방지 (★ 2026-06-08)
+
+### 왜 생겼나
+1. **모노레포가 겹치는 하위트리를 import로 합침** — 루트와 `CODEX_VIDEO_DESK/`가 각자 setup/sync 스크립트를 들고 들어와 사본 누적(canonical 위치 규칙 부재).
+2. **MAINTENANCE의 MIGRATE/INSTALL/APPLY `.py`가 `.bat/.ps1`을 문자열 템플릿 생성·`shutil.copy2`로 복사** → byte 동일 사본 + 템플릿 복붙 본문 미수정 → "이름 다른데 내용 같은" 버그.
+3. **`.gitattributes` 부재** → CRLF/LF/BOM 혼재 → 유령 diff·편집 truncation.
+4. **다중 writer**(노트북 + 실행 PC 둘 다 push) → 같은 파일 병렬 수정 → diverge/충돌. STEP 0의 "push는 노트북만"으로 차단.
+
+### 규칙
+1. 실행파일 **단일 위치(SSOT)** — 루트 편의 복사 금지, 필요하면 사본 말고 얇은 래퍼.
+2. 새/수정 `.bat`·`.ps1` 커밋 전 **중복 md5 점검**(아래). 동일 발견 시 통합.
+3. 템플릿 복붙 시 **본문 대상명까지 교체**.
+4. `.gitattributes`로 줄끝 고정 + 한글 bat BOM 유지.
+5. `.bat/.ps1` 편집은 **HEAD 재구성+치환**(Edit툴 truncation 회피), 편집 후 `file`로 BOM·줄끝 검증.
+
+### 중복 점검 스니펫
+```
+git ls-files -z | grep -ziE '\.(bat|ps1|cmd|vbs)$' | xargs -0 md5sum | sort \
+ | awk '{h=$1;$1="";a[h]=a[h]"\n  "$0;c[h]++} END{for(h in a) if(c[h]>1) print c[h]" identical:"a[h]"\n"}'
+```
+※ `CODEX_VIDEO_DESK/MAINTENANCE/`의 APPLY/RUN/ROLLBACK은 패치 적용/롤백 툴 — 중복 아님, 삭제 금지.
+
+---
+
+## STEP 8 — 변경 이력 (CLAUDE.md 자체)
 
 - 2026-06-04: 신설. STEP 1~7 박음. 6 가이드 진입점 정렬. 하네스 시작.
 - 2026-06-05: ads/ + ads_kt/ + 메타 자동화 합류. STEP 2 명령 패턴 3개 추가, STEP 4 진입점 3개 추가, STEP 5 폴더 구조에 ads/ ads_kt/ 박음.
@@ -169,5 +217,8 @@ phonespot_cardnews/
   (`_docs/DEV_LAPTOP_OFFICE_RUN_GITHUB.md`). 노트북=개발(Claude Code 편집·push), 사무실=실행(pull·패널·
   스케줄러·렌더·카드수집). GitHub=코드 허브. clone/pull/push 명령 + git-pull로 자동적용 안 되는 예외
   (ads Apps Script 배포·_secrets·일러스트Drive허브) 명시. STEP1 조건부Read + STEP2 명령패턴 등록.
+
+- 2026-06-08: **STEP 0 머신 역할 모델 신설(최우선).** 노트북=push only, 실행 PC=pull only, 메인 PC=이미지 자산. 적용=수신PC_자동업데이트 또는 git pull --ff-only/막히면 reset --hard origin/main. DEV_LAPTOP_OFFICE_RUN_GITHUB.md의 "사무실도 push" 모델 폐기.
+- 2026-06-08: **STEP 7 리포 위생 신설.** 중복 실행파일·줄끝 오염 원인(모노레포 import 중복·자동생성 복사·.gitattributes 부재·다중 writer)+규칙. .gitattributes 추가. 루트 죽은 사본 6 + CODEX 비접두 setup 2 = 8개 삭제.
 
 이 파일이 업그레이드되면 변경 이력 1줄 추가. 가이드 추가·제거 시 STEP 1 리스트 동기화.

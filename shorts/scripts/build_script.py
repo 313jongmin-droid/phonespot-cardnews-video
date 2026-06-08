@@ -119,6 +119,8 @@ def pick_images(n):
             return result
     print(f"[ERROR] images/{slug}/ 에 GPT 원본 PNG 없음.")
     print(f"        1.png~N.png 또는 gpt_1.png~ 형식으로 넣어주세요.")
+    print(f"        [HINT] cardnews/images 는 git 비공유. 다른 PC면 메인 PC에서 먼저 동기화:")
+    print(f"               CODEX_VIDEO_DESK\\01_SYNC_CARDNEWS_WORKSPACE_FROM_MAIN_PC.bat")
     sys.exit(1)
 
 
