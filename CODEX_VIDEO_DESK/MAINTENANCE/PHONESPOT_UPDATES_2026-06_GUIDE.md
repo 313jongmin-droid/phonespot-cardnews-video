@@ -308,7 +308,18 @@
 - 결과: `git add -A`(시스템 업로드)가 더는 런타임 파일을 안 담고, pull 충돌이 사라짐. 일러스트는 Drive
   허브로만 공유(저장소도 가벼워짐). 다른 PC에서 그림이 비면 "라이브러리 동기화"로 허브에서 복원.
 
-### 9. 점검 메모(정직)
+### 9. 영상 슬러그 독립 스캔 + 슬러그 삭제 (패널 v24)
+
+- **영상 목록 독립화**: `list_slugs.py` 가 `cardnews/output/` 만 보던 것을 **`articles` ∪ `output`** 으로 확장.
+  카드뉴스 렌더(output 생성) 없이 **article(cards[]) 만 있으면 영상 목록에 뜸**(카드뉴스 목록과 동일).
+  플래그: `[OK]` cards 있음(영상 빌드 가능) / `[SC]` shorts_script 있음 / `[--]` 자원부족. 영상 빌드가
+  output 폴더를 직접 생성하므로 카드뉴스와 무관하게 독립 제작 가능.
+- **슬러그 삭제**: 패널 영상 "관리" 그룹 + 카드 "기타"에 **"선택 슬러그 삭제"**(빨강, confirm).
+  액션 `delete_slug` = SAFE_SLUG 검증 후 `articles/<slug>.json` + `output/<slug>` + `images/<slug>` +
+  `CHUNK_OVERRIDES/<slug>.json` + `RESULTS/*<slug>*` 를 로컬에서 제거(best-effort). git 추적 기사면 push해야
+  다른 PC에도 반영.
+
+### 10. 점검 메모(정직)
 
 - 작업트리에 EOL(CRLF/LF) 차이로 다수 파일이 "수정"으로 보일 수 있음(이전 커밋과의 줄바꿈 차이, 내용 동일).
   `기사_깃에_올리기.bat`은 스코프가 articles+.gitignore라 이 EOL 노이즈를 커밋하지 않음.

@@ -103,33 +103,36 @@ def main() -> int:
     run([GIT, "--version"])
     run([GIT, "status", "--short"], check=False)
 
-    if ahead_count() > 0:
-        log("")
-        log(f"[ahead] Existing local commit waiting for push: {ahead_count()}")
-        code = push_with_retry()
-        if code:
-            return code
-        status_script = ROOT / "CODEX_VIDEO_DESK" / "MAINTENANCE" / "codex_github_status.py"
-        if status_script.exists():
-            subprocess.run([sys.executable, str(status_script)], cwd=str(ROOT))
-        log("[OK] Upload complete.")
-        return 0
-
+    # 1) 로컬 변경 스테이징 + 커밋 (ahead 여부와 무관하게 항상 새 변경을 담는다)
     run([GIT, "add", "-A"])
-
     diff = run([GIT, "diff", "--cached", "--name-only"], check=False)
     changed = [line.strip() for line in (diff.stdout or "").splitlines() if line.strip()]
-    if not changed:
-        log("[OK] No changes to upload.")
-        return 0
+    if changed:
+        stamp = datetime.now().strftime("%Y-%m-%d %H:%M")
+        message = f"Update PhoneSpot Codex system {stamp}"
+        log("")
+        log(f"[commit] {message}  ({len(changed)} files)")
+        run([GIT, "commit", "-m", message])
+    else:
+        log("[info] No new local changes (sync existing commits only).")
 
-    stamp = datetime.now().strftime("%Y-%m-%d %H:%M")
-    message = f"Update PhoneSpot Codex system {stamp}"
+    # 2) 원격 통합(merge) — 원격이 앞서 있으면(non-fast-forward) 먼저 합쳐야 push 가능.
+    #    --no-edit: 머지 커밋 메시지 에디터가 떠서 멈추는 것 방지.
     log("")
-    log(f"[commit] {message}")
-    run([GIT, "commit", "-m", message])
+    log("[pull] integrating remote changes (merge) ...")
+    pull = run([GIT, "pull", "--no-rebase", "--no-edit"], check=False)
+    if pull.returncode:
+        log("")
+        log("[ERROR] pull(merge) failed - likely a conflict.")
+        log("  Fix manually: 'git status' to see conflicts, resolve, 'git add', 'git commit',")
+        log("  then run upload again. To undo the merge: 'git merge --abort'.")
+        return pull.returncode
+
+    # 3) push
     code = push_with_retry()
     if code:
+        log("")
+        log("[ERROR] push failed. Check internet / GitHub credentials.")
         return code
 
     status_script = ROOT / "CODEX_VIDEO_DESK" / "MAINTENANCE" / "codex_github_status.py"

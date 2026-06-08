@@ -1,11 +1,13 @@
-"""슬러그 목록 - 수정한 날짜 기준 역순 정렬 (최신 먼저).
+"""슬러그 목록 - articles ∪ output 기준, 수정한 날짜 역순(최신 먼저).
 
-출력 형식:
-   N.  YYYY.MM.DD  [OK]  slug_name
-   - YYYY.MM.DD: output/<slug>/ 폴더의 mtime (윈도우 탐색기 '수정한 날짜')
-   - [OK]: articles에 cards[] 있고 images/<slug>/에 .png 있음 (자동 생성 가능)
-   - [SC]: shorts_script.json 손폴리시본 + 이미지 있음 (빌드 가능, articles 깨져도 무관)
-   - [--]: 빌드 자원 부족
+영상은 article(cards[])만 있으면 빌드 가능(일러스트는 라이브러리에서 자동 매칭)하므로,
+카드뉴스 output 폴더가 없어도 article 만 있으면 목록에 뜬다(카드뉴스 목록과 동일한 독립 스캔).
+
+플래그(영상 빌드 기준):
+   [OK]  articles 에 cards[]>=2  → 영상 빌드 가능
+   [SC]  output/<slug>/shorts_script.json 있음(article 깨져도 빌드 가능)
+   [--]  자원 부족
+출력: `  N.  YYYY.MM.DD  [FLAG]  slug`
 """
 import json
 import sys
@@ -17,41 +19,55 @@ try:
 except Exception:
     pass
 
-project_root = Path(__file__).parent.parent
-repo_root = project_root.parent  # phonespot_cardnews/
-cardnews_root = repo_root / "cardnews"  # phonespot_cardnews/cardnews/
+project_root = Path(__file__).parent.parent      # shorts/
+repo_root = project_root.parent                   # phonespot_cardnews/
+cardnews_root = repo_root / "cardnews"
 output_dir = cardnews_root / "output"
 articles_dir = cardnews_root / "articles"
-images_dir = cardnews_root / "images"
 
-if not output_dir.exists():
+# 슬러그 수집: output 폴더 ∪ articles json (둘 중 하나만 있어도 등재)
+mtime: dict[str, float] = {}
+if output_dir.exists():
+    for d in output_dir.iterdir():
+        if d.is_dir():
+            try:
+                mtime[d.name] = d.stat().st_mtime
+            except OSError:
+                pass
+if articles_dir.exists():
+    for aj in articles_dir.glob("*.json"):
+        try:
+            m = aj.stat().st_mtime
+        except OSError:
+            continue
+        mtime[aj.stem] = max(mtime.get(aj.stem, 0.0), m)
+
+if not mtime:
     sys.exit(0)
 
-# mtime 기준 역순 정렬 (최신 먼저)
-slug_dirs = [d for d in output_dir.iterdir() if d.is_dir()]
-slug_dirs.sort(key=lambda d: d.stat().st_mtime, reverse=True)
 
-for i, d in enumerate(slug_dirs, 1):
-    slug = d.name
-    mtime = datetime.datetime.fromtimestamp(d.stat().st_mtime)
-    date_str = mtime.strftime("%Y.%m.%d")
-    has_script = (d / "shorts_script.json").exists()
-    cards_ok = False
+def cards_ok(slug: str) -> bool:
     aj = articles_dir / f"{slug}.json"
-    if aj.exists():
-        try:
-            j = json.load(open(aj, encoding="utf-8"))
-            cards = j.get("cards")
-            cards_ok = isinstance(cards, list) and len(cards) >= 2
-        except Exception:
-            pass
-    img_ok = False
-    img_subdir = images_dir / slug
-    if img_subdir.exists():
-        img_ok = any(p.suffix.lower() == ".png" for p in img_subdir.iterdir())
-    if cards_ok and img_ok:
+    if not aj.exists():
+        return False
+    try:
+        j = json.load(open(aj, encoding="utf-8"))
+        cards = j.get("cards")
+        return isinstance(cards, list) and len(cards) >= 2
+    except Exception:
+        return False
+
+
+def has_script(slug: str) -> bool:
+    return (output_dir / slug / "shorts_script.json").exists()
+
+
+rows = sorted(mtime.items(), key=lambda kv: kv[1], reverse=True)
+for i, (slug, m) in enumerate(rows, 1):
+    date_str = datetime.datetime.fromtimestamp(m).strftime("%Y.%m.%d")
+    if cards_ok(slug):
         flag = "[OK]"
-    elif has_script and img_ok:
+    elif has_script(slug):
         flag = "[SC]"
     else:
         flag = "[--]"

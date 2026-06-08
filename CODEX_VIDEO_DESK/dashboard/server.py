@@ -5,6 +5,7 @@ import html
 import json
 import os
 import re
+import shutil
 import socket
 import subprocess
 import sys
@@ -37,7 +38,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v23"
+PANEL_VERSION = "phonespot-web-v24"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -1640,6 +1641,41 @@ class Handler(BaseHTTPRequestHandler):
                 else:
                     json_response(self, {"ok": True, "message": "환경 점검 실행 — 실행 로그에서 PASS/FAIL을 확인하세요."})
                 return
+            if action == "delete_slug":
+                # 슬러그(주제) 삭제: 기사 JSON + 카드 output/images + 청크오버라이드 + 렌더 결과를 로컬에서 제거.
+                # 안전: SAFE_SLUG 검증으로 경로 탈출 방지. best-effort(없는 건 건너뜀).
+                try:
+                    slug_now = validate_slug(slug)
+                except RuntimeError as exc:
+                    json_response(self, {"ok": False, "message": str(exc)})
+                    return
+                targets = [
+                    CARD_ARTICLES / f"{slug_now}.json",
+                    CARD_OUTPUT / slug_now,
+                    CARD_IMAGES / slug_now,
+                    CHUNK_OVERRIDES / f"{slug_now}.json",
+                ]
+                rroot = DESK / "RESULTS"
+                if rroot.exists():
+                    for p in rroot.iterdir():
+                        if slug_now in p.name:
+                            targets.append(p)
+                deleted = 0
+                for t in targets:
+                    try:
+                        if t.is_dir():
+                            shutil.rmtree(t, ignore_errors=True)
+                            deleted += 1
+                        elif t.exists():
+                            t.unlink()
+                            deleted += 1
+                    except OSError:
+                        pass
+                json_response(self, {
+                    "ok": True,
+                    "message": f"'{slug_now}' 삭제: 항목 {deleted}개 제거. (git 추적 기사라면 push해야 다른 PC에도 반영)",
+                })
+                return
             if action == "video_prepare":
                 slug = validate_slug(slug)
                 commands = [
@@ -2128,6 +2164,7 @@ INDEX_HTML = r"""<!doctype html>
             <button class="btn" onclick="chooseUpload('illustration')"><strong>일러스트 웹 업로드</strong><span>다른 PC에서 만든 일러스트를 드롭 폴더에 올립니다.</span></button>
             <button class="btn" onclick="runAction('producer_check')"><strong>환경 점검</strong><span>이 PC가 카드뉴스+영상 렌더를 독립으로 할 수 있는지(노드·렌더러·폰트·임베딩) 확인. 결과는 실행 로그.</span></button>
             <button class="btn" onclick="runAction('system_update')"><strong>시스템 업데이트</strong><span>GitHub에서 최신 코드만 받아옵니다(결과물 안 건드림).</span></button>
+            <button class="btn" style="border-color:#dc2626;color:#dc2626" onclick="deleteSlug()"><strong>선택 슬러그 삭제</strong><span>선택한 슬러그의 기사·이미지·렌더 결과를 로컬에서 제거(되돌릴 수 없음).</span></button>
           </div>
         </div>
         <div id="cardActions" class="pad grid" style="display:none">
@@ -2141,6 +2178,7 @@ INDEX_HTML = r"""<!doctype html>
           <button class="btn primary" onclick="runAction('card_to_video')"><strong>6. 영상으로 넘기기</strong><span>완성 카드뉴스를 영상 준비 단계로 넘깁니다.</span></button>
           <div style="grid-column:1/-1;font-size:12px;color:#64748b;margin-top:2px">기타</div>
           <button class="btn" onclick="runAction('telegram_card_summary')"><strong>후보 현황 텔레그램</strong><span>현재 카드뉴스 후보·상태를 텔레그램으로 보냅니다.</span></button>
+          <button class="btn" style="border-color:#dc2626;color:#dc2626" onclick="deleteSlug()"><strong>선택 슬러그 삭제</strong><span>선택한 슬러그의 기사·이미지·렌더 결과를 로컬에서 제거(되돌릴 수 없음).</span></button>
         </div>
       </section>
       <section>
@@ -2587,6 +2625,17 @@ INDEX_HTML = r"""<!doctype html>
         }
         await loadState();
         await loadJobHistory();
+      } catch (err) { alert(String(err)); }
+    }
+    async function deleteSlug() {
+      if (!selected) { alert("먼저 슬러그를 선택하세요."); return; }
+      if (!confirm("'" + selected + "' 슬러그를 삭제할까요?\n기사(주제)·카드 이미지·렌더 결과가 로컬에서 제거됩니다. 되돌릴 수 없습니다.")) return;
+      try {
+        const result = await api("/api/action", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({action:"delete_slug", slug:selected}) });
+        alert(result.message || (result.ok ? "삭제됨" : "삭제 실패"));
+        selected = "";
+        await reloadLists();
+        await loadState();
       } catch (err) { alert(String(err)); }
     }
     async function cancelRemoteJob() {
