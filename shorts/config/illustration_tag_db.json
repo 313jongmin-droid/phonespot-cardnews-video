@@ -1454,7 +1454,45 @@
       ],
       "note": "자동 발굴 개념: 설정 화면",
       "available": false
+    },
+    "android_user_a91efa70": {
+      "keywords": [
+        "안드폰",
+        "중이신데",
+        "으로",
+        "갈아타려"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 안드폰 중이신데",
+      "available": false
+    },
+    "select_option_76495b69": {
+      "keywords": [
+        "옵션",
+        "선택하시면"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 옵션 선택하시면",
+      "available": false
+    },
+    "cpt_09b8db78": {
+      "keywords": [
+        "알림",
+        "애플워치",
+        "아닌",
+        "타사",
+        "스마트워치로"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 알림 애플워치",
+      "available": false
     }
   },
-  "updated_at": "2026-06-08T16:26:19"
+  "updated_at": "2026-06-08T18:42:29"
 }

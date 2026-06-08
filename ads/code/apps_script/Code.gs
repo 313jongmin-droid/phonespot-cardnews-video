@@ -48,6 +48,14 @@ function onOpen() {
 
     .addToUi();
 
+  // 📡 메타 자동화 메뉴 (meta-sync.gs) — 같은 프로젝트의 다른 파일 함수
+
+  try { buildMetaSyncMenu_(SpreadsheetApp.getUi()); } catch (e) {}
+
+  // 🎬 YouTube 메뉴 (youtube_sync.gs) — 별도 설치 스크립트. onOpen에서 호출돼야 버튼이 뜸
+
+  try { addYouTubeMenuItem(); } catch (e) {}
+
 }
 
 // ──[일상]── 전체 새로고침: GA4 수집 + KPI + 매트릭스 + 차트
@@ -64,7 +72,7 @@ function refreshAll() {
 
     updateChannelMatrixWithGA4();
 
-    updateSNSReport();
+    updateSNSReport({ forceRebuild: false, showAlert: false }); // 이미 만들어졌으면 재생성 생략(속도↑). 수식은 자동 재계산
 
     repairSNSMonthlySummaries(false);
 
@@ -72,13 +80,37 @@ function refreshAll() {
 
     addTimeSeriesChart();
 
-    ui.alert('✅ 전체 새로고침 완료');
+    const stamp = recordLastRefresh_(); // 최근 업데이트 날짜/시간 기록
+
+    ui.alert('✅ 전체 새로고침 완료\n🕐 ' + stamp);
 
   } catch (e) {
 
     ui.alert('❌ 오류: ' + e.message);
 
   }
+
+}
+
+// ──[유틸]── 최근 전체 업데이트 시각 기록 (통합대시보드 A46) — refreshAll이 호출
+
+function recordLastRefresh_() {
+
+  const stamp = Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyy-MM-dd HH:mm:ss');
+
+  const sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('통합대시보드');
+
+  if (sh) {
+
+    sh.getRange('A46:F46').breakApart();
+
+    sh.getRange('A46').setValue('🕐 마지막 전체 업데이트: ' + stamp)
+
+      .setFontColor('#666666').setFontStyle('italic').setFontWeight('bold');
+
+  }
+
+  return stamp;
 
 }
 
@@ -618,11 +650,25 @@ function addTimeSeriesChart() {
 
 // ──[일상]── SNS 채널 운영 보고 (E28 자체 드롭다운으로 기간 별도 설정)
 
-function updateSNSReport() {
+function updateSNSReport(opts) {
+
+  opts = opts || {};
+
+  const forceRebuild = opts.forceRebuild !== false; // 기본 true (메뉴/수동 실행 시 재생성)
+
+  const showAlert = opts.showAlert !== false;       // 기본 true
 
   const ss = SpreadsheetApp.getActiveSpreadsheet();
 
   const sh = ss.getSheetByName('통합대시보드');
+
+  // 이미 표가 만들어져 있고 강제 재생성이 아니면 → 재생성 생략. 수식이 자동 재계산되므로 데이터는 최신 유지
+
+  if (!forceRebuild && sh.getRange('A28').getValue() === '★ SNS 채널 운영') {
+
+    return;
+
+  }
 
   sh.getRange('A28:Z35').breakApart();
 
@@ -734,7 +780,7 @@ function updateSNSReport() {
 
   sh.getRange('B29:F33').setHorizontalAlignment('center');
 
-  SpreadsheetApp.getUi().alert('✅ SNS 보고표 갱신 — E28 드롭다운으로 기간 별도 설정 (채널 매트릭스와 분리)');
+  if (showAlert) SpreadsheetApp.getUi().alert('✅ SNS 보고표 갱신 — E28 드롭다운으로 기간 별도 설정 (채널 매트릭스와 분리)');
 
 }
 

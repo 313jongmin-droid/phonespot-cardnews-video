@@ -1,0 +1,25 @@
+# Windows scripts are encoding-sensitive (Korean BOM + CRLF for goto labels).
+# Mark binary so git stores EXACT bytes and never re-normalizes/strips them.
+# (CLAUDE.md STEP 7 repo hygiene.)
+*.bat   binary
+*.cmd   binary
+*.ps1   binary
+*.vbs   binary
+
+# Media / fonts: binary.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
+*.ico binary
+*.mp3 binary
+*.wav binary
+*.mp4 binary
+*.mov binary
+*.zip binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.pdf binary

@@ -334,18 +334,10 @@ def parse_slugs(raw: str) -> list[dict]:
 
 
 def get_video_slugs() -> list[dict]:
-    rows = parse_slugs(run_capture([sys.executable, str(SCRIPTS / "list_slugs.py")]))
-    rows.sort(key=slug_sort_key)
-    card_map = {row["slug"]: row for row in get_cardnews_rows()}
-    for row in rows:
-        card = card_map.get(row["slug"])
-        if card:
-            row["stage"] = card.get("stage", "")
-            row["stageClass"] = card.get("stageClass", "")
-        else:
-            row["stage"] = "부분"
-            row["stageClass"] = "muted"
-    return rows
+    # 영상 탭도 카드 탭과 동일 소스(articles+images+output)를 사용 → 기사만 있는
+    # 슬러그도 영상 탭에 노출되어 6번(영상으로 넘기기) 없이 바로 영상 준비가 가능.
+    # (예전엔 list_slugs.py = output 폴더 있는 슬러그만 노출되어 6번이 사실상 진입점이었음.)
+    return get_cardnews_rows()
 
 
 def validate_slug(slug: str) -> str:
@@ -1881,6 +1873,20 @@ class Handler(BaseHTTPRequestHandler):
                 else:
                     json_response(self, {"ok": True})
                 return
+            if action == "delete_slug":
+                slug = validate_slug(slug)
+                removed = []
+                for t in (CARD_ARTICLES / f"{slug}.json", CARD_IMAGES / slug, CARD_OUTPUT / slug):
+                    try:
+                        if t.is_dir():
+                            shutil.rmtree(t); removed.append(t.name)
+                        elif t.exists():
+                            t.unlink(); removed.append(t.name)
+                    except OSError as exc:
+                        json_response(self, {"ok": False, "message": f"삭제 실패: {t} ({exc})"})
+                        return
+                json_response(self, {"ok": True, "message": f"삭제됨: {slug} (" + (", ".join(removed) or "대상 없음") + ")"})
+                return
             if action == "open_prompt":
                 safe_open(DESK / "LATEST_PROMPT.md")
                 json_response(self, {"ok": True})
@@ -2154,6 +2160,7 @@ INDEX_HTML = r"""<!doctype html>
           <button class="btn compact" onclick="window.open('/prompt','_blank')"><strong>영상 프롬프트 보기</strong><span>최신 영상용 GPT 프롬프트를 브라우저에서 엽니다.</span></button>
           <button class="btn compact" onclick="openIllustrationRequests()"><strong>신규 일러스트 요청서</strong><span>이 영상의 범용 일러스트 추천과 GPT 프롬프트.</span></button>
           <button class="btn compact" onclick="runAction('open_results')"><strong>영상 결과 폴더</strong><span>완성 MP4와 발행 패키지 폴더를 엽니다.</span></button>
+          <button class="btn compact" onclick="deleteSlug()"><strong>선택 슬러그 삭제</strong><span>선택 슬러그의 articles·images·output 삭제(되돌릴 수 없음).</span></button>
           <button class="btn compact" onclick="runAction('open_illustrations')"><strong>일러스트 폴더</strong><span>재사용 일러스트 라이브러리와 드롭 폴더.</span></button>
           <button class="btn compact" onclick="showChunks()"><strong>청크 경계 편집</strong><span>내용·TTS는 유지하고 줄바꿈·합치기·분할만 조정합니다.</span></button>
           <button class="btn" id="manageToggle" style="grid-column:1/-1;min-height:0;padding:9px 12px;background:#f3f4f6;text-align:center" onclick="toggleManage()"><strong style="margin:0;font-size:13px">＋ 라이브러리 · 시스템 관리</strong></button>
@@ -2178,7 +2185,11 @@ INDEX_HTML = r"""<!doctype html>
           <button class="btn primary" onclick="runAction('card_to_video')"><strong>6. 영상으로 넘기기</strong><span>완성 카드뉴스를 영상 준비 단계로 넘깁니다.</span></button>
           <div style="grid-column:1/-1;font-size:12px;color:#64748b;margin-top:2px">기타</div>
           <button class="btn" onclick="runAction('telegram_card_summary')"><strong>후보 현황 텔레그램</strong><span>현재 카드뉴스 후보·상태를 텔레그램으로 보냅니다.</span></button>
+<<<<<<< HEAD
           <button class="btn" style="border-color:#dc2626;color:#dc2626" onclick="deleteSlug()"><strong>선택 슬러그 삭제</strong><span>선택한 슬러그의 기사·이미지·렌더 결과를 로컬에서 제거(되돌릴 수 없음).</span></button>
+=======
+          <button class="btn" onclick="deleteSlug()"><strong>선택 슬러그 삭제</strong><span>선택한 슬러그의 articles·images·output 파일을 모두 삭제합니다(되돌릴 수 없음).</span></button>
+>>>>>>> 05a132f268a92bb1fe808c7e1803d2f5edf5e008
         </div>
       </section>
       <section>
@@ -2615,6 +2626,16 @@ INDEX_HTML = r"""<!doctype html>
       return runGithubAction(event, "system_upload", "업로드");
     }
 
+    async function deleteSlug() {
+      if (!selected) { alert("먼저 슬러그를 선택하세요."); return; }
+      if (!confirm("정말 삭제할까요?\n'" + selected + "' 의 articles / images / output 파일이 모두 지워집니다. 되돌릴 수 없습니다.")) return;
+      try {
+        const result = await api("/api/action", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({action:"delete_slug", slug:selected}) });
+        alert(result.ok ? (result.message || "삭제됨") : (result.message || "삭제 실패"));
+        if (result.ok) { selected = ""; document.getElementById("selectedSlug").textContent = "없음"; }
+      } catch (err) { alert(String(err)); }
+      await loadState(); await loadSlugs(); await loadCardnews();
+    }
     async function runAction(action) {
       console.log("runAction", action);
       try {

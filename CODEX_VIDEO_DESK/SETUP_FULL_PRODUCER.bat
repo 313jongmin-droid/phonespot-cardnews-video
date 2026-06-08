@@ -12,8 +12,8 @@ pushd "%ROOT%" >nul
 rem ---- pick python: prefer panel runtime venv, else system ----
 set "PY="
 if exist "%ROOT%\.phonespot_runtime\Scripts\python.exe" set "PY=%ROOT%\.phonespot_runtime\Scripts\python.exe"
-if not defined PY ( where python >nul 2>nul && set "PY=python" )
-if not defined PY ( where py >nul 2>nul && set "PY=py" )
+rem MS Store "python" stub passes "where python" but cannot run; verify by running it.
+if not defined PY for /f "tokens=2 delims=. " %%V in ('python --version 2^>^&1') do if "%%V"=="3" set "PY=python"
 if not defined PY (
   echo [ERROR] Python 3.10+ not found. Install Python first, then re-run.
   popd & pause & exit /b 1
