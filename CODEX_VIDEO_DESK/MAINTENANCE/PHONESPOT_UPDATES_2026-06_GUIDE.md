@@ -292,7 +292,23 @@
 - 기존 `cpt_*` 파일은 그대로(이름 변경은 **앞으로 발굴되는 개념부터**). 적용은 다음 "영상 프롬프트 준비"
   실행부터(패널 재시작 불필요).
 
-### 8. 점검 메모(정직)
+### 8. pull 충돌 영구 해결: 런타임 파일 git 추적 해제
+
+- 증상: 부사수 git pull 시 "local changes / untracked files would be overwritten by merge" 후 중단.
+- 원인: **런타임/생성 파일이 git에 추적**된 채 양쪽에서 바뀜. 특히 .gitignore가 일러스트를
+  `!shorts/public/assets/illustrations/**` 로 **강제 추적**하고 있었음(Drive 허브 공유와 모순).
+- 해결:
+  1) .gitignore 수정 — 일러스트 강제추적 제거 + 런타임 무시 추가
+     (`shorts/config/illustration_tag_db.json`, `shorts/codex/ILLUSTRATION_TAG_DB.md`,
+      `shorts/codex/illustration_usage_history.json`, `shorts/public/shorts_script.json`,
+      `shorts/public/assets/illustrations/`).
+  2) **대표 PC 1회**: `CODEX_VIDEO_DESK\런타임파일_git정리_1회.bat` → `git rm --cached`(파일은 로컬 유지)
+     + commit + push. (먼저 일러스트를 Drive 허브에 동기화해 둘 것.)
+  3) pull 내성: 셋업 bat과 `auto_update.cmd` 가 **pull 전에 `git stash --include-untracked`** 수행.
+- 결과: `git add -A`(시스템 업로드)가 더는 런타임 파일을 안 담고, pull 충돌이 사라짐. 일러스트는 Drive
+  허브로만 공유(저장소도 가벼워짐). 다른 PC에서 그림이 비면 "라이브러리 동기화"로 허브에서 복원.
+
+### 9. 점검 메모(정직)
 
 - 작업트리에 EOL(CRLF/LF) 차이로 다수 파일이 "수정"으로 보일 수 있음(이전 커밋과의 줄바꿈 차이, 내용 동일).
   `기사_깃에_올리기.bat`은 스코프가 articles+.gitignore라 이 EOL 노이즈를 커밋하지 않음.

@@ -44,6 +44,11 @@ echo ===== 3/5: playwright chromium =====
 set "PLAYWRIGHT_BROWSERS_PATH=%ROOT%\.playwright"
 "%PY%" -m playwright install chromium
 
+echo ===== 3-1/5: Remotion browser (Chrome Headless Shell) =====
+pushd "%ROOT%\shorts" >nul
+call npx remotion browser ensure
+popd >nul
+
 echo.
 echo ===== 4/5: embedding models (text + CLIP image, ~1GB once) =====
 "%PY%" "%ROOT%\shorts\scripts\codex_illust_embed.py" selftest

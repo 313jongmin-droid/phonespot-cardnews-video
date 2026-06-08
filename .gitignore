@@ -51,6 +51,13 @@ _secrets/
 shorts/config/library_share_path.txt
 shorts/config/concept_name_cache.json
 
+# 런타임/생성 상태 — 각 PC에서 바뀌고 Drive허브로 공유되므로 git 추적 금지(=pull 충돌 방지)
+shorts/config/illustration_tag_db.json
+shorts/codex/ILLUSTRATION_TAG_DB.md
+shorts/codex/illustration_usage_history.json
+shorts/public/shorts_script.json
+shorts/public/assets/illustrations/
+
 # Cardnews generated data (output·images는 재생성 가능 → 무시.
 # articles(주제 JSON)는 작고 누적가치가 커서 git 추적 = 부사수 전파 + 중복방지 DB)
 cardnews/output/
@@ -116,12 +123,10 @@ shorts/hyperframes/
 shorts/hyperframes_codex/
 shorts/.cache/
 
-# Runtime assets: ignore per-slug copied assets, keep reusable libraries.
+# Runtime assets: ignore per-slug copied assets. 일러스트는 Drive 허브로 공유 → git 추적 안 함.
 shorts/public/assets/
 !shorts/public/assets/
 shorts/public/assets/*
-!shorts/public/assets/illustrations/
-!shorts/public/assets/illustrations/**
 !shorts/public/assets/logos/
 !shorts/public/assets/logos/**
 

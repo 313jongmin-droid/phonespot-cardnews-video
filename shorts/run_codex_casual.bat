@@ -138,7 +138,7 @@ rem + cheap intermediate encode (#2; Step 6 finalize is the quality gate).
 call node scripts\render_remotion_fast.mjs CasualShort "!RAWFILE!" > "!RENDERLOG!" 2>&1
 if errorlevel 1 (
     echo  [WARN] fast render path failed - falling back to Remotion CLI. See log.
-    call npx remotion render src/index.ts CasualShort "!RAWFILE!" --concurrency=!PHONESPOT_RENDER_CONCURRENCY! --pixel-format=yuv420p --crf=!PHONESPOT_RAW_CRF! --x264-preset=!PHONESPOT_RAW_PRESET! !GLARGS! >> "!RENDERLOG!" 2>&1
+    call npx remotion render src/index.ts CasualShort "!RAWFILE!" --pixel-format=yuv420p --crf=!PHONESPOT_RAW_CRF! --x264-preset=!PHONESPOT_RAW_PRESET! !GLARGS! >> "!RENDERLOG!" 2>&1
 )
 if errorlevel 1 (
     echo [ERROR] Remotion raw render command failed. See:

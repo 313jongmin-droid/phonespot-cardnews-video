@@ -1,4 +1,4 @@
-﻿@echo off
+@echo off
 chcp 65001 >nul
 rem Set this PC's illustration share-hub path (once per PC).
 rem Hub = a folder inside a cloud sync folder (Google Drive / Dropbox).
@@ -25,20 +25,4 @@ if not errorlevel 1 (
 
 echo.
 echo  Auto-detect failed. Enter the path manually.
-echo  e.g.  G:\My Drive\PhoneSpot_Library   /   G:\내 드라이브\PhoneSpot_Library
-set /p HUB=Hub folder path (Enter to cancel):
-if "%HUB%"=="" ( echo canceled. & pause & exit /b 1 )
-
-if not exist "%HUB%" (
-  echo [create] %HUB%
-  mkdir "%HUB%" 2>nul
-)
-if not exist "%ROOT%\shorts\config" mkdir "%ROOT%\shorts\config" 2>nul
-> "%CFG%" echo %HUB%
-
-echo.
-echo [OK] saved: %CFG%
-echo       hub: %HUB%
-echo.
-echo Next: panel "Manage > library sync" to merge both ways.
-pause
+echo  e.g.  G:\My Drive\PhoneSp

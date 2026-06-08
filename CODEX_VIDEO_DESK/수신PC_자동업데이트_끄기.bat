@@ -1,4 +1,4 @@
-﻿@echo off
+@echo off
 chcp 65001 >nul
 set "HERE=%~dp0"
 del "%HERE%TEMP\panel\auto_update.on" >nul 2>&1

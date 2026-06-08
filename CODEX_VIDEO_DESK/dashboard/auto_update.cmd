@@ -31,6 +31,8 @@ if errorlevel 1 (
 
 >>"%LOG%" echo.
 >>"%LOG%" echo [%date% %time%] auto-update: git pull --ff-only in "%ROOT%"
+rem receiver PC: stash local runtime/untracked so they do not block pull
+"%GIT%" -C "%ROOT%" stash --include-untracked >>"%LOG%" 2>&1
 "%GIT%" -C "%ROOT%" pull --ff-only >>"%LOG%" 2>&1
 >>"%LOG%" echo [exit] !errorlevel!
 exit /b 0

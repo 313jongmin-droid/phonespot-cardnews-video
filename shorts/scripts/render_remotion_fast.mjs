@@ -9,7 +9,7 @@
 //
 // 사용: node scripts/render_remotion_fast.mjs <compositionId> <outPath>
 import { bundle } from "@remotion/bundler";
-import { selectComposition, renderMedia } from "@remotion/renderer";
+import { selectComposition, renderMedia, ensureBrowser } from "@remotion/renderer";
 import path from "node:path";
 import fs from "node:fs";
 import crypto from "node:crypto";
@@ -94,8 +94,49 @@ async function getServeUrl() {
 }
 
 const t0 = Date.now();
+// Remotion 전용 브라우저 보장. 다운로드가 방화벽 등으로 막히면 시스템 Chrome 으로 폴백.
+function findLocalChrome() {
+  const env = (process.env.REMOTION_BROWSER_EXECUTABLE || "").trim();
+  if (env && fs.existsSync(env)) return env;
+  // 1순위: 셋업이 설치한 Playwright chromium (이 repo 의 .playwright, 모든 생산기 PC 에 존재)
+  try {
+    const pw = path.join(ROOT, "..", ".playwright");
+    if (fs.existsSync(pw)) {
+      for (const d of fs.readdirSync(pw)) {
+        if (!d.toLowerCase().startsWith("chromium")) continue;
+        for (const rel of [
+          ["chrome-win", "chrome.exe"],
+          ["chrome-win64", "chrome.exe"],
+          ["chrome-headless-shell-win64", "chrome-headless-shell.exe"],
+          ["chrome-headless-shell-win", "chrome-headless-shell.exe"],
+        ]) {
+          const exe = path.join(pw, d, rel[0], rel[1]);
+          if (fs.existsSync(exe)) return exe;
+        }
+      }
+    }
+  } catch {}
+  // 2순위: 시스템 Chrome / Edge
+  const cands = [
+    "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+    "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+    path.join(process.env.LOCALAPPDATA || "", "Google", "Chrome", "Application", "chrome.exe"),
+    "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+    "C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe",
+  ];
+  for (const c of cands) { try { if (c && fs.existsSync(c)) return c; } catch {} }
+  return null;
+}
+let browserExecutable = null;
+try {
+  await ensureBrowser();
+} catch (e) {
+  browserExecutable = findLocalChrome();
+  if (!browserExecutable) throw e;
+  console.log("[render] Remotion browser download failed; using local Chrome: " + browserExecutable);
+}
 const serveUrl = await getServeUrl();
-const composition = await selectComposition({ serveUrl, id: compId, inputProps: {} });
+const composition = await selectComposition({ serveUrl, id: compId, inputProps: {}, browserExecutable });
 console.log(
   `[render] ${compId} ${composition.width}x${composition.height} frames=${composition.durationInFrames} ` +
   `concurrency=${concurrency} crf=${crf} preset=${x264Preset}`
@@ -104,6 +145,7 @@ let lastPc = -1;
 const renderOpts = {
   serveUrl,
   composition,
+  browserExecutable,
   codec: "h264",
   outputLocation: outPath,
   crf,

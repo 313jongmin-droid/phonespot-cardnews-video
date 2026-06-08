@@ -24,6 +24,7 @@
 - **카드뉴스 기사 작성 (Claude 담당, 주제선정→영상/카드뉴스 분기)**: `cardnews/templates/article_authoring_spec.md`
 - **멀티PC 독립생산 + 일러스트 Drive 공유**: `CODEX_VIDEO_DESK/MAINTENANCE/MULTI_PC_STANDALONE_AND_LIBRARY_SHARING_GUIDE.md`
 - **최근(2026-06) 변경 종합**: `CODEX_VIDEO_DESK/MAINTENANCE/PHONESPOT_UPDATES_2026-06_GUIDE.md`
+- **노트북 개발 / 사무실 실행 / GitHub 연동**: `_docs/DEV_LAPTOP_OFFICE_RUN_GITHUB.md`
 
 각 Read 결과는 다음 작업의 컨텍스트로 직접 활용. 사장님이 "수집해줘" / "발행해줘" / "매커니즘 알려줘" 같은 짧은 명령만 줘도 위 가이드로 모든 형식·룰을 자동 적용해야 함.
 
@@ -50,6 +51,7 @@
 | "부사수 셋업" / "새 PC" / "멀티PC" / "독립 셋업" | `부사수PC_원클릭_셋업.bat`(빈 PC 한 파일) + MULTI_PC 가이드 |
 | "일러스트 공유" / "라이브러리 동기화" / "허브" | 패널 "관리>라이브러리 동기화" 또는 `라이브러리_공유_동기화.bat`. 허브=Drive `PhoneSpot_Library`(데스크톱 동기), 경로파일 `shorts/config/library_share_path.txt` |
 | "주제(기사) 깃에 올려" / "전파" | `기사_깃에_올리기.bat`(대표 push) → 부사수 git pull |
+| "노트북 개발" / "깃허브 연동" / "사무실에서 실행" / "이어받기" | `_docs/DEV_LAPTOP_OFFICE_RUN_GITHUB.md` — 노트북=개발(push), 사무실=실행(pull). clone/pull/push 명령 포함 |
 
 ---
 
@@ -162,5 +164,10 @@ phonespot_cardnews/
   - **부사수 1파일 셋업**: `부사수PC_원클릭_셋업.bat`(winget+clone+`SETUP_FULL_PRODUCER`). 코드 자동전파=옵트인 `수신PC_자동업데이트_켜기.bat`(마커 방식; 옛 env `PHONESPOT_AUTO_UPDATE`는 폐기).
   - **패널 v23**: 버전 단일출처(server.py `PANEL_VERSION`만 올리면 ps1이 읽음), "환경 점검" 버튼, 렌더 취소/진행, 청크 수동분할, remote_ 폴더 제거, 유튜브 캡션(타임스탬프·출처 제거).
   - **운영 안정화**: 한글 내용 .bat은 UTF-8 BOM 필수(없으면 cmd가 한글 깨뜨려 echo가 명령으로 실행됨) — 한글 bat 전부 BOM+ASCII화. `start_hidden.ps1`은 ASCII 주석만(BOM 없는 PS는 CP949 오독). `illustration_tag_db.json` NUL 손상 복구(101개 유지).
+
+- 2026-06-08: **노트북 개발 / 사무실 PC 실행 / GitHub 연동** 워크플로 가이드 합류
+  (`_docs/DEV_LAPTOP_OFFICE_RUN_GITHUB.md`). 노트북=개발(Claude Code 편집·push), 사무실=실행(pull·패널·
+  스케줄러·렌더·카드수집). GitHub=코드 허브. clone/pull/push 명령 + git-pull로 자동적용 안 되는 예외
+  (ads Apps Script 배포·_secrets·일러스트Drive허브) 명시. STEP1 조건부Read + STEP2 명령패턴 등록.
 
 이 파일이 업그레이드되면 변경 이력 1줄 추가. 가이드 추가·제거 시 STEP 1 리스트 동기화.
