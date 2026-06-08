@@ -1,17 +1,24 @@
-=== start 2026-06-06 14:30:58.57 
+=== start 2026-06-08 16:25:44.55 
  
 [probe] where py: 
 C:\Windows\py.exe
+C:\Users\di898\AppData\Local\Microsoft\WindowsApps\py.exe
  
 [using python] 
-[arg-match] '012' -> 012_news_galaxy_unpack_july
+[arg-match] '016' -> 016_news_ios_26_3_release
 ============================================================
 phonespot cardnews renderer (v5)
 BASE: C:\Users\di898\Documents\phonespot_cardnews\cardnews
-SLUG: 012_news_galaxy_unpack_july
-OUT : C:\Users\di898\Documents\phonespot_cardnews\cardnews\output\012_news_galaxy_unpack_july
+SLUG: 016_news_ios_26_3_release
+OUT : C:\Users\di898\Documents\phonespot_cardnews\cardnews\output\016_news_ios_26_3_release
 ============================================================
-[slug] SLUG='012_news_galaxy_unpack_july'  IMG_DIR=C:\Users\di898\Documents\phonespot_cardnews\cardnews\images\012_news_galaxy_unpack_july
+[slug] SLUG='016_news_ios_26_3_release'  IMG_DIR=C:\Users\di898\Documents\phonespot_cardnews\cardnews\images\016_news_ios_26_3_release
+[auto-rename] numeric filenames detected -> numeric order:
+  1.png → card_1.png
+  2.png → card_2.png
+  3.png → card_3.png
+  4.png → card_4.png
+  5.png → card_5.png
 [v9 magazine mode] 6 cards loaded + schema OK
 
 === 1x1 (1080x1080) ===
@@ -38,23 +45,24 @@ OUT : C:\Users\di898\Documents\phonespot_cardnews\cardnews\output\012_news_galax
   OK card_5.jpg
   OK card_6.jpg
 
-Render time: 17.1s
+Render time: 21.0s
 
 === JPG result ===
-  18 files / 2461 KB total (2 MB)
+  18 files / 2443 KB total (2 MB)
 
-OK captions.md (loaded from articles/012_news_galaxy_unpack_july.json) + narration_md (535 chars)
+OK captions.md (loaded from articles/016_news_ios_26_3_release.json) + narration_md (509 chars)
 
 ============================================================
 Images: 18
-Total size: 2 MB (2471 KB)
+Total size: 2 MB (2451 KB)
 ============================================================
 
 [verify] start
-[verify OK] 18 cards + captions OK, no prior-article leak
+[verify ! issues found]
+  - prior-article leak -- token '애플워치' from '002_iphone_anti_theft_2026' in captions.md
 ============================================================
 
 [backup] 1 backups kept (max 5)
  
  
-=== done 2026-06-06 14:31:18.04 
+=== done 2026-06-08 16:26:07.33 

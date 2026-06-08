@@ -153,9 +153,34 @@
         "security_feature_lock",
         "gift_voucher"
       ]
+    },
+    "016_news_ios_26_3_release": {
+      "used_at": "2026-06-08T16:26:17",
+      "source": "codex_enhance",
+      "illustrations": [
+        "password",
+        "device_data_transfer",
+        "appliance",
+        "final_update",
+        "cpt_a1caaea6",
+        "forecast",
+        "battery_charge_range",
+        "battery_overheat",
+        "aluminum_label",
+        "biometric",
+        "call_filter_rules",
+        "call_recording_notice",
+        "chart_down",
+        "chatbot",
+        "memory_chip",
+        "samsung_ai",
+        "gemini",
+        "chart_up",
+        "smartphone"
+      ]
     }
   },
-  "updated_at": "2026-06-08T01:21:36",
+  "updated_at": "2026-06-08T16:26:18",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -185,6 +210,10 @@
     },
     "015_qa_msafer_pass_identity_block": {
       "updated_at": "2026-06-08T01:21:36",
+      "variants": []
+    },
+    "016_news_ios_26_3_release": {
+      "updated_at": "2026-06-08T16:26:18",
       "variants": []
     }
   }

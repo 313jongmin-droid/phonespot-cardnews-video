@@ -1,0 +1,100 @@
+{
+  "slug": "016_news_ios_26_3_release",
+  "engine": "fallback-order",
+  "generated_at": 1780903530.8766892,
+  "requests": [
+    {
+      "filename": "1.png",
+      "variant": "1.png",
+      "section": "card",
+      "chunk_index": 1,
+      "concept_label": "iOS 26.3 정식 출시 완료 (업데이트 도착)",
+      "optional": false,
+      "concept_text": "iOS 26.3 정식 출시 완료 (업데이트 도착) A still life on a soft cream surface. A modern smartphone screen-up showing a clean abstract download-arrow silhouette in soft orange (no text, no UI, no version numbers). Beside the phone, a small generic gift-ribbon shape in muted warm beige, suggesting \"new release\". Soft natural daylight, gentle shadow. No logos."
+    },
+    {
+      "filename": "2.png",
+      "variant": "2.png",
+      "section": "card",
+      "chunk_index": 2,
+      "concept_label": "안드로이드 → 아이폰 이전 개선",
+      "optional": false,
+      "concept_text": "안드로이드 → 아이폰 이전 개선 A top-down flat lay on a warm white surface. Two modern smartphone silhouettes side by side, both screen-up, with a faint orange dashed arrow flowing from the left phone to the right phone. Small generic icon-card silhouettes (photo, contact, app) floating along the arrow path. Soft daylight, clean editorial composition. No logos."
+    },
+    {
+      "filename": "3.png",
+      "variant": "3.png",
+      "section": "card",
+      "chunk_index": 3,
+      "concept_label": "타사 워치 알림 전달",
+      "optional": false,
+      "concept_text": "타사 워치 알림 전달 A close-up still life on a light beige tabletop. A modern smartphone screen-up at one side, a generic round smartwatch (no brand markings, no readable text) at the other side, both connected by a soft orange ripple line in between. Subtle bell-shape silhouette glowing on the watch face. Bright airy lighting."
+    },
+    {
+      "filename": "4.png",
+      "variant": "4.png",
+      "section": "card",
+      "chunk_index": 4,
+      "concept_label": "빠른 페어링 근접 자동",
+      "optional": false,
+      "concept_text": "빠른 페어링 근접 자동 A still life on a soft cream desk. A modern smartphone in the center, screen showing a clean abstract bluetooth-wave silhouette in soft orange. Around the phone, three small generic accessory silhouettes (earbuds, watch, headphone) arranged in a half-circle, each connected by a faint orange dotted line. Soft natural daylight."
+    },
+    {
+      "filename": "5.png",
+      "variant": "5.png",
+      "section": "card",
+      "chunk_index": 5,
+      "concept_label": "시리 업그레이드 전초전",
+      "optional": false,
+      "concept_text": "시리 업그레이드 전초전 A still life on a warm white surface. A modern smartphone screen-up showing a clean abstract voice-wave silhouette in soft orange (no text, no UI). A subtle orange aura around the wave, suggesting \"evolving intelligence\". Soft daylight, clean editorial composition. No real faces, no logos."
+    }
+  ],
+  "assignments": [
+    {
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 8일 오후 04_23_14 (3).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 8일 오후 04_23_14 (3).png",
+      "proposed_filename": "1.png",
+      "confidence": null,
+      "exact_name": false,
+      "alternatives": [],
+      "dedup": null
+    },
+    {
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 8일 오후 04_23_13 (1).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 8일 오후 04_23_13 (1).png",
+      "proposed_filename": "2.png",
+      "confidence": null,
+      "exact_name": false,
+      "alternatives": [],
+      "dedup": null
+    },
+    {
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 8일 오후 04_23_14 (5).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 8일 오후 04_23_14 (5).png",
+      "proposed_filename": "3.png",
+      "confidence": null,
+      "exact_name": false,
+      "alternatives": [],
+      "dedup": null
+    },
+    {
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 8일 오후 04_23_14 (2).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 8일 오후 04_23_14 (2).png",
+      "proposed_filename": "4.png",
+      "confidence": null,
+      "exact_name": false,
+      "alternatives": [],
+      "dedup": null
+    },
+    {
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 8일 오후 04_23_14 (4).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 8일 오후 04_23_14 (4).png",
+      "proposed_filename": "5.png",
+      "confidence": null,
+      "exact_name": false,
+      "alternatives": [],
+      "dedup": null
+    }
+  ],
+  "unmatched_requests": []
+}

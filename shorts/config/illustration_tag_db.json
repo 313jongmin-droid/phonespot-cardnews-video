@@ -1395,7 +1395,66 @@
       ],
       "note": "자동 발굴 개념: 신청 경로",
       "available": true
+    },
+    "cpt_9ebf277e": {
+      "keywords": [
+        "첫째",
+        "안드로이드",
+        "으로"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 첫째 안드로이드",
+      "available": false
+    },
+    "cpt_b90dc475": {
+      "keywords": [
+        "데이터",
+        "한결"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 데이터 한결",
+      "available": false
+    },
+    "cpt_7b46d1e4": {
+      "keywords": [
+        "번에"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 번에",
+      "available": false
+    },
+    "cpt_a91efa70": {
+      "keywords": [
+        "안드폰",
+        "중이신데",
+        "으로",
+        "갈아타려"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 안드폰 중이신데",
+      "available": false
+    },
+    "settings_screen_ab73a8fa": {
+      "keywords": [
+        "설정",
+        "화면",
+        "Move",
+        "from"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 설정 화면",
+      "available": false
     }
   },
-  "updated_at": "2026-06-08T01:20:55"
+  "updated_at": "2026-06-08T16:26:19"
 }
