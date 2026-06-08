@@ -9,9 +9,23 @@ set "CFG=%ROOT%\shorts\config\library_share_path.txt"
 
 echo ============================================================
 echo  Illustration share-hub path setup
-echo  e.g.  G:\My Drive\PhoneSpot_Library
-echo        G:\내 드라이브\PhoneSpot_Library
 echo ============================================================
+
+rem 1) auto-detect (Google Drive desktop) first
+set "PYDET=%ROOT%\.phonespot_runtime\Scripts\python.exe"
+if not exist "%PYDET%" set "PYDET=python"
+echo [auto] trying to detect Google Drive hub folder...
+"%PYDET%" "%ROOT%\shorts\scripts\codex_detect_drive_hub.py"
+if not errorlevel 1 (
+  echo.
+  echo [OK] auto-detected and saved. Next: panel "Manage > library sync".
+  pause
+  exit /b 0
+)
+
+echo.
+echo  Auto-detect failed. Enter the path manually.
+echo  e.g.  G:\My Drive\PhoneSpot_Library   /   G:\내 드라이브\PhoneSpot_Library
 set /p HUB=Hub folder path (Enter to cancel):
 if "%HUB%"=="" ( echo canceled. & pause & exit /b 1 )
 

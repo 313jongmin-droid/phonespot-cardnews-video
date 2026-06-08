@@ -51,21 +51,53 @@ if not exist "%TARGET%\CODEX_VIDEO_DESK\SETUP_FULL_PRODUCER.bat" (
 )
 
 echo.
-echo ===== 3/4: full producer deps + verify =====
+echo ===== 3/5: full producer deps + verify =====
 echo (npm / python deps / playwright chromium / embedding models ~1GB. takes a while)
 call "%TARGET%\CODEX_VIDEO_DESK\SETUP_FULL_PRODUCER.bat"
 
 echo.
-echo ===== 4/4: done =====
+echo ===== 4/5: Google Drive illustration sharing (optional) =====
+set /p DOGD=Set up Google Drive illustration sharing now? (Y/N):
+if /i not "%DOGD%"=="Y" goto :skipgd
+
+rem 4-1) install Google Drive desktop (skip if already installed)
+where winget >nul 2>&1 && (
+  echo [install] Google Drive desktop (skip if present)
+  winget install --id Google.GoogleDrive -e --source winget --accept-package-agreements --accept-source-agreements
+)
+echo.
+echo  [MANUAL — cannot be automated for security/account reasons]
+echo   1) Log in to Google Drive desktop with the shared account.
+echo   2) In Drive, right-click the shared "PhoneSpot_Library" folder
+echo      and choose "Add shortcut to My Drive" (so it syncs locally).
+echo   When done, press any key to auto-detect the local path...
+pause >nul
+
+set "PYDET=%TARGET%\.phonespot_runtime\Scripts\python.exe"
+if not exist "%PYDET%" set "PYDET=python"
+"%PYDET%" "%TARGET%\shorts\scripts\codex_detect_drive_hub.py"
+if errorlevel 1 (
+  echo  [info] auto-detect failed. Run later:
+  echo        %TARGET%\CODEX_VIDEO_DESK\일러스트_공유허브_경로설정.bat
+)
+goto :gddone
+:skipgd
+echo  [skip] You can set this up later with 일러스트_공유허브_경로설정.bat
+:gddone
+
+echo.
+echo ===== 5/5: done =====
 echo ------------------------------------------------------------
 echo  This PC is now a standalone producer (cardnews + video render).
 echo.
 echo  start        : %TARGET%\CODEX_VIDEO_DESK\00_PHONE_SPOT_PANEL.bat
 echo  cardnews     : cardnews tab in the panel
+echo  illust sync  : panel "Manage > library sync" (Drive hub)
 echo  auto-update  : 수신PC_자동업데이트_켜기.bat (optional)
 echo.
-echo  NOTE: API keys/tokens are NOT in GitHub. If article generation
-echo        needs a key, set it like on the main PC.
+echo  NOTE: API keys/tokens are NOT in GitHub. If article generation or
+echo        readable concept names need a key, set _secrets\gemini_key.txt
+echo        like on the main PC.
 echo ------------------------------------------------------------
 echo.
 pause
