@@ -16,6 +16,18 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "android_user_a91efa70": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "안드폰",
+        "중이신데",
+        "으로",
+        "갈아타려"
+      ],
+      "note": "자동 발굴 개념: 안드폰 중이신데"
+    },
     "appliance": {
       "tags": [
         "hardware",
@@ -212,6 +224,19 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "cpt_09b8db78": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "알림",
+        "애플워치",
+        "아닌",
+        "타사",
+        "스마트워치로"
+      ],
+      "note": "자동 발굴 개념: 알림 애플워치"
+    },
     "cpt_0a1ac199": {
       "tags": [
         "auto"
@@ -265,6 +290,18 @@
         "모델"
       ],
       "note": "자동 발굴 개념: 모델"
+    },
+    "cpt_4729c912": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "신청",
+        "경로"
+      ],
+      "note": "자동 발굴 개념: 신청 경로",
+      "available": true
     },
     "cpt_55c40fb8": {
       "tags": [
@@ -360,6 +397,26 @@
       ],
       "note": "자동 발굴 개념: 자동 고지"
     },
+    "cpt_7b46d1e4": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "번에"
+      ],
+      "note": "자동 발굴 개념: 번에"
+    },
+    "cpt_7b7a2f91": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "KISA"
+      ],
+      "note": "자동 발굴 개념: KISA",
+      "available": true
+    },
     "cpt_83fa1e9f": {
       "tags": [
         "auto",
@@ -386,6 +443,18 @@
       ],
       "note": "자동 발굴 개념: 가족 명이라도"
     },
+    "cpt_8bffef74": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "명의도용방지서비스",
+        "활용하시면"
+      ],
+      "note": "자동 발굴 개념: 명의도용방지서비스 활용하시면",
+      "available": true
+    },
     "cpt_8d09d703": {
       "tags": [
         "auto"
@@ -397,6 +466,17 @@
       ],
       "note": "자동 발굴 개념: 정식 출시"
     },
+    "cpt_9ebf277e": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "첫째",
+        "안드로이드",
+        "으로"
+      ],
+      "note": "자동 발굴 개념: 첫째 안드로이드"
+    },
     "cpt_a0d7df46": {
       "tags": [
         "auto"
@@ -405,6 +485,54 @@
         "코앞"
       ],
       "note": "자동 발굴 개념: 코앞"
+    },
+    "cpt_a1caaea6": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "추가",
+        "개통",
+        "사전",
+        "차단할"
+      ],
+      "note": "자동 발굴 개념: 추가 개통",
+      "available": true
+    },
+    "cpt_a91efa70": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "안드폰",
+        "중이신데",
+        "으로",
+        "갈아타려"
+      ],
+      "note": "자동 발굴 개념: 안드폰 중이신데"
+    },
+    "cpt_b5a15155": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "운영하",
+        "Msafer"
+      ],
+      "note": "자동 발굴 개념: 운영하 Msafer",
+      "available": true
+    },
+    "cpt_b90dc475": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "데이터",
+        "한결"
+      ],
+      "note": "자동 발굴 개념: 데이터 한결"
     },
     "cpt_bf3a83cf": {
       "tags": [
@@ -1170,6 +1298,28 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "select_option_76495b69": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "옵션",
+        "선택하시면"
+      ],
+      "note": "자동 발굴 개념: 옵션 선택하시면"
+    },
+    "settings_screen_ab73a8fa": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "설정",
+        "화면",
+        "Move",
+        "from"
+      ],
+      "note": "자동 발굴 개념: 설정 화면"
+    },
     "settings_steps": {
       "tags": [
         "library"
@@ -1334,165 +1484,7 @@
       ],
       "note": "Reusable editorial illustration.",
       "available": true
-    },
-    "cpt_7b7a2f91": {
-      "keywords": [
-        "KISA"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: KISA",
-      "available": true
-    },
-    "cpt_b5a15155": {
-      "keywords": [
-        "운영하",
-        "Msafer"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 운영하 Msafer",
-      "available": true
-    },
-    "cpt_8bffef74": {
-      "keywords": [
-        "명의도용방지서비스",
-        "활용하시면"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 명의도용방지서비스 활용하시면",
-      "available": true
-    },
-    "cpt_a1caaea6": {
-      "keywords": [
-        "추가",
-        "개통",
-        "사전",
-        "차단할"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 추가 개통",
-      "available": true
-    },
-    "cpt_4729c912": {
-      "keywords": [
-        "신청",
-        "경로"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 신청 경로",
-      "available": true
-    },
-    "cpt_9ebf277e": {
-      "keywords": [
-        "첫째",
-        "안드로이드",
-        "으로"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 첫째 안드로이드",
-      "available": false
-    },
-    "cpt_b90dc475": {
-      "keywords": [
-        "데이터",
-        "한결"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 데이터 한결",
-      "available": false
-    },
-    "cpt_7b46d1e4": {
-      "keywords": [
-        "번에"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 번에",
-      "available": false
-    },
-    "cpt_a91efa70": {
-      "keywords": [
-        "안드폰",
-        "중이신데",
-        "으로",
-        "갈아타려"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 안드폰 중이신데",
-      "available": false
-    },
-    "settings_screen_ab73a8fa": {
-      "keywords": [
-        "설정",
-        "화면",
-        "Move",
-        "from"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 설정 화면",
-      "available": false
-    },
-    "android_user_a91efa70": {
-      "keywords": [
-        "안드폰",
-        "중이신데",
-        "으로",
-        "갈아타려"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 안드폰 중이신데",
-      "available": false
-    },
-    "select_option_76495b69": {
-      "keywords": [
-        "옵션",
-        "선택하시면"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 옵션 선택하시면",
-      "available": false
-    },
-    "cpt_09b8db78": {
-      "keywords": [
-        "알림",
-        "애플워치",
-        "아닌",
-        "타사",
-        "스마트워치로"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 알림 애플워치",
-      "available": false
     }
   },
-  "updated_at": "2026-06-08T18:42:29"
+  "updated_at": "2026-06-08T18:45:45"
 }

@@ -109,7 +109,7 @@ cta=cards[-1], 각 구간 TTS=card body). 그래서 기사 JSON 하나가 공통
 - 한국어 자연스럽게. 외래어·영문 약어는 본문 첫 등장 시 풀어쓰기 권장.
 
 ### 제목(title) 규칙
-- 후킹 + SEO 키워드. 특수문자(`?!` `·` `~`) 허용. content_guide의 길이/패턴 참고(맹신 금지).
+- 후킹 + SEO 키워드. 문장부호(`?!` `·` `~`)는 허용, 단 `【】` 등 장식 괄호·이모지는 금지(렌더 `clean_title`이 자동 제거). content_guide의 길이/패턴 참고(맹신 금지).
 
 ### captions_md (5채널 SNS)
 - `cardnews/templates/caption_template.md` 를 그대로 따른다(채널 1 네이버, 2 스레드, 3 인스타,

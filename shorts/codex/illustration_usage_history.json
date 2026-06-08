@@ -155,32 +155,27 @@
       ]
     },
     "016_news_ios_26_3_release": {
-      "used_at": "2026-06-08T18:42:25",
-      "source": "codex_enhance",
+      "used_at": "2026-06-08T18:46:25",
+      "source": "unique_illustration_guard",
       "illustrations": [
-        "password",
         "device_data_transfer",
-        "appliance",
-        "final_update",
-        "cpt_a1caaea6",
-        "forecast",
-        "battery_charge_range",
-        "battery_overheat",
-        "aluminum_label",
-        "biometric",
-        "call_filter_rules",
-        "call_recording_notice",
-        "chart_down",
-        "chatbot",
-        "memory_chip",
+        "phone_settings_toggle",
         "samsung_ai",
-        "gemini",
-        "chart_up",
-        "smartphone"
+        "phone_setup_ready",
+        "smartphone",
+        "newspaper",
+        "microphone",
+        "shield",
+        "meeting_room",
+        "forecast",
+        "cpt_83fa1e9f",
+        "final_update",
+        "chatbot",
+        "gift_voucher"
       ]
     }
   },
-  "updated_at": "2026-06-08T18:42:27",
+  "updated_at": "2026-06-08T18:46:26",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -213,7 +208,7 @@
       "variants": []
     },
     "016_news_ios_26_3_release": {
-      "updated_at": "2026-06-08T18:42:27",
+      "updated_at": "2026-06-08T18:46:26",
       "variants": []
     }
   }

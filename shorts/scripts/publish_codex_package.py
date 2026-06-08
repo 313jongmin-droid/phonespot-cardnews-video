@@ -101,8 +101,27 @@ def clean_youtube_description(value: str) -> str:
     return value
 
 
+# 유튜브 제목에서 뺄 '장식' 문자: 이모지 + 장식용 괄호(【】〔〕「」『』《》〈〉 등).
+# 문장부호(?! ~ . , - · 등)는 유지한다(후킹 허용).
+_TITLE_EMOJI = re.compile(
+    "["
+    "\U0001F300-\U0001FAFF"   # 그림 이모지(emoticons/symbols/transport 등)
+    "\U00002600-\U000026FF"   # 기타 기호
+    "\U00002700-\U000027BF"   # dingbats
+    "\U0001F1E6-\U0001F1FF"   # 국기(지역 표시자)
+    "\U00002B00-\U00002BFF"   # 기타 기호·별표
+    "️‍"            # 변형 선택자 / ZWJ
+    "]",
+    flags=re.UNICODE,
+)
+_TITLE_DECOR_BRACKETS = "【】〔〕「」『』《》〈〉［］｛｝"
+
+
 def clean_title(value: str, fallback: str) -> str:
-    value = re.sub(r"\s+", " ", value or "").strip() or fallback
+    value = value or ""
+    value = _TITLE_EMOJI.sub("", value)                                     # 이모지 제거
+    value = value.translate({ord(c): None for c in _TITLE_DECOR_BRACKETS})  # 장식 괄호 제거(안쪽 글자 유지)
+    value = re.sub(r"\s+", " ", value).strip() or fallback
     return value[:100].rstrip()
 
 

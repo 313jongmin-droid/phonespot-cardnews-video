@@ -1,42 +1,41 @@
 {
-  "slug": "015_qa_msafer_pass_identity_block",
-  "title_short": "내 명의로 폰 몇 대 개통됐나",
-  "video_title": "내 명의로 폰 몇 대 개통됐나",
+  "slug": "016_news_ios_26_3_release",
+  "title_short": "iOS 26.3 정식 출시",
+  "video_title": "iOS 26.3 정식 출시",
   "publication_date": "2026.06.04",
-  "sources": "KISA Msafer + 정책브리핑 PASS 명의도용방지 + 폰스팟 광교점 자료",
+  "sources": "ZDNet 26.3 정식 출시 + 디지털투데이 베타3 + 폰스팟 광교점 자료",
   "channel_name": "폰스팟",
   "channel_tagline": "광교 미니 IT 브리핑",
   "opening": {
     "line1": "광교 미니 IT 브리핑",
-    "line2": "내 명의로 폰 몇 대 개통됐나"
+    "line2": "iOS 26.3 정식 출시"
   },
   "hook": {
-    "tts": "혹시 내 명의로 휴대폰이 몇 대 개통돼 있는지 확인해보신 적 있으신가요? 사기범이 신분증을 도용해 몰래 개통한 회선이 있을 수 있습니다. 1분 안에 점검하실 수 있습니다.",
+    "tts": "애플이 iOS 26.3 정식 버전을 출시했습니다. 아이폰 사용자뿐 아니라 안드폰에서 아이폰으로 갈아타려는 분들도 주목할 만한 5가지 변화가 있습니다.",
     "caption_body": [
-      "내 명의로",
-      "몇 대 개통됐을까?"
+      "iOS 26.3",
+      "정식 출시 완료"
     ],
     "caption_emphasis": [
-      "몇 대"
+      "정식 출시"
     ],
     "headline_lines": [
       {
-        "text": "내 명의로"
+        "text": "iOS 26.3"
       },
       {
-        "text": "몇 대 개통됐을까?",
+        "text": "정식 출시 완료",
         "accent": true
       }
     ],
-    "meta": "출처: KISA 명의도용방지서비스",
+    "meta": "출처: ZDNet 26.3 정식 출시",
     "topic": "뉴스",
     "background_image": "1.png",
     "caption_chunks": [
-      "혹시 내 명의로 휴대폰이 몇 대 개통돼 있는지",
-      "확인해보신 적 있으신가요?",
-      "사기범이 신분증을 도용해 몰래 개통한",
-      "회선이 있을 수 있습니다.",
-      "1분 안에 점검하실 수 있습니다."
+      "애플이 iOS 26.3 정식 버전을 출시했습니다.",
+      "아이폰 사용자뿐 아니라 안드폰에서",
+      "아이폰으로 갈아타려는 분들도 주목할",
+      "만한 5가지 변화가 있습니다."
     ],
     "chunk_visuals": [
       {
@@ -54,10 +53,6 @@
       {
         "type": "mascot",
         "value": "surprised"
-      },
-      {
-        "type": "image",
-        "value": "4.png"
       }
     ],
     "stat": {
@@ -67,114 +62,102 @@
     },
     "_codex_narration_source": "captions.md#intro",
     "display_chunks": [
-      "혹시 내 명의로 휴대폰이 몇 대 개통돼 있는지",
-      "확인해보신 적 있으신가요?",
-      "사기범이 신분증을 도용해 몰래 개통한",
-      "회선이 있을 수 있습니다",
-      "1분 안에 점검하실 수 있습니다"
+      "애플이 iOS 26.3 정식 버전을 출시했습니다",
+      "아이폰 사용자뿐 아니라 안드폰에서",
+      "아이폰으로 갈아타려는 분들도 주목할",
+      "만한 5가지 변화가 있습니다"
     ],
     "_codex_caption_lockstep": {
       "version": 2,
       "compiler": "korean_caption_compiler_v2",
       "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-      "chunk_count": 5
+      "chunk_count": 4
     },
     "_codex_contextual_narrative": true,
     "_codex_sync_mode": "global999_tts_caption_lockstep",
     "tts_chunk_weights": [
-      2233.08,
-      1860.21,
-      1734.17,
-      1760.58,
-      1584.51
+      3538.75,
+      1690.13,
+      1698.95,
+      1566.88
     ],
     "_tts_timing": {
       "mode": "word_boundary_text_align",
       "windows": [
         {
           "start_ms": 0.0,
-          "end_ms": 2233.08,
-          "duration_ms": 2233.08
+          "end_ms": 3538.75,
+          "duration_ms": 3538.75
         },
         {
-          "start_ms": 2233.08,
-          "end_ms": 4093.29,
-          "duration_ms": 1860.21
+          "start_ms": 3538.75,
+          "end_ms": 5228.88,
+          "duration_ms": 1690.13
         },
         {
-          "start_ms": 4093.29,
-          "end_ms": 5827.46,
-          "duration_ms": 1734.17
+          "start_ms": 5228.88,
+          "end_ms": 6927.83,
+          "duration_ms": 1698.95
         },
         {
-          "start_ms": 5827.46,
-          "end_ms": 7588.04,
-          "duration_ms": 1760.58
-        },
-        {
-          "start_ms": 7588.04,
-          "end_ms": 9172.55,
-          "duration_ms": 1584.51
+          "start_ms": 6927.83,
+          "end_ms": 8494.71,
+          "duration_ms": 1566.88
         }
       ],
-      "boundary_count": 25,
-      "caption_signature": "658c76cd1054ed9f00898f39fa13df24fe820bde2ea7bc5392d3084d2eddaa42"
+      "boundary_count": 20,
+      "caption_signature": "45384a3d2d17dfde0ba6196c193913cc8af72e359be2abd88ea994c7f0103339"
     }
   },
   "facts": [
     {
-      "tts": "KISA와 SKT, KT, LGU+가 함께 운영하는 Msafer 명의도용방지서비스를 활용하시면, 본인 명의로 개통된 모든 휴대폰 회선을 무료로 확인하고 추가 개통을 사전에 차단할 수 있습니다. 신청은 두 가지 경로가 있습니다.",
+      "tts": "첫째, 안드로이드에서 아이폰으로 데이터 이전이 한결 쉬워졌습니다. 사진과 동영상, 연락처, 계정 데이터가 타사 앱 없이 첫 설정 단계에서 한 번에 처리됩니다.",
       "caption_body": [
-        "Msafer + PASS",
-        "무료 통합 서비스"
+        "1",
+        "안드로이드 → 아이폰 이전"
       ],
       "caption_emphasis": [
-        "무료"
+        "안드로이드"
       ],
       "headline_lines": [
         {
-          "text": "Msafer + PASS"
+          "text": "1"
         },
         {
-          "text": "무료 통합 서비스",
+          "text": "안드로이드 → 아이폰 이전",
           "accent": true
         }
       ],
-      "meta": "출처: msafer.or.kr 운영 안내",
+      "meta": "출처: ZDNet 26.3 안내",
       "topic": "뉴스",
       "background_image": "2.png",
       "caption_chunks": [
-        "KISA와 SKT, KT, LGU+가",
-        "함께 운영하는 Msafer",
-        "명의도용방지서비스를 활용하시면,",
-        "본인 명의로 개통된 모든 휴대폰 회선을 무료로 확인하고",
-        "추가 개통을 사전에 차단할 수 있습니다.",
-        "신청은 두 가지 경로가 있습니다."
+        "첫째, 안드로이드에서 아이폰으로",
+        "데이터 이전이 한결 쉬워졌습니다.",
+        "사진과 동영상, 연락처,",
+        "계정 데이터가 타사 앱 없이 첫 설정 단계에서",
+        "한 번에 처리됩니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "cpt_7b7a2f91"
+          "value": "device_data_transfer"
         },
         {
           "type": "illust",
-          "value": "cpt_b5a15155"
+          "value": "phone_settings_toggle"
         },
         {
           "type": "illust",
-          "value": "cpt_8bffef74"
+          "value": "samsung_ai"
+        },
+        {
+          "type": "illust",
+          "value": "phone_setup_ready"
         },
         {
           "type": "image",
-          "value": "5.png"
-        },
-        {
-          "type": "illust",
-          "value": "cpt_a1caaea6"
-        },
-        {
-          "type": "illust",
-          "value": "cpt_4729c912"
+          "value": "4.png"
         }
       ],
       "stat": {
@@ -185,229 +168,106 @@
       "id": "fact_1",
       "_codex_narration_source": "captions.md#body",
       "display_chunks": [
-        "KISA와 SKT, KT, LGU+가",
-        "함께 운영하는 Msafer",
-        "명의도용방지서비스를 활용하시면,",
-        "본인 명의로 개통된 모든 휴대폰 회선을 무료로 확인하고",
-        "추가 개통을 사전에 차단할 수 있습니다",
-        "신청은 두 가지 경로가 있습니다"
+        "첫째, 안드로이드에서 아이폰으로",
+        "데이터 이전이 한결 쉬워졌습니다",
+        "사진과 동영상, 연락처,",
+        "계정 데이터가 타사 앱 없이 첫 설정 단계에서",
+        "한 번에 처리됩니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 6
+        "chunk_count": 5
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        3034.17,
-        1117.95,
-        1760.55,
-        2561.62,
-        2458.79,
-        1637.34
+        1898.58,
+        2203.54,
+        1830.96,
+        2227.13,
+        941.88
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 3034.17,
-            "duration_ms": 3034.17
+            "end_ms": 1898.58,
+            "duration_ms": 1898.58
           },
           {
-            "start_ms": 3034.17,
-            "end_ms": 4152.12,
-            "duration_ms": 1117.95
+            "start_ms": 1898.58,
+            "end_ms": 4102.12,
+            "duration_ms": 2203.54
           },
           {
-            "start_ms": 4152.12,
-            "end_ms": 5912.67,
-            "duration_ms": 1760.55
+            "start_ms": 4102.12,
+            "end_ms": 5933.08,
+            "duration_ms": 1830.96
           },
           {
-            "start_ms": 5912.67,
-            "end_ms": 8474.29,
-            "duration_ms": 2561.62
+            "start_ms": 5933.08,
+            "end_ms": 8160.21,
+            "duration_ms": 2227.13
           },
           {
-            "start_ms": 8474.29,
-            "end_ms": 10933.08,
-            "duration_ms": 2458.79
-          },
-          {
-            "start_ms": 10933.08,
-            "end_ms": 12570.42,
-            "duration_ms": 1637.34
+            "start_ms": 8160.21,
+            "end_ms": 9102.09,
+            "duration_ms": 941.88
           }
         ],
-        "boundary_count": 32,
-        "caption_signature": "4575f01c8bf2bb426cd2a919d5f3b47c69ac53ff106958247b7eeba99ca8c50d"
+        "boundary_count": 21,
+        "caption_signature": "3a15dedcf9f1f5ad97a7aba91b24e52a364f1dfbe9fda6c374b7dd97fefdf372"
       }
     },
     {
-      "tts": "모바일에서는 PASS 앱을 설치하신 후 본인확인을 거쳐 명의도용방지 메뉴로 들어가시면 됩니다. PC에서는 msafer.or.kr 에 접속하셔서 공동인증서 또는 카카오, PASS, 네이버 간편인증으로 본인확인을 진행하시면 됩니다. 기능은 세 가지입니다.",
+      "tts": "안드폰을 사용 중이신데 아이폰으로 갈아타려는 경우 첫 설정 화면에서 Move from Android 옵션을 선택하시면 됩니다. 둘째, 유럽연합 지역 한정으로 아이폰 알림을 애플워치가 아닌 타사 스마트워치로도 전달할 수 있게 열렸습니다. 국내 적용 여부는 추가 업데이트에서 확인하실 수 있습니다.",
       "caption_body": [
-        "기능 1",
-        "가입사실현황조회"
+        "2",
+        "타사 워치 알림 전달"
       ],
       "caption_emphasis": [
-        "가입사실현황조회"
+        "타사 워치"
       ],
       "headline_lines": [
         {
-          "text": "기능 1"
+          "text": "2"
         },
         {
-          "text": "가입사실현황조회",
+          "text": "타사 워치 알림 전달",
           "accent": true
         }
       ],
-      "meta": "출처: Msafer 가입사실현황",
+      "meta": "출처: 애플 EU 정책 공지",
       "topic": "뉴스",
       "background_image": "3.png",
       "caption_chunks": [
-        "모바일에서는 PASS 앱을 설치하신",
-        "후 본인확인을 거쳐 명의도용방지 메뉴로 들어가시면",
-        "됩니다. PC에서는 msafer.or.kr",
-        "에 접속하셔서 공동인증서 또는 카카오, PASS,",
-        "네이버 간편인증으로 본인확인을 진행하시면 됩니다.",
-        "기능은 세 가지입니다."
+        "안드폰을 사용 중이신데 아이폰으로 갈아타려는 경우",
+        "첫 설정 화면에서 Move from Android",
+        "옵션을 선택하시면 됩니다.",
+        "둘째, 유럽연합 지역 한정으로 아이폰",
+        "알림을 애플워치가 아닌 타사 스마트워치로도",
+        "전달할 수 있게 열렸습니다.",
+        "국내 적용 여부는 추가 업데이트에서 확인하실 수 있습니다."
       ],
       "chunk_visuals": [
         {
-          "type": "illust",
-          "value": "phone_settings_toggle"
+          "type": "image",
+          "value": "5.png"
         },
         {
           "type": "illust",
-          "value": "cpt_4729c912"
+          "value": "smartphone"
         },
-        {
-          "type": "illust",
-          "value": "cpt_8bffef74"
-        },
-        {
-          "type": "illust",
-          "value": "cpt_6a2e9678"
-        },
-        {
-          "type": "illust",
-          "value": "meeting_room"
-        },
-        {
-          "type": "illust",
-          "value": "forecast"
-        }
-      ],
-      "stat": {
-        "label": "",
-        "value": "",
-        "note": ""
-      },
-      "id": "fact_2",
-      "_codex_narration_source": "captions.md#body",
-      "display_chunks": [
-        "모바일에서는 PASS 앱을 설치하신",
-        "후 본인확인을 거쳐 명의도용방지 메뉴로 들어가시면",
-        "됩니다 PC에서는 msafer.or.kr",
-        "에 접속하셔서 공동인증서 또는 카카오, PASS,",
-        "네이버 간편인증으로 본인확인을 진행하시면 됩니다",
-        "기능은 세 가지입니다"
-      ],
-      "_codex_caption_lockstep": {
-        "version": 2,
-        "compiler": "korean_caption_compiler_v2",
-        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 6
-      },
-      "_codex_contextual_narrative": true,
-      "_codex_sync_mode": "global999_tts_caption_lockstep",
-      "tts_chunk_weights": [
-        2004.21,
-        2482.41,
-        2890.13,
-        3204.25,
-        2852.08,
-        1073.97
-      ],
-      "_tts_timing": {
-        "mode": "word_boundary_text_align",
-        "windows": [
-          {
-            "start_ms": 0.0,
-            "end_ms": 2004.21,
-            "duration_ms": 2004.21
-          },
-          {
-            "start_ms": 2004.21,
-            "end_ms": 4486.62,
-            "duration_ms": 2482.41
-          },
-          {
-            "start_ms": 4486.62,
-            "end_ms": 7376.75,
-            "duration_ms": 2890.13
-          },
-          {
-            "start_ms": 7376.75,
-            "end_ms": 10581.0,
-            "duration_ms": 3204.25
-          },
-          {
-            "start_ms": 10581.0,
-            "end_ms": 13433.08,
-            "duration_ms": 2852.08
-          },
-          {
-            "start_ms": 13433.08,
-            "end_ms": 14507.05,
-            "duration_ms": 1073.97
-          }
-        ],
-        "boundary_count": 27,
-        "caption_signature": "1630e05087fe18d4a00d23925790fb5b135ce4e414d67fc97d69c4b1ca9e6a9c"
-      }
-    },
-    {
-      "tts": "첫째, 가입사실현황조회로 본인 명의로 개통된 전체 회선을 1분 안에 조회하실 수 있습니다. 모르는 회선이 떠 있다면 해당 통신사 고객센터에 즉시 정지와 해지를 신청하시고, 경찰 112 또는 전기통신금융사기 통합대응센터에 신고하시고, 거래 은행에 본인계좌 일괄지급정지를 신청하시기 바랍니다. 둘째, 가입제한 서비스로 본인 동의 없이 이뤄지는 신규 가입, 번호이동, 기기변경, 명의변경을 통신사 단계에서 사전 차단할 수 있습니다.",
-      "caption_body": [
-        "기능 2",
-        "가입제한 사전 차단"
-      ],
-      "caption_emphasis": [
-        "가입제한"
-      ],
-      "headline_lines": [
-        {
-          "text": "기능 2"
-        },
-        {
-          "text": "가입제한 사전 차단",
-          "accent": true
-        }
-      ],
-      "meta": "출처: KISA 가입제한 서비스",
-      "topic": "뉴스",
-      "background_image": "4.png",
-      "caption_chunks": [
-        "첫째, 가입사실현황조회로 본인 명의로",
-        "개통된 전체 회선을 1분 안에 조회하실 수 있습니다.",
-        "모르는 회선이 떠 있다면",
-        "해당 통신사 고객센터에 즉시 정지와 해지를 신청하시고,",
-        "경찰 112 또는 전기통신금융사기",
-        "통합대응센터에 신고하시고,",
-        "거래 은행에 본인계좌 일괄지급정지를 신청하시기 바랍니다.",
-        "둘째, 가입제한 서비스로 본인 동의 없이",
-        "이뤄지는 신규 가입, 번호이동,",
-        "기기변경, 명의변경을 통신사 단계에서",
-        "사전 차단할 수 있습니다."
-      ],
-      "chunk_visuals": [
         {
           "type": "illust",
           "value": "newspaper"
+        },
+        {
+          "type": "mascot",
+          "value": "suspicious"
         },
         {
           "type": "illust",
@@ -419,31 +279,124 @@
         },
         {
           "type": "illust",
-          "value": "cpt_a1caaea6"
+          "value": "meeting_room"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_2",
+      "_codex_narration_source": "captions.md#body",
+      "display_chunks": [
+        "안드폰을 사용 중이신데 아이폰으로 갈아타려는 경우",
+        "첫 설정 화면에서 Move from Android",
+        "옵션을 선택하시면 됩니다",
+        "둘째, 유럽연합 지역 한정으로 아이폰",
+        "알림을 애플워치가 아닌 타사 스마트워치로도",
+        "전달할 수 있게 열렸습니다",
+        "국내 적용 여부는 추가 업데이트에서 확인하실 수 있습니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 7
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        2435.58,
+        1760.54,
+        1886.63,
+        2112.67,
+        1954.25,
+        1927.79,
+        2781.71
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 2435.58,
+            "duration_ms": 2435.58
+          },
+          {
+            "start_ms": 2435.58,
+            "end_ms": 4196.12,
+            "duration_ms": 1760.54
+          },
+          {
+            "start_ms": 4196.12,
+            "end_ms": 6082.75,
+            "duration_ms": 1886.63
+          },
+          {
+            "start_ms": 6082.75,
+            "end_ms": 8195.42,
+            "duration_ms": 2112.67
+          },
+          {
+            "start_ms": 8195.42,
+            "end_ms": 10149.67,
+            "duration_ms": 1954.25
+          },
+          {
+            "start_ms": 10149.67,
+            "end_ms": 12077.46,
+            "duration_ms": 1927.79
+          },
+          {
+            "start_ms": 12077.46,
+            "end_ms": 14859.17,
+            "duration_ms": 2781.71
+          }
+        ],
+        "boundary_count": 37,
+        "caption_signature": "a31c394b849266c4523df0311a0c8b99d4a4f179512eaa40ca83eec201f6a49c"
+      }
+    },
+    {
+      "tts": "셋째, 빠른 페어링 기능이 강화됐습니다. 에어팟처럼 헤드폰이나 스마트워치 등 타사 블루투스 액세서리를 가까이 두기만 해도 빠르게 연결됩니다.",
+      "caption_body": [
+        "3",
+        "빠른 페어링 근접 자동 연결"
+      ],
+      "caption_emphasis": [
+        "빠른 페어링"
+      ],
+      "headline_lines": [
+        {
+          "text": "3"
         },
         {
-          "type": "illust",
-          "value": "prohibit"
-        },
+          "text": "빠른 페어링 근접 자동 연결",
+          "accent": true
+        }
+      ],
+      "meta": "출처: 디지털투데이 26.3 베타3",
+      "topic": "뉴스",
+      "background_image": "4.png",
+      "caption_chunks": [
+        "셋째, 빠른 페어링 기능이 강화됐습니다.",
+        "에어팟처럼 헤드폰이나 스마트워치 등",
+        "타사 블루투스 액세서리를 가까이 두기만",
+        "해도 빠르게 연결됩니다."
+      ],
+      "chunk_visuals": [
         {
           "type": "illust",
-          "value": "impersonation_call"
-        },
-        {
-          "type": "illust",
-          "value": "lock"
-        },
-        {
-          "type": "illust",
-          "value": "secure_app_reregistration"
-        },
-        {
-          "type": "illust",
-          "value": "emergency_account_freeze"
+          "value": "forecast"
         },
         {
           "type": "illust",
           "value": "smartphone"
+        },
+        {
+          "type": "illust",
+          "value": "cpt_83fa1e9f"
         },
         {
           "type": "illust",
@@ -458,151 +411,102 @@
       "id": "fact_3",
       "_codex_narration_source": "captions.md#body",
       "display_chunks": [
-        "첫째, 가입사실현황조회로 본인 명의로",
-        "개통된 전체 회선을 1분 안에 조회하실 수 있습니다",
-        "모르는 회선이 떠 있다면",
-        "해당 통신사 고객센터에 즉시 정지와 해지를 신청하시고,",
-        "경찰 112 또는 전기통신금융사기",
-        "통합대응센터에 신고하시고,",
-        "거래 은행에 본인계좌 일괄지급정지를 신청하시기 바랍니다",
-        "둘째, 가입제한 서비스로 본인 동의 없이",
-        "이뤄지는 신규 가입, 번호이동,",
-        "기기변경, 명의변경을 통신사 단계에서",
-        "사전 차단할 수 있습니다"
+        "셋째, 빠른 페어링 기능이 강화됐습니다",
+        "에어팟처럼 헤드폰이나 스마트워치 등",
+        "타사 블루투스 액세서리를 가까이 두기만",
+        "해도 빠르게 연결됩니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 11
+        "chunk_count": 4
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        2118.67,
-        3207.04,
-        1091.54,
-        3151.42,
-        1813.37,
-        1549.29,
-        3371.5,
-        2051.05,
-        1927.83,
-        2218.29,
-        1205.95
+        2852.12,
+        1690.13,
+        1892.63,
+        1293.99
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 2118.67,
-            "duration_ms": 2118.67
+            "end_ms": 2852.12,
+            "duration_ms": 2852.12
           },
           {
-            "start_ms": 2118.67,
-            "end_ms": 5325.71,
-            "duration_ms": 3207.04
+            "start_ms": 2852.12,
+            "end_ms": 4542.25,
+            "duration_ms": 1690.13
           },
           {
-            "start_ms": 5325.71,
-            "end_ms": 6417.25,
-            "duration_ms": 1091.54
+            "start_ms": 4542.25,
+            "end_ms": 6434.88,
+            "duration_ms": 1892.63
           },
           {
-            "start_ms": 6417.25,
-            "end_ms": 9568.67,
-            "duration_ms": 3151.42
-          },
-          {
-            "start_ms": 9568.67,
-            "end_ms": 11382.04,
-            "duration_ms": 1813.37
-          },
-          {
-            "start_ms": 11382.04,
-            "end_ms": 12931.33,
-            "duration_ms": 1549.29
-          },
-          {
-            "start_ms": 12931.33,
-            "end_ms": 16302.83,
-            "duration_ms": 3371.5
-          },
-          {
-            "start_ms": 16302.83,
-            "end_ms": 18353.88,
-            "duration_ms": 2051.05
-          },
-          {
-            "start_ms": 18353.88,
-            "end_ms": 20281.71,
-            "duration_ms": 1927.83
-          },
-          {
-            "start_ms": 20281.71,
-            "end_ms": 22500.0,
-            "duration_ms": 2218.29
-          },
-          {
-            "start_ms": 22500.0,
-            "end_ms": 23705.95,
-            "duration_ms": 1205.95
+            "start_ms": 6434.88,
+            "end_ms": 7728.87,
+            "duration_ms": 1293.99
           }
         ],
-        "boundary_count": 53,
-        "caption_signature": "8d6670be645563fea1dee56db974641bebd49b01c6338448f03fd1c2c8964528"
+        "boundary_count": 17,
+        "caption_signature": "26f88a87ce90fcab4ac82cb135004068268f24c819061e894272176e3ec71cbe"
       }
     },
     {
-      "tts": "본인이 직접 개통하실 일이 있을 때만 일시 해제하시면 됩니다. 셋째, 번호도용문자 차단 부가서비스로 내 번호를 도용한 스미싱과 광고 문자도 무료로 차단할 수 있습니다. 가입한 통신사 홈페이지에서 부가서비스로 직접 신청하실 수 있습니다.",
+      "tts": "매번 설정 메뉴에 들어가지 않아도 됩니다. 넷째, 26.3은 다음 버전에서 본격 도입될 시리 업그레이드의 기반 작업이 포함된 버전이라는 평가입니다. 다섯째, 알림 변경 사항과 백그라운드 동작 안정성도 함께 개선됐습니다.",
       "caption_body": [
-        "기능 3",
-        "번호도용문자 차단"
+        "4",
+        "시리 업그레이드 전초전"
       ],
       "caption_emphasis": [
-        "번호도용문자"
+        "시리"
       ],
       "headline_lines": [
         {
-          "text": "기능 3"
+          "text": "4"
         },
         {
-          "text": "번호도용문자 차단",
+          "text": "시리 업그레이드 전초전",
           "accent": true
         }
       ],
-      "meta": "출처: KISA·이통3사 부가서비스",
+      "meta": "출처: 디지털투데이 시리 전초전",
       "topic": "뉴스",
       "background_image": "5.png",
       "caption_chunks": [
-        "본인이 직접 개통하실 일이 있을 때만 일시 해제하시면",
-        "됩니다. 셋째, 번호도용문자 차단",
-        "부가서비스로 내 번호를 도용한 스미싱과 광고",
-        "문자도 무료로 차단할 수 있습니다.",
-        "가입한 통신사 홈페이지에서 부가서비스로",
-        "직접 신청하실 수 있습니다."
+        "매번 설정 메뉴에 들어가지 않아도 됩니다.",
+        "넷째, 26.3은 다음 버전에서 본격",
+        "도입될 시리 업그레이드의 기반 작업이",
+        "포함된 버전이라는 평가입니다.",
+        "다섯째, 알림 변경 사항과 백그라운드",
+        "동작 안정성도 함께 개선됐습니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "smartphone"
+          "value": "final_update"
+        },
+        {
+          "type": "illust",
+          "value": "chatbot"
         },
         {
           "type": "illust",
           "value": "smartphone"
         },
         {
+          "type": "mascot",
+          "value": "serious"
+        },
+        {
           "type": "illust",
           "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "logout"
-        },
-        {
-          "type": "illust",
-          "value": "security_feature_lock"
         },
         {
           "type": "illust",
@@ -617,12 +521,12 @@
       "id": "fact_4",
       "_codex_narration_source": "captions.md#body",
       "display_chunks": [
-        "본인이 직접 개통하실 일이 있을 때만 일시 해제하시면",
-        "됩니다 셋째, 번호도용문자 차단",
-        "부가서비스로 내 번호를 도용한 스미싱과 광고",
-        "문자도 무료로 차단할 수 있습니다",
-        "가입한 통신사 홈페이지에서 부가서비스로",
-        "직접 신청하실 수 있습니다"
+        "매번 설정 메뉴에 들어가지 않아도 됩니다",
+        "넷째, 26.3은 다음 버전에서 본격",
+        "도입될 시리 업그레이드의 기반 작업이",
+        "포함된 버전이라는 평가입니다",
+        "다섯째, 알림 변경 사항과 백그라운드",
+        "동작 안정성도 함께 개선됐습니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
@@ -633,49 +537,49 @@
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        2682.04,
-        2414.79,
-        2139.09,
-        2341.54,
-        2042.25,
-        1426.04
+        2526.42,
+        2464.79,
+        1575.71,
+        2095.04,
+        2112.71,
+        1804.54
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 2682.04,
-            "duration_ms": 2682.04
+            "end_ms": 2526.42,
+            "duration_ms": 2526.42
           },
           {
-            "start_ms": 2682.04,
-            "end_ms": 5096.83,
-            "duration_ms": 2414.79
+            "start_ms": 2526.42,
+            "end_ms": 4991.21,
+            "duration_ms": 2464.79
           },
           {
-            "start_ms": 5096.83,
-            "end_ms": 7235.92,
-            "duration_ms": 2139.09
+            "start_ms": 4991.21,
+            "end_ms": 6566.92,
+            "duration_ms": 1575.71
           },
           {
-            "start_ms": 7235.92,
-            "end_ms": 9577.46,
-            "duration_ms": 2341.54
+            "start_ms": 6566.92,
+            "end_ms": 8661.96,
+            "duration_ms": 2095.04
           },
           {
-            "start_ms": 9577.46,
-            "end_ms": 11619.71,
-            "duration_ms": 2042.25
+            "start_ms": 8661.96,
+            "end_ms": 10774.67,
+            "duration_ms": 2112.71
           },
           {
-            "start_ms": 11619.71,
-            "end_ms": 13045.75,
-            "duration_ms": 1426.04
+            "start_ms": 10774.67,
+            "end_ms": 12579.21,
+            "duration_ms": 1804.54
           }
         ],
-        "boundary_count": 31,
-        "caption_signature": "e6c1ceb933a54e0096f91da8e7bad6533cc6128b53b53acaa6ca7b9d1ce800bc"
+        "boundary_count": 28,
+        "caption_signature": "911c9ba22e602000af366682b5d3f6d9f4064e9968e2793cf3584d5dbf398218"
       }
     }
   ],
@@ -731,7 +635,7 @@
       "version": 2,
       "compiler": "korean_caption_compiler_v2",
       "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-      "chunk_count": 6
+      "chunk_count": 4
     },
     "_codex_contextual_narrative": true,
     "_codex_sync_mode": "global999_tts_caption_lockstep",
@@ -762,7 +666,7 @@
   "_chunk_logic_v2": true,
   "_note": "build_script.py 자동 생성 (v2 로직): 시퀀스 내 이미지 순환 + 마스코트 짝수 시퀀스만.",
   "_codex_uses_captions_md_narration": true,
-  "_codex_captions_md_narration_path": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\015_qa_msafer_pass_identity_block\\captions.md",
+  "_codex_captions_md_narration_path": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\016_news_ios_26_3_release\\captions.md",
   "_codex_narration_policy": "tts_only_chunks_visuals_preserved",
   "_codex_unique_source_images": {
     "version": 1,
@@ -789,31 +693,7 @@
         },
         "to": {
           "type": "illust",
-          "value": "prohibit"
-        }
-      },
-      {
-        "section": "cta",
-        "chunk": 5,
-        "from": {
-          "type": "image",
-          "value": "3.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "shield"
-        }
-      },
-      {
-        "section": "cta",
-        "chunk": 6,
-        "from": {
-          "type": "image",
-          "value": "4.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "gift_voucher"
+          "value": "reset"
         }
       }
     ]
@@ -823,54 +703,97 @@
   "_codex_sync_quality_logic": true,
   "_codex_captions_narration_priority": true,
   "_codex_common_quality_note": "Global 001-999 rule: screen chunks are rebuilt as an ordered, lossless partition of captions.md narration; curated visuals are rebalanced without discarding quality rules.",
-  "_codex_uploaded_illustrations": [
-    {
-      "section": "fact_1",
-      "chunk": 1,
-      "variant": "cpt_7b7a2f91"
-    },
-    {
-      "section": "fact_1",
-      "chunk": 2,
-      "variant": "cpt_b5a15155"
-    },
-    {
-      "section": "fact_1",
-      "chunk": 3,
-      "variant": "cpt_8bffef74"
-    },
-    {
-      "section": "fact_1",
-      "chunk": 5,
-      "variant": "cpt_a1caaea6"
-    },
-    {
-      "section": "fact_1",
-      "chunk": 6,
-      "variant": "cpt_4729c912"
-    }
-  ],
   "_codex_semantic_visual_match": {
     "version": 1,
     "policy": "Match chunks to GPT source images using prompt.md descriptions, then fallback to tagged reusable illustrations.",
     "changes": [
       {
         "section": "fact_1",
-        "chunk": 3,
+        "chunk": 1,
         "from": {
           "type": "illust",
-          "value": "cpt_8bffef74"
+          "value": "password"
         },
         "to": {
           "type": "illust",
-          "value": "cpt_83fa1e9f"
+          "value": "device_data_transfer"
         },
-        "context": "함께 운영하는 Msafer 명의도용방지서비스를 활용하시면, 본인 명의로 개통된 모든 휴대폰 회선을 무료로 확인하고 Msafer + PASS 무료 통합 서비스 ['Msafer + PASS', '무료 통합 서비스'] 뉴",
-        "reason": "illust score 0.435"
+        "context": "첫째, 안드로이드에서 아이폰으로 데이터 이전이 한결 쉬워졌습니다 1 안드로이드 → 아이폰 이전 ['1', '안드로이드 → 아이폰 이전'] 뉴스",
+        "reason": "illust score 0.43"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "첫째, 안드로이드에서 아이폰으로 데이터 이전이 한결 쉬워졌습니다 사진과 동영상, 연락처, 1 안드로이드 → 아이폰 이전 ['1', '안드로이드 → 아이폰 이전'] 뉴스",
+        "reason": "illust score 0.467"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 3,
+        "from": {
+          "type": "image",
+          "value": "4.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "samsung_ai"
+        },
+        "context": "데이터 이전이 한결 쉬워졌습니다 사진과 동영상, 연락처, 계정 데이터가 타사 앱 없이 첫 설정 단계에서 1 안드로이드 → 아이폰 이전 ['1', '안드로이드 → 아이폰 이전'] 뉴스",
+        "reason": "illust score 0.467"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 4,
+        "from": {
+          "type": "image",
+          "value": "5.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "사진과 동영상, 연락처, 계정 데이터가 타사 앱 없이 첫 설정 단계에서 한 번에 처리됩니다 1 안드로이드 → 아이폰 이전 ['1', '안드로이드 → 아이폰 이전'] 뉴스",
+        "reason": "illust score 0.448"
       },
       {
         "section": "fact_1",
         "chunk": 5,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "image",
+          "value": "4.png"
+        },
+        "context": "계정 데이터가 타사 앱 없이 첫 설정 단계에서 한 번에 처리됩니다 1 안드로이드 → 아이폰 이전 ['1', '안드로이드 → 아이폰 이전'] 뉴스",
+        "reason": "unused source image (no semantic match, img score 0.353)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "final_update"
+        },
+        "to": {
+          "type": "image",
+          "value": "5.png"
+        },
+        "context": "안드폰을 사용 중이신데 아이폰으로 갈아타려는 경우 첫 설정 화면에서 Move from Android 2 타사 워치 알림 전달 ['2', '타사 워치 알림 전달'] 뉴스",
+        "reason": "unused source image (no semantic match, img score 0.408)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 2,
         "from": {
           "type": "illust",
           "value": "cpt_a1caaea6"
@@ -879,250 +802,82 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "본인 명의로 개통된 모든 휴대폰 회선을 무료로 확인하고 추가 개통을 사전에 차단할 수 있습니다 신청은 두 가지 경로가 있습니다 Msafer + PASS 무료 통합 서비스 ['Msafer + PASS', '무료 통합 ",
+        "context": "안드폰을 사용 중이신데 아이폰으로 갈아타려는 경우 첫 설정 화면에서 Move from Android 옵션을 선택하시면 됩니다 2 타사 워치 알림 전달 ['2', '타사 워치 알림 전달'] 뉴스",
         "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 6,
-        "from": {
-          "type": "illust",
-          "value": "cpt_4729c912"
-        },
-        "to": {
-          "type": "illust",
-          "value": "handshake"
-        },
-        "context": "추가 개통을 사전에 차단할 수 있습니다 신청은 두 가지 경로가 있습니다 Msafer + PASS 무료 통합 서비스 ['Msafer + PASS', '무료 통합 서비스'] 뉴스",
-        "reason": "illust score 0.449"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "secure_app_reregistration"
-        },
-        "to": {
-          "type": "illust",
-          "value": "phone_settings_toggle"
-        },
-        "context": "모바일에서는 PASS 앱을 설치하신 후 본인확인을 거쳐 명의도용방지 메뉴로 들어가시면 기능 1 가입사실현황조회 ['기능 1', '가입사실현황조회'] 뉴스",
-        "reason": "illust score 0.468"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "chart_down"
-        },
-        "to": {
-          "type": "illust",
-          "value": "cpt_4729c912"
-        },
-        "context": "모바일에서는 PASS 앱을 설치하신 후 본인확인을 거쳐 명의도용방지 메뉴로 들어가시면 됩니다 PC에서는 msafer.or.kr 기능 1 가입사실현황조회 ['기능 1', '가입사실현황조회'] 뉴스",
-        "reason": "illust score 0.5"
       },
       {
         "section": "fact_2",
         "chunk": 3,
         "from": {
           "type": "illust",
-          "value": "chart_up"
-        },
-        "to": {
-          "type": "illust",
-          "value": "cpt_8bffef74"
-        },
-        "context": "후 본인확인을 거쳐 명의도용방지 메뉴로 들어가시면 됩니다 PC에서는 msafer.or.kr 에 접속하셔서 공동인증서 또는 카카오, PASS, 기능 1 가입사실현황조회 ['기능 1', '가입사실현황조회'] 뉴스",
-        "reason": "illust score 0.522"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 4,
-        "from": {
-          "type": "mascot",
-          "value": "suspicious"
-        },
-        "to": {
-          "type": "illust",
-          "value": "cpt_6a2e9678"
-        },
-        "context": "됩니다 PC에서는 msafer.or.kr 에 접속하셔서 공동인증서 또는 카카오, PASS, 네이버 간편인증으로 본인확인을 진행하시면 됩니다 기능 1 가입사실현황조회 ['기능 1', '가입사실현황조회'] 뉴스",
-        "reason": "illust score 0.49"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 5,
-        "from": {
-          "type": "illust",
-          "value": "chat_backup_restore"
-        },
-        "to": {
-          "type": "illust",
-          "value": "meeting_room"
-        },
-        "context": "에 접속하셔서 공동인증서 또는 카카오, PASS, 네이버 간편인증으로 본인확인을 진행하시면 됩니다 기능은 세 가지입니다 기능 1 가입사실현황조회 ['기능 1', '가입사실현황조회'] 뉴스",
-        "reason": "illust score 0.444"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 6,
-        "from": {
-          "type": "illust",
-          "value": "chatbot"
-        },
-        "to": {
-          "type": "illust",
           "value": "forecast"
-        },
-        "context": "네이버 간편인증으로 본인확인을 진행하시면 됩니다 기능은 세 가지입니다 기능 1 가입사실현황조회 ['기능 1', '가입사실현황조회'] 뉴스",
-        "reason": "illust score 0.464"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "cpt_83fa1e9f"
         },
         "to": {
           "type": "illust",
           "value": "newspaper"
         },
-        "context": "첫째, 가입사실현황조회로 본인 명의로 개통된 전체 회선을 1분 안에 조회하실 수 있습니다 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
+        "context": "첫 설정 화면에서 Move from Android 옵션을 선택하시면 됩니다 둘째, 유럽연합 지역 한정으로 아이폰 2 타사 워치 알림 전달 ['2', '타사 워치 알림 전달'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
-        "section": "fact_3",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "emergency_account_freeze"
-        },
-        "to": {
-          "type": "illust",
-          "value": "microphone"
-        },
-        "context": "첫째, 가입사실현황조회로 본인 명의로 개통된 전체 회선을 1분 안에 조회하실 수 있습니다 모르는 회선이 떠 있다면 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "clock"
-        },
-        "to": {
-          "type": "illust",
-          "value": "shield"
-        },
-        "context": "개통된 전체 회선을 1분 안에 조회하실 수 있습니다 모르는 회선이 떠 있다면 해당 통신사 고객센터에 즉시 정지와 해지를 신청하시고, 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "cloud_backup"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "모르는 회선이 떠 있다면 해당 통신사 고객센터에 즉시 정지와 해지를 신청하시고, 경찰 112 또는 전기통신금융사기 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
+        "section": "fact_2",
         "chunk": 5,
-        "from": {
-          "type": "illust",
-          "value": "cover_screen_widgets"
-        },
-        "to": {
-          "type": "illust",
-          "value": "prohibit"
-        },
-        "context": "해당 통신사 고객센터에 즉시 정지와 해지를 신청하시고, 경찰 112 또는 전기통신금융사기 통합대응센터에 신고하시고, 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
-        "reason": "illust score 0.477"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 6,
-        "from": {
-          "type": "illust",
-          "value": "aluminum_label"
-        },
-        "to": {
-          "type": "illust",
-          "value": "impersonation_call"
-        },
-        "context": "경찰 112 또는 전기통신금융사기 통합대응센터에 신고하시고, 거래 은행에 본인계좌 일괄지급정지를 신청하시기 바랍니다 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
-        "reason": "illust score 0.447"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 7,
-        "from": {
-          "type": "illust",
-          "value": "appliance"
-        },
-        "to": {
-          "type": "illust",
-          "value": "lock"
-        },
-        "context": "통합대응센터에 신고하시고, 거래 은행에 본인계좌 일괄지급정지를 신청하시기 바랍니다 둘째, 가입제한 서비스로 본인 동의 없이 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
-        "reason": "illust score 0.425"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 8,
         "from": {
           "type": "illust",
           "value": "battery_charge_range"
         },
         "to": {
           "type": "illust",
-          "value": "secure_app_reregistration"
+          "value": "microphone"
         },
-        "context": "거래 은행에 본인계좌 일괄지급정지를 신청하시기 바랍니다 둘째, 가입제한 서비스로 본인 동의 없이 이뤄지는 신규 가입, 번호이동, 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
-        "reason": "illust score 0.423"
+        "context": "둘째, 유럽연합 지역 한정으로 아이폰 알림을 애플워치가 아닌 타사 스마트워치로도 전달할 수 있게 열렸습니다 2 타사 워치 알림 전달 ['2', '타사 워치 알림 전달'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
       },
       {
-        "section": "fact_3",
-        "chunk": 9,
+        "section": "fact_2",
+        "chunk": 6,
         "from": {
           "type": "illust",
           "value": "battery_overheat"
         },
         "to": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "shield"
         },
-        "context": "둘째, 가입제한 서비스로 본인 동의 없이 이뤄지는 신규 가입, 번호이동, 기기변경, 명의변경을 통신사 단계에서 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
+        "context": "알림을 애플워치가 아닌 타사 스마트워치로도 전달할 수 있게 열렸습니다 국내 적용 여부는 추가 업데이트에서 확인하실 수 있습니다 2 타사 워치 알림 전달 ['2', '타사 워치 알림 전달'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 7,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "meeting_room"
+        },
+        "context": "전달할 수 있게 열렸습니다 국내 적용 여부는 추가 업데이트에서 확인하실 수 있습니다 2 타사 워치 알림 전달 ['2', '타사 워치 알림 전달'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
         "section": "fact_3",
-        "chunk": 10,
+        "chunk": 1,
         "from": {
           "type": "illust",
           "value": "biometric"
         },
         "to": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "forecast"
         },
-        "context": "이뤄지는 신규 가입, 번호이동, 기기변경, 명의변경을 통신사 단계에서 사전 차단할 수 있습니다 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
+        "context": "셋째, 빠른 페어링 기능이 강화됐습니다 에어팟처럼 헤드폰이나 스마트워치 등 3 빠른 페어링 근접 자동 연결 ['3', '빠른 페어링 근접 자동 연결'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
         "section": "fact_3",
-        "chunk": 11,
+        "chunk": 2,
         "from": {
           "type": "illust",
           "value": "call_filter_rules"
@@ -1131,7 +886,35 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "기기변경, 명의변경을 통신사 단계에서 사전 차단할 수 있습니다 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
+        "context": "셋째, 빠른 페어링 기능이 강화됐습니다 에어팟처럼 헤드폰이나 스마트워치 등 타사 블루투스 액세서리를 가까이 두기만 3 빠른 페어링 근접 자동 연결 ['3', '빠른 페어링 근접 자동 연결'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "call_recording_notice"
+        },
+        "to": {
+          "type": "illust",
+          "value": "cpt_83fa1e9f"
+        },
+        "context": "에어팟처럼 헤드폰이나 스마트워치 등 타사 블루투스 액세서리를 가까이 두기만 해도 빠르게 연결됩니다 3 빠른 페어링 근접 자동 연결 ['3', '빠른 페어링 근접 자동 연결'] 뉴스",
+        "reason": "illust score 0.484"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "chart_down"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "타사 블루투스 액세서리를 가까이 두기만 해도 빠르게 연결됩니다 3 빠른 페어링 근접 자동 연결 ['3', '빠른 페어링 근접 자동 연결'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
@@ -1139,13 +922,13 @@
         "chunk": 1,
         "from": {
           "type": "illust",
-          "value": "cpt_6a2e9678"
+          "value": "chatbot"
         },
         "to": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "본인이 직접 개통하실 일이 있을 때만 일시 해제하시면 됩니다 셋째, 번호도용문자 차단 기능 3 번호도용문자 차단 ['기능 3', '번호도용문자 차단'] 뉴스",
+        "context": "매번 설정 메뉴에 들어가지 않아도 됩니다 넷째, 26.3은 다음 버전에서 본격 4 시리 업그레이드 전초전 ['4', '시리 업그레이드 전초전'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
@@ -1153,13 +936,13 @@
         "chunk": 2,
         "from": {
           "type": "illust",
-          "value": "cpt_75c6eba6"
+          "value": "memory_chip"
         },
         "to": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "본인이 직접 개통하실 일이 있을 때만 일시 해제하시면 됩니다 셋째, 번호도용문자 차단 부가서비스로 내 번호를 도용한 스미싱과 광고 기능 3 번호도용문자 차단 ['기능 3', '번호도용문자 차단'] 뉴스",
+        "context": "매번 설정 메뉴에 들어가지 않아도 됩니다 넷째, 26.3은 다음 버전에서 본격 도입될 시리 업그레이드의 기반 작업이 4 시리 업그레이드 전초전 ['4', '시리 업그레이드 전초전'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
@@ -1167,55 +950,41 @@
         "chunk": 3,
         "from": {
           "type": "illust",
-          "value": "cpt_ea7bc1d6"
+          "value": "samsung_ai"
         },
         "to": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "됩니다 셋째, 번호도용문자 차단 부가서비스로 내 번호를 도용한 스미싱과 광고 문자도 무료로 차단할 수 있습니다 기능 3 번호도용문자 차단 ['기능 3', '번호도용문자 차단'] 뉴스",
+        "context": "넷째, 26.3은 다음 버전에서 본격 도입될 시리 업그레이드의 기반 작업이 포함된 버전이라는 평가입니다 4 시리 업그레이드 전초전 ['4', '시리 업그레이드 전초전'] 뉴스",
         "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 4,
-        "from": {
-          "type": "mascot",
-          "value": "serious"
-        },
-        "to": {
-          "type": "illust",
-          "value": "logout"
-        },
-        "context": "부가서비스로 내 번호를 도용한 스미싱과 광고 문자도 무료로 차단할 수 있습니다 가입한 통신사 홈페이지에서 부가서비스로 기능 3 번호도용문자 차단 ['기능 3', '번호도용문자 차단'] 뉴스",
-        "reason": "illust score 0.427"
       },
       {
         "section": "fact_4",
         "chunk": 5,
         "from": {
           "type": "illust",
-          "value": "cpt_fd9edf65"
+          "value": "gemini"
         },
         "to": {
           "type": "illust",
-          "value": "security_feature_lock"
+          "value": "smartphone"
         },
-        "context": "문자도 무료로 차단할 수 있습니다 가입한 통신사 홈페이지에서 부가서비스로 직접 신청하실 수 있습니다 기능 3 번호도용문자 차단 ['기능 3', '번호도용문자 차단'] 뉴스",
-        "reason": "illust score 0.433"
+        "context": "포함된 버전이라는 평가입니다 다섯째, 알림 변경 사항과 백그라운드 동작 안정성도 함께 개선됐습니다 4 시리 업그레이드 전초전 ['4', '시리 업그레이드 전초전'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
       },
       {
         "section": "fact_4",
         "chunk": 6,
         "from": {
           "type": "illust",
-          "value": "device_data_transfer"
+          "value": "chart_up"
         },
         "to": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "가입한 통신사 홈페이지에서 부가서비스로 직접 신청하실 수 있습니다 기능 3 번호도용문자 차단 ['기능 3', '번호도용문자 차단'] 뉴스",
+        "context": "다섯째, 알림 변경 사항과 백그라운드 동작 안정성도 함께 개선됐습니다 4 시리 업그레이드 전초전 ['4', '시리 업그레이드 전초전'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       }
     ],
@@ -1227,9 +996,9 @@
           "type": "image",
           "value": "1.png"
         },
-        "context": "혹시 내 명의로 휴대폰이 몇 대 개통돼 있는지 확인해보신 적 있으신가요? 내 명의로 몇 대 개통됐을까? ['내 명의로', '몇 대 개통됐을까?'] 뉴스",
-        "best_image_score": 0.371,
-        "best_illust_score": 0.297
+        "context": "애플이 iOS 26.3 정식 버전을 출시했습니다 아이폰 사용자뿐 아니라 안드폰에서 iOS 26.3 정식 출시 완료 ['iOS 26.3', '정식 출시 완료'] 뉴스",
+        "best_image_score": 0.35,
+        "best_illust_score": 0.258
       },
       {
         "section": "hook",
@@ -1238,9 +1007,9 @@
           "type": "image",
           "value": "2.png"
         },
-        "context": "혹시 내 명의로 휴대폰이 몇 대 개통돼 있는지 확인해보신 적 있으신가요? 사기범이 신분증을 도용해 몰래 개통한 내 명의로 몇 대 개통됐을까? ['내 명의로', '몇 대 개통됐을까?'] 뉴스",
-        "best_image_score": 0.361,
-        "best_illust_score": 0.361
+        "context": "애플이 iOS 26.3 정식 버전을 출시했습니다 아이폰 사용자뿐 아니라 안드폰에서 아이폰으로 갈아타려는 분들도 주목할 iOS 26.3 정식 출시 완료 ['iOS 26.3', '정식 출시 완료'] 뉴스",
+        "best_image_score": 0.338,
+        "best_illust_score": 0.267
       },
       {
         "section": "hook",
@@ -1249,9 +1018,9 @@
           "type": "image",
           "value": "3.png"
         },
-        "context": "확인해보신 적 있으신가요? 사기범이 신분증을 도용해 몰래 개통한 회선이 있을 수 있습니다 내 명의로 몇 대 개통됐을까? ['내 명의로', '몇 대 개통됐을까?'] 뉴스",
-        "best_image_score": 0.221,
-        "best_illust_score": 0.302
+        "context": "아이폰 사용자뿐 아니라 안드폰에서 아이폰으로 갈아타려는 분들도 주목할 만한 5가지 변화가 있습니다 iOS 26.3 정식 출시 완료 ['iOS 26.3', '정식 출시 완료'] 뉴스",
+        "best_image_score": 0.29,
+        "best_illust_score": 0.367
       },
       {
         "section": "hook",
@@ -1260,152 +1029,185 @@
           "type": "mascot",
           "value": "surprised"
         },
-        "context": "사기범이 신분증을 도용해 몰래 개통한 회선이 있을 수 있습니다 1분 안에 점검하실 수 있습니다 내 명의로 몇 대 개통됐을까? ['내 명의로', '몇 대 개통됐을까?'] 뉴스",
-        "best_image_score": 0.242,
-        "best_illust_score": 0.286
+        "context": "아이폰으로 갈아타려는 분들도 주목할 만한 5가지 변화가 있습니다 iOS 26.3 정식 출시 완료 ['iOS 26.3', '정식 출시 완료'] 뉴스",
+        "best_image_score": 0.249,
+        "best_illust_score": 0.346
       },
       {
-        "section": "hook",
+        "section": "fact_1",
         "chunk": 5,
         "current": {
           "type": "image",
           "value": "4.png"
         },
-        "context": "회선이 있을 수 있습니다 1분 안에 점검하실 수 있습니다 내 명의로 몇 대 개통됐을까? ['내 명의로', '몇 대 개통됐을까?'] 뉴스",
-        "best_image_score": 0.216,
-        "best_illust_score": 0.236
+        "context": "계정 데이터가 타사 앱 없이 첫 설정 단계에서 한 번에 처리됩니다 1 안드로이드 → 아이폰 이전 ['1', '안드로이드 → 아이폰 이전'] 뉴스",
+        "best_image_score": 0.353,
+        "best_illust_score": 0.414
       },
       {
-        "section": "fact_1",
-        "chunk": 4,
+        "section": "fact_2",
+        "chunk": 1,
         "current": {
           "type": "image",
           "value": "5.png"
         },
-        "context": "명의도용방지서비스를 활용하시면, 본인 명의로 개통된 모든 휴대폰 회선을 무료로 확인하고 추가 개통을 사전에 차단할 수 있습니다 Msafer + PASS 무료 통합 서비스 ['Msafer + PASS', '무료 통합 서비스'] 뉴스",
-        "best_image_score": 0.327,
-        "best_illust_score": 0.373
+        "context": "안드폰을 사용 중이신데 아이폰으로 갈아타려는 경우 첫 설정 화면에서 Move from Android 2 타사 워치 알림 전달 ['2', '타사 워치 알림 전달'] 뉴스",
+        "best_image_score": 0.408,
+        "best_illust_score": 0.283
       },
       {
-        "section": "fact_1",
+        "section": "fact_2",
+        "chunk": 2,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "안드폰을 사용 중이신데 아이폰으로 갈아타려는 경우 첫 설정 화면에서 Move from Android 옵션을 선택하시면 됩니다 2 타사 워치 알림 전달 ['2', '타사 워치 알림 전달'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.316
+      },
+      {
+        "section": "fact_2",
+        "chunk": 3,
+        "current": {
+          "type": "illust",
+          "value": "newspaper"
+        },
+        "context": "첫 설정 화면에서 Move from Android 옵션을 선택하시면 됩니다 둘째, 유럽연합 지역 한정으로 아이폰 2 타사 워치 알림 전달 ['2', '타사 워치 알림 전달'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.339
+      },
+      {
+        "section": "fact_2",
+        "chunk": 4,
+        "current": {
+          "type": "mascot",
+          "value": "suspicious"
+        },
+        "context": "옵션을 선택하시면 됩니다 둘째, 유럽연합 지역 한정으로 아이폰 알림을 애플워치가 아닌 타사 스마트워치로도 2 타사 워치 알림 전달 ['2', '타사 워치 알림 전달'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.338
+      },
+      {
+        "section": "fact_2",
+        "chunk": 5,
+        "current": {
+          "type": "illust",
+          "value": "microphone"
+        },
+        "context": "둘째, 유럽연합 지역 한정으로 아이폰 알림을 애플워치가 아닌 타사 스마트워치로도 전달할 수 있게 열렸습니다 2 타사 워치 알림 전달 ['2', '타사 워치 알림 전달'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.381
+      },
+      {
+        "section": "fact_2",
+        "chunk": 6,
+        "current": {
+          "type": "illust",
+          "value": "shield"
+        },
+        "context": "알림을 애플워치가 아닌 타사 스마트워치로도 전달할 수 있게 열렸습니다 국내 적용 여부는 추가 업데이트에서 확인하실 수 있습니다 2 타사 워치 알림 전달 ['2', '타사 워치 알림 전달'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.341
+      },
+      {
+        "section": "fact_2",
+        "chunk": 7,
+        "current": {
+          "type": "illust",
+          "value": "meeting_room"
+        },
+        "context": "전달할 수 있게 열렸습니다 국내 적용 여부는 추가 업데이트에서 확인하실 수 있습니다 2 타사 워치 알림 전달 ['2', '타사 워치 알림 전달'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.343
+      },
+      {
+        "section": "fact_3",
+        "chunk": 1,
+        "current": {
+          "type": "illust",
+          "value": "forecast"
+        },
+        "context": "셋째, 빠른 페어링 기능이 강화됐습니다 에어팟처럼 헤드폰이나 스마트워치 등 3 빠른 페어링 근접 자동 연결 ['3', '빠른 페어링 근접 자동 연결'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.362
+      },
+      {
+        "section": "fact_3",
+        "chunk": 2,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "셋째, 빠른 페어링 기능이 강화됐습니다 에어팟처럼 헤드폰이나 스마트워치 등 타사 블루투스 액세서리를 가까이 두기만 3 빠른 페어링 근접 자동 연결 ['3', '빠른 페어링 근접 자동 연결'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.374
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "타사 블루투스 액세서리를 가까이 두기만 해도 빠르게 연결됩니다 3 빠른 페어링 근접 자동 연결 ['3', '빠른 페어링 근접 자동 연결'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.4
+      },
+      {
+        "section": "fact_4",
+        "chunk": 1,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "매번 설정 메뉴에 들어가지 않아도 됩니다 넷째, 26.3은 다음 버전에서 본격 4 시리 업그레이드 전초전 ['4', '시리 업그레이드 전초전'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.281
+      },
+      {
+        "section": "fact_4",
+        "chunk": 2,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "매번 설정 메뉴에 들어가지 않아도 됩니다 넷째, 26.3은 다음 버전에서 본격 도입될 시리 업그레이드의 기반 작업이 4 시리 업그레이드 전초전 ['4', '시리 업그레이드 전초전'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.314
+      },
+      {
+        "section": "fact_4",
+        "chunk": 3,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "넷째, 26.3은 다음 버전에서 본격 도입될 시리 업그레이드의 기반 작업이 포함된 버전이라는 평가입니다 4 시리 업그레이드 전초전 ['4', '시리 업그레이드 전초전'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.371
+      },
+      {
+        "section": "fact_4",
+        "chunk": 4,
+        "current": {
+          "type": "mascot",
+          "value": "serious"
+        },
+        "context": "도입될 시리 업그레이드의 기반 작업이 포함된 버전이라는 평가입니다 다섯째, 알림 변경 사항과 백그라운드 4 시리 업그레이드 전초전 ['4', '시리 업그레이드 전초전'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.408
+      },
+      {
+        "section": "fact_4",
         "chunk": 5,
         "current": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "본인 명의로 개통된 모든 휴대폰 회선을 무료로 확인하고 추가 개통을 사전에 차단할 수 있습니다 신청은 두 가지 경로가 있습니다 Msafer + PASS 무료 통합 서비스 ['Msafer + PASS', '무료 통합 서비스'] 뉴스",
+        "context": "포함된 버전이라는 평가입니다 다섯째, 알림 변경 사항과 백그라운드 동작 안정성도 함께 개선됐습니다 4 시리 업그레이드 전초전 ['4', '시리 업그레이드 전초전'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.377
-      },
-      {
-        "section": "fact_3",
-        "chunk": 1,
-        "current": {
-          "type": "illust",
-          "value": "newspaper"
-        },
-        "context": "첫째, 가입사실현황조회로 본인 명의로 개통된 전체 회선을 1분 안에 조회하실 수 있습니다 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.386
-      },
-      {
-        "section": "fact_3",
-        "chunk": 2,
-        "current": {
-          "type": "illust",
-          "value": "microphone"
-        },
-        "context": "첫째, 가입사실현황조회로 본인 명의로 개통된 전체 회선을 1분 안에 조회하실 수 있습니다 모르는 회선이 떠 있다면 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.335
-      },
-      {
-        "section": "fact_3",
-        "chunk": 3,
-        "current": {
-          "type": "illust",
-          "value": "shield"
-        },
-        "context": "개통된 전체 회선을 1분 안에 조회하실 수 있습니다 모르는 회선이 떠 있다면 해당 통신사 고객센터에 즉시 정지와 해지를 신청하시고, 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.376
-      },
-      {
-        "section": "fact_3",
-        "chunk": 4,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "모르는 회선이 떠 있다면 해당 통신사 고객센터에 즉시 정지와 해지를 신청하시고, 경찰 112 또는 전기통신금융사기 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.363
-      },
-      {
-        "section": "fact_3",
-        "chunk": 9,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "둘째, 가입제한 서비스로 본인 동의 없이 이뤄지는 신규 가입, 번호이동, 기기변경, 명의변경을 통신사 단계에서 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.358
-      },
-      {
-        "section": "fact_3",
-        "chunk": 10,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "이뤄지는 신규 가입, 번호이동, 기기변경, 명의변경을 통신사 단계에서 사전 차단할 수 있습니다 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.419
-      },
-      {
-        "section": "fact_3",
-        "chunk": 11,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "기기변경, 명의변경을 통신사 단계에서 사전 차단할 수 있습니다 기능 2 가입제한 사전 차단 ['기능 2', '가입제한 사전 차단'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.403
-      },
-      {
-        "section": "fact_4",
-        "chunk": 1,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "본인이 직접 개통하실 일이 있을 때만 일시 해제하시면 됩니다 셋째, 번호도용문자 차단 기능 3 번호도용문자 차단 ['기능 3', '번호도용문자 차단'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.396
-      },
-      {
-        "section": "fact_4",
-        "chunk": 2,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "본인이 직접 개통하실 일이 있을 때만 일시 해제하시면 됩니다 셋째, 번호도용문자 차단 부가서비스로 내 번호를 도용한 스미싱과 광고 기능 3 번호도용문자 차단 ['기능 3', '번호도용문자 차단'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.379
-      },
-      {
-        "section": "fact_4",
-        "chunk": 3,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "됩니다 셋째, 번호도용문자 차단 부가서비스로 내 번호를 도용한 스미싱과 광고 문자도 무료로 차단할 수 있습니다 기능 3 번호도용문자 차단 ['기능 3', '번호도용문자 차단'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.408
+        "best_illust_score": 0.307
       },
       {
         "section": "fact_4",
@@ -1414,9 +1216,9 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "가입한 통신사 홈페이지에서 부가서비스로 직접 신청하실 수 있습니다 기능 3 번호도용문자 차단 ['기능 3', '번호도용문자 차단'] 뉴스",
+        "context": "다섯째, 알림 변경 사항과 백그라운드 동작 안정성도 함께 개선됐습니다 4 시리 업그레이드 전초전 ['4', '시리 업그레이드 전초전'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.415
+        "best_illust_score": 0.299
       }
     ]
   },
@@ -1425,30 +1227,30 @@
     "policy": "Illustrations and mascots should not repeat inside one video. CTA logo is exempt.",
     "replacements": [
       {
-        "section": "fact_3",
-        "chunk": 4,
+        "section": "fact_4",
+        "chunk": 1,
         "from": {
           "type": "illust",
           "value": "smartphone"
         },
         "to": {
           "type": "illust",
-          "value": "cpt_a1caaea6"
+          "value": "final_update"
         },
-        "context": "모르는 회선이 떠 있다면 해당 통신사 고객센터에 즉시 정지와 해지를 신청하시고, 경찰 112 또는 전기통신금융사기 기능 2 가입제한 사전 차단 첫째, 가입사실현황조회로 본인 명의로 개통된 전체 회선을 1분 안에 조회하실 수 있습니다. 모르는 회선이 떠 있다면 해당 통신사 고객센터에 즉시"
+        "context": "매번 설정 메뉴에 들어가지 않아도 됩니다 넷째, 26.3은 다음 버전에서 본격 4 시리 업그레이드 전초전 매번 설정 메뉴에 들어가지 않아도 됩니다. 넷째, 26.3은 다음 버전에서 본격 도입될 시리 업그레이드의 기반 작업이 포함된 버전이라는 평가입니다. 다섯째, 알림 변경 사항과 백그라"
       },
       {
-        "section": "fact_3",
-        "chunk": 9,
+        "section": "fact_4",
+        "chunk": 2,
         "from": {
           "type": "illust",
           "value": "smartphone"
         },
         "to": {
           "type": "illust",
-          "value": "emergency_account_freeze"
+          "value": "chatbot"
         },
-        "context": "둘째, 가입제한 서비스로 본인 동의 없이 이뤄지는 신규 가입, 번호이동, 기기변경, 명의변경을 통신사 단계에서 기능 2 가입제한 사전 차단 첫째, 가입사실현황조회로 본인 명의로 개통된 전체 회선을 1분 안에 조회하실 수 있습니다. 모르는 회선이 떠 있다면 해당 통신사 고객센터에 즉시 정"
+        "context": "매번 설정 메뉴에 들어가지 않아도 됩니다 넷째, 26.3은 다음 버전에서 본격 도입될 시리 업그레이드의 기반 작업이 4 시리 업그레이드 전초전 매번 설정 메뉴에 들어가지 않아도 됩니다. 넷째, 26.3은 다음 버전에서 본격 도입될 시리 업그레이드의 기반 작업이 포함된 버전이라는 평가입니"
       },
       {
         "section": "cta",
@@ -1467,39 +1269,21 @@
     "weak": [
       {
         "section": "fact_3",
-        "chunk": 10,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "이뤄지는 신규 가입, 번호이동, 기기변경, 명의변경을 통신사 단계에서 사전 차단할 수 있습니다 기능 2 가입제한 사전 차단 첫째, 가입사실현황조회로 본인 명의로 개통된 전체 회선을 1분 안에 조회하실 수 있습니다. 모르는 회선이 떠 있다면 해당 통신사 고객센터에 즉시 정지와 해지를 신청"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 11,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "기기변경, 명의변경을 통신사 단계에서 사전 차단할 수 있습니다 기능 2 가입제한 사전 차단 첫째, 가입사실현황조회로 본인 명의로 개통된 전체 회선을 1분 안에 조회하실 수 있습니다. 모르는 회선이 떠 있다면 해당 통신사 고객센터에 즉시 정지와 해지를 신청하시고, 경찰 112 또는 전기통"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 1,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "본인이 직접 개통하실 일이 있을 때만 일시 해제하시면 됩니다 셋째, 번호도용문자 차단 기능 3 번호도용문자 차단 본인이 직접 개통하실 일이 있을 때만 일시 해제하시면 됩니다. 셋째, 번호도용문자 차단 부가서비스로 내 번호를 도용한 스미싱과 광고 문자도 무료로 차단할 수 있습니다. 가입한"
-      },
-      {
-        "section": "fact_4",
         "chunk": 2,
         "duplicate": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "본인이 직접 개통하실 일이 있을 때만 일시 해제하시면 됩니다 셋째, 번호도용문자 차단 부가서비스로 내 번호를 도용한 스미싱과 광고 기능 3 번호도용문자 차단 본인이 직접 개통하실 일이 있을 때만 일시 해제하시면 됩니다. 셋째, 번호도용문자 차단 부가서비스로 내 번호를 도용한 스미싱과 광"
+        "context": "셋째, 빠른 페어링 기능이 강화됐습니다 에어팟처럼 헤드폰이나 스마트워치 등 타사 블루투스 액세서리를 가까이 두기만 3 빠른 페어링 근접 자동 연결 셋째, 빠른 페어링 기능이 강화됐습니다. 에어팟처럼 헤드폰이나 스마트워치 등 타사 블루투스 액세서리를 가까이 두기만 해도 빠르게 연결됩니다."
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "duplicate": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "타사 블루투스 액세서리를 가까이 두기만 해도 빠르게 연결됩니다 3 빠른 페어링 근접 자동 연결 셋째, 빠른 페어링 기능이 강화됐습니다. 에어팟처럼 헤드폰이나 스마트워치 등 타사 블루투스 액세서리를 가까이 두기만 해도 빠르게 연결됩니다."
       },
       {
         "section": "fact_4",
@@ -1508,7 +1292,16 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "됩니다 셋째, 번호도용문자 차단 부가서비스로 내 번호를 도용한 스미싱과 광고 문자도 무료로 차단할 수 있습니다 기능 3 번호도용문자 차단 본인이 직접 개통하실 일이 있을 때만 일시 해제하시면 됩니다. 셋째, 번호도용문자 차단 부가서비스로 내 번호를 도용한 스미싱과 광고 문자도 무료로 차"
+        "context": "넷째, 26.3은 다음 버전에서 본격 도입될 시리 업그레이드의 기반 작업이 포함된 버전이라는 평가입니다 4 시리 업그레이드 전초전 매번 설정 메뉴에 들어가지 않아도 됩니다. 넷째, 26.3은 다음 버전에서 본격 도입될 시리 업그레이드의 기반 작업이 포함된 버전이라는 평가입니다. 다섯째,"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 5,
+        "duplicate": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "포함된 버전이라는 평가입니다 다섯째, 알림 변경 사항과 백그라운드 동작 안정성도 함께 개선됐습니다 4 시리 업그레이드 전초전 매번 설정 메뉴에 들어가지 않아도 됩니다. 넷째, 26.3은 다음 버전에서 본격 도입될 시리 업그레이드의 기반 작업이 포함된 버전이라는 평가입니다. 다섯째, 알림"
       },
       {
         "section": "fact_4",
@@ -1517,14 +1310,14 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "가입한 통신사 홈페이지에서 부가서비스로 직접 신청하실 수 있습니다 기능 3 번호도용문자 차단 본인이 직접 개통하실 일이 있을 때만 일시 해제하시면 됩니다. 셋째, 번호도용문자 차단 부가서비스로 내 번호를 도용한 스미싱과 광고 문자도 무료로 차단할 수 있습니다. 가입한 통신사 홈페이지에서"
+        "context": "다섯째, 알림 변경 사항과 백그라운드 동작 안정성도 함께 개선됐습니다 4 시리 업그레이드 전초전 매번 설정 메뉴에 들어가지 않아도 됩니다. 넷째, 26.3은 다음 버전에서 본격 도입될 시리 업그레이드의 기반 작업이 포함된 버전이라는 평가입니다. 다섯째, 알림 변경 사항과 백그라운드 동작"
       }
     ]
   },
   "_codex_effective_script": {
     "version": 2,
-    "slug": "015_qa_msafer_pass_identity_block",
-    "source": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\015_qa_msafer_pass_identity_block\\shorts_script.json",
+    "slug": "016_news_ios_26_3_release",
+    "source": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\016_news_ios_26_3_release\\shorts_script.json",
     "override_applied": false,
     "override_sections": []
   }
