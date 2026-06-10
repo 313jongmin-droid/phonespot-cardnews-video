@@ -1,59 +1,49 @@
 {
-  "slug": "019_news_samsung_thank_you_festival",
-  "title_short": "삼성 고객감사 페스티벌 6/8 시작",
-  "video_title": "삼성 고객감사 페스티벌 6/8 시작",
+  "slug": "020_qa_apple_pay_korea_card",
+  "title_short": "애플페이 한국 카드 추가하는 법",
+  "video_title": "애플페이 한국 카드 추가하는 법",
   "publication_date": "2026.06.10",
-  "sources": "삼성전자 감사 페스티벌 공식 안내 + 갤럭시 캠퍼스 + 폰스팟 광교점 자료",
+  "sources": "Apple Support + 나무위키 Apple Pay 한국 + MacRumors + 폰스팟 광교점 자료",
   "channel_name": "폰스팟",
   "channel_tagline": "광교 미니 IT 브리핑",
   "opening": {
     "line1": "광교 미니 IT 브리핑",
-    "line2": "삼성 고객감사 페스티벌 6/8 시작"
+    "line2": "애플페이 한국 카드 추가하는 법"
   },
   "hook": {
-    "tts": "2026년 6월 8일 월요일부터 7월 5일 일요일까지 4주간 삼성전자 고객감사 페스티벌이 진행됩니다. 자급제 20%, 갤럭시 S26+ 25%, 통신사 구매 모델별 정액 혜택을 챙길 수 있습니다.",
+    "tts": "아이폰 사용자 늘면서 애플페이 쓰시는 분도 늘었는데 정작 카드 추가는 왜 어렵다 하는지 정확히 알려드립니다. 한국은 다른 나라와 방식이 달라서 처음엔 헤매기 쉽습니다.",
     "caption_body": [
-      "삼성 감사 페스티벌",
-      "4주 한정"
+      "애플페이 한국",
+      "카드 추가 어떻게?"
     ],
     "caption_emphasis": [
-      "4주"
+      "카드 추가"
     ],
     "headline_lines": [
       {
-        "text": "삼성 감사 페스티벌"
+        "text": "애플페이 한국"
       },
       {
-        "text": "4주 한정",
+        "text": "카드 추가 어떻게?",
         "accent": true
       }
     ],
-    "meta": "출처: 삼성전자 감사 페스티벌",
+    "meta": "출처: Apple Support 한국",
     "topic": "뉴스",
     "background_image": "",
     "caption_chunks": [
-      "2026년 6월 8일 월요일부터 7월 5일",
-      "일요일까지 4주간 삼성전자 고객감사",
-      "페스티벌이 진행됩니다.",
-      "자급제 20%, 갤럭시 S26+ 25%,",
-      "통신사 구매 모델별 정액 혜택을 챙길 수 있습니다."
+      "아이폰 사용자 늘면서 애플페이 쓰시는 분도 늘었는데",
+      "정작 카드 추가는 왜 어렵다 하는지 정확히 알려드립니다.",
+      "한국은 다른 나라와 방식이 달라서 처음엔 헤매기 쉽습니다."
     ],
     "chunk_visuals": [
       {
         "type": "illust",
-        "value": "monday_d77265f0"
+        "value": "smartphone"
       },
       {
         "type": "illust",
-        "value": "weekly_sunday_82b74c0a"
-      },
-      {
-        "type": "illust",
-        "value": "festival_41b2e7cf"
-      },
-      {
-        "type": "illust",
-        "value": "unlocked_baa71ac6"
+        "value": "newspaper"
       },
       {
         "type": "mascot",
@@ -66,94 +56,77 @@
       "note": ""
     },
     "display_chunks": [
-      "2026년 6월 8일 월요일부터 7월 5일",
-      "일요일까지 4주간 삼성전자 고객감사",
-      "페스티벌이 진행됩니다",
-      "자급제 20%, 갤럭시 S26+ 25%,",
-      "통신사 구매 모델별 정액 혜택을 챙길 수 있습니다"
+      "아이폰 사용자 늘면서 애플페이 쓰시는 분도 늘었는데",
+      "정작 카드 추가는 왜 어렵다 하는지 정확히 알려드립니다",
+      "한국은 다른 나라와 방식이 달라서 처음엔 헤매기 쉽습니다"
     ],
     "_codex_caption_lockstep": {
       "version": 2,
       "compiler": "korean_caption_compiler_v2",
       "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-      "chunk_count": 5
+      "chunk_count": 3
     },
     "_codex_contextual_narrative": true,
     "_codex_sync_mode": "global999_tts_caption_lockstep",
     "tts_chunk_weights": [
-      2136.25,
-      2253.54,
-      1745.79,
-      3459.5,
-      2429.54
+      2602.83,
+      3559.13,
+      2896.13
     ],
     "_tts_timing": {
       "mode": "word_boundary_text_align",
       "windows": [
         {
           "start_ms": 0.0,
-          "end_ms": 2136.25,
-          "duration_ms": 2136.25
+          "end_ms": 2602.83,
+          "duration_ms": 2602.83
         },
         {
-          "start_ms": 2136.25,
-          "end_ms": 4389.79,
-          "duration_ms": 2253.54
+          "start_ms": 2602.83,
+          "end_ms": 6161.96,
+          "duration_ms": 3559.13
         },
         {
-          "start_ms": 4389.79,
-          "end_ms": 6135.58,
-          "duration_ms": 1745.79
-        },
-        {
-          "start_ms": 6135.58,
-          "end_ms": 9595.08,
-          "duration_ms": 3459.5
-        },
-        {
-          "start_ms": 9595.08,
-          "end_ms": 12024.62,
-          "duration_ms": 2429.54
+          "start_ms": 6161.96,
+          "end_ms": 9058.09,
+          "duration_ms": 2896.13
         }
       ],
-      "boundary_count": 24,
-      "caption_signature": "3bd090e54d6080011e012f3f82739e05acc503e0e149a202b046da5a99977b1b"
+      "boundary_count": 23,
+      "caption_signature": "c33a587609779fae89e6b33482a9002c4faebf20a8a049642335b7873d5f2052"
     }
   },
   "facts": [
     {
-      "tts": "행사 기간은 6월 8일부터 7월 5일까지 4주. 단 혜택 신청은 2026년 9월 30일 수요일까지 가능합니다. 행사 기간 안에 구매하시면 9월 말까지 여유롭게 신청하실 수 있습니다.",
+      "tts": "다른 나라처럼 Apple Wallet 앱에서 직접 카드를 추가하는 방식은 한국에서 작동하지 않습니다. 한국에서는 본인이 발급받은 카드사의 모바일 앱을 통해서만 Apple Wallet에 등록할 수 있습니다.",
       "caption_body": [
-        "기간",
-        "6/8 ~ 7/5 신청 9/30까지"
+        "한국 특수성",
+        "Wallet 직접 추가 안 됨"
       ],
       "caption_emphasis": [
-        "6/8 ~ 7/5"
+        "Wallet 직접 추가"
       ],
       "headline_lines": [
         {
-          "text": "기간"
+          "text": "한국 특수성"
         },
         {
-          "text": "6/8 ~ 7/5 신청 9/30까지",
+          "text": "Wallet 직접 추가 안 됨",
           "accent": true
         }
       ],
-      "meta": "출처: 삼성 페스티벌 공식 일정",
+      "meta": "출처: 나무위키 Apple Pay 한국",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "행사 기간은 6월 8일부터 7월 5일까지 4주.",
-        "단 혜택 신청은 2026년 9월 30일",
-        "수요일까지 가능합니다.",
-        "행사 기간 안에 구매하시면 9월 말까지",
-        "여유롭게 신청하실 수 있습니다."
+        "다른 나라처럼 Apple Wallet",
+        "앱에서 직접 카드를 추가하는 방식은",
+        "한국에서 작동하지 않습니다.",
+        "한국에서는 본인이 발급받은 카드사의 모바일",
+        "앱을 통해서만 Apple Wallet에",
+        "등록할 수 있습니다."
       ],
       "chunk_visuals": [
-        {
-          "type": "illust",
-          "value": "event_period_8cafdac4"
-        },
         {
           "type": "illust",
           "value": "microphone"
@@ -169,6 +142,14 @@
         {
           "type": "illust",
           "value": "forecast"
+        },
+        {
+          "type": "illust",
+          "value": "cpt_f59129df"
+        },
+        {
+          "type": "illust",
+          "value": "cpt_a1caaea6"
         }
       ],
       "stat": {
@@ -178,92 +159,101 @@
       },
       "id": "fact_1",
       "display_chunks": [
-        "행사 기간은 6월 8일부터 7월 5일까지 4주",
-        "단 혜택 신청은 2026년 9월 30일",
-        "수요일까지 가능합니다",
-        "행사 기간 안에 구매하시면 9월 말까지",
-        "여유롭게 신청하실 수 있습니다"
+        "다른 나라처럼 Apple Wallet",
+        "앱에서 직접 카드를 추가하는 방식은",
+        "한국에서 작동하지 않습니다",
+        "한국에서는 본인이 발급받은 카드사의 모바일",
+        "앱을 통해서만 Apple Wallet에",
+        "등록할 수 있습니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 5
+        "chunk_count": 6
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        3169.0,
-        2227.12,
-        1786.96,
-        2015.88,
-        1558.08
+        1229.58,
+        1813.38,
+        2053.87,
+        2165.5,
+        1470.05,
+        959.49
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 3169.0,
-            "duration_ms": 3169.0
+            "end_ms": 1229.58,
+            "duration_ms": 1229.58
           },
           {
-            "start_ms": 3169.0,
-            "end_ms": 5396.12,
-            "duration_ms": 2227.12
+            "start_ms": 1229.58,
+            "end_ms": 3042.96,
+            "duration_ms": 1813.38
           },
           {
-            "start_ms": 5396.12,
-            "end_ms": 7183.08,
-            "duration_ms": 1786.96
+            "start_ms": 3042.96,
+            "end_ms": 5096.83,
+            "duration_ms": 2053.87
           },
           {
-            "start_ms": 7183.08,
-            "end_ms": 9198.96,
-            "duration_ms": 2015.88
+            "start_ms": 5096.83,
+            "end_ms": 7262.33,
+            "duration_ms": 2165.5
           },
           {
-            "start_ms": 9198.96,
-            "end_ms": 10757.04,
-            "duration_ms": 1558.08
+            "start_ms": 7262.33,
+            "end_ms": 8732.38,
+            "duration_ms": 1470.05
+          },
+          {
+            "start_ms": 8732.38,
+            "end_ms": 9691.87,
+            "duration_ms": 959.49
           }
         ],
-        "boundary_count": 21,
-        "caption_signature": "1905b48a0afc44c6a5c073a4e8c5676663a61a430b8bc39ec8a7cada8486f2b0"
+        "boundary_count": 24,
+        "caption_signature": "1bdaa92764b58638959497e6e305569f7eda98b74223fc53e2d7518ed2453678"
       }
     },
     {
-      "tts": "이동통신사 SKT KT LGU+ 가입으로 구매하시는 경우 요금제별로 구매 금액이 달라서 모델별 정액으로 혜택이 지급됩니다. S26 갤럭시 신규 가입 시 광교점에서 모델별 정확한 정액 안내 가능합니다.",
+      "tts": "내가 쓰는 카드사 앱을 열고 Apple Pay 또는 Apple Wallet 추가 메뉴를 찾습니다. 카드사가 Mastercard 기반으로 Apple Pay 토큰을 발행해 Wallet으로 자동 전송. 본인인증 후 즉시 사용 가능합니다.",
       "caption_body": [
-        "통신사 구매",
-        "모델별 정액 혜택"
+        "절차",
+        "카드사 앱 → Wallet"
       ],
       "caption_emphasis": [
-        "모델별 정액"
+        "카드사 앱"
       ],
       "headline_lines": [
         {
-          "text": "통신사 구매"
+          "text": "절차"
         },
         {
-          "text": "모델별 정액 혜택",
+          "text": "카드사 앱 → Wallet",
           "accent": true
         }
       ],
-      "meta": "출처: 삼성 페스티벌 운영 안내",
+      "meta": "출처: Apple Support 등록 가이드",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "이동통신사 SKT KT LGU+ 가입으로",
-        "구매하시는 경우 요금제별로 구매 금액이",
-        "달라서 모델별 정액으로 혜택이 지급됩니다.",
-        "S26 갤럭시 신규 가입 시 광교점에서",
-        "모델별 정확한 정액 안내 가능합니다."
+        "내가 쓰는 카드사 앱을",
+        "열고 Apple Pay 또는 Apple Wallet",
+        "추가 메뉴를 찾습니다.",
+        "카드사가 Mastercard",
+        "기반으로 Apple Pay 토큰을",
+        "발행해 Wallet으로 자동 전송.",
+        "본인인증 후 즉시 사용 가능합니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "gift_voucher"
+          "value": "biometric"
         },
         {
           "type": "illust",
@@ -278,8 +268,16 @@
           "value": "smartphone"
         },
         {
-          "type": "mascot",
-          "value": "suspicious"
+          "type": "illust",
+          "value": "cpt_83fa1e9f"
+        },
+        {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        {
+          "type": "illust",
+          "value": "cpt_6a2e9678"
         }
       ],
       "stat": {
@@ -289,100 +287,114 @@
       },
       "id": "fact_2",
       "display_chunks": [
-        "이동통신사 SKT KT LGU+ 가입으로",
-        "구매하시는 경우 요금제별로 구매 금액이",
-        "달라서 모델별 정액으로 혜택이 지급됩니다",
-        "S26 갤럭시 신규 가입 시 광교점에서",
-        "모델별 정확한 정액 안내 가능합니다"
+        "내가 쓰는 카드사 앱을",
+        "열고 Apple Pay 또는 Apple Wallet",
+        "추가 메뉴를 찾습니다",
+        "카드사가 Mastercard",
+        "기반으로 Apple Pay 토큰을",
+        "발행해 Wallet으로 자동 전송",
+        "본인인증 후 즉시 사용 가능합니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 5
+        "chunk_count": 7
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        2400.33,
-        1901.42,
-        2740.5,
-        2174.29,
-        1857.42
+        1106.33,
+        1575.71,
+        1657.75,
+        977.13,
+        1179.54,
+        2174.33,
+        1963.0
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 2400.33,
-            "duration_ms": 2400.33
+            "end_ms": 1106.33,
+            "duration_ms": 1106.33
           },
           {
-            "start_ms": 2400.33,
-            "end_ms": 4301.75,
-            "duration_ms": 1901.42
+            "start_ms": 1106.33,
+            "end_ms": 2682.04,
+            "duration_ms": 1575.71
           },
           {
-            "start_ms": 4301.75,
-            "end_ms": 7042.25,
-            "duration_ms": 2740.5
+            "start_ms": 2682.04,
+            "end_ms": 4339.79,
+            "duration_ms": 1657.75
           },
           {
-            "start_ms": 7042.25,
-            "end_ms": 9216.54,
-            "duration_ms": 2174.29
+            "start_ms": 4339.79,
+            "end_ms": 5316.92,
+            "duration_ms": 977.13
           },
           {
-            "start_ms": 9216.54,
-            "end_ms": 11073.96,
-            "duration_ms": 1857.42
+            "start_ms": 5316.92,
+            "end_ms": 6496.46,
+            "duration_ms": 1179.54
+          },
+          {
+            "start_ms": 6496.46,
+            "end_ms": 8670.79,
+            "duration_ms": 2174.33
+          },
+          {
+            "start_ms": 8670.79,
+            "end_ms": 10633.79,
+            "duration_ms": 1963.0
           }
         ],
-        "boundary_count": 30,
-        "caption_signature": "2eb0d71f6b3eaf60a288974a78e14244314771db6cdddf2b6cba6ac46b27e17e"
+        "boundary_count": 28,
+        "caption_signature": "d1a40f34279ad650967bb7a0bb71006575d83285335ee3ae0bcb45fa1152ec99"
       }
     },
     {
-      "tts": "자급제 제품 구매 시 구매금액의 20%를 디지털 온누리상품권으로 받습니다. 갤럭시 S26+ 자급제는 25%까지 올라갑니다. 제복 공무원 K-히어로는 20% + 10% 추가 = 총 30% 혜택입니다.",
+      "tts": "Apple Wallet 앱에서 Tmoney 카드를 직접 추가할 수 있습니다. 지하철·시내버스에서 아이폰 또는 애플워치를 갖다 대면 결제됩니다. 한국 내 대중교통은 거의 모두 지원됩니다.",
       "caption_body": [
-        "자급제",
-        "20% 온누리상품권"
+        "교통",
+        "Tmoney 지하철·버스 OK"
       ],
       "caption_emphasis": [
-        "20% 온누리상품권"
+        "Tmoney"
       ],
       "headline_lines": [
         {
-          "text": "자급제"
+          "text": "교통"
         },
         {
-          "text": "20% 온누리상품권",
+          "text": "Tmoney 지하철·버스 OK",
           "accent": true
         }
       ],
-      "meta": "출처: 삼성 페스티벌 혜택 안내",
+      "meta": "출처: MacRumors Tmoney",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "자급제 제품 구매 시 구매금액의 20%를",
-        "디지털 온누리상품권으로 받습니다.",
-        "갤럭시 S26+ 자급제는 25%까지 올라갑니다.",
-        "제복 공무원 K-히어로는 20% + 10%",
-        "추가 = 총 30% 혜택입니다."
+        "Apple Wallet 앱에서 Tmoney",
+        "카드를 직접 추가할 수 있습니다.",
+        "지하철·시내버스에서 아이폰 또는",
+        "애플워치를 갖다 대면 결제됩니다.",
+        "한국 내 대중교통은 거의 모두 지원됩니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "unlocked_baa71ac6"
+          "value": "device_data_transfer"
         },
         {
           "type": "illust",
-          "value": "cpt_a1caaea6"
+          "value": "nfc_pay"
         },
         {
           "type": "illust",
-          "value": "smartphone"
+          "value": "cpt_fd9edf65"
         },
         {
           "type": "illust",
@@ -400,11 +412,11 @@
       },
       "id": "fact_3",
       "display_chunks": [
-        "자급제 제품 구매 시 구매금액의 20%를",
-        "디지털 온누리상품권으로 받습니다",
-        "갤럭시 S26+ 자급제는 25%까지 올라갑니다",
-        "제복 공무원 K-히어로는 20% + 10%",
-        "추가 = 총 30% 혜택입니다"
+        "Apple Wallet 앱에서 Tmoney",
+        "카드를 직접 추가할 수 있습니다",
+        "지하철·시내버스에서 아이폰 또는",
+        "애플워치를 갖다 대면 결제됩니다",
+        "한국 내 대중교통은 거의 모두 지원됩니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
@@ -415,80 +427,85 @@
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        2294.71,
-        2291.54,
-        3978.87,
-        2728.88,
-        1778.21
+        1317.62,
+        2168.3,
+        1795.79,
+        2235.91,
+        2121.46
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 2294.71,
-            "duration_ms": 2294.71
+            "end_ms": 1317.62,
+            "duration_ms": 1317.62
           },
           {
-            "start_ms": 2294.71,
-            "end_ms": 4586.25,
-            "duration_ms": 2291.54
+            "start_ms": 1317.62,
+            "end_ms": 3485.92,
+            "duration_ms": 2168.3
           },
           {
-            "start_ms": 4586.25,
-            "end_ms": 8565.12,
-            "duration_ms": 3978.87
+            "start_ms": 3485.92,
+            "end_ms": 5281.71,
+            "duration_ms": 1795.79
           },
           {
-            "start_ms": 8565.12,
-            "end_ms": 11294.0,
-            "duration_ms": 2728.88
+            "start_ms": 5281.71,
+            "end_ms": 7517.62,
+            "duration_ms": 2235.91
           },
           {
-            "start_ms": 11294.0,
-            "end_ms": 13072.21,
-            "duration_ms": 1778.21
+            "start_ms": 7517.62,
+            "end_ms": 9639.08,
+            "duration_ms": 2121.46
           }
         ],
-        "boundary_count": 25,
-        "caption_signature": "61e987c57e7a8920ef889d5910d18740a2c0590caf979c24eaed33ea2e5d0c10"
+        "boundary_count": 23,
+        "caption_signature": "99bfe14502c3f5d8370ebafde9988e1b45a3ce04f9d3f54cf1e5676fd9d65963"
       }
     },
     {
-      "tts": "구매 후 삼성닷컴 행사 페이지에서 직접 신청. 만 14세 이상 본인명의 휴대폰으로 본인인증이 필요합니다. 외국인 등록증(90일 이상 체류) 보유자도 신청 가능합니다.",
+      "tts": "한국 내 현금카드 기능은 Apple Pay에서 지원되지 않습니다. 일반 신용·체크카드와 선불 교통카드만 지원. 본인 카드가 Apple Pay 지원하는지 카드사에 먼저 확인하세요.",
       "caption_body": [
-        "신청 방법",
-        "삼성닷컴 본인인증"
+        "한계",
+        "현금카드 X 일부 카드만"
       ],
       "caption_emphasis": [
-        "삼성닷컴"
+        "현금카드 X"
       ],
       "headline_lines": [
         {
-          "text": "신청 방법"
+          "text": "한계"
         },
         {
-          "text": "삼성닷컴 본인인증",
+          "text": "현금카드 X 일부 카드만",
           "accent": true
         }
       ],
-      "meta": "출처: 삼성 페스티벌 신청 페이지",
+      "meta": "출처: Apple Pay 한국 지원 범위",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "구매 후 삼성닷컴 행사 페이지에서 직접 신청.",
-        "만 14세 이상 본인명의 휴대폰으로 본인인증이 필요합니다.",
-        "외국인 등록증(90일 이상 체류)",
-        "보유자도 신청 가능합니다."
+        "한국 내 현금카드 기능은 Apple Pay에서",
+        "지원되지 않습니다.",
+        "일반 신용·체크카드와 선불 교통카드만 지원.",
+        "본인 카드가 Apple Pay 지원하는지",
+        "카드사에 먼저 확인하세요."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "biometric"
+          "value": "smartphone"
         },
         {
           "type": "illust",
-          "value": "cpt_4729c912"
+          "value": "smartphone"
+        },
+        {
+          "type": "illust",
+          "value": "smartphone"
         },
         {
           "type": "illust",
@@ -506,51 +523,58 @@
       },
       "id": "fact_4",
       "display_chunks": [
-        "구매 후 삼성닷컴 행사 페이지에서 직접 신청",
-        "만 14세 이상 본인명의 휴대폰으로 본인인증이 필요합니다",
-        "외국인 등록증(90일 이상 체류)",
-        "보유자도 신청 가능합니다"
+        "한국 내 현금카드 기능은 Apple Pay에서",
+        "지원되지 않습니다",
+        "일반 신용·체크카드와 선불 교통카드만 지원",
+        "본인 카드가 Apple Pay 지원하는지",
+        "카드사에 먼저 확인하세요"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 4
+        "chunk_count": 5
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        3265.83,
-        3327.46,
-        1980.67,
-        1382.04
+        2004.21,
+        1508.12,
+        2948.92,
+        1566.92,
+        1355.66
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 3265.83,
-            "duration_ms": 3265.83
+            "end_ms": 2004.21,
+            "duration_ms": 2004.21
           },
           {
-            "start_ms": 3265.83,
-            "end_ms": 6593.29,
-            "duration_ms": 3327.46
+            "start_ms": 2004.21,
+            "end_ms": 3512.33,
+            "duration_ms": 1508.12
           },
           {
-            "start_ms": 6593.29,
-            "end_ms": 8573.96,
-            "duration_ms": 1980.67
+            "start_ms": 3512.33,
+            "end_ms": 6461.25,
+            "duration_ms": 2948.92
           },
           {
-            "start_ms": 8573.96,
-            "end_ms": 9956.0,
-            "duration_ms": 1382.04
+            "start_ms": 6461.25,
+            "end_ms": 8028.17,
+            "duration_ms": 1566.92
+          },
+          {
+            "start_ms": 8028.17,
+            "end_ms": 9383.83,
+            "duration_ms": 1355.66
           }
         ],
         "boundary_count": 22,
-        "caption_signature": "bceaeb3a8f46e95cabc1e4162f8b88a85a044f67f8f5c9b3884fee6b73d83d5a"
+        "caption_signature": "17b90d85811674936eafcff91e4302966491914130417490b2ffe6f264418a83"
       }
     }
   ],
@@ -582,7 +606,7 @@
     "chunk_visuals": [
       {
         "type": "illust",
-        "value": "cpt_fd9edf65"
+        "value": "gift_voucher"
       },
       {
         "type": "logo",
@@ -641,133 +665,78 @@
   "_codex_sync_quality_logic": true,
   "_codex_captions_narration_priority": false,
   "_codex_common_quality_note": "Global 001-999 rule: screen chunks are rebuilt as an ordered, lossless partition of captions.md narration; curated visuals are rebalanced without discarding quality rules.",
-  "_codex_uploaded_illustrations": [
-    {
-      "section": "hook",
-      "chunk": 1,
-      "variant": "monday_d77265f0"
-    },
-    {
-      "section": "hook",
-      "chunk": 2,
-      "variant": "weekly_sunday_82b74c0a"
-    },
-    {
-      "section": "hook",
-      "chunk": 3,
-      "variant": "festival_41b2e7cf"
-    },
-    {
-      "section": "hook",
-      "chunk": 4,
-      "variant": "unlocked_baa71ac6"
-    },
-    {
-      "section": "fact_1",
-      "chunk": 1,
-      "variant": "event_period_8cafdac4"
-    }
-  ],
   "_codex_semantic_visual_match": {
     "version": 1,
     "policy": "Match chunks to GPT source images using prompt.md descriptions, then fallback to tagged reusable illustrations.",
     "changes": [
       {
         "section": "hook",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "monday_d77265f0"
-        },
-        "to": {
-          "type": "illust",
-          "value": "cpt_75c6eba6"
-        },
-        "context": "2026년 6월 8일 월요일부터 7월 5일 일요일까지 4주간 삼성전자 고객감사 삼성 감사 페스티벌 4주 한정 ['삼성 감사 페스티벌', '4주 한정'] 뉴스",
-        "reason": "illust score 0.424"
-      },
-      {
-        "section": "hook",
         "chunk": 2,
         "from": {
           "type": "illust",
-          "value": "weekly_sunday_82b74c0a"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "2026년 6월 8일 월요일부터 7월 5일 일요일까지 4주간 삼성전자 고객감사 페스티벌이 진행됩니다 삼성 감사 페스티벌 4주 한정 ['삼성 감사 페스티벌', '4주 한정'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "hook",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "festival_41b2e7cf"
+          "value": "aluminum_label"
         },
         "to": {
           "type": "illust",
           "value": "newspaper"
         },
-        "context": "일요일까지 4주간 삼성전자 고객감사 페스티벌이 진행됩니다 자급제 20%, 갤럭시 S26+ 25%, 삼성 감사 페스티벌 4주 한정 ['삼성 감사 페스티벌', '4주 한정'] 뉴스",
+        "context": "아이폰 사용자 늘면서 애플페이 쓰시는 분도 늘었는데 정작 카드 추가는 왜 어렵다 하는지 정확히 알려드립니다 한국은 다른 나라와 방식이 달라서 처음엔 헤매기 쉽습니다 애플페이 한국 카드 추가 어떻게? ['애플페이 한국",
         "reason": "neutral filler (no semantic match)"
       },
       {
-        "section": "hook",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "unlocked_baa71ac6"
-        },
-        "to": {
-          "type": "illust",
-          "value": "telecom_discount_compare"
-        },
-        "context": "페스티벌이 진행됩니다 자급제 20%, 갤럭시 S26+ 25%, 통신사 구매 모델별 정액 혜택을 챙길 수 있습니다 삼성 감사 페스티벌 4주 한정 ['삼성 감사 페스티벌', '4주 한정'] 뉴스",
-        "reason": "illust score 0.517"
-      },
-      {
         "section": "fact_1",
-        "chunk": 2,
+        "chunk": 1,
         "from": {
           "type": "illust",
-          "value": "aluminum_label"
+          "value": "smartphone"
         },
         "to": {
           "type": "illust",
           "value": "microphone"
         },
-        "context": "행사 기간은 6월 8일부터 7월 5일까지 4주 단 혜택 신청은 2026년 9월 30일 수요일까지 가능합니다 기간 6/8 ~ 7/5 신청 9/30까지 ['기간', '6/8 ~ 7/5 신청 9/30까지'] 뉴스",
+        "context": "다른 나라처럼 Apple Wallet 앱에서 직접 카드를 추가하는 방식은 한국 특수성 Wallet 직접 추가 안 됨 ['한국 특수성', 'Wallet 직접 추가 안 됨'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
         "section": "fact_1",
-        "chunk": 3,
+        "chunk": 2,
         "from": {
           "type": "illust",
-          "value": "appliance"
+          "value": "aluminum_label"
         },
         "to": {
           "type": "illust",
           "value": "shield"
         },
-        "context": "단 혜택 신청은 2026년 9월 30일 수요일까지 가능합니다 행사 기간 안에 구매하시면 9월 말까지 기간 6/8 ~ 7/5 신청 9/30까지 ['기간', '6/8 ~ 7/5 신청 9/30까지'] 뉴스",
+        "context": "다른 나라처럼 Apple Wallet 앱에서 직접 카드를 추가하는 방식은 한국에서 작동하지 않습니다 한국 특수성 Wallet 직접 추가 안 됨 ['한국 특수성', 'Wallet 직접 추가 안 됨'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
         "section": "fact_1",
-        "chunk": 4,
+        "chunk": 3,
         "from": {
           "type": "illust",
-          "value": "battery_charge_range"
+          "value": "appliance"
         },
         "to": {
           "type": "illust",
           "value": "meeting_room"
         },
-        "context": "수요일까지 가능합니다 행사 기간 안에 구매하시면 9월 말까지 여유롭게 신청하실 수 있습니다 기간 6/8 ~ 7/5 신청 9/30까지 ['기간', '6/8 ~ 7/5 신청 9/30까지'] 뉴스",
+        "context": "앱에서 직접 카드를 추가하는 방식은 한국에서 작동하지 않습니다 한국에서는 본인이 발급받은 카드사의 모바일 한국 특수성 Wallet 직접 추가 안 됨 ['한국 특수성', 'Wallet 직접 추가 안 됨'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "battery_charge_range"
+        },
+        "to": {
+          "type": "illust",
+          "value": "forecast"
+        },
+        "context": "한국에서 작동하지 않습니다 한국에서는 본인이 발급받은 카드사의 모바일 앱을 통해서만 Apple Wallet에 한국 특수성 Wallet 직접 추가 안 됨 ['한국 특수성', 'Wallet 직접 추가 안 됨'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
@@ -779,9 +748,23 @@
         },
         "to": {
           "type": "illust",
-          "value": "forecast"
+          "value": "smartphone"
         },
-        "context": "행사 기간 안에 구매하시면 9월 말까지 여유롭게 신청하실 수 있습니다 기간 6/8 ~ 7/5 신청 9/30까지 ['기간', '6/8 ~ 7/5 신청 9/30까지'] 뉴스",
+        "context": "한국에서는 본인이 발급받은 카드사의 모바일 앱을 통해서만 Apple Wallet에 등록할 수 있습니다 한국 특수성 Wallet 직접 추가 안 됨 ['한국 특수성', 'Wallet 직접 추가 안 됨'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 6,
+        "from": {
+          "type": "illust",
+          "value": "biometric"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "앱을 통해서만 Apple Wallet에 등록할 수 있습니다 한국 특수성 Wallet 직접 추가 안 됨 ['한국 특수성', 'Wallet 직접 추가 안 됨'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
@@ -795,7 +778,7 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "이동통신사 SKT KT LGU+ 가입으로 구매하시는 경우 요금제별로 구매 금액이 달라서 모델별 정액으로 혜택이 지급됩니다 통신사 구매 모델별 정액 혜택 ['통신사 구매', '모델별 정액 혜택'] 뉴스",
+        "context": "내가 쓰는 카드사 앱을 열고 Apple Pay 또는 Apple Wallet 추가 메뉴를 찾습니다 절차 카드사 앱 → Wallet ['절차', '카드사 앱 → Wallet'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
@@ -809,7 +792,7 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "구매하시는 경우 요금제별로 구매 금액이 달라서 모델별 정액으로 혜택이 지급됩니다 S26 갤럭시 신규 가입 시 광교점에서 통신사 구매 모델별 정액 혜택 ['통신사 구매', '모델별 정액 혜택'] 뉴스",
+        "context": "열고 Apple Pay 또는 Apple Wallet 추가 메뉴를 찾습니다 카드사가 Mastercard 절차 카드사 앱 → Wallet ['절차', '카드사 앱 → Wallet'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
@@ -823,8 +806,64 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "달라서 모델별 정액으로 혜택이 지급됩니다 S26 갤럭시 신규 가입 시 광교점에서 모델별 정확한 정액 안내 가능합니다 통신사 구매 모델별 정액 혜택 ['통신사 구매', '모델별 정액 혜택'] 뉴스",
+        "context": "추가 메뉴를 찾습니다 카드사가 Mastercard 기반으로 Apple Pay 토큰을 절차 카드사 앱 → Wallet ['절차', '카드사 앱 → Wallet'] 뉴스",
         "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 5,
+        "from": {
+          "type": "mascot",
+          "value": "suspicious"
+        },
+        "to": {
+          "type": "illust",
+          "value": "cpt_83fa1e9f"
+        },
+        "context": "카드사가 Mastercard 기반으로 Apple Pay 토큰을 발행해 Wallet으로 자동 전송 절차 카드사 앱 → Wallet ['절차', '카드사 앱 → Wallet'] 뉴스",
+        "reason": "illust score 0.48"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 6,
+        "from": {
+          "type": "illust",
+          "value": "battery_overheat"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "기반으로 Apple Pay 토큰을 발행해 Wallet으로 자동 전송 본인인증 후 즉시 사용 가능합니다 절차 카드사 앱 → Wallet ['절차', '카드사 앱 → Wallet'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 7,
+        "from": {
+          "type": "illust",
+          "value": "biometric"
+        },
+        "to": {
+          "type": "illust",
+          "value": "cpt_6a2e9678"
+        },
+        "context": "발행해 Wallet으로 자동 전송 본인인증 후 즉시 사용 가능합니다 절차 카드사 앱 → Wallet ['절차', '카드사 앱 → Wallet'] 뉴스",
+        "reason": "illust score 0.51"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "Apple Wallet 앱에서 Tmoney 카드를 직접 추가할 수 있습니다 교통 Tmoney 지하철·버스 OK ['교통', 'Tmoney 지하철·버스 OK'] 뉴스",
+        "reason": "illust score 0.42"
       },
       {
         "section": "fact_3",
@@ -837,7 +876,7 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "자급제 제품 구매 시 구매금액의 20%를 디지털 온누리상품권으로 받습니다 갤럭시 S26+ 자급제는 25%까지 올라갑니다 자급제 20% 온누리상품권 ['자급제', '20% 온누리상품권'] 뉴스",
+        "context": "Apple Wallet 앱에서 Tmoney 카드를 직접 추가할 수 있습니다 지하철·시내버스에서 아이폰 또는 교통 Tmoney 지하철·버스 OK ['교통', 'Tmoney 지하철·버스 OK'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
@@ -851,7 +890,7 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "디지털 온누리상품권으로 받습니다 갤럭시 S26+ 자급제는 25%까지 올라갑니다 제복 공무원 K-히어로는 20% + 10% 자급제 20% 온누리상품권 ['자급제', '20% 온누리상품권'] 뉴스",
+        "context": "카드를 직접 추가할 수 있습니다 지하철·시내버스에서 아이폰 또는 애플워치를 갖다 대면 결제됩니다 교통 Tmoney 지하철·버스 OK ['교통', 'Tmoney 지하철·버스 OK'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
@@ -865,7 +904,7 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "갤럭시 S26+ 자급제는 25%까지 올라갑니다 제복 공무원 K-히어로는 20% + 10% 추가 = 총 30% 혜택입니다 자급제 20% 온누리상품권 ['자급제', '20% 온누리상품권'] 뉴스",
+        "context": "지하철·시내버스에서 아이폰 또는 애플워치를 갖다 대면 결제됩니다 한국 내 대중교통은 거의 모두 지원됩니다 교통 Tmoney 지하철·버스 OK ['교통', 'Tmoney 지하철·버스 OK'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
@@ -879,7 +918,7 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "제복 공무원 K-히어로는 20% + 10% 추가 = 총 30% 혜택입니다 자급제 20% 온누리상품권 ['자급제', '20% 온누리상품권'] 뉴스",
+        "context": "애플워치를 갖다 대면 결제됩니다 한국 내 대중교통은 거의 모두 지원됩니다 교통 Tmoney 지하철·버스 OK ['교통', 'Tmoney 지하철·버스 OK'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
@@ -893,7 +932,7 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "구매 후 삼성닷컴 행사 페이지에서 직접 신청 만 14세 이상 본인명의 휴대폰으로 본인인증이 필요합니다 외국인 등록증(90일 이상 체류) 신청 방법 삼성닷컴 본인인증 ['신청 방법', '삼성닷컴 본인인증'] 뉴스",
+        "context": "한국 내 현금카드 기능은 Apple Pay에서 지원되지 않습니다 일반 신용·체크카드와 선불 교통카드만 지원 한계 현금카드 X 일부 카드만 ['한계', '현금카드 X 일부 카드만'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
@@ -907,186 +946,211 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "만 14세 이상 본인명의 휴대폰으로 본인인증이 필요합니다 외국인 등록증(90일 이상 체류) 보유자도 신청 가능합니다 신청 방법 삼성닷컴 본인인증 ['신청 방법', '삼성닷컴 본인인증'] 뉴스",
+        "context": "지원되지 않습니다 일반 신용·체크카드와 선불 교통카드만 지원 본인 카드가 Apple Pay 지원하는지 한계 현금카드 X 일부 카드만 ['한계', '현금카드 X 일부 카드만'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "battery_charge_range"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "일반 신용·체크카드와 선불 교통카드만 지원 본인 카드가 Apple Pay 지원하는지 카드사에 먼저 확인하세요 한계 현금카드 X 일부 카드만 ['한계', '현금카드 X 일부 카드만'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       }
     ],
     "weak": [
       {
         "section": "hook",
-        "chunk": 2,
+        "chunk": 1,
         "current": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "2026년 6월 8일 월요일부터 7월 5일 일요일까지 4주간 삼성전자 고객감사 페스티벌이 진행됩니다 삼성 감사 페스티벌 4주 한정 ['삼성 감사 페스티벌', '4주 한정'] 뉴스",
+        "context": "아이폰 사용자 늘면서 애플페이 쓰시는 분도 늘었는데 정작 카드 추가는 왜 어렵다 하는지 정확히 알려드립니다 애플페이 한국 카드 추가 어떻게? ['애플페이 한국', '카드 추가 어떻게?'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.333
+        "best_illust_score": 0.323
       },
       {
         "section": "hook",
-        "chunk": 3,
+        "chunk": 2,
         "current": {
           "type": "illust",
           "value": "newspaper"
         },
-        "context": "일요일까지 4주간 삼성전자 고객감사 페스티벌이 진행됩니다 자급제 20%, 갤럭시 S26+ 25%, 삼성 감사 페스티벌 4주 한정 ['삼성 감사 페스티벌', '4주 한정'] 뉴스",
+        "context": "아이폰 사용자 늘면서 애플페이 쓰시는 분도 늘었는데 정작 카드 추가는 왜 어렵다 하는지 정확히 알려드립니다 한국은 다른 나라와 방식이 달라서 처음엔 헤매기 쉽습니다 애플페이 한국 카드 추가 어떻게? ['애플페이 한국', '카드 추가 어떻게?'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.372
+        "best_illust_score": 0.342
       },
       {
         "section": "hook",
-        "chunk": 5,
+        "chunk": 3,
         "current": {
           "type": "mascot",
           "value": "surprised"
         },
-        "context": "자급제 20%, 갤럭시 S26+ 25%, 통신사 구매 모델별 정액 혜택을 챙길 수 있습니다 삼성 감사 페스티벌 4주 한정 ['삼성 감사 페스티벌', '4주 한정'] 뉴스",
+        "context": "정작 카드 추가는 왜 어렵다 하는지 정확히 알려드립니다 한국은 다른 나라와 방식이 달라서 처음엔 헤매기 쉽습니다 애플페이 한국 카드 추가 어떻게? ['애플페이 한국', '카드 추가 어떻게?'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.355
+        "best_illust_score": 0.302
       },
       {
         "section": "fact_1",
-        "chunk": 2,
+        "chunk": 1,
         "current": {
           "type": "illust",
           "value": "microphone"
         },
-        "context": "행사 기간은 6월 8일부터 7월 5일까지 4주 단 혜택 신청은 2026년 9월 30일 수요일까지 가능합니다 기간 6/8 ~ 7/5 신청 9/30까지 ['기간', '6/8 ~ 7/5 신청 9/30까지'] 뉴스",
+        "context": "다른 나라처럼 Apple Wallet 앱에서 직접 카드를 추가하는 방식은 한국 특수성 Wallet 직접 추가 안 됨 ['한국 특수성', 'Wallet 직접 추가 안 됨'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.321
+        "best_illust_score": 0.386
       },
       {
         "section": "fact_1",
-        "chunk": 3,
+        "chunk": 2,
         "current": {
           "type": "illust",
           "value": "shield"
         },
-        "context": "단 혜택 신청은 2026년 9월 30일 수요일까지 가능합니다 행사 기간 안에 구매하시면 9월 말까지 기간 6/8 ~ 7/5 신청 9/30까지 ['기간', '6/8 ~ 7/5 신청 9/30까지'] 뉴스",
+        "context": "다른 나라처럼 Apple Wallet 앱에서 직접 카드를 추가하는 방식은 한국에서 작동하지 않습니다 한국 특수성 Wallet 직접 추가 안 됨 ['한국 특수성', 'Wallet 직접 추가 안 됨'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.343
+        "best_illust_score": 0.367
       },
       {
         "section": "fact_1",
-        "chunk": 4,
+        "chunk": 3,
         "current": {
           "type": "illust",
           "value": "meeting_room"
         },
-        "context": "수요일까지 가능합니다 행사 기간 안에 구매하시면 9월 말까지 여유롭게 신청하실 수 있습니다 기간 6/8 ~ 7/5 신청 9/30까지 ['기간', '6/8 ~ 7/5 신청 9/30까지'] 뉴스",
+        "context": "앱에서 직접 카드를 추가하는 방식은 한국에서 작동하지 않습니다 한국에서는 본인이 발급받은 카드사의 모바일 한국 특수성 Wallet 직접 추가 안 됨 ['한국 특수성', 'Wallet 직접 추가 안 됨'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.366
+        "best_illust_score": 0.364
+      },
+      {
+        "section": "fact_1",
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "forecast"
+        },
+        "context": "한국에서 작동하지 않습니다 한국에서는 본인이 발급받은 카드사의 모바일 앱을 통해서만 Apple Wallet에 한국 특수성 Wallet 직접 추가 안 됨 ['한국 특수성', 'Wallet 직접 추가 안 됨'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.331
       },
       {
         "section": "fact_1",
         "chunk": 5,
         "current": {
           "type": "illust",
-          "value": "forecast"
-        },
-        "context": "행사 기간 안에 구매하시면 9월 말까지 여유롭게 신청하실 수 있습니다 기간 6/8 ~ 7/5 신청 9/30까지 ['기간', '6/8 ~ 7/5 신청 9/30까지'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.374
-      },
-      {
-        "section": "fact_2",
-        "chunk": 1,
-        "current": {
-          "type": "illust",
           "value": "smartphone"
         },
-        "context": "이동통신사 SKT KT LGU+ 가입으로 구매하시는 경우 요금제별로 구매 금액이 통신사 구매 모델별 정액 혜택 ['통신사 구매', '모델별 정액 혜택'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.337
-      },
-      {
-        "section": "fact_2",
-        "chunk": 2,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "이동통신사 SKT KT LGU+ 가입으로 구매하시는 경우 요금제별로 구매 금액이 달라서 모델별 정액으로 혜택이 지급됩니다 통신사 구매 모델별 정액 혜택 ['통신사 구매', '모델별 정액 혜택'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.373
-      },
-      {
-        "section": "fact_2",
-        "chunk": 3,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "구매하시는 경우 요금제별로 구매 금액이 달라서 모델별 정액으로 혜택이 지급됩니다 S26 갤럭시 신규 가입 시 광교점에서 통신사 구매 모델별 정액 혜택 ['통신사 구매', '모델별 정액 혜택'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.32
-      },
-      {
-        "section": "fact_2",
-        "chunk": 4,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "달라서 모델별 정액으로 혜택이 지급됩니다 S26 갤럭시 신규 가입 시 광교점에서 모델별 정확한 정액 안내 가능합니다 통신사 구매 모델별 정액 혜택 ['통신사 구매', '모델별 정액 혜택'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.37
-      },
-      {
-        "section": "fact_2",
-        "chunk": 5,
-        "current": {
-          "type": "mascot",
-          "value": "suspicious"
-        },
-        "context": "S26 갤럭시 신규 가입 시 광교점에서 모델별 정확한 정액 안내 가능합니다 통신사 구매 모델별 정액 혜택 ['통신사 구매', '모델별 정액 혜택'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.388
-      },
-      {
-        "section": "fact_3",
-        "chunk": 1,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "자급제 제품 구매 시 구매금액의 20%를 디지털 온누리상품권으로 받습니다 자급제 20% 온누리상품권 ['자급제', '20% 온누리상품권'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.324
-      },
-      {
-        "section": "fact_3",
-        "chunk": 2,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "자급제 제품 구매 시 구매금액의 20%를 디지털 온누리상품권으로 받습니다 갤럭시 S26+ 자급제는 25%까지 올라갑니다 자급제 20% 온누리상품권 ['자급제', '20% 온누리상품권'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.316
-      },
-      {
-        "section": "fact_3",
-        "chunk": 3,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "디지털 온누리상품권으로 받습니다 갤럭시 S26+ 자급제는 25%까지 올라갑니다 제복 공무원 K-히어로는 20% + 10% 자급제 20% 온누리상품권 ['자급제', '20% 온누리상품권'] 뉴스",
+        "context": "한국에서는 본인이 발급받은 카드사의 모바일 앱을 통해서만 Apple Wallet에 등록할 수 있습니다 한국 특수성 Wallet 직접 추가 안 됨 ['한국 특수성', 'Wallet 직접 추가 안 됨'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0.358
       },
       {
+        "section": "fact_1",
+        "chunk": 6,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "앱을 통해서만 Apple Wallet에 등록할 수 있습니다 한국 특수성 Wallet 직접 추가 안 됨 ['한국 특수성', 'Wallet 직접 추가 안 됨'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.412
+      },
+      {
+        "section": "fact_2",
+        "chunk": 1,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "내가 쓰는 카드사 앱을 열고 Apple Pay 또는 Apple Wallet 절차 카드사 앱 → Wallet ['절차', '카드사 앱 → Wallet'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.382
+      },
+      {
+        "section": "fact_2",
+        "chunk": 2,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "내가 쓰는 카드사 앱을 열고 Apple Pay 또는 Apple Wallet 추가 메뉴를 찾습니다 절차 카드사 앱 → Wallet ['절차', '카드사 앱 → Wallet'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.393
+      },
+      {
+        "section": "fact_2",
+        "chunk": 3,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "열고 Apple Pay 또는 Apple Wallet 추가 메뉴를 찾습니다 카드사가 Mastercard 절차 카드사 앱 → Wallet ['절차', '카드사 앱 → Wallet'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.394
+      },
+      {
+        "section": "fact_2",
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "추가 메뉴를 찾습니다 카드사가 Mastercard 기반으로 Apple Pay 토큰을 절차 카드사 앱 → Wallet ['절차', '카드사 앱 → Wallet'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.383
+      },
+      {
+        "section": "fact_2",
+        "chunk": 6,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "기반으로 Apple Pay 토큰을 발행해 Wallet으로 자동 전송 본인인증 후 즉시 사용 가능합니다 절차 카드사 앱 → Wallet ['절차', '카드사 앱 → Wallet'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.412
+      },
+      {
+        "section": "fact_3",
+        "chunk": 2,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "Apple Wallet 앱에서 Tmoney 카드를 직접 추가할 수 있습니다 지하철·시내버스에서 아이폰 또는 교통 Tmoney 지하철·버스 OK ['교통', 'Tmoney 지하철·버스 OK'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.378
+      },
+      {
+        "section": "fact_3",
+        "chunk": 3,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "카드를 직접 추가할 수 있습니다 지하철·시내버스에서 아이폰 또는 애플워치를 갖다 대면 결제됩니다 교통 Tmoney 지하철·버스 OK ['교통', 'Tmoney 지하철·버스 OK'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.352
+      },
+      {
         "section": "fact_3",
         "chunk": 4,
         "current": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "갤럭시 S26+ 자급제는 25%까지 올라갑니다 제복 공무원 K-히어로는 20% + 10% 추가 = 총 30% 혜택입니다 자급제 20% 온누리상품권 ['자급제', '20% 온누리상품권'] 뉴스",
+        "context": "지하철·시내버스에서 아이폰 또는 애플워치를 갖다 대면 결제됩니다 한국 내 대중교통은 거의 모두 지원됩니다 교통 Tmoney 지하철·버스 OK ['교통', 'Tmoney 지하철·버스 OK'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.336
+        "best_illust_score": 0.28
       },
       {
         "section": "fact_3",
@@ -1095,9 +1159,9 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "제복 공무원 K-히어로는 20% + 10% 추가 = 총 30% 혜택입니다 자급제 20% 온누리상품권 ['자급제', '20% 온누리상품권'] 뉴스",
+        "context": "애플워치를 갖다 대면 결제됩니다 한국 내 대중교통은 거의 모두 지원됩니다 교통 Tmoney 지하철·버스 OK ['교통', 'Tmoney 지하철·버스 OK'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.3
+        "best_illust_score": 0.284
       },
       {
         "section": "fact_4",
@@ -1106,9 +1170,9 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "구매 후 삼성닷컴 행사 페이지에서 직접 신청 만 14세 이상 본인명의 휴대폰으로 본인인증이 필요합니다 신청 방법 삼성닷컴 본인인증 ['신청 방법', '삼성닷컴 본인인증'] 뉴스",
+        "context": "한국 내 현금카드 기능은 Apple Pay에서 지원되지 않습니다 한계 현금카드 X 일부 카드만 ['한계', '현금카드 X 일부 카드만'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.378
+        "best_illust_score": 0.357
       },
       {
         "section": "fact_4",
@@ -1117,9 +1181,9 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "구매 후 삼성닷컴 행사 페이지에서 직접 신청 만 14세 이상 본인명의 휴대폰으로 본인인증이 필요합니다 외국인 등록증(90일 이상 체류) 신청 방법 삼성닷컴 본인인증 ['신청 방법', '삼성닷컴 본인인증'] 뉴스",
+        "context": "한국 내 현금카드 기능은 Apple Pay에서 지원되지 않습니다 일반 신용·체크카드와 선불 교통카드만 지원 한계 현금카드 X 일부 카드만 ['한계', '현금카드 X 일부 카드만'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.355
+        "best_illust_score": 0.331
       },
       {
         "section": "fact_4",
@@ -1128,20 +1192,31 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "만 14세 이상 본인명의 휴대폰으로 본인인증이 필요합니다 외국인 등록증(90일 이상 체류) 보유자도 신청 가능합니다 신청 방법 삼성닷컴 본인인증 ['신청 방법', '삼성닷컴 본인인증'] 뉴스",
+        "context": "지원되지 않습니다 일반 신용·체크카드와 선불 교통카드만 지원 본인 카드가 Apple Pay 지원하는지 한계 현금카드 X 일부 카드만 ['한계', '현금카드 X 일부 카드만'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.359
+        "best_illust_score": 0.349
       },
       {
         "section": "fact_4",
         "chunk": 4,
         "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "일반 신용·체크카드와 선불 교통카드만 지원 본인 카드가 Apple Pay 지원하는지 카드사에 먼저 확인하세요 한계 현금카드 X 일부 카드만 ['한계', '현금카드 X 일부 카드만'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.285
+      },
+      {
+        "section": "fact_4",
+        "chunk": 5,
+        "current": {
           "type": "mascot",
           "value": "serious"
         },
-        "context": "외국인 등록증(90일 이상 체류) 보유자도 신청 가능합니다 신청 방법 삼성닷컴 본인인증 ['신청 방법', '삼성닷컴 본인인증'] 뉴스",
+        "context": "본인 카드가 Apple Pay 지원하는지 카드사에 먼저 확인하세요 한계 현금카드 X 일부 카드만 ['한계', '현금카드 X 일부 카드만'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.349
+        "best_illust_score": 0.296
       }
     ]
   },
@@ -1150,34 +1225,21 @@
     "policy": "Illustrations and mascots should not repeat inside one video. CTA logo is exempt.",
     "replacements": [
       {
-        "section": "fact_2",
-        "chunk": 1,
+        "section": "fact_1",
+        "chunk": 5,
         "from": {
           "type": "illust",
           "value": "smartphone"
         },
         "to": {
           "type": "illust",
-          "value": "gift_voucher"
+          "value": "cpt_f59129df"
         },
-        "context": "이동통신사 SKT KT LGU+ 가입으로 구매하시는 경우 요금제별로 구매 금액이 통신사 구매 모델별 정액 혜택 이동통신사 SKT KT LGU+ 가입으로 구매하시는 경우 요금제별로 구매 금액이 달라서 모델별 정액으로 혜택이 지급됩니다. S26 갤럭시 신규 가입 시 광교점에서 모델별 정확한"
+        "context": "한국에서는 본인이 발급받은 카드사의 모바일 앱을 통해서만 Apple Wallet에 등록할 수 있습니다 한국 특수성 Wallet 직접 추가 안 됨 다른 나라처럼 Apple Wallet 앱에서 직접 카드를 추가하는 방식은 한국에서 작동하지 않습니다. 한국에서는 본인이 발급받은 카드사의 모바"
       },
       {
-        "section": "fact_3",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "unlocked_baa71ac6"
-        },
-        "context": "자급제 제품 구매 시 구매금액의 20%를 디지털 온누리상품권으로 받습니다 자급제 20% 온누리상품권 자급제 제품 구매 시 구매금액의 20%를 디지털 온누리상품권으로 받습니다. 갤럭시 S26+ 자급제는 25%까지 올라갑니다. 제복 공무원 K-히어로는 20% + 10% 추가 = 총 30% "
-      },
-      {
-        "section": "fact_3",
-        "chunk": 2,
+        "section": "fact_1",
+        "chunk": 6,
         "from": {
           "type": "illust",
           "value": "smartphone"
@@ -1186,10 +1248,10 @@
           "type": "illust",
           "value": "cpt_a1caaea6"
         },
-        "context": "자급제 제품 구매 시 구매금액의 20%를 디지털 온누리상품권으로 받습니다 갤럭시 S26+ 자급제는 25%까지 올라갑니다 자급제 20% 온누리상품권 자급제 제품 구매 시 구매금액의 20%를 디지털 온누리상품권으로 받습니다. 갤럭시 S26+ 자급제는 25%까지 올라갑니다. 제복 공무원 K-"
+        "context": "앱을 통해서만 Apple Wallet에 등록할 수 있습니다 한국 특수성 Wallet 직접 추가 안 됨 다른 나라처럼 Apple Wallet 앱에서 직접 카드를 추가하는 방식은 한국에서 작동하지 않습니다. 한국에서는 본인이 발급받은 카드사의 모바일 앱을 통해서만 Apple Wallet에 "
       },
       {
-        "section": "fact_4",
+        "section": "fact_2",
         "chunk": 1,
         "from": {
           "type": "illust",
@@ -1199,10 +1261,10 @@
           "type": "illust",
           "value": "biometric"
         },
-        "context": "구매 후 삼성닷컴 행사 페이지에서 직접 신청 만 14세 이상 본인명의 휴대폰으로 본인인증이 필요합니다 신청 방법 삼성닷컴 본인인증 구매 후 삼성닷컴 행사 페이지에서 직접 신청. 만 14세 이상 본인명의 휴대폰으로 본인인증이 필요합니다. 외국인 등록증(90일 이상 체류) 보유자도 신청 가"
+        "context": "내가 쓰는 카드사 앱을 열고 Apple Pay 또는 Apple Wallet 절차 카드사 앱 → Wallet 내가 쓰는 카드사 앱을 열고 Apple Pay 또는 Apple Wallet 추가 메뉴를 찾습니다. 카드사가 Mastercard 기반으로 Apple Pay 토큰을 발행해 Wallet"
       },
       {
-        "section": "fact_4",
+        "section": "fact_3",
         "chunk": 2,
         "from": {
           "type": "illust",
@@ -1210,9 +1272,22 @@
         },
         "to": {
           "type": "illust",
-          "value": "cpt_4729c912"
+          "value": "nfc_pay"
         },
-        "context": "구매 후 삼성닷컴 행사 페이지에서 직접 신청 만 14세 이상 본인명의 휴대폰으로 본인인증이 필요합니다 외국인 등록증(90일 이상 체류) 신청 방법 삼성닷컴 본인인증 구매 후 삼성닷컴 행사 페이지에서 직접 신청. 만 14세 이상 본인명의 휴대폰으로 본인인증이 필요합니다. 외국인 등록증(9"
+        "context": "Apple Wallet 앱에서 Tmoney 카드를 직접 추가할 수 있습니다 지하철·시내버스에서 아이폰 또는 교통 Tmoney 지하철·버스 OK Apple Wallet 앱에서 Tmoney 카드를 직접 추가할 수 있습니다. 지하철·시내버스에서 아이폰 또는 애플워치를 갖다 대면 결제됩니다. "
+      },
+      {
+        "section": "fact_3",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "cpt_fd9edf65"
+        },
+        "context": "카드를 직접 추가할 수 있습니다 지하철·시내버스에서 아이폰 또는 애플워치를 갖다 대면 결제됩니다 교통 Tmoney 지하철·버스 OK Apple Wallet 앱에서 Tmoney 카드를 직접 추가할 수 있습니다. 지하철·시내버스에서 아이폰 또는 애플워치를 갖다 대면 결제됩니다. 한국 내 대"
       },
       {
         "section": "cta",
@@ -1223,7 +1298,7 @@
         },
         "to": {
           "type": "illust",
-          "value": "cpt_fd9edf65"
+          "value": "gift_voucher"
         },
         "context": "휴대폰 구매할 땐? 지원금부터 무료로 조회해보세요 휴대폰 구매할 땐? 지원금부터 무료로 조회해보세요 휴대폰 구매할 땐? 지원금부터 무료로 조회해보세요."
       }
@@ -1236,7 +1311,7 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "이동통신사 SKT KT LGU+ 가입으로 구매하시는 경우 요금제별로 구매 금액이 달라서 모델별 정액으로 혜택이 지급됩니다 통신사 구매 모델별 정액 혜택 이동통신사 SKT KT LGU+ 가입으로 구매하시는 경우 요금제별로 구매 금액이 달라서 모델별 정액으로 혜택이 지급됩니다. S26 갤럭"
+        "context": "내가 쓰는 카드사 앱을 열고 Apple Pay 또는 Apple Wallet 추가 메뉴를 찾습니다 절차 카드사 앱 → Wallet 내가 쓰는 카드사 앱을 열고 Apple Pay 또는 Apple Wallet 추가 메뉴를 찾습니다. 카드사가 Mastercard 기반으로 Apple Pay 토큰"
       },
       {
         "section": "fact_2",
@@ -1245,7 +1320,7 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "구매하시는 경우 요금제별로 구매 금액이 달라서 모델별 정액으로 혜택이 지급됩니다 S26 갤럭시 신규 가입 시 광교점에서 통신사 구매 모델별 정액 혜택 이동통신사 SKT KT LGU+ 가입으로 구매하시는 경우 요금제별로 구매 금액이 달라서 모델별 정액으로 혜택이 지급됩니다. S26 갤럭시"
+        "context": "열고 Apple Pay 또는 Apple Wallet 추가 메뉴를 찾습니다 카드사가 Mastercard 절차 카드사 앱 → Wallet 내가 쓰는 카드사 앱을 열고 Apple Pay 또는 Apple Wallet 추가 메뉴를 찾습니다. 카드사가 Mastercard 기반으로 Apple Pay"
       },
       {
         "section": "fact_2",
@@ -1254,16 +1329,16 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "달라서 모델별 정액으로 혜택이 지급됩니다 S26 갤럭시 신규 가입 시 광교점에서 모델별 정확한 정액 안내 가능합니다 통신사 구매 모델별 정액 혜택 이동통신사 SKT KT LGU+ 가입으로 구매하시는 경우 요금제별로 구매 금액이 달라서 모델별 정액으로 혜택이 지급됩니다. S26 갤럭시 신"
+        "context": "추가 메뉴를 찾습니다 카드사가 Mastercard 기반으로 Apple Pay 토큰을 절차 카드사 앱 → Wallet 내가 쓰는 카드사 앱을 열고 Apple Pay 또는 Apple Wallet 추가 메뉴를 찾습니다. 카드사가 Mastercard 기반으로 Apple Pay 토큰을 발행해 W"
       },
       {
-        "section": "fact_3",
-        "chunk": 3,
+        "section": "fact_2",
+        "chunk": 6,
         "duplicate": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "디지털 온누리상품권으로 받습니다 갤럭시 S26+ 자급제는 25%까지 올라갑니다 제복 공무원 K-히어로는 20% + 10% 자급제 20% 온누리상품권 자급제 제품 구매 시 구매금액의 20%를 디지털 온누리상품권으로 받습니다. 갤럭시 S26+ 자급제는 25%까지 올라갑니다. 제복 공무원 K"
+        "context": "기반으로 Apple Pay 토큰을 발행해 Wallet으로 자동 전송 본인인증 후 즉시 사용 가능합니다 절차 카드사 앱 → Wallet 내가 쓰는 카드사 앱을 열고 Apple Pay 또는 Apple Wallet 추가 메뉴를 찾습니다. 카드사가 Mastercard 기반으로 Apple Pay"
       },
       {
         "section": "fact_3",
@@ -1272,7 +1347,7 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "갤럭시 S26+ 자급제는 25%까지 올라갑니다 제복 공무원 K-히어로는 20% + 10% 추가 = 총 30% 혜택입니다 자급제 20% 온누리상품권 자급제 제품 구매 시 구매금액의 20%를 디지털 온누리상품권으로 받습니다. 갤럭시 S26+ 자급제는 25%까지 올라갑니다. 제복 공무원 K-"
+        "context": "지하철·시내버스에서 아이폰 또는 애플워치를 갖다 대면 결제됩니다 한국 내 대중교통은 거의 모두 지원됩니다 교통 Tmoney 지하철·버스 OK Apple Wallet 앱에서 Tmoney 카드를 직접 추가할 수 있습니다. 지하철·시내버스에서 아이폰 또는 애플워치를 갖다 대면 결제됩니다. 한"
       },
       {
         "section": "fact_3",
@@ -1281,7 +1356,25 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "제복 공무원 K-히어로는 20% + 10% 추가 = 총 30% 혜택입니다 자급제 20% 온누리상품권 자급제 제품 구매 시 구매금액의 20%를 디지털 온누리상품권으로 받습니다. 갤럭시 S26+ 자급제는 25%까지 올라갑니다. 제복 공무원 K-히어로는 20% + 10% 추가 = 총 30% "
+        "context": "애플워치를 갖다 대면 결제됩니다 한국 내 대중교통은 거의 모두 지원됩니다 교통 Tmoney 지하철·버스 OK Apple Wallet 앱에서 Tmoney 카드를 직접 추가할 수 있습니다. 지하철·시내버스에서 아이폰 또는 애플워치를 갖다 대면 결제됩니다. 한국 내 대중교통은 거의 모두 지원"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 1,
+        "duplicate": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "한국 내 현금카드 기능은 Apple Pay에서 지원되지 않습니다 한계 현금카드 X 일부 카드만 한국 내 현금카드 기능은 Apple Pay에서 지원되지 않습니다. 일반 신용·체크카드와 선불 교통카드만 지원. 본인 카드가 Apple Pay 지원하는지 카드사에 먼저 확인하세요."
+      },
+      {
+        "section": "fact_4",
+        "chunk": 2,
+        "duplicate": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "한국 내 현금카드 기능은 Apple Pay에서 지원되지 않습니다 일반 신용·체크카드와 선불 교통카드만 지원 한계 현금카드 X 일부 카드만 한국 내 현금카드 기능은 Apple Pay에서 지원되지 않습니다. 일반 신용·체크카드와 선불 교통카드만 지원. 본인 카드가 Apple Pay 지원하는"
       },
       {
         "section": "fact_4",
@@ -1290,14 +1383,23 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "만 14세 이상 본인명의 휴대폰으로 본인인증이 필요합니다 외국인 등록증(90일 이상 체류) 보유자도 신청 가능합니다 신청 방법 삼성닷컴 본인인증 구매 후 삼성닷컴 행사 페이지에서 직접 신청. 만 14세 이상 본인명의 휴대폰으로 본인인증이 필요합니다. 외국인 등록증(90일 이상 체류) 보"
+        "context": "지원되지 않습니다 일반 신용·체크카드와 선불 교통카드만 지원 본인 카드가 Apple Pay 지원하는지 한계 현금카드 X 일부 카드만 한국 내 현금카드 기능은 Apple Pay에서 지원되지 않습니다. 일반 신용·체크카드와 선불 교통카드만 지원. 본인 카드가 Apple Pay 지원하는지 카"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 4,
+        "duplicate": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "일반 신용·체크카드와 선불 교통카드만 지원 본인 카드가 Apple Pay 지원하는지 카드사에 먼저 확인하세요 한계 현금카드 X 일부 카드만 한국 내 현금카드 기능은 Apple Pay에서 지원되지 않습니다. 일반 신용·체크카드와 선불 교통카드만 지원. 본인 카드가 Apple Pay 지원하"
       }
     ]
   },
   "_codex_effective_script": {
     "version": 2,
-    "slug": "019_news_samsung_thank_you_festival",
-    "source": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\019_news_samsung_thank_you_festival\\shorts_script.json",
+    "slug": "020_qa_apple_pay_korea_card",
+    "source": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\020_qa_apple_pay_korea_card\\shorts_script.json",
     "override_applied": false,
     "override_sections": []
   }

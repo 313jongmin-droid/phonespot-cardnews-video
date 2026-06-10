@@ -231,9 +231,30 @@
         "cpt_4729c912",
         "cpt_fd9edf65"
       ]
+    },
+    "020_qa_apple_pay_korea_card": {
+      "used_at": "2026-06-10T18:25:28",
+      "source": "unique_illustration_guard",
+      "illustrations": [
+        "smartphone",
+        "newspaper",
+        "microphone",
+        "shield",
+        "meeting_room",
+        "forecast",
+        "cpt_f59129df",
+        "cpt_a1caaea6",
+        "biometric",
+        "cpt_83fa1e9f",
+        "cpt_6a2e9678",
+        "device_data_transfer",
+        "nfc_pay",
+        "cpt_fd9edf65",
+        "gift_voucher"
+      ]
     }
   },
-  "updated_at": "2026-06-10T18:06:37",
+  "updated_at": "2026-06-10T18:25:29",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -279,6 +300,10 @@
     },
     "019_news_samsung_thank_you_festival": {
       "updated_at": "2026-06-10T18:06:37",
+      "variants": []
+    },
+    "020_qa_apple_pay_korea_card": {
+      "updated_at": "2026-06-10T18:25:29",
       "variants": []
     }
   }

@@ -1676,7 +1676,69 @@
       ],
       "note": "자동 발굴 개념: 일요일 주간",
       "available": true
+    },
+    "cpt_678358f4": {
+      "keywords": [
+        "사용자",
+        "애플페",
+        "쓰시",
+        "분도",
+        "늘었는데"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 사용자 애플페",
+      "available": false
+    },
+    "card_struggle_81529308": {
+      "keywords": [
+        "정작",
+        "카드",
+        "추가",
+        "어렵다",
+        "하는지"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 정작 카드",
+      "available": false
+    },
+    "global_adoption_3a84a22d": {
+      "keywords": [
+        "다른",
+        "나라처럼",
+        "Apple",
+        "Wallet"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 다른 나라처럼",
+      "available": false
+    },
+    "korean_broken_36986e9e": {
+      "keywords": [
+        "한국",
+        "작동하지"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 한국 작동하지",
+      "available": false
+    },
+    "register_14135bd2": {
+      "keywords": [
+        "등록할"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 등록할",
+      "available": false
     }
   },
-  "updated_at": "2026-06-10T18:06:09"
+  "updated_at": "2026-06-10T18:23:01"
 }
