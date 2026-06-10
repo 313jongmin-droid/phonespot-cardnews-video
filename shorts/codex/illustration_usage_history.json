@@ -210,9 +210,30 @@
         "cpt_4729c912",
         "gift_voucher"
       ]
+    },
+    "019_news_samsung_thank_you_festival": {
+      "used_at": "2026-06-10T18:06:36",
+      "source": "uploaded_illustrations",
+      "illustrations": [
+        "monday_d77265f0",
+        "weekly_sunday_82b74c0a",
+        "festival_41b2e7cf",
+        "unlocked_baa71ac6",
+        "event_period_8cafdac4",
+        "microphone",
+        "shield",
+        "meeting_room",
+        "forecast",
+        "gift_voucher",
+        "smartphone",
+        "cpt_a1caaea6",
+        "biometric",
+        "cpt_4729c912",
+        "cpt_fd9edf65"
+      ]
     }
   },
-  "updated_at": "2026-06-10T17:45:58",
+  "updated_at": "2026-06-10T18:06:37",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -254,6 +275,10 @@
     },
     "018_scam_wedding_invite_smishing": {
       "updated_at": "2026-06-10T17:45:58",
+      "variants": []
+    },
+    "019_news_samsung_thank_you_festival": {
+      "updated_at": "2026-06-10T18:06:37",
       "variants": []
     }
   }

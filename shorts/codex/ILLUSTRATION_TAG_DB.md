@@ -11,7 +11,7 @@
 | `battery_charge_range` | battery, charging, tips, library | 1 | 017_tip_summer_travel_phone_5min |
 | `battery_health_check` | battery, health, tips | 0 |  |
 | `battery_overheat` | battery, heat, warning, library | 1 | 017_tip_summer_travel_phone_5min |
-| `biometric` | security, privacy, authentication, library | 1 | 017_tip_summer_travel_phone_5min |
+| `biometric` | security, privacy, authentication, library | 2 | 019_news_samsung_thank_you_festival |
 | `call_filter_rules` | library | 0 |  |
 | `call_recording_notice` | library | 1 | 010_tip_iphone_call_record |
 | `chart_down` | price, data, decrease, library | 1 | 011_qa_combo_discount_check |
@@ -29,7 +29,7 @@
 | `cpt_1a196d6d` | auto | 0 |  |
 | `cpt_313e9e00` | auto | 0 |  |
 | `cpt_3317f8c6` | auto | 0 |  |
-| `cpt_4729c912` | auto, library | 2 | 018_scam_wedding_invite_smishing |
+| `cpt_4729c912` | auto, library | 3 | 019_news_samsung_thank_you_festival |
 | `cpt_55c40fb8` | auto | 0 |  |
 | `cpt_5cd81fce` | auto | 0 |  |
 | `cpt_6174b190` | auto | 0 |  |
@@ -48,7 +48,7 @@
 | `cpt_8d09d703` | auto | 0 |  |
 | `cpt_9ebf277e` | auto | 0 |  |
 | `cpt_a0d7df46` | auto | 0 |  |
-| `cpt_a1caaea6` | auto, library | 1 | 015_qa_msafer_pass_identity_block |
+| `cpt_a1caaea6` | auto, library | 2 | 019_news_samsung_thank_you_festival |
 | `cpt_a91efa70` | auto | 0 |  |
 | `cpt_b5a15155` | auto, library | 1 | 015_qa_msafer_pass_identity_block |
 | `cpt_b90dc475` | auto | 0 |  |
@@ -64,21 +64,23 @@
 | `cpt_f5cc7e27` | auto | 0 |  |
 | `cpt_f7997fd3` | auto | 0 |  |
 | `cpt_fa7ce644` | auto | 0 |  |
-| `cpt_fd9edf65` | auto, library | 1 | 014_scam_voicephishing_zero_relief |
+| `cpt_fd9edf65` | auto, library | 2 | 019_news_samsung_thank_you_festival |
 | `cut_theft_43505b9f` | auto | 0 |  |
 | `device_data_transfer` | device, migration, backup, tips, library | 2 | 016_news_ios_26_3_release |
 | `device_os_requirement` | library | 0 |  |
 | `device_price_rise` | price, increase, device | 0 |  |
 | `display_ratio_change` | library | 0 |  |
 | `emergency_account_freeze` | security, bank, response, golden-time, library | 2 | 015_qa_msafer_pass_identity_block |
+| `event_period_8cafdac4` | auto, library | 1 | 019_news_samsung_thank_you_festival |
 | `fake_government_page` | security, smishing, government, warning | 0 |  |
+| `festival_41b2e7cf` | auto, library | 1 | 019_news_samsung_thank_you_festival |
 | `final_update` | software, update, library | 3 | 016_news_ios_26_3_release |
 | `foldable` | hardware, foldable, library | 1 | 012_news_galaxy_unpack_july |
-| `forecast` | news, forecast, library | 9 | 018_scam_wedding_invite_smishing |
+| `forecast` | news, forecast, library | 10 | 019_news_samsung_thank_you_festival |
 | `friend_wedding_suspicion_884c4f09` | auto, library | 1 | 018_scam_wedding_invite_smishing |
 | `gemini` | ai, assistant, google, library | 2 | 010_tip_iphone_call_record |
 | `gift_prohibit` | price, security, warning, library | 1 | 018_scam_wedding_invite_smishing |
-| `gift_voucher` | price, subsidy, purchase, library | 8 | 018_scam_wedding_invite_smishing |
+| `gift_voucher` | price, subsidy, purchase, library | 9 | 019_news_samsung_thank_you_festival |
 | `handshake` | policy, access, partnership, library | 2 | 014_scam_voicephishing_zero_relief |
 | `health_sensor_watch` | library | 2 | 012_news_galaxy_unpack_july |
 | `heat_release` | battery, heat, hardware, library | 0 |  |
@@ -88,11 +90,12 @@
 | `lock` | security, privacy, lock, library | 3 | 018_scam_wedding_invite_smishing |
 | `logout` | security, privacy, account, library | 1 | 015_qa_msafer_pass_identity_block |
 | `market_cap` | price, data, market, library | 1 | 014_scam_voicephishing_zero_relief |
-| `meeting_room` | policy, news, strategy, library | 9 | 018_scam_wedding_invite_smishing |
+| `meeting_room` | policy, news, strategy, library | 10 | 019_news_samsung_thank_you_festival |
 | `memory_chip` | ai, hardware, chip, library | 2 | 010_tip_iphone_call_record |
-| `microphone` | news, quote, library | 8 | 016_news_ios_26_3_release |
+| `microphone` | news, quote, library | 9 | 019_news_samsung_thank_you_festival |
 | `mobile_settings_31257fb6` | auto | 0 |  |
 | `module_install` | library | 0 |  |
+| `monday_d77265f0` | auto, library | 1 | 019_news_samsung_thank_you_festival |
 | `newspaper` | news, source, library | 7 | 016_news_ios_26_3_release |
 | `nfc_open_access` | payment, nfc, access | 0 |  |
 | `nfc_pay` | payment, nfc, access, library | 1 | 018_scam_wedding_invite_smishing |
@@ -117,8 +120,8 @@
 | `select_option_76495b69` | auto | 0 |  |
 | `settings_screen_ab73a8fa` | auto | 0 |  |
 | `settings_steps` | library | 0 |  |
-| `shield` | security, privacy, protection, library | 9 | 018_scam_wedding_invite_smishing |
-| `smartphone` | device, purchase, cta, library | 9 | 017_tip_summer_travel_phone_5min |
+| `shield` | security, privacy, protection, library | 10 | 019_news_samsung_thank_you_festival |
+| `smartphone` | device, purchase, cta, library | 10 | 019_news_samsung_thank_you_festival |
 | `smishing_fake_link` | security, smishing, warning, link | 0 |  |
 | `stock_chart` | price, data, market, library | 0 |  |
 | `store` | store, purchase, cta, library | 3 | 014_scam_voicephishing_zero_relief |
@@ -128,10 +131,13 @@
 | `ti_decrease` | materials, hardware, decrease, library | 1 | 011_qa_combo_discount_check |
 | `transfer_interruption_warning` | library | 0 |  |
 | `transfer_path_steps` | library | 0 |  |
+| `unlocked_baa71ac6` | auto, library | 1 | 019_news_samsung_thank_you_festival |
 | `warning` | security, warning, library | 2 | 018_scam_wedding_invite_smishing |
+| `weekly_sunday_82b74c0a` | auto, library | 1 | 019_news_samsung_thank_you_festival |
 
 ## Recent videos
 
+- `019_news_samsung_thank_you_festival`: monday_d77265f0, weekly_sunday_82b74c0a, festival_41b2e7cf, unlocked_baa71ac6, event_period_8cafdac4, microphone, shield, meeting_room, forecast, gift_voucher, smartphone, cpt_a1caaea6, biometric, cpt_4729c912, cpt_fd9edf65
 - `018_scam_wedding_invite_smishing`: cpt_f59129df, surge_b56b4f67, cpt_066b1a1b, phone_settings_toggle, phone_setup_ready, cpt_6f69bf84, friend_wedding_suspicion_884c4f09, meeting_room, security_feature_lock, lock, impersonation_call, gift_prohibit, shield, prohibit, warning, forecast, nfc_pay, cpt_4729c912, gift_voucher
 - `017_tip_summer_travel_phone_5min`: smartphone, aluminum_label, appliance, battery_charge_range, battery_overheat, biometric
 - `016_news_ios_26_3_release`: device_data_transfer, phone_settings_toggle, samsung_ai, phone_setup_ready, smartphone, newspaper, microphone, shield, meeting_room, forecast, cpt_83fa1e9f, final_update, chatbot, gift_voucher

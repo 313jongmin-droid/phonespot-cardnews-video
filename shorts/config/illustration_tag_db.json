@@ -819,6 +819,20 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "event_period_8cafdac4": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "행사",
+        "기간",
+        "부터",
+        "까지"
+      ],
+      "note": "자동 발굴 개념: 행사 기간",
+      "available": true
+    },
     "fake_government_page": {
       "tags": [
         "security",
@@ -833,6 +847,17 @@
       ],
       "note": "Reusable editorial illustration.",
       "available": false
+    },
+    "festival_41b2e7cf": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "페스티벌"
+      ],
+      "note": "자동 발굴 개념: 페스티벌",
+      "available": true
     },
     "final_update": {
       "tags": [
@@ -1131,6 +1156,17 @@
       ],
       "keywords": [],
       "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "monday_d77265f0": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "월요일"
+      ],
+      "note": "자동 발굴 개념: 월요일",
       "available": true
     },
     "newspaper": {
@@ -1601,6 +1637,17 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "unlocked_baa71ac6": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "자급제"
+      ],
+      "note": "자동 발굴 개념: 자급제",
+      "available": true
+    },
     "warning": {
       "tags": [
         "security",
@@ -1615,7 +1662,21 @@
       ],
       "note": "Reusable editorial illustration.",
       "available": true
+    },
+    "weekly_sunday_82b74c0a": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "일요일",
+        "주간",
+        "삼성전자",
+        "고객감사"
+      ],
+      "note": "자동 발굴 개념: 일요일 주간",
+      "available": true
     }
   },
-  "updated_at": "2026-06-10T17:44:53"
+  "updated_at": "2026-06-10T18:06:09"
 }
