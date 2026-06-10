@@ -1484,7 +1484,73 @@
       ],
       "note": "Reusable editorial illustration.",
       "available": true
+    },
+    "price_shock_7abfd08b": {
+      "keywords": [
+        "공항",
+        "도착",
+        "깨닫",
+        "요금",
+        "폭탄"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 공항 도착",
+      "available": false
+    },
+    "cut_theft_43505b9f": {
+      "keywords": [
+        "끊김",
+        "도난",
+        "피해",
+        "출국",
+        "이면"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 끊김 도난",
+      "available": false
+    },
+    "mobile_settings_31257fb6": {
+      "keywords": [
+        "설정",
+        "모바일",
+        "네트워크",
+        "데이터",
+        "로밍"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 설정 모바일",
+      "available": false
+    },
+    "cpt_678a9adc": {
+      "keywords": [
+        "항공기",
+        "모드",
+        "켜두고",
+        "따로"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 항공기 모드",
+      "available": false
+    },
+    "cpt_163f537d": {
+      "keywords": [
+        "켜는",
+        "방식"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 켜는 방식",
+      "available": false
     }
   },
-  "updated_at": "2026-06-08T18:45:45"
+  "updated_at": "2026-06-08T19:22:08"
 }

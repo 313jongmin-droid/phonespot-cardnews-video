@@ -58,6 +58,33 @@ function onOpen() {
 
 }
 
+// ──[Web App]── generator.html 호스팅 + API 라우팅 (2026-06-09 백업 동기화)
+function doGet(e) {
+  // 권한 체크: Owner Execute일 때 Session.getActiveUser().getEmail()이 빈 문자열일 수 있음 → 빈 문자열은 통과
+  const allowed = ['313jongmin@gmail.com', 'mazision@gmail.com'];
+  let user = '';
+  try { user = Session.getActiveUser().getEmail(); } catch (err) {}
+  if (user && !allowed.includes(user)) {
+    return HtmlService.createHtmlOutput(
+      '<h1>🔒 접근 권한 없음</h1><p>접속 계정: ' + user + '</p>'
+    );
+  }
+
+  // API 라우팅: ?api=meta_creatives (외부 환경 fallback용)
+  if (e && e.parameter && e.parameter.api === 'meta_creatives') {
+    return getMetaCreativesAsJSON_();
+  }
+
+  // 페이지 라우팅: ?page=generator (default)
+  const page = (e && e.parameter && e.parameter.page) || 'generator';
+  if (page === 'generator') {
+    return HtmlService.createHtmlOutputFromFile('generator')
+      .setTitle('폰스팟 광고 생성기')
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+  }
+  return HtmlService.createHtmlOutput('<h1>404</h1>');
+}
+
 // ──[일상]── 전체 새로고침: GA4 수집 + KPI + 매트릭스 + 차트
 
 function refreshAll() {

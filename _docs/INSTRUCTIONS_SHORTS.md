@@ -64,6 +64,44 @@ PROJECT_INSTRUCTIONS_SHORTS.md  # 이 문서 (마스터 사본)
 
 # 작업 순서
 
+## Step 0 — 자체 유튜브 채널 학습 Read (★ 2026-06-05 신설, 매 영상 작업 전 필수)
+
+매일 03:40 Apps Script가 유튜브 채널 성과 분석 → **Drive `phonespot_cardnews_state/youtube_insights.md`** 자동 갱신. Drive desktop sync로 로컬 동기화. 영상 작업 시작 전 반드시 Read.
+
+### Read 정보
+- **Top 키워드** — shorts_script 제목/도입부 TTS 멘트에 자연스럽게 반영
+- **우수 후킹 패턴** (의문/숫자/감탄/시간/가격) → 카드 1 TTS 후킹에 적용
+- **우수 영상 공통점** — 톤·구조 (예: 첫 1초 가격 노출, 모델명+숫자)
+- **회피 패턴** — 답습 X
+- **Gemini 권장 룰** (3-4문장 직접 조언)
+
+### 가중치 (영상 빌드 자동 보정)
+- 우수 키워드 포함 → 자연스럽게 강조
+- 우수 후킹과 매치 → 카드 1 TTS 멘트로 변환
+- 회피 패턴 답습 → shorts_script 재작성
+
+### 파일 없을 때
+youtube_insights.md 없으면 skip. 기본 작성 룰만 사용. 오류 던지지 말 것.
+
+## Step 0.5 — 메타 광고 학습 Read (★ 2026-06-10 신설, 유튜브 학습과 함께)
+
+매일 01:45 Apps Script가 메타 광고 성과 분석 → **Drive `phonespot_cardnews_state/meta_insights.md`** 자동 갱신. 같은 폴더 (유튜브 옆). 영상 작업 시작 전 함께 Read.
+
+### Read 정보 (유튜브 인사이트와 합산)
+- **Top 키워드** (CTR 가중) — shorts_script 제목/TTS 멘트에 우선 반영
+- **우수 헤드라인 패턴** — 카드 1 후킹 멘트 톤 적용 (유튜브 후킹과 합산)
+- **카톡전환 우수 캠페인 공통점** — CTA 톤 (카톡 클릭 유도 메시지)
+- **회피 패턴** — 답습 X
+- **`cardnews_hooking_suggestion` 필드** — 메타 우수 패턴의 영상 후킹 적용 직접 조언
+
+### 가중치 (유튜브와 합산 적용)
+- 메타 + 유튜브 둘 다 우수로 잡힌 키워드 → 최우선 강조
+- 메타 우수 헤드라인 패턴과 카드 1 후킹 매치 → 톤 그대로 활용
+- 메타 회피 패턴 답습 → shorts_script 재작성
+
+### 파일 없을 때
+meta_insights.md 없으면 메타 룰만 skip. 유튜브 학습은 그대로. 오류 던지지 말 것.
+
 ## Step 1: 카드뉴스 결과 확인
 - output/<slug>/9x16/ 폴더에 card_1.jpg ~ card_6.jpg 있는지 확인
 - articles/<slug>.json 존재 + captions_md 필드 있는지 확인

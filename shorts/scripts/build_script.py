@@ -107,8 +107,13 @@ def parse_headline(hl_raw):
 img_dir = cardnews_root / "images" / slug
 
 
+ILLUST_PLACEHOLDER = "smartphone"  # 카드이미지 없을 때 청크 placeholder(렌더 semantic match가 실제 일러스트로 교체)
+
+
 def pick_images(n):
-    """GPT 원본 PNG. card_*.png 제외. 우선순위: {N}.png > gpt_{N}.png"""
+    """GPT 원본 PNG. card_*.png 제외. 우선순위: {N}.png > gpt_{N}.png.
+    카드이미지가 없으면 막지 않고 빈 배경을 반환한다(영상=일러스트 전용 모드).
+    실제 화면 비주얼은 렌더 단계 codex_semantic_visual_match 가 일러스트로 채운다."""
     for pat in ("{}.png", "gpt_{}.png"):
         available = [img_dir / pat.format(i) for i in range(1, 20)]
         existing = [p.name for p in available if p.exists()]
@@ -117,11 +122,8 @@ def pick_images(n):
             for i in range(n):
                 result.append(existing[i] if i < len(existing) else existing[-1])
             return result
-    print(f"[ERROR] images/{slug}/ 에 GPT 원본 PNG 없음.")
-    print(f"        1.png~N.png 또는 gpt_1.png~ 형식으로 넣어주세요.")
-    print(f"        [HINT] cardnews/images 는 git 비공유. 다른 PC면 메인 PC에서 먼저 동기화:")
-    print(f"               CODEX_VIDEO_DESK\\01_SYNC_CARDNEWS_WORKSPACE_FROM_MAIN_PC.bat")
-    sys.exit(1)
+    print(f"[info] images/{slug}/ 에 GPT 카드이미지 없음 → 일러스트 전용 모드(배경 비움, 렌더가 일러스트로 채움).")
+    return [""] * n
 
 
 def collect_all_images():
@@ -209,10 +211,15 @@ def build_chunk_visuals(chunks, idx, pool):
     if n == 0:
         return []
     visuals = []
-    pool_n = max(1, len(pool))
-    for k in range(n):
-        img = pool[(idx + k) % pool_n]
-        visuals.append({"type": "image", "value": img})
+    if pool:
+        pool_n = len(pool)
+        for k in range(n):
+            img = pool[(idx + k) % pool_n]
+            visuals.append({"type": "image", "value": img})
+    else:
+        # 카드이미지 없음 → 일러스트 placeholder. 렌더의 semantic match 가 실제 일러스트로 교체.
+        for k in range(n):
+            visuals.append({"type": "illust", "value": ILLUST_PLACEHOLDER})
     # 마스코트: 짝수 시퀀스만 + 청크 2개 이상
     if n >= 2 and idx % 2 == 0:
         emotion = MASCOT_EMOTIONS[idx % len(MASCOT_EMOTIONS)]

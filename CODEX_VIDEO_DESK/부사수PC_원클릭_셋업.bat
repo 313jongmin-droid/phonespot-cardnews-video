@@ -31,8 +31,12 @@ call :ensure git     "Git.Git"            "Git"
 call :ensure node    "OpenJS.NodeJS.LTS"  "Node.js"
 call :ensure python  "Python.Python.3.12" "Python"
 
-where git >nul 2>&1
-if errorlevel 1 (
+set "GIT="
+where git >nul 2>&1 && set "GIT=git"
+if not defined GIT if exist "C:\Program Files\Git\cmd\git.exe" set "GIT=C:\Program Files\Git\cmd\git.exe"
+if not defined GIT if exist "C:\Program Files\Git\bin\git.exe" set "GIT=C:\Program Files\Git\bin\git.exe"
+if not defined GIT for /d %%D in ("%LOCALAPPDATA%\GitHubDesktop\app-*") do if exist "%%D\resources\app\git\cmd\git.exe" set "GIT=%%D\resources\app\git\cmd\git.exe"
+if not defined GIT (
   echo.
   echo [ERROR] Git not found. If you just installed it, close this window
   echo         and run this file again ^(PATH needs refresh^).
@@ -43,12 +47,12 @@ echo.
 echo ===== 2/5: get project (clone / pull) =====
 if exist "%TARGET%\.git" (
   echo [update] existing repo - stash local runtime changes, then pull
-  git -C "%TARGET%" stash --include-untracked >nul 2>&1
-  git -C "%TARGET%" pull --ff-only
+  "!GIT!" -C "%TARGET%" stash --include-untracked >nul 2>&1
+  "!GIT!" -C "%TARGET%" pull --ff-only
 ) else (
   for %%I in ("%TARGET%\..") do if not exist "%%~fI" mkdir "%%~fI" >nul 2>&1
   echo [clone] %REPO%
-  git clone "%REPO%" "%TARGET%"
+  "!GIT!" clone "%REPO%" "%TARGET%"
 )
 
 if not exist "%TARGET%\CODEX_VIDEO_DESK\SETUP_FULL_PRODUCER.bat" (
@@ -94,4 +98,4 @@ echo  start       : %TARGET%\CODEX_VIDEO_DESK\00_PHONE_SPOT_PANEL.bat
 echo  illust sync : panel "Manage > library sync" (Drive hub)
 echo  NOTE: API keys are NOT in GitHub. For article gen / readable concept
 echo        names, set _secrets\gemini_key.txt like on the main PC.
-echo ---------------------------
+echo ----------------

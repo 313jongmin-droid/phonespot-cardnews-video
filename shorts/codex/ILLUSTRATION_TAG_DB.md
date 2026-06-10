@@ -5,13 +5,13 @@
 
 | illustration | tags | use count | last slug |
 |---|---|---:|---|
-| `aluminum_label` | materials, hardware, library | 1 | 001_apple_ondevice_ai_wwdc26 |
+| `aluminum_label` | materials, hardware, library | 2 | 017_tip_summer_travel_phone_5min |
 | `android_user_a91efa70` | auto | 0 |  |
-| `appliance` | hardware, device, library | 1 | 001_apple_ondevice_ai_wwdc26 |
-| `battery_charge_range` | battery, charging, tips, library | 0 |  |
+| `appliance` | hardware, device, library | 2 | 017_tip_summer_travel_phone_5min |
+| `battery_charge_range` | battery, charging, tips, library | 1 | 017_tip_summer_travel_phone_5min |
 | `battery_health_check` | battery, health, tips | 0 |  |
-| `battery_overheat` | battery, heat, warning, library | 0 |  |
-| `biometric` | security, privacy, authentication, library | 0 |  |
+| `battery_overheat` | battery, heat, warning, library | 1 | 017_tip_summer_travel_phone_5min |
+| `biometric` | security, privacy, authentication, library | 1 | 017_tip_summer_travel_phone_5min |
 | `call_filter_rules` | library | 0 |  |
 | `call_recording_notice` | library | 1 | 010_tip_iphone_call_record |
 | `chart_down` | price, data, decrease, library | 1 | 011_qa_combo_discount_check |
@@ -109,7 +109,7 @@
 | `settings_screen_ab73a8fa` | auto | 0 |  |
 | `settings_steps` | library | 0 |  |
 | `shield` | security, privacy, protection, library | 8 | 016_news_ios_26_3_release |
-| `smartphone` | device, purchase, cta, library | 8 | 016_news_ios_26_3_release |
+| `smartphone` | device, purchase, cta, library | 9 | 017_tip_summer_travel_phone_5min |
 | `smishing_fake_link` | security, smishing, warning, link | 0 |  |
 | `stock_chart` | price, data, market, library | 0 |  |
 | `store` | store, purchase, cta, library | 3 | 014_scam_voicephishing_zero_relief |
@@ -122,6 +122,7 @@
 
 ## Recent videos
 
+- `017_tip_summer_travel_phone_5min`: smartphone, aluminum_label, appliance, battery_charge_range, battery_overheat, biometric
 - `016_news_ios_26_3_release`: device_data_transfer, phone_settings_toggle, samsung_ai, phone_setup_ready, smartphone, newspaper, microphone, shield, meeting_room, forecast, cpt_83fa1e9f, final_update, chatbot, gift_voucher
 - `015_qa_msafer_pass_identity_block`: cpt_7b7a2f91, cpt_b5a15155, cpt_8bffef74, cpt_a1caaea6, cpt_4729c912, phone_settings_toggle, cpt_6a2e9678, meeting_room, forecast, newspaper, microphone, shield, prohibit, impersonation_call, lock, secure_app_reregistration, emergency_account_freeze, smartphone, logout, security_feature_lock, gift_voucher
 - `014_scam_voicephishing_zero_relief`: impersonation_call, cpt_fd9edf65, cpt_75c6eba6, cpt_6a2e9678, cpt_ea7bc1d6, cpt_83fa1e9f, microphone, shield, meeting_room, forecast, market_cap, store, smartphone, emergency_account_freeze, handshake, gift_voucher

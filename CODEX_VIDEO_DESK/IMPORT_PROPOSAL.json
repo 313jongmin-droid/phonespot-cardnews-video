@@ -1,95 +1,95 @@
 {
-  "slug": "015_qa_msafer_pass_identity_block",
+  "slug": "017_tip_summer_travel_phone_5min",
   "engine": "fallback-mtime",
-  "generated_at": 1780848540.3729494,
+  "generated_at": 1780914548.0403175,
   "requests": [
     {
-      "filename": "cpt_7b7a2f91.png",
-      "variant": "cpt_7b7a2f91",
+      "filename": "price_shock_7abfd08b.png",
+      "variant": "price_shock_7abfd08b",
+      "section": "hook",
+      "chunk_index": 0,
+      "concept_label": "공항 도착",
+      "optional": true,
+      "concept_text": "공항 도착 price shock 7abfd08b 공항 도착 깨닫 요금 폭탄 auto concept 공항 도착 후 깨닫는 요금 폭탄·연결"
+    },
+    {
+      "filename": "cut_theft_43505b9f.png",
+      "variant": "cut_theft_43505b9f",
+      "section": "hook",
+      "chunk_index": 1,
+      "concept_label": "끊김 도난",
+      "optional": true,
+      "concept_text": "끊김 도난 cut theft 43505b9f 끊김 도난 피해 출국 이면 auto concept 끊김·도난 피해를 출국 전 5분이면 막을 수 있습니다"
+    },
+    {
+      "filename": "mobile_settings_31257fb6.png",
+      "variant": "mobile_settings_31257fb6",
       "section": "fact_1",
       "chunk_index": 0,
-      "concept_label": "KISA",
+      "concept_label": "설정 모바일",
       "optional": true,
-      "concept_text": "KISA cpt 7b7a2f91 KISA auto concept KISA와 SKT, KT, LGU+가"
+      "concept_text": "설정 모바일 mobile settings 31257fb6 설정 모바일 네트워크 데이터 로밍 auto concept 설정 → 모바일 네트워크 → 데이터 로밍 OFF"
     },
     {
-      "filename": "cpt_b5a15155.png",
-      "variant": "cpt_b5a15155",
+      "filename": "cpt_678a9adc.png",
+      "variant": "cpt_678a9adc",
       "section": "fact_1",
       "chunk_index": 1,
-      "concept_label": "운영하 Msafer",
+      "concept_label": "항공기 모드",
       "optional": true,
-      "concept_text": "운영하 Msafer cpt b5a15155 운영하 Msafer auto concept 함께 운영하는 Msafer"
+      "concept_text": "항공기 모드 cpt 678a9adc 항공기 모드 켜두고 따로 auto concept 항공기 모드를 켜두고 Wi-Fi만 따로"
     },
     {
-      "filename": "cpt_8bffef74.png",
-      "variant": "cpt_8bffef74",
+      "filename": "cpt_163f537d.png",
+      "variant": "cpt_163f537d",
       "section": "fact_1",
       "chunk_index": 2,
-      "concept_label": "명의도용방지서비스 활용하시면",
+      "concept_label": "켜는 방식",
       "optional": true,
-      "concept_text": "명의도용방지서비스 활용하시면 cpt 8bffef74 명의도용방지서비스 활용하시면 auto concept 명의도용방지서비스를 활용하시면,"
-    },
-    {
-      "filename": "cpt_a1caaea6.png",
-      "variant": "cpt_a1caaea6",
-      "section": "fact_1",
-      "chunk_index": 4,
-      "concept_label": "추가 개통",
-      "optional": true,
-      "concept_text": "추가 개통 cpt a1caaea6 추가 개통 사전 차단할 auto concept 추가 개통을 사전에 차단할 수 있습니다"
-    },
-    {
-      "filename": "cpt_4729c912.png",
-      "variant": "cpt_4729c912",
-      "section": "fact_1",
-      "chunk_index": 5,
-      "concept_label": "신청 경로",
-      "optional": true,
-      "concept_text": "신청 경로 cpt 4729c912 신청 경로 auto concept 신청은 두 가지 경로가 있습니다"
+      "concept_text": "켜는 방식 cpt 163f537d 켜는 방식 auto concept 켜는 방식도 안전합니다"
     }
   ],
   "assignments": [
     {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 8일 오전 01_08_42 (1).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 8일 오전 01_08_42 (1).png",
-      "proposed_filename": "cpt_7b7a2f91.png",
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 8일 오후 07_27_41 (1).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 8일 오후 07_27_41 (1).png",
+      "proposed_filename": "price_shock_7abfd08b.png",
       "confidence": null,
       "exact_name": false,
       "alternatives": [],
       "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 8일 오전 01_08_42 (2).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 8일 오전 01_08_42 (2).png",
-      "proposed_filename": "cpt_b5a15155.png",
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 8일 오후 07_27_42 (2).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 8일 오후 07_27_42 (2).png",
+      "proposed_filename": "cut_theft_43505b9f.png",
       "confidence": null,
       "exact_name": false,
       "alternatives": [],
       "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 8일 오전 01_08_44 (5).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 8일 오전 01_08_44 (5).png",
-      "proposed_filename": "cpt_8bffef74.png",
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 8일 오후 07_27_42 (3).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 8일 오후 07_27_42 (3).png",
+      "proposed_filename": "mobile_settings_31257fb6.png",
       "confidence": null,
       "exact_name": false,
       "alternatives": [],
       "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 8일 오전 01_08_44 (4).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 8일 오전 01_08_44 (4).png",
-      "proposed_filename": "cpt_a1caaea6.png",
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 8일 오후 07_27_42 (4).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 8일 오후 07_27_42 (4).png",
+      "proposed_filename": "cpt_678a9adc.png",
       "confidence": null,
       "exact_name": false,
       "alternatives": [],
       "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 8일 오전 01_08_43 (3).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 8일 오전 01_08_43 (3).png",
-      "proposed_filename": "cpt_4729c912.png",
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 8일 오후 07_27_44 (5).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 8일 오후 07_27_44 (5).png",
+      "proposed_filename": "cpt_163f537d.png",
       "confidence": null,
       "exact_name": false,
       "alternatives": [],

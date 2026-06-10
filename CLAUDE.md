@@ -40,6 +40,13 @@
 5. `_docs/INSTRUCTIONS_SHORTS.md` — 영상(shorts) 빌드 매뉴얼
 6. `cardnews/_state/content_guide.md` — 매 사이클 학습되는 시즌·트렌드 메모 (존재 시)
 
+**인사이트 시트 (★ 매 수집·캡션 사이클 시작 시 무조건 Read, sync_sources 자동 전달):**
+
+7. **관리대장 시트 `유튜브_인사이트`** — Apps Script 03:40 자동 갱신 (Top 키워드·후킹 패턴·우수 영상). 매 수집 시 가중치 적용. 캡션 첫 줄 후킹 패턴 적용.
+8. **관리대장 시트 `메타_인사이트`** ★ 시트 추가 필요 (현재 Drive MD) — Top 헤드라인 패턴·우수 광고. 매 캡션 작성 시 짧은 채널 후킹 적용.
+
+→ 시트 sync 안 되면 "인사이트 0건, 가중치 미적용" 1줄 명시 후 진행. 매커니즘·포맷·자가 검증 = `_docs/INSIGHTS_LOOP.md`.
+
 **조건부 (작업 유형 따라 추가 Read):**
 
 - 실사 AI 광고 영상 (Higgsfield, Claude 담당): `shorts/promo_ai/README.md` + `shorts/promo_ai/WORKFLOW.md`
@@ -58,7 +65,7 @@
 
 | 사장님 명령 패턴 | 첫 행동 |
 |---|---|
-| "신규 수집" / "news 수집" / "신규 카드뉴스" | `INSTRUCTIONS_CARDNEWS.md` Step 1 룰 + 4 라인 병렬 WebSearch + 풀 후보 표 (라인별 모두 노출, 통합 번호) |
+| "신규 수집" / "news 수집" / "신규 카드뉴스" | (1) 시트 `유튜브_인사이트` + `메타_인사이트` Read + ★ **채널 운영 시트 (메타·당근·카카오·네이버·스레드·인스타) 최근 7일 진행사항 스캔 → `store-active+30%` 매장 진행 캠페인 강제 후보** (2) `cardnews/articles/*.json` Glob → 기존 발행 토픽 중복 회피 (3) `INSTRUCTIONS_CARDNEWS.md` Step 1 룰 + 4 라인 병렬 WebSearch (매장 진행 키워드 반영) (4) 풀 후보 표 + 가중치 라벨 (yt / meta / store-active / season / dup / 회피) |
 | "N번 발행" / "N+M 발행" / 숫자 회신 | `CARDNEWS_BUILD.md` 워크플로 따라 JSON + prompt.md + outbox 신호 |
 | "프롬프트 다듬어줘" / "청크 다듬어줘" | `INSTRUCTIONS_CARDNEWS.md` 자막 청크 룰 + 매장 정합 |
 | "텔레그램으로 쏴줘" | `AUTOMATION_OVERVIEW.md` outbox watcher 룰 → `_state/outbox/<날짜>_<주제>.txt` 떨굼 |
@@ -69,7 +76,8 @@
 | "매커니즘 알려줘" / "이게 어떻게 돌아가" | `AUTOMATION_OVERVIEW.md` 직참조 |
 | "관리대장" / "광고운영" / "광고 시트" / "KPI" | `ads/README_FOR_AI.md` → `ads/MANUAL.md` |
 | "메타 자동화" / "캠페인별 통합" / "UTM 매핑" / "GA4 매핑" | `ads/META_AUTOMATION.md` |
-| "유튜브 학습" / "인사이트" / **스크립트·카피 작성 시** | `ads/YOUTUBE_LEARNING.md` + 시트 "유튜브_인사이트" 탭 Read → 키워드/후킹 자동 반영 |
+| "유튜브 학습" / "인사이트" / **스크립트·카피 작성 시** | `ads/YOUTUBE_LEARNING.md` + Drive `phonespot_cardnews_state/youtube_insights.md` Read → 키워드/후킹 자동 반영 |
+| "메타 학습" / "광고 카피" / "광고 인사이트" / **카피·후킹 작성 시** | `ads/META_LEARNING.md` + Drive `phonespot_cardnews_state/meta_insights.md` Read → Top 키워드·헤드라인 패턴·카톡전환 우수 캠페인 자동 반영 |
 | "KT다이렉트샵" / "KT 관리대장" | `ads_kt/README_FOR_AI.md` |
 | "카드뉴스 기사 써줘" / "주제 뽑아줘" / "기사 만들어줘" | `cardnews/templates/article_authoring_spec.md` → 주제제안(content_guide)→사실수집→기사 JSON 저장. 영상만이면 카드이미지·image_prompts 생략 |
 | "부사수 셋업" / "새 PC" / "멀티PC" / "독립 셋업" | `부사수PC_원클릭_셋업.bat`(빈 PC 한 파일) + MULTI_PC 가이드 |
@@ -203,6 +211,7 @@ git ls-files -z | grep -ziE '\.(bat|ps1|cmd|vbs)$' | xargs -0 md5sum | sort \
 - 2026-06-04: 신설. STEP 1~7 박음. 6 가이드 진입점 정렬. 하네스 시작.
 - 2026-06-05: ads/ + ads_kt/ + 메타 자동화 합류. STEP 2 명령 패턴 3개 추가, STEP 4 진입점 3개 추가, STEP 5 폴더 구조에 ads/ ads_kt/ 박음.
 - 2026-06-05: 유튜브 자동 학습 루프 합류. `ads/YOUTUBE_LEARNING.md` + `youtube_sync.gs`의 generateYouTubeInsights (Gemini API 분석, 매일 03:40 자동). 스크립트·카피 작성 시 "유튜브_인사이트" 시트 Read 의무화.
+- 2026-06-05: 유튜브 학습 — 시트 탭 → **Drive MD 파일** 로 전환. Apps Script가 매일 03:40 `phonespot_cardnews_state/youtube_insights.md` Drive에 저장 → desktop sync로 로컬. INSTRUCTIONS_CARDNEWS.md (외부 신호 다음 자체 학습 섹션) + INSTRUCTIONS_SHORTS.md (Step 0) 룰 추가. 후보 점수 가중치 +30%/+20%/+50%/-40% 자동 적용.
 - 2026-06-07: promo(홍보영상) 트랙 하네스 합류. STEP 2 명령 패턴 + STEP 4 진입점 + STEP 5 폴더에 등록. 진입점=`shorts/promo/README.md`(Remotion 기생, 나레이션 없음·효과음+음악·스타일별 SFX·무드 음악풀). ※ `_docs/INSTRUCTIONS_SHORTS.md`는 옛 MoviePy/Typecast 설계라 현행 Remotion과 불일치 — 갱신 필요(미정).
 - 2026-06-08: promo_ai(실사 AI 광고) 트랙 하네스 합류. STEP 1 조건부 Read 섹션 신설 + STEP 2 명령 패턴 + STEP 4 진입점 + STEP 5 폴더에 등록. 진입점=`shorts/promo_ai/README.md` + `WORKFLOW.md`(Higgsfield MCP Kling 3.0 1순위 / Seedance 2순위 / ffmpeg 합치기, Claude 담당, 15초 9:16). 결제 상태: Higgsfield Free 3 credits (결제 검토 중, STARTER $19/월·연납 또는 PLUS $39-49/월).
 - 2026-06-08: **멀티PC 독립생산 + Claude 기사작성 + Drive 일러스트 공유 합류.** 핵심:
@@ -220,5 +229,11 @@ git ls-files -z | grep -ziE '\.(bat|ps1|cmd|vbs)$' | xargs -0 md5sum | sort \
 
 - 2026-06-08: **STEP 0 머신 역할 모델 신설(최우선).** 노트북=push only, 실행 PC=pull only, 메인 PC=이미지 자산. 적용=수신PC_자동업데이트 또는 git pull --ff-only/막히면 reset --hard origin/main. DEV_LAPTOP_OFFICE_RUN_GITHUB.md의 "사무실도 push" 모델 폐기.
 - 2026-06-08: **STEP 7 리포 위생 신설.** 중복 실행파일·줄끝 오염 원인(모노레포 import 중복·자동생성 복사·.gitattributes 부재·다중 writer)+규칙. .gitattributes 추가. 루트 죽은 사본 6 + CODEX 비접두 setup 2 = 8개 삭제.
+- 2026-06-08: **유튜브 시트 헤더 3행 구조 박음.** 유튜브 시트는 행 1(제목) + 행 2(네비) + 행 3(컬럼 헤더) + 행 4~ 데이터. `youtube_sync.gs` 상수 `SHEET_DATA_START_ROW = 4`(2/3 ❌). 정렬 시 행 1-3 절대 포함 금지. 깨졌을 때 복구 함수 `repairYouTubeSheetHeaders`(A열 "날짜" 행 찾아 위 1행=네비, 두 행을 행 2-3 위치로 복원). 가이드 `ads/YOUTUBE_LEARNING.md` 시트 구조 절대 룰 섹션 박음.
+- 2026-06-10: **메타 자동 학습 루프 합류 (유튜브 패턴 그대로).** Apps Script `meta-sync.gs`에 `generateMetaInsightsMarkdown` 함수 추가 → 매일 01:45 자동 분석 (`메타_소재` + `메타_통합` 시트 → Gemini → Drive `phonespot_cardnews_state/meta_insights.md` 덮어쓰기). 활용처: ① 광고 카피 작성 (generator.html) ② 카드뉴스/쇼츠 후킹 reference. 신규 가이드 `ads/META_LEARNING.md` (YOUTUBE_LEARNING.md 패턴), `_docs/INSTRUCTIONS_CARDNEWS.md`에 "자체 메타 광고 학습" 섹션 (유튜브와 가중치 합산), `_docs/INSTRUCTIONS_SHORTS.md` Step 0.5 추가. 트리거: setupTriggers() 01:30 syncAll + 01:45 generateMetaInsightsMarkdown.
+- 2026-06-10: **UTM_매핑 시트 + 자동 발견 합류.** 메타 API campaign_name(한글) ↔ GA4 utm_campaign(영문 슬러그) 불일치로 메타_통합 시트 GA4 컬럼 공란 문제 해결. `UTM_매핑` 시트 (A: 한글 / B: 영문 슬러그 / C: 첫 발견일 / D: 상태 / E: 메모) 자동 생성. `syncMetaCampaignIntegrated` 안에서 `autoDiscoverCampaigns_` 호출 → 새 한글 캠페인 발견 시 A열 자동 추가 (B열 비움, 상태 ⚠️ 매핑 필요). 메타_통합 GA4 매칭 수식이 VLOOKUP으로 한글 → 영문 변환 후 매칭. 사용자는 새 캠페인 추가 시 B열 1줄만 입력. 추가: `notifyUnmappedCampaigns_`, `showUnmappedCampaigns` (메뉴 "🔍 미매핑 캠페인 보기").
+- 2026-06-10: **메타_통합 → 광고그룹(adset) 단위로 전환 (★ 1차 자동화 완성).** 사용자 메타 운영 단위 = 광고그룹 (BA/VA 등) + GA4 utm_campaign 에 광고그룹 식별자(한글) 박혀있음. 코드 변경: ① Meta API `level=campaign` → `level=adset` ② fields에 `adset_id, adset_name` 추가 ③ 메타_통합 시트 19컬럼 구조 (날짜/캠페인ID/캠페인명/광고그룹ID/광고그룹명/노출/클릭/지출/CTR/CPC/GA4세션/카톡클릭/전화클릭/시티마켓/카톡전환률/카톡당CPC/문의수/개통수/메모) ④ `autoDiscoverCampaigns_` → `autoDiscoverAdsets_` (광고그룹명 기준) ⑤ GA4 매칭 수식 D열(캠페인명) → E열(광고그룹명) 기준. UTM_매핑 시트 헤더 "메타 캠페인명" → "메타 광고그룹명". 메뉴 항목 "📊 캠페인별 통합" → "📊 광고그룹별 통합", "🔍 미매핑 캠페인 보기" → "🔍 미매핑 광고그룹 보기". 메타 잠금(phonespot86 비정상 활동 감지) 풀린 후 정상 작동 확인.
+- 2026-06-10: **메타 phonespot86 비정상활동 잠금 사건 → 복구 + 대응 정리.** 디버거 결과 토큰 Valid(만료없음, scopes 정상) → 토큰 자체 문제 X, 광고 계정 또는 앱 권한 문제. 원인 추정: 평소 안 쓰던 디바이스/IP에서 phonespot86 로그인 + 개발자 콘솔 단시간 다중 접근. 자동화 코드 자체는 안전(rate limit 미달, 정책 위반 X). 재발 대응: 2FA + 로그인 알림 ON, 본인 계정(313jongmin)을 비즈니스 매니저 관리자로 추가(백업 플랜), 1회 더 잠기면 그때 빈도 조정.
+- 2026-06-10 (예정): **인스타 시트 자동화 — 인증 안정화 후 작업.** Instagram Graph API 사용(메타 산하). 현재 META_TOKEN scopes에 `instagram_basic`, `instagram_manage_insights` 없음 → 비즈니스 매니저에서 시스템 사용자 `phonespot-sync` 에 권한 + 인스타 비즈니스 계정 자산 추가. 신규 토큰 발급 X(기존 토큰에 권한 자동 반영). 가져올 데이터: 게시물별 조회수/좋아요/리치/permalink/caption + 일별 팔로워 추이(30일 한도). 인스타 시트 컬럼: A날짜/C주제/D링크/E조회수/F좋아요/G팔로워 자동, H운영메모/I비고 수동. **메타 잠금 안정화 며칠 후 진행** (인증 직후 권한 변경하면 의심 트리거 가능).
 
 이 파일이 업그레이드되면 변경 이력 1줄 추가. 가이드 추가·제거 시 STEP 1 리스트 동기화.

@@ -1,11 +1,18 @@
 @echo off
 chcp 65001 >nul
-setlocal
+setlocal enabledelayedexpansion
 title PhoneSpot - stop tracking runtime files (one-time, MAIN PC)
 for %%I in ("%~dp0..") do set "ROOT=%%~fI"
 cd /d "%ROOT%"
 
-where git >nul 2>&1 || ( echo [ERROR] git not found. & pause & exit /b 1 )
+rem ---- resolve git like the panel does (PATH, Program Files, GitHub Desktop) ----
+set "GIT="
+where git >nul 2>&1 && set "GIT=git"
+if not defined GIT if exist "C:\Program Files\Git\cmd\git.exe" set "GIT=C:\Program Files\Git\cmd\git.exe"
+if not defined GIT if exist "C:\Program Files\Git\bin\git.exe" set "GIT=C:\Program Files\Git\bin\git.exe"
+if not defined GIT for /d %%D in ("%LOCALAPPDATA%\GitHubDesktop\app-*") do if exist "%%D\resources\app\git\cmd\git.exe" set "GIT=%%D\resources\app\git\cmd\git.exe"
+if not defined GIT ( echo [ERROR] git not found. Install Git or GitHub Desktop, then retry. & pause & exit /b 1 )
+echo [git] using: !GIT!
 
 echo ============================================================
 echo  Stop tracking runtime/generated files in git (one-time).
@@ -22,23 +29,11 @@ if /i not "%OK%"=="Y" ( echo canceled. & pause & exit /b 1 )
 
 echo.
 echo [git] untracking runtime files (files stay on disk)...
-git rm -r --cached --ignore-unmatch "shorts/public/assets/illustrations"
-git rm --cached --ignore-unmatch "shorts/config/illustration_tag_db.json"
-git rm --cached --ignore-unmatch "shorts/codex/ILLUSTRATION_TAG_DB.md"
-git rm --cached --ignore-unmatch "shorts/codex/illustration_usage_history.json"
-git rm --cached --ignore-unmatch "shorts/public/shorts_script.json"
+"!GIT!" rm -r --cached --ignore-unmatch "shorts/public/assets/illustrations"
+"!GIT!" rm --cached --ignore-unmatch "shorts/config/illustration_tag_db.json"
+"!GIT!" rm --cached --ignore-unmatch "shorts/codex/ILLUSTRATION_TAG_DB.md"
+"!GIT!" rm --cached --ignore-unmatch "shorts/codex/illustration_usage_history.json"
+"!GIT!" rm --cached --ignore-unmatch "shorts/public/shorts_script.json"
 
-git add .gitignore
-git commit -m "stop tracking runtime/generated files (prevent pull conflicts)"
-if errorlevel 1 echo [info] nothing to commit or commit failed - see above.
-
-echo.
-echo [git] push...
-git push
-if errorlevel 1 (
-  echo [FAIL] push failed. Check internet / git credentials.
-) else (
-  echo [OK] done. Other PCs: next pull is clean. If an illustration looks
-  echo      missing there, run panel "Manage > library sync" to restore from the hub.
-)
-pause
+"!GIT!" add .gitignore
+"!GIT!" commit -m "stop tracking runtime/generated files

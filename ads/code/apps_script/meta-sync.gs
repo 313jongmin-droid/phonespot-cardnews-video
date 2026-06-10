@@ -800,24 +800,408 @@ function getMetaCreativesAsJSON_() {
   }
 }
 
+// ============ 옵션 C 폐기 (2026-06-09) ============
+// 컨셉_태그 컬럼 시스템 종민 결정으로 전체 제거. 카피 생성은 기존 폼(USP/추가 키워드)
+// + 신규 컨셉 자유 입력바(generator.html) 활용. 시트 P열에 남아있는 컨셉_태그 컬럼은
+// 종민이 시트에서 수동 삭제 가능 (그대로 둬도 무관).
+
+// ============ 🤖 Apify 벤치마크 수집 (2026-06-09) ============
+// Meta Ad Library를 신원 인증 없이 우회. Apify scraper 호출.
+// Actor: curious_coder/facebook-ads-library-scraper ($0.00075/광고)
+// 토큰: PropertiesService → APIFY_TOKEN
+
+const APIFY_ACTOR_ID = 'curious_coder/facebook-ads-library-scraper';
+
+function getApifyToken_() {
+  const t = PropertiesService.getScriptProperties().getProperty('APIFY_TOKEN');
+  if (!t) throw new Error('APIFY_TOKEN이 PropertiesService에 없음. 프로젝트 설정 → 스크립트 속성에서 추가하세요.');
+  return t;
+}
+
+// 핵심 호출 함수
+function fetchBenchmarkFromApify_(searchTerm, count, countryCode) {
+  const token = getApifyToken_();
+  const cc = countryCode || 'KR';
+  const searchUrl = 'https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=' + cc +
+                    '&q=' + encodeURIComponent(searchTerm) + '&search_type=keyword_unordered&media_type=all';
+  const input = {
+    urls: [{url: searchUrl}],
+    count: count || 30,
+    'scrapePageAds.activeStatus': 'active',
+    'scrapePageAds.countryCode': cc
+  };
+  // Apify run-sync-get-dataset-items: 동기 호출, 결과 즉시 반환
+  const actorPath = APIFY_ACTOR_ID.replace('/', '~');
+  const apiUrl = 'https://api.apify.com/v2/acts/' + actorPath +
+                 '/run-sync-get-dataset-items?token=' + token;
+  const res = UrlFetchApp.fetch(apiUrl, {
+    method: 'post',
+    contentType: 'application/json',
+    payload: JSON.stringify(input),
+    muteHttpExceptions: true
+  });
+  const code = res.getResponseCode();
+  if (code !== 200 && code !== 201) {
+    throw new Error('Apify 호출 실패 ' + code + ': ' + res.getContentText().slice(0, 400));
+  }
+  return JSON.parse(res.getContentText());
+}
+
+// Apify 결과 → 시트 저장 (벤치마크_경쟁사_광고 시트 재활용 + 추가 컬럼)
+function saveBenchmarkToSheet_(items, searchTerm) {
+  const ss = SpreadsheetApp.getActive();
+  let sheet = ss.getSheetByName(SHEET_BM_CP);
+  if (!sheet) {
+    sheet = ss.insertSheet(SHEET_BM_CP);
+    sheet.appendRow(['벤치마크·경쟁사 광고 라이브러리 (Apify + Meta Ad Library)']);
+    sheet.appendRow([
+      'ID', '구분', '페이지명', '페이지ID', '팔로워',
+      '본문 발췌', '광고 형식', 'CTA', '게재 시작일', '게재 위치',
+      '운영 일수', '위치 수', '변형 수', '점수', '등급',
+      '썸네일 URL', 'Ad Library URL', '검색 키워드', '수집일'
+    ]);
+    sheet.getRange(2, 1, 1, 19).setBackground('#1F4E78').setFontColor('#FFFFFF').setFontWeight('bold');
+    sheet.setColumnWidths(1, 19, 110);
+    sheet.setColumnWidth(6, 320);  // 본문 발췌
+    sheet.setColumnWidth(17, 200); // Ad Library URL
+  }
+
+  const today = new Date();
+  const nowStr = Utilities.formatDate(today, 'Asia/Seoul', 'yyyy-MM-dd');
+  let added = 0;
+  let goodCount = 0;
+  // 중복 체크 (광고 ID 끝 8자리 기준)
+  let existingSet = new Set();
+  if (sheet.getLastRow() >= 3) {
+    const existing = sheet.getRange(3, 1, sheet.getLastRow() - 2, 1).getValues();
+    existing.forEach(r => existingSet.add(String(r[0]).slice(-8)));
+  }
+
+  for (const item of items) {
+    const adId = String(item.ad_archive_id || '');
+    if (!adId) continue;
+    const idSuffix = adId.slice(-8);
+    if (existingSet.has(idSuffix)) continue;
+
+    const s = item.snapshot || {};
+    const body = (s.body && s.body.text) || '';
+    const bodyExcerpt = body.split('\n').filter(l => l.trim()).slice(0, 3).join(' | ').slice(0, 280);
+    const platforms = item.publisher_platform || [];
+    const startDate = item.start_date ? new Date(item.start_date * 1000) : null;
+    const days = startDate ? Math.floor((today - startDate) / (1000 * 60 * 60 * 24)) : 0;
+    const collation = item.collation_count || 1;
+
+    // 점수 계산 (운영일수 + 채널수 + 변형수)
+    let score = 0;
+    if (days >= 90) score += 3;
+    else if (days >= 30) score += 2;
+    else if (days >= 7) score += 1;
+    if (platforms.length >= 4) score += 2;
+    else if (platforms.length >= 2) score += 1;
+    if (collation >= 3) score += 1;
+
+    let grade;
+    if (score >= 5) grade = '★★★ 검증됨';
+    else if (score >= 3) grade = '★★ 양호';
+    else if (score >= 1) grade = '★ 신규';
+    else grade = '평가 보류';
+    if (score >= 5) goodCount++;
+
+    // 썸네일
+    const videos = s.videos || [];
+    const images = s.images || [];
+    const thumbnail = (videos[0] && videos[0].video_preview_image_url) ||
+                      (images[0] && images[0].original_image_url) ||
+                      (images[0] && images[0].resized_image_url) || '';
+
+    const seq = sheet.getLastRow() - 1 + added + 1;
+    const newId = 'BM-' + String(seq).padStart(3, '0') + '_' + adId.slice(-6);
+    existingSet.add(idSuffix);
+
+    sheet.appendRow([
+      newId, 'BM',
+      s.page_name || '-',
+      s.page_id || '-',
+      s.page_like_count || 0,
+      bodyExcerpt || '-',
+      s.display_format || '-',
+      s.cta_text || '-',
+      item.start_date_formatted || '-',
+      platforms.join(', '),
+      days,
+      platforms.length,
+      collation,
+      score,
+      grade,
+      thumbnail,
+      item.ad_library_url || '-',
+      searchTerm,
+      nowStr
+    ]);
+    added++;
+    Utilities.sleep(50);
+  }
+
+  applyBenchmarkGradeFormatting_(sheet);
+  return { added, goodCount, totalReceived: items.length };
+}
+
+function applyBenchmarkGradeFormatting_(sheet) {
+  const range = sheet.getRange('O3:O1000');
+  const rules = [
+    SpreadsheetApp.newConditionalFormatRule()
+      .whenTextContains('★★★').setBackground('#c8e6c9').setFontColor('#1b5e20').setBold(true).setRanges([range]).build(),
+    SpreadsheetApp.newConditionalFormatRule()
+      .whenTextContains('★★').setBackground('#fff9c4').setFontColor('#5d4e00').setRanges([range]).build(),
+    SpreadsheetApp.newConditionalFormatRule()
+      .whenTextContains('★').setBackground('#e1f5fe').setFontColor('#01579b').setRanges([range]).build(),
+    SpreadsheetApp.newConditionalFormatRule()
+      .whenTextEqualTo('평가 보류').setBackground('#f5f5f5').setFontColor('#9e9e9e').setRanges([range]).build()
+  ];
+  sheet.setConditionalFormatRules(rules);
+}
+
+// 메뉴 단발 (키워드 prompt)
+function promptApifyBenchmark() {
+  const ui = SpreadsheetApp.getUi();
+  const kw = ui.prompt('🤖 Apify 벤치마크 수집',
+    '검색 키워드 (예: 휴대폰성지, 갤럭시 S26 자급제, 통신비 절약):',
+    ui.ButtonSet.OK_CANCEL);
+  if (kw.getSelectedButton() !== ui.Button.OK) return;
+  const term = kw.getResponseText().trim();
+  if (!term) return;
+
+  const cnt = ui.prompt('광고 수 (기본 30, 최대 200)',
+    '비용: 30개 ≈ 30원, 100개 ≈ 100원, 200개 ≈ 200원',
+    ui.ButtonSet.OK_CANCEL);
+  if (cnt.getSelectedButton() !== ui.Button.OK) return;
+  const count = Math.max(1, Math.min(200, parseInt(cnt.getResponseText()) || 30));
+
+  try {
+    Logger.log('Apify call: ' + term + ' / ' + count);
+    const items = fetchBenchmarkFromApify_(term, count, 'KR');
+    const r = saveBenchmarkToSheet_(items, term);
+    ui.alert(
+      '✅ Apify 수집 완료\n\n' +
+      '키워드: ' + term + '\n' +
+      '수신: ' + r.totalReceived + '건 / 신규 저장 ' + r.added + '건\n' +
+      '★★★ 검증됨: ' + r.goodCount + '건\n' +
+      '예상 비용: $' + (r.totalReceived * 0.00075).toFixed(4) + '\n\n' +
+      '시트: 벤치마크_경쟁사_광고'
+    );
+    logSync_('promptApifyBenchmark', term + ': ' + r.added + ' new, ' + r.goodCount + ' verified');
+  } catch (e) {
+    ui.alert('❌ 실패: ' + e.message);
+    logSync_('promptApifyBenchmark', 'FAIL: ' + e.message);
+  }
+}
+
+// generator.html 페이지 로드 시 시트 누적분 fetch (자동 import)
+function getBenchmarkForGenerator() {
+  try {
+    const sheet = SpreadsheetApp.getActive().getSheetByName(SHEET_BM_CP);
+    if (!sheet) return { ok: true, items: [] };
+    if (sheet.getLastRow() < 3) return { ok: true, items: [] };
+    // 헤더 정의: ID/구분/페이지명/페이지ID/팔로워/본문 발췌/광고 형식/CTA/게재 시작일/게재 위치/운영 일수/위치 수/변형 수/점수/등급/썸네일 URL/Ad Library URL/검색 키워드/수집일
+    const data = sheet.getRange(3, 1, sheet.getLastRow() - 2, 19).getValues();
+    const items = [];
+    for (const row of data) {
+      const id = String(row[0] || '');
+      if (!id.startsWith('BM') && !id.startsWith('CP')) continue;
+      items.push({
+        id: id,
+        category: String(row[1] || 'BM'),
+        pageName: String(row[2] || '-'),
+        pageId: String(row[3] || '-'),
+        followers: parseInt(row[4]) || 0,
+        body: String(row[5] || ''),
+        format: String(row[6] || '-'),
+        cta: String(row[7] || '-'),
+        startDate: String(row[8] || '-'),
+        platforms: String(row[9] || '').split(',').map(s => s.trim()).filter(Boolean),
+        days: parseInt(row[10]) || 0,
+        platformCount: parseInt(row[11]) || 0,
+        collation: parseInt(row[12]) || 1,
+        score: parseInt(row[13]) || 0,
+        grade: String(row[14] || '평가 보류'),
+        thumbnail: String(row[15] || ''),
+        adLibraryUrl: String(row[16] || ''),
+        searchTerm: String(row[17] || ''),
+        collectedAt: String(row[18] || '')
+      });
+    }
+    return { ok: true, items: items, count: items.length };
+  } catch (e) {
+    return { ok: false, error: e.message, items: [] };
+  }
+}
+
+// 벤치마크 시트 행 삭제 (BM ID 또는 광고 archive ID로)
+function deleteBenchmarkFromSheet(idOrAdId) {
+  try {
+    const sheet = SpreadsheetApp.getActive().getSheetByName(SHEET_BM_CP);
+    if (!sheet) return { ok: false, error: '벤치마크 시트 없음' };
+    if (sheet.getLastRow() < 3) return { ok: false, error: '데이터 없음' };
+    const data = sheet.getRange(3, 1, sheet.getLastRow() - 2, 1).getValues();
+    const target = String(idOrAdId || '').trim();
+    if (!target) return { ok: false, error: 'ID 없음' };
+    // 정확 매치 + 끝자리 매치 둘 다 시도
+    for (let i = 0; i < data.length; i++) {
+      const rowId = String(data[i][0] || '');
+      if (rowId === target || rowId.endsWith('_' + target) || rowId.endsWith(target.slice(-6))) {
+        sheet.deleteRow(i + 3);
+        return { ok: true, deleted: rowId };
+      }
+    }
+    return { ok: false, error: 'ID 못 찾음: ' + target };
+  } catch (e) {
+    return { ok: false, error: e.message };
+  }
+}
+
+// 여러 개 일괄 삭제
+function deleteBenchmarksFromSheet(ids) {
+  if (!Array.isArray(ids)) return { ok: false, error: '배열 아님' };
+  try {
+    const sheet = SpreadsheetApp.getActive().getSheetByName(SHEET_BM_CP);
+    if (!sheet) return { ok: false, error: '벤치마크 시트 없음' };
+    if (sheet.getLastRow() < 3) return { ok: false, error: '데이터 없음' };
+    const data = sheet.getRange(3, 1, sheet.getLastRow() - 2, 1).getValues();
+    const targets = new Set(ids.map(x => String(x).trim()).filter(Boolean));
+    // 뒤에서부터 삭제 (인덱스 안정성)
+    const rowsToDelete = [];
+    for (let i = 0; i < data.length; i++) {
+      const rowId = String(data[i][0] || '');
+      const matches = Array.from(targets).some(t =>
+        rowId === t || rowId.endsWith('_' + t) || rowId.endsWith(t.slice(-6)));
+      if (matches) rowsToDelete.push(i + 3);
+    }
+    for (let i = rowsToDelete.length - 1; i >= 0; i--) {
+      sheet.deleteRow(rowsToDelete[i]);
+    }
+    return { ok: true, deleted: rowsToDelete.length };
+  } catch (e) {
+    return { ok: false, error: e.message };
+  }
+}
+
+// 시트 직접 링크 (gid)
+function getBenchmarkSheetUrl() {
+  try {
+    const ss = SpreadsheetApp.getActive();
+    const sheet = ss.getSheetByName(SHEET_BM_CP);
+    if (!sheet) return { ok: false, error: '벤치마크 시트 없음' };
+    return {
+      ok: true,
+      url: ss.getUrl() + '#gid=' + sheet.getSheetId(),
+      rowCount: Math.max(0, sheet.getLastRow() - 2)
+    };
+  } catch (e) {
+    return { ok: false, error: e.message };
+  }
+}
+
+// generator.html에서 호출 (Web App API)
+function searchBenchmarkViaApify(searchTerm, count, countryCode) {
+  try {
+    const items = fetchBenchmarkFromApify_(searchTerm, count || 20, countryCode || 'KR');
+    const today = new Date();
+    const processed = items.map(item => {
+      const s = item.snapshot || {};
+      const startDate = item.start_date ? new Date(item.start_date * 1000) : null;
+      const days = startDate ? Math.floor((today - startDate) / (1000 * 60 * 60 * 24)) : 0;
+      const platforms = item.publisher_platform || [];
+      const collation = item.collation_count || 1;
+      const videos = s.videos || [];
+      const images = s.images || [];
+      const thumbnail = (videos[0] && videos[0].video_preview_image_url) ||
+                        (images[0] && images[0].original_image_url) || '';
+      let score = 0;
+      if (days >= 90) score += 3;
+      else if (days >= 30) score += 2;
+      else if (days >= 7) score += 1;
+      if (platforms.length >= 4) score += 2;
+      else if (platforms.length >= 2) score += 1;
+      if (collation >= 3) score += 1;
+      let grade;
+      if (score >= 5) grade = '★★★ 검증됨';
+      else if (score >= 3) grade = '★★ 양호';
+      else if (score >= 1) grade = '★ 신규';
+      else grade = '평가 보류';
+      const body = (s.body && s.body.text) || '';
+      return {
+        adId: String(item.ad_archive_id || ''),
+        pageName: s.page_name || '-',
+        pageId: s.page_id || '-',
+        pageFollowers: s.page_like_count || 0,
+        body: body,
+        bodyExcerpt: body.slice(0, 400),
+        displayFormat: s.display_format || '-',
+        cta: s.cta_text || '-',
+        startDate: item.start_date_formatted || '-',
+        days, platforms, collation, score, grade, thumbnail,
+        adLibraryUrl: item.ad_library_url || ''
+      };
+    });
+    return { ok: true, totalReceived: items.length, items: processed };
+  } catch (e) {
+    return { ok: false, error: e.message };
+  }
+}
+
+// generator.html에서 선택한 광고들 시트 저장
+function saveBenchmarkSelectedFromGenerator(itemsRaw, searchTerm) {
+  try {
+    // generator.html이 보낸 processed item을 raw 형태로 복구해서 saveBenchmarkToSheet_ 재활용
+    const items = (itemsRaw || []).map(p => ({
+      ad_archive_id: p.adId,
+      collation_count: p.collation,
+      publisher_platform: p.platforms,
+      start_date: null, // 이미 days 계산됨, 시트 저장 시 startDate 문자열만 씀
+      start_date_formatted: p.startDate,
+      ad_library_url: p.adLibraryUrl,
+      snapshot: {
+        page_name: p.pageName,
+        page_id: p.pageId,
+        page_like_count: p.pageFollowers,
+        body: { text: p.body || p.bodyExcerpt || '' },
+        display_format: p.displayFormat,
+        cta_text: p.cta,
+        videos: p.thumbnail ? [{video_preview_image_url: p.thumbnail}] : []
+      }
+    }));
+    // days 계산을 위해 start_date 추정 (역산)
+    items.forEach((it, i) => {
+      const days = itemsRaw[i].days || 0;
+      it.start_date = Math.floor((Date.now() - days * 86400 * 1000) / 1000);
+    });
+    const r = saveBenchmarkToSheet_(items, searchTerm || 'manual');
+    return { ok: true, added: r.added, goodCount: r.goodCount };
+  } catch (e) {
+    return { ok: false, error: e.message };
+  }
+}
+
 // ============ 메뉴 (기존 onOpen에서 호출) ============
+// 원칙 (2026-06-09): 시트 메뉴 = 자동화·백엔드 운영. 사용자 도구(벤치마크 수집, 카피·이미지 생성, JSON Export 등) 전부 generator.html(Web App) 내부에서 처리.
 function buildMetaSyncMenu_(ui) {
   ui.createMenu('📡 메타 자동화')
     .addItem('🔄 지금 동기화 (테스트)', 'manualSyncToday')
     .addItem('📥 어제 성과만 가져오기', 'syncMetaDaily')
     .addItem('🎨 광고소재 라이브러리 갱신', 'syncMetaCreatives')
-    .addItem('📊 캠페인별 통합 (어제)', 'syncMetaCampaignIntegrated')   // ★ 신규
-    .addItem('⏪ 30일 백필 (1회만)', 'backfillMetaCampaign30Days')      // ★ 신규
+    .addItem('📊 캠페인별 통합 (어제)', 'syncMetaCampaignIntegrated')
+    .addItem('⏪ 30일 백필 (1회만)', 'backfillMetaCampaign30Days')
     .addSeparator()
-    .addItem('🔍 벤치마크 광고 수집 (Ad Library)', 'promptSyncBenchmark')
-    .addItem('🥊 경쟁사 광고 수집 (Ad Library)', 'promptSyncCompetitor')
-    .addSeparator()
-    .addItem('📤 JSON Export (generator.html용)', 'exportCreativesAsJSON')
     .addItem('📊 마지막 동기화 정보', 'showLastSyncInfo')
-    .addSeparator()
-    .addItem('🔑 토큰 연결 테스트', 'testTokenAndAccount')
+    .addItem('🔑 토큰 연결 테스트 (메타)', 'testTokenAndAccount')
     .addItem('⏰ Daily Trigger 설정', 'setupTriggers')
     .addToUi();
+  // 폐기된 사용자 도구 메뉴 (generator.html로 이동, 2026-06-09):
+  //  - 🤖 Apify 벤치마크 수집 → generator 벤치마크 탭 🔍 검색바
+  //  - 🔍 벤치마크 / 🥊 경쟁사 (Ad Library 인증 필요) → 신원인증 못 받아 폐기
+  //  - 📤 JSON Export → generator가 직접 google.script.run으로 호출
+  // promptApifyBenchmark / promptSyncBenchmark / promptSyncCompetitor / exportCreativesAsJSON
+  // 함수는 코드에 남겨두지만 메뉴에서만 제거 (호환·복구용).
 }
 
 function showLastSyncInfo() {

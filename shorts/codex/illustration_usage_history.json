@@ -173,9 +173,21 @@
         "chatbot",
         "gift_voucher"
       ]
+    },
+    "017_tip_summer_travel_phone_5min": {
+      "used_at": "2026-06-08T19:22:01",
+      "source": "codex_enhance",
+      "illustrations": [
+        "smartphone",
+        "aluminum_label",
+        "appliance",
+        "battery_charge_range",
+        "battery_overheat",
+        "biometric"
+      ]
     }
   },
-  "updated_at": "2026-06-08T18:46:26",
+  "updated_at": "2026-06-08T19:22:04",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -209,6 +221,10 @@
     },
     "016_news_ios_26_3_release": {
       "updated_at": "2026-06-08T18:46:26",
+      "variants": []
+    },
+    "017_tip_summer_travel_phone_5min": {
+      "updated_at": "2026-06-08T19:22:04",
       "variants": []
     }
   }
