@@ -185,9 +185,34 @@
         "battery_overheat",
         "biometric"
       ]
+    },
+    "018_scam_wedding_invite_smishing": {
+      "used_at": "2026-06-10T17:45:57",
+      "source": "uploaded_illustrations",
+      "illustrations": [
+        "cpt_f59129df",
+        "surge_b56b4f67",
+        "cpt_066b1a1b",
+        "phone_settings_toggle",
+        "phone_setup_ready",
+        "cpt_6f69bf84",
+        "friend_wedding_suspicion_884c4f09",
+        "meeting_room",
+        "security_feature_lock",
+        "lock",
+        "impersonation_call",
+        "gift_prohibit",
+        "shield",
+        "prohibit",
+        "warning",
+        "forecast",
+        "nfc_pay",
+        "cpt_4729c912",
+        "gift_voucher"
+      ]
     }
   },
-  "updated_at": "2026-06-08T19:22:04",
+  "updated_at": "2026-06-10T17:45:58",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -225,6 +250,10 @@
     },
     "017_tip_summer_travel_phone_5min": {
       "updated_at": "2026-06-08T19:22:04",
+      "variants": []
+    },
+    "018_scam_wedding_invite_smishing": {
+      "updated_at": "2026-06-10T17:45:58",
       "variants": []
     }
   }

@@ -21,19 +21,23 @@
 | `clock` | time, tips, library | 2 | 011_qa_combo_discount_check |
 | `cloud_backup` | security, privacy, cloud, library | 1 | 001_apple_ondevice_ai_wwdc26 |
 | `cover_screen_widgets` | library | 0 |  |
+| `cpt_066b1a1b` | auto, library | 1 | 018_scam_wedding_invite_smishing |
 | `cpt_09b8db78` | auto | 0 |  |
 | `cpt_0a1ac199` | auto | 0 |  |
 | `cpt_0ddb8d80` | auto | 0 |  |
+| `cpt_163f537d` | auto | 0 |  |
 | `cpt_1a196d6d` | auto | 0 |  |
 | `cpt_313e9e00` | auto | 0 |  |
 | `cpt_3317f8c6` | auto | 0 |  |
-| `cpt_4729c912` | auto, library | 1 | 015_qa_msafer_pass_identity_block |
+| `cpt_4729c912` | auto, library | 2 | 018_scam_wedding_invite_smishing |
 | `cpt_55c40fb8` | auto | 0 |  |
 | `cpt_5cd81fce` | auto | 0 |  |
 | `cpt_6174b190` | auto | 0 |  |
 | `cpt_64b80bba` | auto | 0 |  |
+| `cpt_678a9adc` | auto | 0 |  |
 | `cpt_6a2e9678` | auto, library | 2 | 015_qa_msafer_pass_identity_block |
 | `cpt_6ec7317d` | auto | 0 |  |
+| `cpt_6f69bf84` | auto, library | 1 | 018_scam_wedding_invite_smishing |
 | `cpt_75c6eba6` | auto, library | 1 | 014_scam_voicephishing_zero_relief |
 | `cpt_7a87dd35` | auto | 0 |  |
 | `cpt_7b46d1e4` | auto | 0 |  |
@@ -56,10 +60,12 @@
 | `cpt_ea93eb2b` | auto | 0 |  |
 | `cpt_f14977dc` | auto | 0 |  |
 | `cpt_f35df68f` | auto | 0 |  |
+| `cpt_f59129df` | auto, library | 1 | 018_scam_wedding_invite_smishing |
 | `cpt_f5cc7e27` | auto | 0 |  |
 | `cpt_f7997fd3` | auto | 0 |  |
 | `cpt_fa7ce644` | auto | 0 |  |
 | `cpt_fd9edf65` | auto, library | 1 | 014_scam_voicephishing_zero_relief |
+| `cut_theft_43505b9f` | auto | 0 |  |
 | `device_data_transfer` | device, migration, backup, tips, library | 2 | 016_news_ios_26_3_release |
 | `device_os_requirement` | library | 0 |  |
 | `device_price_rise` | price, increase, device | 0 |  |
@@ -68,60 +74,65 @@
 | `fake_government_page` | security, smishing, government, warning | 0 |  |
 | `final_update` | software, update, library | 3 | 016_news_ios_26_3_release |
 | `foldable` | hardware, foldable, library | 1 | 012_news_galaxy_unpack_july |
-| `forecast` | news, forecast, library | 8 | 016_news_ios_26_3_release |
+| `forecast` | news, forecast, library | 9 | 018_scam_wedding_invite_smishing |
+| `friend_wedding_suspicion_884c4f09` | auto, library | 1 | 018_scam_wedding_invite_smishing |
 | `gemini` | ai, assistant, google, library | 2 | 010_tip_iphone_call_record |
-| `gift_prohibit` | price, security, warning, library | 0 |  |
-| `gift_voucher` | price, subsidy, purchase, library | 7 | 016_news_ios_26_3_release |
+| `gift_prohibit` | price, security, warning, library | 1 | 018_scam_wedding_invite_smishing |
+| `gift_voucher` | price, subsidy, purchase, library | 8 | 018_scam_wedding_invite_smishing |
 | `handshake` | policy, access, partnership, library | 2 | 014_scam_voicephishing_zero_relief |
 | `health_sensor_watch` | library | 2 | 012_news_galaxy_unpack_july |
 | `heat_release` | battery, heat, hardware, library | 0 |  |
-| `impersonation_call` | security, voice-phishing, call, warning, library | 3 | 015_qa_msafer_pass_identity_block |
+| `impersonation_call` | security, voice-phishing, call, warning, library | 4 | 018_scam_wedding_invite_smishing |
 | `launch_event` | library | 0 |  |
 | `liquid_titanium` | materials, hardware, library | 0 |  |
-| `lock` | security, privacy, lock, library | 2 | 015_qa_msafer_pass_identity_block |
+| `lock` | security, privacy, lock, library | 3 | 018_scam_wedding_invite_smishing |
 | `logout` | security, privacy, account, library | 1 | 015_qa_msafer_pass_identity_block |
 | `market_cap` | price, data, market, library | 1 | 014_scam_voicephishing_zero_relief |
-| `meeting_room` | policy, news, strategy, library | 8 | 016_news_ios_26_3_release |
+| `meeting_room` | policy, news, strategy, library | 9 | 018_scam_wedding_invite_smishing |
 | `memory_chip` | ai, hardware, chip, library | 2 | 010_tip_iphone_call_record |
 | `microphone` | news, quote, library | 8 | 016_news_ios_26_3_release |
+| `mobile_settings_31257fb6` | auto | 0 |  |
 | `module_install` | library | 0 |  |
 | `newspaper` | news, source, library | 7 | 016_news_ios_26_3_release |
 | `nfc_open_access` | payment, nfc, access | 0 |  |
-| `nfc_pay` | payment, nfc, access, library | 0 |  |
+| `nfc_pay` | payment, nfc, access, library | 1 | 018_scam_wedding_invite_smishing |
 | `official_site_check` | security, official-site, check | 0 |  |
 | `ondevice_ai_chip` | ai, hardware, privacy | 0 |  |
 | `optimized_charging` | battery, charging, tips, library | 0 |  |
 | `password` | security, privacy, authentication, library | 0 |  |
 | `personal_data_leak` | security, privacy, leak | 0 |  |
-| `phone_settings_toggle` | library | 5 | 016_news_ios_26_3_release |
-| `phone_setup_ready` | library | 3 | 016_news_ios_26_3_release |
+| `phone_settings_toggle` | library | 6 | 018_scam_wedding_invite_smishing |
+| `phone_setup_ready` | library | 4 | 018_scam_wedding_invite_smishing |
 | `plan_price_tier_compare` | price, plan, compare, telecom | 0 |  |
 | `price_hike` | price, increase, library | 0 |  |
-| `prohibit` | security, warning, restriction, library | 2 | 015_qa_msafer_pass_identity_block |
+| `price_shock_7abfd08b` | auto | 0 |  |
+| `prohibit` | security, warning, restriction, library | 3 | 018_scam_wedding_invite_smishing |
 | `recording_archive` | library | 1 | 010_tip_iphone_call_record |
 | `release_calendar` | library | 0 |  |
 | `repair_privacy` | security, privacy, repair | 0 |  |
 | `reset` | security, privacy, software, library | 0 |  |
 | `samsung_ai` | ai, assistant, software, library | 3 | 016_news_ios_26_3_release |
 | `secure_app_reregistration` | security, bank, authentication, setup, library | 1 | 015_qa_msafer_pass_identity_block |
-| `security_feature_lock` | library | 1 | 015_qa_msafer_pass_identity_block |
+| `security_feature_lock` | library | 2 | 018_scam_wedding_invite_smishing |
 | `select_option_76495b69` | auto | 0 |  |
 | `settings_screen_ab73a8fa` | auto | 0 |  |
 | `settings_steps` | library | 0 |  |
-| `shield` | security, privacy, protection, library | 8 | 016_news_ios_26_3_release |
+| `shield` | security, privacy, protection, library | 9 | 018_scam_wedding_invite_smishing |
 | `smartphone` | device, purchase, cta, library | 9 | 017_tip_summer_travel_phone_5min |
 | `smishing_fake_link` | security, smishing, warning, link | 0 |  |
 | `stock_chart` | price, data, market, library | 0 |  |
 | `store` | store, purchase, cta, library | 3 | 014_scam_voicephishing_zero_relief |
+| `surge_b56b4f67` | auto, library | 1 | 018_scam_wedding_invite_smishing |
 | `telecom_discount_compare` | price, subsidy, compare, telecom, library | 2 | 012_news_galaxy_unpack_july |
 | `theft_auto_lock` | security, privacy, theft | 0 |  |
 | `ti_decrease` | materials, hardware, decrease, library | 1 | 011_qa_combo_discount_check |
 | `transfer_interruption_warning` | library | 0 |  |
 | `transfer_path_steps` | library | 0 |  |
-| `warning` | security, warning, library | 1 | 010_tip_iphone_call_record |
+| `warning` | security, warning, library | 2 | 018_scam_wedding_invite_smishing |
 
 ## Recent videos
 
+- `018_scam_wedding_invite_smishing`: cpt_f59129df, surge_b56b4f67, cpt_066b1a1b, phone_settings_toggle, phone_setup_ready, cpt_6f69bf84, friend_wedding_suspicion_884c4f09, meeting_room, security_feature_lock, lock, impersonation_call, gift_prohibit, shield, prohibit, warning, forecast, nfc_pay, cpt_4729c912, gift_voucher
 - `017_tip_summer_travel_phone_5min`: smartphone, aluminum_label, appliance, battery_charge_range, battery_overheat, biometric
 - `016_news_ios_26_3_release`: device_data_transfer, phone_settings_toggle, samsung_ai, phone_setup_ready, smartphone, newspaper, microphone, shield, meeting_room, forecast, cpt_83fa1e9f, final_update, chatbot, gift_voucher
 - `015_qa_msafer_pass_identity_block`: cpt_7b7a2f91, cpt_b5a15155, cpt_8bffef74, cpt_a1caaea6, cpt_4729c912, phone_settings_toggle, cpt_6a2e9678, meeting_room, forecast, newspaper, microphone, shield, prohibit, impersonation_call, lock, secure_app_reregistration, emergency_account_freeze, smartphone, logout, security_feature_lock, gift_voucher

@@ -1,54 +1,54 @@
 {
-  "slug": "016_news_ios_26_3_release",
-  "title_short": "iOS 26.3 정식 출시",
-  "video_title": "iOS 26.3 정식 출시",
+  "slug": "018_scam_wedding_invite_smishing",
+  "title_short": "6월 결혼 시즌 모바일 청첩장 스미싱",
+  "video_title": "6월 결혼 시즌 모바일 청첩장 스미싱",
   "publication_date": "2026.06.04",
-  "sources": "ZDNet 26.3 정식 출시 + 디지털투데이 베타3 + 폰스팟 광교점 자료",
+  "sources": "KISA 보호나라 청첩장 스미싱 권고 + KISA 보안공지 + 폰스팟 광교점 자료",
   "channel_name": "폰스팟",
   "channel_tagline": "광교 미니 IT 브리핑",
   "opening": {
     "line1": "광교 미니 IT 브리핑",
-    "line2": "iOS 26.3 정식 출시"
+    "line2": "6월 결혼 시즌 모바일 청첩장 스미싱"
   },
   "hook": {
-    "tts": "애플이 iOS 26.3 정식 버전을 출시했습니다. 아이폰 사용자뿐 아니라 안드폰에서 아이폰으로 갈아타려는 분들도 주목할 만한 5가지 변화가 있습니다.",
+    "tts": "6월 결혼 시즌 모바일 청첩장 사칭 스미싱이 급증하고 있습니다. 발신번호가 저장된 지인으로 표시되고 악성앱 아이콘이 정상앱과 똑같아 육안 판별이 불가능합니다.",
     "caption_body": [
-      "iOS 26.3",
-      "정식 출시 완료"
+      "축하해 잠깐",
+      "청첩장 확인해줘"
     ],
     "caption_emphasis": [
-      "정식 출시"
+      "청첩장"
     ],
     "headline_lines": [
       {
-        "text": "iOS 26.3"
+        "text": "축하해 잠깐"
       },
       {
-        "text": "정식 출시 완료",
+        "text": "청첩장 확인해줘",
         "accent": true
       }
     ],
-    "meta": "출처: ZDNet 26.3 정식 출시",
+    "meta": "출처: KISA 보호나라 권고",
     "topic": "뉴스",
-    "background_image": "1.png",
+    "background_image": "",
     "caption_chunks": [
-      "애플이 iOS 26.3 정식 버전을 출시했습니다.",
-      "아이폰 사용자뿐 아니라 안드폰에서",
-      "아이폰으로 갈아타려는 분들도 주목할",
-      "만한 5가지 변화가 있습니다."
+      "6월 결혼 시즌 모바일 청첩장 사칭 스미싱이",
+      "급증하고 있습니다.",
+      "발신번호가 저장된 지인으로 표시되고",
+      "악성앱 아이콘이 정상앱과 똑같아 육안 판별이 불가능합니다."
     ],
     "chunk_visuals": [
       {
-        "type": "image",
-        "value": "1.png"
+        "type": "illust",
+        "value": "cpt_f59129df"
       },
       {
-        "type": "image",
-        "value": "2.png"
+        "type": "illust",
+        "value": "surge_b56b4f67"
       },
       {
-        "type": "image",
-        "value": "3.png"
+        "type": "illust",
+        "value": "cpt_066b1a1b"
       },
       {
         "type": "mascot",
@@ -60,12 +60,11 @@
       "value": "",
       "note": ""
     },
-    "_codex_narration_source": "captions.md#intro",
     "display_chunks": [
-      "애플이 iOS 26.3 정식 버전을 출시했습니다",
-      "아이폰 사용자뿐 아니라 안드폰에서",
-      "아이폰으로 갈아타려는 분들도 주목할",
-      "만한 5가지 변화가 있습니다"
+      "6월 결혼 시즌 모바일 청첩장 사칭 스미싱이",
+      "급증하고 있습니다",
+      "발신번호가 저장된 지인으로 표시되고",
+      "악성앱 아이콘이 정상앱과 똑같아 육안 판별이 불가능합니다"
     ],
     "_codex_caption_lockstep": {
       "version": 2,
@@ -76,88 +75,83 @@
     "_codex_contextual_narrative": true,
     "_codex_sync_mode": "global999_tts_caption_lockstep",
     "tts_chunk_weights": [
-      3538.75,
-      1690.13,
-      1698.95,
-      1566.88
+      2329.92,
+      1472.91,
+      1822.17,
+      3054.54
     ],
     "_tts_timing": {
       "mode": "word_boundary_text_align",
       "windows": [
         {
           "start_ms": 0.0,
-          "end_ms": 3538.75,
-          "duration_ms": 3538.75
+          "end_ms": 2329.92,
+          "duration_ms": 2329.92
         },
         {
-          "start_ms": 3538.75,
-          "end_ms": 5228.88,
-          "duration_ms": 1690.13
+          "start_ms": 2329.92,
+          "end_ms": 3802.83,
+          "duration_ms": 1472.91
         },
         {
-          "start_ms": 5228.88,
-          "end_ms": 6927.83,
-          "duration_ms": 1698.95
+          "start_ms": 3802.83,
+          "end_ms": 5625.0,
+          "duration_ms": 1822.17
         },
         {
-          "start_ms": 6927.83,
-          "end_ms": 8494.71,
-          "duration_ms": 1566.88
+          "start_ms": 5625.0,
+          "end_ms": 8679.54,
+          "duration_ms": 3054.54
         }
       ],
       "boundary_count": 20,
-      "caption_signature": "45384a3d2d17dfde0ba6196c193913cc8af72e359be2abd88ea994c7f0103339"
+      "caption_signature": "3af8e7f5b99d9519cc6fe4ba3b8e33e5eb3a14b6f68229bf5fdac1967ab88cc4"
     }
   },
   "facts": [
     {
-      "tts": "첫째, 안드로이드에서 아이폰으로 데이터 이전이 한결 쉬워졌습니다. 사진과 동영상, 연락처, 계정 데이터가 타사 앱 없이 첫 설정 단계에서 한 번에 처리됩니다.",
+      "tts": "발신번호가 수신자 스마트폰에 저장된 연락처나 일반 휴대전화번호로 표기돼 진짜 지인이 보낸 문자로 오인하게 만듭니다. 친구 결혼이 잦은 시기일수록 의심 없이 클릭하기 쉽습니다.",
       "caption_body": [
-        "1",
-        "안드로이드 → 아이폰 이전"
+        "수법 1",
+        "지인 번호 위장"
       ],
       "caption_emphasis": [
-        "안드로이드"
+        "지인 번호"
       ],
       "headline_lines": [
         {
-          "text": "1"
+          "text": "수법 1"
         },
         {
-          "text": "안드로이드 → 아이폰 이전",
+          "text": "지인 번호 위장",
           "accent": true
         }
       ],
-      "meta": "출처: ZDNet 26.3 안내",
+      "meta": "출처: KISA 청첩장 스미싱 안내",
       "topic": "뉴스",
-      "background_image": "2.png",
+      "background_image": "",
       "caption_chunks": [
-        "첫째, 안드로이드에서 아이폰으로",
-        "데이터 이전이 한결 쉬워졌습니다.",
-        "사진과 동영상, 연락처,",
-        "계정 데이터가 타사 앱 없이 첫 설정 단계에서",
-        "한 번에 처리됩니다."
+        "발신번호가 수신자 스마트폰에 저장된",
+        "연락처나 일반 휴대전화번호로 표기돼",
+        "진짜 지인이 보낸 문자로 오인하게 만듭니다.",
+        "친구 결혼이 잦은 시기일수록 의심 없이 클릭하기 쉽습니다."
       ],
       "chunk_visuals": [
-        {
-          "type": "illust",
-          "value": "device_data_transfer"
-        },
         {
           "type": "illust",
           "value": "phone_settings_toggle"
         },
         {
           "type": "illust",
-          "value": "samsung_ai"
-        },
-        {
-          "type": "illust",
           "value": "phone_setup_ready"
         },
         {
-          "type": "image",
-          "value": "4.png"
+          "type": "illust",
+          "value": "cpt_6f69bf84"
+        },
+        {
+          "type": "illust",
+          "value": "friend_wedding_suspicion_884c4f09"
         }
       ],
       "stat": {
@@ -166,255 +160,11 @@
         "note": ""
       },
       "id": "fact_1",
-      "_codex_narration_source": "captions.md#body",
       "display_chunks": [
-        "첫째, 안드로이드에서 아이폰으로",
-        "데이터 이전이 한결 쉬워졌습니다",
-        "사진과 동영상, 연락처,",
-        "계정 데이터가 타사 앱 없이 첫 설정 단계에서",
-        "한 번에 처리됩니다"
-      ],
-      "_codex_caption_lockstep": {
-        "version": 2,
-        "compiler": "korean_caption_compiler_v2",
-        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 5
-      },
-      "_codex_contextual_narrative": true,
-      "_codex_sync_mode": "global999_tts_caption_lockstep",
-      "tts_chunk_weights": [
-        1898.58,
-        2203.54,
-        1830.96,
-        2227.13,
-        941.88
-      ],
-      "_tts_timing": {
-        "mode": "word_boundary_text_align",
-        "windows": [
-          {
-            "start_ms": 0.0,
-            "end_ms": 1898.58,
-            "duration_ms": 1898.58
-          },
-          {
-            "start_ms": 1898.58,
-            "end_ms": 4102.12,
-            "duration_ms": 2203.54
-          },
-          {
-            "start_ms": 4102.12,
-            "end_ms": 5933.08,
-            "duration_ms": 1830.96
-          },
-          {
-            "start_ms": 5933.08,
-            "end_ms": 8160.21,
-            "duration_ms": 2227.13
-          },
-          {
-            "start_ms": 8160.21,
-            "end_ms": 9102.09,
-            "duration_ms": 941.88
-          }
-        ],
-        "boundary_count": 21,
-        "caption_signature": "3a15dedcf9f1f5ad97a7aba91b24e52a364f1dfbe9fda6c374b7dd97fefdf372"
-      }
-    },
-    {
-      "tts": "안드폰을 사용 중이신데 아이폰으로 갈아타려는 경우 첫 설정 화면에서 Move from Android 옵션을 선택하시면 됩니다. 둘째, 유럽연합 지역 한정으로 아이폰 알림을 애플워치가 아닌 타사 스마트워치로도 전달할 수 있게 열렸습니다. 국내 적용 여부는 추가 업데이트에서 확인하실 수 있습니다.",
-      "caption_body": [
-        "2",
-        "타사 워치 알림 전달"
-      ],
-      "caption_emphasis": [
-        "타사 워치"
-      ],
-      "headline_lines": [
-        {
-          "text": "2"
-        },
-        {
-          "text": "타사 워치 알림 전달",
-          "accent": true
-        }
-      ],
-      "meta": "출처: 애플 EU 정책 공지",
-      "topic": "뉴스",
-      "background_image": "3.png",
-      "caption_chunks": [
-        "안드폰을 사용 중이신데 아이폰으로 갈아타려는 경우",
-        "첫 설정 화면에서 Move from Android",
-        "옵션을 선택하시면 됩니다.",
-        "둘째, 유럽연합 지역 한정으로 아이폰",
-        "알림을 애플워치가 아닌 타사 스마트워치로도",
-        "전달할 수 있게 열렸습니다.",
-        "국내 적용 여부는 추가 업데이트에서 확인하실 수 있습니다."
-      ],
-      "chunk_visuals": [
-        {
-          "type": "image",
-          "value": "5.png"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "newspaper"
-        },
-        {
-          "type": "mascot",
-          "value": "suspicious"
-        },
-        {
-          "type": "illust",
-          "value": "microphone"
-        },
-        {
-          "type": "illust",
-          "value": "shield"
-        },
-        {
-          "type": "illust",
-          "value": "meeting_room"
-        }
-      ],
-      "stat": {
-        "label": "",
-        "value": "",
-        "note": ""
-      },
-      "id": "fact_2",
-      "_codex_narration_source": "captions.md#body",
-      "display_chunks": [
-        "안드폰을 사용 중이신데 아이폰으로 갈아타려는 경우",
-        "첫 설정 화면에서 Move from Android",
-        "옵션을 선택하시면 됩니다",
-        "둘째, 유럽연합 지역 한정으로 아이폰",
-        "알림을 애플워치가 아닌 타사 스마트워치로도",
-        "전달할 수 있게 열렸습니다",
-        "국내 적용 여부는 추가 업데이트에서 확인하실 수 있습니다"
-      ],
-      "_codex_caption_lockstep": {
-        "version": 2,
-        "compiler": "korean_caption_compiler_v2",
-        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 7
-      },
-      "_codex_contextual_narrative": true,
-      "_codex_sync_mode": "global999_tts_caption_lockstep",
-      "tts_chunk_weights": [
-        2435.58,
-        1760.54,
-        1886.63,
-        2112.67,
-        1954.25,
-        1927.79,
-        2781.71
-      ],
-      "_tts_timing": {
-        "mode": "word_boundary_text_align",
-        "windows": [
-          {
-            "start_ms": 0.0,
-            "end_ms": 2435.58,
-            "duration_ms": 2435.58
-          },
-          {
-            "start_ms": 2435.58,
-            "end_ms": 4196.12,
-            "duration_ms": 1760.54
-          },
-          {
-            "start_ms": 4196.12,
-            "end_ms": 6082.75,
-            "duration_ms": 1886.63
-          },
-          {
-            "start_ms": 6082.75,
-            "end_ms": 8195.42,
-            "duration_ms": 2112.67
-          },
-          {
-            "start_ms": 8195.42,
-            "end_ms": 10149.67,
-            "duration_ms": 1954.25
-          },
-          {
-            "start_ms": 10149.67,
-            "end_ms": 12077.46,
-            "duration_ms": 1927.79
-          },
-          {
-            "start_ms": 12077.46,
-            "end_ms": 14859.17,
-            "duration_ms": 2781.71
-          }
-        ],
-        "boundary_count": 37,
-        "caption_signature": "a31c394b849266c4523df0311a0c8b99d4a4f179512eaa40ca83eec201f6a49c"
-      }
-    },
-    {
-      "tts": "셋째, 빠른 페어링 기능이 강화됐습니다. 에어팟처럼 헤드폰이나 스마트워치 등 타사 블루투스 액세서리를 가까이 두기만 해도 빠르게 연결됩니다.",
-      "caption_body": [
-        "3",
-        "빠른 페어링 근접 자동 연결"
-      ],
-      "caption_emphasis": [
-        "빠른 페어링"
-      ],
-      "headline_lines": [
-        {
-          "text": "3"
-        },
-        {
-          "text": "빠른 페어링 근접 자동 연결",
-          "accent": true
-        }
-      ],
-      "meta": "출처: 디지털투데이 26.3 베타3",
-      "topic": "뉴스",
-      "background_image": "4.png",
-      "caption_chunks": [
-        "셋째, 빠른 페어링 기능이 강화됐습니다.",
-        "에어팟처럼 헤드폰이나 스마트워치 등",
-        "타사 블루투스 액세서리를 가까이 두기만",
-        "해도 빠르게 연결됩니다."
-      ],
-      "chunk_visuals": [
-        {
-          "type": "illust",
-          "value": "forecast"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "cpt_83fa1e9f"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
-        }
-      ],
-      "stat": {
-        "label": "",
-        "value": "",
-        "note": ""
-      },
-      "id": "fact_3",
-      "_codex_narration_source": "captions.md#body",
-      "display_chunks": [
-        "셋째, 빠른 페어링 기능이 강화됐습니다",
-        "에어팟처럼 헤드폰이나 스마트워치 등",
-        "타사 블루투스 액세서리를 가까이 두기만",
-        "해도 빠르게 연결됩니다"
+        "발신번호가 수신자 스마트폰에 저장된",
+        "연락처나 일반 휴대전화번호로 표기돼",
+        "진짜 지인이 보낸 문자로 오인하게 만듭니다",
+        "친구 결혼이 잦은 시기일수록 의심 없이 클릭하기 쉽습니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
@@ -425,80 +175,277 @@
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        2852.12,
-        1690.13,
-        1892.63,
-        1293.99
+        1881.0,
+        1848.58,
+        2819.71,
+        2984.17
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 2852.12,
-            "duration_ms": 2852.12
+            "end_ms": 1881.0,
+            "duration_ms": 1881.0
           },
           {
-            "start_ms": 2852.12,
-            "end_ms": 4542.25,
-            "duration_ms": 1690.13
+            "start_ms": 1881.0,
+            "end_ms": 3729.58,
+            "duration_ms": 1848.58
           },
           {
-            "start_ms": 4542.25,
-            "end_ms": 6434.88,
-            "duration_ms": 1892.63
+            "start_ms": 3729.58,
+            "end_ms": 6549.29,
+            "duration_ms": 2819.71
           },
           {
-            "start_ms": 6434.88,
-            "end_ms": 7728.87,
-            "duration_ms": 1293.99
+            "start_ms": 6549.29,
+            "end_ms": 9533.46,
+            "duration_ms": 2984.17
           }
         ],
-        "boundary_count": 17,
-        "caption_signature": "26f88a87ce90fcab4ac82cb135004068268f24c819061e894272176e3ec71cbe"
+        "boundary_count": 22,
+        "caption_signature": "8c2545ad920e2b0d490399be96fb163d72e2dc780bde0683a3f156c71adfb3bc"
       }
     },
     {
-      "tts": "매번 설정 메뉴에 들어가지 않아도 됩니다. 넷째, 26.3은 다음 버전에서 본격 도입될 시리 업그레이드의 기반 작업이 포함된 버전이라는 평가입니다. 다섯째, 알림 변경 사항과 백그라운드 동작 안정성도 함께 개선됐습니다.",
+      "tts": "악성앱이 정상앱과 동일한 아이콘을 사용해 설치 후에도 구분이 안 됩니다. 접근권한 요구 화면에서 무심코 동의 버튼을 누르면 원격제어·정보 탈취가 시작됩니다.",
       "caption_body": [
-        "4",
-        "시리 업그레이드 전초전"
+        "수법 2",
+        "악성앱 정상앱 위장"
       ],
       "caption_emphasis": [
-        "시리"
+        "악성앱"
       ],
       "headline_lines": [
         {
-          "text": "4"
+          "text": "수법 2"
         },
         {
-          "text": "시리 업그레이드 전초전",
+          "text": "악성앱 정상앱 위장",
           "accent": true
         }
       ],
-      "meta": "출처: 디지털투데이 시리 전초전",
+      "meta": "출처: KISA 악성앱 분석",
       "topic": "뉴스",
-      "background_image": "5.png",
+      "background_image": "",
       "caption_chunks": [
-        "매번 설정 메뉴에 들어가지 않아도 됩니다.",
-        "넷째, 26.3은 다음 버전에서 본격",
-        "도입될 시리 업그레이드의 기반 작업이",
-        "포함된 버전이라는 평가입니다.",
-        "다섯째, 알림 변경 사항과 백그라운드",
-        "동작 안정성도 함께 개선됐습니다."
+        "악성앱이 정상앱과 동일한 아이콘을",
+        "사용해 설치 후에도 구분이 안 됩니다.",
+        "접근권한 요구 화면에서 무심코 동의 버튼을 누르면",
+        "원격제어·정보 탈취가 시작됩니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "final_update"
+          "value": "meeting_room"
         },
         {
           "type": "illust",
-          "value": "chatbot"
+          "value": "security_feature_lock"
         },
         {
           "type": "illust",
-          "value": "smartphone"
+          "value": "lock"
+        },
+        {
+          "type": "illust",
+          "value": "impersonation_call"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_2",
+      "display_chunks": [
+        "악성앱이 정상앱과 동일한 아이콘을",
+        "사용해 설치 후에도 구분이 안 됩니다",
+        "접근권한 요구 화면에서 무심코 동의 버튼을 누르면",
+        "원격제어·정보 탈취가 시작됩니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 4
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        1722.54,
+        2432.38,
+        2579.25,
+        1707.75
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 1722.54,
+            "duration_ms": 1722.54
+          },
+          {
+            "start_ms": 1722.54,
+            "end_ms": 4154.92,
+            "duration_ms": 2432.38
+          },
+          {
+            "start_ms": 4154.92,
+            "end_ms": 6734.17,
+            "duration_ms": 2579.25
+          },
+          {
+            "start_ms": 6734.17,
+            "end_ms": 8441.92,
+            "duration_ms": 1707.75
+          }
+        ],
+        "boundary_count": 21,
+        "caption_signature": "fe3ab3552e2755693248f5f05d9147d231c6761c22f7b14b823b919d3708bb51"
+      }
+    },
+    {
+      "tts": "출처가 불분명한 URL은 절대 클릭하지 마세요. 청첩장이 의심되면 발신자에게 전화로 직접 확인 후 카카오톡 공식 모바일 청첩장 서비스인지 점검하시기 바랍니다.",
+      "caption_body": [
+        "예방 1",
+        "URL 클릭 차단"
+      ],
+      "caption_emphasis": [
+        "URL 클릭"
+      ],
+      "headline_lines": [
+        {
+          "text": "예방 1"
+        },
+        {
+          "text": "URL 클릭 차단",
+          "accent": true
+        }
+      ],
+      "meta": "출처: KISA URL 차단 권고",
+      "topic": "뉴스",
+      "background_image": "",
+      "caption_chunks": [
+        "출처가 불분명한 URL은 절대 클릭하지 마세요.",
+        "청첩장이 의심되면 발신자에게 전화로",
+        "직접 확인 후 카카오톡 공식 모바일 청첩장",
+        "서비스인지 점검하시기 바랍니다."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "gift_prohibit"
+        },
+        {
+          "type": "illust",
+          "value": "shield"
+        },
+        {
+          "type": "illust",
+          "value": "prohibit"
+        },
+        {
+          "type": "illust",
+          "value": "warning"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_3",
+      "display_chunks": [
+        "출처가 불분명한 URL은 절대 클릭하지 마세요",
+        "청첩장이 의심되면 발신자에게 전화로",
+        "직접 확인 후 카카오톡 공식 모바일 청첩장",
+        "서비스인지 점검하시기 바랍니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 4
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        3125.0,
+        2042.25,
+        2077.46,
+        1628.5
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 3125.0,
+            "duration_ms": 3125.0
+          },
+          {
+            "start_ms": 3125.0,
+            "end_ms": 5167.25,
+            "duration_ms": 2042.25
+          },
+          {
+            "start_ms": 5167.25,
+            "end_ms": 7244.71,
+            "duration_ms": 2077.46
+          },
+          {
+            "start_ms": 7244.71,
+            "end_ms": 8873.21,
+            "duration_ms": 1628.5
+          }
+        ],
+        "boundary_count": 20,
+        "caption_signature": "d2b50850021b3c44cafd1823567e74316ab409e8645a3c13bd4a9e996d0083d0"
+      }
+    },
+    {
+      "tts": "이미 클릭·설치했다면 휴대전화를 비행기 모드로 전환 + Wi-Fi 끄기. 원격제어 차단 후 번호도용문자 차단 신청 + 모바일 결제 내역 확인 + 경찰 112 + 금감원 1332 신고.",
+      "caption_body": [
+        "감염 의심 시",
+        "비행기 모드 즉시"
+      ],
+      "caption_emphasis": [
+        "비행기 모드"
+      ],
+      "headline_lines": [
+        {
+          "text": "감염 의심 시"
+        },
+        {
+          "text": "비행기 모드 즉시",
+          "accent": true
+        }
+      ],
+      "meta": "출처: KISA 사후 대응 권고",
+      "topic": "뉴스",
+      "background_image": "",
+      "caption_chunks": [
+        "이미 클릭·설치했다면",
+        "휴대전화를 비행기 모드로 전환 + Wi-Fi 끄기.",
+        "원격제어 차단 후 번호도용문자 차단 신청",
+        "+ 모바일 결제 내역 확인 + 경찰 112",
+        "+ 금감원 1332 신고."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "forecast"
+        },
+        {
+          "type": "illust",
+          "value": "cpt_f59129df"
+        },
+        {
+          "type": "illust",
+          "value": "nfc_pay"
         },
         {
           "type": "mascot",
@@ -506,11 +453,7 @@
         },
         {
           "type": "illust",
-          "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
+          "value": "cpt_4729c912"
         }
       ],
       "stat": {
@@ -519,67 +462,59 @@
         "note": ""
       },
       "id": "fact_4",
-      "_codex_narration_source": "captions.md#body",
       "display_chunks": [
-        "매번 설정 메뉴에 들어가지 않아도 됩니다",
-        "넷째, 26.3은 다음 버전에서 본격",
-        "도입될 시리 업그레이드의 기반 작업이",
-        "포함된 버전이라는 평가입니다",
-        "다섯째, 알림 변경 사항과 백그라운드",
-        "동작 안정성도 함께 개선됐습니다"
+        "이미 클릭·설치했다면",
+        "휴대전화를 비행기 모드로 전환 + Wi-Fi 끄기",
+        "원격제어 차단 후 번호도용문자 차단 신청",
+        "+ 모바일 결제 내역 확인 + 경찰 112",
+        "+ 금감원 1332 신고"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 6
+        "chunk_count": 5
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        2526.42,
-        2464.79,
-        1575.71,
-        2095.04,
-        2112.71,
-        1804.54
+        1115.12,
+        3268.67,
+        2456.0,
+        2447.17,
+        1619.75
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 2526.42,
-            "duration_ms": 2526.42
+            "end_ms": 1115.12,
+            "duration_ms": 1115.12
           },
           {
-            "start_ms": 2526.42,
-            "end_ms": 4991.21,
-            "duration_ms": 2464.79
+            "start_ms": 1115.12,
+            "end_ms": 4383.79,
+            "duration_ms": 3268.67
           },
           {
-            "start_ms": 4991.21,
-            "end_ms": 6566.92,
-            "duration_ms": 1575.71
+            "start_ms": 4383.79,
+            "end_ms": 6839.79,
+            "duration_ms": 2456.0
           },
           {
-            "start_ms": 6566.92,
-            "end_ms": 8661.96,
-            "duration_ms": 2095.04
+            "start_ms": 6839.79,
+            "end_ms": 9286.96,
+            "duration_ms": 2447.17
           },
           {
-            "start_ms": 8661.96,
-            "end_ms": 10774.67,
-            "duration_ms": 2112.71
-          },
-          {
-            "start_ms": 10774.67,
-            "end_ms": 12579.21,
-            "duration_ms": 1804.54
+            "start_ms": 9286.96,
+            "end_ms": 10906.71,
+            "duration_ms": 1619.75
           }
         ],
         "boundary_count": 28,
-        "caption_signature": "911c9ba22e602000af366682b5d3f6d9f4064e9968e2793cf3584d5dbf398218"
+        "caption_signature": "3cd4f2e6e3a2f1fe964c647d03a76dd88204cc37a024533a164aebe701308a63"
       }
     }
   ],
@@ -603,7 +538,7 @@
     ],
     "meta": "Phonespot 광교점",
     "topic": "뉴스",
-    "background_image": "5.png",
+    "background_image": "",
     "caption_chunks": [
       "휴대폰 구매할 땐?",
       "지원금부터 무료로 조회해보세요"
@@ -626,7 +561,6 @@
     "kakao": "@폰스팟광교점",
     "location": "광교호수공원 B1-47",
     "litt": "litt.ly/phonespot",
-    "_codex_narration_source": "fixed_cta_contract",
     "display_chunks": [
       "휴대폰 구매할 땐?",
       "지원금부터 무료로 조회해보세요"
@@ -635,11 +569,12 @@
       "version": 2,
       "compiler": "korean_caption_compiler_v2",
       "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-      "chunk_count": 4
+      "chunk_count": 1
     },
     "_codex_contextual_narrative": true,
     "_codex_sync_mode": "global999_tts_caption_lockstep",
     "_codex_fixed_cta": true,
+    "_codex_narration_source": "fixed_cta_contract",
     "tts_chunk_weights": [
       1707.75,
       1804.54
@@ -665,162 +600,296 @@
   "_auto_generated": true,
   "_chunk_logic_v2": true,
   "_note": "build_script.py 자동 생성 (v2 로직): 시퀀스 내 이미지 순환 + 마스코트 짝수 시퀀스만.",
-  "_codex_uses_captions_md_narration": true,
-  "_codex_captions_md_narration_path": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\016_news_ios_26_3_release\\captions.md",
-  "_codex_narration_policy": "tts_only_chunks_visuals_preserved",
-  "_codex_unique_source_images": {
-    "version": 1,
-    "policy": "non-illustration image visuals are used at most once across one video",
-    "replacements": [
-      {
-        "section": "cta",
-        "chunk": 3,
-        "from": {
-          "type": "image",
-          "value": "1.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "store"
-        }
-      },
-      {
-        "section": "cta",
-        "chunk": 4,
-        "from": {
-          "type": "image",
-          "value": "2.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "reset"
-        }
-      }
-    ]
-  },
   "_codex_global_999_quality": true,
   "_codex_common_quality_logic": true,
   "_codex_sync_quality_logic": true,
-  "_codex_captions_narration_priority": true,
+  "_codex_captions_narration_priority": false,
   "_codex_common_quality_note": "Global 001-999 rule: screen chunks are rebuilt as an ordered, lossless partition of captions.md narration; curated visuals are rebalanced without discarding quality rules.",
+  "_codex_uploaded_illustrations": [
+    {
+      "section": "hook",
+      "chunk": 1,
+      "variant": "cpt_f59129df"
+    },
+    {
+      "section": "hook",
+      "chunk": 2,
+      "variant": "surge_b56b4f67"
+    },
+    {
+      "section": "hook",
+      "chunk": 3,
+      "variant": "cpt_066b1a1b"
+    },
+    {
+      "section": "fact_1",
+      "chunk": 3,
+      "variant": "cpt_6f69bf84"
+    },
+    {
+      "section": "fact_1",
+      "chunk": 4,
+      "variant": "friend_wedding_suspicion_884c4f09"
+    }
+  ],
   "_codex_semantic_visual_match": {
     "version": 1,
     "policy": "Match chunks to GPT source images using prompt.md descriptions, then fallback to tagged reusable illustrations.",
     "changes": [
       {
-        "section": "fact_1",
+        "section": "hook",
         "chunk": 1,
         "from": {
           "type": "illust",
-          "value": "password"
-        },
-        "to": {
-          "type": "illust",
-          "value": "device_data_transfer"
-        },
-        "context": "첫째, 안드로이드에서 아이폰으로 데이터 이전이 한결 쉬워졌습니다 1 안드로이드 → 아이폰 이전 ['1', '안드로이드 → 아이폰 이전'] 뉴스",
-        "reason": "illust score 0.43"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "device_data_transfer"
-        },
-        "to": {
-          "type": "illust",
-          "value": "phone_settings_toggle"
-        },
-        "context": "첫째, 안드로이드에서 아이폰으로 데이터 이전이 한결 쉬워졌습니다 사진과 동영상, 연락처, 1 안드로이드 → 아이폰 이전 ['1', '안드로이드 → 아이폰 이전'] 뉴스",
-        "reason": "illust score 0.467"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 3,
-        "from": {
-          "type": "image",
-          "value": "4.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "samsung_ai"
-        },
-        "context": "데이터 이전이 한결 쉬워졌습니다 사진과 동영상, 연락처, 계정 데이터가 타사 앱 없이 첫 설정 단계에서 1 안드로이드 → 아이폰 이전 ['1', '안드로이드 → 아이폰 이전'] 뉴스",
-        "reason": "illust score 0.467"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 4,
-        "from": {
-          "type": "image",
-          "value": "5.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "phone_setup_ready"
-        },
-        "context": "사진과 동영상, 연락처, 계정 데이터가 타사 앱 없이 첫 설정 단계에서 한 번에 처리됩니다 1 안드로이드 → 아이폰 이전 ['1', '안드로이드 → 아이폰 이전'] 뉴스",
-        "reason": "illust score 0.448"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 5,
-        "from": {
-          "type": "illust",
-          "value": "appliance"
-        },
-        "to": {
-          "type": "image",
-          "value": "4.png"
-        },
-        "context": "계정 데이터가 타사 앱 없이 첫 설정 단계에서 한 번에 처리됩니다 1 안드로이드 → 아이폰 이전 ['1', '안드로이드 → 아이폰 이전'] 뉴스",
-        "reason": "unused source image (no semantic match, img score 0.353)"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "final_update"
-        },
-        "to": {
-          "type": "image",
-          "value": "5.png"
-        },
-        "context": "안드폰을 사용 중이신데 아이폰으로 갈아타려는 경우 첫 설정 화면에서 Move from Android 2 타사 워치 알림 전달 ['2', '타사 워치 알림 전달'] 뉴스",
-        "reason": "unused source image (no semantic match, img score 0.408)"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "cpt_a1caaea6"
+          "value": "cpt_f59129df"
         },
         "to": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "안드폰을 사용 중이신데 아이폰으로 갈아타려는 경우 첫 설정 화면에서 Move from Android 옵션을 선택하시면 됩니다 2 타사 워치 알림 전달 ['2', '타사 워치 알림 전달'] 뉴스",
+        "context": "6월 결혼 시즌 모바일 청첩장 사칭 스미싱이 급증하고 있습니다 축하해 잠깐 청첩장 확인해줘 ['축하해 잠깐', '청첩장 확인해줘'] 뉴스",
         "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "hook",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "surge_b56b4f67"
+        },
+        "to": {
+          "type": "illust",
+          "value": "friend_wedding_suspicion_884c4f09"
+        },
+        "context": "6월 결혼 시즌 모바일 청첩장 사칭 스미싱이 급증하고 있습니다 발신번호가 저장된 지인으로 표시되고 축하해 잠깐 청첩장 확인해줘 ['축하해 잠깐', '청첩장 확인해줘'] 뉴스",
+        "reason": "illust score 0.455"
+      },
+      {
+        "section": "hook",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "cpt_066b1a1b"
+        },
+        "to": {
+          "type": "illust",
+          "value": "cpt_75c6eba6"
+        },
+        "context": "급증하고 있습니다 발신번호가 저장된 지인으로 표시되고 악성앱 아이콘이 정상앱과 똑같아 육안 판별이 불가능합니다 축하해 잠깐 청첩장 확인해줘 ['축하해 잠깐', '청첩장 확인해줘'] 뉴스",
+        "reason": "illust score 0.429"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "발신번호가 수신자 스마트폰에 저장된 연락처나 일반 휴대전화번호로 표기돼 수법 1 지인 번호 위장 ['수법 1', '지인 번호 위장'] 뉴스",
+        "reason": "illust score 0.549"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "발신번호가 수신자 스마트폰에 저장된 연락처나 일반 휴대전화번호로 표기돼 진짜 지인이 보낸 문자로 오인하게 만듭니다 수법 1 지인 번호 위장 ['수법 1', '지인 번호 위장'] 뉴스",
+        "reason": "illust score 0.515"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "cpt_6f69bf84"
+        },
+        "to": {
+          "type": "illust",
+          "value": "newspaper"
+        },
+        "context": "연락처나 일반 휴대전화번호로 표기돼 진짜 지인이 보낸 문자로 오인하게 만듭니다 친구 결혼이 잦은 시기일수록 의심 없이 클릭하기 쉽습니다 수법 1 지인 번호 위장 ['수법 1', '지인 번호 위장'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "friend_wedding_suspicion_884c4f09"
+        },
+        "to": {
+          "type": "illust",
+          "value": "microphone"
+        },
+        "context": "진짜 지인이 보낸 문자로 오인하게 만듭니다 친구 결혼이 잦은 시기일수록 의심 없이 클릭하기 쉽습니다 수법 1 지인 번호 위장 ['수법 1', '지인 번호 위장'] 뉴스",
+        "reason": "illust score 0.43"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "meeting_room"
+        },
+        "context": "악성앱이 정상앱과 동일한 아이콘을 사용해 설치 후에도 구분이 안 됩니다 수법 2 악성앱 정상앱 위장 ['수법 2', '악성앱 정상앱 위장'] 뉴스",
+        "reason": "illust score 0.444"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "security_feature_lock"
+        },
+        "context": "악성앱이 정상앱과 동일한 아이콘을 사용해 설치 후에도 구분이 안 됩니다 접근권한 요구 화면에서 무심코 동의 버튼을 누르면 수법 2 악성앱 정상앱 위장 ['수법 2', '악성앱 정상앱 위장'] 뉴스",
+        "reason": "illust score 0.511"
       },
       {
         "section": "fact_2",
         "chunk": 3,
         "from": {
           "type": "illust",
-          "value": "forecast"
+          "value": "appliance"
         },
         "to": {
           "type": "illust",
-          "value": "newspaper"
+          "value": "lock"
         },
-        "context": "첫 설정 화면에서 Move from Android 옵션을 선택하시면 됩니다 둘째, 유럽연합 지역 한정으로 아이폰 2 타사 워치 알림 전달 ['2', '타사 워치 알림 전달'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
+        "context": "사용해 설치 후에도 구분이 안 됩니다 접근권한 요구 화면에서 무심코 동의 버튼을 누르면 원격제어·정보 탈취가 시작됩니다 수법 2 악성앱 정상앱 위장 ['수법 2', '악성앱 정상앱 위장'] 뉴스",
+        "reason": "illust score 0.49"
       },
       {
         "section": "fact_2",
+        "chunk": 4,
+        "from": {
+          "type": "mascot",
+          "value": "suspicious"
+        },
+        "to": {
+          "type": "illust",
+          "value": "impersonation_call"
+        },
+        "context": "접근권한 요구 화면에서 무심코 동의 버튼을 누르면 원격제어·정보 탈취가 시작됩니다 수법 2 악성앱 정상앱 위장 ['수법 2', '악성앱 정상앱 위장'] 뉴스",
+        "reason": "illust score 0.47"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "gift_prohibit"
+        },
+        "context": "출처가 불분명한 URL은 절대 클릭하지 마세요 청첩장이 의심되면 발신자에게 전화로 예방 1 URL 클릭 차단 ['예방 1', 'URL 클릭 차단'] 뉴스",
+        "reason": "illust score 0.422"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "shield"
+        },
+        "context": "출처가 불분명한 URL은 절대 클릭하지 마세요 청첩장이 의심되면 발신자에게 전화로 직접 확인 후 카카오톡 공식 모바일 청첩장 예방 1 URL 클릭 차단 ['예방 1', 'URL 클릭 차단'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "prohibit"
+        },
+        "context": "청첩장이 의심되면 발신자에게 전화로 직접 확인 후 카카오톡 공식 모바일 청첩장 서비스인지 점검하시기 바랍니다 예방 1 URL 클릭 차단 ['예방 1', 'URL 클릭 차단'] 뉴스",
+        "reason": "illust score 0.462"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "battery_charge_range"
+        },
+        "to": {
+          "type": "illust",
+          "value": "warning"
+        },
+        "context": "직접 확인 후 카카오톡 공식 모바일 청첩장 서비스인지 점검하시기 바랍니다 예방 1 URL 클릭 차단 ['예방 1', 'URL 클릭 차단'] 뉴스",
+        "reason": "illust score 0.424"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "forecast"
+        },
+        "context": "이미 클릭·설치했다면 휴대전화를 비행기 모드로 전환 + Wi-Fi 끄기 감염 의심 시 비행기 모드 즉시 ['감염 의심 시', '비행기 모드 즉시'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "이미 클릭·설치했다면 휴대전화를 비행기 모드로 전환 + Wi-Fi 끄기 원격제어 차단 후 번호도용문자 차단 신청 감염 의심 시 비행기 모드 즉시 ['감염 의심 시', '비행기 모드 즉시'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "휴대전화를 비행기 모드로 전환 + Wi-Fi 끄기 원격제어 차단 후 번호도용문자 차단 신청 + 모바일 결제 내역 확인 + 경찰 112 감염 의심 시 비행기 모드 즉시 ['감염 의심 시', '비행기 모드 즉시'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
         "chunk": 5,
         "from": {
           "type": "illust",
@@ -828,163 +897,9 @@
         },
         "to": {
           "type": "illust",
-          "value": "microphone"
-        },
-        "context": "둘째, 유럽연합 지역 한정으로 아이폰 알림을 애플워치가 아닌 타사 스마트워치로도 전달할 수 있게 열렸습니다 2 타사 워치 알림 전달 ['2', '타사 워치 알림 전달'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 6,
-        "from": {
-          "type": "illust",
-          "value": "battery_overheat"
-        },
-        "to": {
-          "type": "illust",
-          "value": "shield"
-        },
-        "context": "알림을 애플워치가 아닌 타사 스마트워치로도 전달할 수 있게 열렸습니다 국내 적용 여부는 추가 업데이트에서 확인하실 수 있습니다 2 타사 워치 알림 전달 ['2', '타사 워치 알림 전달'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 7,
-        "from": {
-          "type": "illust",
-          "value": "aluminum_label"
-        },
-        "to": {
-          "type": "illust",
-          "value": "meeting_room"
-        },
-        "context": "전달할 수 있게 열렸습니다 국내 적용 여부는 추가 업데이트에서 확인하실 수 있습니다 2 타사 워치 알림 전달 ['2', '타사 워치 알림 전달'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "biometric"
-        },
-        "to": {
-          "type": "illust",
-          "value": "forecast"
-        },
-        "context": "셋째, 빠른 페어링 기능이 강화됐습니다 에어팟처럼 헤드폰이나 스마트워치 등 3 빠른 페어링 근접 자동 연결 ['3', '빠른 페어링 근접 자동 연결'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "call_filter_rules"
-        },
-        "to": {
-          "type": "illust",
           "value": "smartphone"
         },
-        "context": "셋째, 빠른 페어링 기능이 강화됐습니다 에어팟처럼 헤드폰이나 스마트워치 등 타사 블루투스 액세서리를 가까이 두기만 3 빠른 페어링 근접 자동 연결 ['3', '빠른 페어링 근접 자동 연결'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "call_recording_notice"
-        },
-        "to": {
-          "type": "illust",
-          "value": "cpt_83fa1e9f"
-        },
-        "context": "에어팟처럼 헤드폰이나 스마트워치 등 타사 블루투스 액세서리를 가까이 두기만 해도 빠르게 연결됩니다 3 빠른 페어링 근접 자동 연결 ['3', '빠른 페어링 근접 자동 연결'] 뉴스",
-        "reason": "illust score 0.484"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "chart_down"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "타사 블루투스 액세서리를 가까이 두기만 해도 빠르게 연결됩니다 3 빠른 페어링 근접 자동 연결 ['3', '빠른 페어링 근접 자동 연결'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "chatbot"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "매번 설정 메뉴에 들어가지 않아도 됩니다 넷째, 26.3은 다음 버전에서 본격 4 시리 업그레이드 전초전 ['4', '시리 업그레이드 전초전'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "memory_chip"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "매번 설정 메뉴에 들어가지 않아도 됩니다 넷째, 26.3은 다음 버전에서 본격 도입될 시리 업그레이드의 기반 작업이 4 시리 업그레이드 전초전 ['4', '시리 업그레이드 전초전'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "samsung_ai"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "넷째, 26.3은 다음 버전에서 본격 도입될 시리 업그레이드의 기반 작업이 포함된 버전이라는 평가입니다 4 시리 업그레이드 전초전 ['4', '시리 업그레이드 전초전'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 5,
-        "from": {
-          "type": "illust",
-          "value": "gemini"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "포함된 버전이라는 평가입니다 다섯째, 알림 변경 사항과 백그라운드 동작 안정성도 함께 개선됐습니다 4 시리 업그레이드 전초전 ['4', '시리 업그레이드 전초전'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 6,
-        "from": {
-          "type": "illust",
-          "value": "chart_up"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "다섯째, 알림 변경 사항과 백그라운드 동작 안정성도 함께 개선됐습니다 4 시리 업그레이드 전초전 ['4', '시리 업그레이드 전초전'] 뉴스",
+        "context": "+ 모바일 결제 내역 확인 + 경찰 112 + 금감원 1332 신고 감염 의심 시 비행기 모드 즉시 ['감염 의심 시', '비행기 모드 즉시'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       }
     ],
@@ -993,34 +908,12 @@
         "section": "hook",
         "chunk": 1,
         "current": {
-          "type": "image",
-          "value": "1.png"
+          "type": "illust",
+          "value": "smartphone"
         },
-        "context": "애플이 iOS 26.3 정식 버전을 출시했습니다 아이폰 사용자뿐 아니라 안드폰에서 iOS 26.3 정식 출시 완료 ['iOS 26.3', '정식 출시 완료'] 뉴스",
-        "best_image_score": 0.35,
-        "best_illust_score": 0.258
-      },
-      {
-        "section": "hook",
-        "chunk": 2,
-        "current": {
-          "type": "image",
-          "value": "2.png"
-        },
-        "context": "애플이 iOS 26.3 정식 버전을 출시했습니다 아이폰 사용자뿐 아니라 안드폰에서 아이폰으로 갈아타려는 분들도 주목할 iOS 26.3 정식 출시 완료 ['iOS 26.3', '정식 출시 완료'] 뉴스",
-        "best_image_score": 0.338,
-        "best_illust_score": 0.267
-      },
-      {
-        "section": "hook",
-        "chunk": 3,
-        "current": {
-          "type": "image",
-          "value": "3.png"
-        },
-        "context": "아이폰 사용자뿐 아니라 안드폰에서 아이폰으로 갈아타려는 분들도 주목할 만한 5가지 변화가 있습니다 iOS 26.3 정식 출시 완료 ['iOS 26.3', '정식 출시 완료'] 뉴스",
-        "best_image_score": 0.29,
-        "best_illust_score": 0.367
+        "context": "6월 결혼 시즌 모바일 청첩장 사칭 스미싱이 급증하고 있습니다 축하해 잠깐 청첩장 확인해줘 ['축하해 잠깐', '청첩장 확인해줘'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.408
       },
       {
         "section": "hook",
@@ -1029,141 +922,42 @@
           "type": "mascot",
           "value": "surprised"
         },
-        "context": "아이폰으로 갈아타려는 분들도 주목할 만한 5가지 변화가 있습니다 iOS 26.3 정식 출시 완료 ['iOS 26.3', '정식 출시 완료'] 뉴스",
-        "best_image_score": 0.249,
-        "best_illust_score": 0.346
+        "context": "발신번호가 저장된 지인으로 표시되고 악성앱 아이콘이 정상앱과 똑같아 육안 판별이 불가능합니다 축하해 잠깐 청첩장 확인해줘 ['축하해 잠깐', '청첩장 확인해줘'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.328
       },
       {
         "section": "fact_1",
-        "chunk": 5,
-        "current": {
-          "type": "image",
-          "value": "4.png"
-        },
-        "context": "계정 데이터가 타사 앱 없이 첫 설정 단계에서 한 번에 처리됩니다 1 안드로이드 → 아이폰 이전 ['1', '안드로이드 → 아이폰 이전'] 뉴스",
-        "best_image_score": 0.353,
-        "best_illust_score": 0.414
-      },
-      {
-        "section": "fact_2",
-        "chunk": 1,
-        "current": {
-          "type": "image",
-          "value": "5.png"
-        },
-        "context": "안드폰을 사용 중이신데 아이폰으로 갈아타려는 경우 첫 설정 화면에서 Move from Android 2 타사 워치 알림 전달 ['2', '타사 워치 알림 전달'] 뉴스",
-        "best_image_score": 0.408,
-        "best_illust_score": 0.283
-      },
-      {
-        "section": "fact_2",
-        "chunk": 2,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "안드폰을 사용 중이신데 아이폰으로 갈아타려는 경우 첫 설정 화면에서 Move from Android 옵션을 선택하시면 됩니다 2 타사 워치 알림 전달 ['2', '타사 워치 알림 전달'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.316
-      },
-      {
-        "section": "fact_2",
         "chunk": 3,
         "current": {
           "type": "illust",
           "value": "newspaper"
         },
-        "context": "첫 설정 화면에서 Move from Android 옵션을 선택하시면 됩니다 둘째, 유럽연합 지역 한정으로 아이폰 2 타사 워치 알림 전달 ['2', '타사 워치 알림 전달'] 뉴스",
+        "context": "연락처나 일반 휴대전화번호로 표기돼 진짜 지인이 보낸 문자로 오인하게 만듭니다 친구 결혼이 잦은 시기일수록 의심 없이 클릭하기 쉽습니다 수법 1 지인 번호 위장 ['수법 1', '지인 번호 위장'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.339
+        "best_illust_score": 0.363
       },
       {
-        "section": "fact_2",
-        "chunk": 4,
-        "current": {
-          "type": "mascot",
-          "value": "suspicious"
-        },
-        "context": "옵션을 선택하시면 됩니다 둘째, 유럽연합 지역 한정으로 아이폰 알림을 애플워치가 아닌 타사 스마트워치로도 2 타사 워치 알림 전달 ['2', '타사 워치 알림 전달'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.338
-      },
-      {
-        "section": "fact_2",
-        "chunk": 5,
-        "current": {
-          "type": "illust",
-          "value": "microphone"
-        },
-        "context": "둘째, 유럽연합 지역 한정으로 아이폰 알림을 애플워치가 아닌 타사 스마트워치로도 전달할 수 있게 열렸습니다 2 타사 워치 알림 전달 ['2', '타사 워치 알림 전달'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.381
-      },
-      {
-        "section": "fact_2",
-        "chunk": 6,
+        "section": "fact_3",
+        "chunk": 2,
         "current": {
           "type": "illust",
           "value": "shield"
         },
-        "context": "알림을 애플워치가 아닌 타사 스마트워치로도 전달할 수 있게 열렸습니다 국내 적용 여부는 추가 업데이트에서 확인하실 수 있습니다 2 타사 워치 알림 전달 ['2', '타사 워치 알림 전달'] 뉴스",
+        "context": "출처가 불분명한 URL은 절대 클릭하지 마세요 청첩장이 의심되면 발신자에게 전화로 직접 확인 후 카카오톡 공식 모바일 청첩장 예방 1 URL 클릭 차단 ['예방 1', 'URL 클릭 차단'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.341
+        "best_illust_score": 0.412
       },
       {
-        "section": "fact_2",
-        "chunk": 7,
-        "current": {
-          "type": "illust",
-          "value": "meeting_room"
-        },
-        "context": "전달할 수 있게 열렸습니다 국내 적용 여부는 추가 업데이트에서 확인하실 수 있습니다 2 타사 워치 알림 전달 ['2', '타사 워치 알림 전달'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.343
-      },
-      {
-        "section": "fact_3",
+        "section": "fact_4",
         "chunk": 1,
         "current": {
           "type": "illust",
           "value": "forecast"
         },
-        "context": "셋째, 빠른 페어링 기능이 강화됐습니다 에어팟처럼 헤드폰이나 스마트워치 등 3 빠른 페어링 근접 자동 연결 ['3', '빠른 페어링 근접 자동 연결'] 뉴스",
+        "context": "이미 클릭·설치했다면 휴대전화를 비행기 모드로 전환 + Wi-Fi 끄기 감염 의심 시 비행기 모드 즉시 ['감염 의심 시', '비행기 모드 즉시'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.362
-      },
-      {
-        "section": "fact_3",
-        "chunk": 2,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "셋째, 빠른 페어링 기능이 강화됐습니다 에어팟처럼 헤드폰이나 스마트워치 등 타사 블루투스 액세서리를 가까이 두기만 3 빠른 페어링 근접 자동 연결 ['3', '빠른 페어링 근접 자동 연결'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.374
-      },
-      {
-        "section": "fact_3",
-        "chunk": 4,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "타사 블루투스 액세서리를 가까이 두기만 해도 빠르게 연결됩니다 3 빠른 페어링 근접 자동 연결 ['3', '빠른 페어링 근접 자동 연결'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.4
-      },
-      {
-        "section": "fact_4",
-        "chunk": 1,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "매번 설정 메뉴에 들어가지 않아도 됩니다 넷째, 26.3은 다음 버전에서 본격 4 시리 업그레이드 전초전 ['4', '시리 업그레이드 전초전'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.281
+        "best_illust_score": 0.313
       },
       {
         "section": "fact_4",
@@ -1172,9 +966,9 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "매번 설정 메뉴에 들어가지 않아도 됩니다 넷째, 26.3은 다음 버전에서 본격 도입될 시리 업그레이드의 기반 작업이 4 시리 업그레이드 전초전 ['4', '시리 업그레이드 전초전'] 뉴스",
+        "context": "이미 클릭·설치했다면 휴대전화를 비행기 모드로 전환 + Wi-Fi 끄기 원격제어 차단 후 번호도용문자 차단 신청 감염 의심 시 비행기 모드 즉시 ['감염 의심 시', '비행기 모드 즉시'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.314
+        "best_illust_score": 0.31
       },
       {
         "section": "fact_4",
@@ -1183,9 +977,9 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "넷째, 26.3은 다음 버전에서 본격 도입될 시리 업그레이드의 기반 작업이 포함된 버전이라는 평가입니다 4 시리 업그레이드 전초전 ['4', '시리 업그레이드 전초전'] 뉴스",
+        "context": "휴대전화를 비행기 모드로 전환 + Wi-Fi 끄기 원격제어 차단 후 번호도용문자 차단 신청 + 모바일 결제 내역 확인 + 경찰 112 감염 의심 시 비행기 모드 즉시 ['감염 의심 시', '비행기 모드 즉시'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.371
+        "best_illust_score": 0.32
       },
       {
         "section": "fact_4",
@@ -1194,9 +988,9 @@
           "type": "mascot",
           "value": "serious"
         },
-        "context": "도입될 시리 업그레이드의 기반 작업이 포함된 버전이라는 평가입니다 다섯째, 알림 변경 사항과 백그라운드 4 시리 업그레이드 전초전 ['4', '시리 업그레이드 전초전'] 뉴스",
+        "context": "원격제어 차단 후 번호도용문자 차단 신청 + 모바일 결제 내역 확인 + 경찰 112 + 금감원 1332 신고 감염 의심 시 비행기 모드 즉시 ['감염 의심 시', '비행기 모드 즉시'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.408
+        "best_illust_score": 0.346
       },
       {
         "section": "fact_4",
@@ -1205,20 +999,9 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "포함된 버전이라는 평가입니다 다섯째, 알림 변경 사항과 백그라운드 동작 안정성도 함께 개선됐습니다 4 시리 업그레이드 전초전 ['4', '시리 업그레이드 전초전'] 뉴스",
+        "context": "+ 모바일 결제 내역 확인 + 경찰 112 + 금감원 1332 신고 감염 의심 시 비행기 모드 즉시 ['감염 의심 시', '비행기 모드 즉시'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.307
-      },
-      {
-        "section": "fact_4",
-        "chunk": 6,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "다섯째, 알림 변경 사항과 백그라운드 동작 안정성도 함께 개선됐습니다 4 시리 업그레이드 전초전 ['4', '시리 업그레이드 전초전'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.299
+        "best_illust_score": 0.369
       }
     ]
   },
@@ -1228,19 +1011,6 @@
     "replacements": [
       {
         "section": "fact_4",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "final_update"
-        },
-        "context": "매번 설정 메뉴에 들어가지 않아도 됩니다 넷째, 26.3은 다음 버전에서 본격 4 시리 업그레이드 전초전 매번 설정 메뉴에 들어가지 않아도 됩니다. 넷째, 26.3은 다음 버전에서 본격 도입될 시리 업그레이드의 기반 작업이 포함된 버전이라는 평가입니다. 다섯째, 알림 변경 사항과 백그라"
-      },
-      {
-        "section": "fact_4",
         "chunk": 2,
         "from": {
           "type": "illust",
@@ -1248,9 +1018,35 @@
         },
         "to": {
           "type": "illust",
-          "value": "chatbot"
+          "value": "cpt_f59129df"
         },
-        "context": "매번 설정 메뉴에 들어가지 않아도 됩니다 넷째, 26.3은 다음 버전에서 본격 도입될 시리 업그레이드의 기반 작업이 4 시리 업그레이드 전초전 매번 설정 메뉴에 들어가지 않아도 됩니다. 넷째, 26.3은 다음 버전에서 본격 도입될 시리 업그레이드의 기반 작업이 포함된 버전이라는 평가입니"
+        "context": "이미 클릭·설치했다면 휴대전화를 비행기 모드로 전환 + Wi-Fi 끄기 원격제어 차단 후 번호도용문자 차단 신청 감염 의심 시 비행기 모드 즉시 이미 클릭·설치했다면 휴대전화를 비행기 모드로 전환 + Wi-Fi 끄기. 원격제어 차단 후 번호도용문자 차단 신청 + 모바일 결제 내역 확인 "
+      },
+      {
+        "section": "fact_4",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "nfc_pay"
+        },
+        "context": "휴대전화를 비행기 모드로 전환 + Wi-Fi 끄기 원격제어 차단 후 번호도용문자 차단 신청 + 모바일 결제 내역 확인 + 경찰 112 감염 의심 시 비행기 모드 즉시 이미 클릭·설치했다면 휴대전화를 비행기 모드로 전환 + Wi-Fi 끄기. 원격제어 차단 후 번호도용문자 차단 신청 + 모"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 5,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "cpt_4729c912"
+        },
+        "context": "+ 모바일 결제 내역 확인 + 경찰 112 + 금감원 1332 신고 감염 의심 시 비행기 모드 즉시 이미 클릭·설치했다면 휴대전화를 비행기 모드로 전환 + Wi-Fi 끄기. 원격제어 차단 후 번호도용문자 차단 신청 + 모바일 결제 내역 확인 + 경찰 112 + 금감원 1332 신고."
       },
       {
         "section": "cta",
@@ -1266,58 +1062,12 @@
         "context": "휴대폰 구매할 땐? 지원금부터 무료로 조회해보세요 휴대폰 구매할 땐? 지원금부터 무료로 조회해보세요 휴대폰 구매할 땐? 지원금부터 무료로 조회해보세요."
       }
     ],
-    "weak": [
-      {
-        "section": "fact_3",
-        "chunk": 2,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "셋째, 빠른 페어링 기능이 강화됐습니다 에어팟처럼 헤드폰이나 스마트워치 등 타사 블루투스 액세서리를 가까이 두기만 3 빠른 페어링 근접 자동 연결 셋째, 빠른 페어링 기능이 강화됐습니다. 에어팟처럼 헤드폰이나 스마트워치 등 타사 블루투스 액세서리를 가까이 두기만 해도 빠르게 연결됩니다."
-      },
-      {
-        "section": "fact_3",
-        "chunk": 4,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "타사 블루투스 액세서리를 가까이 두기만 해도 빠르게 연결됩니다 3 빠른 페어링 근접 자동 연결 셋째, 빠른 페어링 기능이 강화됐습니다. 에어팟처럼 헤드폰이나 스마트워치 등 타사 블루투스 액세서리를 가까이 두기만 해도 빠르게 연결됩니다."
-      },
-      {
-        "section": "fact_4",
-        "chunk": 3,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "넷째, 26.3은 다음 버전에서 본격 도입될 시리 업그레이드의 기반 작업이 포함된 버전이라는 평가입니다 4 시리 업그레이드 전초전 매번 설정 메뉴에 들어가지 않아도 됩니다. 넷째, 26.3은 다음 버전에서 본격 도입될 시리 업그레이드의 기반 작업이 포함된 버전이라는 평가입니다. 다섯째,"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 5,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "포함된 버전이라는 평가입니다 다섯째, 알림 변경 사항과 백그라운드 동작 안정성도 함께 개선됐습니다 4 시리 업그레이드 전초전 매번 설정 메뉴에 들어가지 않아도 됩니다. 넷째, 26.3은 다음 버전에서 본격 도입될 시리 업그레이드의 기반 작업이 포함된 버전이라는 평가입니다. 다섯째, 알림"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 6,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "다섯째, 알림 변경 사항과 백그라운드 동작 안정성도 함께 개선됐습니다 4 시리 업그레이드 전초전 매번 설정 메뉴에 들어가지 않아도 됩니다. 넷째, 26.3은 다음 버전에서 본격 도입될 시리 업그레이드의 기반 작업이 포함된 버전이라는 평가입니다. 다섯째, 알림 변경 사항과 백그라운드 동작"
-      }
-    ]
+    "weak": []
   },
   "_codex_effective_script": {
     "version": 2,
-    "slug": "016_news_ios_26_3_release",
-    "source": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\016_news_ios_26_3_release\\shorts_script.json",
+    "slug": "018_scam_wedding_invite_smishing",
+    "source": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\018_scam_wedding_invite_smishing\\shorts_script.json",
     "override_applied": false,
     "override_sections": []
   }

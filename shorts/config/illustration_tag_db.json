@@ -224,6 +224,20 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "cpt_066b1a1b": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "발신번호",
+        "저장된",
+        "지인",
+        "표시되고"
+      ],
+      "note": "자동 발굴 개념: 발신번호 저장된",
+      "available": true
+    },
     "cpt_09b8db78": {
       "tags": [
         "auto"
@@ -256,6 +270,16 @@
         "플립"
       ],
       "note": "자동 발굴 개념: 폴드 플립"
+    },
+    "cpt_163f537d": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "켜는",
+        "방식"
+      ],
+      "note": "자동 발굴 개념: 켜는 방식"
     },
     "cpt_1a196d6d": {
       "tags": [
@@ -345,6 +369,18 @@
       ],
       "note": "자동 발굴 개념: 값이 진짜"
     },
+    "cpt_678a9adc": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "항공기",
+        "모드",
+        "켜두고",
+        "따로"
+      ],
+      "note": "자동 발굴 개념: 항공기 모드"
+    },
     "cpt_6a2e9678": {
       "tags": [
         "auto",
@@ -370,6 +406,21 @@
         "안에"
       ],
       "note": "자동 발굴 개념: 사전예약 보통"
+    },
+    "cpt_6f69bf84": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "진짜",
+        "지인",
+        "보낸",
+        "문자로",
+        "오인하게"
+      ],
+      "note": "자동 발굴 개념: 진짜 지인",
+      "available": true
     },
     "cpt_75c6eba6": {
       "tags": [
@@ -626,6 +677,21 @@
       ],
       "note": "자동 발굴 개념: 폴더블 신제품인"
     },
+    "cpt_f59129df": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "결혼",
+        "시즌",
+        "모바일",
+        "청첩장",
+        "사칭"
+      ],
+      "note": "자동 발굴 개념: 결혼 시즌",
+      "available": true
+    },
     "cpt_f5cc7e27": {
       "tags": [
         "auto"
@@ -673,6 +739,19 @@
       ],
       "note": "자동 발굴 개념: 시작된 지원",
       "available": true
+    },
+    "cut_theft_43505b9f": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "끊김",
+        "도난",
+        "피해",
+        "출국",
+        "이면"
+      ],
+      "note": "자동 발굴 개념: 끊김 도난"
     },
     "device_data_transfer": {
       "tags": [
@@ -797,6 +876,21 @@
         "예정"
       ],
       "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "friend_wedding_suspicion_884c4f09": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "친구",
+        "결혼",
+        "잦은",
+        "시기일수록",
+        "의심"
+      ],
+      "note": "자동 발굴 개념: 친구 결혼",
       "available": true
     },
     "gemini": {
@@ -1018,6 +1112,19 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "mobile_settings_31257fb6": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "설정",
+        "모바일",
+        "네트워크",
+        "데이터",
+        "로밍"
+      ],
+      "note": "자동 발굴 개념: 설정 모바일"
+    },
     "module_install": {
       "tags": [
         "library"
@@ -1193,6 +1300,19 @@
       ],
       "note": "Reusable editorial illustration.",
       "available": true
+    },
+    "price_shock_7abfd08b": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "공항",
+        "도착",
+        "깨닫",
+        "요금",
+        "폭탄"
+      ],
+      "note": "자동 발굴 개념: 공항 도착"
     },
     "prohibit": {
       "tags": [
@@ -1408,6 +1528,17 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "surge_b56b4f67": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "급증하고"
+      ],
+      "note": "자동 발굴 개념: 급증하고",
+      "available": true
+    },
     "telecom_discount_compare": {
       "tags": [
         "price",
@@ -1484,73 +1615,7 @@
       ],
       "note": "Reusable editorial illustration.",
       "available": true
-    },
-    "price_shock_7abfd08b": {
-      "keywords": [
-        "공항",
-        "도착",
-        "깨닫",
-        "요금",
-        "폭탄"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 공항 도착",
-      "available": false
-    },
-    "cut_theft_43505b9f": {
-      "keywords": [
-        "끊김",
-        "도난",
-        "피해",
-        "출국",
-        "이면"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 끊김 도난",
-      "available": false
-    },
-    "mobile_settings_31257fb6": {
-      "keywords": [
-        "설정",
-        "모바일",
-        "네트워크",
-        "데이터",
-        "로밍"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 설정 모바일",
-      "available": false
-    },
-    "cpt_678a9adc": {
-      "keywords": [
-        "항공기",
-        "모드",
-        "켜두고",
-        "따로"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 항공기 모드",
-      "available": false
-    },
-    "cpt_163f537d": {
-      "keywords": [
-        "켜는",
-        "방식"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 켜는 방식",
-      "available": false
     }
   },
-  "updated_at": "2026-06-08T19:22:08"
+  "updated_at": "2026-06-10T17:44:53"
 }

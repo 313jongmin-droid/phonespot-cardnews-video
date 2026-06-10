@@ -1,95 +1,95 @@
 {
-  "slug": "017_tip_summer_travel_phone_5min",
+  "slug": "018_scam_wedding_invite_smishing",
   "engine": "fallback-mtime",
-  "generated_at": 1780914548.0403175,
+  "generated_at": 1781081002.3739812,
   "requests": [
     {
-      "filename": "price_shock_7abfd08b.png",
-      "variant": "price_shock_7abfd08b",
+      "filename": "cpt_f59129df.png",
+      "variant": "cpt_f59129df",
       "section": "hook",
       "chunk_index": 0,
-      "concept_label": "공항 도착",
+      "concept_label": "결혼 시즌",
       "optional": true,
-      "concept_text": "공항 도착 price shock 7abfd08b 공항 도착 깨닫 요금 폭탄 auto concept 공항 도착 후 깨닫는 요금 폭탄·연결"
+      "concept_text": "결혼 시즌 cpt f59129df 결혼 시즌 모바일 청첩장 사칭 auto concept 6월 결혼 시즌 모바일 청첩장 사칭 스미싱이"
     },
     {
-      "filename": "cut_theft_43505b9f.png",
-      "variant": "cut_theft_43505b9f",
+      "filename": "surge_b56b4f67.png",
+      "variant": "surge_b56b4f67",
       "section": "hook",
       "chunk_index": 1,
-      "concept_label": "끊김 도난",
+      "concept_label": "급증하고",
       "optional": true,
-      "concept_text": "끊김 도난 cut theft 43505b9f 끊김 도난 피해 출국 이면 auto concept 끊김·도난 피해를 출국 전 5분이면 막을 수 있습니다"
+      "concept_text": "급증하고 surge b56b4f67 급증하고 auto concept 급증하고 있습니다"
     },
     {
-      "filename": "mobile_settings_31257fb6.png",
-      "variant": "mobile_settings_31257fb6",
-      "section": "fact_1",
-      "chunk_index": 0,
-      "concept_label": "설정 모바일",
+      "filename": "cpt_066b1a1b.png",
+      "variant": "cpt_066b1a1b",
+      "section": "hook",
+      "chunk_index": 2,
+      "concept_label": "발신번호 저장된",
       "optional": true,
-      "concept_text": "설정 모바일 mobile settings 31257fb6 설정 모바일 네트워크 데이터 로밍 auto concept 설정 → 모바일 네트워크 → 데이터 로밍 OFF"
+      "concept_text": "발신번호 저장된 cpt 066b1a1b 발신번호 저장된 지인 표시되고 auto concept 발신번호가 저장된 지인으로 표시되고"
     },
     {
-      "filename": "cpt_678a9adc.png",
-      "variant": "cpt_678a9adc",
-      "section": "fact_1",
-      "chunk_index": 1,
-      "concept_label": "항공기 모드",
-      "optional": true,
-      "concept_text": "항공기 모드 cpt 678a9adc 항공기 모드 켜두고 따로 auto concept 항공기 모드를 켜두고 Wi-Fi만 따로"
-    },
-    {
-      "filename": "cpt_163f537d.png",
-      "variant": "cpt_163f537d",
+      "filename": "cpt_6f69bf84.png",
+      "variant": "cpt_6f69bf84",
       "section": "fact_1",
       "chunk_index": 2,
-      "concept_label": "켜는 방식",
+      "concept_label": "진짜 지인",
       "optional": true,
-      "concept_text": "켜는 방식 cpt 163f537d 켜는 방식 auto concept 켜는 방식도 안전합니다"
+      "concept_text": "진짜 지인 cpt 6f69bf84 진짜 지인 보낸 문자로 오인하게 auto concept 진짜 지인이 보낸 문자로 오인하게 만듭니다"
+    },
+    {
+      "filename": "friend_wedding_suspicion_884c4f09.png",
+      "variant": "friend_wedding_suspicion_884c4f09",
+      "section": "fact_1",
+      "chunk_index": 3,
+      "concept_label": "친구 결혼",
+      "optional": true,
+      "concept_text": "친구 결혼 friend wedding suspicion 884c4f09 친구 결혼 잦은 시기일수록 의심 auto concept 친구 결혼이 잦은 시기일수록 의심 없이 클릭하기 쉽습니다"
     }
   ],
   "assignments": [
     {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 8일 오후 07_27_41 (1).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 8일 오후 07_27_41 (1).png",
-      "proposed_filename": "price_shock_7abfd08b.png",
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 10일 오후 05_42_58 (1).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 10일 오후 05_42_58 (1).png",
+      "proposed_filename": "cpt_f59129df.png",
       "confidence": null,
       "exact_name": false,
       "alternatives": [],
       "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 8일 오후 07_27_42 (2).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 8일 오후 07_27_42 (2).png",
-      "proposed_filename": "cut_theft_43505b9f.png",
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 10일 오후 05_42_59 (2).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 10일 오후 05_42_59 (2).png",
+      "proposed_filename": "surge_b56b4f67.png",
       "confidence": null,
       "exact_name": false,
       "alternatives": [],
       "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 8일 오후 07_27_42 (3).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 8일 오후 07_27_42 (3).png",
-      "proposed_filename": "mobile_settings_31257fb6.png",
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 10일 오후 05_42_59 (3).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 10일 오후 05_42_59 (3).png",
+      "proposed_filename": "cpt_066b1a1b.png",
       "confidence": null,
       "exact_name": false,
       "alternatives": [],
       "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 8일 오후 07_27_42 (4).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 8일 오후 07_27_42 (4).png",
-      "proposed_filename": "cpt_678a9adc.png",
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 10일 오후 05_43_00 (4).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 10일 오후 05_43_00 (4).png",
+      "proposed_filename": "cpt_6f69bf84.png",
       "confidence": null,
       "exact_name": false,
       "alternatives": [],
       "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 8일 오후 07_27_44 (5).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 8일 오후 07_27_44 (5).png",
-      "proposed_filename": "cpt_163f537d.png",
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 10일 오후 05_43_00 (5).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 10일 오후 05_43_00 (5).png",
+      "proposed_filename": "friend_wedding_suspicion_884c4f09.png",
       "confidence": null,
       "exact_name": false,
       "alternatives": [],
