@@ -254,8 +254,8 @@
       ]
     },
     "021_news_galaxy_flip8_exynos": {
-      "used_at": "2026-06-13T21:50:10",
-      "source": "unique_illustration_guard",
+      "used_at": "2026-06-13T22:48:55",
+      "source": "semantic_visual_match",
       "illustrations": [
         "memory_chip",
         "smartphone",
@@ -264,14 +264,9 @@
         "device_os_requirement",
         "device_data_transfer",
         "appliance",
-        "self_flip_6728256c",
         "camera_battery_ecd040c7",
-        "samsung_ai",
         "ti_decrease",
-        "cpt_496029c6",
-        "forecast",
-        "battery_charge_range",
-        "gift_voucher"
+        "battery_charge_range"
       ]
     },
     "022_tip_galaxy_battery_save_5": {
@@ -286,7 +281,7 @@
       ]
     }
   },
-  "updated_at": "2026-06-13T21:50:11",
+  "updated_at": "2026-06-13T22:48:57",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -339,7 +334,7 @@
       "variants": []
     },
     "021_news_galaxy_flip8_exynos": {
-      "updated_at": "2026-06-13T21:50:11",
+      "updated_at": "2026-06-13T22:48:57",
       "variants": []
     },
     "022_tip_galaxy_battery_save_5": {

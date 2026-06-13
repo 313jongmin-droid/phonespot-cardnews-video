@@ -254,15 +254,15 @@
         },
         {
           "type": "illust",
-          "value": "self_flip_6728256c"
+          "value": "smartphone"
+        },
+        {
+          "type": "illust",
+          "value": "smartphone"
         },
         {
           "type": "illust",
           "value": "camera_battery_ecd040c7"
-        },
-        {
-          "type": "illust",
-          "value": "samsung_ai"
         }
       ],
       "stat": {
@@ -352,11 +352,11 @@
         },
         {
           "type": "illust",
-          "value": "cpt_496029c6"
+          "value": "smartphone"
         },
         {
           "type": "illust",
-          "value": "forecast"
+          "value": "smartphone"
         }
       ],
       "stat": {
@@ -534,7 +534,7 @@
     "chunk_visuals": [
       {
         "type": "illust",
-        "value": "gift_voucher"
+        "value": "smartphone"
       },
       {
         "type": "logo",

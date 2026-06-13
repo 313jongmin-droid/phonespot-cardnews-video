@@ -259,6 +259,7 @@
   - `readable_variant()`: Gemini 번역으로 `<english_slug>_<hash8>` 사람읽기 이름. 키 없으면 `cpt_<hash8>` 폴백.
   - 캐시 `shorts/config/concept_name_cache.json`(git 비추적). 키파일 `_secrets/gemini_key.txt`.
 - `codex_illustration_scout.py` / `codex_illustration_db.py` / `codex_unique_illustration_guard.py` / `codex_warm_embeddings.py`.
+  - **★ `codex_unique_illustration_guard.py` 버그 수정(2026-06-13)**: 이 가드는 semantic_match **다음에** 돌며 "중복 일러스트를 유니크하게" 바꾸는데, **매처의 제외 규칙(cpt·blocklist)을 무시**하고 반복된 중립 필러까지 강제 교체해 **매처가 걸러낸 cpt_496029c6(사기그림)·무관 그림을 되살렸다**(매칭 망가짐의 진짜 뿌리). 수정: `_is_bad_variant`(cpt·blocklist 제외) + **중립 필러(`_NEUTRALS`)는 반복 허용**(억지 유니크 금지). 매처와 같은 env(`PHONESPOT_ILLUST_BLOCKLIST`/`_TRUST_CONCEPT_ART`/`_NEUTRAL_FILLERS`) 사용. **교훈: semantic_match 뒤에 비주얼을 만지는 모든 단계(guard·scout·apply)는 같은 제외 규칙을 따라야 한다.**
 - 지문/사용이력: `shorts/codex/ILLUSTRATION_TAG_DB.md`, `shorts/codex/illustration_usage_history.json`(런타임, git 비추적).
 
 **수정 시 읽을 것**
@@ -271,6 +272,7 @@
 - **★ CLIP 그림엔진(`codex_image_embed`)이 PC에 미설치면 content-gate 무력** → 텍스트/태그 매칭만으로 동작. 즉 "이름↔그림 불일치"의 범용 차단은 **CLIP 켜야 완전**. 안 켜진 동안은 정책 3(cpt_ 제외)+중립폴백+임계 0.48이 방어선. 검증 단서: `shorts/codex/image_embed_cache.json` 존재 여부.
 - **잘못 그려진 정식(비-cpt_) 일러스트**(예: ti_decrease=티타늄'감소'를 슬림화에 사용)는 특정 이름 하드코딩 ❌(원칙). 해결=그 그림을 더 중립/정확한 것으로 교체하거나 CLIP content-gate 활성화.
 - **실사 포토가 안 뜸**: ① 사진이 **렌더하는 PC에 없음**(git 비추적 → 노트북에 넣고 사무실 렌더면 누락) ② `PHONESPOT_PHOTO_MIN` 0.80 너무 엄격(0.60으로 검증) ③ 새 코드 미전파(push→pull). 로그 `[semantic_visual] ... photos=N장(min=...)`로 로드 여부·장수 확인.
+- **약한/그리디 매칭(appliance·ti_decrease 류)**: 매처가 0.48 턱걸이로 약한 일러스트를 고르거나(예 "엑시노스"에 appliance), 적합 일러스트가 1개뿐일 때 **앞 청크에서 소진**돼 정작 핵심 청크가 차선을 받음(그리디 per-chunk). 범용 해결 = ① 그 주제 **사진/일러스트 보강**(photo가 0.48을 이기면 대체) ② CLIP content-gate 활성화 ③ `EMBED_MIN_ILLUST` 상향(약한 건 중립으로, 단 중립 반복↑). **특정 이름 하드코딩 ❌.**
 - **수정 작업법**: 이 파일은 Edit 누적이 꼬리를 truncate한 적 있음(2026-06-13) → 큰 변경은 **bash-python(assert count==1 + py_compile + tail 확인)**, 깨지면 `git show HEAD:<path>`의 꼬리로 복구.
 
 ---
@@ -448,6 +450,7 @@
 ---
 
 ## 변경 이력 (이 맵 자체)
+- 2026-06-13: **★ 매칭 망가짐의 진짜 뿌리 = `codex_unique_illustration_guard` 버그(검증완료).** 가드가 semantic_match 뒤에 중복 중립을 유니크화하며 cpt·무관 그림을 되살림 → cpt·blocklist 제외 + 중립 반복 허용으로 수정. 재렌더 224859에서 cpt=0 확인. 포토 "일러스트보다 우수할 때만" 규칙(`photo ≥ best_ill`)도 추가. 남은 appliance/ti_decrease는 매처 약한픽/그리디 = 에셋 보강으로(함정 박음).
 - 2026-06-13: **E단원에 실사 포토 라이브러리 박음 (사장님 설계).** `assets/photos/`(한글 파일명=라벨) → 매칭 1순위(`≥PHOTO_MIN` 기본 0.80, env) → 일러스트 → 생성요청. `build_photo_index`+`best_photo` 게이트, `ImageVisual`로 렌더. 텍스트 엔진만 써 CLIP 미설치여도 작동. git 비추적(렌더 PC에 직접). 함정에 "안 뜨는 3원인" 박음. **검증 대기**(사진 넣고 0.6으로 재렌더).
 - 2026-06-13: **고퀄 batch 박음 (재렌더 181856 검증).** C단원: 오프닝 2.0초·아웃트로 3.2초(+2)·**닫기 CTA 디자인카드 `CasualCta`(일러스트 폐기)**·카드 전환 애니메이션(`cardEnter`). J단원: 후킹 공식 5패턴. (1 CLIP·9 제품이미지는 제외/대기.)
 - 2026-06-13: **C단원 SNS 레이아웃·오디오 + J단원 길이목표 박음 (P2·P3).** 제목바 hook-only(`CasualCard.tsx`), 자막 세이프영역 안전(변경X), 라우드니스 −14(`finalize_sns_video.py` loudnorm, env off), BGM 보류. 길이 35~45초 목표 = 기사 집필 레버(`article_authoring_spec.md` §body + J단원). 검증=실행PC 재렌더.
