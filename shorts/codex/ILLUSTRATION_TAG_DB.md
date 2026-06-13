@@ -51,7 +51,7 @@
 | `cpt_8b587f6c` | auto | 0 |  |
 | `cpt_8bffef74` | auto, library | 1 | 015_qa_msafer_pass_identity_block |
 | `cpt_8d09d703` | auto | 0 |  |
-| `cpt_98cab19a` | auto, library | 1 | 021_news_galaxy_flip8_exynos |
+| `cpt_98cab19a` | auto, library | 0 |  |
 | `cpt_9ebf277e` | auto | 0 |  |
 | `cpt_a0d7df46` | auto | 0 |  |
 | `cpt_a1caaea6` | auto, library | 3 | 020_qa_apple_pay_korea_card |
@@ -82,7 +82,7 @@
 | `fake_government_page` | security, smishing, government, warning | 0 |  |
 | `festival_41b2e7cf` | auto, library | 1 | 019_news_samsung_thank_you_festival |
 | `final_update` | software, update, library | 3 | 016_news_ios_26_3_release |
-| `foldable` | hardware, foldable, library | 2 | 021_news_galaxy_flip8_exynos |
+| `foldable` | hardware, foldable, library | 1 | 012_news_galaxy_unpack_july |
 | `forecast` | news, forecast, library | 12 | 021_news_galaxy_flip8_exynos |
 | `friend_wedding_suspicion_884c4f09` | auto, library | 1 | 018_scam_wedding_invite_smishing |
 | `gemini` | ai, assistant, google, library | 2 | 010_tip_iphone_call_record |
@@ -110,10 +110,10 @@
 | `newspaper` | news, source, library | 8 | 020_qa_apple_pay_korea_card |
 | `nfc_open_access` | payment, nfc, access | 0 |  |
 | `nfc_pay` | payment, nfc, access, library | 2 | 020_qa_apple_pay_korea_card |
-| `official_sale_9dc82f05` | auto, library | 1 | 021_news_galaxy_flip8_exynos |
+| `official_sale_9dc82f05` | auto, library | 0 |  |
 | `official_site_check` | security, official-site, check | 0 |  |
 | `ondevice_ai_chip` | ai, hardware, privacy | 0 |  |
-| `optimized_charging` | battery, charging, tips, library | 1 | 021_news_galaxy_flip8_exynos |
+| `optimized_charging` | battery, charging, tips, library | 0 |  |
 | `password` | security, privacy, authentication, library | 0 |  |
 | `personal_data_63b96014` | auto | 0 |  |
 | `personal_data_leak` | security, privacy, leak | 0 |  |
@@ -154,7 +154,7 @@
 
 ## Recent videos
 
-- `021_news_galaxy_flip8_exynos`: smartphone, phone_setup_ready, memory_chip, phone_settings_toggle, device_os_requirement, device_data_transfer, cpt_98cab19a, official_sale_9dc82f05, foldable, appliance, self_flip_6728256c, camera_battery_ecd040c7, samsung_ai, ti_decrease, cpt_496029c6, forecast, battery_charge_range, optimized_charging, gift_voucher
+- `021_news_galaxy_flip8_exynos`: memory_chip, smartphone, phone_setup_ready, phone_settings_toggle, device_os_requirement, device_data_transfer, appliance, self_flip_6728256c, camera_battery_ecd040c7, samsung_ai, ti_decrease, cpt_496029c6, forecast, battery_charge_range, gift_voucher
 - `022_tip_galaxy_battery_save_5`: smartphone, aluminum_label, appliance, battery_charge_range, battery_overheat
 - `020_qa_apple_pay_korea_card`: smartphone, newspaper, microphone, shield, meeting_room, forecast, cpt_f59129df, cpt_a1caaea6, biometric, cpt_83fa1e9f, cpt_6a2e9678, device_data_transfer, nfc_pay, cpt_fd9edf65, gift_voucher
 - `019_news_samsung_thank_you_festival`: monday_d77265f0, weekly_sunday_82b74c0a, festival_41b2e7cf, unlocked_baa71ac6, event_period_8cafdac4, microphone, shield, meeting_room, forecast, gift_voucher, smartphone, cpt_a1caaea6, biometric, cpt_4729c912, cpt_fd9edf65

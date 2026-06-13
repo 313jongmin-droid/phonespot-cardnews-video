@@ -378,6 +378,9 @@ def semantic_match(data: dict, slug: str) -> bool:
                     _sc = ce.cosine(cvec, _pv)
                     if _sc > best_photo[0]:
                         best_photo = (round(float(_sc), 3), _pf)
+                if best_photo[1]:
+                    # 진단 로그: 임계와 무관하게 각 청크의 최고 포토 점수 출력 → 적정 PHOTO_MIN 산정용.
+                    print(f"[photo] {section_name} c{idx+1}: {best_photo[1]} {best_photo[0]} (min={PHOTO_MIN})")
 
             # ★ 범용 그림내용(CLIP) 검증용 랭킹. 텍스트/태그로 고른 일러스트라도 '실제 그림'이
             #   주제와 맞는지 같은 잣대(EMBED_MIN_ILLUST_IMG)로 확인한다. 이름 하드코딩 없이
@@ -393,10 +396,11 @@ def semantic_match(data: dict, slug: str) -> bool:
 
             chosen = None
             reason = ""
-            if best_photo[0] >= PHOTO_MIN and best_photo[1]:
-                # 실사 포토 = 1순위. 렌더는 ImageVisual(assets/photos/<file>) 켄번스 모션.
+            if best_photo[0] >= PHOTO_MIN and best_photo[1] and best_photo[0] >= best_ill[0]:
+                # 실사 포토 우선 — 단 '일러스트보다 잘 맞을 때만'(>= best_ill). 약한 포토가
+                # 좋은 일러스트를 굶기지 않도록 둘을 비교해 더 나은 쪽을 쓴다. 렌더=ImageVisual 켄번스.
                 chosen = {"type": "image", "value": f"photos/{best_photo[1]}"}
-                reason = f"photo {best_photo[0]} (>= {PHOTO_MIN})"
+                reason = f"photo {best_photo[0]} (>= {PHOTO_MIN}, ill={best_ill[0]})"
             elif best_img[0] >= min_img and best_img[0] >= best_ill[0]:
                 chosen = {"type": "image", "value": best_img[1]}
                 reason = f"image score {best_img[0]}: {best_img[2][:80]}"

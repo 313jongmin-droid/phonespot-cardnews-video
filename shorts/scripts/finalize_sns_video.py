@@ -57,7 +57,9 @@ def common_prefix(ffmpeg: str, src: Path) -> list[str]:
         # 표준 레벨로. TP -1.5dB(클리핑 여유). env PHONESPOT_TARGET_LUFS 로 조절(끄려면 "off").
         *([] if os.getenv("PHONESPOT_TARGET_LUFS", "-14").lower() == "off" else [
             "-af",
-            f"loudnorm=I={os.getenv('PHONESPOT_TARGET_LUFS', '-14')}:TP=-1.5:LRA=11",
+            # loudnorm 은 내부적으로 192k 로 업샘플 → 출력이 96k 로 남는 부수효과가 있어
+            # aresample=48000 으로 표준 48kHz 고정(소셜 플랫폼 표준, 재인코딩 위험↓).
+            f"loudnorm=I={os.getenv('PHONESPOT_TARGET_LUFS', '-14')}:TP=-1.5:LRA=11,aresample=48000",
         ]),
     ]
 

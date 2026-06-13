@@ -67,6 +67,8 @@ if errorlevel 1 (
 )
 
 echo.
+rem ----- real-photo match threshold: TEST default 0.6 (raise later, or set env PHONESPOT_PHOTO_MIN) -----
+if "%PHONESPOT_PHOTO_MIN%"=="" set "PHONESPOT_PHOTO_MIN=0.6"
 echo ----- Step 3/7: Build script + copy assets -----
 python scripts\build_script.py !SLUG!
 if errorlevel 1 goto :fail
