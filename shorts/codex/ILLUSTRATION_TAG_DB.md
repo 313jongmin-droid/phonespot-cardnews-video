@@ -14,6 +14,7 @@
 | `biometric` | security, privacy, authentication, library | 3 | 020_qa_apple_pay_korea_card |
 | `call_filter_rules` | library | 0 |  |
 | `call_recording_notice` | library | 1 | 010_tip_iphone_call_record |
+| `camera_battery_ecd040c7` | auto, library | 1 | 021_news_galaxy_flip8_exynos |
 | `card_struggle_81529308` | auto | 0 |  |
 | `chart_down` | price, data, decrease, library | 1 | 011_qa_combo_discount_check |
 | `chart_up` | price, data, increase, library | 1 | 001_apple_ondevice_ai_wwdc26 |
@@ -31,6 +32,7 @@
 | `cpt_313e9e00` | auto | 0 |  |
 | `cpt_3317f8c6` | auto | 0 |  |
 | `cpt_4729c912` | auto, library | 3 | 019_news_samsung_thank_you_festival |
+| `cpt_496029c6` | auto, library | 1 | 021_news_galaxy_flip8_exynos |
 | `cpt_55c40fb8` | auto | 0 |  |
 | `cpt_5cd81fce` | auto | 0 |  |
 | `cpt_6174b190` | auto | 0 |  |
@@ -39,15 +41,16 @@
 | `cpt_678a9adc` | auto | 0 |  |
 | `cpt_6a2e9678` | auto, library | 3 | 020_qa_apple_pay_korea_card |
 | `cpt_6ec7317d` | auto | 0 |  |
-| `cpt_6f69bf84` | auto, library | 1 | 018_scam_wedding_invite_smishing |
+| `cpt_6f69bf84` | auto, library | 2 | 021_news_galaxy_flip8_exynos |
 | `cpt_75c6eba6` | auto, library | 1 | 014_scam_voicephishing_zero_relief |
 | `cpt_7a87dd35` | auto | 0 |  |
 | `cpt_7b46d1e4` | auto | 0 |  |
 | `cpt_7b7a2f91` | auto, library | 1 | 015_qa_msafer_pass_identity_block |
-| `cpt_83fa1e9f` | auto, library | 3 | 020_qa_apple_pay_korea_card |
+| `cpt_83fa1e9f` | auto, library | 4 | 021_news_galaxy_flip8_exynos |
 | `cpt_8b587f6c` | auto | 0 |  |
 | `cpt_8bffef74` | auto, library | 1 | 015_qa_msafer_pass_identity_block |
 | `cpt_8d09d703` | auto | 0 |  |
+| `cpt_98cab19a` | auto, library | 0 |  |
 | `cpt_9ebf277e` | auto | 0 |  |
 | `cpt_a0d7df46` | auto | 0 |  |
 | `cpt_a1caaea6` | auto, library | 3 | 020_qa_apple_pay_korea_card |
@@ -71,41 +74,42 @@
 | `device_data_transfer` | device, migration, backup, tips, library | 3 | 020_qa_apple_pay_korea_card |
 | `device_os_requirement` | library | 0 |  |
 | `device_price_rise` | price, increase, device | 0 |  |
-| `display_ratio_change` | library | 0 |  |
+| `display_ratio_change` | library | 1 | 021_news_galaxy_flip8_exynos |
 | `emergency_account_freeze` | security, bank, response, golden-time, library | 2 | 015_qa_msafer_pass_identity_block |
 | `event_period_8cafdac4` | auto, library | 1 | 019_news_samsung_thank_you_festival |
 | `fake_government_page` | security, smishing, government, warning | 0 |  |
 | `festival_41b2e7cf` | auto, library | 1 | 019_news_samsung_thank_you_festival |
 | `final_update` | software, update, library | 3 | 016_news_ios_26_3_release |
 | `foldable` | hardware, foldable, library | 1 | 012_news_galaxy_unpack_july |
-| `forecast` | news, forecast, library | 11 | 020_qa_apple_pay_korea_card |
+| `forecast` | news, forecast, library | 12 | 021_news_galaxy_flip8_exynos |
 | `friend_wedding_suspicion_884c4f09` | auto, library | 1 | 018_scam_wedding_invite_smishing |
 | `gemini` | ai, assistant, google, library | 2 | 010_tip_iphone_call_record |
 | `gift_prohibit` | price, security, warning, library | 1 | 018_scam_wedding_invite_smishing |
-| `gift_voucher` | price, subsidy, purchase, library | 10 | 020_qa_apple_pay_korea_card |
+| `gift_voucher` | price, subsidy, purchase, library | 11 | 021_news_galaxy_flip8_exynos |
 | `global_adoption_3a84a22d` | auto | 0 |  |
 | `handshake` | policy, access, partnership, library | 2 | 014_scam_voicephishing_zero_relief |
 | `health_sensor_watch` | library | 2 | 012_news_galaxy_unpack_july |
 | `heat_release` | battery, heat, hardware, library | 0 |  |
 | `impersonation_call` | security, voice-phishing, call, warning, library | 4 | 018_scam_wedding_invite_smishing |
 | `korean_broken_36986e9e` | auto | 0 |  |
-| `launch_event` | library | 0 |  |
+| `launch_event` | library | 1 | 021_news_galaxy_flip8_exynos |
 | `liquid_titanium` | materials, hardware, library | 0 |  |
 | `lock` | security, privacy, lock, library | 3 | 018_scam_wedding_invite_smishing |
 | `logout` | security, privacy, account, library | 1 | 015_qa_msafer_pass_identity_block |
 | `market_cap` | price, data, market, library | 1 | 014_scam_voicephishing_zero_relief |
-| `meeting_room` | policy, news, strategy, library | 11 | 020_qa_apple_pay_korea_card |
-| `memory_chip` | ai, hardware, chip, library | 2 | 010_tip_iphone_call_record |
-| `microphone` | news, quote, library | 10 | 020_qa_apple_pay_korea_card |
+| `meeting_room` | policy, news, strategy, library | 12 | 021_news_galaxy_flip8_exynos |
+| `memory_chip` | ai, hardware, chip, library | 3 | 021_news_galaxy_flip8_exynos |
+| `microphone` | news, quote, library | 11 | 021_news_galaxy_flip8_exynos |
 | `mobile_settings_31257fb6` | auto | 0 |  |
 | `module_install` | library | 0 |  |
 | `monday_d77265f0` | auto, library | 1 | 019_news_samsung_thank_you_festival |
-| `newspaper` | news, source, library | 8 | 020_qa_apple_pay_korea_card |
+| `newspaper` | news, source, library | 9 | 021_news_galaxy_flip8_exynos |
 | `nfc_open_access` | payment, nfc, access | 0 |  |
 | `nfc_pay` | payment, nfc, access, library | 2 | 020_qa_apple_pay_korea_card |
+| `official_sale_9dc82f05` | auto, library | 0 |  |
 | `official_site_check` | security, official-site, check | 0 |  |
 | `ondevice_ai_chip` | ai, hardware, privacy | 0 |  |
-| `optimized_charging` | battery, charging, tips, library | 0 |  |
+| `optimized_charging` | battery, charging, tips, library | 1 | 021_news_galaxy_flip8_exynos |
 | `password` | security, privacy, authentication, library | 0 |  |
 | `personal_data_leak` | security, privacy, leak | 0 |  |
 | `phone_settings_toggle` | library | 6 | 018_scam_wedding_invite_smishing |
@@ -123,9 +127,10 @@
 | `secure_app_reregistration` | security, bank, authentication, setup, library | 1 | 015_qa_msafer_pass_identity_block |
 | `security_feature_lock` | library | 2 | 018_scam_wedding_invite_smishing |
 | `select_option_76495b69` | auto | 0 |  |
+| `self_flip_6728256c` | auto, library | 0 |  |
 | `settings_screen_ab73a8fa` | auto | 0 |  |
 | `settings_steps` | library | 0 |  |
-| `shield` | security, privacy, protection, library | 11 | 020_qa_apple_pay_korea_card |
+| `shield` | security, privacy, protection, library | 12 | 021_news_galaxy_flip8_exynos |
 | `smartphone` | device, purchase, cta, library | 12 | 021_news_galaxy_flip8_exynos |
 | `smishing_fake_link` | security, smishing, warning, link | 0 |  |
 | `stock_chart` | price, data, market, library | 0 |  |
@@ -133,7 +138,7 @@
 | `surge_b56b4f67` | auto, library | 1 | 018_scam_wedding_invite_smishing |
 | `telecom_discount_compare` | price, subsidy, compare, telecom, library | 2 | 012_news_galaxy_unpack_july |
 | `theft_auto_lock` | security, privacy, theft | 0 |  |
-| `ti_decrease` | materials, hardware, decrease, library | 1 | 011_qa_combo_discount_check |
+| `ti_decrease` | materials, hardware, decrease, library | 2 | 021_news_galaxy_flip8_exynos |
 | `transfer_interruption_warning` | library | 0 |  |
 | `transfer_path_steps` | library | 0 |  |
 | `unlocked_baa71ac6` | auto, library | 1 | 019_news_samsung_thank_you_festival |
@@ -142,7 +147,7 @@
 
 ## Recent videos
 
-- `021_news_galaxy_flip8_exynos`: smartphone, aluminum_label, appliance, battery_charge_range
+- `021_news_galaxy_flip8_exynos`: smartphone, newspaper, memory_chip, camera_battery_ecd040c7, appliance, microphone, shield, meeting_room, launch_event, aluminum_label, cpt_83fa1e9f, cpt_496029c6, cpt_6f69bf84, ti_decrease, display_ratio_change, forecast, battery_charge_range, optimized_charging, gift_voucher
 - `020_qa_apple_pay_korea_card`: smartphone, newspaper, microphone, shield, meeting_room, forecast, cpt_f59129df, cpt_a1caaea6, biometric, cpt_83fa1e9f, cpt_6a2e9678, device_data_transfer, nfc_pay, cpt_fd9edf65, gift_voucher
 - `019_news_samsung_thank_you_festival`: monday_d77265f0, weekly_sunday_82b74c0a, festival_41b2e7cf, unlocked_baa71ac6, event_period_8cafdac4, microphone, shield, meeting_room, forecast, gift_voucher, smartphone, cpt_a1caaea6, biometric, cpt_4729c912, cpt_fd9edf65
 - `018_scam_wedding_invite_smishing`: cpt_f59129df, surge_b56b4f67, cpt_066b1a1b, phone_settings_toggle, phone_setup_ready, cpt_6f69bf84, friend_wedding_suspicion_884c4f09, meeting_room, security_feature_lock, lock, impersonation_call, gift_prohibit, shield, prohibit, warning, forecast, nfc_pay, cpt_4729c912, gift_voucher

@@ -15,38 +15,36 @@ interface Props {
 
 const line2Size = (line: string) => {
   const len = line.replace(/\s/g, "").length;
-  if (len <= 9) return 104;
-  if (len <= 13) return 92;
-  return 82;
+  if (len <= 9) return 112;
+  if (len <= 13) return 98;
+  return 86;
 };
 
+// 강한 후킹용 오프닝: 평평한 검정 → 브랜드 다크 그라데이션 + 움직이는 주황 글로우,
+// 채널 태그라인은 작은 주황 키커 pill, 헤드라인은 빠르게(0.3초 안에) 큼직하게 등장.
 export const OpeningHook: React.FC<Props> = ({ line1, line2, durFrames }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const l1op = interpolate(frame, [2, 8], [0, 1], {
+  // 빠른 등장(첫 프레임부터 키커·글로우 보임, 헤드라인은 ~6프레임에 안착)
+  const kicker = interpolate(frame, [0, 4], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  const l1y = interpolate(frame, [2, 10], [-30, 0], {
+  const barW = interpolate(frame, [3, 12], [0, 100], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  const l2 = spring({
-    frame: frame - 7,
-    fps,
-    config: { damping: 11, stiffness: 240 },
-  });
-  const barW = interpolate(frame, [10, 22], [0, 100], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-  const zoom = interpolate(frame, [0, durFrames], [1.0, 1.035]);
+  const head = spring({ frame: frame - 2, fps, config: { damping: 12, stiffness: 260 } });
+  const zoom = interpolate(frame, [0, durFrames], [1.0, 1.05]);
+  // 글로우가 천천히 드리프트하며 살아있는 느낌
+  const gx = interpolate(frame, [0, durFrames], [38, 62]);
+  const gy = interpolate(frame, [0, durFrames], [34, 44]);
 
   return (
     <AbsoluteFill
       style={{
-        backgroundColor: "#0A0A0A",
+        background: "linear-gradient(160deg, #1B0A03 0%, #0A0A0A 55%, #000000 100%)",
         justifyContent: "center",
         alignItems: "center",
         fontFamily:
@@ -54,55 +52,71 @@ export const OpeningHook: React.FC<Props> = ({ line1, line2, durFrames }) => {
         transform: `scale(${zoom})`,
       }}
     >
-      <div
+      {/* 움직이는 주황 글로우 */}
+      <AbsoluteFill
         style={{
-          position: "absolute",
-          inset: 0,
+          background: `radial-gradient(circle at ${gx}% ${gy}%, rgba(247,75,11,0.34), rgba(247,75,11,0.10) 26%, transparent 56%)`,
+        }}
+      />
+      {/* 미세 그리드 */}
+      <AbsoluteFill
+        style={{
           backgroundImage:
-            "linear-gradient(rgba(247,75,11,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(247,75,11,0.045) 1px, transparent 1px)",
+            "linear-gradient(rgba(247,75,11,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(247,75,11,0.05) 1px, transparent 1px)",
           backgroundSize: "72px 72px",
+          opacity: 0.7,
         }}
       />
 
-      <div style={{ textAlign: "center", padding: "0 70px" }}>
+      <div style={{ textAlign: "center", padding: "0 64px", position: "relative" }}>
+        {/* 키커 pill (채널 태그라인) */}
         <div
           style={{
-            fontSize: 52,
-            fontWeight: 700,
+            display: "inline-block",
+            background: "#F74B0B",
             color: "#FFFFFF",
-            opacity: l1op * 0.85,
-            transform: `translateY(${l1y}px)`,
-            letterSpacing: 0,
+            fontSize: 30,
+            fontWeight: 800,
+            letterSpacing: 0.5,
+            padding: "10px 24px",
+            borderRadius: 100,
+            marginBottom: 30,
+            opacity: kicker,
+            transform: `translateY(${(1 - kicker) * -16}px)`,
           }}
         >
           {line1}
         </div>
 
-        <div
-          style={{
-            width: `${barW}%`,
-            height: 8,
-            backgroundColor: "#F74B0B",
-            margin: "26px auto",
-            borderRadius: 4,
-            maxWidth: 560,
-          }}
-        />
-
+        {/* 헤드라인 (빠르고 큼직하게) */}
         <div
           style={{
             fontSize: line2Size(line2),
             fontWeight: 900,
             color: "#FFFFFF",
-            letterSpacing: 0,
-            lineHeight: 1.16,
+            letterSpacing: -1,
+            lineHeight: 1.14,
             wordBreak: "keep-all",
             overflowWrap: "break-word",
-            transform: `scale(${0.74 + l2 * 0.26})`,
+            opacity: Math.min(1, head * 1.4),
+            transform: `translateY(${(1 - head) * 26}px) scale(${0.86 + head * 0.14})`,
+            textShadow: "0 6px 30px rgba(0,0,0,0.5)",
           }}
         >
           {line2}
         </div>
+
+        {/* 강조 바 */}
+        <div
+          style={{
+            width: `${barW}%`,
+            height: 9,
+            backgroundColor: "#F74B0B",
+            margin: "30px auto 0",
+            borderRadius: 5,
+            maxWidth: 520,
+          }}
+        />
       </div>
     </AbsoluteFill>
   );

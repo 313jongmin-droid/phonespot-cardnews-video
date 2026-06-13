@@ -49,7 +49,7 @@
 - 진입 bat: `CODEX_VIDEO_DESK/00_PHONE_SPOT_PANEL.bat`.
 
 **핵심 심볼 (server.py, 검증된 줄)**
-- `PANEL_VERSION = "phonespot-web-v24"` (L41) — **버전 단일 출처(SSOT)**. ps1이 이 값을 읽음.
+- `PANEL_VERSION = "phonespot-web-v32"` (L41) — **버전 단일 출처(SSOT)**. ps1이 이 값을 읽음. 화면/CSS 바꾸면 이 숫자만 올림.
 - `get_video_slugs()` (L336) — 영상 슬러그 목록. `list_slugs.py` 호출(articles∪output 독립 스캔).
 - `get_cardnews_rows()` (L1073) — 카드뉴스 행. `CARD_OUTPUT ∪ CARD_IMAGES ∪ CARD_ARTICLES` 합집합 스캔.
 - 액션 디스패치: `if action == "..."` 블록들 (L1589~2010). 주요:
@@ -63,15 +63,36 @@
 - ps1이 server.py에서 정규식 `PANEL_VERSION\s*=\s*"([^"]+)"` 로 버전을 읽어 표시(폴백 "phonespot-web-v21").
 - **화면이 안 바뀌면 server.py의 `PANEL_VERSION`만 올리면 됨.** ps1엔 손 안 댐.
 
+**디자인 시스템 (iOS / Apple HIG, 2026-06-13, v25~v32)** — 전부 `INDEX_HTML`의 `<style>` 블록 안.
+- **렌더 방식**: `INDEX_HTML = r"""..."""` 순수 raw string + `html_response(self, INDEX_HTML)` 직접 서빙(.format/f-string 아님) → **CSS 중괄호 안전**.
+- **토큰(`:root`)**: 시스템 컬러(`--system-bg #F2F2F7`/`--card-bg`/`--label*` 계층/`--separator rgba(.08)`), 브랜드 주황 `--accent #F74B0B`(blue 아님), `--shadow-subtle/-card/-elevated`, 라운드 `--r-sm~xl`, `--t-fast`. **★ legacy alias**(`--line`/`--orange`/`--ink`/`--muted`/`--bg`/`--r` 등)를 신토큰에 매핑 → 본문 인라인 `var(--line)` 등 그대로 작동(깨짐 방지).
+- **폰트**: Pretendard Variable(`<head>`에 `<link>` + `@import` 둘 다, dynamic-subset CDN) + `font-variant-numeric:tabular-nums`. 오프라인이면 시스템 폰트 폴백.
+- **레이아웃**: max-width 센터링 제거 → **풀폭 + 좌우 20px 균일 거터**(header/.runtime-strip/main 동일). `main` 그리드 `400px 1fr`.
+  - 좌측 슬러그 섹션 = `main > section`만 **`position:sticky; top:80px; align-self:start`**(우측 높이에 안 늘어남), `.list { max-height:calc(100vh-188px) }`.
+  - 우측 페어: `.pair`(1fr 1fr) = 상태|로그, `.pair.lopsided`(1.8fr 1fr) = 기록|결과. `align-items:stretch`(박스 높이 맞춤). 마크업에서 두 섹션씩 `<div class="pair">`로 감쌈.
+- **슬러그 행 = 2줄 iOS 리스트**: `.row`(grid `38px 1fr auto`) → 번호배지 + `.row-main`(`.slug-name` 줄바꿈 + `.row-sub`) + `.stage-pill`. **번호배지 = `idx+1`**(영상은 `videoItems.forEach((item,idx)=>`; 이전 `item.number`는 undefined로 "defin" 깨짐).
+- **상단 4박스(runtime-card)**: 흰 카드 통일, 상태는 값 앞 **컬러 점**(`.runtime-card.good/.bad/.warn b::before { content:"●" }` = 초록/빨강/주황). 배경 틴트 제거.
+- **선택영상 배지**: `.action-head{flex-direction:column}` + `.selected-badge{width:100%}` 18px → 제목 아래 전폭 좌측.
+- **깊이**: 타일/카드 **테두리 없이 그림자 하나**(`.btn{border:none;box-shadow:shadow-subtle}`, 호버=elevated+accent 링). 주황 절제(flag 등 중립).
+- **액션 타일 통일**: `.btn.compact`를 일반 `.btn`과 동일 크기·설명 표시로(예전 `display:none` 폐기).
+- **단계적 노출(progressive disclosure, v31~v32)**: 영상작업 기본 화면 = 선택영상 + 1·2·3 핵심 스텝만. 보조 묶음 2개를 **접기 토글**로(둘 다 기본 접힘) → 첫 화면에 상태+로그 노출.
+  - 공통 토글 스타일 = **`.foldbar`**(전폭 회색 바 + 가운데 라벨 + `.foldbar-caret` ▾접힘/▴펼침). `보기 · 편집`(`#viewEditToggle`→`#viewEditActions`)과 `라이브러리 · 시스템 관리`(`#manageToggle`→`#manageActions`) **둘 다 동일 UI**.
+  - JS: `toggleViewEdit()`/`toggleManage()` — display none↔grid + 캐럿 flip. 보기·편집은 **localStorage `panel.viewEdit`** 로 펼침 상태 기억(부팅 L3046 직후 복원). 관리는 매번 접힘.
+  - 접이식 그룹은 `grid-column:1/-1` + 자체 `repeat(3,minmax(160px,1fr))` 서브그리드(7개/관리 버튼).
+  - 상단 4박스(runtime-card)는 패딩·폰트·`min-height:0`로 슬림화.
+- **롤백**: `CODEX_VIDEO_DESK/dashboard/server.py.bak_pre_ios_20260613`(iOS 이전 = 기존 주황 디자인). `copy /Y ...bak... server.py` 또는 `git checkout -- ...server.py`.
+
 **수정 시 읽을 것**
 - 버튼/액션 추가·변경: `server.py`의 `INDEX_HTML`(버튼 HTML+JS) + 액션 디스패치 블록.
 - 화면만: `INDEX_HTML`.
 - 기동/버전: `start_hidden.ps1` + `PANEL_VERSION`.
 
 **함정**
-- `INDEX_HTML`은 거대한 raw string → Edit 부분일치 truncation 주의(I 단원). 긴 변경은 통째 Write 검토.
+- **★ Edit 누적이 `INDEX_HTML`/파일 꼬리를 truncate(2026-06-13 실제 발생)** — 큰 raw string을 Edit 툴로 여러 번 고치면 끝부분(main() 등)이 잘려 `'(' was never closed` 컴파일 에러. **권장 작업법**: server.py 대규모 CSS/마크업 변경은 **bash-python read→replace(assert count==1)→write**로(Edit 누적 X), 매번 `python -m py_compile` + `<div>/<section>` 개폐 카운트 + 파일 tail(`main guard`) 확인. 잘렸으면 백업 꼬리(`server.py.bak_pre_ios_20260613`)에서 `rindex(anchor)`로 이어붙여 복구.
+- 마운트 tearing: bash가 큰/방금 쓴 server.py를 **잘린 사본으로 읽을 수 있음**(읽은 바이트<stat이면 의심). 진위 판단은 `python3 -c "len(open().read())"` vs stat, 또는 호스트 Read. 단 호스트 Read도 **stale 캐시**일 수 있으니 최종 판정은 bash 풀read 바이트수 일치 + py_compile.
 - `start_hidden.ps1`은 **ASCII 주석만**(BOM 없는 PS는 CP949 오독으로 깨짐).
 - 액션 추가 시 GET(`json_response`)와 POST(`/api/action`) 양쪽 정합 확인.
+- 머지 충돌 마커(`<<<<<<< HEAD`)가 `INDEX_HTML` 안에 남으면 Python은 통과(raw string)하지만 화면에 충돌 텍스트·중복 버튼 노출 → 발견 시 정리(이번에 카드 삭제버튼 1개로 통합).
 
 **교차 영향**: 렌더/라이브러리/슬러그 액션은 C·D 단원 스크립트를 subprocess로 부름.
 
@@ -397,6 +418,8 @@
 ---
 
 ## 변경 이력 (이 맵 자체)
+- 2026-06-13: **A단원 패널 UI 단계적 노출 박음(v31~v32)** — 영상작업 보조버튼 2묶음을 공통 `.foldbar` 접기 토글(보기·편집 + 라이브러리·시스템 관리, 둘 다 기본 접힘·동일 UI·캐럿)로 → 첫 화면에 상태+로그 노출. 보기·편집은 `localStorage panel.viewEdit` 기억. 런타임 4박스 슬림. PANEL_VERSION v30→v32.
+- 2026-06-13: **A단원에 패널 iOS 디자인 시스템 박음(v25~v30)** — 토큰/Pretendard/legacy alias/풀폭 거터/sticky 좌측리스트/우측 페어(상태\|로그·기록\|결과)/2줄 슬러그행(idx+1)/상단 흰카드+컬러점/그림자 단일화. 함정에 **Edit 누적 truncation 실사고 + bash-python 작업법 + 복구법** 박음. 롤백=`server.py.bak_pre_ios_20260613`.
 - 2026-06-13: **F단원 함정에 미커밋 기사 유실 사고 박음** — auto-update `stash --include-untracked`가 untracked 기사를 쓸어감(노트북 마커 ON이 원인). 복구법(`stash@{0}^3`) + 재발방지(노트북 마커 OFF + pull bat `auto_update.cmd`/`부사수PC_원클릭_셋업.bat`에 기사 자동커밋 박음).
 - 2026-06-13: **B 단원 인사이트 누적 학습 + 가중치 라벨 매트릭스 박음.** 마스터 룰 문서에 `_docs/INSIGHTS_LOOP.md`(시트 직접 Read 단일 모델 — 코덱스·GitHub·Drive MD·mklink 폐기) + `cardnews/templates/caption_template.md`(5채널+영상 나레이션) 명시. 가중치 라벨 6종(yt+30/yt-hook+20/meta+20·30/store-active+30/season+30/freshness+10/dup-100) 정본 위치 = `INSIGHTS_LOOP.md` §3. 함정에 "시트 운영 메모 7일 스캔 빼먹으면 매장 핵심 캠페인 누락(예: 삼성 페스티벌)" 박음. H 단원 outbox 파일명 표준(`<YYYY-MM-DD>_collect*.txt` 후보표 / `<NNN>_ready.txt` 작성 완료 통지) + listener 함정(부팅 자동시작·송신 검증) 박음.
 - 2026-06-13: **C단원에 커버(9:16 표지) 기능 박음** — `Cover.tsx`(CoverShort) + `Root.tsx` id=Cover + `render_cover.mjs`(renderStill, 번들캐시 재사용) + `run_codex_casual.bat` Step6 직후 best-effort. 결과 = `RESULTDIR\<RESULTKEY>_cover.jpg`. Remotion 4.0.404.

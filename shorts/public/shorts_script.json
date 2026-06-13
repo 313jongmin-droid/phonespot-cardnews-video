@@ -1,40 +1,42 @@
 {
-  "slug": "020_qa_apple_pay_korea_card",
-  "title_short": "애플페이 한국 카드 추가하는 법",
-  "video_title": "애플페이 한국 카드 추가하는 법",
-  "publication_date": "2026.06.10",
-  "sources": "Apple Support + 나무위키 Apple Pay 한국 + MacRumors + 폰스팟 광교점 자료",
+  "slug": "021_news_galaxy_flip8_exynos",
+  "title_short": "갤럭시 플립8 엑시노스 2600 + 슬림화",
+  "video_title": "갤럭시 플립8 엑시노스 2600 + 슬림화",
+  "publication_date": "2026.06.13",
+  "sources": "나무위키 갤럭시 Z 플립8 + 싸당 + 스마트리더 Tech + 폰스팟 광교점 자료",
   "channel_name": "폰스팟",
   "channel_tagline": "광교 미니 IT 브리핑",
   "opening": {
     "line1": "광교 미니 IT 브리핑",
-    "line2": "애플페이 한국 카드 추가하는 법"
+    "line2": "갤럭시 플립8 엑시노스 2600 + 슬림화"
   },
   "hook": {
-    "tts": "아이폰 사용자 늘면서 애플페이 쓰시는 분도 늘었는데 정작 카드 추가는 왜 어렵다 하는지 정확히 알려드립니다. 한국은 다른 나라와 방식이 달라서 처음엔 헤매기 쉽습니다.",
+    "tts": "삼성이 7월 언팩에서 공개할 갤럭시 Z 플립8은 자체 칩 엑시노스 2600 탑재와 본체 슬림화에 집중한 변화로 전망됩니다. 카메라·배터리·충전은 전작과 같지만 손에 잡히는 느낌이 달라집니다.",
     "caption_body": [
-      "애플페이 한국",
-      "카드 추가 어떻게?"
+      "갤럭시 플립8",
+      "엑시노스 2600 슬림화"
     ],
     "caption_emphasis": [
-      "카드 추가"
+      "엑시노스 2600"
     ],
     "headline_lines": [
       {
-        "text": "애플페이 한국"
+        "text": "갤럭시 플립8"
       },
       {
-        "text": "카드 추가 어떻게?",
+        "text": "엑시노스 2600 슬림화",
         "accent": true
       }
     ],
-    "meta": "출처: Apple Support 한국",
+    "meta": "출처: 나무위키 갤럭시 Z 플립8",
     "topic": "뉴스",
     "background_image": "",
     "caption_chunks": [
-      "아이폰 사용자 늘면서 애플페이 쓰시는 분도 늘었는데",
-      "정작 카드 추가는 왜 어렵다 하는지 정확히 알려드립니다.",
-      "한국은 다른 나라와 방식이 달라서 처음엔 헤매기 쉽습니다."
+      "삼성이 7월 언팩에서 공개할 갤럭시 Z",
+      "플립8은 자체 칩 엑시노스 2600",
+      "탑재와 본체 슬림화에 집중한 변화로 전망됩니다.",
+      "카메라·배터리·충전은 전작과 같지만",
+      "손에 잡히는 느낌이 달라집니다."
     ],
     "chunk_visuals": [
       {
@@ -46,8 +48,16 @@
         "value": "newspaper"
       },
       {
-        "type": "mascot",
-        "value": "surprised"
+        "type": "illust",
+        "value": "memory_chip"
+      },
+      {
+        "type": "illust",
+        "value": "camera_battery_ecd040c7"
+      },
+      {
+        "type": "illust",
+        "value": "appliance"
       }
     ],
     "stat": {
@@ -56,75 +66,87 @@
       "note": ""
     },
     "display_chunks": [
-      "아이폰 사용자 늘면서 애플페이 쓰시는 분도 늘었는데",
-      "정작 카드 추가는 왜 어렵다 하는지 정확히 알려드립니다",
-      "한국은 다른 나라와 방식이 달라서 처음엔 헤매기 쉽습니다"
+      "삼성이 7월 언팩에서 공개할 갤럭시 Z",
+      "플립8은 자체 칩 엑시노스 2600",
+      "탑재와 본체 슬림화에 집중한 변화로 전망됩니다",
+      "카메라·배터리·충전은 전작과 같지만",
+      "손에 잡히는 느낌이 달라집니다"
     ],
     "_codex_caption_lockstep": {
       "version": 2,
       "compiler": "korean_caption_compiler_v2",
       "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-      "chunk_count": 3
+      "chunk_count": 5
     },
     "_codex_contextual_narrative": true,
     "_codex_sync_mode": "global999_tts_caption_lockstep",
     "tts_chunk_weights": [
-      2602.83,
-      3559.13,
-      2896.13
+      2197.88,
+      1778.16,
+      3075.0,
+      1742.96,
+      1637.33
     ],
     "_tts_timing": {
       "mode": "word_boundary_text_align",
       "windows": [
         {
           "start_ms": 0.0,
-          "end_ms": 2602.83,
-          "duration_ms": 2602.83
+          "end_ms": 2197.88,
+          "duration_ms": 2197.88
         },
         {
-          "start_ms": 2602.83,
-          "end_ms": 6161.96,
-          "duration_ms": 3559.13
+          "start_ms": 2197.88,
+          "end_ms": 3976.04,
+          "duration_ms": 1778.16
         },
         {
-          "start_ms": 6161.96,
-          "end_ms": 9058.09,
-          "duration_ms": 2896.13
+          "start_ms": 3976.04,
+          "end_ms": 7051.04,
+          "duration_ms": 3075.0
+        },
+        {
+          "start_ms": 7051.04,
+          "end_ms": 8794.0,
+          "duration_ms": 1742.96
+        },
+        {
+          "start_ms": 8794.0,
+          "end_ms": 10431.33,
+          "duration_ms": 1637.33
         }
       ],
-      "boundary_count": 23,
-      "caption_signature": "c33a587609779fae89e6b33482a9002c4faebf20a8a049642335b7873d5f2052"
+      "boundary_count": 27,
+      "caption_signature": "0236ee15efdc5f75a5fc10ced73c2bb869a840fbdbaad1c864b879ecc26fef4c"
     }
   },
   "facts": [
     {
-      "tts": "다른 나라처럼 Apple Wallet 앱에서 직접 카드를 추가하는 방식은 한국에서 작동하지 않습니다. 한국에서는 본인이 발급받은 카드사의 모바일 앱을 통해서만 Apple Wallet에 등록할 수 있습니다.",
+      "tts": "공개는 2026년 7월 중순 하반기 언팩, 정식 판매는 7월 말에서 8월 초 사이 글로벌 동시 출시가 유력합니다. 폴드8과 함께 발표됩니다.",
       "caption_body": [
-        "한국 특수성",
-        "Wallet 직접 추가 안 됨"
+        "공개·출시",
+        "7월 중순 언팩"
       ],
       "caption_emphasis": [
-        "Wallet 직접 추가"
+        "7월 중순"
       ],
       "headline_lines": [
         {
-          "text": "한국 특수성"
+          "text": "공개·출시"
         },
         {
-          "text": "Wallet 직접 추가 안 됨",
+          "text": "7월 중순 언팩",
           "accent": true
         }
       ],
-      "meta": "출처: 나무위키 Apple Pay 한국",
+      "meta": "출처: 싸당 폴드/플립8 루머",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "다른 나라처럼 Apple Wallet",
-        "앱에서 직접 카드를 추가하는 방식은",
-        "한국에서 작동하지 않습니다.",
-        "한국에서는 본인이 발급받은 카드사의 모바일",
-        "앱을 통해서만 Apple Wallet에",
-        "등록할 수 있습니다."
+        "공개는 2026년 7월 중순 하반기 언팩,",
+        "정식 판매는 7월 말에서 8월 초 사이",
+        "글로벌 동시 출시가 유력합니다.",
+        "폴드8과 함께 발표됩니다."
       ],
       "chunk_visuals": [
         {
@@ -141,15 +163,7 @@
         },
         {
           "type": "illust",
-          "value": "forecast"
-        },
-        {
-          "type": "illust",
-          "value": "cpt_f59129df"
-        },
-        {
-          "type": "illust",
-          "value": "cpt_a1caaea6"
+          "value": "launch_event"
         }
       ],
       "stat": {
@@ -159,113 +173,84 @@
       },
       "id": "fact_1",
       "display_chunks": [
-        "다른 나라처럼 Apple Wallet",
-        "앱에서 직접 카드를 추가하는 방식은",
-        "한국에서 작동하지 않습니다",
-        "한국에서는 본인이 발급받은 카드사의 모바일",
-        "앱을 통해서만 Apple Wallet에",
-        "등록할 수 있습니다"
+        "공개는 2026년 7월 중순 하반기 언팩,",
+        "정식 판매는 7월 말에서 8월 초 사이",
+        "글로벌 동시 출시가 유력합니다",
+        "폴드8과 함께 발표됩니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 6
+        "chunk_count": 4
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        1229.58,
-        1813.38,
-        2053.87,
-        2165.5,
-        1470.05,
-        959.49
+        2356.33,
+        1963.05,
+        2150.7,
+        1470.05
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 1229.58,
-            "duration_ms": 1229.58
+            "end_ms": 2356.33,
+            "duration_ms": 2356.33
           },
           {
-            "start_ms": 1229.58,
-            "end_ms": 3042.96,
-            "duration_ms": 1813.38
+            "start_ms": 2356.33,
+            "end_ms": 4319.38,
+            "duration_ms": 1963.05
           },
           {
-            "start_ms": 3042.96,
-            "end_ms": 5096.83,
-            "duration_ms": 2053.87
+            "start_ms": 4319.38,
+            "end_ms": 6470.08,
+            "duration_ms": 2150.7
           },
           {
-            "start_ms": 5096.83,
-            "end_ms": 7262.33,
-            "duration_ms": 2165.5
-          },
-          {
-            "start_ms": 7262.33,
-            "end_ms": 8732.38,
+            "start_ms": 6470.08,
+            "end_ms": 7940.13,
             "duration_ms": 1470.05
-          },
-          {
-            "start_ms": 8732.38,
-            "end_ms": 9691.87,
-            "duration_ms": 959.49
           }
         ],
-        "boundary_count": 24,
-        "caption_signature": "1bdaa92764b58638959497e6e305569f7eda98b74223fc53e2d7518ed2453678"
+        "boundary_count": 20,
+        "caption_signature": "20c20e9044f575759e2779fd7c4b741f085919414502778d38870450144bf8f9"
       }
     },
     {
-      "tts": "내가 쓰는 카드사 앱을 열고 Apple Pay 또는 Apple Wallet 추가 메뉴를 찾습니다. 카드사가 Mastercard 기반으로 Apple Pay 토큰을 발행해 Wallet으로 자동 전송. 본인인증 후 즉시 사용 가능합니다.",
+      "tts": "스냅드래곤이 아닌 삼성 엑시노스 2600 탑재가 유력합니다. 전성비 개선과 온디바이스 AI 처리 효율 강화가 핵심. 전작 대비 발열·배터리 효율이 관전 포인트입니다.",
       "caption_body": [
-        "절차",
-        "카드사 앱 → Wallet"
+        "칩",
+        "엑시노스 2600 자체 탑재"
       ],
       "caption_emphasis": [
-        "카드사 앱"
+        "엑시노스 2600"
       ],
       "headline_lines": [
         {
-          "text": "절차"
+          "text": "칩"
         },
         {
-          "text": "카드사 앱 → Wallet",
+          "text": "엑시노스 2600 자체 탑재",
           "accent": true
         }
       ],
-      "meta": "출처: Apple Support 등록 가이드",
+      "meta": "출처: 스마트리더 Tech 루머",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "내가 쓰는 카드사 앱을",
-        "열고 Apple Pay 또는 Apple Wallet",
-        "추가 메뉴를 찾습니다.",
-        "카드사가 Mastercard",
-        "기반으로 Apple Pay 토큰을",
-        "발행해 Wallet으로 자동 전송.",
-        "본인인증 후 즉시 사용 가능합니다."
+        "스냅드래곤이 아닌 삼성 엑시노스 2600",
+        "탑재가 유력합니다.",
+        "전성비 개선과 온디바이스 AI 처리 효율 강화가 핵심.",
+        "전작 대비 발열·배터리 효율이 관전 포인트입니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "biometric"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
+          "value": "aluminum_label"
         },
         {
           "type": "illust",
@@ -273,11 +258,11 @@
         },
         {
           "type": "illust",
-          "value": "smartphone"
+          "value": "cpt_496029c6"
         },
         {
           "type": "illust",
-          "value": "cpt_6a2e9678"
+          "value": "cpt_6f69bf84"
         }
       ],
       "stat": {
@@ -287,122 +272,91 @@
       },
       "id": "fact_2",
       "display_chunks": [
-        "내가 쓰는 카드사 앱을",
-        "열고 Apple Pay 또는 Apple Wallet",
-        "추가 메뉴를 찾습니다",
-        "카드사가 Mastercard",
-        "기반으로 Apple Pay 토큰을",
-        "발행해 Wallet으로 자동 전송",
-        "본인인증 후 즉시 사용 가능합니다"
+        "스냅드래곤이 아닌 삼성 엑시노스 2600",
+        "탑재가 유력합니다",
+        "전성비 개선과 온디바이스 AI 처리 효율 강화가 핵심",
+        "전작 대비 발열·배터리 효율이 관전 포인트입니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 7
+        "chunk_count": 4
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        1106.33,
-        1575.71,
-        1657.75,
-        977.13,
-        1179.54,
-        2174.33,
-        1963.0
+        2285.92,
+        1604.91,
+        3345.09,
+        2429.58
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 1106.33,
-            "duration_ms": 1106.33
+            "end_ms": 2285.92,
+            "duration_ms": 2285.92
           },
           {
-            "start_ms": 1106.33,
-            "end_ms": 2682.04,
-            "duration_ms": 1575.71
+            "start_ms": 2285.92,
+            "end_ms": 3890.83,
+            "duration_ms": 1604.91
           },
           {
-            "start_ms": 2682.04,
-            "end_ms": 4339.79,
-            "duration_ms": 1657.75
+            "start_ms": 3890.83,
+            "end_ms": 7235.92,
+            "duration_ms": 3345.09
           },
           {
-            "start_ms": 4339.79,
-            "end_ms": 5316.92,
-            "duration_ms": 977.13
-          },
-          {
-            "start_ms": 5316.92,
-            "end_ms": 6496.46,
-            "duration_ms": 1179.54
-          },
-          {
-            "start_ms": 6496.46,
-            "end_ms": 8670.79,
-            "duration_ms": 2174.33
-          },
-          {
-            "start_ms": 8670.79,
-            "end_ms": 10633.79,
-            "duration_ms": 1963.0
+            "start_ms": 7235.92,
+            "end_ms": 9665.5,
+            "duration_ms": 2429.58
           }
         ],
-        "boundary_count": 28,
-        "caption_signature": "d1a40f34279ad650967bb7a0bb71006575d83285335ee3ae0bcb45fa1152ec99"
+        "boundary_count": 23,
+        "caption_signature": "346ed8955e7c47ff35705f76ca468bb83986bc36af67765e4c986e5dfa70b553"
       }
     },
     {
-      "tts": "Apple Wallet 앱에서 Tmoney 카드를 직접 추가할 수 있습니다. 지하철·시내버스에서 아이폰 또는 애플워치를 갖다 대면 결제됩니다. 한국 내 대중교통은 거의 모두 지원됩니다.",
+      "tts": "본체 슬림화에 집중하면서도 외부 디스플레이는 유지·소폭 개선이 예상됩니다. 손에 잡았을 때 두께·무게 체감이 가장 큰 변화 포인트입니다.",
       "caption_body": [
-        "교통",
-        "Tmoney 지하철·버스 OK"
+        "디자인",
+        "본체 슬림화 집중"
       ],
       "caption_emphasis": [
-        "Tmoney"
+        "본체 슬림화"
       ],
       "headline_lines": [
         {
-          "text": "교통"
+          "text": "디자인"
         },
         {
-          "text": "Tmoney 지하철·버스 OK",
+          "text": "본체 슬림화 집중",
           "accent": true
         }
       ],
-      "meta": "출처: MacRumors Tmoney",
+      "meta": "출처: 플립8 디자인 루머",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "Apple Wallet 앱에서 Tmoney",
-        "카드를 직접 추가할 수 있습니다.",
-        "지하철·시내버스에서 아이폰 또는",
-        "애플워치를 갖다 대면 결제됩니다.",
-        "한국 내 대중교통은 거의 모두 지원됩니다."
+        "본체 슬림화에 집중하면서도 외부",
+        "디스플레이는 유지·소폭 개선이 예상됩니다.",
+        "손에 잡았을 때 두께·무게 체감이 가장 큰 변화 포인트입니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "device_data_transfer"
+          "value": "ti_decrease"
         },
         {
           "type": "illust",
-          "value": "nfc_pay"
+          "value": "display_ratio_change"
         },
         {
           "type": "illust",
-          "value": "cpt_fd9edf65"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
+          "value": "forecast"
         }
       ],
       "stat": {
@@ -412,100 +366,81 @@
       },
       "id": "fact_3",
       "display_chunks": [
-        "Apple Wallet 앱에서 Tmoney",
-        "카드를 직접 추가할 수 있습니다",
-        "지하철·시내버스에서 아이폰 또는",
-        "애플워치를 갖다 대면 결제됩니다",
-        "한국 내 대중교통은 거의 모두 지원됩니다"
+        "본체 슬림화에 집중하면서도 외부",
+        "디스플레이는 유지·소폭 개선이 예상됩니다",
+        "손에 잡았을 때 두께·무게 체감이 가장 큰 변화 포인트입니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 5
+        "chunk_count": 3
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        1317.62,
-        2168.3,
-        1795.79,
-        2235.91,
-        2121.46
+        1748.96,
+        2705.25,
+        3142.62
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 1317.62,
-            "duration_ms": 1317.62
+            "end_ms": 1748.96,
+            "duration_ms": 1748.96
           },
           {
-            "start_ms": 1317.62,
-            "end_ms": 3485.92,
-            "duration_ms": 2168.3
+            "start_ms": 1748.96,
+            "end_ms": 4454.21,
+            "duration_ms": 2705.25
           },
           {
-            "start_ms": 3485.92,
-            "end_ms": 5281.71,
-            "duration_ms": 1795.79
-          },
-          {
-            "start_ms": 5281.71,
-            "end_ms": 7517.62,
-            "duration_ms": 2235.91
-          },
-          {
-            "start_ms": 7517.62,
-            "end_ms": 9639.08,
-            "duration_ms": 2121.46
+            "start_ms": 4454.21,
+            "end_ms": 7596.83,
+            "duration_ms": 3142.62
           }
         ],
-        "boundary_count": 23,
-        "caption_signature": "99bfe14502c3f5d8370ebafde9988e1b45a3ce04f9d3f54cf1e5676fd9d65963"
+        "boundary_count": 19,
+        "caption_signature": "cd0fba3bb4f5939e0c07f1b77409ac320e824603c7a154676d8541199916a7b8"
       }
     },
     {
-      "tts": "한국 내 현금카드 기능은 Apple Pay에서 지원되지 않습니다. 일반 신용·체크카드와 선불 교통카드만 지원. 본인 카드가 Apple Pay 지원하는지 카드사에 먼저 확인하세요.",
+      "tts": "메인 카메라 구성과 배터리 용량 4300mAh, 충전 속도 25W는 전작과 대동소이할 것으로 전망됩니다. 사진·동영상 사용 패턴이 크게 바뀌진 않을 가능성이 큽니다.",
       "caption_body": [
-        "한계",
-        "현금카드 X 일부 카드만"
+        "유지",
+        "카메라·배터리·충전"
       ],
       "caption_emphasis": [
-        "현금카드 X"
+        "카메라·배터리·충전"
       ],
       "headline_lines": [
         {
-          "text": "한계"
+          "text": "유지"
         },
         {
-          "text": "현금카드 X 일부 카드만",
+          "text": "카메라·배터리·충전",
           "accent": true
         }
       ],
-      "meta": "출처: Apple Pay 한국 지원 범위",
+      "meta": "출처: 플립8 스펙 루머",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "한국 내 현금카드 기능은 Apple Pay에서",
-        "지원되지 않습니다.",
-        "일반 신용·체크카드와 선불 교통카드만 지원.",
-        "본인 카드가 Apple Pay 지원하는지",
-        "카드사에 먼저 확인하세요."
+        "메인 카메라 구성과 배터리 용량 4300mAh,",
+        "충전 속도 25W는 전작과 대동소이할 것으로 전망됩니다.",
+        "사진·동영상 사용 패턴이 크게",
+        "바뀌진 않을 가능성이 큽니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "smartphone"
+          "value": "battery_charge_range"
         },
         {
           "type": "illust",
-          "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
+          "value": "optimized_charging"
         },
         {
           "type": "illust",
@@ -523,58 +458,51 @@
       },
       "id": "fact_4",
       "display_chunks": [
-        "한국 내 현금카드 기능은 Apple Pay에서",
-        "지원되지 않습니다",
-        "일반 신용·체크카드와 선불 교통카드만 지원",
-        "본인 카드가 Apple Pay 지원하는지",
-        "카드사에 먼저 확인하세요"
+        "메인 카메라 구성과 배터리 용량 4300mAh,",
+        "충전 속도 25W는 전작과 대동소이할 것으로 전망됩니다",
+        "사진·동영상 사용 패턴이 크게",
+        "바뀌진 않을 가능성이 큽니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 5
+        "chunk_count": 4
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        2004.21,
-        1508.12,
-        2948.92,
-        1566.92,
-        1355.66
+        3210.21,
+        3832.04,
+        1558.08,
+        1487.71
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 2004.21,
-            "duration_ms": 2004.21
+            "end_ms": 3210.21,
+            "duration_ms": 3210.21
           },
           {
-            "start_ms": 2004.21,
-            "end_ms": 3512.33,
-            "duration_ms": 1508.12
+            "start_ms": 3210.21,
+            "end_ms": 7042.25,
+            "duration_ms": 3832.04
           },
           {
-            "start_ms": 3512.33,
-            "end_ms": 6461.25,
-            "duration_ms": 2948.92
+            "start_ms": 7042.25,
+            "end_ms": 8600.33,
+            "duration_ms": 1558.08
           },
           {
-            "start_ms": 6461.25,
-            "end_ms": 8028.17,
-            "duration_ms": 1566.92
-          },
-          {
-            "start_ms": 8028.17,
-            "end_ms": 9383.83,
-            "duration_ms": 1355.66
+            "start_ms": 8600.33,
+            "end_ms": 10088.04,
+            "duration_ms": 1487.71
           }
         ],
-        "boundary_count": 22,
-        "caption_signature": "17b90d85811674936eafcff91e4302966491914130417490b2ffe6f264418a83"
+        "boundary_count": 23,
+        "caption_signature": "96fc314ca817e3807da76a354e08f2e3bbd8ccd0115cfc0cff45f7b0a963355c"
       }
     }
   ],
@@ -665,6 +593,33 @@
   "_codex_sync_quality_logic": true,
   "_codex_captions_narration_priority": false,
   "_codex_common_quality_note": "Global 001-999 rule: screen chunks are rebuilt as an ordered, lossless partition of captions.md narration; curated visuals are rebalanced without discarding quality rules.",
+  "_codex_uploaded_illustrations": [
+    {
+      "section": "hook",
+      "chunk": 2,
+      "variant": "self_flip_6728256c"
+    },
+    {
+      "section": "hook",
+      "chunk": 3,
+      "variant": "cpt_496029c6"
+    },
+    {
+      "section": "hook",
+      "chunk": 4,
+      "variant": "camera_battery_ecd040c7"
+    },
+    {
+      "section": "fact_1",
+      "chunk": 1,
+      "variant": "cpt_98cab19a"
+    },
+    {
+      "section": "fact_1",
+      "chunk": 2,
+      "variant": "official_sale_9dc82f05"
+    }
+  ],
   "_codex_semantic_visual_match": {
     "version": 1,
     "policy": "Match chunks to GPT source images using prompt.md descriptions, then fallback to tagged reusable illustrations.",
@@ -674,27 +629,41 @@
         "chunk": 2,
         "from": {
           "type": "illust",
-          "value": "aluminum_label"
+          "value": "self_flip_6728256c"
         },
         "to": {
           "type": "illust",
           "value": "newspaper"
         },
-        "context": "아이폰 사용자 늘면서 애플페이 쓰시는 분도 늘었는데 정작 카드 추가는 왜 어렵다 하는지 정확히 알려드립니다 한국은 다른 나라와 방식이 달라서 처음엔 헤매기 쉽습니다 애플페이 한국 카드 추가 어떻게? ['애플페이 한국",
+        "context": "삼성이 7월 언팩에서 공개할 갤럭시 Z 플립8은 자체 칩 엑시노스 2600 탑재와 본체 슬림화에 집중한 변화로 전망됩니다 갤럭시 플립8 엑시노스 2600 슬림화 ['갤럭시 플립8', '엑시노스 2600 슬림화'] 뉴",
         "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "hook",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "cpt_496029c6"
+        },
+        "to": {
+          "type": "illust",
+          "value": "memory_chip"
+        },
+        "context": "플립8은 자체 칩 엑시노스 2600 탑재와 본체 슬림화에 집중한 변화로 전망됩니다 카메라·배터리·충전은 전작과 같지만 갤럭시 플립8 엑시노스 2600 슬림화 ['갤럭시 플립8', '엑시노스 2600 슬림화'] 뉴스",
+        "reason": "illust score 0.495"
       },
       {
         "section": "fact_1",
         "chunk": 1,
         "from": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "cpt_98cab19a"
         },
         "to": {
           "type": "illust",
           "value": "microphone"
         },
-        "context": "다른 나라처럼 Apple Wallet 앱에서 직접 카드를 추가하는 방식은 한국 특수성 Wallet 직접 추가 안 됨 ['한국 특수성', 'Wallet 직접 추가 안 됨'] 뉴스",
+        "context": "공개는 2026년 7월 중순 하반기 언팩, 정식 판매는 7월 말에서 8월 초 사이 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
@@ -702,265 +671,13 @@
         "chunk": 2,
         "from": {
           "type": "illust",
-          "value": "aluminum_label"
+          "value": "official_sale_9dc82f05"
         },
         "to": {
           "type": "illust",
           "value": "shield"
         },
-        "context": "다른 나라처럼 Apple Wallet 앱에서 직접 카드를 추가하는 방식은 한국에서 작동하지 않습니다 한국 특수성 Wallet 직접 추가 안 됨 ['한국 특수성', 'Wallet 직접 추가 안 됨'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "appliance"
-        },
-        "to": {
-          "type": "illust",
-          "value": "meeting_room"
-        },
-        "context": "앱에서 직접 카드를 추가하는 방식은 한국에서 작동하지 않습니다 한국에서는 본인이 발급받은 카드사의 모바일 한국 특수성 Wallet 직접 추가 안 됨 ['한국 특수성', 'Wallet 직접 추가 안 됨'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "battery_charge_range"
-        },
-        "to": {
-          "type": "illust",
-          "value": "forecast"
-        },
-        "context": "한국에서 작동하지 않습니다 한국에서는 본인이 발급받은 카드사의 모바일 앱을 통해서만 Apple Wallet에 한국 특수성 Wallet 직접 추가 안 됨 ['한국 특수성', 'Wallet 직접 추가 안 됨'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 5,
-        "from": {
-          "type": "illust",
-          "value": "battery_overheat"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "한국에서는 본인이 발급받은 카드사의 모바일 앱을 통해서만 Apple Wallet에 등록할 수 있습니다 한국 특수성 Wallet 직접 추가 안 됨 ['한국 특수성', 'Wallet 직접 추가 안 됨'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 6,
-        "from": {
-          "type": "illust",
-          "value": "biometric"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "앱을 통해서만 Apple Wallet에 등록할 수 있습니다 한국 특수성 Wallet 직접 추가 안 됨 ['한국 특수성', 'Wallet 직접 추가 안 됨'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "aluminum_label"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "내가 쓰는 카드사 앱을 열고 Apple Pay 또는 Apple Wallet 추가 메뉴를 찾습니다 절차 카드사 앱 → Wallet ['절차', '카드사 앱 → Wallet'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "appliance"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "열고 Apple Pay 또는 Apple Wallet 추가 메뉴를 찾습니다 카드사가 Mastercard 절차 카드사 앱 → Wallet ['절차', '카드사 앱 → Wallet'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "battery_charge_range"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "추가 메뉴를 찾습니다 카드사가 Mastercard 기반으로 Apple Pay 토큰을 절차 카드사 앱 → Wallet ['절차', '카드사 앱 → Wallet'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 5,
-        "from": {
-          "type": "mascot",
-          "value": "suspicious"
-        },
-        "to": {
-          "type": "illust",
-          "value": "cpt_83fa1e9f"
-        },
-        "context": "카드사가 Mastercard 기반으로 Apple Pay 토큰을 발행해 Wallet으로 자동 전송 절차 카드사 앱 → Wallet ['절차', '카드사 앱 → Wallet'] 뉴스",
-        "reason": "illust score 0.48"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 6,
-        "from": {
-          "type": "illust",
-          "value": "battery_overheat"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "기반으로 Apple Pay 토큰을 발행해 Wallet으로 자동 전송 본인인증 후 즉시 사용 가능합니다 절차 카드사 앱 → Wallet ['절차', '카드사 앱 → Wallet'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 7,
-        "from": {
-          "type": "illust",
-          "value": "biometric"
-        },
-        "to": {
-          "type": "illust",
-          "value": "cpt_6a2e9678"
-        },
-        "context": "발행해 Wallet으로 자동 전송 본인인증 후 즉시 사용 가능합니다 절차 카드사 앱 → Wallet ['절차', '카드사 앱 → Wallet'] 뉴스",
-        "reason": "illust score 0.51"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "device_data_transfer"
-        },
-        "context": "Apple Wallet 앱에서 Tmoney 카드를 직접 추가할 수 있습니다 교통 Tmoney 지하철·버스 OK ['교통', 'Tmoney 지하철·버스 OK'] 뉴스",
-        "reason": "illust score 0.42"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "aluminum_label"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "Apple Wallet 앱에서 Tmoney 카드를 직접 추가할 수 있습니다 지하철·시내버스에서 아이폰 또는 교통 Tmoney 지하철·버스 OK ['교통', 'Tmoney 지하철·버스 OK'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "appliance"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "카드를 직접 추가할 수 있습니다 지하철·시내버스에서 아이폰 또는 애플워치를 갖다 대면 결제됩니다 교통 Tmoney 지하철·버스 OK ['교통', 'Tmoney 지하철·버스 OK'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "battery_charge_range"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "지하철·시내버스에서 아이폰 또는 애플워치를 갖다 대면 결제됩니다 한국 내 대중교통은 거의 모두 지원됩니다 교통 Tmoney 지하철·버스 OK ['교통', 'Tmoney 지하철·버스 OK'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 5,
-        "from": {
-          "type": "illust",
-          "value": "battery_overheat"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "애플워치를 갖다 대면 결제됩니다 한국 내 대중교통은 거의 모두 지원됩니다 교통 Tmoney 지하철·버스 OK ['교통', 'Tmoney 지하철·버스 OK'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "aluminum_label"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "한국 내 현금카드 기능은 Apple Pay에서 지원되지 않습니다 일반 신용·체크카드와 선불 교통카드만 지원 한계 현금카드 X 일부 카드만 ['한계', '현금카드 X 일부 카드만'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "appliance"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "지원되지 않습니다 일반 신용·체크카드와 선불 교통카드만 지원 본인 카드가 Apple Pay 지원하는지 한계 현금카드 X 일부 카드만 ['한계', '현금카드 X 일부 카드만'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "battery_charge_range"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "일반 신용·체크카드와 선불 교통카드만 지원 본인 카드가 Apple Pay 지원하는지 카드사에 먼저 확인하세요 한계 현금카드 X 일부 카드만 ['한계', '현금카드 X 일부 카드만'] 뉴스",
+        "context": "공개는 2026년 7월 중순 하반기 언팩, 정식 판매는 7월 말에서 8월 초 사이 글로벌 동시 출시가 유력합니다 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       }
     ],
@@ -972,9 +689,9 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "아이폰 사용자 늘면서 애플페이 쓰시는 분도 늘었는데 정작 카드 추가는 왜 어렵다 하는지 정확히 알려드립니다 애플페이 한국 카드 추가 어떻게? ['애플페이 한국', '카드 추가 어떻게?'] 뉴스",
+        "context": "삼성이 7월 언팩에서 공개할 갤럭시 Z 플립8은 자체 칩 엑시노스 2600 갤럭시 플립8 엑시노스 2600 슬림화 ['갤럭시 플립8', '엑시노스 2600 슬림화'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.323
+        "best_illust_score": 0.375
       },
       {
         "section": "hook",
@@ -983,20 +700,9 @@
           "type": "illust",
           "value": "newspaper"
         },
-        "context": "아이폰 사용자 늘면서 애플페이 쓰시는 분도 늘었는데 정작 카드 추가는 왜 어렵다 하는지 정확히 알려드립니다 한국은 다른 나라와 방식이 달라서 처음엔 헤매기 쉽습니다 애플페이 한국 카드 추가 어떻게? ['애플페이 한국', '카드 추가 어떻게?'] 뉴스",
+        "context": "삼성이 7월 언팩에서 공개할 갤럭시 Z 플립8은 자체 칩 엑시노스 2600 탑재와 본체 슬림화에 집중한 변화로 전망됩니다 갤럭시 플립8 엑시노스 2600 슬림화 ['갤럭시 플립8', '엑시노스 2600 슬림화'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.342
-      },
-      {
-        "section": "hook",
-        "chunk": 3,
-        "current": {
-          "type": "mascot",
-          "value": "surprised"
-        },
-        "context": "정작 카드 추가는 왜 어렵다 하는지 정확히 알려드립니다 한국은 다른 나라와 방식이 달라서 처음엔 헤매기 쉽습니다 애플페이 한국 카드 추가 어떻게? ['애플페이 한국', '카드 추가 어떻게?'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.302
+        "best_illust_score": 0.417
       },
       {
         "section": "fact_1",
@@ -1005,9 +711,9 @@
           "type": "illust",
           "value": "microphone"
         },
-        "context": "다른 나라처럼 Apple Wallet 앱에서 직접 카드를 추가하는 방식은 한국 특수성 Wallet 직접 추가 안 됨 ['한국 특수성', 'Wallet 직접 추가 안 됨'] 뉴스",
+        "context": "공개는 2026년 7월 중순 하반기 언팩, 정식 판매는 7월 말에서 8월 초 사이 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.386
+        "best_illust_score": 0.34
       },
       {
         "section": "fact_1",
@@ -1016,9 +722,9 @@
           "type": "illust",
           "value": "shield"
         },
-        "context": "다른 나라처럼 Apple Wallet 앱에서 직접 카드를 추가하는 방식은 한국에서 작동하지 않습니다 한국 특수성 Wallet 직접 추가 안 됨 ['한국 특수성', 'Wallet 직접 추가 안 됨'] 뉴스",
+        "context": "공개는 2026년 7월 중순 하반기 언팩, 정식 판매는 7월 말에서 8월 초 사이 글로벌 동시 출시가 유력합니다 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.367
+        "best_illust_score": 0.333
       },
       {
         "section": "fact_1",
@@ -1027,163 +733,20 @@
           "type": "illust",
           "value": "meeting_room"
         },
-        "context": "앱에서 직접 카드를 추가하는 방식은 한국에서 작동하지 않습니다 한국에서는 본인이 발급받은 카드사의 모바일 한국 특수성 Wallet 직접 추가 안 됨 ['한국 특수성', 'Wallet 직접 추가 안 됨'] 뉴스",
+        "context": "정식 판매는 7월 말에서 8월 초 사이 글로벌 동시 출시가 유력합니다 폴드8과 함께 발표됩니다 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.364
+        "best_illust_score": 0.398
       },
       {
-        "section": "fact_1",
-        "chunk": 4,
+        "section": "fact_3",
+        "chunk": 3,
         "current": {
           "type": "illust",
           "value": "forecast"
         },
-        "context": "한국에서 작동하지 않습니다 한국에서는 본인이 발급받은 카드사의 모바일 앱을 통해서만 Apple Wallet에 한국 특수성 Wallet 직접 추가 안 됨 ['한국 특수성', 'Wallet 직접 추가 안 됨'] 뉴스",
+        "context": "디스플레이는 유지·소폭 개선이 예상됩니다 손에 잡았을 때 두께·무게 체감이 가장 큰 변화 포인트입니다 디자인 본체 슬림화 집중 ['디자인', '본체 슬림화 집중'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.331
-      },
-      {
-        "section": "fact_1",
-        "chunk": 5,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "한국에서는 본인이 발급받은 카드사의 모바일 앱을 통해서만 Apple Wallet에 등록할 수 있습니다 한국 특수성 Wallet 직접 추가 안 됨 ['한국 특수성', 'Wallet 직접 추가 안 됨'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.358
-      },
-      {
-        "section": "fact_1",
-        "chunk": 6,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "앱을 통해서만 Apple Wallet에 등록할 수 있습니다 한국 특수성 Wallet 직접 추가 안 됨 ['한국 특수성', 'Wallet 직접 추가 안 됨'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.412
-      },
-      {
-        "section": "fact_2",
-        "chunk": 1,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "내가 쓰는 카드사 앱을 열고 Apple Pay 또는 Apple Wallet 절차 카드사 앱 → Wallet ['절차', '카드사 앱 → Wallet'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.382
-      },
-      {
-        "section": "fact_2",
-        "chunk": 2,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "내가 쓰는 카드사 앱을 열고 Apple Pay 또는 Apple Wallet 추가 메뉴를 찾습니다 절차 카드사 앱 → Wallet ['절차', '카드사 앱 → Wallet'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.393
-      },
-      {
-        "section": "fact_2",
-        "chunk": 3,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "열고 Apple Pay 또는 Apple Wallet 추가 메뉴를 찾습니다 카드사가 Mastercard 절차 카드사 앱 → Wallet ['절차', '카드사 앱 → Wallet'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.394
-      },
-      {
-        "section": "fact_2",
-        "chunk": 4,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "추가 메뉴를 찾습니다 카드사가 Mastercard 기반으로 Apple Pay 토큰을 절차 카드사 앱 → Wallet ['절차', '카드사 앱 → Wallet'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.383
-      },
-      {
-        "section": "fact_2",
-        "chunk": 6,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "기반으로 Apple Pay 토큰을 발행해 Wallet으로 자동 전송 본인인증 후 즉시 사용 가능합니다 절차 카드사 앱 → Wallet ['절차', '카드사 앱 → Wallet'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.412
-      },
-      {
-        "section": "fact_3",
-        "chunk": 2,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "Apple Wallet 앱에서 Tmoney 카드를 직접 추가할 수 있습니다 지하철·시내버스에서 아이폰 또는 교통 Tmoney 지하철·버스 OK ['교통', 'Tmoney 지하철·버스 OK'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.378
-      },
-      {
-        "section": "fact_3",
-        "chunk": 3,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "카드를 직접 추가할 수 있습니다 지하철·시내버스에서 아이폰 또는 애플워치를 갖다 대면 결제됩니다 교통 Tmoney 지하철·버스 OK ['교통', 'Tmoney 지하철·버스 OK'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.352
-      },
-      {
-        "section": "fact_3",
-        "chunk": 4,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "지하철·시내버스에서 아이폰 또는 애플워치를 갖다 대면 결제됩니다 한국 내 대중교통은 거의 모두 지원됩니다 교통 Tmoney 지하철·버스 OK ['교통', 'Tmoney 지하철·버스 OK'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.28
-      },
-      {
-        "section": "fact_3",
-        "chunk": 5,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "애플워치를 갖다 대면 결제됩니다 한국 내 대중교통은 거의 모두 지원됩니다 교통 Tmoney 지하철·버스 OK ['교통', 'Tmoney 지하철·버스 OK'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.284
-      },
-      {
-        "section": "fact_4",
-        "chunk": 1,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "한국 내 현금카드 기능은 Apple Pay에서 지원되지 않습니다 한계 현금카드 X 일부 카드만 ['한계', '현금카드 X 일부 카드만'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.357
-      },
-      {
-        "section": "fact_4",
-        "chunk": 2,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "한국 내 현금카드 기능은 Apple Pay에서 지원되지 않습니다 일반 신용·체크카드와 선불 교통카드만 지원 한계 현금카드 X 일부 카드만 ['한계', '현금카드 X 일부 카드만'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.331
+        "best_illust_score": 0.417
       },
       {
         "section": "fact_4",
@@ -1192,31 +755,20 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "지원되지 않습니다 일반 신용·체크카드와 선불 교통카드만 지원 본인 카드가 Apple Pay 지원하는지 한계 현금카드 X 일부 카드만 ['한계', '현금카드 X 일부 카드만'] 뉴스",
+        "context": "충전 속도 25W는 전작과 대동소이할 것으로 전망됩니다 사진·동영상 사용 패턴이 크게 바뀌진 않을 가능성이 큽니다 유지 카메라·배터리·충전 ['유지', '카메라·배터리·충전'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.349
+        "best_illust_score": 0.308
       },
       {
         "section": "fact_4",
         "chunk": 4,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "일반 신용·체크카드와 선불 교통카드만 지원 본인 카드가 Apple Pay 지원하는지 카드사에 먼저 확인하세요 한계 현금카드 X 일부 카드만 ['한계', '현금카드 X 일부 카드만'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.285
-      },
-      {
-        "section": "fact_4",
-        "chunk": 5,
         "current": {
           "type": "mascot",
           "value": "serious"
         },
-        "context": "본인 카드가 Apple Pay 지원하는지 카드사에 먼저 확인하세요 한계 현금카드 X 일부 카드만 ['한계', '현금카드 X 일부 카드만'] 뉴스",
+        "context": "사진·동영상 사용 패턴이 크게 바뀌진 않을 가능성이 큽니다 유지 카메라·배터리·충전 ['유지', '카메라·배터리·충전'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.296
+        "best_illust_score": 0.388
       }
     ]
   },
@@ -1224,71 +776,6 @@
     "version": 1,
     "policy": "Illustrations and mascots should not repeat inside one video. CTA logo is exempt.",
     "replacements": [
-      {
-        "section": "fact_1",
-        "chunk": 5,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "cpt_f59129df"
-        },
-        "context": "한국에서는 본인이 발급받은 카드사의 모바일 앱을 통해서만 Apple Wallet에 등록할 수 있습니다 한국 특수성 Wallet 직접 추가 안 됨 다른 나라처럼 Apple Wallet 앱에서 직접 카드를 추가하는 방식은 한국에서 작동하지 않습니다. 한국에서는 본인이 발급받은 카드사의 모바"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 6,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "cpt_a1caaea6"
-        },
-        "context": "앱을 통해서만 Apple Wallet에 등록할 수 있습니다 한국 특수성 Wallet 직접 추가 안 됨 다른 나라처럼 Apple Wallet 앱에서 직접 카드를 추가하는 방식은 한국에서 작동하지 않습니다. 한국에서는 본인이 발급받은 카드사의 모바일 앱을 통해서만 Apple Wallet에 "
-      },
-      {
-        "section": "fact_2",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "biometric"
-        },
-        "context": "내가 쓰는 카드사 앱을 열고 Apple Pay 또는 Apple Wallet 절차 카드사 앱 → Wallet 내가 쓰는 카드사 앱을 열고 Apple Pay 또는 Apple Wallet 추가 메뉴를 찾습니다. 카드사가 Mastercard 기반으로 Apple Pay 토큰을 발행해 Wallet"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "nfc_pay"
-        },
-        "context": "Apple Wallet 앱에서 Tmoney 카드를 직접 추가할 수 있습니다 지하철·시내버스에서 아이폰 또는 교통 Tmoney 지하철·버스 OK Apple Wallet 앱에서 Tmoney 카드를 직접 추가할 수 있습니다. 지하철·시내버스에서 아이폰 또는 애플워치를 갖다 대면 결제됩니다. "
-      },
-      {
-        "section": "fact_3",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "cpt_fd9edf65"
-        },
-        "context": "카드를 직접 추가할 수 있습니다 지하철·시내버스에서 아이폰 또는 애플워치를 갖다 대면 결제됩니다 교통 Tmoney 지하철·버스 OK Apple Wallet 앱에서 Tmoney 카드를 직접 추가할 수 있습니다. 지하철·시내버스에서 아이폰 또는 애플워치를 갖다 대면 결제됩니다. 한국 내 대"
-      },
       {
         "section": "cta",
         "chunk": 1,
@@ -1305,101 +792,20 @@
     ],
     "weak": [
       {
-        "section": "fact_2",
-        "chunk": 2,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "내가 쓰는 카드사 앱을 열고 Apple Pay 또는 Apple Wallet 추가 메뉴를 찾습니다 절차 카드사 앱 → Wallet 내가 쓰는 카드사 앱을 열고 Apple Pay 또는 Apple Wallet 추가 메뉴를 찾습니다. 카드사가 Mastercard 기반으로 Apple Pay 토큰"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 3,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "열고 Apple Pay 또는 Apple Wallet 추가 메뉴를 찾습니다 카드사가 Mastercard 절차 카드사 앱 → Wallet 내가 쓰는 카드사 앱을 열고 Apple Pay 또는 Apple Wallet 추가 메뉴를 찾습니다. 카드사가 Mastercard 기반으로 Apple Pay"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 4,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "추가 메뉴를 찾습니다 카드사가 Mastercard 기반으로 Apple Pay 토큰을 절차 카드사 앱 → Wallet 내가 쓰는 카드사 앱을 열고 Apple Pay 또는 Apple Wallet 추가 메뉴를 찾습니다. 카드사가 Mastercard 기반으로 Apple Pay 토큰을 발행해 W"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 6,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "기반으로 Apple Pay 토큰을 발행해 Wallet으로 자동 전송 본인인증 후 즉시 사용 가능합니다 절차 카드사 앱 → Wallet 내가 쓰는 카드사 앱을 열고 Apple Pay 또는 Apple Wallet 추가 메뉴를 찾습니다. 카드사가 Mastercard 기반으로 Apple Pay"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 4,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "지하철·시내버스에서 아이폰 또는 애플워치를 갖다 대면 결제됩니다 한국 내 대중교통은 거의 모두 지원됩니다 교통 Tmoney 지하철·버스 OK Apple Wallet 앱에서 Tmoney 카드를 직접 추가할 수 있습니다. 지하철·시내버스에서 아이폰 또는 애플워치를 갖다 대면 결제됩니다. 한"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 5,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "애플워치를 갖다 대면 결제됩니다 한국 내 대중교통은 거의 모두 지원됩니다 교통 Tmoney 지하철·버스 OK Apple Wallet 앱에서 Tmoney 카드를 직접 추가할 수 있습니다. 지하철·시내버스에서 아이폰 또는 애플워치를 갖다 대면 결제됩니다. 한국 내 대중교통은 거의 모두 지원"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 1,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "한국 내 현금카드 기능은 Apple Pay에서 지원되지 않습니다 한계 현금카드 X 일부 카드만 한국 내 현금카드 기능은 Apple Pay에서 지원되지 않습니다. 일반 신용·체크카드와 선불 교통카드만 지원. 본인 카드가 Apple Pay 지원하는지 카드사에 먼저 확인하세요."
-      },
-      {
-        "section": "fact_4",
-        "chunk": 2,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "한국 내 현금카드 기능은 Apple Pay에서 지원되지 않습니다 일반 신용·체크카드와 선불 교통카드만 지원 한계 현금카드 X 일부 카드만 한국 내 현금카드 기능은 Apple Pay에서 지원되지 않습니다. 일반 신용·체크카드와 선불 교통카드만 지원. 본인 카드가 Apple Pay 지원하는"
-      },
-      {
         "section": "fact_4",
         "chunk": 3,
         "duplicate": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "지원되지 않습니다 일반 신용·체크카드와 선불 교통카드만 지원 본인 카드가 Apple Pay 지원하는지 한계 현금카드 X 일부 카드만 한국 내 현금카드 기능은 Apple Pay에서 지원되지 않습니다. 일반 신용·체크카드와 선불 교통카드만 지원. 본인 카드가 Apple Pay 지원하는지 카"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 4,
-        "duplicate": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "일반 신용·체크카드와 선불 교통카드만 지원 본인 카드가 Apple Pay 지원하는지 카드사에 먼저 확인하세요 한계 현금카드 X 일부 카드만 한국 내 현금카드 기능은 Apple Pay에서 지원되지 않습니다. 일반 신용·체크카드와 선불 교통카드만 지원. 본인 카드가 Apple Pay 지원하"
+        "context": "충전 속도 25W는 전작과 대동소이할 것으로 전망됩니다 사진·동영상 사용 패턴이 크게 바뀌진 않을 가능성이 큽니다 유지 카메라·배터리·충전 메인 카메라 구성과 배터리 용량 4300mAh, 충전 속도 25W는 전작과 대동소이할 것으로 전망됩니다. 사진·동영상 사용 패턴이 크게 바뀌진 않을"
       }
     ]
   },
   "_codex_effective_script": {
     "version": 2,
-    "slug": "020_qa_apple_pay_korea_card",
-    "source": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\020_qa_apple_pay_korea_card\\shorts_script.json",
+    "slug": "021_news_galaxy_flip8_exynos",
+    "source": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\021_news_galaxy_flip8_exynos\\shorts_script.json",
     "override_applied": false,
     "override_sections": []
   }

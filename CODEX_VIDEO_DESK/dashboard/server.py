@@ -38,7 +38,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v26"
+PANEL_VERSION = "phonespot-web-v32"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -2030,7 +2030,7 @@ INDEX_HTML = r"""<!doctype html>
     :root{
       --system-bg:#F2F2F7; --card-bg:#FFFFFF; --secondary-bg:#F2F2F7; --tertiary-bg:#FAFAFA;
       --label:#1D1D1F; --label-secondary:#3C3C43; --label-tertiary:#86868B; --label-quaternary:#C7C7CC;
-      --separator:rgba(60,60,67,.12); --separator-opaque:#E5E5EA;
+      --separator:rgba(60,60,67,.08); --separator-opaque:#ECECEE;
       --accent:#F74B0B; --accent-hover:#D63E06; --accent-soft:rgba(247,75,11,.10); --accent-tint:rgba(247,75,11,.05);
       --success:#34C759; --warning:#FF9500; --danger:#FF3B30;
       --r-sm:6px; --r-md:10px; --r-lg:14px; --r-xl:18px;
@@ -2046,24 +2046,26 @@ INDEX_HTML = r"""<!doctype html>
     * { box-sizing:border-box; }
     body { margin:0; background:var(--system-bg); color:var(--label);
       font-family:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Segoe UI','Malgun Gothic',sans-serif;
+      font-variant-numeric:tabular-nums;
       letter-spacing:-.2px; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
-    header { min-height:60px; display:flex; align-items:center; justify-content:space-between; padding:14px 22px;
+    header { min-height:60px; display:flex; align-items:center; justify-content:space-between; padding:14px 20px;
       background:rgba(255,255,255,.86); backdrop-filter:saturate(180%) blur(20px); -webkit-backdrop-filter:saturate(180%) blur(20px);
       color:var(--label); border-bottom:.5px solid var(--separator); gap:16px; position:sticky; top:0; z-index:20; }
     header strong { font-size:18px; font-weight:700; letter-spacing:-.4px; }
     header span { color:var(--label-tertiary); font-size:13px; word-break:break-all; }
-    main { display:grid; grid-template-columns:400px 1fr; gap:16px; padding:16px; max-width:1540px; margin:0 auto; }
+    main { display:grid; grid-template-columns:400px 1fr; gap:18px; padding:18px 20px; max-width:none; margin:0; }
     section { background:var(--card-bg); border-radius:var(--r-xl); overflow:hidden; box-shadow:var(--shadow-card); }
-    .head { display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border-bottom:.5px solid var(--separator); background:transparent; gap:10px; }
-    h2 { margin:0; font-size:16px; font-weight:600; letter-spacing:-.2px; }
+    main > section { align-self:start; position:sticky; top:80px; }
+    .head { display:flex; align-items:center; justify-content:space-between; padding:15px 18px; border-bottom:.5px solid var(--separator); background:transparent; gap:10px; }
+    h2 { margin:0; font-size:18px; font-weight:700; letter-spacing:-.3px; }
     .small { font-size:12px; color:var(--label-tertiary); }
-    .pad { padding:16px; }
+    .pad { padding:18px; }
     .tabs { display:flex; gap:2px; padding:4px; margin:10px; background:rgba(118,118,128,.08); border-radius:var(--r-md); }
     .tab { flex:1; border:none; background:transparent; border-radius:7px; padding:8px; cursor:pointer; font-weight:600; font-size:13px; color:var(--label); transition:var(--t-fast); }
     .tab:hover { color:var(--accent); }
     .tab.active { background:var(--card-bg); color:var(--accent); box-shadow:0 1px 3px rgba(0,0,0,.10); }
     .list { max-height:715px; overflow:auto; }
-    .list { padding:7px; max-height:780px; }
+    .list { padding:7px; max-height:calc(100vh - 188px); }
     .row { width:100%; border:0; background:var(--card-bg); text-align:left; cursor:pointer; display:grid; grid-template-columns:38px minmax(0,1fr) auto; gap:12px; align-items:center; font-size:13px; padding:13px 12px; border-radius:13px; margin-bottom:5px; transition:var(--t-fast); }
     .row.video, .row.card { grid-template-columns:38px minmax(0,1fr) auto; }
     .row:hover { background:var(--accent-tint); }
@@ -2075,44 +2077,49 @@ INDEX_HTML = r"""<!doctype html>
     .row-sub { font-size:12px; color:var(--label-tertiary); line-height:1.35; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
     .row-date,.flag { color:var(--label-tertiary); font-size:12px; white-space:nowrap; }
     .title-sub { display:block; color:var(--label-tertiary); font-size:12px; margin-top:2px; font-weight:400; line-height:1.35; }
-    .flag { font-weight:600; color:var(--accent); }
+    .flag { font-weight:600; color:var(--label-tertiary); }
     .stage-pill { display:inline-flex; align-items:center; justify-content:center; min-width:82px; padding:4px 8px; border-radius:100px; font-size:11px; font-weight:700; border:none; background:rgba(118,118,128,.12); color:var(--label-secondary); }
     .stage-pill.ok { background:rgba(52,199,89,.15); color:#1B7A3D; }
     .stage-pill.warn { background:rgba(255,149,0,.15); color:#B25A00; }
     .stage-pill.muted { background:rgba(118,118,128,.12); color:var(--label-tertiary); }
     .grid { display:grid; grid-template-columns:repeat(3,minmax(160px,1fr)); gap:12px; }
-    .action-head { align-items:flex-start; }
-    .selected-badge { min-width:300px; max-width:720px; padding:10px 14px; border:none; border-radius:var(--r-md); background:var(--accent-soft); color:var(--label); }
+    .pair { display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:stretch; }
+    .pair.lopsided { grid-template-columns:1.8fr 1fr; }
+    .action-head { align-items:stretch; flex-direction:column; gap:12px; }
+    .selected-badge { min-width:0; max-width:none; width:100%; padding:12px 16px; border:none; border-radius:var(--r-md); background:var(--accent-soft); color:var(--label); }
     .selected-badge span { display:block; font-size:12px; color:var(--accent); font-weight:600; margin-bottom:3px; }
-    .selected-badge b { display:block; font-size:15px; line-height:1.3; white-space:normal; word-break:break-all; }
+    .selected-badge b { display:block; font-size:18px; font-weight:700; line-height:1.3; white-space:normal; word-break:break-all; }
     .status-note { margin-top:8px; padding:11px 13px; background:var(--secondary-bg); border:none; border-radius:var(--r-md); line-height:1.45; }
-    .btn { border:.5px solid var(--separator); background:var(--card-bg); color:var(--label); border-radius:var(--r-md); min-height:78px; padding:13px; cursor:pointer; text-align:left; box-shadow:var(--shadow-subtle); transition:var(--t-fast); }
-    .btn:hover, .btn:focus-visible { background:var(--accent-tint); border-color:var(--accent); transform:translateY(-1px); box-shadow:var(--shadow-elevated); }
+    .btn { border:none; background:var(--card-bg); color:var(--label); border-radius:var(--r-md); min-height:78px; padding:14px; cursor:pointer; text-align:left; box-shadow:var(--shadow-subtle); transition:var(--t-fast); }
+    .btn:hover, .btn:focus-visible { background:var(--accent-tint); transform:translateY(-1px); box-shadow:var(--shadow-elevated),inset 0 0 0 1px var(--accent-soft); }
     .btn:active { transform:scale(.99); }
-    .btn.primary { background:var(--accent-soft); border-color:transparent; }
+    .btn.primary { background:var(--accent-tint); }
     .btn.primary strong { color:var(--accent); }
-    .btn.compact { min-height:0; padding:10px 12px; box-shadow:none; }
-    .btn.compact strong { margin-bottom:0; font-size:13px; } .btn.compact span { display:none; }
+    .btn.compact { min-height:78px; padding:13px; box-shadow:var(--shadow-subtle); }
+    .btn.compact strong { margin-bottom:6px; font-size:14px; } .btn.compact span { display:block; }
+    .foldbar { grid-column:1/-1; display:flex; align-items:center; justify-content:center; gap:8px; background:var(--secondary-bg); border:none; border-radius:var(--r-md); padding:11px 14px; margin-top:2px; cursor:pointer; font-size:13px; font-weight:600; color:var(--label-secondary); transition:var(--t-fast); }
+    .foldbar:hover { background:rgba(118,118,128,.16); color:var(--label); }
+    .foldbar-caret { font-size:11px; color:var(--label-tertiary); }
     .btn strong { display:block; font-size:14px; font-weight:600; margin-bottom:6px; } .btn span { font-size:12px; color:var(--label-tertiary); line-height:1.35; }
     .btn:hover strong, .btn:hover span, .btn:focus-visible strong, .btn:focus-visible span { color:inherit; }
-    .runtime-strip { max-width:1520px; margin:14px auto 0; padding:0 18px; display:grid; grid-template-columns:1.05fr 1.25fr .9fr .9fr; gap:10px; box-sizing:border-box; }
-    .runtime-card { border:none; border-radius:var(--r-lg); background:var(--card-bg); padding:12px 14px; min-height:62px; min-width:0; box-shadow:var(--shadow-card); }
-    .runtime-card span { display:block; font-size:11px; color:var(--label-tertiary); margin-bottom:5px; }
-    .runtime-card b { display:block; font-size:15px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-    .runtime-card.good { background:rgba(52,199,89,.06); box-shadow:var(--shadow-subtle),inset 0 0 0 1px rgba(52,199,89,.4); }
-    .runtime-card.bad { background:rgba(255,59,48,.06); box-shadow:var(--shadow-subtle),inset 0 0 0 1px rgba(255,59,48,.4); }
-    .runtime-card.warn { background:rgba(255,149,0,.06); box-shadow:var(--shadow-subtle),inset 0 0 0 1px rgba(255,149,0,.4); }
+    .runtime-strip { max-width:none; margin:16px 0 0; padding:0 20px; display:grid; grid-template-columns:repeat(4,1fr); gap:12px; box-sizing:border-box; }
+    .runtime-card { border:none; border-radius:var(--r-lg); background:var(--card-bg); padding:10px 13px; min-height:0; min-width:0; box-shadow:var(--shadow-card); }
+    .runtime-card span { display:block; font-size:10.5px; color:var(--label-tertiary); margin-bottom:3px; }
+    .runtime-card b { display:block; font-size:14px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .runtime-card.good b::before { content:"●"; color:var(--success); font-size:9px; vertical-align:2px; margin-right:7px; }
+    .runtime-card.bad b::before { content:"●"; color:var(--danger); font-size:9px; vertical-align:2px; margin-right:7px; }
+    .runtime-card.warn b::before { content:"●"; color:var(--warning); font-size:9px; vertical-align:2px; margin-right:7px; }
     .runtime-action { margin-top:8px; border:none; background:var(--accent-soft); color:var(--accent); border-radius:8px; padding:6px 10px; font-size:11px; font-weight:700; cursor:pointer; transition:var(--t-fast); }
     .runtime-action:hover { background:var(--accent); color:#fff; }
     .runtime-actions { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
     .runtime-actions .runtime-action { margin-top:8px; }
     .runtime-select { width:100%; margin-top:7px; border:none; background:var(--secondary-bg); border-radius:8px; padding:6px 8px; font-size:11px; font-family:inherit; color:var(--label); }
     .status { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; }
-    .metric { border:none; border-radius:var(--r-md); padding:12px; background:var(--secondary-bg); min-height:72px; } .metric b { display:block; font-size:19px; font-weight:700; margin-top:4px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .metric { border:none; border-radius:var(--r-md); padding:12px; background:var(--secondary-bg); min-height:72px; } .metric b { display:block; font-size:23px; font-weight:600; letter-spacing:-.4px; margin-top:5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
     .metric.slug b { font-size:13px; white-space:normal; word-break:break-all; line-height:1.3; }
     .warn { color:var(--danger); } .ok { color:#1B7A3D; }
-    .log { height:390px; overflow:auto; background:#1C1C1E; color:#E5E5EA; padding:16px; font-family:'SF Mono',Consolas,monospace; font-size:12px; white-space:pre-wrap; border-radius:0 0 var(--r-lg) var(--r-lg); }
-    .results { max-height:170px; overflow:auto; font-size:13px; } .result-row { display:flex; justify-content:space-between; gap:10px; padding:8px 0; border-bottom:.5px solid var(--separator); }
+    .log { height:360px; overflow:auto; background:#1C1C1E; color:#E5E5EA; padding:16px; font-family:'SF Mono',Consolas,monospace; font-size:12px; white-space:pre-wrap; border-radius:0 0 var(--r-lg) var(--r-lg); }
+    .results { max-height:340px; overflow:auto; font-size:13px; } .result-row { display:flex; flex-direction:column; gap:3px; padding:9px 0; border-bottom:.5px solid var(--separator); }
     .result-row > * { min-width:0; }
     .result-row a { overflow-wrap:anywhere; word-break:break-word; color:var(--accent); }
     .history-scroll { max-height:340px; overflow:auto; }
@@ -2156,7 +2163,7 @@ INDEX_HTML = r"""<!doctype html>
     @keyframes fadeIn { from{opacity:0;transform:translateY(8px);} to{opacity:1;transform:translateY(0);} }
     section { animation:fadeIn 220ms cubic-bezier(.4,0,.2,1); }
     @media (prefers-reduced-motion:reduce){ *,*::before,*::after{ animation-duration:.01ms!important; transition-duration:.01ms!important; } }
-    @media (max-width:1080px) { main { grid-template-columns:1fr; } .grid,.status { grid-template-columns:1fr 1fr; } }
+    @media (max-width:1080px) { main { grid-template-columns:1fr; } .grid,.status { grid-template-columns:1fr 1fr; } .pair,.pair.lopsided { grid-template-columns:1fr; } main > section { position:static; } }
     @media (max-width:700px) {
       header { padding:12px 14px; flex-wrap:wrap; }
       header > span { width:100%; }
@@ -2194,15 +2201,17 @@ INDEX_HTML = r"""<!doctype html>
           <button class="btn primary" onclick="runAction('video_prepare')"><strong>1. 영상용 프롬프트 준비</strong><span>선택한 카드뉴스 결과를 숏폼 영상 스크립트와 일러스트 요청으로 변환합니다.</span></button>
           <button class="btn primary" onclick="openImportReview()"><strong>2. 이미지 가져오기 + 렌더</strong><span>다운로드한 GPT 이미지를 그림 내용으로 자동 배정 제안 → 확인하고 확정합니다.</span></button>
           <button class="btn primary" onclick="runAction('video_render_selected')"><strong>3. 선택 영상만 렌더</strong><span>추가 이미지 없이 현재 선택한 슬러그를 다시 렌더합니다.</span></button>
-          <div style="grid-column:1/-1;font-size:12px;color:#64748b;margin-top:2px">보기 · 편집</div>
-          <button class="btn compact" onclick="runPreflight()"><strong>렌더 전 사전검사</strong><span>이미지·스크립트·CTA·한글·중복 사용을 먼저 확인합니다.</span></button>
-          <button class="btn compact" onclick="window.open('/prompt','_blank')"><strong>영상 프롬프트 보기</strong><span>최신 영상용 GPT 프롬프트를 브라우저에서 엽니다.</span></button>
-          <button class="btn compact" onclick="openIllustrationRequests()"><strong>신규 일러스트 요청서</strong><span>이 영상의 범용 일러스트 추천과 GPT 프롬프트.</span></button>
-          <button class="btn compact" onclick="runAction('open_results')"><strong>영상 결과 폴더</strong><span>완성 MP4와 발행 패키지 폴더를 엽니다.</span></button>
-          <button class="btn compact" onclick="deleteSlug()"><strong>선택 슬러그 삭제</strong><span>선택 슬러그의 articles·images·output 삭제(되돌릴 수 없음).</span></button>
-          <button class="btn compact" onclick="runAction('open_illustrations')"><strong>일러스트 폴더</strong><span>재사용 일러스트 라이브러리와 드롭 폴더.</span></button>
-          <button class="btn compact" onclick="showChunks()"><strong>청크 경계 편집</strong><span>내용·TTS는 유지하고 줄바꿈·합치기·분할만 조정합니다.</span></button>
-          <button class="btn" id="manageToggle" style="grid-column:1/-1;min-height:0;padding:9px 12px;background:#f3f4f6;text-align:center" onclick="toggleManage()"><strong style="margin:0;font-size:13px">＋ 라이브러리 · 시스템 관리</strong></button>
+          <button class="foldbar" id="viewEditToggle" onclick="toggleViewEdit()">보기 · 편집 <span class="foldbar-caret" id="viewEditCaret">▾</span></button>
+          <div id="viewEditActions" style="display:none;grid-column:1/-1;gap:12px;grid-template-columns:repeat(3,minmax(160px,1fr))">
+            <button class="btn compact" onclick="runPreflight()"><strong>렌더 전 사전검사</strong><span>이미지·스크립트·CTA·한글·중복 사용을 먼저 확인합니다.</span></button>
+            <button class="btn compact" onclick="window.open('/prompt','_blank')"><strong>영상 프롬프트 보기</strong><span>최신 영상용 GPT 프롬프트를 브라우저에서 엽니다.</span></button>
+            <button class="btn compact" onclick="openIllustrationRequests()"><strong>신규 일러스트 요청서</strong><span>이 영상의 범용 일러스트 추천과 GPT 프롬프트.</span></button>
+            <button class="btn compact" onclick="runAction('open_results')"><strong>영상 결과 폴더</strong><span>완성 MP4와 발행 패키지 폴더를 엽니다.</span></button>
+            <button class="btn compact" onclick="deleteSlug()"><strong>선택 슬러그 삭제</strong><span>선택 슬러그의 articles·images·output 삭제(되돌릴 수 없음).</span></button>
+            <button class="btn compact" onclick="runAction('open_illustrations')"><strong>일러스트 폴더</strong><span>재사용 일러스트 라이브러리와 드롭 폴더.</span></button>
+            <button class="btn compact" onclick="showChunks()"><strong>청크 경계 편집</strong><span>내용·TTS는 유지하고 줄바꿈·합치기·분할만 조정합니다.</span></button>
+          </div>
+          <button class="foldbar" id="manageToggle" onclick="toggleManage()">라이브러리 · 시스템 관리 <span class="foldbar-caret" id="manageCaret">▾</span></button>
           <div id="manageActions" style="display:none;grid-column:1/-1;gap:12px;grid-template-columns:repeat(3,minmax(160px,1fr))">
             <button class="btn" onclick="runAction('library_sync')"><strong>일러스트 라이브러리 공유</strong><span>공유 허브와 양방향 병합(비파괴). 허브 경로 먼저 설정. 결과는 실행 로그.</span></button>
             <button class="btn" onclick="runAction('library_dedup')"><strong>라이브러리 중복 점검</strong><span>비슷한 그림 리포트(읽기전용). 정리는 라이브러리_중복정리.bat --apply.</span></button>
@@ -2227,6 +2236,7 @@ INDEX_HTML = r"""<!doctype html>
           <button class="btn" style="border-color:#dc2626;color:#dc2626" onclick="deleteSlug()"><strong>선택 슬러그 삭제</strong><span>선택한 슬러그의 기사·이미지·렌더 결과를 로컬에서 제거(되돌릴 수 없음).</span></button>
         </div>
       </section>
+      <div class="pair">
       <section>
         <div class="head"><h2>상태</h2><div style="display:flex;gap:8px;align-items:center"><span class="small" id="jobText">대기 중</span><button class="mini-btn" id="statusCancelButton" onclick="cancelRemoteJob()" style="display:none">중도 취소</button></div></div>
         <div class="pad status">
@@ -2282,6 +2292,8 @@ INDEX_HTML = r"""<!doctype html>
         </div>
       </section>
       <section><div class="head"><h2>실행 로그</h2><div style="display:flex;gap:8px;align-items:center"><span class="small">실패하면 이 로그를 복사해서 보내면 됩니다.</span><button class="mini-btn" onclick="copyLog()">로그 복사</button></div></div><div id="log" class="log"></div></section>
+      </div>
+      <div class="pair lopsided">
       <section>
         <div class="head"><h2>최근 작업 기록</h2><button onclick="loadJobHistory()">새로고침</button></div>
         <div class="history-scroll">
@@ -2292,6 +2304,7 @@ INDEX_HTML = r"""<!doctype html>
         </div>
       </section>
       <section><div class="head"><h2>최근 영상 결과</h2><button onclick="runAction('open_results')">결과 폴더 열기</button></div><div class="pad results" id="results"></div></section>
+      </div>
     </div>
   </main>
   <input id="cardUploadInput" type="file" accept=".png,.jpg,.jpeg,.webp" multiple hidden>
@@ -2354,10 +2367,10 @@ INDEX_HTML = r"""<!doctype html>
     }
     async function loadSlugs() {
       const data = await api("/api/slugs"); videoItems = data.slugs || []; const box = document.getElementById("videoList"); box.innerHTML = "";
-      videoItems.forEach(item => {
+      videoItems.forEach((item, idx) => {
         const btn = document.createElement("button");
         btn.className = "row video" + (item.slug === selected ? " active" : "");
-        btn.innerHTML = `<span class="row-number">${item.number}</span><span class="row-main"><span class="slug-name">${item.slug}</span><span class="row-sub">${item.date}${item.flag && item.flag !== "undefined" ? " · " + item.flag : ""}</span></span><span class="stage-pill ${item.stageClass || "muted"}">${item.stage || "-"}</span>`;
+        btn.innerHTML = `<span class="row-number">${idx + 1}</span><span class="row-main"><span class="slug-name">${item.slug}</span><span class="row-sub">${item.date}${item.flag && item.flag !== "undefined" ? " · " + item.flag : ""}</span></span><span class="stage-pill ${item.stageClass || "muted"}">${item.stage || "-"}</span>`;
         btn.onclick = () => { selected = item.slug; document.getElementById("selectedSlug").textContent = selected; setMode("video"); updateSelectedStatus(); loadSlugs(); };
         box.appendChild(btn);
       });
@@ -2716,10 +2729,20 @@ INDEX_HTML = r"""<!doctype html>
     }
     function toggleManage() {
       const m = document.getElementById("manageActions");
-      const t = document.getElementById("manageToggle");
+      const c = document.getElementById("manageCaret");
+      if (!m) return;
       const open = m.style.display === "grid";
       m.style.display = open ? "none" : "grid";
-      if (t) { const s = t.querySelector("strong"); if (s) s.textContent = (open ? "＋" : "－") + " 라이브러리 · 시스템 관리"; }
+      if (c) c.textContent = open ? "▾" : "▴";
+    }
+    function toggleViewEdit() {
+      const m = document.getElementById("viewEditActions");
+      const c = document.getElementById("viewEditCaret");
+      if (!m) return;
+      const open = m.style.display === "grid";
+      m.style.display = open ? "none" : "grid";
+      if (c) c.textContent = open ? "▾" : "▴";
+      try { localStorage.setItem("panel.viewEdit", open ? "0" : "1"); } catch(e){}
     }
     async function openCardImportReview() {
       if (!selected) { alert("먼저 카드뉴스를 선택하세요."); return; }
@@ -3036,6 +3059,7 @@ INDEX_HTML = r"""<!doctype html>
       window.open("/card-prompt/" + encodeURIComponent(selected), "_blank");
     }
     reloadLists(); loadState(); loadJobHistory(); setInterval(loadState, 1500); setInterval(loadJobHistory, 5000); setInterval(loadCardnews, 10000);
+    try { if (localStorage.getItem("panel.viewEdit") === "1") toggleViewEdit(); } catch(e){}
   </script>
 </body>
 </html>"""

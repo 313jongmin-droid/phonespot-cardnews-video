@@ -27,12 +27,22 @@ MIN_ILLUST_SCORE = 12
 
 # Topic-neutral editorial illustrations that are never "wrong" on a phone/IT
 # news short. Used as filler when nothing matches, instead of random library art.
-NEUTRAL_FILLERS = ["smartphone", "newspaper", "microphone", "shield", "meeting_room", "forecast"]
+# ★ 진짜 중립(phone/device 일반)만. 이전엔 newspaper/shield/microphone/meeting_room/forecast
+#   가 들어있었는데 이것들은 속보/보안/팟캐스트/회의/예측이라는 '특정 의미'를 그려서
+#   폴백으로 쓰면 '무관 그림'으로 보였다(예: 출시일에 shield, 칩에 newspaper). 제외.
+#   라이브러리에 없는 항목은 pick_neutral 이 자동으로 건너뛴다. env 로 조절 가능.
+NEUTRAL_FILLERS = [v.strip() for v in os.getenv(
+    "PHONESPOT_NEUTRAL_FILLERS",
+    "smartphone,phone_setup_ready,phone_settings_toggle,device_os_requirement,device_data_transfer",
+).split(",") if v.strip()]
 
 # 임베딩(의미) 모드 임계: 코사인 0~1 스케일. 모델 없으면 위 lexical 임계 사용.
-# 필요하면 이 두 값만 조절(올리면 더 엄격, 무관 매칭↓ / 내리면 더 관대).
-EMBED_MIN_IMAGE = 0.42
-EMBED_MIN_ILLUST = 0.42
+# 필요하면 이 두 값만 조절(올리면 더 엄격, 무관 매칭↓ / 내리면 더 관대). env 로도 조절.
+EMBED_MIN_IMAGE = float(os.getenv("PHONESPOT_EMBED_MIN_IMAGE", "0.42"))
+# ★ 0.42 는 너무 관대해 먼 그림이 통과했다(예: 출시일→shield, 슬림화→ti_decrease,
+#   엑시노스→aluminum_label). 0.48 로 올려 약한 매칭은 중립 필러로 떨어지게 한다.
+#   "무관 그림 < 중립 그림" 원칙. PC 재렌더로 검증 후 PHONESPOT_EMBED_MIN_ILLUST 로 미세조정.
+EMBED_MIN_ILLUST = float(os.getenv("PHONESPOT_EMBED_MIN_ILLUST", "0.48"))
 
 # 그림 "내용"(CLIP) 매칭 임계: 청크 텍스트 ↔ 라이브러리 그림 픽셀의 교차모달 코사인.
 # 이름/태그가 아니라 실제 그림이 무엇을 그렸는지로 재사용 → 파일명이 틀려도 안전.
@@ -41,6 +51,13 @@ EMBED_MIN_ILLUST = 0.42
 # 이 신호는 '확신 있는 텍스트 매칭이 없을 때, 중립 필러 대신' 쓰는 보조 신호다.
 # 즉 잘 맞던 매칭을 덮어쓰지 않으므로 기존 품질을 떨어뜨리지 않는다.
 EMBED_MIN_ILLUST_IMG = float(os.getenv("PHONESPOT_IMG_MATCH_MIN", "0.28"))
+
+# ★ 내용이 잘못 그려진 라이브러리 그림 차단목록. 텍스트/태그 임베딩엔 맞아도 실제 그림이
+#   주제와 다른 것들(예: cpt_496029c6 = '온디바이스 AI' 개념인데 보이스피싱 장면). 매칭/폴백/
+#   내용매칭 어디서도 선택 안 됨. 라이브러리 그림 자체는 PC 에서 교체/삭제 권장. env 로 확장.
+ILLUST_BLOCKLIST = set(
+    v.strip() for v in os.getenv("PHONESPOT_ILLUST_BLOCKLIST", "cpt_496029c6").split(",") if v.strip()
+)
 
 
 ALIASES = {
@@ -142,6 +159,8 @@ def illustration_candidates(context: str, used_visuals: set[str]) -> list[tuple[
     for variant, entry in (db.get("illustrations", {}) or {}).items():
         if variant not in available:
             continue
+        if variant in ILLUST_BLOCKLIST:
+            continue
         key = f"illust:{variant}"
         if key in used_visuals:
             continue
@@ -224,6 +243,8 @@ def _embed_image_candidates(slug, cvec, used_images, prompt_map, desc_emb):
 def _embed_illust_candidates(cvec, lib_index, used_visuals):
     rows = []
     for variant, vec in lib_index.items():
+        if variant in ILLUST_BLOCKLIST:
+            continue
         if f"illust:{variant}" in used_visuals:
             continue
         score = ce.cosine(cvec, vec) if cvec is not None else 0.0
@@ -239,6 +260,8 @@ def _imgcontent_best(context, img_index, used_visuals):
         return (0.0, "")
     rows = ie.rank_for_text(context, index=img_index)
     for variant, score in rows:
+        if variant in ILLUST_BLOCKLIST:
+            continue
         if f"illust:{variant}" in used_visuals:
             continue
         return (round(float(score), 3), variant)

@@ -254,17 +254,32 @@
       ]
     },
     "021_news_galaxy_flip8_exynos": {
-      "used_at": "2026-06-13T13:04:14",
-      "source": "codex_enhance",
+      "used_at": "2026-06-13T14:26:09",
+      "source": "unique_illustration_guard",
       "illustrations": [
         "smartphone",
-        "aluminum_label",
+        "newspaper",
+        "memory_chip",
+        "camera_battery_ecd040c7",
         "appliance",
-        "battery_charge_range"
+        "microphone",
+        "shield",
+        "meeting_room",
+        "launch_event",
+        "aluminum_label",
+        "cpt_83fa1e9f",
+        "cpt_496029c6",
+        "cpt_6f69bf84",
+        "ti_decrease",
+        "display_ratio_change",
+        "forecast",
+        "battery_charge_range",
+        "optimized_charging",
+        "gift_voucher"
       ]
     }
   },
-  "updated_at": "2026-06-13T13:04:15",
+  "updated_at": "2026-06-13T14:26:10",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -317,7 +332,7 @@
       "variants": []
     },
     "021_news_galaxy_flip8_exynos": {
-      "updated_at": "2026-06-13T13:04:15",
+      "updated_at": "2026-06-13T14:26:10",
       "variants": []
     }
   }

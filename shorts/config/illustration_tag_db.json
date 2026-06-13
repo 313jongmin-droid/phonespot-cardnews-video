@@ -121,6 +121,34 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "camera_battery_ecd040c7": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "카메라",
+        "배터리",
+        "충전",
+        "전작",
+        "같지"
+      ],
+      "note": "자동 발굴 개념: 카메라 배터리",
+      "available": true
+    },
+    "card_struggle_81529308": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "정작",
+        "카드",
+        "추가",
+        "어렵다",
+        "하는지"
+      ],
+      "note": "자동 발굴 개념: 정작 카드"
+    },
     "chart_down": {
       "tags": [
         "price",
@@ -327,6 +355,21 @@
       "note": "자동 발굴 개념: 신청 경로",
       "available": true
     },
+    "cpt_496029c6": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "탑재",
+        "본체",
+        "슬림화",
+        "집중한",
+        "변화로"
+      ],
+      "note": "자동 발굴 개념: 탑재 본체",
+      "available": true
+    },
     "cpt_55c40fb8": {
       "tags": [
         "auto"
@@ -368,6 +411,19 @@
         "진짜"
       ],
       "note": "자동 발굴 개념: 값이 진짜"
+    },
+    "cpt_678358f4": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "사용자",
+        "애플페",
+        "쓰시",
+        "분도",
+        "늘었는데"
+      ],
+      "note": "자동 발굴 개념: 사용자 애플페"
     },
     "cpt_678a9adc": {
       "tags": [
@@ -516,6 +572,20 @@
         "초로"
       ],
       "note": "자동 발굴 개념: 정식 출시"
+    },
+    "cpt_98cab19a": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "공개",
+        "중순",
+        "하반기",
+        "언팩"
+      ],
+      "note": "자동 발굴 개념: 공개 중순",
+      "available": true
     },
     "cpt_9ebf277e": {
       "tags": [
@@ -964,6 +1034,18 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "global_adoption_3a84a22d": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "다른",
+        "나라처럼",
+        "Apple",
+        "Wallet"
+      ],
+      "note": "자동 발굴 개념: 다른 나라처럼"
+    },
     "handshake": {
       "tags": [
         "policy",
@@ -1020,6 +1102,16 @@
       ],
       "note": "Reusable editorial illustration.",
       "available": true
+    },
+    "korean_broken_36986e9e": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "한국",
+        "작동하지"
+      ],
+      "note": "자동 발굴 개념: 한국 작동하지"
     },
     "launch_event": {
       "tags": [
@@ -1214,6 +1306,19 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "official_sale_9dc82f05": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "정식",
+        "판매",
+        "사이"
+      ],
+      "note": "자동 발굴 개념: 정식 판매",
+      "available": true
+    },
     "official_site_check": {
       "tags": [
         "security",
@@ -1374,6 +1479,15 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "register_14135bd2": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "등록할"
+      ],
+      "note": "자동 발굴 개념: 등록할"
+    },
     "release_calendar": {
       "tags": [
         "library"
@@ -1463,6 +1577,19 @@
         "선택하시면"
       ],
       "note": "자동 발굴 개념: 옵션 선택하시면"
+    },
+    "self_flip_6728256c": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "플립",
+        "자체",
+        "엑시노스"
+      ],
+      "note": "자동 발굴 개념: 플립 자체",
+      "available": true
     },
     "settings_screen_ab73a8fa": {
       "tags": [
@@ -1676,134 +1803,7 @@
       ],
       "note": "자동 발굴 개념: 일요일 주간",
       "available": true
-    },
-    "cpt_678358f4": {
-      "keywords": [
-        "사용자",
-        "애플페",
-        "쓰시",
-        "분도",
-        "늘었는데"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 사용자 애플페",
-      "available": false
-    },
-    "card_struggle_81529308": {
-      "keywords": [
-        "정작",
-        "카드",
-        "추가",
-        "어렵다",
-        "하는지"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 정작 카드",
-      "available": false
-    },
-    "global_adoption_3a84a22d": {
-      "keywords": [
-        "다른",
-        "나라처럼",
-        "Apple",
-        "Wallet"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 다른 나라처럼",
-      "available": false
-    },
-    "korean_broken_36986e9e": {
-      "keywords": [
-        "한국",
-        "작동하지"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 한국 작동하지",
-      "available": false
-    },
-    "register_14135bd2": {
-      "keywords": [
-        "등록할"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 등록할",
-      "available": false
-    },
-    "self_flip_6728256c": {
-      "keywords": [
-        "플립",
-        "자체",
-        "엑시노스"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 플립 자체",
-      "available": false
-    },
-    "cpt_496029c6": {
-      "keywords": [
-        "탑재",
-        "본체",
-        "슬림화",
-        "집중한",
-        "변화로"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 탑재 본체",
-      "available": false
-    },
-    "camera_battery_ecd040c7": {
-      "keywords": [
-        "카메라",
-        "배터리",
-        "충전",
-        "전작",
-        "같지"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 카메라 배터리",
-      "available": false
-    },
-    "cpt_98cab19a": {
-      "keywords": [
-        "공개",
-        "중순",
-        "하반기",
-        "언팩"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 공개 중순",
-      "available": false
-    },
-    "official_sale_9dc82f05": {
-      "keywords": [
-        "정식",
-        "판매",
-        "사이"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 정식 판매",
-      "available": false
     }
   },
-  "updated_at": "2026-06-13T13:04:18"
+  "updated_at": "2026-06-13T14:25:28"
 }
