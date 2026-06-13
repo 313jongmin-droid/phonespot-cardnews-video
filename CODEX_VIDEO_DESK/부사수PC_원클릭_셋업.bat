@@ -47,6 +47,9 @@ echo.
 echo ===== 2/5: get project (clone / pull) =====
 if exist "%TARGET%\.git" (
   echo [update] existing repo - stash local runtime changes, then pull
+  rem protect untracked article JSON so the stash below never sweeps them away
+  "!GIT!" -C "%TARGET%" add cardnews/articles >nul 2>&1
+  "!GIT!" -c user.email=phonespot@local -c user.name=phonespot -C "%TARGET%" commit -m "auto-save articles before update" >nul 2>&1
   "!GIT!" -C "%TARGET%" stash --include-untracked >nul 2>&1
   "!GIT!" -C "%TARGET%" pull --ff-only
 ) else (

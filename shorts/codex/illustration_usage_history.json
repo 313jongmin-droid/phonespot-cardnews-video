@@ -252,9 +252,19 @@
         "cpt_fd9edf65",
         "gift_voucher"
       ]
+    },
+    "021_news_galaxy_flip8_exynos": {
+      "used_at": "2026-06-13T13:04:14",
+      "source": "codex_enhance",
+      "illustrations": [
+        "smartphone",
+        "aluminum_label",
+        "appliance",
+        "battery_charge_range"
+      ]
     }
   },
-  "updated_at": "2026-06-10T18:25:29",
+  "updated_at": "2026-06-13T13:04:15",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -304,6 +314,10 @@
     },
     "020_qa_apple_pay_korea_card": {
       "updated_at": "2026-06-10T18:25:29",
+      "variants": []
+    },
+    "021_news_galaxy_flip8_exynos": {
+      "updated_at": "2026-06-13T13:04:15",
       "variants": []
     }
   }
