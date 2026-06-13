@@ -1,0 +1,3242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>폰스팟 광고 소재 생성기 v11 (자가점검 통합)</title>
+<style>
+  /* === Pretendard (iOS-style Korean) — dynamic-subset (lightweight) === */
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css');
+
+  /* === Design Tokens — Apple HIG light === */
+  :root {
+    --system-bg: #F2F2F7;
+    --card-bg: #FFFFFF;
+    --secondary-bg: #F2F2F7;
+    --tertiary-bg: #FAFAFA;
+
+    --label: #1D1D1F;
+    --label-secondary: #3C3C43;
+    --label-tertiary: #86868B;
+    --label-quaternary: #C7C7CC;
+
+    --separator: rgba(60, 60, 67, 0.12);
+    --separator-opaque: #E5E5EA;
+
+    --accent: #007AFF;
+    --accent-hover: #0051D5;
+    --accent-soft: rgba(0, 122, 255, 0.08);
+    --accent-tint: rgba(0, 122, 255, 0.04);
+
+    --success: #34C759;
+    --warning: #FF9500;
+    --danger: #FF3B30;
+    --info: #FFCC00;
+
+    --r-sm: 8px;
+    --r-md: 12px;
+    --r-lg: 16px;
+    --r-xl: 22px;
+
+    --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.05), 0 6px 20px rgba(0, 0, 0, 0.05);
+    --shadow-elevated: 0 10px 34px rgba(0, 0, 0, 0.12), 0 0 0 0.5px rgba(0, 0, 0, 0.04);
+
+    --t-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont,
+                 'Apple SD Gothic Neo', 'SF Pro Text', 'SF Pro Display',
+                 system-ui, 'Segoe UI', 'Malgun Gothic', sans-serif;
+    background: var(--system-bg);
+    color: var(--label);
+    line-height: 1.47;
+    letter-spacing: -0.2px;
+    padding: 24px 20px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .container { max-width: 1180px; margin: 0 auto; }
+
+  h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 5px; }
+  .subtitle { color: var(--label-tertiary); font-size: 13px; margin-bottom: 28px; font-weight: 400; }
+
+  /* === Tabs — segmented control === */
+  .tabs {
+    display: inline-flex; gap: 2px; margin-bottom: 20px;
+    background: rgba(118, 118, 128, 0.08);
+    border-radius: var(--r-md); padding: 3px;
+  }
+  .tab {
+    padding: 8px 16px; cursor: pointer; font-size: 13px; font-weight: 500;
+    color: var(--label); border-radius: 7px;
+    transition: var(--t-fast);
+    user-select: none;
+  }
+  .tab:hover { color: var(--accent); }
+  .tab.active {
+    background: var(--card-bg);
+    color: var(--label);
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* === Section / Card === */
+  section {
+    background: var(--card-bg);
+    border-radius: var(--r-xl);
+    padding: 24px 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow-subtle);
+  }
+
+  h2 {
+    font-size: 20px; font-weight: 700; letter-spacing: -0.3px;
+    margin-bottom: 18px;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 12px;
+  }
+  h2 .toggle { font-size: 13px; color: var(--accent); cursor: pointer; user-select: none; font-weight: 400; }
+
+  h3 { font-size: 14px; font-weight: 600; margin: 14px 0 8px; color: var(--label-secondary); }
+
+  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+
+  /* === Form group — iOS list-section style === */
+  .form-group { padding: 18px 0; }
+  .form-group:first-of-type { padding-top: 0; }
+  .form-group:last-of-type { padding-bottom: 0; }
+  .form-group + .form-group { border-top: 1px solid var(--separator); }
+  .form-group-header {
+    font-size: 11px; font-weight: 600;
+    color: var(--label-tertiary);
+    text-transform: uppercase; letter-spacing: 0.6px;
+    margin-bottom: 14px;
+  }
+  .form-group--accent .form-group-header { color: var(--accent); }
+  .form-stack > * + * { margin-top: 14px; }
+
+  /* === Form controls === */
+  label { display: block; font-size: 12px; font-weight: 500; margin-bottom: 6px; color: var(--label-secondary); }
+
+  input, select, textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: none;
+    background: var(--secondary-bg);
+    border-radius: var(--r-md);
+    font-size: 14px; font-family: inherit;
+    color: var(--label);
+    transition: var(--t-fast);
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    background: var(--card-bg);
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+  input::placeholder { color: var(--label-tertiary); }
+
+  input[type=password] { font-family: 'SF Mono', Consolas, monospace; }
+  textarea { resize: vertical; min-height: 60px; }
+
+  /* === Checkbox group — chip / pill === */
+  .checkbox-group { display: flex; flex-wrap: wrap; gap: 6px; }
+  .checkbox-group label {
+    display: inline-flex; align-items: center;
+    padding: 7px 14px;
+    background: var(--secondary-bg);
+    border-radius: 100px;
+    font-weight: 500; cursor: pointer; margin: 0; font-size: 12.5px;
+    color: var(--label);
+    transition: var(--t-fast);
+    user-select: none;
+  }
+  .checkbox-group label:hover { background: rgba(118, 118, 128, 0.16); }
+  .checkbox-group input[type=checkbox] { display: none; }
+  .checkbox-group label:has(input:checked) { background: var(--accent); color: #fff; }
+
+  /* === Radio group === */
+  .radio-group {
+    display: flex; gap: 2px; padding: 3px;
+    background: rgba(118, 118, 128, 0.08);
+    border-radius: var(--r-md);
+  }
+  .radio-group label {
+    flex: 1; padding: 8px; cursor: pointer; margin: 0;
+    font-size: 12.5px; text-align: center;
+    border-radius: 7px;
+    transition: var(--t-fast);
+    font-weight: 500; color: var(--label);
+  }
+  .radio-group input[type=radio] { display: none; }
+  .radio-group label:has(input:checked) {
+    background: var(--card-bg);
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+
+  /* === Buttons — Apple HIG === */
+  button {
+    background: var(--accent); color: #fff; border: none;
+    padding: 10px 18px; border-radius: var(--r-md);
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    font-family: inherit; letter-spacing: -0.1px;
+    transition: var(--t-fast);
+  }
+  button:hover { background: var(--accent-hover); }
+  button:active { transform: scale(0.98); }
+  button:disabled { background: var(--label-quaternary); cursor: not-allowed; transform: none; }
+
+  button.secondary { background: var(--secondary-bg); color: var(--label); }
+  button.secondary:hover { background: rgba(118, 118, 128, 0.16); }
+
+  button.danger { background: var(--danger); }
+  button.danger:hover { background: #D70015; }
+
+  button.small { padding: 6px 12px; font-size: 12.5px; border-radius: 8px; }
+  button.btn-large {
+    flex: 1; min-width: 240px;
+    padding: 15px 18px; font-size: 15px; font-weight: 700;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #0A84FF 0%, #5E5CE6 100%);
+    box-shadow: 0 6px 18px rgba(10, 132, 255, 0.32);
+  }
+  button.btn-large:hover { background: linear-gradient(135deg, #0070E0 0%, #4F4DD0 100%); }
+  button.btn-text { background: transparent; color: var(--accent); padding: 8px 12px; }
+  button.btn-text:hover { background: var(--accent-soft); }
+
+  .btn-row { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+  .btn-caption {
+    display: block; margin-top: 6px;
+    font-size: 12px; color: var(--label-tertiary); line-height: 1.4;
+  }
+
+  /* === Candidate (copy result card) === */
+  .candidate {
+    background: var(--card-bg);
+    border: 1px solid var(--separator-opaque);
+    border-radius: var(--r-md);
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: var(--t-fast);
+  }
+  .candidate:hover { border-color: var(--accent); background: var(--accent-tint); }
+  .candidate.selected {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    box-shadow: 0 0 0 0.5px var(--accent);
+  }
+  .candidate-header { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .pattern-tag {
+    font-size: 11px; background: var(--secondary-bg);
+    padding: 3px 9px; border-radius: 100px;
+    color: var(--label-secondary); white-space: nowrap; font-weight: 500;
+  }
+  .candidate-text { font-size: 15px; font-weight: 600; letter-spacing: -0.2px; color: var(--label); }
+  .candidate-meta { font-size: 12px; color: var(--label-tertiary); font-weight: 500; }
+
+  /* === Visual card === */
+  .visual-card {
+    border: 1px solid var(--separator-opaque);
+    border-radius: var(--r-md);
+    padding: 14px; margin-bottom: 8px;
+    cursor: pointer; background: var(--card-bg);
+    transition: var(--t-fast);
+  }
+  .visual-card:hover { border-color: var(--accent); }
+  .visual-card.selected { border-color: var(--accent); background: var(--accent-tint); }
+  .visual-card .title { font-weight: 600; margin-bottom: 4px; font-size: 14px; }
+  .visual-card .desc { font-size: 12px; color: var(--label-secondary); margin-bottom: 6px; }
+  .palette { display: flex; gap: 4px; margin-bottom: 6px; align-items: center; }
+  .swatch { width: 18px; height: 18px; border-radius: var(--r-sm); border: 1px solid var(--separator); }
+  .visual-card .prompt {
+    font-size: 11px; color: var(--label-secondary);
+    background: var(--secondary-bg);
+    padding: 8px 10px; border-radius: var(--r-sm);
+    font-family: 'SF Mono', Consolas, monospace;
+    max-height: 80px; overflow-y: auto;
+  }
+
+  /* === Guide table === */
+  .guide-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .guide-table th { font-weight: 600; font-size: 11px; color: var(--label-tertiary); text-transform: uppercase; letter-spacing: 0.6px; padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--separator); }
+  .guide-table td { padding: 10px 12px; border-bottom: 1px solid var(--separator); vertical-align: top; color: var(--label-secondary); }
+  .guide-table tr.guide-group td { background: rgba(0, 122, 255, 0.04); color: var(--accent); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 12px; }
+  .guide-table tr:last-child td { border-bottom: none; }
+  .guide-table td strong { color: var(--label); font-weight: 600; }
+  .guide-table .guide-example { color: var(--label-tertiary); font-size: 12px; }
+  .guide-table .guide-where { font-size: 11px; color: var(--label-tertiary); font-weight: 500; letter-spacing: 0.3px; white-space: nowrap; }
+
+  /* === Library table === */
+  .library-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .library-table th, .library-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--separator);
+    text-align: left;
+  }
+  .library-table th {
+    background: transparent;
+    font-weight: 600; font-size: 11px;
+    color: var(--label-tertiary);
+    text-transform: uppercase; letter-spacing: 0.3px;
+  }
+  .library-table tr:last-child td { border-bottom: none; }
+
+  .hidden { display: none !important; }
+
+  /* === Info box === */
+  .info-box {
+    background: var(--accent-soft);
+    padding: 12px 14px; font-size: 13px;
+    border-radius: var(--r-md);
+    margin-bottom: 14px;
+    color: var(--label); line-height: 1.5;
+  }
+  .info-box.error { background: rgba(255, 59, 48, 0.1); color: #C62828; }
+  .info-box.success { background: rgba(52, 199, 89, 0.1); color: #1B5E20; }
+
+  /* === Result boxes (3 종 — 일반/라이브러리/벤치마크) === */
+  .result-box {
+    padding: 18px 20px; margin-bottom: 16px;
+    border-radius: var(--r-lg);
+    border-left: 4px solid var(--accent);
+    background: var(--accent-soft);
+  }
+  .result-box.result-general   { border-left-color: #5E5CE6; background: linear-gradient(135deg, rgba(94,92,230,0.10), rgba(10,132,255,0.06)); }
+  .result-box.result-library   { border-left-color: #34C759; background: rgba(52, 199, 89, 0.09); }
+  .result-box.result-benchmark { border-left-color: #FF9500; background: rgba(255, 149, 0, 0.09); }
+  .result-box-header {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 10px; margin-bottom: 8px; flex-wrap: wrap;
+  }
+  .result-box-title { font-size: 16px; font-weight: 700; letter-spacing: -0.2px; color: var(--label); }
+  .result-general   .result-box-title { color: #5E5CE6; }
+  .result-library   .result-box-title { color: #248A3D; }
+  .result-benchmark .result-box-title { color: #C25E00; }
+  .result-box-desc {
+    font-size: 12px; color: var(--label-secondary);
+    margin-bottom: 12px; line-height: 1.6;
+    display: flex; align-items: center; gap: 4px; flex-wrap: wrap;
+  }
+  .result-box-body {
+    background: transparent; padding: 2px 0 0; font-size: 13px;
+  }
+  .result-box-body:empty { display: none; }
+  .match-card {
+    padding: 12px 14px; margin-bottom: 8px;
+    background: var(--card-bg);
+    border-radius: var(--r-md);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 2px 8px rgba(0,0,0,0.03);
+    font-size: 12.5px;
+  }
+  .match-card:last-child { margin-bottom: 0; }
+  .match-card .match-headline { font-weight: 500; color: var(--label); margin-bottom: 4px; }
+  .match-card .match-meta { font-size: 11px; color: var(--label-tertiary); }
+  .match-empty {
+    padding: 12px; text-align: center; font-size: 12px;
+    color: var(--label-tertiary);
+  }
+
+  /* === Stats === */
+  .stats { display: flex; gap: 20px; font-size: 13px; color: var(--label-secondary); margin-bottom: 14px; flex-wrap: wrap; }
+  .stat-item strong { color: var(--accent); font-size: 16px; font-weight: 700; }
+
+  /* === Selection bar === */
+  .selection-bar {
+    position: sticky; bottom: 0; background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    padding: 12px 16px;
+    border: 1px solid var(--separator-opaque);
+    border-radius: var(--r-md);
+    margin-top: 12px;
+    display: flex; justify-content: space-between; align-items: center;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.04);
+  }
+  .selection-bar .count { font-size: 13px; color: var(--label-secondary); }
+
+  .loading { text-align: center; padding: 32px; color: var(--label-tertiary); font-size: 14px; }
+  .loading::after { content: '...'; animation: dots 1.5s steps(4) infinite; }
+  @keyframes dots { 0%,20% { content: ''; } 40% { content: '.'; } 60% { content: '..'; } 80%,100% { content: '...'; } }
+
+  /* === Micro-interactions (C-3) === */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.96); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  @keyframes slideUpToast {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .tab-panel.active { animation: fadeIn 240ms cubic-bezier(0.4, 0, 0.2, 1); }
+  .candidate { animation: fadeIn 220ms cubic-bezier(0.4, 0, 0.2, 1) backwards; }
+  .candidate:nth-child(1)  { animation-delay: 0ms; }
+  .candidate:nth-child(2)  { animation-delay: 30ms; }
+  .candidate:nth-child(3)  { animation-delay: 60ms; }
+  .candidate:nth-child(4)  { animation-delay: 90ms; }
+  .candidate:nth-child(5)  { animation-delay: 120ms; }
+  .candidate:nth-child(6)  { animation-delay: 150ms; }
+  .candidate:nth-child(7)  { animation-delay: 180ms; }
+  .candidate:nth-child(8)  { animation-delay: 210ms; }
+  .candidate:nth-child(n+9) { animation-delay: 240ms; }
+  .info-box { animation: fadeIn 200ms ease-out; }
+  .toast { animation: slideUpToast 260ms cubic-bezier(0.4, 0, 0.2, 1); }
+  section { animation: fadeIn 200ms ease-out; }
+
+  /* 사용자 모션 줄이기 환경 존중 */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* === API status pill === */
+  .api-status {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; font-weight: 500;
+    padding: 4px 10px; border-radius: 100px;
+  }
+  .api-status.connected { background: rgba(52, 199, 89, 0.15); color: #1B5E20; }
+  .api-status.disconnected { background: rgba(255, 59, 48, 0.15); color: #C62828; }
+  .api-status.checking { background: rgba(255, 149, 0, 0.15); color: #B25A00; }
+
+  /* === Code === */
+  code {
+    background: var(--secondary-bg);
+    padding: 2px 6px; border-radius: var(--r-sm);
+    font-family: 'SF Mono', Consolas, monospace;
+    font-size: 12px; color: var(--accent);
+  }
+
+  /* === Scrollbar === */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-thumb { background: rgba(118, 118, 128, 0.3); border-radius: 100px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(118, 118, 128, 0.5); }
+  ::-webkit-scrollbar-track { background: transparent; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>폰스팟 광고 소재 생성기 v11 <span style="font-size:12px; color:#86868b">+ 프리셋·페이지·양방향 sync</span></h1>
+  <div class="subtitle">카피 생성 → 카피 카드의 🎨 클릭 → 이미지 프롬프트 자동 생성/복사 → ChatGPT 4o</div>
+
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('copy')">📝 카피 생성</div>
+    <div class="tab" onclick="switchTab('library')">📚 라이브러리</div>
+    <div class="tab" onclick="switchTab('benchmark')">🎯 벤치마크</div>
+    <div class="tab" onclick="switchTab('settings')">⚙ 설정</div>
+  </div>
+
+  <!-- ========== TAB 1: 카피 생성 ========== -->
+  <div class="tab-panel active" id="panel-copy">
+    <section>
+      <h2>
+        <span>카피 입력 폼</span>
+        <button class="secondary small" onclick="randomFillCopy(true)">🎲 랜덤 + 즉시 생성</button>
+      </h2>
+      <!-- 그룹 1: 분류 · 타겟 -->
+      <div class="form-group">
+        <div class="form-group-header">🎯 분류 · 타겟</div>
+        <div class="grid-3">
+          <div>
+            <label>카테고리</label>
+            <select id="c-category">
+              <option>휴대폰</option>
+              <option>유심만</option>
+              <option>알뜰폰</option>
+              <option>중고폰</option>
+              <option>키즈폰</option>
+              <option>효도폰</option>
+              <option>공짜폰</option>
+              <option>인터넷</option>
+              <option>인터넷+TV</option>
+            </select>
+          </div>
+          <div>
+            <label>타겟 연령</label>
+            <select id="c-age">
+              <option>10대</option><option>20대</option><option>30대</option><option>40대</option><option>50대+</option><option selected>전 연령</option>
+            </select>
+          </div>
+          <div>
+            <label>타겟 성별</label>
+            <select id="c-gender">
+              <option>여성</option><option>남성</option><option selected>전체</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- 그룹 2: 컨텍스트 -->
+      <div class="form-group">
+        <div class="form-group-header">🗓 컨텍스트</div>
+        <div class="grid-3">
+          <div>
+            <label>시즌 · 이벤트</label>
+            <select id="c-season">
+              <option selected>시즌리스</option><option>봄</option><option>여름</option><option>가을</option><option>겨울</option>
+              <option>설</option><option>추석</option><option>블랙프라이데이</option><option>크리스마스</option><option>신학기</option>
+            </select>
+          </div>
+          <div>
+            <label>제품</label>
+            <input type="text" id="c-product" placeholder="아이폰15, 갤럭시 S24, 인터넷 500M...">
+          </div>
+          <div>
+            <label>길이 선호</label>
+            <select id="c-length">
+              <option value="짧게 10자 이내">짧게 (10자 이내)</option>
+              <option value="중간 15자 내외">중간 (15자 내외)</option>
+              <option value="길게 20-25자">길게 (20-25자)</option>
+              <option value="자유" selected>자유</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- 그룹 3: 카피 메시지 -->
+      <div class="form-group">
+        <div class="form-group-header">✍️ 카피 메시지</div>
+        <div class="form-stack">
+          <div>
+            <label>핵심 USP <span style="font-weight:400; color:var(--label-tertiary)">— 짧은 카피 문구, 템플릿 <code>{USP}</code> 슬롯 + LLM 반영</span></label>
+            <input type="text" id="c-usp" placeholder="1분 견적, 최저가 보장, 가격 조회 편리함...">
+          </div>
+          <div>
+            <label>톤 · 감정 <span style="font-weight:400; color:var(--label-tertiary)">— 다중 선택</span></label>
+            <div class="checkbox-group" id="c-tones">
+              <label><input type="checkbox" value="감성/공감"> 감성·공감</label>
+              <label><input type="checkbox" value="직설/강력"> 직설·강력</label>
+              <label><input type="checkbox" value="유머/B급"> 유머</label>
+              <label><input type="checkbox" value="정보성/신뢰"> 정보성·신뢰</label>
+              <label><input type="checkbox" value="미니멀/프리미엄"> 프리미엄</label>
+              <label><input type="checkbox" value="호기심"> 호기심</label>
+              <label><input type="checkbox" value="긴급/FOMO"> 긴급·FOMO</label>
+              <label><input type="checkbox" value="손실회피"> 손실회피</label>
+              <label><input type="checkbox" value="자부심"> 자부심</label>
+            </div>
+          </div>
+          <div>
+            <label>후킹 구조 <span style="font-weight:400; color:var(--label-tertiary)">— 문장 골격(정서 톤과 별개), 다중 선택 / 비우면 LLM 자유</span></label>
+            <div class="checkbox-group" id="c-hooks">
+              <label><input type="checkbox" value="질문형"> 질문형</label>
+              <label><input type="checkbox" value="단언형"> 단언형</label>
+              <label><input type="checkbox" value="비교형"> 비교형</label>
+              <label><input type="checkbox" value="한정형"> 한정형</label>
+              <label><input type="checkbox" value="가격강조"> 가격강조</label>
+              <label><input type="checkbox" value="감성/공감"> 감성·공감</label>
+              <label><input type="checkbox" value="위협형"> 위협형</label>
+              <label><input type="checkbox" value="FOMO형"> FOMO형</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 그룹 4: LLM 강조 (지역 + 신규 컨셉) -->
+      <div class="form-group form-group--accent">
+        <div class="form-group-header">✨ LLM 강조</div>
+        <div class="form-stack">
+          <div>
+            <label>지역 <span style="font-weight:400; color:var(--label-tertiary)">— 공백=전국 / "광교점" 등 매장명 자유 입력</span></label>
+            <input type="text" id="c-region" placeholder="예: 광교점 (공백이면 지역 고려 ❌, 전국용 카피)">
+          </div>
+          <div>
+            <label>신규 컨셉 <span style="font-weight:400; color:var(--label-tertiary)">— 추상 키워드 (선택)</span></label>
+            <input type="text" id="c-new-concept" placeholder="예: 휴대폰대란, 보상기변 3년차">
+          </div>
+        </div>
+        <div style="font-size:12px; color:var(--label-tertiary); margin-top:8px; line-height:1.5">
+          지역·신규 컨셉 = LLM 프롬프트에 박힘. 매칭은 지역 입력 시 시트 지역 매칭 광고 우선 + 전국 광고 폴백.
+        </div>
+      </div>
+
+      <!-- 그룹 5: 라이브러리 합류 옵션 (기본 OFF — 폼 값 기반 순수 템플릿만) -->
+      <div class="btn-row">
+        <button class="btn-large" onclick="generateAdCopyGuide()">광고 카피 가이드 생성</button>
+      </div>
+      <div class="btn-caption">
+        결과 3종: 🤖 일반 LLM 프롬프트 + ✨ 라이브러리 매칭 + 🎯 벤치마크 매칭. 카테고리 매칭이 없으면 일반만 표시.
+      </div>
+      <div class="btn-row" style="margin-top:10px">
+        <button class="secondary small" onclick="randomFillCopy(false)">🎲 랜덤 채우기</button>
+        <button class="btn-text small" onclick="resetAllForm()">전체 초기화</button>
+      </div>
+      <!-- D1: 폼 프리셋 저장 -->
+      <div style="margin-top:10px; padding:8px; background:#f5f5f7; border-radius:6px; display:flex; gap:6px; align-items:center; flex-wrap:wrap">
+        <span style="font-size:11px; font-weight:600">💾 프리셋:</span>
+        <select id="c-preset-select" style="flex:1; min-width:150px; font-size:12px" onchange="loadCopyPreset()"></select>
+        <input type="text" id="c-preset-name" placeholder="새 프리셋 이름" style="flex:1; min-width:120px; font-size:12px">
+        <button class="secondary small" onclick="saveCopyPreset()">저장</button>
+        <button class="danger small" onclick="deleteCopyPreset()">삭제</button>
+      </div>
+    </section>
+
+    <!-- 🔄 메타 비율 변환 (1:1 → 4:5/9:16/1.91:1) — 카피 결과 위에 배치 (스크롤 부담 X) -->
+    <section id="resize-section" class="hidden">
+      <h2>
+        <span>🔄 메타 비율 변환 (1:1 → 다른 비율)</span>
+      </h2>
+      <div class="info-box" style="background:#e8f5e9; border-left:3px solid #4caf50">
+        <strong>사용법</strong>: 🎨 이미지 버튼으로 1:1 영문 프롬프트 → ChatGPT 4o에 입력 → 1:1 이미지 받음 → 아래 비율 버튼 클릭(한글 재구성 프롬프트 복사) → ChatGPT에 <strong>1:1 이미지 첨부</strong> + 복사한 프롬프트 입력 → 비율별 이미지.
+      </div>
+      <div class="btn-row" style="gap:6px; flex-wrap:wrap">
+        <button onclick="copyResizePrompt('1:1')" style="flex:1; min-width:160px; padding:10px">
+          🟦 1:1 (1080×1080)<br>
+          <span style="font-size:10px; opacity:0.85; font-weight:400">피드 정사각형 / 영문 프롬프트</span>
+        </button>
+        <button onclick="copyResizePrompt('4:5')" style="flex:1; min-width:160px; padding:10px">
+          📱 4:5 (1080×1350)<br>
+          <span style="font-size:10px; opacity:0.85; font-weight:400">피드 세로형 / 한글 재구성</span>
+        </button>
+        <button onclick="copyResizePrompt('9:16')" style="flex:1; min-width:160px; padding:10px">
+          📲 9:16 (1080×1920)<br>
+          <span style="font-size:10px; opacity:0.85; font-weight:400">스토리/릴스 / 한글 재구성</span>
+        </button>
+        <button onclick="copyResizePrompt('1.91:1')" style="flex:1; min-width:160px; padding:10px">
+          🖼 1.91:1 (1200×628)<br>
+          <span style="font-size:10px; opacity:0.85; font-weight:400">링크 광고 / 한글 재구성</span>
+        </button>
+      </div>
+      <div style="margin-top:8px; padding:8px; background:#fff3e0; border-left:3px solid #ff9800; border-radius:4px; font-size:11px; color:#5d4e00">
+        ⚠️ <strong>한계</strong>: GPT 이미지 모델은 텍스트 재생성하므로 한글 철자 깨질 수 있음. 생성 후 원본과 대조 확인. <strong>픽셀 단위 보존</strong>이 필요하면 Figma/Canva에서 원본 요소 재배치 권장.
+      </div>
+    </section>
+
+    <section id="copy-results-section" class="hidden">
+      <h2>
+        <span>광고 카피 가이드 결과</span>
+        <span class="toggle" onclick="generateAdCopyGuide()">↻ 다시 생성</span>
+      </h2>
+
+      <!-- 🎲 랜덤 변주 (1순위, 항상 표시) — 코어 고정 / 톤·후킹 변주 -->
+      <div class="result-box result-general">
+        <div class="result-box-header">
+          <span class="result-box-title">🎲 랜덤 변주 — 코어 고정 / 톤·후킹 변주 8개</span>
+          <button class="secondary small" onclick="redrawVariations()">🎲 다시 뽑기</button>
+        </div>
+        <div class="result-box-desc">선택한 톤·후킹은 고정, 비운 축은 랜덤. 행마다 슬로건 / 이미지 프롬프트 복사.</div>
+        <div style="display:flex; gap:6px; align-items:center; margin-bottom:10px; flex-wrap:wrap">
+          <span style="font-size:12px; font-weight:600; white-space:nowrap">✍️ 슬로건→이미지:</span>
+          <input type="text" id="img-headline" placeholder="LLM에서 고른 헤드라인 붙여넣기 → 그 문구로 배너 이미지" style="flex:1; min-width:200px; font-size:12px; padding:8px 10px">
+          <button class="secondary small" onclick="copyImageWithHeadline()">🎨 이 슬로건으로 이미지 프롬프트</button>
+        </div>
+        <div id="result-variations-body" class="result-box-body"></div>
+      </div>
+
+      <!-- ✨ 추천 — 라이브러리 검증 매칭 (매칭 있을 때만 표시) -->
+      <div class="result-box result-library hidden" id="result-library-box">
+        <div class="result-box-header">
+          <span class="result-box-title">✨ 추천 — 라이브러리 검증 매칭</span>
+          <button class="secondary small" onclick="copyLibraryPrompt()">🖋️ 슬로건용 프롬프트 (매칭 박힘)</button>
+          <button class="secondary small" onclick="copyLibraryImagePrompt()">🎨 이미지생성용 프롬프트</button>
+        </div>
+        <div class="result-box-desc">
+          폼 카테고리 매칭 + 최소 CTR ≥ <input type="number" id="result-min-ctr" min="0" max="20" step="0.5" style="width:60px; padding:2px 6px" onchange="renderAdCopyGuide()">% · 매칭 시 검증된 톤·후킹이라 랜덤 변주 불필요
+        </div>
+        <div id="result-library-body" class="result-box-body"></div>
+      </div>
+
+      <!-- 🎯 추천 — 벤치마크 검증 매칭 (매칭 있을 때만) -->
+      <div class="result-box result-benchmark hidden" id="result-benchmark-box">
+        <div class="result-box-header">
+          <span class="result-box-title">🎯 추천 — 벤치마크 검증 매칭</span>
+          <button class="secondary small" onclick="copyBenchmarkPrompt()">🖋️ 슬로건용 프롬프트 (후킹 박힘)</button>
+          <button class="secondary small" onclick="copyBenchmarkImagePrompt()">🎨 이미지생성용 프롬프트</button>
+        </div>
+        <div class="result-box-desc">
+          폼 카테고리 매칭 + 운영 ≥ <input type="number" id="result-min-days" min="0" max="365" step="10" style="width:60px; padding:2px 6px" onchange="renderAdCopyGuide()">일
+          + 등급 ≥ <input type="number" id="result-min-grade" min="0" max="3" step="1" style="width:50px; padding:2px 6px" onchange="renderAdCopyGuide()">★
+        </div>
+        <div id="result-benchmark-body" class="result-box-body"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ========== TAB: 라이브러리 ========== -->
+  <div class="tab-panel" id="panel-library">
+    <section>
+      <h2>새 캠페인 저장</h2>
+      <div class="info-box">카피 탭에서 카드 클릭으로 선택 → 하단 "✓ 라이브러리용으로 설정" 클릭 → 여기에 활성 카피로 모임. 저장 시 카피 컨텍스트 기반 이미지 프롬프트 자동 생성·포함.</div>
+      <div>
+        <h3>활성 카피 (<span id="active-copy-count">0</span>)</h3>
+        <div id="active-copies" style="border:1px solid #d2d2d7; border-radius:8px; padding:8px; min-height:80px; max-height:200px; overflow-y:auto; font-size:12px;"></div>
+      </div>
+      <div style="margin-top:10px">
+        <label>운영 메모 (선택)</label>
+        <input type="text" id="lib-memo" placeholder="예: 2026 봄 시즌 / 신규 페이지 테스트">
+      </div>
+      <div class="btn-row">
+        <button onclick="saveToLibrary()">💾 라이브러리에 저장 (자동 채번)</button>
+        <select id="lib-id-prefix">
+          <option value="PS">PS (자체)</option>
+          <option value="BM">BM (벤치마크)</option>
+          <option value="CP">CP (경쟁사)</option>
+        </select>
+        <button class="secondary small" onclick="clearActive()">활성 비우기</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>📡 메타 자동 동기화 (Apps Script 연동)</h2>
+      <div id="meta-last-sync-info" style="font-size:12px; color:#5d4e00; background:#fff8e1; padding:6px 10px; border-radius:4px; margin-bottom:8px"></div>
+      <div class="info-box">옵션 A: Web App URL 한 번 등록 → "🔄 자동 갱신" 한 클릭으로 끝. 옵션 B: 수동 JSON 붙여넣기.</div>
+
+      <h3>옵션 A. 자동 갱신 (Web App 환경 자동 감지)</h3>
+      <div id="meta-webapp-detected" style="font-size:12px; color:#2e7d32; margin-bottom:6px; display:none">
+        ✅ Apps Script Web App 환경 감지됨 — 시트 직접 호출 가능 (URL/Secret 불필요)
+      </div>
+      <div id="meta-webapp-fallback" style="display:none">
+        <div style="display:grid; grid-template-columns:1fr; gap:6px">
+          <input type="text" id="meta-webapp-url" placeholder="Web App URL (외부 환경에서만 필요)">
+          <input type="password" id="meta-webapp-secret" placeholder="Secret (외부 환경에서만 필요)">
+        </div>
+      </div>
+      <div class="btn-row">
+        <button onclick="fetchMetaAuto()">🔄 시트에서 자동 갱신</button>
+        <button class="secondary small" onclick="saveWebAppUrl()" id="save-webapp-btn" style="display:none">💾 URL/Secret 저장</button>
+      </div>
+      <div id="meta-fetch-status" style="font-size:12px; color:#86868b; margin-top:6px"></div>
+
+      <h3 style="margin-top:14px">옵션 B. 수동 JSON 붙여넣기</h3>
+      <textarea id="meta-import-json" placeholder='[{"id":"PS-001","metaAdId":"...","headline":"...","ctr":5.5,...}]' style="width:100%; height:60px; font-family:monospace; font-size:11px;"></textarea>
+      <div class="btn-row">
+        <button class="secondary" onclick="importFromMetaJSON()">📥 JSON 수동 import</button>
+        <span id="meta-import-stats" style="font-size:12px; color:#86868b; margin-left:8px"></span>
+      </div>
+
+      <div id="meta-pattern-insights" style="margin-top:10px"></div>
+    </section>
+
+    <section>
+      <h2>
+        <span>적재된 캠페인</span>
+        <span class="toggle" onclick="toggle('library-body')">접기/펼치기</span>
+      </h2>
+      <div id="library-body">
+        <div class="stats" id="library-stats"></div>
+        <div class="btn-row" style="margin-bottom:12px">
+          <button class="secondary small" onclick="exportLibrary()">📤 JSON 내보내기 (백업)</button>
+          <button class="secondary small" onclick="document.getElementById('import-file').click()">📥 JSON 가져오기</button>
+          <input type="file" id="import-file" accept=".json" style="display:none" onchange="importLibrary(event)">
+          <button class="secondary small" onclick="pushLibraryToSheet()">📤 시트로 push (광고_라이브러리)</button>
+          <input type="text" id="library-filter" placeholder="🔍 ID/헤드라인 검색" style="font-size:12px; padding:4px 8px; flex:1; min-width:120px" oninput="renderLibrary()">
+          <button class="danger small" onclick="clearLibrary()">🗑 전체 삭제</button>
+        </div>
+        <table class="library-table">
+          <thead>
+            <tr>
+              <th>ID</th><th>날짜</th><th>이미지</th><th>헤드라인</th><th>CTR</th><th>지출</th><th>평가</th><th></th>
+            </tr>
+          </thead>
+          <tbody id="library-rows"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <!-- ========== TAB: 벤치마크 ========== -->
+  <div class="tab-panel" id="panel-benchmark">
+    <section>
+      <h2>
+        <span>🎯 벤치마크 — 경쟁사 메타 광고 자동 수집</span>
+        <span style="font-size:11px; color:#86868b; font-weight:400">Apify Meta Ad Library</span>
+      </h2>
+      <div class="info-box" style="background:#fff9c4; border-left:3px solid #fbc02d">
+        <strong>간접 성과 점수화</strong>: 메타는 CTR/지출 비공개. 대신 ① 운영일수 ② 노출채널 수 ③ 광고 변형 수로 ★등급. 90일+ 운영 + 다채널 = ★★★ 검증됨 (실제로 잘 굴러가는 광고).
+        비용: 광고 1개 = $0.00075 (≈ 1원). 30개 검색 ≈ 30원.
+      </div>
+
+      <div class="grid-3" style="margin-top:10px">
+        <div>
+          <label>검색 키워드</label>
+          <input type="text" id="bm-keyword" placeholder="예: 휴대폰성지, 갤럭시 S26 자급제, 통신비 절약" value="휴대폰성지">
+        </div>
+        <div>
+          <label>국가 (ISO 코드)</label>
+          <input type="text" id="bm-country" placeholder="KR" value="KR" maxlength="2" style="text-transform:uppercase">
+        </div>
+        <div>
+          <label>광고 수 (1~200)</label>
+          <input type="number" id="bm-count" value="20" min="1" max="200">
+        </div>
+      </div>
+      <div class="btn-row" style="margin-top:10px; gap:6px">
+        <button onclick="searchBenchmark()" style="flex:1; padding:10px; font-weight:600">🔍 Apify 검색 + 결과 미리보기</button>
+        <button class="secondary" onclick="loadBenchmarkFromSheet()">📚 시트 누적분 로드</button>
+        <button class="secondary" onclick="openBenchmarkSheet()" title="시트 새 탭으로 열기">📂 시트 직접 열기</button>
+      </div>
+      <div id="bm-status" style="margin-top:8px; font-size:11px; color:#86868b"></div>
+    </section>
+
+    <section>
+      <h2>
+        <span>
+          <span id="bm-mode-badge"></span>
+          결과 <span id="bm-result-count">0</span>건
+        </span>
+        <span id="bm-result-actions" style="display:flex; gap:6px">
+          <button class="small secondary" onclick="bmSelectAll(true)">전체 선택</button>
+          <button class="small secondary" onclick="bmSelectAll(false)">선택 해제</button>
+          <button class="small" onclick="saveBenchmarkSelected()">💾 선택 시트 저장</button>
+        </span>
+      </h2>
+      <div id="bm-results" style="display:flex; flex-direction:column; gap:8px"></div>
+    </section>
+
+    <section>
+      <h2>📊 디자인 패턴 자동 분석</h2>
+      <div class="info-box">선택 (또는 전체) 광고 기준 자동 통계: 광고 형식 / 노출 채널 / CTA / 페이지별 분포 / 후킹 키워드 / 평균 운영일수.</div>
+      <div id="bm-analysis" style="font-size:12px"></div>
+    </section>
+  </div>
+
+  <!-- ========== TAB: 설정 ========== -->
+  <div class="tab-panel" id="panel-settings">
+    <section>
+      <h2>패턴 풀 정보</h2>
+      <div class="info-box">템플릿 모드는 코드에 박제된 <strong id="pattern-pool-count">60+</strong>개 패턴 풀에서 매번 20개 랜덤 픽 + 슬롯 변수(숫자/행동/혜택/타겟 등) 랜덤 채움. 더 다양한 카피가 필요하면 카피 생성 모드를 "🤖 Claude 챗 모드"로 변경.</div>
+      <div style="font-size:12px; color:#86868b">패턴 추가/수정은 HTML 파일 직접 편집으로 가능 (CATALOG.copyPatterns 배열).</div>
+    </section>
+
+    <section>
+      <h2>데이터 백업/복원</h2>
+      <div class="info-box">localStorage는 브라우저별 저장. 캐시 삭제 시 날아가므로 주기적 백업 권장.</div>
+      <div class="btn-row">
+        <button class="secondary" onclick="exportLibrary()">📤 라이브러리 JSON 내보내기</button>
+        <button class="secondary" onclick="document.getElementById('import-file-2').click()">📥 라이브러리 JSON 가져오기</button>
+        <input type="file" id="import-file-2" accept=".json" style="display:none" onchange="importLibrary(event)">
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+// ============ 카탈로그 ============
+const CATALOG = {
+  copyPatterns: [
+    // 질문형 + 손실회피 (5)
+    { name: '질문형+손실회피', template: '{제품} 가격 안 보면 손해?' },
+    { name: '질문형+손실회피', template: '{제품} {연결1} 사면 후회?' },
+    { name: '질문형+손실회피', template: '아직도 {제품} 비싸게 사세요?' },
+    { name: '질문형+손실회피', template: '{제품} 비교 없이 결정하시나요?' },
+    { name: '질문형+손실회피', template: '{제품}, 정말 그 가격이 맞나요?' },
+    // 수치형 + 베네핏 (6)
+    { name: '수치형+베네핏', template: '{숫자}{단위}만에 {행동}까지!' },
+    { name: '수치형+베네핏', template: '단 {숫자}{단위}, {행동} 끝' },
+    { name: '수치형+베네핏', template: '{숫자}{단위}면 {제품} 견적 완성' },
+    { name: '수치형+베네핏', template: '{혜택} 최대 {숫자}%' },
+    { name: '수치형+베네핏', template: '{숫자}원 차이가 이렇게 큽니다' },
+    { name: '수치형+베네핏', template: '{N}명 검증, {숫자}{단위} 컷' },
+    // 비교형 (4)
+    { name: '비교형', template: '온라인 vs 오프라인, 진짜 {제품} 가격은?' },
+    { name: '비교형', template: '대리점 vs 폰스팟, 차이는?' },
+    { name: '비교형', template: '{제품}, 어디서 사야 진짜 싸요?' },
+    { name: '비교형', template: '같은 {제품}인데 가격이 왜 다를까?' },
+    // FOMO + 긴급 (5)
+    { name: 'FOMO+긴급', template: '오늘만 {혜택}!' },
+    { name: 'FOMO+긴급', template: '오늘 안 보면 내일은 늦어요' },
+    { name: 'FOMO+긴급', template: '{기간} 한정 {혜택}' },
+    { name: 'FOMO+긴급', template: '곧 마감, {행동}' },
+    { name: 'FOMO+긴급', template: '{날짜}까지만 가능합니다' },
+    // 사회적 증명 (4)
+    { name: '사회적증명', template: '{N}명이 선택한 {USP}' },
+    { name: '사회적증명', template: '{N}명 후기 평균 {등급}점' },
+    { name: '사회적증명', template: '{타겟} {N}명이 여기로 옮겼습니다' },
+    { name: '사회적증명', template: '월 {N}명 다녀가는 곳' },
+    // 호기심 (5)
+    { name: '호기심', template: '{타겟}만 아는 {제품} {비밀}' },
+    { name: '호기심', template: '{타겟}이 여기서 {제품} 사는 이유' },
+    { name: '호기심', template: '{제품} 사기 전, 꼭 봐야 할 {것}' },
+    { name: '호기심', template: '왜 {타겟}은 대리점을 안 갈까?' },
+    { name: '호기심', template: '{제품} 가격, 진짜는 따로 있다' },
+    // 단언형 (4)
+    { name: '단언형', template: '{제품}, 이게 진짜 가격이다' },
+    { name: '단언형', template: '{제품}은 여기가 진리' },
+    { name: '단언형', template: '{제품}, 결정의 순간' },
+    { name: '단언형', template: '{타겟}이라면 무조건 여기' },
+    // 스토리형 (3)
+    { name: '스토리형', template: '{제품} 바꾸려다 가격 보고 놀란 이유' },
+    { name: '스토리형', template: '{타겟}이 폰 바꾼 후 후회 없는 이유' },
+    { name: '스토리형', template: '대리점 갔다가 폰스팟으로 온 사람들' },
+    // 명령형 + 긴급 (3)
+    { name: '명령형+긴급', template: '지금 {행동}하세요' },
+    { name: '명령형+긴급', template: '{기간} 안에 {행동}' },
+    { name: '명령형+긴급', template: '늦기 전에 {행동}' },
+    // 진단형 (3)
+    { name: '진단형', template: '혹시 {제품} 비싸게 사셨나요?' },
+    { name: '진단형', template: '{고민} 있으세요?' },
+    { name: '진단형', template: '{타겟}, 이거 모르면 손해' },
+    // 권위형 (3)
+    { name: '권위형', template: '폰스팟이 인정한 진짜 {제품} 가격' },
+    { name: '권위형', template: '전문가가 권하는 {제품} 구매처' },
+    { name: '권위형', template: '{N}년 노하우로 잡은 가격' },
+    // 결과지향 (3)
+    { name: '결과지향', template: '{행동} 하나로 {혜택}' },
+    { name: '결과지향', template: '클릭 한 번, {결과}' },
+    { name: '결과지향', template: '{행동}만 하면 {혜택}' },
+    // 대조 + 선택 (3)
+    { name: '대조+선택', template: '대리점 말고 폰스팟에서 {행동}' },
+    { name: '대조+선택', template: '비싼 곳 말고, 진짜 가격 보이는 곳' },
+    { name: '대조+선택', template: '{제품} 살 곳, 두 번 고민하지 마세요' },
+    // 감정 + 공감 (4)
+    { name: '감정+공감', template: '{제품} 가격 비교 스트레스, 이제 끝' },
+    { name: '감정+공감', template: '{고민}, 5분이면 해결' },
+    { name: '감정+공감', template: '폰 바꿀 때 {걱정} 끝' },
+    { name: '감정+공감', template: '{타겟}의 폰 고민, 여기서 풀자' },
+    // 한정형 (2)
+    { name: '한정형', template: '오늘만 {제품} {혜택}' },
+    { name: '한정형', template: '{날짜}까지만 {혜택}' },
+    // 가격조회 특화 (4)
+    { name: '가격조회', template: '내 {제품} 진짜 가격은?' },
+    { name: '가격조회', template: '{제품} 가격, {숫자}{단위}이면 보입니다' },
+    { name: '가격조회', template: '내가 사려는 {제품}, 얼마면 살까?' },
+    { name: '가격조회', template: '지원금 포함 {제품} 가격 즉시 확인' },
+    // 후기 + 신뢰 (3)
+    { name: '후기+신뢰', template: '{N}명이 인정한 {USP}' },
+    { name: '후기+신뢰', template: '{타겟} {N}명 추천' },
+    { name: '후기+신뢰', template: '평점 {등급}, {N}명의 선택' },
+    // 부정 + 반전 (3)
+    { name: '부정+반전', template: '{제품} 비싸다? 아닙니다' },
+    { name: '부정+반전', template: '대리점이 정답? 글쎄요' },
+    { name: '부정+반전', template: '폰 가격, 다 똑같지 않습니다' },
+    // 약속/제안형 (3)
+    { name: '약속형', template: '{제품}, 이 가격이 마지노선' },
+    { name: '제안형', template: '{제품}, 이렇게 사세요' },
+    { name: '경고형', template: '대리점에서 {제품} 사면 후회합니다' },
+    // ===== 타겟 호명 패턴 (타겟 슬롯 활용) =====
+    { name: '단언형',     template: '{타겟어}가 선택한 {제품}' },
+    { name: '단언형',     template: '{타겟어}라면 여기' },
+    { name: '호기심',     template: '{타겟어}이 여기서 {제품} 사는 이유' },
+    { name: '제안형',     template: '{타겟어}에게 추천하는 {USP}' },
+    { name: '진단형',     template: '{타겟어}, 이거 모르면 진짜 손해' },
+    { name: '감정+공감', template: '바쁜 {타겟어}, 이렇게 해결하세요' },
+    { name: '권위형',     template: '{타겟어}이 인정한 {제품} 진짜 가격' },
+    // ===== 감정어 패턴 (감정 슬롯 활용) =====
+    { name: '호기심',         template: '{감정어} {제품} {비밀}' },
+    { name: '단언형',         template: '{감정어} 선택, {제품}' },
+    { name: '질문형+손실회피', template: '{감정어}? {제품} 가격 확인하세요' },
+    { name: '약속형',         template: '{감정어}, 지금 {USP}' },
+    { name: '감정+공감',      template: '{감정어}, {USP}로 해결' },
+    // ===== 키워드 패턴 (사용자 입력 키워드 활용) =====
+    { name: '호기심',         template: '{키워드}이라면 꼭 봐야 할 {제품}' },
+    { name: '감정+공감',      template: '{키워드}들의 {USP}' },
+    { name: '제안형',         template: '{키워드}을 위한 {제품}' },
+    { name: '단언형',         template: '{키워드}, 이게 정답입니다' },
+    // ============ 인터넷 · 인터넷+TV 전용 패턴 (2026-06-12 D) ============
+    // categories 메타로 카테고리 매칭 시에만 풀에 들어감
+    { name: '결합할인',       template: '인터넷+휴대폰 묶으면 월 {숫자}만원', categories: ['인터넷','인터넷+TV'] },
+    { name: '결합할인',       template: '결합 시 통신비 매월 {숫자}만원 절약', categories: ['인터넷','인터넷+TV'] },
+    { name: '위약금대납',     template: '이전 회선 위약금 {숫자}만원 대납', categories: ['인터넷','인터넷+TV'] },
+    { name: '위약금대납',     template: '위약금 부담 없이 갈아타기 {USP}', categories: ['인터넷','인터넷+TV'] },
+    { name: '사은품강조',     template: '인터넷 가입하면 {혜택} 무료', categories: ['인터넷','인터넷+TV'] },
+    { name: '사은품강조',     template: '신규 가입 + {혜택} 즉시 지급', categories: ['인터넷','인터넷+TV'] },
+    { name: '속도자랑',       template: '{숫자}Gbps 인터넷 + 와이파이 {혜택}', categories: ['인터넷','인터넷+TV'] },
+    { name: '속도자랑',       template: '광랜 {숫자}Mbps, 끊김 없는 스트리밍', categories: ['인터넷','인터넷+TV'] },
+    { name: '견적비교',       template: '24개월 총 비용 비교, 진짜 싼 곳', categories: ['인터넷','인터넷+TV'] },
+    { name: '견적비교',       template: '월 요금 {USP}, 1분 만에 확인', categories: ['인터넷','인터넷+TV'] },
+    { name: '설치당일',       template: '신청하면 당일 설치 가능', categories: ['인터넷','인터넷+TV'] },
+    { name: '설치당일',       template: '예약 후 {숫자}일 안에 설치 완료', categories: ['인터넷','인터넷+TV'] },
+    { name: '이사할인',       template: '이사 시 인터넷 옮기면 {혜택}', categories: ['인터넷','인터넷+TV'] },
+    { name: '신혼특가',       template: '신혼부부 인터넷+TV 묶음 특가', categories: ['인터넷','인터넷+TV'] },
+    { name: '자영업견적',     template: '자영업자 인터넷 견적, 1분 확인', categories: ['인터넷','인터넷+TV'] },
+    { name: '통신사비교',     template: 'KT vs SK vs U+, 진짜 싼 곳은?', categories: ['인터넷','인터넷+TV'] },
+    { name: '약정만료',       template: '약정 만료 됐다면 위약금 없이 변경', categories: ['인터넷','인터넷+TV'] },
+    { name: 'TV채널혜택',     template: '인터넷+TV {숫자}채널, 월 {숫자}만원', categories: ['인터넷+TV'] },
+    { name: 'IPTV프리미엄',   template: 'IPTV 프리미엄 채널 {혜택}', categories: ['인터넷+TV'] },
+    { name: '셋톱박스무료',   template: '셋톱박스 무료 설치 + {혜택}', categories: ['인터넷+TV'] },
+    { name: '월요금절약',     template: '인터넷+TV 월 {숫자}만원 절약', categories: ['인터넷+TV'] },
+    { name: '결합최저가',     template: '인터넷+TV 결합, 진짜 최저가 비교', categories: ['인터넷','인터넷+TV'] },
+    { name: '인터넷속도진단', template: '내 집 인터넷 속도 1분 진단', categories: ['인터넷','인터넷+TV'] },
+    { name: '재계약혜택',     template: '재계약 시 {혜택} 다시 받기', categories: ['인터넷','인터넷+TV'] },
+    { name: '와이파이속도',   template: '와이파이 5G 빠르게, 끊김 X', categories: ['인터넷','인터넷+TV'] },
+    { name: '비교형',         template: '같은 인터넷인데 가격이 왜 다를까?', categories: ['인터넷','인터넷+TV'] },
+    { name: '질문형+손실회피', template: '인터넷 위약금 그대로 내고 계세요?', categories: ['인터넷','인터넷+TV'] },
+    { name: '결과지향',       template: '클릭 한 번으로 인터넷 견적 확인', categories: ['인터넷','인터넷+TV'] }
+  ],
+  tones: {
+    // 시즌리스 - 모든 톤 bgDesc는 시즌 모티브 없이 중립적으로 작성
+    '감성_봄': { label: '감성/부드러움', palette: ['#F9D5DC','#2B3142','#5BAE5B','#F4A6B8'], paletteRoles: ['배경','헤드라인','CTA','강조'], mood: 'soft, gentle, warm, friendly', bgDesc: 'soft pastel pink to cream gradient background, smooth and clean', layouts: ['vertical-stacked','centered-product'] },
+    '직설_강력': { label: '직설/강력', palette: ['#6B5E8A','#FFE873','#3A2F5C','#A89BC4'], paletteRoles: ['배경','헤드라인','그림자','그라데이션'], mood: 'bold, direct, high-impact, urgent', bgDesc: 'deep purple to lavender vertical gradient background, dramatic and clean', layouts: ['vertical-stacked','full-bleed-product'] },
+    '미니멀_프리미엄': { label: '미니멀/프리미엄', palette: ['#0A0A0A','#FFFFFF','#FFD700','#86868b'], paletteRoles: ['배경','텍스트','강조','서브'], mood: 'minimal, premium, clean, sophisticated', bgDesc: 'pure black background with subtle gradient', layouts: ['centered-product','full-bleed-product'] },
+    '정보_신뢰': { label: '정보성/신뢰', palette: ['#1B2845','#F5F5F5','#FF6B35','#4A5680'], paletteRoles: ['배경','카드','강조','서브'], mood: 'trustworthy, informative, structured, professional', bgDesc: 'navy blue background with light gray accent zones', layouts: ['hero-with-callouts','horizontal-split'] },
+    '유머_B급': { label: '유머/B급', palette: ['#FFE600','#000000','#FF1744','#00BCD4'], paletteRoles: ['배경','텍스트','강조','포인트'], mood: 'playful, humorous, bold, eye-catching', bgDesc: 'vivid yellow background with comic-style bold graphic elements', layouts: ['collage-multi','centered-product'] },
+    '시즌_여름': { label: '시즌/여름', palette: ['#00BCD4','#B2EBF2','#FFFFFF','#FF6F00'], paletteRoles: ['배경','그라데이션','텍스트','CTA'], mood: 'cool, refreshing, summer, vibrant', bgDesc: 'cyan to mint gradient background with subtle water droplet motifs in corners', layouts: ['full-bleed-product','vertical-stacked'] },
+    '시즌_가을': { label: '시즌/가을', palette: ['#C9A227','#4A3728','#FFF8E1','#8B4513'], paletteRoles: ['배경','텍스트','하이라이트','강조'], mood: 'warm, autumn, cozy, earthy', bgDesc: 'warm mustard background with subtle autumn leaf motifs in corners', layouts: ['vertical-stacked','horizontal-split'] },
+    '시즌_겨울': { label: '시즌/겨울', palette: ['#0A2E5C','#FFFFFF','#C2185B','#90A4AE'], paletteRoles: ['배경','텍스트','강조','서브'], mood: 'cool, winter, holiday, elegant', bgDesc: 'deep navy background with subtle snowflake motifs in corners', layouts: ['centered-product','collage-multi'] }
+  },
+  // 시즌별 추가 모티브 (시즌리스면 추가 안 함)
+  seasonalAccents: {
+    '봄': 'Add subtle cherry blossom petals scattered in the corners as a seasonal accent.',
+    '여름': 'Add subtle water droplet or wave motifs as a seasonal accent.',
+    '가을': 'Add subtle autumn leaf motifs as a seasonal accent.',
+    '겨울': 'Add subtle snowflake motifs as a seasonal accent.',
+    '크리스마스': 'Add subtle Christmas-themed elements (snowflakes, pine needles, soft lights) as a seasonal accent.',
+    '설': 'Add subtle traditional Korean Lunar New Year motifs (subtle traditional patterns) as a seasonal accent.',
+    '추석': 'Add subtle full moon and Korean Chuseok-themed elements as a seasonal accent.',
+    '블랙프라이데이': 'Add subtle bold sale-related visual cues (red/black accents, urgency feel) as a seasonal accent.',
+    '신학기': 'Add subtle back-to-school visual cues as a seasonal accent.'
+  },
+  layouts: {
+    'vertical-stacked': '헤드라인 상단/제품 중앙/CTA 하단',
+    'horizontal-split': '좌측 텍스트/우측 제품',
+    'centered-product': '제품 중앙 + 텍스트 둘러싸기',
+    'full-bleed-product': '제품 풀화면 + 텍스트 오버레이',
+    'collage-multi': '제품 콜라주',
+    'hero-with-callouts': '제품 1개 + 포인트 박스'
+  },
+  layoutEnDesc: {
+    'vertical-stacked': 'vertical stacked layout with headline area at top, product in center, CTA area at bottom',
+    'horizontal-split': 'horizontal split layout with text area on left and product on right',
+    'centered-product': 'product centered with text wrapping around it',
+    'full-bleed-product': 'product filling the entire frame with text overlay',
+    'collage-multi': 'collage layout with multiple products arranged dynamically',
+    'hero-with-callouts': 'single hero product with surrounding callout boxes'
+  },
+  // 패턴 → 비주얼 톤 매핑 (패턴이 시즌·톤 입력보다 우선)
+  patternToTone: {
+    '질문형+손실회피': '직설_강력',
+    '수치형+베네핏':   '직설_강력',
+    '비교형':           '정보_신뢰',
+    'FOMO+긴급':        '직설_강력',
+    '사회적증명':       '정보_신뢰',
+    '호기심':           '미니멀_프리미엄',
+    '단언형':           '미니멀_프리미엄',
+    '스토리형':         '감성_봄',
+    '명령형+긴급':      '직설_강력',
+    '진단형':           '정보_신뢰',
+    '권위형':           '미니멀_프리미엄',
+    '결과지향':         '정보_신뢰',
+    '대조+선택':        '직설_강력',
+    '감정+공감':        '감성_봄',
+    '한정형':           '직설_강력',
+    '가격조회':         '정보_신뢰',
+    '후기+신뢰':        '정보_신뢰',
+    '부정+반전':        '직설_강력',
+    '약속형':           '미니멀_프리미엄',
+    '제안형':           '미니멀_프리미엄',
+    '경고형':           '직설_강력',
+    '시간단축':         '직설_강력'
+  },
+  // 패턴 → 시각 컨셉 힌트 (구체적 컴포지션 명시)
+  patternVisualHint: {
+    '질문형+손실회피': 'Composition: smartphone featured with subtle dramatic side-lighting. Add a faint visual hint of stakes or consequence - perhaps a slightly darkened backdrop or a single contrasting element. The product feels like a critical decision moment.',
+    '수치형+베네핏':   'Composition: clean dynamic layout suggesting speed - subtle motion blur lines or kinetic energy elements around the product. The smartphone feels fast and effortless to obtain.',
+    '비교형':           'Composition: split-screen layout. Left half shows a dim, cluttered, generic mobile carrier shop atmosphere (vague store signage silhouette, fluorescent lighting feel, slightly chaotic). Right half shows a clean bright modern setting with the smartphone prominently featured under spotlight. Clear visual contrast between the two zones.',
+    'FOMO+긴급':        'Composition: dynamic angled product shot with warm urgent color accents (red/orange highlights, bursts of light). Add subtle clock or motion indicator. Sense of time pressure.',
+    '사회적증명':       'Composition: multiple smartphones grouped confidently in the frame, or product centered with subtle review-star/checkmark hint elements (no actual text). Sense of widespread choice.',
+    '호기심':           'Composition: smartphone partially obscured by light/shadow, or revealed from behind a curtain-like visual element. Mystery and intrigue.',
+    '단언형':           'Composition: bold centered hero shot of the smartphone, dramatic spotlight from above, premium dark backdrop. Product as the definitive answer, no ambiguity.',
+    '스토리형':         'Composition: smartphone in a relatable everyday context with slight before/after or transformation hint. Warmer lighting.',
+    '명령형+긴급':      'Composition: bold centered composition with strong directional cue (arrow shape in lighting, leading lines). The smartphone is the clear focal point demanding action.',
+    '진단형':           'Composition: extreme close-up of smartphone detail, magnifying-glass style framing, like uncovering hidden truth.',
+    '권위형':           'Composition: spotlit smartphone on dark dramatic background, professional museum/showroom feel. Convey expert authority.',
+    '결과지향':         'Composition: clean minimal composition with smartphone as the clear outcome. Transparent reveal-style framing.',
+    '대조+선택':        'Composition: two visual zones in the frame. One side (e.g., left) dim and dismissed - hints of generic offline carrier shop or rejected alternative (vague shop sign, dimmer lighting). Other side (e.g., right) bright and chosen - the smartphone prominently featured. Directional choice clearly communicated.',
+    '감정+공감':        'Composition: warm soft lighting, intimate close-up framing of the smartphone. Comforting atmosphere. (Note: no human figures - convey emotion through staging and lighting.)',
+    '한정형':           'Composition: smartphone with premium scarcity feel - perhaps subtle vault/case elements, single spotlight, exclusive aura.',
+    '가격조회':         'Composition: smartphone partially behind a transparent veil/curtain that is being pulled back to reveal it. Sense of price/truth being unveiled instantly.',
+    '후기+신뢰':        'Composition: smartphone grounded in a stable centered composition with subtle star/checkmark/badge visual hints (no actual text). Validated and trusted feel.',
+    '부정+반전':        'Composition: smartphone featured prominently and confidently in the foreground/center. In the background, a smaller dimmed/grayed-out generic mobile carrier shop element (faint silhouette of a typical offline shop signage or storefront) that is being implicitly rejected. Cool tones, slight dramatic lighting. The visual says "actually, no - this is the better way". AVOID any soft, cute, feminine, or floral decorative elements.',
+    '약속형':           'Composition: smartphone in solid grounded composition, decisive premium feel. Like a final commitment.',
+    '제안형':           'Composition: smartphone displayed with subtle directional cue (arrow, hand-pointer light, leading line) suggesting "this way". Confident expert recommendation feel.',
+    '경고형':           'Composition: smartphone with slightly alert atmosphere - sharper shadows, attention-grabbing color accent. Warning mood without being scary.',
+    '시간단축':         'Composition: kinetic motion feel around the smartphone, time-saving implied through speed-line or stopwatch-style visual cues (no actual text/numbers).'
+  }
+};
+
+const SLOT_VALUES = {
+  '숫자': ['1','3','5','10','30','50','99'],
+  '단위': ['초','분'],
+  '행동': ['가격 조회','견적 받기','주문','비교','확인','신청','체크','검색'],
+  '혜택': ['최저가','추가 할인','무료 배송','즉시 발송','사은품','카드 캐시백','적립금'],
+  'N': ['10,000','50,000','100,000','12만','25만','30만'],
+  '타겟': ['MZ','직장인','학생','주부','30대','신규고객','알뜰족','효도자녀','자취생'],
+  '연결1': ['모르고','확인 안 하고','비교 없이','그냥'],
+  '비밀': ['비밀','꿀팁','진짜 가격','노하우','진실'],
+  '기간': ['오늘만','이번 주만','단 3일','24시간'],
+  '고민': ['폰 가격 비교','어디서 살지','지원금 계산','요금제 선택'],
+  '걱정': ['속을까봐','비쌀까봐','복잡할까봐','후회할까봐'],
+  '결과': ['최저가 발견','진짜 가격 확인','시간 절약','지원금 풀반영'],
+  '등급': ['4.9','5.0','4.8'],
+  '날짜': ['이번 주말','월말','오늘 자정','내일 자정'],
+  '것': ['리스트','체크포인트','숨은 비용','함정']
+};
+
+// 감정별 감정어 (카피 톤에 직접 반영)
+const EMOTION_WORDS = {
+  '불안/손실회피': ['놓치면 손해','늦으면 후회','모르면 큰일','지금 안 보면 위험'],
+  '호기심':         ['진짜','숨겨진','아무도 모르는','뜻밖의'],
+  '자부심/우월감': ['똑똑한 선택','아는 사람만 가는','진짜는 여기','센스 있는'],
+  '안심/신뢰':     ['걱정 마세요','편하게','안심하고','믿고 맡기는'],
+  '긴급/FOMO':     ['지금 당장','오늘만','마지막 기회','곧 마감'],
+  '공감/위로':     ['이해해요','다 그래요','괜찮아요','쉽지 않죠'],
+  '유머/재미':     ['뜻밖에','어이없게','진짜요?','웃기지만']
+};
+
+// 타겟 연령·성별 → 호명 가능한 단어
+const TARGET_WORDS = {
+  '10대':    ['10대','학생','중고생'],
+  '20대':    ['20대','MZ','청춘'],
+  '30대':    ['30대','직장인','바쁜 분'],
+  '40대':    ['40대','효도자녀','중년'],
+  '50대+':   ['시니어','어르신','50대 이상'],
+  '전 연령': ['모든 분','누구나'],
+  '여성':    ['여성','주부','엄마'],
+  '남성':    ['남성','아빠'],
+  '전체':    ['누구나','모두']
+};
+
+// 패턴 → 톤·감정 매칭 (2026-06-12 통합 9개 키로 정규화)
+// 값: ctx.tones (다중 체크박스) 와 매칭 시 패턴 가중치 ↑
+const PATTERN_EMOTION = {
+  '질문형+손실회피': ['손실회피','호기심'],
+  '수치형+베네핏':   ['긴급/FOMO','정보성/신뢰'],
+  '비교형':           ['호기심','직설/강력'],
+  'FOMO+긴급':        ['긴급/FOMO','손실회피'],
+  '사회적증명':       ['정보성/신뢰'],
+  '호기심':           ['호기심'],
+  '단언형':           ['자부심','직설/강력'],
+  '스토리형':         ['감성/공감'],
+  '명령형+긴급':      ['긴급/FOMO','직설/강력'],
+  '진단형':           ['정보성/신뢰','손실회피'],
+  '권위형':           ['정보성/신뢰','자부심','직설/강력'],
+  '결과지향':         ['정보성/신뢰','직설/강력'],
+  '대조+선택':        ['호기심','자부심'],
+  '감정+공감':        ['감성/공감'],
+  '한정형':           ['긴급/FOMO'],
+  '가격조회':         ['정보성/신뢰','호기심'],
+  '후기+신뢰':        ['정보성/신뢰','감성/공감'],
+  '부정+반전':        ['호기심','자부심','유머/B급'],
+  '약속형':           ['정보성/신뢰','자부심'],
+  '제안형':           ['정보성/신뢰','자부심'],
+  '경고형':           ['손실회피','직설/강력'],
+  '시간단축':         ['긴급/FOMO','직설/강력']
+};
+
+// 랜덤 풀 (폰스팟 컨텍스트 가중치 적용)
+const RANDOM_POOLS = {
+  category: ['휴대폰','휴대폰','휴대폰','유심만','알뜰폰','중고폰','키즈폰','효도폰','공짜폰','인터넷','인터넷+TV'],
+  age: ['10대','20대','20대','30대','30대','30대','40대','40대','50대+','전 연령'],
+  gender: ['전체','전체','전체','여성','남성'],
+  season: ['시즌리스','시즌리스','시즌리스','시즌리스','봄','여름','가을','겨울','설','추석','블랙프라이데이','크리스마스','신학기'],
+  product: ['내 휴대폰','내 휴대폰','아이폰','아이폰15','아이폰15 Pro','갤럭시','갤럭시S24','갤럭시 울트라','폴드','폴드6'],
+  usp: ['가격 조회 편리함','1분 견적','최저가 보장','당일 배송','실시간 가격 확인','정직한 가격','재고 즉시 확인','지원금 포함 즉시 조회','대리점보다 저렴'],
+  emotion: ['자유','불안/손실회피','호기심','자부심/우월감','안심/신뢰','긴급/FOMO','공감/위로','유머/재미'],
+  keywords: ['','학생','첫 폰','효도폰','자취','알뜰','직장인','신규가입','기변'],
+  length: ['짧게 10자 이내','중간 15자 내외','중간 15자 내외','중간 15자 내외','길게 20-25자','자유'],
+  copyTones: ['감성/공감','직설/강력','유머/B급','정보성/신뢰','미니멀/프리미엄','호기심','긴급/FOMO','손실회피','자부심'],
+  visualTones: ['감성_봄','직설_강력','미니멀_프리미엄','정보_신뢰','유머_B급','시즌_여름','시즌_가을','시즌_겨울'],
+  layouts: ['vertical-stacked','horizontal-split','centered-product','full-bleed-product','collage-multi','hero-with-callouts'],
+  textMode: ['blank','blank','blank','korean']
+};
+
+// ============ 상태 ============
+let currentCopies = [];
+let selectedCopies = new Set();
+let activeCopies = []; // 라이브러리용 활성 카피
+let library = [];
+
+// ============ 🔄 메타 비율 변환 프롬프트 (2026-06-09) ============
+// 1:1은 buildImagePrompt 사용 안내, 나머지 한글 재구성 프롬프트
+const RESIZE_PROMPTS = {
+  '1:1': `# 역할
+너는 광고 배너 리터칭 전문가다.
+
+# 작업
+첨부한 1:1 배너 이미지를 동일한 1:1 비율(1080×1080 px)로 재출력한다.
+
+# 규칙
+- 로고, 제품/피사체, 모든 카피 문구, CTA 버튼, 브랜드 컬러·폰트·그래픽 스타일을 그대로 유지한다.
+- 요소를 한 방향으로 늘리거나 찌그러뜨리지 않는다. 추가·삭제하지 않는다.
+- 화질 저하, 텍스트 번짐, 색상 변형이 없도록 한다.
+- 핵심 요소는 가장자리에서 최소 5% 안전 여백을 둔다.
+
+# 출력
+- 비율: 1:1 / 해상도: 1080×1080 px
+- 형식: 텍스트가 선명한 고해상도 이미지 1장`,
+
+  '4:5': `# 역할
+너는 광고 배너를 게재 규격에 맞게 재디자인하는 아트디렉터다.
+
+# 작업
+첨부한 1:1 배너 이미지를, 세로로 더 긴 4:5 비율(1080×1350 px)의 광고로 "처음부터 그 비율로 디자인된 것처럼" 레이아웃을 재구성한다.
+
+# 가장 중요한 규칙
+- 원본을 가운데 두고 위아래 배경만 늘리지 마라. 그러면 빈 여백 띠가 생긴다.
+- 대신, 늘어난 세로 공간을 요소들이 자연스럽게 채우도록 크기와 위치를 다시 잡아라.
+
+# 콘텐츠 규칙
+- 로고, 제품/피사체, 모든 카피 문구, CTA 버튼, 브랜드 컬러·폰트·그래픽 스타일은 변경·삭제·추가하지 않는다.
+- 요소는 가로세로 같은 비율로만 확대/축소한다(비례 리사이징 허용, 한 방향 왜곡 금지).
+- 원본의 시각적 위계(메인 카피 > 제품 > CTA > 로고 등 강조 순서)를 유지한다.
+
+# 레이아웃 지침
+- 세로 흐름으로 재구성: 상단에 로고/헤드라인, 중앙에 제품/피사체, 하단에 서브카피와 CTA.
+- 늘어난 세로 공간만큼 제품·헤드라인을 적절히 키워 화면을 시원하게 채운다.
+- 요소 간 간격을 균형 있게 분배해 빈 띠가 생기지 않게 한다.
+- 배경은 원본의 색·질감·그라데이션을 이어 자연스럽게 확장한다.
+- 텍스트는 원본 문구 그대로, 선명하게, 잘리지 않게.
+- 핵심 요소는 가장자리에서 최소 5% 여백.
+
+# 출력
+- 비율: 4:5 (세로형) / 해상도: 1080×1350 px
+- 형식: 텍스트가 선명한 고해상도 이미지 1장`,
+
+  '9:16': `# 역할
+너는 광고 배너를 게재 규격에 맞게 재디자인하는 아트디렉터다.
+
+# 작업
+첨부한 1:1 배너 이미지를, 풀스크린 세로형 9:16 비율(1080×1920 px)의 스토리/릴스 광고로 "처음부터 그 비율로 디자인된 것처럼" 레이아웃을 재구성한다.
+
+# 가장 중요한 규칙
+- 원본을 가운데 두고 위아래 배경만 늘리지 마라. 9:16은 세로가 매우 길어서 그렇게 하면 위아래에 거대한 빈 띠가 생긴다.
+- 대신, 화면 전체를 하나의 세로형 광고로 새로 구성하라.
+
+# 콘텐츠 규칙
+- 로고, 제품/피사체, 모든 카피 문구, CTA 버튼, 브랜드 컬러·폰트·그래픽 스타일은 변경·삭제·추가하지 않는다.
+- 요소는 가로세로 같은 비율로만 확대/축소한다(비례 리사이징 허용, 한 방향 왜곡 금지).
+- 원본의 시각적 위계(강조 순서)를 유지한다.
+
+# 레이아웃 지침
+- 위에서 아래로 읽히는 세로 구성으로 재배치:
+  · 상단 영역  → 로고 / 브랜드 요소
+  · 중앙 영역  → 제품/피사체를 크게 배치 (시선이 가장 먼저 닿는 곳)
+  · 중하단 영역 → 메인 헤드라인과 서브카피
+  · 하단 영역  → CTA 버튼
+- 제품·헤드라인을 가로폭(1080px)을 충분히 활용할 만큼 키워 화면을 꽉 채운다.
+- 배경은 원본의 색·질감·그라데이션을 이어 자연스럽게 확장한다.
+- 세이프 영역: Meta 스토리/릴스 UI를 고려해 상단 14%, 하단 20%에는 핵심 요소·텍스트·CTA를 배치하지 않는다.
+- 텍스트는 원본 문구 그대로, 선명하게, 잘리지 않게.
+
+# 출력
+- 비율: 9:16 (풀스크린 세로형) / 해상도: 1080×1920 px
+- 형식: 텍스트가 선명한 고해상도 이미지 1장`,
+
+  '1.91:1': `# 역할
+너는 광고 배너를 게재 규격에 맞게 재디자인하는 아트디렉터다.
+
+# 작업
+첨부한 1:1 배너 이미지를, 가로로 긴 1.91:1 비율(1200×628 px)의 광고로 "처음부터 그 비율로 디자인된 것처럼" 레이아웃을 재구성한다.
+
+# 가장 중요한 규칙
+- 원본을 가운데 두고 좌우 배경만 늘리지 마라. 그러면 양옆에 빈 여백 띠가 생긴다.
+- 대신, 가로로 넓어진 공간을 좌우 분할 구성으로 꽉 채워라.
+
+# 콘텐츠 규칙
+- 로고, 제품/피사체, 모든 카피 문구, CTA 버튼, 브랜드 컬러·폰트·그래픽 스타일은 변경·삭제·추가하지 않는다.
+- 요소는 가로세로 같은 비율로만 확대/축소한다(비례 리사이징 허용, 한 방향 왜곡 금지).
+- 원본의 시각적 위계(강조 순서)를 유지한다.
+
+# 레이아웃 지침
+- 좌우 분할 가로 구성으로 재배치:
+  · 한쪽(예: 좌측) → 제품/피사체를 세로 높이에 맞춰 크게 배치
+  · 다른 쪽(예: 우측) → 헤드라인 + 서브카피 + CTA를 위계 순으로 정렬
+  · 로고는 상단 모서리 등 적절한 위치에 배치
+- 세로 높이(628px)가 줄어든 만큼 요소를 적절히 축소하되, 가로 공간은 좌우 요소로 꽉 채워 빈 여백 띠가 생기지 않게 한다.
+- 배경은 원본의 색·질감·그라데이션을 이어 자연스럽게 확장한다.
+- 텍스트는 원본 문구 그대로, 선명하게, 잘리지 않게. 세로폭이 좁으니 글자가 위아래로 잘리지 않도록 특히 주의한다.
+- 핵심 요소는 가장자리에서 최소 5% 여백.
+
+# 출력
+- 비율: 1.91:1 (가로형) / 해상도: 1200×628 px
+- 형식: 텍스트가 선명한 고해상도 이미지 1장`
+};
+
+function copyResizePrompt(ratio) {
+  const p = RESIZE_PROMPTS[ratio];
+  if (!p) { alert('비율 프롬프트 없음: ' + ratio); return; }
+  copyText(p);
+  const label = { '1:1': '1:1 (1080×1080)', '4:5': '4:5 (1080×1350)', '9:16': '9:16 (1080×1920)', '1.91:1': '1.91:1 (1200×628)' }[ratio];
+  showToast(`📋 ${label} 프롬프트 복사됨. ChatGPT 4o에 1:1 이미지 첨부 + 붙여넣기.`);
+}
+
+// ============ 유틸 ============
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function fillSlots(template, ctx) {
+  // 정규식 ★ 수정 (2026-06-12): \w는 ASCII만 매칭하여 {제품}/{타겟어}/{숫자} 등 한글 슬롯이 매칭 안 됨.
+  // [^\}]+ 로 변경 → 중괄호 안 모든 문자 매칭 (한글 포함).
+  return template.replace(/\{([^\}]+)\}/g, (_, key) => {
+    if (key === '제품') return ctx.product;
+    if (key === 'USP') return ctx.usp;
+    if (key === '타겟') return ctx.targetText || pick(SLOT_VALUES['타겟']);
+    // 감정어: 폼의 강조 감정값 매칭
+    if (key === '감정어') {
+      const emo = ctx.emotion;
+      const wordsForEmo = (emo && EMOTION_WORDS[emo]) ? EMOTION_WORDS[emo] : null;
+      const allWords = Object.values(EMOTION_WORDS).flat();
+      return wordsForEmo ? pick(wordsForEmo) : pick(allWords);
+    }
+    // 타겟어: 연령·성별 결합 호명
+    if (key === '타겟어') {
+      const ageWords = TARGET_WORDS[ctx.age] || [];
+      const genderWords = (ctx.gender && ctx.gender !== '전체') ? (TARGET_WORDS[ctx.gender] || []) : [];
+      const combined = [...ageWords, ...genderWords];
+      return combined.length > 0 ? pick(combined) : pick(SLOT_VALUES['타겟']);
+    }
+    // 키워드: 폼 추가 키워드 (쉼표 분리)
+    if (key === '키워드') {
+      const list = (ctx.keywords || '').split(',').map(s => s.trim()).filter(Boolean);
+      return list.length > 0 ? pick(list) : pick(SLOT_VALUES['타겟']);
+    }
+    if (SLOT_VALUES[key]) return pick(SLOT_VALUES[key]);
+    return `{${key}}`;
+  });
+}
+function pickSubset(arr, min, max) {
+  const count = min + Math.floor(Math.random() * (max - min + 1));
+  return shuffle(arr).slice(0, count);
+}
+function setSelectValue(id, value) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  for (const opt of el.options) {
+    if (opt.value === value || opt.text === value) { el.value = opt.value; return; }
+  }
+}
+function setCheckboxGroup(containerId, values) {
+  document.querySelectorAll(`#${containerId} input[type=checkbox]`).forEach(el => {
+    el.checked = values.includes(el.value);
+  });
+}
+
+// ============ 탭 ============
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(el => el.classList.remove('active'));
+  const tabs = document.querySelectorAll('.tab');
+  const map = { 'copy': 0, 'library': 1, 'benchmark': 2, 'settings': 3 };
+  if (map[name] !== undefined && tabs[map[name]]) tabs[map[name]].classList.add('active');
+  const panel = document.getElementById('panel-' + name);
+  if (panel) panel.classList.add('active');
+  // 벤치마크 탭 첫 진입 시 한 번 자동 로드
+  if (name === 'benchmark' && !window._benchmarkLoadedOnce) {
+    window._benchmarkLoadedOnce = true;
+    loadBenchmarkFromSheet();
+  }
+}
+
+// ============ 🎯 벤치마크 탭 (Apify Meta Ad Library) ============
+let benchmarkResults = [];      // 현재 표시 중인 결과
+let benchmarkSelected = new Set(); // 선택된 인덱스
+let benchmarkSourceMode = 'search'; // 'search' (Apify 새 검색) | 'sheet' (시트 누적분)
+
+function searchBenchmark() {
+  if (!isAppsScriptWebApp()) {
+    alert('Web App 환경에서만 작동 (Apify는 Apps Script가 호출)');
+    return;
+  }
+  const kw = document.getElementById('bm-keyword').value.trim();
+  if (!kw) { alert('검색 키워드 입력'); return; }
+  const country = (document.getElementById('bm-country').value || 'KR').toUpperCase();
+  const count = parseInt(document.getElementById('bm-count').value) || 20;
+  const statusEl = document.getElementById('bm-status');
+  statusEl.innerHTML = `⏳ Apify 호출 중... (${count}건, 예상 비용 $${(count*0.00075).toFixed(4)} / 약 30~60초)`;
+  benchmarkResults = []; benchmarkSelected.clear();
+  benchmarkSourceMode = 'search';
+  document.getElementById('bm-results').innerHTML = '<div class="info-box">로딩 중...</div>';
+
+  google.script.run
+    .withSuccessHandler(function(res) {
+      if (!res || !res.ok) {
+        statusEl.innerHTML = `❌ ${res?.error || '실패'}`;
+        document.getElementById('bm-results').innerHTML = `<div class="info-box" style="color:#c62828">❌ ${res?.error || '알 수 없는 오류'}</div>`;
+        return;
+      }
+      benchmarkResults = res.items || [];
+      statusEl.innerHTML = `✅ 수신 ${res.totalReceived}건 (★★★ ${benchmarkResults.filter(x => x.grade.startsWith('★★★')).length}건)`;
+      renderBenchmarkResults();
+      renderBenchmarkAnalysis();
+    })
+    .withFailureHandler(function(err) {
+      statusEl.innerHTML = `❌ ${err.message || err}`;
+      document.getElementById('bm-results').innerHTML = `<div class="info-box" style="color:#c62828">❌ ${err.message || err}</div>`;
+    })
+    .searchBenchmarkViaApify(kw, count, country);
+}
+
+function loadBenchmarkFromSheet() {
+  if (!isAppsScriptWebApp()) { alert('Web App 환경 필요'); return; }
+  const statusEl = document.getElementById('bm-status');
+  statusEl.innerHTML = '⏳ 시트에서 누적 벤치마크 직접 로드 중...';
+  benchmarkSourceMode = 'sheet';
+  benchmarkSelected.clear();
+  document.getElementById('bm-results').innerHTML = '<div class="info-box">로딩 중...</div>';
+
+  google.script.run
+    .withSuccessHandler(function(res) {
+      if (!res || !res.ok) {
+        statusEl.innerHTML = `❌ ${res?.error || '실패'}`;
+        document.getElementById('bm-results').innerHTML = `<div class="info-box" style="color:#c62828">❌ ${res?.error || '실패'}</div>`;
+        return;
+      }
+      if (!Array.isArray(res.items) || res.items.length === 0) {
+        statusEl.innerHTML = '⚠ 시트에 누적된 BM 광고 없음. 먼저 Apify 검색 → 시트 저장 실행.';
+        document.getElementById('bm-results').innerHTML = '<div class="info-box">데이터 없음</div>';
+        return;
+      }
+      benchmarkResults = res.items.map(bm => {
+        const firstLine = (bm.body || '').split('\n').map(s => s.trim()).filter(Boolean)[0] || '';
+        return {
+          adId: (bm.id || '').replace(/^BM-\d+_/, ''),
+          sheetId: bm.id,  // 시트 ID (삭제용)
+          pageName: bm.pageName,
+          pageId: bm.pageId,
+          pageFollowers: bm.followers || 0,
+          bodyExcerpt: firstLine.slice(0, 300) || bm.body.slice(0, 300),
+          body: bm.body,
+          displayFormat: bm.format,
+          cta: bm.cta,
+          startDate: bm.startDate,
+          days: bm.days,
+          platforms: bm.platforms || [],
+          collation: bm.collation || 1,
+          score: bm.score || 0,
+          grade: bm.grade || '평가 보류',
+          thumbnail: bm.thumbnail || '',
+          adLibraryUrl: bm.adLibraryUrl || '',
+          searchTerm: bm.searchTerm || '',
+          collectedAt: bm.collectedAt || ''
+        };
+      });
+      statusEl.innerHTML = `✅ 시트 누적 ${benchmarkResults.length}건 (★★★ ${benchmarkResults.filter(x => x.grade.startsWith('★★★')).length}건)`;
+      renderBenchmarkResults();
+      renderBenchmarkAnalysis();
+    })
+    .withFailureHandler(err => {
+      statusEl.innerHTML = `❌ ${err.message || err}`;
+      document.getElementById('bm-results').innerHTML = `<div class="info-box" style="color:#c62828">❌ ${err.message || err}</div>`;
+    })
+    .getBenchmarkForGenerator();
+}
+
+// 시트 직접 열기 (새 탭)
+function openBenchmarkSheet() {
+  if (!isAppsScriptWebApp()) { alert('Web App 환경 필요'); return; }
+  google.script.run
+    .withSuccessHandler(function(res) {
+      if (res && res.ok && res.url) window.open(res.url, '_blank');
+      else alert('시트 URL 가져오기 실패: ' + (res?.error || ''));
+    })
+    .withFailureHandler(err => alert(err.message || err))
+    .getBenchmarkSheetUrl();
+}
+
+// 단건 삭제
+function deleteBenchmarkOne(sheetId, idx) {
+  if (!sheetId) { alert('삭제 대상 없음'); return; }
+  if (!confirm(`시트에서 "${sheetId}" 삭제할까요? (되돌릴 수 없음)`)) return;
+  google.script.run
+    .withSuccessHandler(function(res) {
+      if (res && res.ok) {
+        showToast(`🗑 ${res.deleted} 삭제됨`);
+        // library에서도 제거
+        library = library.filter(x => x.id !== sheetId);
+        renderLibrary();
+        // 화면에서도 제거
+        if (typeof idx === 'number') {
+          benchmarkResults.splice(idx, 1);
+          benchmarkSelected.clear();
+          renderBenchmarkResults();
+          renderBenchmarkAnalysis();
+        }
+      } else {
+        alert('삭제 실패: ' + (res?.error || ''));
+      }
+    })
+    .withFailureHandler(err => alert(err.message || err))
+    .deleteBenchmarkFromSheet(sheetId);
+}
+
+// 다중 삭제
+function deleteBenchmarkSelected() {
+  if (benchmarkSelected.size === 0) { alert('선택된 광고 없음'); return; }
+  const ids = Array.from(benchmarkSelected)
+    .map(i => benchmarkResults[i] && benchmarkResults[i].sheetId)
+    .filter(Boolean);
+  if (ids.length === 0) { alert('시트 누적분이 아님 (검색 결과는 시트에 없음)'); return; }
+  if (!confirm(`시트에서 ${ids.length}개 삭제할까요? (되돌릴 수 없음)`)) return;
+  google.script.run
+    .withSuccessHandler(function(res) {
+      if (res && res.ok) {
+        showToast(`🗑 ${res.deleted}개 삭제됨`);
+        library = library.filter(x => !ids.includes(x.id));
+        renderLibrary();
+        // 다시 시트에서 로드
+        loadBenchmarkFromSheet();
+      } else {
+        alert('삭제 실패: ' + (res?.error || ''));
+      }
+    })
+    .withFailureHandler(err => alert(err.message || err))
+    .deleteBenchmarksFromSheet(ids);
+}
+
+function renderBenchmarkResults() {
+  const container = document.getElementById('bm-results');
+  document.getElementById('bm-result-count').textContent = benchmarkResults.length;
+  // 모드 표시
+  const modeBadge = document.getElementById('bm-mode-badge');
+  if (modeBadge) {
+    if (benchmarkSourceMode === 'sheet') {
+      modeBadge.innerHTML = '<span style="font-size:10px; background:#7b1fa2; color:#fff; padding:2px 6px; border-radius:3px">📚 시트 누적분</span>';
+    } else {
+      modeBadge.innerHTML = '<span style="font-size:10px; background:#007aff; color:#fff; padding:2px 6px; border-radius:3px">🔍 Apify 새 검색</span>';
+    }
+  }
+  // 액션 버튼 모드별 토글
+  const actionEl = document.getElementById('bm-result-actions');
+  if (actionEl) {
+    if (benchmarkSourceMode === 'sheet') {
+      actionEl.innerHTML = `
+        <button class="small secondary" onclick="bmSelectAll(true)">전체 선택</button>
+        <button class="small secondary" onclick="bmSelectAll(false)">선택 해제</button>
+        <button class="small danger" onclick="deleteBenchmarkSelected()">🗑 선택 삭제 (시트)</button>
+      `;
+    } else {
+      actionEl.innerHTML = `
+        <button class="small secondary" onclick="bmSelectAll(true)">전체 선택</button>
+        <button class="small secondary" onclick="bmSelectAll(false)">선택 해제</button>
+        <button class="small" onclick="saveBenchmarkSelected()">💾 선택 시트 저장</button>
+      `;
+    }
+  }
+  if (benchmarkResults.length === 0) {
+    container.innerHTML = '<div class="info-box">결과 없음</div>';
+    return;
+  }
+  container.innerHTML = benchmarkResults.map((r, i) => {
+    const isSel = benchmarkSelected.has(i);
+    const gradeColor = r.grade.startsWith('★★★') ? '#1b5e20' : r.grade.startsWith('★★') ? '#5d4e00' : r.grade.startsWith('★') ? '#01579b' : '#9e9e9e';
+    const gradeBg = r.grade.startsWith('★★★') ? '#c8e6c9' : r.grade.startsWith('★★') ? '#fff9c4' : r.grade.startsWith('★') ? '#e1f5fe' : '#f5f5f5';
+    const thumb = r.thumbnail ? `<img src="${escapeAttr(r.thumbnail)}" style="width:80px; height:80px; object-fit:cover; border-radius:6px; flex-shrink:0">` : '<div style="width:80px; height:80px; background:#eee; border-radius:6px; flex-shrink:0"></div>';
+    const sheetIdBadge = r.sheetId ? `<span style="font-size:9px; background:#7b1fa2; color:#fff; padding:1px 4px; border-radius:3px">${escapeHtml(r.sheetId)}</span>` : '';
+    const sheetMeta = r.searchTerm ? `<span style="font-size:10px; color:#86868b">검색: "${escapeHtml(r.searchTerm)}" · 수집 ${escapeHtml(r.collectedAt || '-')}</span>` : '';
+    const deleteBtn = (benchmarkSourceMode === 'sheet' && r.sheetId)
+      ? `<button class="small danger" onclick="event.stopPropagation(); deleteBenchmarkOne('${escapeAttr(r.sheetId)}', ${i})" style="font-size:10px; padding:3px 8px">🗑 삭제</button>`
+      : '';
+    return `
+      <div onclick="toggleBenchmark(${i})" style="padding:10px; border:1px solid ${isSel ? '#007aff' : '#e0e0e0'}; background:${isSel ? '#e3f2fd' : '#fff'}; border-radius:8px; cursor:pointer; display:flex; gap:10px">
+        <input type="checkbox" ${isSel ? 'checked' : ''} onchange="toggleBenchmark(${i})" onclick="event.stopPropagation()" style="margin-top:5px; width:18px; height:18px">
+        ${thumb}
+        <div style="flex:1; min-width:0">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; margin-bottom:4px; flex-wrap:wrap">
+            <span style="display:flex; gap:6px; align-items:center">
+              ${sheetIdBadge}
+              <strong style="font-size:13px">${escapeHtml(r.pageName)}</strong>
+            </span>
+            <span style="font-size:10px; background:${gradeBg}; color:${gradeColor}; padding:2px 6px; border-radius:3px; font-weight:600">${escapeHtml(r.grade)}</span>
+          </div>
+          <div style="font-size:11px; color:#86868b; margin-bottom:4px">
+            📅 ${r.days}일 운영 · 📍 ${(r.platforms || []).join('+')} · 🔁 변형 ${r.collation}개 · 👥 팔로워 ${r.pageFollowers} · 📹 ${r.displayFormat} · CTA: ${escapeHtml(r.cta)}
+          </div>
+          ${sheetMeta ? `<div style="margin-bottom:4px">${sheetMeta}</div>` : ''}
+          <div style="font-size:12px; color:#424245; max-height:60px; overflow:hidden; line-height:1.4">${escapeHtml(r.bodyExcerpt || '').replace(/\\n/g, ' ').slice(0, 300)}</div>
+          <div style="margin-top:6px; display:flex; gap:6px; align-items:center">
+            ${r.adLibraryUrl ? `<a href="${escapeAttr(r.adLibraryUrl)}" target="_blank" onclick="event.stopPropagation()" style="font-size:10px; color:#007aff">→ Ad Library 원문↗</a>` : ''}
+            ${deleteBtn}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function escapeHtml(s) {
+  return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function escapeAttr(s) { return escapeHtml(s); }
+
+function toggleBenchmark(i) {
+  if (benchmarkSelected.has(i)) benchmarkSelected.delete(i);
+  else benchmarkSelected.add(i);
+  renderBenchmarkResults();
+}
+
+function bmSelectAll(on) {
+  benchmarkSelected.clear();
+  if (on) benchmarkResults.forEach((_, i) => benchmarkSelected.add(i));
+  renderBenchmarkResults();
+}
+
+function saveBenchmarkSelected() {
+  if (benchmarkSelected.size === 0) { alert('선택된 광고 없음'); return; }
+  if (!isAppsScriptWebApp()) { alert('Web App 환경 필요'); return; }
+  const keyword = document.getElementById('bm-keyword').value.trim() || 'manual';
+  const selected = Array.from(benchmarkSelected).map(i => benchmarkResults[i]);
+  const statusEl = document.getElementById('bm-status');
+  statusEl.innerHTML = `⏳ ${selected.length}건 시트 저장 중...`;
+  google.script.run
+    .withSuccessHandler(function(res) {
+      if (res && res.ok) {
+        statusEl.innerHTML = `✅ ${res.added}건 시트 저장 (★★★ ${res.goodCount}건)`;
+        showToast(`💾 ${res.added}건 벤치마크 저장됨`);
+        benchmarkSelected.clear();
+        renderBenchmarkResults();
+      } else {
+        statusEl.innerHTML = `❌ ${res?.error || '저장 실패'}`;
+      }
+    })
+    .withFailureHandler(err => statusEl.innerHTML = `❌ ${err.message || err}`)
+    .saveBenchmarkSelectedFromGenerator(selected, keyword);
+}
+
+function renderBenchmarkAnalysis() {
+  const target = benchmarkSelected.size > 0
+    ? Array.from(benchmarkSelected).map(i => benchmarkResults[i])
+    : benchmarkResults;
+  const el = document.getElementById('bm-analysis');
+  if (target.length === 0) { el.innerHTML = '<div style="color:#86868b">분석할 결과 없음</div>'; return; }
+  // 통계
+  const formatStats = {}, ctaStats = {}, platformStats = {}, pageStats = {};
+  let daysSum = 0, daysCount = 0, collationSum = 0;
+  const verified = []; // ★★★
+  for (const r of target) {
+    formatStats[r.displayFormat] = (formatStats[r.displayFormat] || 0) + 1;
+    ctaStats[r.cta] = (ctaStats[r.cta] || 0) + 1;
+    (r.platforms || []).forEach(p => platformStats[p] = (platformStats[p] || 0) + 1);
+    pageStats[r.pageName] = (pageStats[r.pageName] || 0) + 1;
+    if (r.days) { daysSum += r.days; daysCount++; }
+    collationSum += (r.collation || 1);
+    if (r.grade.startsWith('★★★')) verified.push(r);
+  }
+  // 후킹 키워드 — 본문 첫 줄 추출
+  const hookFreq = {};
+  target.forEach(r => {
+    const first = (r.bodyExcerpt || '').split('|')[0].split('\n')[0].trim();
+    const words = first.split(/[\s,!?.]+/).filter(w => w.length >= 2 && !/^[-]+$/.test(w));
+    words.slice(0, 3).forEach(w => hookFreq[w] = (hookFreq[w] || 0) + 1);
+  });
+  const topHooks = Object.entries(hookFreq).sort((a, b) => b[1] - a[1]).slice(0, 8);
+
+  function row(title, stats) {
+    const sorted = Object.entries(stats).sort((a, b) => b[1] - a[1]);
+    return `<div style="margin-bottom:8px"><strong style="font-size:11px">${title}</strong><div style="font-size:11px; color:#424245">${sorted.map(([k, v]) => `${escapeHtml(k)} ×${v}`).join(' · ') || '-'}</div></div>`;
+  }
+  el.innerHTML = `
+    <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:10px">
+      <div>${row('📹 광고 형식', formatStats)}</div>
+      <div>${row('🎯 CTA', ctaStats)}</div>
+      <div>${row('📍 노출 채널', platformStats)}</div>
+      <div>${row('🏢 페이지별', pageStats)}</div>
+    </div>
+    <div style="margin-top:10px; padding-top:10px; border-top:1px solid #eee">
+      <strong style="font-size:11px">📊 핵심 지표</strong>
+      <div style="font-size:11px; color:#424245">
+        총 ${target.length}건 · 평균 운영 ${daysCount > 0 ? Math.round(daysSum/daysCount) : 0}일 · 평균 변형 ${(collationSum/target.length).toFixed(1)}개 · ★★★ ${verified.length}건
+      </div>
+    </div>
+    <div style="margin-top:10px">
+      <strong style="font-size:11px">🔥 후킹 키워드 빈도 (본문 첫 줄)</strong>
+      <div style="font-size:11px; color:#424245">${topHooks.map(([w, c]) => `${escapeHtml(w)} ×${c}`).join(' · ') || '-'}</div>
+    </div>
+  `;
+}
+
+// ============ 옵션 C 폐기 (2026-06-09) ============
+// 컨셉 태그 시트·동적 폼 시스템 종민 결정으로 전체 제거.
+// 신규 컨셉은 카피 입력 폼의 "🆕 신규 컨셉 (자유 입력)" 한 줄로 처리.
+
+// ============ 카피 입력 수집 ============
+function getCopyContext() {
+  const tones = Array.from(document.querySelectorAll('#c-tones input:checked')).map(el => el.value);
+  const hooks = Array.from(document.querySelectorAll('#c-hooks input:checked')).map(el => el.value);  // ★ Q3 후킹 구조 (문장 골격, 정서 톤과 별개)
+  return {
+    category: document.getElementById('c-category').value,
+    age: document.getElementById('c-age').value,
+    gender: document.getElementById('c-gender').value,
+    season: document.getElementById('c-season').value,
+    product: document.getElementById('c-product').value || '내 휴대폰',
+    usp: document.getElementById('c-usp').value || '가격 조회',
+    emotion: '자유',  // 폐기, fillSlots 폴백 호환용 더미
+    keywords: '',     // 폐기, fillSlots 폴백 호환용 더미
+    length: document.getElementById('c-length').value,
+    tones: tones.length > 0 ? tones : ['감성/공감', '직설/강력'],
+    hooks: hooks,  // ★ Q3 — 비우면 빈 배열 (LLM 자유)
+    region: (document.getElementById('c-region')?.value || '').trim(),           // ★ Task 44 — 자유 입력 지역명 (공백=전국)
+    newConcept: (document.getElementById('c-new-concept')?.value || '').trim(),  // 🆕 자유 입력 신규 컨셉
+    includeVerified: !!document.getElementById('c-include-verified')?.checked,    // ✨ 토글 (기본 OFF)
+    includeBenchmark: !!document.getElementById('c-include-benchmark')?.checked  // 🎯 토글 (기본 OFF)
+  };
+}
+
+// ============ 카피 폼 랜덤 채우기 ============
+function randomFillCopy(thenGenerate) {
+  setSelectValue('c-category', pick(RANDOM_POOLS.category));
+  setSelectValue('c-age', pick(RANDOM_POOLS.age));
+  setSelectValue('c-gender', pick(RANDOM_POOLS.gender));
+  setSelectValue('c-season', pick(RANDOM_POOLS.season));
+  document.getElementById('c-product').value = pick(RANDOM_POOLS.product);
+  document.getElementById('c-usp').value = pick(RANDOM_POOLS.usp);
+  setSelectValue('c-length', pick(RANDOM_POOLS.length));
+  setCheckboxGroup('c-tones', pickSubset(RANDOM_POOLS.copyTones, 1, 3));
+  showToast('카피 폼 랜덤 채움');
+  if (thenGenerate) {
+    generateCopiesFromLibrary();
+  }
+}
+
+// ============ 🧹 전체 초기화 ============
+function resetAllForm() {
+  setSelectValue('c-category', '휴대폰');
+  setSelectValue('c-age', '전 연령');
+  setSelectValue('c-gender', '전체');
+  setSelectValue('c-season', '시즌리스');
+  document.getElementById('c-product').value = '';
+  document.getElementById('c-usp').value = '';
+  setSelectValue('c-length', '자유');
+  setCheckboxGroup('c-tones', []);
+  setCheckboxGroup('c-hooks', []);
+  const nc = document.getElementById('c-new-concept');
+  if (nc) nc.value = '';
+  const rg = document.getElementById('c-region');
+  if (rg) rg.value = '';
+  // 카피 결과도 비우기
+  currentCopies = [];
+  selectedCopies.clear();
+  const resultsSection = document.getElementById('copy-results-section');
+  if (resultsSection) resultsSection.classList.add('hidden');
+  const resizeEl = document.getElementById('resize-section');
+  if (resizeEl) resizeEl.classList.add('hidden');
+  showToast('🧹 폼 + 카피 결과 전체 초기화');
+}
+
+// ============ 광고 카피 가이드 생성 (메인 진입점, 2026-06-12) ============
+// 결과 3종: 🤖 일반 LLM 프롬프트 + ✨ 라이브러리 매칭 + 🎯 벤치마크 매칭
+// 라이브러리·벤치마크 매칭은 카테고리 매칭 광고가 있을 때만 표시.
+let currentGuide = { ctx: null, generalPrompt: '', variations: [], libraryMatches: [], libraryPrompt: '', benchmarkMatches: [], benchmarkPrompt: '', semanticScores: {} };
+
+function generateAdCopyGuide() {
+  const ctx = getCopyContext();
+  currentGuide.ctx = ctx;
+  currentGuide.semanticScores = {};  // 새 생성마다 의미점수 리셋
+  currentGuide.generalPrompt = buildCopyPrompt(ctx);   // 하위호환 (copyGeneralPrompt 폴백용)
+  currentGuide.variations = drawVariationCombos(ctx, 8); // ★ 8개 랜덤 변주 (축 고정/랜덤)
+  renderAdCopyGuide();
+  const libCnt = currentGuide.libraryMatches.length;
+  const bmCnt = currentGuide.benchmarkMatches.length;
+  if (libCnt === 0 && bmCnt === 0) {
+    showToast(`🎲 랜덤 변주 8개 생성 (검증 매칭 0건 — 카테고리 라벨링 시 추천 표시)`);
+  } else {
+    showToast(`✨ 추천 ${libCnt + bmCnt}건 + 🎲 변주 8개`);
+  }
+  // ★ 컨셉/지역 있으면 Gemini 의미 매칭 (비동기 → 끝나면 추천 박스 재렌더)
+  if (ctx.newConcept || ctx.region) requestSemanticMatch(ctx);
+}
+
+// ★ 2026-06-12: Gemini 의미 매칭 — 컨셉/지역 앵글과 주제 유사한 라이브러리·벤치마크 광고 추천
+function requestSemanticMatch(ctx) {
+  if (typeof isAppsScriptWebApp === 'function' && !isAppsScriptWebApp()) return;  // 외부환경은 호출 불가 → 스킵
+  const candidates = (library || [])
+    .filter(x => x.id && (x.headline || x.body || (x.meta && x.meta.body)))
+    .map(x => ({ id: x.id, text: ((x.headline || '') + ' ' + (x.body || (x.meta && x.meta.body) || '')).trim().slice(0, 140) }))
+    .slice(0, 40);
+  if (candidates.length === 0) return;
+  setSemanticLoading(true);
+  google.script.run
+    .withSuccessHandler(function(res) {
+      setSemanticLoading(false);
+      if (res && res.ok && res.scores) {
+        currentGuide.semanticScores = res.scores;
+        renderAdCopyGuide();
+        const n = Object.keys(res.scores).filter(k => (res.scores[k] || 0) >= 55).length;
+        if (n > 0) showToast(`🧠 의미 매칭 ${n}건 — 앵글 관련 광고 추천`);
+      } else if (res && !res.ok) {
+        showToast(`🧠 의미 매칭 건너뜀: ${res.error || '-'}`);
+      }
+    })
+    .withFailureHandler(function(err) { setSemanticLoading(false); console.warn('semantic match fail', err); })
+    .getSemanticAdMatches({ concept: ctx.newConcept || '', region: ctx.region || '', category: ctx.category || '', usp: ctx.usp || '', candidates: candidates });
+}
+
+function setSemanticLoading(on) {
+  ['result-library-box', 'result-benchmark-box'].forEach(function(id) {
+    const box = document.getElementById(id);
+    if (!box) return;
+    let tag = box.querySelector('.sem-loading');
+    if (on && !tag) {
+      const hdr = box.querySelector('.result-box-title');
+      if (!hdr) return;
+      tag = document.createElement('span');
+      tag.className = 'sem-loading';
+      tag.textContent = ' 🧠 의미 매칭 중…';
+      tag.style.cssText = 'font-size:11px; color:#5E5CE6; font-weight:600';
+      hdr.appendChild(tag);
+    } else if (!on && tag) {
+      tag.remove();
+    }
+  });
+}
+
+// 하위 호환: 옛 호출 폴백
+function generateCopies() { generateAdCopyGuide(); }
+function generateCopiesFromLibrary() { generateAdCopyGuide(); }
+function generateCopiesViaLLM() { generateAdCopyGuide(); }
+
+// ============ 📋 박스별 프롬프트 복사 ============
+function copyGeneralPrompt() {
+  if (!currentGuide.generalPrompt) { alert('먼저 [광고 카피 가이드 생성] 버튼을 눌러주세요'); return; }
+  copyText(currentGuide.generalPrompt);
+  showToast('🤖 일반 LLM 프롬프트 복사됨. ChatGPT/Claude 챗에 붙여넣기.');
+}
+function copyLibraryPrompt() {
+  if (!currentGuide.libraryPrompt) { alert('라이브러리 매칭 0건 — 시트 카테고리 라벨링 필요'); return; }
+  copyText(currentGuide.libraryPrompt);
+  showToast('✨ 라이브러리 강화 LLM 프롬프트 복사됨.');
+}
+function copyBenchmarkPrompt() {
+  if (!currentGuide.benchmarkPrompt) { alert('벤치마크 매칭 0건 — 시트 카테고리/후킹 구조 라벨링 필요'); return; }
+  copyText(currentGuide.benchmarkPrompt);
+  showToast('🎯 벤치마크 강화 LLM 프롬프트 복사됨.');
+}
+
+// ============ 🎲 랜덤 변주 엔진 (코어 고정 / 톤·후킹만 변주) — 2026-06-12 ============
+const ALL_TONES_V = ['감성/공감','직설/강력','유머/B급','정보성/신뢰','미니멀/프리미엄','호기심','긴급/FOMO','손실회피','자부심'];
+const ALL_HOOKS_V = ['질문형','단언형','비교형','한정형','가격강조','감성/공감','위협형','FOMO형'];
+const TONE_STYLE_V = {
+  '감성/공감':'따뜻하게 공감 건드리는','직설/강력':'군더더기 없이 강하게','유머/B급':'가볍고 위트있게',
+  '정보성/신뢰':'근거로 신뢰 주는','미니멀/프리미엄':'담백·고급스럽게','호기심':'궁금증 자극',
+  '긴급/FOMO':'지금 아니면 늦는','손실회피':'놓치면 손해 강조','자부심':'우월감·자부심 자극'
+};
+const HOOK_STYLE_V = {
+  '질문형':'의문을 던져 클릭 유도','단언형':'확신에 찬 선언','비교형':'옛 방식↔폰스팟 대조',
+  '한정형':'시간·수량 제한 압박','가격강조':'싸다는 암시','감성/공감':'정서 공명',
+  '위협형':'손실·후회 경고','FOMO형':'놓치면 손해'
+};
+// 후킹 → 로컬 패턴 힌트 (거친 샘플용 근사치 — 템플릿이 후킹축으로 태깅 안 돼있어 best-effort)
+const HOOK_PATTERN_HINT = {
+  '질문형':['질문','?'],'단언형':['단언'],'비교형':['비교','견적'],'한정형':['한정'],
+  '가격강조':['가격','견적','최저'],'감성/공감':['감정','공감'],'위협형':['손실','위협'],'FOMO형':['긴급','한정','FOMO']
+};
+
+// 축 고정/랜덤: 체크된 축은 그 풀에서, 안 체크된 축은 전체에서 뽑음. 둘 다 1개씩이면 8개 동일(의도된 동작).
+// 톤과 의미가 겹치는 후킹 (공감×공감, FOMO×FOMO, 손실회피×위협 같은 중복 방지)
+const TONE_HOOK_EQUIV = { '감성/공감': '감성/공감', '긴급/FOMO': 'FOMO형', '손실회피': '위협형' };
+function drawVariationCombos(ctx, n) {
+  const tonePool = (ctx.tones && ctx.tones.length) ? ctx.tones : ALL_TONES_V;
+  const hookPool = (ctx.hooks && ctx.hooks.length) ? ctx.hooks : ALL_HOOKS_V;
+  const out = [];
+  for (let i = 0; i < (n || 8); i++) {
+    const tone = pick(tonePool);
+    let hook = pick(hookPool);
+    // 톤≡후킹 의미 중복이면 다시 뽑기 (후킹 풀에 대안 있을 때만 — 둘 다 1개로 고정한 경우는 사용자 의도라 허용)
+    let tries = 0;
+    while (TONE_HOOK_EQUIV[tone] === hook && hookPool.length > 1 && tries < 10) {
+      hook = pick(hookPool); tries++;
+    }
+    out.push({ tone, hook });
+  }
+  return out;
+}
+
+// 거친 로컬 샘플 (LLM 없이 fillSlots) — 후킹 힌트로 패턴 bias, 없으면 카테고리 풀에서 랜덤
+function roughSampleForCombo_(ctx, combo) {
+  const pats = CATALOG.copyPatterns || [];
+  let pool = pats.filter(p => !p.categories || p.categories.includes(ctx.category));
+  if (pool.length === 0) pool = pats;
+  const hints = HOOK_PATTERN_HINT[combo.hook] || [];
+  const hinted = pool.filter(p => hints.some(h => (p.name || '').includes(h) || (p.template || '').includes(h)));
+  const chosen = pick(hinted.length ? hinted : pool);
+  if (!chosen) return '';
+  try { return fillSlots(chosen.template, ctx); } catch (e) { return chosen.template; }
+}
+
+function renderVariations() {
+  const body = document.getElementById('result-variations-body');
+  if (!body) return;
+  const ctx = currentGuide.ctx;
+  const vars = currentGuide.variations || [];
+  if (!ctx || vars.length === 0) { body.innerHTML = ''; return; }
+  const coreBox = `
+    <div style="background:#EEF4FF; border:1px solid #CBD9F5; border-radius:8px; padding:10px 14px; margin-bottom:12px">
+      <div style="font-size:12px; font-weight:700; color:#1F4E78; margin-bottom:5px">📌 고정 코어 — 아래 8개 변주가 전부 공통으로 깔고 가는 값</div>
+      <div style="font-size:13px; color:var(--label); line-height:1.8">
+        카테고리 <strong>${escapeHtml(ctx.category || '-')}</strong> · 지역 <strong>${escapeHtml(ctx.region || '전국')}</strong> · 타겟 <strong>${escapeHtml(ctx.age || '-')} ${escapeHtml(ctx.gender || '-')}</strong> · 제품 <strong>${escapeHtml(ctx.product || '-')}</strong> · USP <strong>${escapeHtml(ctx.usp || '-')}</strong> · 길이 <strong>${escapeHtml(ctx.length || '-')}</strong>${ctx.newConcept ? ` · 신규컨셉 <strong>${escapeHtml(ctx.newConcept)}</strong>` : ''}
+      </div>
+    </div>`;
+  const rows = vars.map((v, i) => {
+    const style = `${HOOK_STYLE_V[v.hook] || v.hook} + ${TONE_STYLE_V[v.tone] || v.tone} 톤`;
+    const sample = escapeHtml(roughSampleForCombo_(ctx, v));
+    return `
+      <div class="match-card" style="display:flex; justify-content:space-between; align-items:center; gap:16px; padding:12px 16px">
+        <div style="flex:1; min-width:0">
+          <div style="font-size:14px; font-weight:600">${i + 1}. <span style="color:#0066CC">${escapeHtml(v.hook)}</span> × <span style="color:#AF52DE">${escapeHtml(v.tone)}</span> <span style="font-weight:400; color:var(--label-tertiary); font-size:12px">— ${escapeHtml(style)}</span></div>
+          <div style="font-size:13px; color:var(--label-secondary); margin-top:5px">거친 샘플: "${sample}"</div>
+        </div>
+        <div style="display:flex; gap:8px; flex-shrink:0">
+          <button class="secondary" style="padding:10px 20px; font-size:13px; white-space:nowrap" onclick="copyVariationSlogan(${i})">🖋️ 슬로건</button>
+          <button class="secondary" style="padding:10px 20px; font-size:13px; white-space:nowrap" onclick="copyVariationImage(${i})">🎨 이미지</button>
+        </div>
+      </div>`;
+  }).join('');
+  body.innerHTML = coreBox + rows;
+}
+
+function redrawVariations() {
+  if (!currentGuide.ctx) { alert('먼저 [광고 카피 가이드 생성]을 눌러주세요'); return; }
+  currentGuide.variations = drawVariationCombos(currentGuide.ctx, 8);
+  renderVariations();
+  showToast('🎲 변주 8개 새로 뽑음');
+}
+
+// 행 i의 톤·후킹을 단일 고정한 ctx (코어는 그대로)
+function variationCtx_(i) {
+  const v = currentGuide.variations[i];
+  return { ...currentGuide.ctx, tones: [v.tone], hooks: [v.hook] };
+}
+
+function copyVariationSlogan(i) {
+  const v = currentGuide.variations[i];
+  if (!v) return;
+  copyText(buildCopyPrompt(variationCtx_(i), 12));  // 단일 방향 = 12개 (25개는 필러 생김)
+  showToast(`🖋️ 슬로건 프롬프트 복사 (${v.hook} × ${v.tone}, 12개)`);
+}
+
+function copyVariationImage(i) {
+  const v = currentGuide.variations[i];
+  if (!v) return;
+  const rowCtx = variationCtx_(i);
+  const tone = CATALOG.tones[deriveVisualTone(rowCtx, null)];
+  const layout = pick(tone.layouts);
+  copyText(buildImagePrompt({ ...rowCtx, headline: '', pattern: '' }, tone, layout, 'none'));  // 변주 = 참고 블록 없음
+  showToast(`🎨 이미지 프롬프트 복사 (${v.hook} × ${v.tone} → ${tone.label})`);
+}
+
+// ★ 2026-06-12: 슬로건→이미지 — LLM에서 고른 실제 헤드라인을 그대로 박은 완성 배너 프롬프트
+function copyImageWithHeadline() {
+  const el = document.getElementById('img-headline');
+  const h = (el ? el.value : '').trim();
+  if (!h) { alert('LLM에서 고른 헤드라인을 먼저 붙여넣어주세요'); return; }
+  const cCtx = getCopyContext();
+  const tone = CATALOG.tones[deriveVisualTone(cCtx, null)];
+  const layout = pick(tone.layouts);
+  copyText(buildImagePrompt({ ...cCtx, headline: h, pattern: '' }, tone, layout, 'none'));
+  showToast(`🎨 "${h.slice(0, 14)}…" 이미지 프롬프트 복사 (${tone.label})`);
+}
+
+// 라이브러리 메타 우수 광고 인사이트 추출
+function getMetaLibraryInsights() {
+  const metaItems = library.filter(x => x.metaAdId);
+  const good = metaItems.filter(x => x.performance?.evaluation === '우수');
+  // 키워드 빈출 추출 (2글자 이상)
+  const keywordFreq = {};
+  good.forEach(x => {
+    const words = (x.headline || '').split(/[\s,?.!]+/).filter(w => w.length >= 2);
+    words.forEach(w => { keywordFreq[w] = (keywordFreq[w] || 0) + 1; });
+  });
+  const topKeywords = Object.entries(keywordFreq)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 10)
+    .map(([w]) => w);
+  // 패턴 빈도
+  const patternFreq = {};
+  good.forEach(x => {
+    if (x.pattern) patternFreq[x.pattern] = (patternFreq[x.pattern] || 0) + 1;
+  });
+  // 검증된 헤드라인 (그대로 카피 후보로)
+  const verifiedHeadlines = good.map(x => ({
+    pattern: '✨ 검증된 메타 광고',
+    text: x.headline,
+    chars: (x.headline || '').replace(/\s/g, '').length,
+    metaAdId: x.metaAdId,
+    ctr: x.performance?.ctr,
+    isVerified: true
+  })).filter(x => x.text && x.text !== '-');
+
+  // 🎯 벤치마크 검증 후킹 (BM 광고 본문 첫 줄, 90일+ 또는 점수≥5)
+  const verifiedBenchmark = library
+    .filter(x => x.isBenchmark && (x.days >= 90 || x.score >= 5) && x.headline && x.headline !== '-')
+    .map(x => ({
+      pattern: '🎯 벤치마크 검증',
+      text: x.headline,
+      chars: (x.headline || '').replace(/\s/g, '').length,
+      isBenchmark: true,
+      pageName: x.pageName,
+      days: x.days,
+      grade: x.grade,
+      adLibraryUrl: x.adLibraryUrl
+    }));
+
+  return { good, topKeywords, patternFreq, verifiedHeadlines, verifiedBenchmark };
+}
+
+// ★ 2026-06-12 재설계: 시드 카드 폐기 → 라이브러리/벤치마크 매칭 모델
+// 폼 카테고리와 시트 카테고리 컬럼(메타_소재 16열, 벤치마크 20열) 매칭 + 임계값 필터
+//
+// 라이브러리 매칭: ctx.category == lib.category && CTR >= minCtr
+// 벤치마크 매칭: ctx.category == bm.category && days >= minDays && score >= minScore
+//
+// 매칭 0건 가능 시나리오: 시트에 카테고리 라벨링 안 됨 → 빈 카드, 일반 LLM 프롬프트만 박스 표시.
+
+// 지역 매칭 도우미 (Task 44):
+//   폼 지역 공백 → 모든 광고 매칭 (시트 지역 무관)
+//   폼 지역 있음 → 우선순위 1: 시트 지역과 일치(includes) / 2: 시트 지역 공백(=전국)
+// regionMatchScore: 2=정확매칭, 1=전국폴백, 0=불일치(제외)
+function regionMatchScore_(formRegion, sheetRegion) {
+  const fr = (formRegion || '').trim();
+  const sr = (sheetRegion || '').trim();
+  if (!fr) return 2;  // 폼 공백 = 모든 광고 동등 매칭
+  if (sr && (sr === fr || sr.includes(fr) || fr.includes(sr))) return 2;  // 정확 또는 부분 매칭
+  if (!sr) return 1;  // 시트 공백(=전국) → 폴백
+  return 0;  // 시트가 다른 지역으로 라벨링됨 → 제외
+}
+
+function searchLibraryMatching(ctx, minCtr) {
+  const target = (ctx.category || '').trim();
+  const sem = (currentGuide && currentGuide.semanticScores) || {};
+  const SEM_MIN = 55;  // 의미 매칭 임계
+  return (library || [])
+    .filter(x => x.metaAdId)  // 폰스팟 자체 광고만 (BM/CP 제외)
+    .filter(x => x.headline && x.headline !== '-')
+    .map(x => ({ ...x, _semScore: sem[x.id] || 0, _regionScore: regionMatchScore_(ctx.region, x.region) }))
+    .filter(x => {
+      const cat = (x.category || '').trim();
+      const catMatch = target && cat === target;
+      const semMatch = x._semScore >= SEM_MIN;
+      if (!catMatch && !semMatch) return false;  // 카테고리도 의미도 안 맞으면 제외
+      if (catMatch && !semMatch) {  // 순수 카테고리 매칭엔 CTR 임계 적용 (의미매칭은 주제 우선이라 면제)
+        const ctr = parseFloat(x.performance && x.performance.ctr) || parseFloat(x.ctr) || 0;
+        if (ctr < minCtr) return false;
+      }
+      return true;
+    })
+    .filter(x => x._regionScore > 0)  // 지역 불일치 제외
+    .sort((a, b) => {
+      if ((b._semScore || 0) !== (a._semScore || 0)) return (b._semScore || 0) - (a._semScore || 0);  // 1차: 의미점수
+      if (b._regionScore !== a._regionScore) return b._regionScore - a._regionScore;  // 2차: 지역
+      const ca = parseFloat(a.performance && a.performance.ctr) || parseFloat(a.ctr) || 0;
+      const cb = parseFloat(b.performance && b.performance.ctr) || parseFloat(b.ctr) || 0;
+      return cb - ca;  // 3차: CTR
+    })
+    .slice(0, 10);
+}
+
+function searchBenchmarkMatching(ctx, minDays, minScore) {
+  const target = (ctx.category || '').trim();
+  const sem = (currentGuide && currentGuide.semanticScores) || {};
+  const SEM_MIN = 55;
+  return (library || [])
+    .filter(x => x.id && (x.id.startsWith('BM') || x.id.startsWith('CP')))
+    .filter(x => x.headline && x.headline !== '-')
+    .map(x => ({ ...x, _semScore: sem[x.id] || 0, _regionScore: regionMatchScore_(ctx.region, x.region) }))
+    .filter(x => {
+      const cat = (x.category || '').trim();
+      const catMatch = target && cat === target;
+      const semMatch = x._semScore >= SEM_MIN;
+      if (!catMatch && !semMatch) return false;
+      if (catMatch && !semMatch) {  // 순수 카테고리 매칭엔 운영일/등급 임계 적용 (의미매칭은 면제)
+        if ((x.days || 0) < minDays) return false;
+        if ((x.score || 0) < minScore) return false;
+      }
+      return true;
+    })
+    .filter(x => x._regionScore > 0)
+    .sort((a, b) => {
+      if ((b._semScore || 0) !== (a._semScore || 0)) return (b._semScore || 0) - (a._semScore || 0);
+      if (b._regionScore !== a._regionScore) return b._regionScore - a._regionScore;
+      return (b.score || 0) - (a.score || 0) || (b.days || 0) - (a.days || 0);
+    })
+    .slice(0, 10);
+}
+
+// 라이브러리 매칭 광고 → 강화 LLM 프롬프트 (carbon copy 검증 카피 박힘)
+function buildLibraryEnrichedPrompt(ctx, matches) {
+  if (!matches || matches.length === 0) return '';
+  const examples = matches.map(x => {
+    const ctr = parseFloat(x.performance && x.performance.ctr) || parseFloat(x.ctr) || 0;
+    return `- "${x.headline}" (CTR ${ctr.toFixed(1)}%)`;
+  }).join('\n');
+  const base = buildCopyPrompt(ctx);
+  const refBlock = `# 참고 — 라이브러리 검증 카피 (폰스팟 CTR 7%+ · 톤·구조·길이감 학습용, 복제 ❌)\n${examples}\n\n`;
+  return base.replace('# 출력 양식', refBlock + '# 출력 양식');
+}
+
+// 벤치마크 매칭 광고 → 강화 LLM 프롬프트 (후킹 구조만 박힘, 카피 X)
+function buildBenchmarkEnrichedPrompt(ctx, matches) {
+  if (!matches || matches.length === 0) return '';
+  // 후킹 구조 빈도 집계
+  const hookFreq = {};
+  matches.forEach(x => {
+    const h = (x.hookStructure || '').trim();
+    if (h) hookFreq[h] = (hookFreq[h] || 0) + 1;
+  });
+  const topHooks = Object.entries(hookFreq).sort((a, b) => b[1] - a[1]).slice(0, 5);
+  const hookLine = topHooks.length > 0
+    ? topHooks.map(([h, c]) => `${h}(×${c})`).join(' / ')
+    : '(시트 후킹 구조 라벨링 필요)';
+
+  // 광고 자체는 참고용으로 짧게만 (페이지명·운영일·등급)
+  const adRefs = matches.map(x =>
+    `- [${x.pageName || '-'}] ${x.days}일 운영 / ${x.grade || '-'} / 후킹: ${x.hookStructure || '미분류'}`
+  ).join('\n');
+
+  const base = buildCopyPrompt(ctx);
+  const refBlock = `# 참고 — 벤치마크 (경쟁사 검증 광고 · 후킹 구조·톤만 흡수, 카피 복제 ❌)\n빈출 후킹 구조: ${hookLine}\n${adRefs}\n경쟁사 가격·상품·매장 정책은 폰스팟과 다름.\n\n`;
+  return base.replace('# 출력 양식', refBlock + '# 출력 양식');
+}
+
+function buildCopyPrompt(ctx, count = 25) {
+  // 길이 분포 (count 비율: 20/28/32/20). ※ 옛 라이브러리/벤치마크/패턴풀 블록은 1:1 매핑 전환으로 제거됨(2026-06-12) — 참고는 enrich 함수가 주입.
+  const dist = {
+    short: Math.round(count * 0.20),   // 5개
+    mid:   Math.round(count * 0.28),   // 7개
+    long:  Math.round(count * 0.32),   // 8개
+    xlong: count - Math.round(count * 0.20) - Math.round(count * 0.28) - Math.round(count * 0.32) // 5개
+  };
+
+  // ★ 2026-06-12: 단일조합(변주 1행) 감지 → 한 방향 강제. 아니면 다중 분배.
+  const singleCombo = ctx.tones && ctx.tones.length === 1 && ctx.hooks && ctx.hooks.length === 1;
+  // 이번 방향 한 줄 (단일조합=한 방향 강제 / 다중=분배)
+  const direction = singleCombo
+    ? `후킹=${ctx.hooks[0]}(${HOOK_STYLE_V[ctx.hooks[0]] || ''}) · 톤=${ctx.tones[0]}(${TONE_STYLE_V[ctx.tones[0]] || ''}) — ${count}개 전부 이 한 방향으로 통일, 다른 후킹·톤 섞지 말 것`
+    : `톤=${(ctx.tones || []).join(', ') || '자유'}${ctx.hooks && ctx.hooks.length ? ` · 후킹=${ctx.hooks.join(', ')} (고르게 분배)` : ''}`;
+
+  // ★ 지역 입력 시 — 지역명만 끼워넣지 말고 지역성을 후킹의 중심으로
+  const regionEmphasis = ctx.region ? `
+# 지역 강조 (중요 — "${ctx.region}" 입력됨)
+이번 카피는 지역명을 단순 삽입하지 말고 "${ctx.region}" 지역성을 후킹의 중심에 둔다. **${count}개 모든 카피가 예외 없이 지역성을 담을 것 — 지역성 빠진 카피는 폐기** (막연한 전국 톤 ❌). 단 매번 똑같은 단어로 박지 말고 표현·각도를 다양하게. 로컬 후킹 예: 단독성("${ctx.region} 단독" / "${ctx.region}에서만"), 동네·근접성("${ctx.region} 사는 사람만" / "우리 동네 ${ctx.region}"), 한정성("${ctx.region} 한정" / "${ctx.region} 이번 주만"), 로컬 신뢰("${ctx.region}에서 입소문난" / "${ctx.region} 사람들이 아는").
+` : '';
+
+  // ★ 신규 컨셉 입력 시 — 키워드 삽입이 아니라 그 "앵글"을 후킹 중심으로 (후킹×톤과 믹스)
+  const conceptEmphasis = ctx.newConcept ? `
+# 신규 컨셉 강조 (중요 — 앵글 "${ctx.newConcept}")
+이 컨셉을 카피의 중심 앵글로 삼는다. 단순 키워드 삽입 ❌ — "${ctx.newConcept}"가 가리키는 상황·감정·이슈를 후킹으로 살린다. 이번 방향(후킹×톤)과 결합해 이 앵글을 여러 각도로 친다. **${count}개 모든 카피가 예외 없이 이 앵글을 중심에 둘 것 — 앵글 빠진 카피는 폐기** (표현·각도는 다양하게). (예: 페인포인트형 = "${ctx.newConcept}, 아직도 그냥 두세요?" / 트렌드 공감형 = "${ctx.newConcept} 시대, 이건 챙기셔야죠")
+` : '';
+
+  // ★ 길이: 특정 선택 시 전부 그 길이 / "자유"일 때만 분포
+  const lengthRule = (ctx.length && ctx.length !== '자유')
+    ? `- 길이 통일: ${count}개 전부 "${ctx.length}" 길이로 (다른 길이대 ❌).`
+    : `- 길이 분포(자유): 8자이내 ${dist.short} / 9-14자 ${dist.mid} / 15-20자 ${dist.long} / 21자+ ${dist.xlong}`;
+  // ★ 타겟: 특정 세대·성별 선택 시 카피가 그 대상에 밀착 (값만 나열 ❌)
+  const tgt = `${ctx.age || ''} ${ctx.gender || ''}`.trim();
+  const isBroadAge = !ctx.age || /전\s*연령|전체|무관/.test(ctx.age);
+  const isBroadGender = !ctx.gender || /전체|무관|남녀/.test(ctx.gender);
+  const targetRule = (!isBroadAge || !isBroadGender)
+    ? `- 타겟 밀착(중요): 카피의 어휘·관심사·고민·말투가 "${tgt}"이(가) "내 얘기네" 느낄 만큼 그 세대·성별에 맞을 것. 막연히 누구나용 ❌.\n`
+    : '';
+
+  return `# 목적
+폰스팟(citymarket.co.kr/pb)의 한국어 광고 헤드라인 카피 ${count}개를 만든다.
+폰스팟 = "회원가입·상담·매장방문 없이" 클릭 1번으로 즉시 내 가격 확인. 카피의 1순위는 "얼마인지 보고 싶다"는 호기심으로 클릭시키는 것. 옛 방식(전화·매장·긴 상담) ↔ 폰스팟(클릭 1번·즉시·투명)의 대조가 강력. 거품 빼고 직설적이거나 옆자리 동료처럼 친근하게.
+
+# 지정값 (모든 카피가 이 값을 깔고 감)
+- 카테고리: ${ctx.category}
+- 제품: ${ctx.product}
+- 핵심 USP: ${ctx.usp}
+- 타겟: ${ctx.age} ${ctx.gender}
+- 지역: ${ctx.region || '전국'}
+- 길이 선호: ${ctx.length}
+- 이번 방향: ${direction}${ctx.newConcept ? `\n- 신규 컨셉(앵글): ${ctx.newConcept}` : ''}
+${conceptEmphasis}${regionEmphasis}
+# 규칙
+- 제품·카테고리가 카피 다수에서 분명히 드러날 것. 막연한 카피("그냥 살래요?", "먼저 보세요" 류) 금지 — 무엇을 왜 봐야 하는지 드러낼 것.
+- 가격 명시 ❌ (만원/원/숫자/%), "확인하면 놀랄 만큼 싸다"는 암시만. 같은 명사·동사 3회 초과 반복 ❌. 사람 외형·이름 ❌.
+${targetRule}${lengthRule}
+
+# 출력 양식 (마크다운 표만, 다른 설명·코드블록 ❌)
+| 번호 | 헤드라인 | 글자수 | 길이층 | 메모 |
+|------|----------|--------|--------|------|
+| 1 | (헤드라인) | (공백제외) | 8자/9-14/15-20/21+ | (한 줄) |
+... (${count}개 모두 채울 것)`;
+}
+
+// ★ 2026-06-12: 시드 카드 렌더링 폐기 → 3종 박스 렌더링
+// 일반 LLM 프롬프트(항상) + 라이브러리 매칭(있을 때만) + 벤치마크 매칭(있을 때만)
+function renderAdCopyGuide() {
+  const ctx = currentGuide.ctx;
+  if (!ctx) return;
+
+  document.getElementById('copy-results-section').classList.remove('hidden');
+  const resizeEl = document.getElementById('resize-section');
+  if (resizeEl) resizeEl.classList.remove('hidden');
+
+  // 임계값 (localStorage 로드 + 슬라이더 현재값)
+  const minCtr = parseFloat(document.getElementById('result-min-ctr').value) || 7;
+  const minDays = parseInt(document.getElementById('result-min-days').value) || 90;
+  const minScore = parseInt(document.getElementById('result-min-grade').value) || 3;
+  localStorage.setItem('gen.minCtr', minCtr);
+  localStorage.setItem('gen.minDays', minDays);
+  localStorage.setItem('gen.minGrade', minScore);
+
+  // ============ 🎲 랜덤 변주 8행 (코어 요약 + 변주 목록) ============
+  renderVariations();
+
+  // ============ ✨ 라이브러리 박스 ============
+  const libMatches = searchLibraryMatching(ctx, minCtr);
+  currentGuide.libraryMatches = libMatches;
+  const libBox = document.getElementById('result-library-box');
+  const libBody = document.getElementById('result-library-body');
+  if (libMatches.length === 0) {
+    libBox.classList.remove('hidden');
+    libBody.innerHTML = `<div class="match-empty">카테고리 "${escapeHtml(ctx.category || '-')}" + CTR ≥ ${minCtr}% 매칭 0건<br><span style="font-size:11px">메타_소재 시트 16열(카테고리)에 라벨링 필요</span></div>`;
+    currentGuide.libraryPrompt = '';
+  } else {
+    libBox.classList.remove('hidden');
+    libBody.innerHTML = libMatches.map(x => {
+      const ctr = parseFloat(x.performance && x.performance.ctr) || parseFloat(x.ctr) || 0;
+      const regionTag = x.region
+        ? `<span style="background:#34C759; color:#fff; padding:1px 5px; border-radius:3px; font-size:10px; margin-right:4px">📍 ${escapeHtml(x.region)}</span>`
+        : `<span style="background:#86868B; color:#fff; padding:1px 5px; border-radius:3px; font-size:10px; margin-right:4px">전국</span>`;
+      const polarBadge = x._regionScore === 1 ? `<span style="font-size:10px; color:var(--label-tertiary)">(폴백)</span>` : '';
+      return `
+        <div class="match-card">
+          <div class="match-headline">${regionTag}${escapeHtml(x.headline)} ${polarBadge}</div>
+          <div class="match-meta">CTR ${ctr.toFixed(1)}% · ${escapeHtml(x.evaluation || x.performance && x.performance.evaluation || '-')} · ${escapeHtml(x.metaAdId || x.id || '-')}</div>
+        </div>
+      `;
+    }).join('');
+    currentGuide.libraryPrompt = buildLibraryEnrichedPrompt(ctx, libMatches);
+  }
+
+  // ============ 🎯 벤치마크 박스 ============
+  const bmMatches = searchBenchmarkMatching(ctx, minDays, minScore);
+  currentGuide.benchmarkMatches = bmMatches;
+  const bmBox = document.getElementById('result-benchmark-box');
+  const bmBody = document.getElementById('result-benchmark-body');
+  if (bmMatches.length === 0) {
+    bmBox.classList.remove('hidden');
+    bmBody.innerHTML = `<div class="match-empty">카테고리 "${escapeHtml(ctx.category || '-')}" + 운영 ≥ ${minDays}일 + 등급 ≥ ${minScore}★ 매칭 0건<br><span style="font-size:11px">벤치마크_경쟁사_광고 시트 20·21열(카테고리·후킹 구조)에 라벨링 필요</span></div>`;
+    currentGuide.benchmarkPrompt = '';
+  } else {
+    bmBox.classList.remove('hidden');
+    bmBody.innerHTML = bmMatches.map(x => {
+      const linkBtn = x.adLibraryUrl
+        ? `<a href="${escapeHtml(x.adLibraryUrl)}" target="_blank" style="font-size:10px; color:#FF9500; text-decoration:underline; margin-left:6px">원문↗</a>`
+        : '';
+      const regionTag = x.region
+        ? `<span style="background:#FF9500; color:#fff; padding:1px 5px; border-radius:3px; font-size:10px; margin-right:4px">📍 ${escapeHtml(x.region)}</span>`
+        : `<span style="background:#86868B; color:#fff; padding:1px 5px; border-radius:3px; font-size:10px; margin-right:4px">전국</span>`;
+      const polarBadge = x._regionScore === 1 ? `<span style="font-size:10px; color:var(--label-tertiary)">(폴백)</span>` : '';
+      return `
+        <div class="match-card">
+          <div class="match-headline">${regionTag}${escapeHtml((x.headline || '').slice(0, 80))} ${polarBadge}</div>
+          <div class="match-meta">
+            [${escapeHtml(x.pageName || '-')}] · ${x.days || 0}일 운영 · ${escapeHtml(x.grade || '-')}
+            · 후킹: <strong style="color:var(--label-secondary)">${escapeHtml(x.hookStructure || '미분류')}</strong>
+            ${linkBtn}
+          </div>
+        </div>
+      `;
+    }).join('');
+    currentGuide.benchmarkPrompt = buildBenchmarkEnrichedPrompt(ctx, bmMatches);
+  }
+}
+
+// 하위 호환
+function renderCopies() { renderAdCopyGuide(); }
+
+function toggleCopy(i) {
+  if (selectedCopies.has(i)) selectedCopies.delete(i);
+  else selectedCopies.add(i);
+  document.querySelectorAll('#copy-results .candidate')[i].classList.toggle('selected');
+  updateSelectedCount('copy');
+}
+
+function copySelectedCopies() {
+  const copies = Array.from(selectedCopies).map(i => currentCopies[i]);
+  if (copies.length === 0) { alert('선택된 카피 없음'); return; }
+  copyText(copies.map((c, i) => `${i + 1}. [${c.pattern}] ${c.text}`).join('\n'));
+}
+
+function setActiveCopies() {
+  const copies = Array.from(selectedCopies).map(i => currentCopies[i]);
+  if (copies.length === 0) { alert('선택된 카피 없음'); return; }
+  activeCopies = copies;
+  renderActive();
+  showToast(`${copies.length}개 카피를 라이브러리용으로 설정`);
+}
+
+// ============ 슬로건 변형 20개 프롬프트 복사 ============
+function buildSloganVariationPrompt(referenceSlogan, referencePattern, ctx) {
+  const conceptBlock = ctx.newConcept
+    ? `[🆕 신규 컨셉 — 절반(10개)에 자연스럽게 반영. 모든 변형에 박지 말 것]\n${ctx.newConcept}\n\n`
+    : '';
+  const refLen = (referenceSlogan || '').replace(/\s/g, '').length;
+  return `당신은 폰스팟(citymarket.co.kr/pb)의 한국어 광고 슬로건 카피라이터입니다. 슬로건 변형 20개를 만들어주세요.
+
+[참고 슬로건]
+"${referenceSlogan}" (${refLen}자)
+
+[패턴]
+${referencePattern || '미정'}
+
+${conceptBlock}[브랜드 본질 — 변형의 핵심 메시지에 녹일 것]
+폰스팟의 차별점:
+1. "회원가입·로그인·상담 없이" 즉시 가격 확인 — 1초 만에 내 가격 조회
+2. 호기심 갭(궁금 → 클릭) 유도가 슬로건의 1순위
+3. 가격 자체 명시 ❌. "확인하면 놀랄 만큼 싼 가격" 암시만
+4. 옛 방식(전화 문의/매장 방문/긴 상담) ↔ 폰스팟(클릭 1번/즉시 확인) 대조 효과적
+5. 거품 빼고 직설 또는 친근한 톤 (꼰대·과장·이모지 남발 ❌)
+
+[캠페인 컨텍스트]
+- 타겟: ${ctx.age || '전 연령'} ${ctx.gender || '전체'}
+- 시즌: ${ctx.season || '시즌리스'}
+- 제품: ${ctx.product || '미정'}
+- 핵심 USP: ${ctx.usp || '미정'}
+- 톤·감정 (다중): ${(ctx.tones || []).join(', ') || '자유'}
+
+[엄격 규칙 — 위반 시 변형 폐기·재생성]
+1. **참고 슬로건의 패턴·골격·길이감 유지**, 표현·단어·뉘앙스·후크는 다양화. A/B 테스트 가능한 수준.
+2. **단어 반복**: 같은 명사·동사가 20개 중 3회 초과 등장 ❌.
+3. **길이 분포**: 참고 ${refLen}자 기준 ±5자 범위에서 분산. 모든 변형이 같은 길이 ❌.
+4. **단순 단어 치환 ❌**: 명사 1개만 바꿔치기한 변형은 1~2개만. 나머지는 구조·후킹·시제 변형.
+5. **가격 명시 ❌**: 만원/원/숫자가격 ❌.
+6. **인물 묘사 ❌**: 사람 외형·이름 ❌. 제품·서비스·상황 중심.
+
+[출력 형식 — 표만, 다른 설명 ❌]
+| 번호 | 슬로건 | 글자수 | 변형 포인트 |
+| 1 | (슬로건) | (숫자) | (예: 후킹 강화 / 시제 변경 / 부정형 전환) |
+| 2 | ... | ... | ... |
+...
+| 20 | ... | ... | ... |`;
+}
+
+function copySloganByIndex(i) {
+  if (!currentCopies[i]) return;
+  const c = currentCopies[i];
+  const ctx = getCopyContext();
+  const prompt = buildSloganVariationPrompt(c.text, c.pattern, ctx);
+  copyText(prompt);
+  showToast('슬로건 변형 20개 프롬프트 복사됨. Claude/GPT 챗에 붙여넣기');
+}
+
+// ============ 박스별 이미지 프롬프트 (1:1 매핑 — 라이브러리/벤치마크 각각만) ============
+function copyBoxImagePrompt_(refMode, label) {
+  const cCtx = getCopyContext();
+  const tone = CATALOG.tones[deriveVisualTone(cCtx, null)];
+  const layout = pick(tone.layouts);
+  copyText(buildImagePrompt({ ...cCtx, headline: '', pattern: '' }, tone, layout, refMode));
+  showToast(`🎨 ${label} 이미지 프롬프트 복사 (${tone.label})`);
+}
+function copyLibraryImagePrompt() { copyBoxImagePrompt_('library', '라이브러리'); }
+function copyBenchmarkImagePrompt() { copyBoxImagePrompt_('benchmark', '벤치마크'); }
+// 하위호환 (혹시 남은 호출) — 폼 기준 둘 다 포함
+function copyStandaloneImagePrompt() { copyBoxImagePrompt_('both', '폼 기준'); }
+
+// ============ 카피 → 이미지 프롬프트 자동 생성·복사 ============
+function copyImagePromptForCopy(copyIndex) {
+  const copy = currentCopies[copyIndex];
+  if (!copy) return;
+  const cCtx = getCopyContext();
+  const visualToneKey = deriveVisualTone(cCtx, copy);
+  const tone = CATALOG.tones[visualToneKey];
+  const layout = pick(tone.layouts);
+  // 카피 폼의 모든 입력 조건을 ctx에 통째로 전달
+  const ctx = {
+    ...cCtx,
+    headline: copy.text,
+    pattern: copy.pattern || ''
+  };
+  const prompt = buildImagePrompt(ctx, tone, layout);
+  copyText(prompt);
+  showToast(`이미지 프롬프트 복사됨 (${copy.pattern} → ${tone.label}, ${layout})`);
+}
+
+function deriveVisualTone(cCtx, copy) {
+  // 우선순위 1: 카피 패턴이 강한 시각적 함의를 가짐 → 패턴 매핑 사용
+  if (copy && copy.pattern && CATALOG.patternToTone[copy.pattern]) {
+    return CATALOG.patternToTone[copy.pattern];
+  }
+  // 우선순위 2: 시즌 (시즌 톤이 카피와 충돌하지 않을 때)
+  const seasonalMap = {
+    '봄': '감성_봄',
+    '여름': '시즌_여름',
+    '가을': '시즌_가을',
+    '겨울': '시즌_겨울',
+    '크리스마스': '시즌_겨울'
+  };
+  if (seasonalMap[cCtx.season]) return seasonalMap[cCtx.season];
+  // 우선순위 3: 카피 폼의 톤 선호
+  const copyToneMap = {
+    '감성/부드러움': '감성_봄',
+    '직설/강력': '직설_강력',
+    '유머/B급': '유머_B급',
+    '정보성/신뢰': '정보_신뢰',
+    '미니멀/프리미엄': '미니멀_프리미엄'
+  };
+  const mappedTones = (cCtx.tones || []).map(t => copyToneMap[t]).filter(Boolean);
+  return mappedTones.length > 0 ? pick(mappedTones) : '직설_강력';
+}
+
+// ============ 라이브러리 우수 광고 디자인 분석 ============
+// 광고명에 박힌 색상·스타일 키워드 자동 추출 + 광고명별 CTR 통계
+function analyzeWinningDesigns_() {
+  const winners = (library || [])
+    .filter(x => x.performance && x.performance.evaluation === '우수'
+      && x.headline && x.headline !== '-'
+      && parseFloat(x.performance.ctr) >= 7);
+  if (winners.length === 0) return null;
+
+  // 색상·스타일 키워드 사전 (한글 + 영문)
+  const styleVocab = {
+    colors: { '초록':'green', '파랑':'blue', '빨강':'red', '분홍':'pink', '핑크':'pink',
+              '노랑':'yellow', '검정':'black', '흰색':'white', '주황':'orange',
+              '보라':'purple', '마젠타':'magenta', '하늘':'sky blue', '회색':'gray' },
+    styles: { '미니멀':'minimalist', '홀로그램':'holographic', '신문':'newspaper layout',
+              '콜라주':'collage', '플랫폼':'flat platform', '신문':'editorial' }
+  };
+
+  // 광고명에서 키워드 추출
+  const colorStats = {}; // {color: {count, ctrSum}}
+  const styleStats = {};
+  for (const ad of winners) {
+    const name = String(ad.name || '');
+    const ctr = parseFloat(ad.performance.ctr) || 0;
+    for (const [kr, en] of Object.entries(styleVocab.colors)) {
+      if (name.includes(kr)) {
+        if (!colorStats[en]) colorStats[en] = { count: 0, ctrSum: 0, kr: kr };
+        colorStats[en].count++;
+        colorStats[en].ctrSum += ctr;
+      }
+    }
+    for (const [kr, en] of Object.entries(styleVocab.styles)) {
+      if (name.includes(kr)) {
+        if (!styleStats[en]) styleStats[en] = { count: 0, ctrSum: 0, kr: kr };
+        styleStats[en].count++;
+        styleStats[en].ctrSum += ctr;
+      }
+    }
+  }
+  // 색상별 평균 CTR 정렬
+  const colorRank = Object.entries(colorStats)
+    .map(([en, s]) => ({ en, kr: s.kr, count: s.count, avgCtr: (s.ctrSum / s.count).toFixed(2) }))
+    .sort((a, b) => parseFloat(b.avgCtr) - parseFloat(a.avgCtr));
+  const styleRank = Object.entries(styleStats)
+    .map(([en, s]) => ({ en, kr: s.kr, count: s.count, avgCtr: (s.ctrSum / s.count).toFixed(2) }))
+    .sort((a, b) => parseFloat(b.avgCtr) - parseFloat(a.avgCtr));
+
+  // 상위 5개 광고 (CTR 기준)
+  const top5 = winners
+    .sort((a, b) => (parseFloat(b.performance.ctr) || 0) - (parseFloat(a.performance.ctr) || 0))
+    .slice(0, 5)
+    .map(x => ({
+      name: x.name || '-',
+      headline: x.headline,
+      ctr: x.performance.ctr,
+      spend: x.performance.spend || 0
+    }));
+
+  return { colorRank, styleRank, top5, totalWinners: winners.length };
+}
+
+// 🎯 벤치마크 디자인 코드 분석
+function buildBenchmarkDesignBlock_() {
+  const bm = (library || []).filter(x => x.id && x.id.startsWith('BM'));
+  const verified = bm.filter(x => (x.days || 0) >= 90 || (x.score || 0) >= 5);
+  if (verified.length === 0) return '';
+  // 광고 형식 분포
+  const formatStats = {}, ctaStats = {};
+  verified.forEach(x => {
+    formatStats[x.format || '-'] = (formatStats[x.format || '-'] || 0) + 1;
+    ctaStats[x.cta || '-'] = (ctaStats[x.cta || '-'] || 0) + 1;
+  });
+  const fmtSorted = Object.entries(formatStats).sort((a, b) => b[1] - a[1]);
+  const ctaSorted = Object.entries(ctaStats).sort((a, b) => b[1] - a[1]);
+  return `
+[🎯 Benchmark design code — Competitor verified ads (90d+ run on Meta Ad Library)]
+Verified ads: ${verified.length} (out of ${bm.length} total benchmark)
+- Display format distribution: ${fmtSorted.map(([k, v]) => `${k}(${v})`).join(', ')}
+- CTA distribution: ${ctaSorted.map(([k, v]) => `${k}(${v})`).join(', ')}
+Notes on competitor visual code:
+- Competitor (e.g. 동탄 도매폰센타) tends to use VIDEO format with long Korean body text overlay; PhoneSpot uses STATIC IMAGE with short bold headline. Keep PhoneSpot visual DNA — don't adopt competitor's video-heavy style.
+- Competitor CTA = Instagram profile redirect; PhoneSpot CTA = direct price check link. Visual should reinforce "click → instant price" affordance.
+- Visual learning from benchmark: layout principles + Korean typography conventions only. Hook style and CTA stay PhoneSpot-distinct.
+`;
+}
+
+// 디자인 분석 결과 → 영문 마크다운 블록
+function buildLibraryDesignBlock_() {
+  const analysis = analyzeWinningDesigns_();
+  if (!analysis) return '';
+
+  const lines = ['', '[★ Reference: PhoneSpot library winning ads — CTR 7%+ verified]',
+    'Learn the design code (color, layout, typography, hook style) from these top performers. Apply principles, do NOT copy directly.', ''];
+
+  // 상위 5개 광고 명시
+  lines.push(`Top ${analysis.top5.length} winners (of ${analysis.totalWinners} verified):`);
+  for (const t of analysis.top5) {
+    lines.push(`- "${t.name}" → Headline: "${t.headline}" (CTR ${t.ctr}%, spend ${t.spend.toLocaleString()}원)`);
+  }
+  lines.push('');
+
+  // 색상 분포
+  if (analysis.colorRank.length > 0) {
+    lines.push('Color performance ranking (from winning ad names):');
+    for (const c of analysis.colorRank.slice(0, 5)) {
+      lines.push(`- ${c.en} (${c.kr}): ${c.count} winners, avg CTR ${c.avgCtr}%`);
+    }
+    lines.push(`→ Strongest color: ${analysis.colorRank[0].en} (${analysis.colorRank[0].kr})`);
+    lines.push('');
+  }
+
+  // 스타일 분포
+  if (analysis.styleRank.length > 0) {
+    lines.push('Style performance ranking:');
+    for (const s of analysis.styleRank.slice(0, 5)) {
+      lines.push(`- ${s.en} (${s.kr}): ${s.count} winners, avg CTR ${s.avgCtr}%`);
+    }
+    lines.push('');
+  }
+
+  // 디자인 코드 추론
+  lines.push('Inferred design code from winners:');
+  lines.push('- Hook style: question-based ("얼마일까?", "공짜?", "안보면 손해?") + imperative CTA ("확인해보세요", "터치 한 번")');
+  lines.push('- Composition: Korean headline at top (bold sans-serif), product at center, clean color block background');
+  lines.push('- Typography: heavy weight, high contrast against background, mobile-legible (≥80px equivalent)');
+  lines.push('- Background: solid color block (top performers use ' +
+    (analysis.colorRank[0] ? analysis.colorRank[0].en : 'vivid solid colors') + '), avoid noisy textures');
+  lines.push('- No human figures, no prices, no excessive icons');
+  lines.push('');
+  lines.push('Apply these codes to the new banner. Headline messaging may differ but visual DNA should match the winners.');
+
+  return lines.join('\n');
+}
+
+// 매 생성마다 다른 "광고 디자이너"처럼 — 포맷은 고정(완성 배너), 아트 디렉션만 랜덤
+const AD_STYLE_POOL = [
+  "comic pop-art (만화체): halftone dots, thick black outlines, explosive starbursts, high-energy red/yellow",
+  "clean bold flat design: chunky sans-serif, solid color blocks, crisp drop-shadows, blue/white",
+  "neon glow on dark background: electric accents, glossy, futuristic night-sale vibe",
+  "kawaii sticker style: rounded soft shapes, cute mascot/star, hearts, pastel sky-blue",
+  "3D glossy render: inflated balloon-like typography, depth, vibrant gradient, shiny highlights",
+  "retro 80s: bold geometric shapes, high-saturation sunset palette, chrome accents",
+  "Y2K holographic: iridescent chrome, sparkles, bubbly type, silver/violet",
+  "festival sale explosion: confetti, gold burst badges, ribbon banners, celebratory red/gold",
+  "masking-tape scrapbook collage: torn-paper callouts, handwritten-feel accents",
+  "bold high-contrast promo: one strong accent color, huge type, generous negative space — still a finished banner with CTA",
+  "vivid gradient mesh: smooth color blends, soft glow, modern app-store promo feel",
+  "tabloid sale flyer: heavy black headline, '특가/긴급' stamp, urgent red highlights"
+];
+function buildImagePrompt(ctx, tone, layout, refMode) {
+  const mode = refMode || 'both';  // 'none'(변주) | 'library' | 'benchmark' | 'both' — 슬로건과 동일한 1:1 매핑
+  const adStyle = pick(AD_STYLE_POOL);  // ★ 매 생성 랜덤 아트 디렉션
+  const productEn = mapProductToEnglish(ctx.product, ctx.category);
+  const layoutEn = CATALOG.layoutEnDesc[layout];
+
+  // 시즌리스면 시즌 모티브 0
+  const seasonAccent = (ctx.season && ctx.season !== '시즌리스' && CATALOG.seasonalAccents[ctx.season])
+    ? ' ' + CATALOG.seasonalAccents[ctx.season]
+    : '';
+
+  // 패턴별 시각 컨셉
+  const patternHint = ctx.pattern && CATALOG.patternVisualHint[ctx.pattern]
+    ? CATALOG.patternVisualHint[ctx.pattern]
+    : '';
+
+  // 카피 폼 입력 조건 전체 컨텍스트로 전달
+  const target = `${ctx.age || ''} ${ctx.gender || ''}`.trim();
+  const contextLines = [
+    ctx.newConcept ? `★ NEW CONCEPT (primary axis): ${ctx.newConcept}` : '',
+    `Category: ${ctx.category || '휴대폰 판매'}`,
+    target ? `Target audience: ${target}` : '',
+    ctx.season && ctx.season !== '시즌리스' ? `Season/event: ${ctx.season}` : '',
+    ctx.usp ? `Core USP / message: ${ctx.usp}` : '',
+    ctx.tones && ctx.tones.length ? `Tone & emotion: ${ctx.tones.join(', ')}` : '',
+    ctx.hooks && ctx.hooks.length ? `Hook structure (visual intent): ${ctx.hooks.join(', ')}` : ''
+  ].filter(Boolean).join('\n');
+
+  // 헤드라인은 이미지에 직접 그리도록 (광고 소재 자체로 사용)
+  const headlineInstruction = ctx.headline
+    ? `Render the Korean headline "${ctx.headline}" as the HERO — very large, bold, high-contrast outlined Korean typography at the top. Use ${tone.palette[1]} for the text against the ${tone.palette[0]} area.`
+    : `Compose and render a short punchy Korean HERO headline (one bold phrase aligned to the USP "${ctx.usp || '지금 확인'}", in the energetic style of 공짜폰 / 무료폰 / 반값폰 / 0원부터) — very large, bold, outlined, high-contrast at the top.`;
+
+  // ★ 1:1 매핑 — refMode에 맞는 참고만 포함 (변주='none' → 둘 다 ❌ / 라이브러리·벤치마크 → 자기 것만)
+  const libraryBlock = ((mode === 'library' || mode === 'both') && typeof buildLibraryDesignBlock_ === 'function') ? buildLibraryDesignBlock_() : '';
+  const benchmarkBlock = ((mode === 'benchmark' || mode === 'both') && typeof buildBenchmarkDesignBlock_ === 'function') ? buildBenchmarkDesignBlock_() : '';
+
+  return `Create a ready-to-use Korean mobile DISPLAY AD creative (a complete performance-marketing banner) for a smartphone retail store (브랜드: 폰스팟, citymarket.co.kr/pb) — NOT a product visual or background plate. Square 1:1 for social/display placements (Meta/Instagram/Kakao/Naver/Google/YouTube). It must look like a fully finished, high-converting Korean retail/telecom promo banner usable immediately for paid ads.
+
+[Campaign context]
+${contextLines}
+${libraryBlock}${benchmarkBlock}
+[Visual specifications]
+Background: ${tone.bgDesc}.${seasonAccent}
+Product: ${productEn}.
+Layout: ${layoutEn}.
+Base mood: ${tone.mood}.
+Color palette: ${tone.palette.slice(0,3).join(', ')}.
+
+[Pattern-specific composition]
+Copy pattern: ${ctx.pattern || 'N/A'}.
+${patternHint}
+
+[Ad copy & layout — render a COMPLETE, ready-to-run banner. Render ALL Korean text directly inside the image as part of the final design. This is NOT a clean background waiting for later text insertion.]
+${headlineInstruction}
+- Typography: large, bold, highly legible Korean lettering (exact treatment follows the art direction below) — understandable in 1 second.
+- Supporting callout: a short Korean sub-headline for the offer based on USP "${ctx.usp || '-'}" (느낌 예: "최대 0원부터!", "지금 조건 확인").
+- Sticker-style elements: speech-bubble boxes, burst/star badges (e.g. "무료폰 가능"), small pop accents — like a real Korean telecom/shopping promo.
+- CTA: a strong rounded CTA button near the bottom with Korean text "지금 조회" or "지금 확인" + arrow — high-contrast, obviously tappable.
+- Every Korean character correctly spelled and crisply legible. No gibberish/garbled glyphs, no empty placeholder bars.
+
+[Visual style — VARY EVERY GENERATION, as if a different Korean ad designer made it]
+Art direction for THIS render: ${adStyle}.
+Fully commit to this art direction — reinterpret colors, typography treatment, badges and accents accordingly (do NOT fall back to a generic default look). Keep it direct-response and click-optimized. Product = clean attractive CUTOUT (not a realistic store scene). Hierarchy stays fixed: dominant headline → callout → badge → product → CTA. Polished and usable. ${target ? 'Resonate with the ' + target + ' demographic.' : ''}
+
+[Avoid]
+Empty headline placeholders, text-free product posters, luxury/editorial minimalism, overly realistic store photography, complicated scenes, small unreadable copy, generic corporate design.`;
+}
+
+function mapProductToEnglish(product, category) {
+  const p = (product || '').toLowerCase();
+  if (p.includes('아이폰') || p.includes('iphone')) return 'modern iPhone Pro smartphone with premium titanium finish, rear camera module clearly visible';
+  if (p.includes('갤럭시') || p.includes('galaxy')) return 'modern Galaxy Ultra smartphone with titanium finish, rear camera module clearly visible, S Pen partially visible';
+  if (p.includes('폴드')) return 'modern foldable smartphone (Galaxy Fold style) shown semi-folded';
+  if (category === '액세서리') return 'phone accessories arranged neatly (earphones, cases, chargers)';
+  if (category === '중고폰') return 'pre-owned smartphone with clean finish, displayed with quality assurance feel';
+  if (category === '통신요금제') return 'smartphone displaying signal/network indicators on screen';
+  return 'modern premium smartphone with rear camera module clearly visible, slightly tilted angle';
+}
+
+function updateSelectedCount(type) {
+  if (type === 'copy') document.getElementById('copy-selected-count').textContent = selectedCopies.size;
+}
+
+// ============ 라이브러리 ============
+function renderActive() {
+  document.getElementById('active-copy-count').textContent = activeCopies.length;
+  const ac = document.getElementById('active-copies');
+  ac.innerHTML = activeCopies.length === 0
+    ? '<div style="color:#86868b">없음</div>'
+    : activeCopies.map((c, i) => `<div style="padding:4px 0; border-bottom:1px solid #f5f5f7"><span class="pattern-tag">${c.pattern}</span> ${c.text}</div>`).join('');
+}
+
+function clearActive() {
+  activeCopies = [];
+  renderActive();
+}
+
+function nextId(prefix) {
+  const ids = library.filter(x => x.id.startsWith(prefix)).map(x => parseInt(x.id.split('-')[1]));
+  const max = ids.length > 0 ? Math.max(...ids) : 0;
+  return `${prefix}-${String(max + 1).padStart(3, '0')}`;
+}
+
+function saveToLibrary() {
+  if (activeCopies.length === 0) {
+    alert('카피를 1개 이상 활성 설정하세요'); return;
+  }
+  const prefix = document.getElementById('lib-id-prefix').value;
+  const id = nextId(prefix);
+  const cCtx = getCopyContext();
+  // 활성 카피 각각에 대해 이미지 프롬프트 자동 생성 (패턴·폼 컨텍스트 반영)
+  const generatedImages = activeCopies.map(c => {
+    const visualToneKey = deriveVisualTone(cCtx, c);
+    const tone = CATALOG.tones[visualToneKey];
+    const layout = pick(tone.layouts);
+    return {
+      tone: visualToneKey,
+      toneLabel: tone.label,
+      layout,
+      headline: c.text,
+      pattern: c.pattern || '',
+      enPrompt: buildImagePrompt({ ...cCtx, headline: c.text, pattern: c.pattern || '' }, tone, layout)
+    };
+  });
+  const entry = {
+    id, date: new Date().toISOString().split('T')[0],
+    category: cCtx.category,
+    age: cCtx.age, gender: cCtx.gender,
+    season: cCtx.season, usp: cCtx.usp, product: cCtx.product,
+    headline: activeCopies[0].text,
+    pattern: activeCopies[0].pattern || '',
+    allCopies: activeCopies,
+    images: generatedImages,
+    memo: document.getElementById('lib-memo').value,
+    performance: { ctr: '', conversions: '', evaluation: '' }
+  };
+  library.push(entry);
+  persistLibrary();
+  alert(`${id}로 저장됨 (이미지 프롬프트 ${generatedImages.length}개 자동 생성·포함)`);
+  document.getElementById('lib-memo').value = '';
+}
+
+function loadLibrary() {
+  const data = localStorage.getItem('phonespot_library');
+  library = data ? JSON.parse(data) : [];
+  renderLibrary();
+}
+function persistLibrary() {
+  localStorage.setItem('phonespot_library', JSON.stringify(library));
+  renderLibrary();
+}
+
+let libraryPage = 1;
+const LIBRARY_PAGE_SIZE = 50;
+
+function renderLibrary() {
+  const tbody = document.getElementById('library-rows');
+  // D4: 필터 + 페이지네이션
+  const filterEl = document.getElementById('library-filter');
+  const filterText = filterEl ? filterEl.value.trim().toLowerCase() : '';
+  let filtered = library;
+  if (filterText) {
+    filtered = library.filter(e =>
+      (e.id || '').toLowerCase().includes(filterText) ||
+      (e.headline || '').toLowerCase().includes(filterText) ||
+      (e.metaAdId || '').toLowerCase().includes(filterText)
+    );
+  }
+  const totalPages = Math.max(1, Math.ceil(filtered.length / LIBRARY_PAGE_SIZE));
+  if (libraryPage > totalPages) libraryPage = 1;
+  const start = (libraryPage - 1) * LIBRARY_PAGE_SIZE;
+  const pageItems = filtered.slice(start, start + LIBRARY_PAGE_SIZE);
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color:#86868b">검색 결과 없음</td></tr>';
+  } else {
+    tbody.innerHTML = pageItems.map(e => {
+      const imgSrc = e.meta?.imageUrl || '';
+      const thumb = imgSrc
+        ? `<a href="${imgSrc}" target="_blank"><img src="${imgSrc}" style="width:50px;height:50px;object-fit:cover;border-radius:4px"></a>`
+        : '-';
+      const ctr = e.performance?.ctr || '';
+      const spend = e.performance?.spend || '';
+      return `
+        <tr>
+          <td><strong>${e.id}</strong>${e.metaAdId ? '<br><span style="font-size:9px;color:#86868b">📡 ' + e.metaAdId.slice(-6) + '</span>' : ''}</td>
+          <td>${e.date}</td>
+          <td>${thumb}</td>
+          <td title="${e.headline}">${(e.headline || '').length > 25 ? e.headline.slice(0, 25) + '…' : (e.headline || '-')}</td>
+          <td><input type="text" value="${ctr}" placeholder="-" style="width:60px" onchange="updatePerf('${e.id}', 'ctr', this.value)"></td>
+          <td><input type="text" value="${spend}" placeholder="-" style="width:70px" onchange="updatePerf('${e.id}', 'spend', this.value)"></td>
+          <td>
+            <select onchange="updatePerf('${e.id}', 'evaluation', this.value)">
+              <option value="">-</option>
+              <option value="우수" ${e.performance?.evaluation === '우수' ? 'selected' : ''}>우수</option>
+              <option value="평균" ${e.performance?.evaluation === '평균' ? 'selected' : ''}>평균</option>
+              <option value="저조" ${e.performance?.evaluation === '저조' ? 'selected' : ''}>저조</option>
+            </select>
+          </td>
+          <td><button class="small danger" onclick="deleteEntry('${e.id}')">삭제</button></td>
+        </tr>
+      `;
+    }).join('');
+  }
+  const stats = document.getElementById('library-stats');
+  const psCount = library.filter(x => x.id.startsWith('PS')).length;
+  const bmCount = library.filter(x => x.id.startsWith('BM')).length;
+  const cpCount = library.filter(x => x.id.startsWith('CP')).length;
+  const goodCount = library.filter(x => x.performance?.evaluation === '우수').length;
+  const metaCount = library.filter(x => x.metaAdId).length;
+  let pageNav = '';
+  if (totalPages > 1) {
+    pageNav = `
+      <div class="stat-item" style="display:flex; gap:4px; align-items:center; margin-left:auto">
+        <button class="small secondary" onclick="libraryPage=Math.max(1,libraryPage-1);renderLibrary();" ${libraryPage <= 1 ? 'disabled' : ''}>◀</button>
+        <span style="font-size:12px">${libraryPage}/${totalPages}</span>
+        <button class="small secondary" onclick="libraryPage=Math.min(${totalPages},libraryPage+1);renderLibrary();" ${libraryPage >= totalPages ? 'disabled' : ''}>▶</button>
+      </div>`;
+  }
+  stats.innerHTML = `
+    <div class="stat-item">총 <strong>${library.length}</strong> ${filterText ? `(필터 ${filtered.length})` : ''}</div>
+    <div class="stat-item">자체 <strong>${psCount}</strong></div>
+    <div class="stat-item">벤치마크 <strong>${bmCount}</strong></div>
+    <div class="stat-item">경쟁사 <strong>${cpCount}</strong></div>
+    <div class="stat-item">우수 <strong>${goodCount}</strong></div>
+    <div class="stat-item">📡 메타 sync <strong>${metaCount}</strong></div>
+    ${pageNav}
+  `;
+  renderMetaPatternInsights();
+  updateLastSyncDisplay();
+}
+
+// ============ D1: 폼 프리셋 저장/불러오기 ============
+function getCopyPresets() {
+  try { return JSON.parse(localStorage.getItem('phonespot_copy_presets') || '{}'); }
+  catch (e) { return {}; }
+}
+function persistCopyPresets(presets) {
+  localStorage.setItem('phonespot_copy_presets', JSON.stringify(presets));
+  renderCopyPresetSelect();
+}
+function renderCopyPresetSelect() {
+  const select = document.getElementById('c-preset-select');
+  if (!select) return;
+  const presets = getCopyPresets();
+  const names = Object.keys(presets);
+  select.innerHTML = '<option value="">(프리셋 선택)</option>' +
+    names.map(n => `<option value="${n}">${n}</option>`).join('');
+}
+function saveCopyPreset() {
+  const name = document.getElementById('c-preset-name').value.trim();
+  if (!name) { alert('프리셋 이름을 입력하세요'); return; }
+  const presets = getCopyPresets();
+  presets[name] = getCopyContext();
+  persistCopyPresets(presets);
+  document.getElementById('c-preset-name').value = '';
+  showToast(`프리셋 "${name}" 저장됨`);
+}
+function loadCopyPreset() {
+  const name = document.getElementById('c-preset-select').value;
+  if (!name) return;
+  const presets = getCopyPresets();
+  const ctx = presets[name];
+  if (!ctx) return;
+  setSelectValue('c-category', ctx.category);
+  setSelectValue('c-age', ctx.age);
+  setSelectValue('c-gender', ctx.gender);
+  setSelectValue('c-season', ctx.season);
+  document.getElementById('c-product').value = ctx.product || '';
+  document.getElementById('c-usp').value = ctx.usp || '';
+  setSelectValue('c-length', ctx.length);
+  setCheckboxGroup('c-tones', ctx.tones || []);
+  // 옛 프리셋에 newConcept이 있으면 복원
+  const ncEl = document.getElementById('c-new-concept');
+  if (ncEl) ncEl.value = ctx.newConcept || '';
+  const rgEl = document.getElementById('c-region');
+  if (rgEl) rgEl.value = ctx.region || '';
+  showToast(`프리셋 "${name}" 불러옴`);
+}
+function deleteCopyPreset() {
+  const name = document.getElementById('c-preset-select').value;
+  if (!name) { alert('삭제할 프리셋 선택'); return; }
+  if (!confirm(`프리셋 "${name}" 삭제?`)) return;
+  const presets = getCopyPresets();
+  delete presets[name];
+  persistCopyPresets(presets);
+  showToast(`프리셋 "${name}" 삭제됨`);
+}
+
+// ============ D2: 마지막 동기화 시각 표시 ============
+function updateLastSyncDisplay() {
+  const el = document.getElementById('meta-last-sync-info');
+  if (!el) return;
+  const metaCount = library.filter(x => x.metaAdId).length;
+  let lastSync = localStorage.getItem('phonespot_last_sync') || '없음';
+  el.innerHTML = `📊 마지막 메타 동기화: <strong>${lastSync}</strong> · 라이브러리 누적: <strong>${library.length}건</strong> (메타: ${metaCount}건)`;
+}
+
+// ============ C2: generator → 시트 양방향 push ============
+function pushLibraryToSheet() {
+  if (!isAppsScriptWebApp()) {
+    alert('Web App 환경에서만 사용 가능 (script.google.com)');
+    return;
+  }
+  if (library.length === 0) {
+    alert('라이브러리가 비어있습니다');
+    return;
+  }
+  if (!confirm(`라이브러리 ${library.length}건을 시트(광고_라이브러리)에 push?\n(시트 기존 데이터 덮어씁니다)`)) return;
+  const statusEl = document.getElementById('meta-fetch-status');
+  if (statusEl) statusEl.innerHTML = '⏳ 시트로 push 중...';
+  google.script.run
+    .withSuccessHandler(function(res) {
+      if (res && res.ok) {
+        if (statusEl) statusEl.innerHTML = `✅ 시트에 ${res.count}건 push 완료 (광고_라이브러리 시트)`;
+        showToast(`${res.count}건 push됨`);
+      } else {
+        if (statusEl) statusEl.innerHTML = `❌ 실패: ${res?.error || '알 수 없음'}`;
+      }
+    })
+    .withFailureHandler(function(err) {
+      if (statusEl) statusEl.innerHTML = `❌ ${err.message || err}`;
+    })
+    .pushLibraryFromGenerator(library);
+}
+
+// ============ Web App 환경 감지 + 자동 fetch ============
+function isAppsScriptWebApp() {
+  return typeof google !== 'undefined' && google.script && google.script.run;
+}
+
+function fetchMetaAuto() {
+  if (isAppsScriptWebApp()) {
+    fetchMetaViaGoogleScriptRun();
+  } else {
+    fetchMetaFromWebApp(); // 외부 환경 fallback (URL/Secret 사용)
+  }
+}
+
+function fetchMetaViaGoogleScriptRun() {
+  const statusEl = document.getElementById('meta-fetch-status');
+  statusEl.innerHTML = '⏳ 시트에서 가져오는 중...';
+  google.script.run
+    .withSuccessHandler(function(data) {
+      if (data && data.error) {
+        statusEl.innerHTML = `❌ 실패: ${data.error}`;
+        return;
+      }
+      if (!Array.isArray(data) || data.length === 0) {
+        statusEl.innerHTML = '⚠️ 시트의 메타_소재 시트에 데이터가 없습니다';
+        return;
+      }
+      document.getElementById('meta-import-json').value = JSON.stringify(data);
+      importFromMetaJSON();
+      statusEl.innerHTML = `✅ 자동 갱신 완료 (${data.length}건, 시트 직접 호출)`;
+      const now = new Date().toLocaleString('ko-KR');
+      localStorage.setItem('phonespot_last_sync', now);
+      updateLastSyncDisplay();
+    })
+    .withFailureHandler(function(err) {
+      statusEl.innerHTML = `❌ 실패: ${err.message || err}`;
+    })
+    .getMetaCreativesForGenerator();
+}
+
+function setupWebAppUI() {
+  const detected = isAppsScriptWebApp();
+  document.getElementById('meta-webapp-detected').style.display = detected ? 'block' : 'none';
+  document.getElementById('meta-webapp-fallback').style.display = detected ? 'none' : 'block';
+  document.getElementById('save-webapp-btn').style.display = detected ? 'none' : 'inline-block';
+  // Web App 환경이면 페이지 로드 시 자동 fetch
+  if (detected) {
+    setTimeout(fetchMetaViaGoogleScriptRun, 500);
+    setTimeout(fetchBenchmarkFromSheetIntoLibrary, 1200);  // 🎯 벤치마크 시트도 자동 import
+  }
+}
+
+// 🎯 벤치마크 시트의 BM 광고를 library 배열에 자동 합류 (페이지 로드 시)
+function fetchBenchmarkFromSheetIntoLibrary() {
+  if (!isAppsScriptWebApp()) return;
+  google.script.run
+    .withSuccessHandler(function(res) {
+      if (!res || !res.ok || !Array.isArray(res.items) || res.items.length === 0) return;
+      // 기존 library에서 BM/CP 제거 후 새로 합류 (중복 방지)
+      library = library.filter(x => !(x.id && (x.id.startsWith('BM') || x.id.startsWith('CP'))));
+      for (const bm of res.items) {
+        const firstLine = (bm.body || '').split('\n').map(s => s.trim()).filter(Boolean)[0] || '';
+        const headline = firstLine.slice(0, 60); // 첫 줄 60자 컷
+        library.push({
+          id: bm.id,
+          kind: bm.kind,                    // BM/CP 구분자 (옛 'category' 키)
+          category: bm.category || '',      // ★ 종민 수기 라벨 (상품 카테고리)
+          hookStructure: bm.hookStructure || '',  // ★ 종민 수기 라벨 (후킹 구조)
+          region: bm.region || '',          // ★ Task 44 — 종민 수기 자유 텍스트 (공백=전국)
+          headline: headline,
+          body: bm.body,
+          pageName: bm.pageName,
+          pageId: bm.pageId,
+          followers: bm.followers,
+          format: bm.format,
+          cta: bm.cta,
+          startDate: bm.startDate,
+          platforms: bm.platforms,
+          days: bm.days,
+          collation: bm.collation,
+          score: bm.score,
+          grade: bm.grade,
+          thumbnail: bm.thumbnail,
+          adLibraryUrl: bm.adLibraryUrl,
+          searchTerm: bm.searchTerm,
+          isBenchmark: true
+        });
+      }
+      renderLibrary();
+      updateLastSyncDisplay();
+      const v = res.items.filter(x => x.grade && x.grade.startsWith('★★★')).length;
+      showToast(`🎯 벤치마크 ${res.items.length}건 시트에서 import (★★★ ${v}건)`);
+    })
+    .withFailureHandler(function(err) {
+      console.warn('벤치마크 import 실패: ' + (err.message || err));
+    })
+    .getBenchmarkForGenerator();
+}
+
+// ============ Web App URL 저장 / 자동 갱신 (외부 환경 fallback) ============
+function saveWebAppUrl() {
+  const url = document.getElementById('meta-webapp-url').value.trim();
+  const secret = document.getElementById('meta-webapp-secret').value.trim();
+  if (!url) { alert('URL을 입력하세요'); return; }
+  localStorage.setItem('phonespot_meta_webapp', url);
+  if (secret) localStorage.setItem('phonespot_meta_secret', secret);
+  showToast('URL/Secret 저장됨');
+}
+
+function loadWebAppUrl() {
+  const url = localStorage.getItem('phonespot_meta_webapp');
+  const secret = localStorage.getItem('phonespot_meta_secret');
+  if (url) document.getElementById('meta-webapp-url').value = url;
+  if (secret) document.getElementById('meta-webapp-secret').value = secret;
+}
+
+async function fetchMetaFromWebApp() {
+  const url = document.getElementById('meta-webapp-url').value.trim();
+  const secret = document.getElementById('meta-webapp-secret').value.trim();
+  if (!url) { alert('Web App URL을 먼저 입력하세요'); return; }
+  const statusEl = document.getElementById('meta-fetch-status');
+  statusEl.innerHTML = '⏳ 시트에서 가져오는 중...';
+  try {
+    const sep = url.includes('?') ? '&' : '?';
+    const fullUrl = `${url}${sep}api=meta_creatives${secret ? '&secret=' + encodeURIComponent(secret) : ''}`;
+    const res = await fetch(fullUrl);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const text = await res.text();
+    // HTML 응답 감지 (어드민 페이지가 반환되면 인증 실패)
+    if (text.trim().startsWith('<')) {
+      throw new Error('어드민 페이지 반환됨 → Code.gs doGet 라우팅 또는 secret 확인');
+    }
+    const data = JSON.parse(text);
+    if (data.error) throw new Error(data.error);
+    if (!Array.isArray(data)) throw new Error('응답 형식 오류');
+    document.getElementById('meta-import-json').value = JSON.stringify(data);
+    importFromMetaJSON();
+    statusEl.innerHTML = `✅ 자동 갱신 완료 (${data.length}건)`;
+    if (!localStorage.getItem('phonespot_meta_webapp')) saveWebAppUrl();
+  } catch (e) {
+    statusEl.innerHTML = `❌ 실패: ${e.message}`;
+  }
+}
+
+// ============ 메타 데이터 import + 패턴 분석 ============
+function importFromMetaJSON() {
+  const text = document.getElementById('meta-import-json').value.trim();
+  if (!text) { alert('JSON을 붙여넣어주세요'); return; }
+  let data;
+  // 1차: 그대로 파싱
+  try {
+    data = JSON.parse(text);
+  } catch (e1) {
+    // 2차: control character (줄바꿈/탭 등) 자동 escape 후 재시도
+    try {
+      const cleaned = text.split("").map(function(c) {
+        var code = c.charCodeAt(0);
+        if (code < 32) {
+          if (code === 10) return "\\n";
+          if (code === 13) return "\\r";
+          if (code === 9) return "\\t";
+          return "";
+        }
+        return c;
+      }).join("");
+      data = JSON.parse(cleaned);
+    } catch (e2) {
+      alert('JSON 파싱 실패: ' + e2.message + '\n\n시트에서 다시 export 후 재시도 하세요.');
+      return;
+    }
+  }
+  if (!Array.isArray(data)) { alert('JSON이 배열 형식이어야 함'); return; }
+  let added = 0, updated = 0;
+  data.forEach(item => {
+    const existing = library.find(e => e.metaAdId === item.metaAdId);
+    const entry = {
+      id: item.id || existing?.id || `PS-${String(library.length + 1).padStart(3, '0')}`,
+      metaAdId: item.metaAdId,
+      date: (item.createdDate || '').toString().split('T')[0] || existing?.date || new Date().toISOString().split('T')[0],
+      category: (item.category || '').trim() || existing?.category || '',  // ★ 시트 16열 카테고리 우선 (종민 라벨링)
+      region: (item.region || '').trim() || existing?.region || '',         // ★ 시트 17열 지역 (공백=전국)
+      headline: item.headline || existing?.headline || '-',
+      pattern: existing?.pattern || '메타 운영중',
+      meta: {
+        name: item.name,
+        status: item.status,
+        body: item.body,
+        imageUrl: item.imageUrl
+      },
+      allCopies: existing?.allCopies || [{ pattern: '메타', text: item.headline }],
+      images: existing?.images || (item.imageUrl ? [{ toneLabel: '메타원본', layout: 'meta', headline: item.headline, enPrompt: '(메타 운영중 — 원본 이미지 URL 참조)' }] : []),
+      memo: existing?.memo || '',
+      performance: {
+        impressions: item.impressions,
+        clicks: item.clicks,
+        spend: item.spend,
+        ctr: item.ctr,
+        cpc: item.cpc,
+        evaluation: item.evaluation,
+        conversions: existing?.performance?.conversions || ''
+      }
+    };
+    if (existing) {
+      Object.assign(existing, entry);
+      updated++;
+    } else {
+      library.push(entry);
+      added++;
+    }
+  });
+  persistLibrary();
+  document.getElementById('meta-import-stats').textContent = `✅ 신규 ${added}건 / 갱신 ${updated}건`;
+  document.getElementById('meta-import-json').value = '';
+  showToast(`메타 import: 신규 ${added} / 갱신 ${updated}`);
+}
+
+function renderMetaPatternInsights() {
+  const el = document.getElementById('meta-pattern-insights');
+  if (!el) return;
+  const metaItems = library.filter(x => x.metaAdId);
+  if (metaItems.length === 0) {
+    el.innerHTML = '';
+    return;
+  }
+  // 우수 광고 분석
+  const good = metaItems.filter(x => x.performance?.evaluation === '우수');
+  const avg = metaItems.filter(x => x.performance?.evaluation === '평균');
+  const bad = metaItems.filter(x => x.performance?.evaluation === '저조');
+
+  const avgCTR = (arr) => {
+    if (arr.length === 0) return 0;
+    return (arr.reduce((s, x) => s + parseFloat(x.performance?.ctr || 0), 0) / arr.length).toFixed(2);
+  };
+
+  // 헤드라인 키워드 빈도 (우수 광고에서)
+  const keywordFreq = {};
+  good.forEach(x => {
+    const words = (x.headline || '').split(/\s+/).filter(w => w.length >= 2);
+    words.forEach(w => { keywordFreq[w] = (keywordFreq[w] || 0) + 1; });
+  });
+  const topKeywords = Object.entries(keywordFreq)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 8)
+    .map(([w, c]) => `${w}(${c})`)
+    .join(', ');
+
+  el.innerHTML = `
+    <div class="info-box success">
+      <strong>📊 메타 광고 패턴 인사이트 (${metaItems.length}건 분석)</strong><br>
+      평가 분포: 우수 ${good.length} (CTR ${avgCTR(good)}%) / 평균 ${avg.length} (${avgCTR(avg)}%) / 저조 ${bad.length} (${avgCTR(bad)}%)<br>
+      ${topKeywords ? `<strong>우수 광고 빈출 키워드:</strong> ${topKeywords}<br>` : ''}
+      <span style="font-size:11px; color:#5d4e00">→ 카피 생성 시 이 키워드를 "추가 키워드" 슬롯에 넣으면 우수 패턴 카피 풀이 우선 생성됨</span>
+    </div>
+  `;
+}
+
+function updatePerf(id, field, value) {
+  const entry = library.find(e => e.id === id);
+  if (entry) { entry.performance = entry.performance || {}; entry.performance[field] = value; persistLibrary(); }
+}
+function deleteEntry(id) {
+  if (!confirm(`${id} 삭제?`)) return;
+  library = library.filter(e => e.id !== id); persistLibrary();
+}
+function exportLibrary() {
+  const blob = new Blob([JSON.stringify(library, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `phonespot-library-${new Date().toISOString().split('T')[0]}.json`; a.click();
+  URL.revokeObjectURL(url);
+}
+function importLibrary(event) {
+  const file = event.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!Array.isArray(data)) throw new Error('잘못된 형식');
+      if (confirm(`${data.length}개 항목 병합? (취소=덮어쓰기)`)) library = [...library, ...data];
+      else library = data;
+      persistLibrary(); alert('완료');
+    } catch (err) { alert('실패: ' + err.message); }
+  };
+  reader.readAsText(file);
+}
+function clearLibrary() {
+  if (!confirm('모두 삭제?')) return;
+  library = []; persistLibrary();
+}
+
+// ============ 기타 ============
+function copyText(text) {
+  // 1차: 표준 Clipboard API (https/localhost에서만 작동)
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(
+      () => showToast('복사됨'),
+      () => fallbackCopy(text)
+    );
+    return;
+  }
+  // 2차: file:// 환경 fallback
+  fallbackCopy(text);
+}
+
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.setAttribute('readonly', '');
+  ta.style.cssText = 'position:fixed; top:0; left:0; opacity:0; pointer-events:none;';
+  document.body.appendChild(ta);
+  ta.focus();
+  ta.select();
+  ta.setSelectionRange(0, text.length);
+  let success = false;
+  try { success = document.execCommand('copy'); } catch (e) {}
+  document.body.removeChild(ta);
+  if (success) showToast('복사됨');
+  else showCopyModal(text);
+}
+
+function showCopyModal(text) {
+  const old = document.getElementById('copy-modal');
+  if (old) old.remove();
+  const modal = document.createElement('div');
+  modal.id = 'copy-modal';
+  modal.style.cssText = 'position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:10000; display:flex; align-items:center; justify-content:center; padding:20px;';
+  modal.innerHTML = `
+    <div style="background:#fff; padding:20px; border-radius:12px; max-width:700px; width:100%;">
+      <h3 style="margin-bottom:6px; font-size:16px">자동 복사 차단됨 (file:// 환경)</h3>
+      <p style="font-size:12px; color:#86868b; margin-bottom:10px">아래 텍스트가 자동 선택되어 있음 → Ctrl+C 로 복사</p>
+      <textarea id="copy-modal-text" readonly style="width:100%; height:240px; padding:10px; border:1px solid #d2d2d7; border-radius:8px; font-family:monospace; font-size:12px; resize:none;"></textarea>
+      <div style="text-align:right; margin-top:10px;">
+        <button onclick="document.getElementById('copy-modal').remove()">닫기</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  const ta = document.getElementById('copy-modal-text');
+  ta.value = text;
+  setTimeout(() => { ta.focus(); ta.select(); }, 50);
+}
+function toggle(id) { document.getElementById(id).classList.toggle('hidden'); }
+function showToast(msg) {
+  let toast = document.getElementById('toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'toast';
+    toast.style.cssText = 'position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:#1d1d1f; color:#fff; padding:8px 16px; border-radius:20px; font-size:13px; z-index:9999; opacity:0; transition:opacity 0.2s';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = msg;
+  toast.style.opacity = '1';
+  setTimeout(() => toast.style.opacity = '0', 1500);
+}
+function switchTabByName(name) {
+  const labelMap = { copy: '카피 생성', library: '라이브러리', settings: '설정' };
+  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(el => el.classList.remove('active'));
+  Array.from(document.querySelectorAll('.tab')).find(el => el.textContent.includes(labelMap[name]))?.classList.add('active');
+  document.getElementById('panel-' + name).classList.add('active');
+}
+
+// ============ 초기화 ============
+// 옛 localStorage에 저장된 카탈로그가 있으면 무시 + 정리 (확장된 풀 강제)
+localStorage.removeItem('phonespot_catalog');
+localStorage.removeItem('phonespot_api');
+loadLibrary();
+renderActive();
+loadWebAppUrl();
+setupWebAppUI();
+renderCopyPresetSelect();
+updateLastSyncDisplay();
+// 패턴 풀 카운트 표시
+const poolCountEl = document.getElementById('pattern-pool-count');
+if (poolCountEl) poolCountEl.textContent = CATALOG.copyPatterns.length;
+
+// 결과 박스 슬라이더 초기값 (localStorage)
+(function loadGuideThresholds() {
+  const ctrEl = document.getElementById('result-min-ctr');
+  const daysEl = document.getElementById('result-min-days');
+  const gradeEl = document.getElementById('result-min-grade');
+  if (ctrEl) ctrEl.value = parseFloat(localStorage.getItem('gen.minCtr')) || 7;
+  if (daysEl) daysEl.value = parseInt(localStorage.getItem('gen.minDays')) || 90;
+  if (gradeEl) gradeEl.value = parseInt(localStorage.getItem('gen.minGrade')) || 3;
+})();
+</script>
+</body>
+</html>

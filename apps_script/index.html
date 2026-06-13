@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<base target="_top">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>폰스팟 어드민</title>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --orange: #FF6F0F; --orange-soft: #FFF4ED; --orange-dark: #E65A00;
+  --black: #0A0A0A; --gray-900: #1F1F1F; --gray-700: #4A4A4A;
+  --gray-500: #888; --gray-300: #D9D9D9; --gray-100: #F5F5F5;
+  --gray-50: #FAFAFA; --white: #FFFFFF;
+  --green: #16A34A; --red: #DC2626; --yellow: #F59E0B;
+  --bg: var(--gray-50); --surface: var(--white); --text: var(--black);
+  --border: var(--gray-300); --muted: var(--gray-500);
+}
+[data-theme="dark"] {
+  --bg: #0A0A0A; --surface: #1F1F1F; --text: #F5F5F5;
+  --border: #333; --muted: #888;
+  --gray-50: #1A1A1A; --gray-100: #252525; --gray-300: #404040;
+  --gray-500: #888; --gray-700: #BBB; --orange-soft: #3D1F0A;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; }
+body {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text); background: var(--bg);
+  font-size: 14px; line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── 레이아웃 ──────────────────────────────────────── */
+.layout { display: flex; min-height: 100vh; }
+.sidebar {
+  width: 220px; background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 16px 0; position: fixed; top: 0; left: 0; bottom: 0;
+  transition: transform 0.2s; z-index: 200;
+}
+.sidebar__logo {
+  font-size: 18px; font-weight: 800; padding: 8px 20px 20px;
+}
+.sidebar__logo span { color: var(--orange); }
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 20px; cursor: pointer; color: var(--text);
+  font-size: 14px; font-weight: 500;
+  border-left: 3px solid transparent;
+  transition: background 0.1s;
+}
+.nav-item:hover { background: var(--gray-100); }
+.nav-item.active {
+  background: var(--orange-soft); color: var(--orange);
+  border-left-color: var(--orange); font-weight: 700;
+}
+.nav-icon { width: 18px; text-align: center; }
+
+.main { flex: 1; margin-left: 220px; }
+.header {
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  padding: 14px 24px; display: flex; align-items: center;
+  justify-content: space-between; position: sticky; top: 0; z-index: 100;
+}
+.hamburger { display: none; background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text); }
+.header__title { font-size: 16px; font-weight: 700; }
+.header__right { display: flex; align-items: center; gap: 8px; }
+.btn {
+  border: 1px solid var(--border); background: var(--surface); color: var(--text);
+  padding: 7px 12px; border-radius: 7px; font-size: 12px; cursor: pointer;
+  font-family: inherit; font-weight: 500; transition: all 0.1s;
+}
+.btn:hover { border-color: var(--orange); color: var(--orange); }
+.btn--primary { background: var(--orange); color: var(--white); border-color: var(--orange); }
+.btn--primary:hover { background: var(--orange-dark); color: var(--white); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.select {
+  border: 1px solid var(--border); background: var(--surface); color: var(--text);
+  padding: 6px 10px; border-radius: 7px; font-size: 12px;
+  font-family: inherit; cursor: pointer;
+}
+.updated { font-size: 11px; color: var(--muted); margin-right: 8px; }
+
+.container { padding: 20px 24px; max-width: 1400px; }
+.page { display: none; }
+.page.active { display: block; }
+
+/* ── 섹션 ─────────────────────────────────────────── */
+.section { margin-bottom: 28px; }
+.section__head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px; gap: 12px; flex-wrap: wrap;
+}
+.section__title {
+  font-size: 15px; font-weight: 700; color: var(--text);
+  display: flex; align-items: center; gap: 8px;
+}
+.section__title::before {
+  content: ''; width: 3px; height: 15px; background: var(--orange); border-radius: 2px;
+}
+
+/* ── KPI 카드 (MoM) ────────────────────────────────── */
+.kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.kpi-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 4px;
+  transition: all 0.15s;
+}
+.kpi-card:hover { border-color: var(--orange); transform: translateY(-1px); }
+.kpi-card__label { font-size: 11px; color: var(--muted); font-weight: 500; }
+.kpi-card__value { font-size: 22px; font-weight: 800; color: var(--text); line-height: 1.1; }
+.kpi-card__mom {
+  font-size: 11px; font-weight: 600;
+  margin-top: 4px; display: inline-flex; align-items: center; gap: 3px;
+}
+.kpi-card__mom--up { color: var(--green); }
+.kpi-card__mom--down { color: var(--red); }
+.kpi-card__mom--flat { color: var(--muted); }
+
+/* ── 표 ──────────────────────────────────────────── */
+.table-wrap {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; overflow: hidden; overflow-x: auto;
+}
+table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 600px; }
+th, td { padding: 9px 11px; text-align: center; border-bottom: 1px solid var(--gray-100); white-space: nowrap; color: var(--text); }
+th {
+  background: var(--gray-50); font-weight: 700; color: var(--gray-700);
+  font-size: 12px; border-bottom: 2px solid var(--border); cursor: pointer;
+  user-select: none;
+}
+th.sortable:hover { color: var(--orange); }
+th:first-child, td:first-child { text-align: left; font-weight: 600; padding-left: 14px; }
+tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: var(--orange-soft); }
+
+.badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+.badge--green { background: #DCFCE7; color: var(--green); }
+.badge--red { background: #FEE2E2; color: var(--red); }
+.badge--yellow { background: #FEF3C7; color: var(--yellow); }
+.badge--gray { background: var(--gray-100); color: var(--muted); }
+.badge--orange { background: var(--orange-soft); color: var(--orange-dark); }
+
+/* ── 차트 ────────────────────────────────────────── */
+.chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.chart-box {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 16px; height: 340px;
+}
+.chart-box--full { grid-column: 1 / -1; }
+.chart-title {
+  font-size: 13px; font-weight: 600; color: var(--text);
+  margin-bottom: 8px;
+}
+
+/* ── 카톡 ────────────────────────────────────────── */
+.cells {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 16px 18px; display: grid; grid-template-columns: repeat(8, 1fr); gap: 12px;
+}
+.cell { display: flex; flex-direction: column; gap: 4px; text-align: center; }
+.cell__label { font-size: 11px; color: var(--muted); font-weight: 500; }
+.cell__value { font-size: 16px; font-weight: 700; color: var(--text); }
+
+/* ── 광고소재 갤러리 ──────────────────────────────── */
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+.creative-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  overflow: hidden; transition: all 0.15s; cursor: pointer;
+}
+.creative-card:hover { transform: translateY(-2px); border-color: var(--orange); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+.creative-card__img {
+  width: 100%; height: 160px; background: var(--gray-100);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted); font-size: 12px;
+  background-size: cover; background-position: center;
+}
+.creative-card__body { padding: 12px; }
+.creative-card__name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.creative-card__meta { font-size: 11px; color: var(--muted); display: flex; justify-content: space-between; align-items: center; }
+
+/* ── 검색/필터 ───────────────────────────────────── */
+.filter-bar { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.input {
+  border: 1px solid var(--border); background: var(--surface); color: var(--text);
+  padding: 7px 12px; border-radius: 7px; font-size: 13px;
+  font-family: inherit; min-width: 180px; flex: 1;
+}
+.input:focus { outline: none; border-color: var(--orange); }
+
+/* ── 예산 ────────────────────────────────────────── */
+.budget-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 20px; max-width: 600px;
+}
+.budget-stats { display: flex; gap: 24px; margin-bottom: 16px; }
+.budget-stat__label { font-size: 11px; color: var(--muted); font-weight: 500; }
+.budget-stat__value { font-size: 20px; font-weight: 700; color: var(--text); }
+.budget-stat__value--spent { color: var(--orange); }
+.budget-stat__value--left  { color: var(--green); }
+.progress {
+  background: var(--gray-100); border-radius: 999px; height: 12px;
+  overflow: hidden; margin-bottom: 8px;
+}
+.progress__fill {
+  height: 100%; background: linear-gradient(90deg, var(--orange) 0%, var(--orange-dark) 100%);
+  border-radius: 999px; transition: width 0.5s;
+}
+.progress__fill--over { background: var(--red); }
+.budget-input-row { display: flex; gap: 8px; margin-top: 16px; align-items: center; }
+.budget-input-row label { font-size: 12px; color: var(--muted); font-weight: 500; }
+
+/* ── 설정 ────────────────────────────────────────── */
+.setting-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 0; border-bottom: 1px solid var(--gray-100);
+}
+.setting-row:last-child { border-bottom: none; }
+.setting-label { font-size: 14px; font-weight: 600; color: var(--text); }
+.setting-desc { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.switch { position: relative; width: 42px; height: 24px; }
+.switch input { display: none; }
+.switch__slider {
+  position: absolute; inset: 0; background: var(--gray-300); border-radius: 12px;
+  cursor: pointer; transition: 0.2s;
+}
+.switch__slider::before {
+  content: ''; position: absolute; top: 2px; left: 2px;
+  width: 20px; height: 20px; background: white; border-radius: 50%;
+  transition: 0.2s;
+}
+.switch input:checked + .switch__slider { background: var(--orange); }
+.switch input:checked + .switch__slider::before { transform: translateX(18px); }
+
+/* ── 상태/로딩 ───────────────────────────────────── */
+.status {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 30px; text-align: center; max-width: 700px; margin: 40px auto;
+}
+.status__icon { font-size: 32px; margin-bottom: 12px; }
+.status__title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.status__msg { font-size: 13px; color: var(--gray-700); margin-bottom: 16px; }
+.status__detail {
+  background: var(--gray-50); border: 1px solid var(--border); border-radius: 8px;
+  padding: 12px; font-family: monospace; font-size: 11px; color: var(--gray-700);
+  text-align: left; white-space: pre-wrap; word-break: break-all; max-height: 200px; overflow-y: auto;
+}
+.status__hint {
+  font-size: 12px; color: var(--orange-dark); margin-top: 16px;
+  background: var(--orange-soft); padding: 12px; border-radius: 8px;
+}
+.loader {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 40px; color: var(--muted); font-size: 13px;
+}
+.loader::before {
+  content: ''; display: inline-block; width: 14px; height: 14px;
+  border: 2px solid var(--border); border-top-color: var(--orange);
+  border-radius: 50%; animation: spin 0.6s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.empty {
+  text-align: center; padding: 40px; color: var(--muted); font-size: 13px;
+  background: var(--surface); border: 1px dashed var(--border); border-radius: 10px;
+}
+
+.toast {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--black); color: var(--white);
+  padding: 12px 20px; border-radius: 24px; font-size: 13px;
+  z-index: 300; opacity: 0; transition: all 0.3s ease;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ── 모바일 ──────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .cells { grid-template-columns: repeat(4, 1fr); }
+  .chart-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .main { margin-left: 0; }
+  .hamburger { display: block; }
+  .container { padding: 16px; }
+  .header { padding: 12px 16px; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .kpi-card__value { font-size: 18px; }
+  .cells { grid-template-columns: repeat(2, 1fr); }
+  .chart-box { padding: 12px; height: 280px; }
+  .gallery { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
+  .budget-stats { flex-direction: column; gap: 10px; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- ── 사이드바 ────────────────────────────────── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar__logo">폰스<span>팟</span> 어드민</div>
+    <div class="nav-item active" data-page="dashboard"><span class="nav-icon">📊</span>대시보드</div>
+    <div class="nav-item" data-page="creatives"><span class="nav-icon">🖼</span>광고소재</div>
+    <div class="nav-item" data-page="inquiries"><span class="nav-icon">💬</span>문의 리스트</div>
+    <div class="nav-item" data-page="budget"><span class="nav-icon">💰</span>예산</div>
+    <div class="nav-item" data-page="settings"><span class="nav-icon">⚙️</span>설정</div>
+  </aside>
+
+  <!-- ── 메인 ────────────────────────────────────── -->
+  <div class="main">
+    <header class="header">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <button class="hamburger" onclick="toggleSidebar()">☰</button>
+        <div class="header__title" id="pageTitle">대시보드</div>
+      </div>
+      <div class="header__right">
+        <select class="select" id="periodSelect" onchange="onPeriodChange()">
+          <option value="yesterday">어제</option>
+          <option value="7">최근 7일</option>
+          <option value="14">최근 14일</option>
+          <option value="30" selected>최근 30일</option>
+        </select>
+        <span class="updated" id="updatedAt">—</span>
+        <button class="btn" id="btnRefresh" onclick="refreshAll()" disabled>↻ 새로고침</button>
+      </div>
+    </header>
+
+    <div class="container">
+      <!-- 대시보드 -->
+      <div class="page active" id="page-dashboard">
+        <div id="dashContent"><div class="loader">초기화 중…</div></div>
+      </div>
+      <!-- 광고소재 -->
+      <div class="page" id="page-creatives">
+        <div class="section">
+          <div class="section__head">
+            <div class="section__title">광고 소재 갤러리</div>
+            <div class="filter-bar" style="margin:0;">
+              <select class="select" id="creativeChannel" onchange="renderCreatives()">
+                <option value="">전체 채널</option>
+                <option>메타</option><option>구글</option><option>네이버</option><option>카카오</option><option>당근</option>
+              </select>
+              <select class="select" id="creativeStatus" onchange="renderCreatives()">
+                <option value="">전체 상태</option>
+                <option>집행중</option><option>대기</option><option>종료</option>
+              </select>
+            </div>
+          </div>
+          <div id="creativesContent"><div class="loader">로딩 중…</div></div>
+        </div>
+      </div>
+      <!-- 문의 리스트 -->
+      <div class="page" id="page-inquiries">
+        <div class="section">
+          <div class="section__head">
+            <div class="section__title">문의 리스트</div>
+          </div>
+          <div class="filter-bar">
+            <input class="input" id="inqSearch" placeholder="🔍 이름/채널/메모 검색" oninput="renderInquiries()">
+            <select class="select" id="inqStatus" onchange="renderInquiries()">
+              <option value="">전체 상태</option>
+              <option>개통</option><option>미개통</option>
+            </select>
+            <select class="select" id="inqSource" onchange="renderInquiries()">
+              <option value="">전체 채널</option>
+              <option>메타</option><option>구글</option><option>네이버</option><option>카카오</option><option>당근</option><option>불확실</option>
+            </select>
+          </div>
+          <div id="inquiriesContent"><div class="loader">로딩 중…</div></div>
+        </div>
+      </div>
+      <!-- 예산 -->
+      <div class="page" id="page-budget">
+        <div class="section">
+          <div class="section__title" style="margin-bottom:14px;">월 예산 트래커</div>
+          <div id="budgetContent"><div class="loader">로딩 중…</div></div>
+        </div>
+      </div>
+      <!-- 설정 -->
+      <div class="page" id="page-settings">
+        <div class="section">
+          <div class="section__title" style="margin-bottom:14px;">설정</div>
+          <div class="budget-card">
+            <div class="setting-row">
+              <div>
+                <div class="setting-label">🌙 다크모드</div>
+                <div class="setting-desc">야간 보기 편한 색상</div>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="darkToggle" onchange="toggleDark()">
+                <span class="switch__slider"></span>
+              </label>
+            </div>
+            <div class="setting-row">
+              <div>
+                <div class="setting-label">⏱ 자동 새로고침</div>
+                <div class="setting-desc">5분마다 데이터 자동 갱신</div>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="autoRefresh" onchange="toggleAutoRefresh()">
+                <span class="switch__slider"></span>
+              </label>
+            </div>
+            <div class="setting-row">
+              <div>
+                <div class="setting-label">👤 접근 권한</div>
+                <div class="setting-desc">Apps Script의 doGet → allowed 배열에 이메일 추가</div>
+              </div>
+              <button class="btn" onclick="alert('Apps Script 에디터 → Code.gs 상단의 doGet 함수 → allowed 배열에 이메일 추가 후 재배포')">안내</button>
+            </div>
+            <div class="setting-row">
+              <div>
+                <div class="setting-label">🔄 시트 새로고침</div>
+                <div class="setting-desc">refreshAll 함수 실행 (30~60초)</div>
+              </div>
+              <button class="btn btn--primary" onclick="refreshAll()">실행</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let monthlyChart = null, dailyChart = null, donutChart = null;
+let currentPeriod = '30';
+let currentMomData = null;
+let autoRefreshTimer = null;
+let allCreatives = [], allInquiries = [];
+
+console.log('[폰스팟] 스크립트 로드');
+
+window.addEventListener('load', () => {
+  // 다크모드 복원
+  if (localStorage.getItem('darkMode') === '1') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.getElementById('darkToggle').checked = true;
+  }
+  // 자동 새로고침 복원
+  if (localStorage.getItem('autoRefresh') === '1') {
+    document.getElementById('autoRefresh').checked = true;
+    startAutoRefresh();
+  }
+  // 네비
+  document.querySelectorAll('.nav-item').forEach(el => {
+    el.addEventListener('click', () => switchPage(el.dataset.page));
+  });
+  // 초기 ping → 데이터 로드
+  startPing();
+});
+
+function startPing() {
+  setDashContent('<div class="loader">서버 연결 확인 중…</div>');
+  const t = setTimeout(() => {
+    showError('서버 응답 없음 (10초)',
+      'ping() 함수가 응답하지 않습니다.',
+      '1. Code.gs에 ping 함수 없음\n2. 권한 미승인\n3. 재배포 안 함\n4. 광고차단/쿠키 차단');
+  }, 10000);
+  try {
+    google.script.run
+      .withSuccessHandler(res => { clearTimeout(t); console.log('[ping] OK', res); loadDashboard(); })
+      .withFailureHandler(err => { clearTimeout(t); showError('서버 연결 실패', err.message || err); })
+      .ping();
+  } catch (e) { clearTimeout(t); showError('google.script.run 호출 실패', e.message); }
+}
+
+// ── 페이지 전환 ────────────────────────────────────────
+function switchPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.querySelector(`.nav-item[data-page="${name}"]`).classList.add('active');
+
+  const titles = { dashboard: '대시보드', creatives: '광고 소재', inquiries: '문의 리스트', budget: '예산', settings: '설정' };
+  document.getElementById('pageTitle').textContent = titles[name];
+
+  if (name === 'creatives') loadCreatives();
+  if (name === 'inquiries') loadInquiries();
+  if (name === 'budget')    loadBudget();
+
+  if (window.innerWidth <= 768) document.getElementById('sidebar').classList.remove('open');
+}
+
+function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+
+// ── 기간 변경 ─────────────────────────────────────────
+function onPeriodChange() {
+  currentPeriod = document.getElementById('periodSelect').value;
+  loadDashboard();
+}
+
+// ── 대시보드 로딩 ─────────────────────────────────────
+function loadDashboard() {
+  setDashContent('<div class="loader">데이터 로딩 중…</div>');
+  google.script.run
+    .withSuccessHandler(data => {
+      if (!data.ok) { showError('서버 함수 에러', data.error); return; }
+      // MoM 데이터도 같이 로드
+      google.script.run
+        .withSuccessHandler(mom => {
+          if (mom.ok) currentMomData = mom;
+          // 일별 추이도 로드
+          google.script.run
+            .withSuccessHandler(daily => {
+              renderDashboard(data, daily.ok ? daily : null);
+              document.getElementById('btnRefresh').disabled = false;
+            })
+            .getDailySpendTrend(30);
+        })
+        .getMomComparison();
+    })
+    .withFailureHandler(err => showError('로딩 실패', err.message || err))
+    .getDashboardData(currentPeriod);
+}
+
+// ── 대시보드 렌더 ─────────────────────────────────────
+function renderDashboard(data, daily) {
+  document.getElementById('updatedAt').textContent = '갱신 ' + (data.updatedAt || '—');
+  const k = data.kpis;
+
+  let html = '';
+
+  // KPI 카드 4개 (MoM 포함)
+  html += '<div class="section"><div class="section__title">오늘의 한눈</div><div class="kpi-grid">';
+  html += kpiCard('💵 광고비', won(k.spend), momArrow('spend'));
+  html += kpiCard('💰 CPL(전체)', won(k.cpl_all), null);
+  html += kpiCard('🎯 CPL(추적)', won(k.cpl_tracked), null);
+  html += kpiCard('📊 문의수', k.inquiry + '건', momArrow('inquiry'));
+  html += '</div></div>';
+
+  // 핵심 지표 라인
+  html += `<div class="section"><div class="section__title">핵심 지표</div>
+    <div class="cells" style="grid-template-columns: repeat(6, 1fr);">
+      <div class="cell"><div class="cell__label">노출</div><div class="cell__value">${num(k.impression)}</div></div>
+      <div class="cell"><div class="cell__label">클릭</div><div class="cell__value">${num(k.click)}</div></div>
+      <div class="cell"><div class="cell__label">CTR</div><div class="cell__value">${pct(k.ctr)}</div></div>
+      <div class="cell"><div class="cell__label">출처확인</div><div class="cell__value">${k.sourceConfirmed}건</div></div>
+      <div class="cell"><div class="cell__label">개통</div><div class="cell__value">${k.opened}건</div></div>
+      <div class="cell"><div class="cell__label">출처미상</div><div class="cell__value">${pct(k.unattributed)}</div></div>
+    </div></div>`;
+
+  // 채널 매트릭스
+  html += `<div class="section"><div class="section__title">채널별 효율 매트릭스</div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>채널</th><th>노출</th><th>클릭</th><th>CTR</th><th>광고비</th><th>문의</th><th>CPC</th><th>CPL</th></tr></thead>
+      <tbody>${data.channels.map(c => `
+        <tr><td>${c.name}</td><td>${num(c.impression)}</td><td>${num(c.click)}</td>
+        <td>${pct(c.ctr)}</td><td>${won(c.spend)}</td><td>${c.inquiry}건</td>
+        <td>${won(c.cpc)}</td><td>${c.inquiry > 0 ? won(c.cpl) : '-'}</td></tr>
+      `).join('')}</tbody></table></div></div>`;
+
+  // 차트 그리드 (도넛 + 월별)
+  html += `<div class="section"><div class="chart-grid">
+    <div class="chart-box"><div class="chart-title">채널별 광고비 비중</div><canvas id="donutChart"></canvas></div>
+    <div class="chart-box"><div class="chart-title">월별 광고비 추이</div><canvas id="monthlyChart"></canvas></div>
+    <div class="chart-box chart-box--full"><div class="chart-title">일별 광고비 (최근 30일)</div><canvas id="dailyChart"></canvas></div>
+  </div></div>`;
+
+  // 카톡 리포트
+  if (data.sheetValues.kakaoHeaders.length > 0) {
+    const ph = data.sheetValues.kakaoPeriod;
+    html += `<div class="section"><div class="section__head">
+      <div class="section__title">카톡 문의 입력률 ${ph ? '<span class="badge badge--orange">'+esc(ph)+'</span>' : ''}</div>
+      </div><div class="cells">${data.sheetValues.kakaoHeaders.map((h, i) => {
+        const v = data.sheetValues.kakaoValues[i] || '—';
+        const isLast = i === data.sheetValues.kakaoHeaders.length - 1;
+        return `<div class="cell"><div class="cell__label">${esc(h)}</div>
+          <div class="cell__value">${isLast ? badgeOf(v) : esc(v)}</div></div>`;
+      }).join('')}</div></div>`;
+  }
+
+  // SNS
+  if (data.sheetValues.snsRows.length > 0) {
+    const sp = data.sheetValues.snsPeriod;
+    html += `<div class="section"><div class="section__title">SNS 채널 운영 ${sp ? '<span class="badge badge--orange">'+esc(sp)+'</span>' : ''}</div>
+      <div class="table-wrap"><table><thead><tr>${data.sheetValues.snsHeaders.map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead>
+      <tbody>${data.sheetValues.snsRows.map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div></div>`;
+  }
+
+  setDashContent(html);
+  drawDonut(data.channels);
+  drawMonthly(data.sheetValues);
+  if (daily) drawDaily(daily);
+}
+
+function kpiCard(label, value, momHtml) {
+  return `<div class="kpi-card">
+    <div class="kpi-card__label">${label}</div>
+    <div class="kpi-card__value">${value}</div>
+    ${momHtml || ''}
+  </div>`;
+}
+
+function momArrow(metric) {
+  if (!currentMomData) return '';
+  const key = metric === 'spend' ? 'spendChange' : 'inquiryChange';
+  const v = currentMomData[key];
+  if (v === null || v === undefined) return '<div class="kpi-card__mom kpi-card__mom--flat">전월 데이터 없음</div>';
+  if (Math.abs(v) < 0.01) return '<div class="kpi-card__mom kpi-card__mom--flat">→ 보합</div>';
+  const cls = v > 0 ? 'up' : 'down';
+  const arrow = v > 0 ? '↑' : '↓';
+  return `<div class="kpi-card__mom kpi-card__mom--${cls}">${arrow} ${pct(Math.abs(v))} 전월비</div>`;
+}
+
+// ── 차트들 ─────────────────────────────────────────
+function drawDonut(channels) {
+  const canvas = document.getElementById('donutChart');
+  if (!canvas) return;
+  const colors = ['#1877F2','#4285F4','#03C75A','#FEE500','#FF6F0F'];
+  if (donutChart) donutChart.destroy();
+  donutChart = new Chart(canvas, {
+    type: 'doughnut',
+    data: {
+      labels: channels.map(c => c.name),
+      datasets: [{ data: channels.map(c => c.spend), backgroundColor: colors, borderWidth: 0 }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'right', labels: { font: { size: 11 } } },
+        tooltip: { callbacks: { label: ctx => ctx.label + ': ' + ctx.parsed.toLocaleString() + '원' } }
+      }
+    }
+  });
+}
+
+function drawMonthly(sv) {
+  const canvas = document.getElementById('monthlyChart');
+  if (!canvas || !sv.monthlyRows || sv.monthlyRows.length === 0) return;
+  const labels = sv.monthlyRows.map(r => r[0]);
+  const colors = ['#1877F2','#4285F4','#03C75A','#FEE500','#FF6F0F'];
+  const channels = ['메타','구글','네이버','카카오','당근'];
+  const parseNum = s => Number(String(s || '').replace(/[^0-9.-]/g, '')) || 0;
+  const datasets = channels.map((ch, i) => ({
+    label: ch, data: sv.monthlyRows.map(r => parseNum(r[i + 1])),
+    borderColor: colors[i], backgroundColor: colors[i] + '20',
+    borderWidth: 2, tension: 0.2, pointRadius: 2
+  }));
+  if (monthlyChart) monthlyChart.destroy();
+  monthlyChart = new Chart(canvas, {
+    type: 'line',
+    data: { labels, datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'top', labels: { font: { size: 10 } } } },
+      scales: { y: { beginAtZero: true, ticks: { callback: v => (v / 1000).toFixed(0) + 'K' } } }
+    }
+  });
+}
+
+function drawDaily(daily) {
+  const canvas = document.getElementById('dailyChart');
+  if (!canvas) return;
+  const colors = ['#1877F2','#4285F4','#03C75A','#FEE500','#FF6F0F'];
+  const datasets = daily.datasets.map((ds, i) => ({
+    label: ds.label, data: ds.data,
+    borderColor: colors[i], backgroundColor: colors[i] + '20',
+    borderWidth: 2, tension: 0.3, pointRadius: 0, pointHoverRadius: 4
+  }));
+  if (dailyChart) dailyChart.destroy();
+  dailyChart = new Chart(canvas, {
+    type: 'line',
+    data: { labels: daily.labels, datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'top', labels: { font: { size: 10 } } } },
+      scales: { y: { beginAtZero: true, ticks: { callback: v => (v / 1000).toFixed(0) + 'K' } } }
+    }
+  });
+}
+
+// ── 광고소재 ─────────────────────────────────────────
+function loadCreatives() {
+  document.getElementById('creativesContent').innerHTML = '<div class="loader">로딩 중…</div>';
+  google.script.run
+    .withSuccessHandler(res => {
+      if (!res.ok) { document.getElementById('creativesContent').innerHTML = `<div class="empty">${esc(res.error)}</div>`; return; }
+      allCreatives = res.items;
+      renderCreatives();
+    })
+    .withFailureHandler(err => { document.getElementById('creativesContent').innerHTML = `<div class="empty">실패: ${esc(err.message)}</div>`; })
+    .getAdCreatives();
+}
+
+function renderCreatives() {
+  const ch = document.getElementById('creativeChannel').value;
+  const st = document.getElementById('creativeStatus').value;
+  const filtered = allCreatives.filter(c =>
+    (!ch || c.channel === ch) && (!st || c.status === st)
+  );
+  if (filtered.length === 0) {
+    document.getElementById('creativesContent').innerHTML = '<div class="empty">소재가 없습니다. 광고소재 시트 또는 Drive 폴더 확인.</div>';
+    return;
+  }
+  document.getElementById('creativesContent').innerHTML = `<div class="gallery">${filtered.map(c => `
+    <div class="creative-card" onclick="window.open('${esc(c.driveUrl || '#')}', '_blank')">
+      <div class="creative-card__img" ${c.imgUrl ? `style="background-image:url('${esc(c.imgUrl)}')"` : ''}>${!c.imgUrl ? '🖼 미리보기 없음' : ''}</div>
+      <div class="creative-card__body">
+        <div class="creative-card__name">${esc(c.name || '—')}</div>
+        <div class="creative-card__meta">
+          <span class="badge badge--orange">${esc(c.channel || '?')}</span>
+          ${statusBadge(c.status)}
+        </div>
+      </div>
+    </div>`).join('')}</div>`;
+}
+
+function statusBadge(s) {
+  if (s === '집행중') return '<span class="badge badge--green">집행중</span>';
+  if (s === '대기') return '<span class="badge badge--yellow">대기</span>';
+  if (s === '종료') return '<span class="badge badge--red">종료</span>';
+  return '<span class="badge badge--gray">'+esc(s||'-')+'</span>';
+}
+
+// ── 문의 리스트 ──────────────────────────────────────
+function loadInquiries() {
+  document.getElementById('inquiriesContent').innerHTML = '<div class="loader">로딩 중…</div>';
+  google.script.run
+    .withSuccessHandler(res => {
+      if (!res.ok) { document.getElementById('inquiriesContent').innerHTML = `<div class="empty">${esc(res.error)}</div>`; return; }
+      allInquiries = res.items;
+      renderInquiries();
+    })
+    .withFailureHandler(err => { document.getElementById('inquiriesContent').innerHTML = `<div class="empty">실패: ${esc(err.message)}</div>`; })
+    .getInquiries(0);
+}
+
+function renderInquiries() {
+  const q = document.getElementById('inqSearch').value.toLowerCase();
+  const st = document.getElementById('inqStatus').value;
+  const src = document.getElementById('inqSource').value;
+  const filtered = allInquiries.filter(i => {
+    if (st && i.status !== st) return false;
+    if (src && i.source !== src) return false;
+    if (q && !(i.name+i.source+i.memo).toLowerCase().includes(q)) return false;
+    return true;
+  });
+  if (filtered.length === 0) {
+    document.getElementById('inquiriesContent').innerHTML = '<div class="empty">결과 없음</div>';
+    return;
+  }
+  document.getElementById('inquiriesContent').innerHTML = `<div class="table-wrap"><table>
+    <thead><tr><th>날짜</th><th>이름</th><th>상태</th><th>유입</th><th>메모</th></tr></thead>
+    <tbody>${filtered.map(i => `<tr>
+      <td>${esc(i.date)}</td><td>${esc(i.name)}</td>
+      <td>${statusBadge(i.status)}</td><td>${esc(i.source)}</td>
+      <td style="text-align:left; white-space: normal;">${esc(i.memo)}</td>
+    </tr>`).join('')}</tbody></table></div>`;
+}
+
+// ── 예산 ────────────────────────────────────────────
+function loadBudget() {
+  document.getElementById('budgetContent').innerHTML = '<div class="loader">로딩 중…</div>';
+  google.script.run
+    .withSuccessHandler(res => {
+      if (!res.ok) { document.getElementById('budgetContent').innerHTML = `<div class="empty">${esc(res.error)}</div>`; return; }
+      renderBudget(res);
+    })
+    .getBudget();
+}
+
+function renderBudget(b) {
+  const pct100 = b.budget > 0 ? (b.spent / b.budget) * 100 : 0;
+  const over = pct100 > 100;
+  document.getElementById('budgetContent').innerHTML = `<div class="budget-card">
+    <div style="font-size:12px;color:var(--muted);margin-bottom:8px;">${esc(b.monthKey)} 월</div>
+    <div class="budget-stats">
+      <div><div class="budget-stat__label">월 예산</div><div class="budget-stat__value">${won(b.budget)}</div></div>
+      <div><div class="budget-stat__label">집행</div><div class="budget-stat__value budget-stat__value--spent">${won(b.spent)}</div></div>
+      <div><div class="budget-stat__label">${over ? '초과' : '남음'}</div><div class="budget-stat__value budget-stat__value--left" style="${over ? 'color:var(--red);' : ''}">${won(Math.abs(b.remaining))}</div></div>
+    </div>
+    <div class="progress"><div class="progress__fill ${over ? 'progress__fill--over' : ''}" style="width: ${Math.min(pct100, 100)}%;"></div></div>
+    <div style="font-size:12px;color:var(--muted);text-align:right;">${pct100.toFixed(1)}% 사용</div>
+    <div class="budget-input-row">
+      <label>월 예산 설정:</label>
+      <input class="input" type="number" id="budgetInput" value="${b.budget}" placeholder="원">
+      <button class="btn btn--primary" onclick="saveBudget()">저장</button>
+    </div>
+  </div>`;
+}
+
+function saveBudget() {
+  const v = parseInt(document.getElementById('budgetInput').value) || 0;
+  google.script.run
+    .withSuccessHandler(() => { showToast('✅ 예산 저장됨'); loadBudget(); })
+    .saveBudget(v);
+}
+
+// ── 설정 ────────────────────────────────────────────
+function toggleDark() {
+  const on = document.getElementById('darkToggle').checked;
+  if (on) { document.documentElement.setAttribute('data-theme', 'dark'); localStorage.setItem('darkMode', '1'); }
+  else { document.documentElement.removeAttribute('data-theme'); localStorage.removeItem('darkMode'); }
+}
+
+function toggleAutoRefresh() {
+  const on = document.getElementById('autoRefresh').checked;
+  if (on) { localStorage.setItem('autoRefresh', '1'); startAutoRefresh(); showToast('5분마다 자동 새로고침'); }
+  else { localStorage.removeItem('autoRefresh'); stopAutoRefresh(); showToast('자동 새로고침 끔'); }
+}
+
+function startAutoRefresh() {
+  stopAutoRefresh();
+  autoRefreshTimer = setInterval(() => loadDashboard(), 5 * 60 * 1000);
+}
+function stopAutoRefresh() { if (autoRefreshTimer) { clearInterval(autoRefreshTimer); autoRefreshTimer = null; } }
+
+// ── 시트 새로고침 ─────────────────────────────────────
+function refreshAll() {
+  const btn = document.getElementById('btnRefresh');
+  btn.disabled = true; btn.textContent = '⌛ 갱신 중…';
+  showToast('전체 새로고침 시작 — 30~60초');
+  google.script.run
+    .withSuccessHandler(res => {
+      btn.disabled = false; btn.textContent = '↻ 새로고침';
+      showToast(res.message);
+      if (res.ok) loadDashboard();
+    })
+    .withFailureHandler(err => {
+      btn.disabled = false; btn.textContent = '↻ 새로고침';
+      showToast('❌ ' + (err.message || err));
+    })
+    .refreshAllForWebApp();
+}
+
+// ── 유틸 ────────────────────────────────────────────
+function setDashContent(html) { document.getElementById('dashContent').innerHTML = html; }
+function showError(title, msg, detail) {
+  setDashContent(`<div class="status">
+    <div class="status__icon">⚠️</div>
+    <div class="status__title">${esc(title)}</div>
+    <div class="status__msg">${esc(msg).replace(/\\n/g, '<br>')}</div>
+    ${detail ? `<div class="status__detail">${esc(detail)}</div>` : ''}
+    <div class="status__hint">💡 Apps Script → getDashboardData 직접 실행 → 권한 승인 → 재배포 → 강제 새로고침(Ctrl+Shift+R)</div>
+  </div>`);
+}
+function showToast(msg) {
+  const t = document.getElementById('toast'); t.textContent = msg;
+  t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000);
+}
+function esc(s) {
+  if (s === null || s === undefined) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+}
+function num(n) { return Number(n || 0).toLocaleString(); }
+function won(n) { return Number(n || 0).toLocaleString() + '원'; }
+function pct(n) { return (Number(n || 0) * 100).toFixed(1) + '%'; }
+function badgeOf(text) {
+  const t = String(text || '');
+  if (t.includes('🟢') || t.includes('정상') || t.includes('효율')) return `<span class="badge badge--green">${esc(t)}</span>`;
+  if (t.includes('🔴') || t.includes('비효율') || t.includes('대량')) return `<span class="badge badge--red">${esc(t)}</span>`;
+  if (t.includes('🟡') || t.includes('🟠') || t.includes('일부') || t.includes('불안정')) return `<span class="badge badge--yellow">${esc(t)}</span>`;
+  return `<span class="badge badge--gray">${esc(t)}</span>`;
+}
+</script>
+</body>
+</html>

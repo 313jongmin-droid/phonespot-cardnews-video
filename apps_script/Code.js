@@ -1,0 +1,915 @@
+// ════════════════════════════════════════════════════════════
+//  폰스팟 광고운영 관리대장 — Apps Script (메뉴 정리본: 2026-05-29)
+//  ★ 2026-06-11 패치: updateChannelMatrixWithGA4 + updateKPISummary
+//     메타 → 메타_통합, 네이버 → 네이버_통합 (광고그룹 단위 자동 합산)
+//  [일상] 매일 자동/메뉴 실행  [수동] 필요시 직접 실행  [유틸] 보조
+// ════════════════════════════════════════════════════════════
+
+const GA4_PROP_ID = '534396517';
+const GA4_AUTO_SHEET = 'GA4_자동';
+const INQUIRY_SHEET = '문의접수';
+// 카톡 리포트는 별도 시트가 아니라 문의접수 시트 우측 H:Q 영역에 내장
+const KAKAO_REPORT_START_COL = 8; // H열
+const KAKAO_REPORT_NUM_COLS = 10;
+const KAKAO_REPORT_HEADER_ROW = 4;
+const KAKAO_REPORT_DATA_ROW = 5;
+
+// ──[일상]── 시트 열 때 커스텀 메뉴 생성
+function onOpen() {
+  SpreadsheetApp.getUi()
+    .createMenu('🛠 폰스팟 운영')
+    .addItem('⚡ 전체 새로고침', 'refreshAll')
+    .addSeparator()
+    .addItem('🔄 GA4 최신 데이터 가져오기 (어제)', 'fetchGA4Daily')
+    .addItem('📥 GA4 30일 다시 가져오기 (백필)', 'fetchGA4Backfill')
+    .addSeparator()
+    .addItem('📊 SNS 월별 합계 수식 복구', 'repairSNSMonthlySummaries')
+    .addItem('📉 문의접수 입력률 갱신', 'updateKakaoInquiryCoverage')
+    .addToUi();
+
+  // 📡 메타 자동화 메뉴 (meta-sync.gs) — 같은 프로젝트의 다른 파일 함수
+  try { buildMetaSyncMenu_(SpreadsheetApp.getUi()); } catch (e) {}
+
+  // 🎬 YouTube 메뉴 (youtube_sync.gs) — 별도 설치 스크립트. onOpen에서 호출돼야 버튼이 뜸
+  try { addYouTubeMenuItem(); } catch (e) {}
+
+  // 🔍 네이버 자동화 메뉴 (naver-sync.gs)
+  try { buildNaverSyncMenu_(SpreadsheetApp.getUi()); } catch (e) {}
+}
+
+// ──[일상]── 전체 새로고침: GA4 + 메타 + 유튜브 sync + 대시보드 빌드 + 인사이트 MD 생성
+function refreshAll() {
+  const ui = SpreadsheetApp.getUi();
+  const errors = [];
+
+  // ===== 1단계: 외부 API 데이터 sync =====
+  try { syncAll(); }
+  catch (e) { errors.push('syncAll(메타+GA4): ' + e.message); Logger.log(e); }
+
+  try { fetchYouTubeAnalyticsDaily(); }
+  catch (e) { errors.push('fetchYouTubeAnalyticsDaily: ' + e.message); Logger.log(e); }
+
+  // ===== 2단계: 인사이트 MD 생성 (Drive 저장) =====
+  try { generateMetaInsightsMarkdown(); }
+  catch (e) { errors.push('generateMetaInsightsMarkdown: ' + e.message); Logger.log(e); }
+
+  try { generateYouTubeInsightsMarkdown(); }
+  catch (e) { errors.push('generateYouTubeInsightsMarkdown: ' + e.message); Logger.log(e); }
+
+  // ===== 3단계: 대시보드 빌드 (수식/UI 재구성) =====
+  try { updateKPISummary(); } catch (e) { errors.push('updateKPISummary: ' + e.message); }
+  try { updateChannelMatrixWithGA4(); } catch (e) { errors.push('updateChannelMatrixWithGA4: ' + e.message); }
+  try { updateSNSReport({ forceRebuild: false, showAlert: false }); } catch (e) { errors.push('updateSNSReport: ' + e.message); }
+  try { repairSNSMonthlySummaries(false); } catch (e) { errors.push('repairSNSMonthlySummaries: ' + e.message); }
+  try { updateKakaoInquiryCoverage(false); } catch (e) { errors.push('updateKakaoInquiryCoverage: ' + e.message); }
+  try { addTimeSeriesChart(); } catch (e) { errors.push('addTimeSeriesChart: ' + e.message); }
+
+  const stamp = recordLastRefresh_();
+
+  if (errors.length === 0) {
+    ui.alert('✅ 전체 새로고침 완료\n🕐 ' + stamp +
+             '\n\n· GA4 + 메타 + 유튜브 sync\n· 메타 + 유튜브 인사이트 MD\n· 대시보드 + KPI 갱신');
+  } else {
+    ui.alert('⚠️ 부분 완료\n🕐 ' + stamp +
+             '\n\n실패 ' + errors.length + '건:\n' + errors.slice(0, 5).join('\n') +
+             (errors.length > 5 ? '\n... 외 ' + (errors.length - 5) + '건' : ''));
+  }
+}
+
+// ──[유틸]── 최근 전체 업데이트 시각 기록 (통합대시보드 A46) — refreshAll이 호출
+function recordLastRefresh_() {
+  const stamp = Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyy-MM-dd HH:mm:ss');
+  const sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('통합대시보드');
+  if (sh) {
+    sh.getRange('A46:F46').breakApart();
+    sh.getRange('A46').setValue('🕐 마지막 전체 업데이트: ' + stamp)
+      .setFontColor('#666666').setFontStyle('italic').setFontWeight('bold');
+  }
+  return stamp;
+}
+
+// ──[일상]── 어제 GA4 데이터 수집 (매일 새벽 트리거가 호출)
+function fetchGA4Daily() {
+  const TZ = 'Asia/Seoul';
+  const y = new Date();
+  y.setDate(y.getDate() - 1);
+  const ymd = Utilities.formatDate(y, TZ, 'yyyy-MM-dd');
+  importGA4(ymd, ymd, false);
+}
+
+// ──[수동]── 최근 30일 GA4 데이터 전체 다시 수집
+function fetchGA4Backfill() {
+  importGA4('30daysAgo', 'yesterday', true);
+}
+
+// ──[일상]── GA4 Data API 호출 → GA4_자동 시트 적재
+function importGA4(startDate, endDate, clearAll) {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sh = ss.getSheetByName(GA4_AUTO_SHEET);
+  if (!sh) {
+    sh = ss.insertSheet(GA4_AUTO_SHEET);
+    sh.getRange('A1:H1').merge();
+    sh.getRange('A1').setValue('■ GA4 자동 수집 (Data API, 매일 새벽 1시)')
+      .setBackground('#1F4E78').setFontColor('#FFFFFF').setFontWeight('bold').setFontSize(12);
+    sh.getRange('A2:H2').merge();
+    sh.getRange('A2').setValue('※ 행 5~ 자동. 수동 입력 금지.')
+      .setFontStyle('italic').setFontColor('#666');
+    sh.getRange('A4:H4').setValues([['date','sessionSource','sessionMedium','sessionCampaignName','eventName','eventCount','sessions','totalUsers']])
+      .setBackground('#D9E1F2').setFontWeight('bold');
+    sh.setColumnWidths(1, 8, 130);
+  }
+
+  const request = {
+    dateRanges: [{startDate: startDate, endDate: endDate}],
+    dimensions: [
+      {name: 'date'}, {name: 'sessionSource'}, {name: 'sessionMedium'},
+      {name: 'sessionCampaignName'}, {name: 'eventName'}
+    ],
+    metrics: [
+      {name: 'eventCount'}, {name: 'sessions'}, {name: 'totalUsers'}
+    ],
+    orderBys: [{dimension: {dimensionName: 'date'}, desc: true}],
+    limit: 100000
+  };
+
+  const response = AnalyticsData.Properties.runReport(request, 'properties/' + GA4_PROP_ID);
+  if (!response.rows || response.rows.length === 0) {
+    Logger.log('No data ' + startDate + '~' + endDate);
+    return;
+  }
+
+  if (clearAll) {
+    const lastRow = sh.getLastRow();
+    if (lastRow >= 5) sh.getRange(5, 1, lastRow - 4, 8).clearContent();
+  } else {
+    const ymdAPI = startDate.replace(/-/g, '');
+    const dateCol = sh.getRange('A:A').getValues();
+    const rowsToDelete = [];
+    for (let i = 4; i < dateCol.length; i++) {
+      if (dateCol[i][0] && String(dateCol[i][0]) === ymdAPI) rowsToDelete.push(i + 1);
+    }
+    for (let i = rowsToDelete.length - 1; i >= 0; i--) sh.deleteRow(rowsToDelete[i]);
+  }
+
+  const rows = response.rows.map(row => [
+    row.dimensionValues[0].value,
+    row.dimensionValues[1].value,
+    row.dimensionValues[2].value,
+    row.dimensionValues[3].value,
+    row.dimensionValues[4].value,
+    parseInt(row.metricValues[0].value),
+    parseInt(row.metricValues[1].value),
+    parseInt(row.metricValues[2].value)
+  ]);
+
+  let lastRow = 4;
+  const dateCol2 = sh.getRange('A:A').getValues();
+  for (let i = dateCol2.length - 1; i >= 0; i--) {
+    if (dateCol2[i][0]) { lastRow = i + 1; break; }
+  }
+  sh.getRange(lastRow + 1, 1, rows.length, 8).setValues(rows);
+  Logger.log('OK ' + startDate + '~' + endDate + ': ' + rows.length + ' rows');
+}
+
+// ──[일상]── 핵심 KPI 상세 (행 9-14) 재구성 — CPL 2종 (전체/추적)
+// ★ 2026-06-11 패치: 메타 → 메타_통합(H), 네이버 → 네이버_통합(H)
+function updateKPISummary() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sh = ss.getSheetByName('통합대시보드');
+
+  // A9:I14 클리어
+  sh.getRange('A9:I14').clearContent().clearFormat();
+
+  // 행 9: 섹션 헤더
+  sh.getRange('A9:I9').merge().setValue('★ 핵심 KPI 상세 (위 카드의 원천)')
+    .setBackground('#1F4E78').setFontColor('#FFFFFF').setFontWeight('bold').setFontSize(13);
+
+  // 행 10: 컬럼 헤더 — CPL(전체) 컬럼 신규 추가
+  const h = ['기간','광고소진','문의','출처확인','개통','개통률','리틀리CTR','CPL(추적)','CPL(전체)'];
+  sh.getRange(10, 1, 1, 9).setValues([h])
+    .setBackground('#D9E1F2').setFontWeight('bold').setHorizontalAlignment('center')
+    .setBorder(true,true,true,true,true,true);
+
+  const periods = [
+    ['어제',       'TODAY()-1',  'TODAY()-1'],
+    ['최근 7일',   'TODAY()-6',  'TODAY()'],
+    ['최근 14일',  'TODAY()-13', 'TODAY()'],
+    ['최근 30일',  'TODAY()-29', 'TODAY()'],
+  ];
+
+  // ★ 패치: 채널별 광고비 시트/컬럼 매핑 (자동수집 채널은 통합 시트 H열 지출)
+  const ADS = [
+    {sh:'메타_통합',   spd:'H'},
+    {sh:'구글',        spd:'G'},
+    {sh:'네이버_통합', spd:'H'},
+    {sh:'카카오',      spd:'G'},
+    {sh:'당근',        spd:'G'},
+  ];
+
+  periods.forEach(([lbl, st, en], i) => {
+    const r = 11 + i;
+    const sumPaid = ADS.map(a =>
+      `SUMIFS('${a.sh}'!${a.spd}:${a.spd},'${a.sh}'!A:A,">="&${st},'${a.sh}'!A:A,"<="&${en})`
+    ).join('+');
+    const countInq = (extra='') => `COUNTIFS('문의접수'!A:A,">="&${st},'문의접수'!A:A,"<="&${en}${extra})`;
+    const sumLi = (col) => `SUMIFS('리틀리'!${col}:${col},'리틀리'!A:A,">="&${st},'리틀리'!A:A,"<="&${en})`;
+
+    sh.getRange(r, 1).setValue(lbl).setFontWeight('bold');
+    sh.getRange(r, 2).setFormula(`=${sumPaid}`).setNumberFormat('#,##0"원"');
+    sh.getRange(r, 3).setFormula(`=${countInq()}`).setNumberFormat('#,##0"건"');
+    sh.getRange(r, 4).setFormula(`=${countInq()}-${countInq(",'문의접수'!D:D,\"불확실\"")}-${countInq(",'문의접수'!D:D,\"\"")}`).setNumberFormat('#,##0"건"');
+    sh.getRange(r, 5).setFormula(`=${countInq(",'문의접수'!C:C,\"개통\"")}`).setNumberFormat('#,##0"건"');
+    sh.getRange(r, 6).setFormula(`=IFERROR(E${r}/D${r},"-")`).setNumberFormat('0.0%');
+    sh.getRange(r, 7).setFormula(`=IFERROR(${sumLi('C')}/${sumLi('B')},"-")`).setNumberFormat('0.0%');
+    sh.getRange(r, 8).setFormula(`=IFERROR(B${r}/D${r},"-")`).setNumberFormat('#,##0"원"');
+    sh.getRange(r, 9).setFormula(`=IFERROR(B${r}/C${r},"-")`).setNumberFormat('#,##0"원"');
+    sh.getRange(r, 1, 1, 9).setBorder(true,true,true,true,true,true).setHorizontalAlignment('center');
+  });
+
+  SpreadsheetApp.getUi().alert('✅ 핵심 KPI 갱신 완료\n· 메타/네이버 = 통합 시트 합산 (광고그룹 단위)\n· CPL(추적): 출처확인된 문의 기준\n· CPL(전체): 모든 문의 기준');
+}
+
+// ──[일상]── 채널 매트릭스 재구성 (E16 드롭다운으로 기간 변경: 어제/7일/30일)
+// ★ 2026-06-11 패치: 메타/네이버 = 통합 시트 F(노출)/G(클릭)/H(지출), 기타 = 기존 E/F/G
+function updateChannelMatrixWithGA4() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sh = ss.getSheetByName('통합대시보드');
+
+  // ── 행 16: 섹션 헤더 + 기간 드롭다운 ──
+  sh.getRange('A16:Z16').breakApart();
+  sh.getRange('A16:Z16').clearContent().clearFormat();
+  sh.getRange('A16:C16').merge().setValue('★ 채널별 효율 매트릭스')
+    .setBackground('#1F4E78').setFontColor('#FFFFFF').setFontWeight('bold').setFontSize(13);
+
+  sh.getRange('D16').setValue('📅 기간:').setFontWeight('bold').setHorizontalAlignment('right');
+  sh.getRange('E16').setBackground('#FFF59D').setFontWeight('bold').setHorizontalAlignment('center')
+    .setDataValidation(SpreadsheetApp.newDataValidation()
+      .requireValueInList(['어제','최근 7일','최근 30일'], true).setAllowInvalid(false).build());
+  if (sh.getRange('E16').getValue() === '') sh.getRange('E16').setValue('최근 30일');
+
+  sh.getRange('M16').setValue('기간▶').setFontColor('#BBBBBB').setFontSize(8).setHorizontalAlignment('right');
+  sh.getRange('N16').setFormula('=IF($E$16="어제",TODAY()-1,IF($E$16="최근 7일",TODAY()-6,TODAY()-29))')
+    .setNumberFormat('m/d').setFontColor('#BBBBBB');
+  sh.getRange('O16').setFormula('=IF($E$16="어제",TODAY()-1,TODAY())')
+    .setNumberFormat('m/d').setFontColor('#BBBBBB');
+
+  // A17:Z24 클리어 (행16, 행25 네비게이션 보존)
+  sh.getRange('A17:Z24').clearContent().clearFormat();
+
+  // 행 17 헤더
+  const h = ['채널','노출','클릭','소진','광고문의','GA4세션','카톡클릭','전화클릭','시티마켓','카톡전환률','카톡당CPC','평가'];
+  sh.getRange(17, 1, 1, 12).setValues([h])
+    .setBackground('#1F4E78').setFontColor('#FFFFFF')
+    .setFontWeight('bold').setHorizontalAlignment('center');
+
+  // ★ 패치: 채널 정의 — adSheet/impCol/clkCol/spdCol 분리
+  //   메타_통합 / 네이버_통합 = 광고그룹 단위 19컬럼 (F=노출 G=클릭 H=지출)
+  //   구글 / 카카오 / 당근 = 수동 입력 시트 (E=노출 F=클릭 G=지출)
+  const channels = [
+    {row:18, name:'메타',   adSheet:'메타_통합',   impCol:'F', clkCol:'G', spdCol:'H', inq:'메타',   ga4:true,  sources:['meta','facebook.com','m.facebook.com','l.facebook.com']},
+    {row:19, name:'구글',   adSheet:'구글',        impCol:'E', clkCol:'F', spdCol:'G', inq:'구글',   ga4:true,  sources:['google']},
+    {row:20, name:'네이버', adSheet:'네이버_통합', impCol:'F', clkCol:'G', spdCol:'H', inq:'네이버', ga4:true,  sources:['naver','naver_blog','ad.search.naver.com','m.ad.search.naver.com','m.search.naver.com']},
+    {row:21, name:'카카오', adSheet:'카카오',      impCol:'E', clkCol:'F', spdCol:'G', inq:'카카오', ga4:true,  sources:['kakao']},
+    {row:22, name:'당근',   adSheet:'당근',        impCol:'E', clkCol:'F', spdCol:'G', inq:'당근',   ga4:true,  sources:['daangn','danggn']},
+  ];
+
+  const fmtKM = '[>=1000000]0.00,,"M";[>=1000]0.0,"K";#,##0';
+  const fmtKMWon = '[>=1000000]0.00,,"M원";[>=1000]0.0,"K원";#,##0"원"';
+  const ga4D = `'GA4_자동'!A:A,">="&TEXT($N$16,"yyyymmdd"),'GA4_자동'!A:A,"<="&TEXT($O$16,"yyyymmdd")`;
+
+  channels.forEach(({row, name, adSheet, impCol, clkCol, spdCol, inq, ga4, sources}) => {
+    sh.getRange(row, 1).setValue(name).setFontWeight('bold');
+    const ad = (col) => `SUMIFS('${adSheet}'!${col}:${col},'${adSheet}'!A:A,">="&$N$16,'${adSheet}'!A:A,"<="&$O$16)`;
+    sh.getRange(row, 2).setFormula(`=IFERROR(${ad(impCol)},0)`).setNumberFormat(fmtKM);
+    sh.getRange(row, 3).setFormula(`=IFERROR(${ad(clkCol)},0)`).setNumberFormat(fmtKM);
+    sh.getRange(row, 4).setFormula(`=IFERROR(${ad(spdCol)},0)`).setNumberFormat(fmtKMWon);
+    sh.getRange(row, 5).setFormula(`=COUNTIFS('문의접수'!A:A,">="&$N$16,'문의접수'!A:A,"<="&$O$16,'문의접수'!D:D,"${inq}")`).setNumberFormat('#,##0"건"');
+
+    if (!ga4) {
+      sh.getRange(row, 6, 1, 6).setValues([['-','-','-','-','-','-']]);
+      sh.getRange(row, 12).setValue('GA4 무관');
+    } else {
+      const ev = (e) => sources.map(s =>
+        `SUMIFS('GA4_자동'!F:F,'GA4_자동'!B:B,"${s}",'GA4_자동'!E:E,"${e}",${ga4D})`).join('+');
+      const sess = sources.map(s =>
+        `SUMIFS('GA4_자동'!G:G,'GA4_자동'!B:B,"${s}",'GA4_자동'!E:E,"session_start",${ga4D})`).join('+');
+      sh.getRange(row, 6).setFormula(`=IFERROR(${sess},0)`).setNumberFormat(fmtKM);
+      sh.getRange(row, 7).setFormula(`=IFERROR(${ev('kakao_chat_click')},0)`);
+      sh.getRange(row, 8).setFormula(`=IFERROR(${ev('phone_click')},0)`);
+      sh.getRange(row, 9).setFormula(`=IFERROR(${ev('citymarket_click')},0)`);
+      sh.getRange(row, 10).setFormula(`=IFERROR(IF(F${row}=0,0,G${row}/F${row}),0)`).setNumberFormat('0.00%');
+      sh.getRange(row, 11).setFormula(`=IFERROR(IF(G${row}=0,"-",D${row}/G${row}),"-")`).setNumberFormat('#,##0"원"');
+      sh.getRange(row, 12).setFormula(`=IF(D${row}=0,"-",IF(G${row}=0,"🔴 카톡클릭 0",IF(K${row}<50000,"🟢 효율","🔴 비효율")))`);
+    }
+  });
+
+  // 행 23: 전체 합계
+  sh.getRange('A23').setValue('전체 (attribution 무관)').setFontWeight('bold').setBackground('#FFF2CC');
+  sh.getRange('B23:E23').setBackground('#FFF2CC');
+  sh.getRange('F23').setFormula(`=IFERROR(SUMIFS('GA4_자동'!G:G,'GA4_자동'!E:E,"session_start",${ga4D}),0)`).setNumberFormat(fmtKM);
+  sh.getRange('G23').setFormula(`=IFERROR(SUMIFS('GA4_자동'!F:F,'GA4_자동'!E:E,"kakao_chat_click",${ga4D}),0)`);
+  sh.getRange('H23').setFormula(`=IFERROR(SUMIFS('GA4_자동'!F:F,'GA4_자동'!E:E,"phone_click",${ga4D}),0)`);
+  sh.getRange('I23').setFormula(`=IFERROR(SUMIFS('GA4_자동'!F:F,'GA4_자동'!E:E,"citymarket_click",${ga4D}),0)`);
+  sh.getRange('F23:L23').setBackground('#FFF2CC').setFontWeight('bold');
+
+  sh.getRange('A17:L23').setHorizontalAlignment('center');
+
+  SpreadsheetApp.getUi().alert('✅ 채널 매트릭스 갱신 완료\n· 메타/네이버 = 통합 시트 (광고그룹 단위 자동 합산)\n· 구글/카카오/당근 = 기존 수동 입력 시트\n· 당근 GA4 수집 활성화 (daangn + danggn)');
+}
+
+// ──[일상]── 추세 시트 — 30일 일별 광고비/카톡클릭 차트 재생성
+function addTimeSeriesChart() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sh = ss.getSheetByName('추세');
+  if (!sh) sh = ss.insertSheet('추세');
+  sh.clear();
+  sh.getCharts().forEach(c => sh.removeChart(c));
+
+  sh.getRange('A1:G1').merge().setValue('■ 시계열 추세 (최근 30일 일별 광고비)')
+    .setBackground('#1F4E78').setFontColor('#FFFFFF').setFontWeight('bold').setFontSize(12);
+
+  // ★ 패치: 채널별 시트/지출 컬럼 매핑
+  const trendChannels = [
+    {disp:'메타',   sheet:'메타_통합',   spdCol:'H'},
+    {disp:'구글',   sheet:'구글',        spdCol:'G'},
+    {disp:'네이버', sheet:'네이버_통합', spdCol:'H'},
+    {disp:'카카오', sheet:'카카오',      spdCol:'G'},
+    {disp:'당근',   sheet:'당근',        spdCol:'G'},
+  ];
+
+  sh.getRange('A3').setValue('날짜');
+  trendChannels.forEach((c, i) => sh.getRange(3, 2 + i).setValue(c.disp));
+  sh.getRange(3, 7).setValue('일합계');
+  sh.getRange('A3:G3').setBackground('#D9E1F2').setFontWeight('bold')
+    .setBorder(true,true,true,true,true,true).setHorizontalAlignment('center');
+
+  for (let i = 0; i < 30; i++) {
+    const r = 4 + i;
+    sh.getRange(r, 1).setFormula(`=TODAY()-${29 - i}`).setNumberFormat('M/d (ddd)');
+    trendChannels.forEach((c, idx) => {
+      sh.getRange(r, 2 + idx).setFormula(
+        `=IFERROR(SUMIFS('${c.sheet}'!${c.spdCol}:${c.spdCol},'${c.sheet}'!A:A,A${r}),0)`
+      ).setNumberFormat('#,##0');
+    });
+    sh.getRange(r, 7).setFormula(`=SUM(B${r}:F${r})`).setNumberFormat('#,##0').setFontWeight('bold');
+  }
+
+  const chart = sh.newChart()
+    .setChartType(Charts.ChartType.LINE)
+    .addRange(sh.getRange('A3:F33'))
+    .setOption('title', '채널별 일별 광고비 (최근 30일)')
+    .setOption('height', 400).setOption('width', 1000)
+    .setOption('legend', {position: 'bottom'})
+    .setOption('hAxis', {title: '날짜'})
+    .setOption('vAxis', {title: '광고비 (원)', format: '#,##0'})
+    .setPosition(2, 9, 0, 0)
+    .build();
+  sh.insertChart(chart);
+
+  sh.getRange('A36:G36').merge().setValue('■ 카톡 채팅 클릭 추세 (GA4)')
+    .setBackground('#1F4E78').setFontColor('#FFFFFF').setFontWeight('bold').setFontSize(12);
+
+  sh.getRange('A38').setValue('날짜');
+  trendChannels.forEach((c, i) => sh.getRange(38, 2 + i).setValue(c.disp));
+  sh.getRange(38, 7).setValue('일합계');
+  sh.getRange('A38:G38').setBackground('#D9E1F2').setFontWeight('bold').setBorder(true,true,true,true,true,true);
+
+  const ga4SourceMap = ['meta','google','naver','kakao','daangn'];
+  for (let i = 0; i < 30; i++) {
+    const r = 39 + i;
+    sh.getRange(r, 1).setFormula(`=TODAY()-${29 - i}`).setNumberFormat('M/d (ddd)');
+    ga4SourceMap.forEach((src, c) => {
+      sh.getRange(r, 2 + c).setFormula(
+        `=IFERROR(SUMIFS('GA4_자동'!F:F,'GA4_자동'!A:A,TEXT(A${r},"yyyymmdd"),'GA4_자동'!B:B,"${src}",'GA4_자동'!E:E,"kakao_chat_click"),0)`
+      ).setNumberFormat('#,##0');
+    });
+    sh.getRange(r, 7).setFormula(`=SUM(B${r}:F${r})`).setFontWeight('bold');
+  }
+
+  const chart2 = sh.newChart()
+    .setChartType(Charts.ChartType.LINE)
+    .addRange(sh.getRange('A38:F68'))
+    .setOption('title', '채널별 일별 카톡 채팅 클릭 (최근 30일)')
+    .setOption('height', 400).setOption('width', 1000)
+    .setOption('legend', {position: 'bottom'})
+    .setOption('hAxis', {title: '날짜'})
+    .setOption('vAxis', {title: '카톡 클릭 수'})
+    .setPosition(37, 9, 0, 0)
+    .build();
+  sh.insertChart(chart2);
+
+  sh.setColumnWidth(1, 110);
+  for (let c = 2; c <= 7; c++) sh.setColumnWidth(c, 90);
+
+  Logger.log('시계열 차트 2개 생성 완료');
+}
+
+// ──[일상]── SNS 채널 운영 보고 (E28 자체 드롭다운으로 기간 별도 설정)
+function updateSNSReport(opts) {
+  opts = opts || {};
+  const forceRebuild = opts.forceRebuild !== false;
+  const showAlert = opts.showAlert !== false;
+
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sh = ss.getSheetByName('통합대시보드');
+
+  if (!forceRebuild && sh.getRange('A28').getValue() === '★ SNS 채널 운영') {
+    return;
+  }
+
+  sh.getRange('A28:Z35').breakApart();
+  sh.getRange('A28:Z35').clearContent().clearFormat();
+
+  sh.getRange('A28:C28').merge().setValue('★ SNS 채널 운영')
+    .setBackground('#1F4E78').setFontColor('#FFFFFF')
+    .setFontWeight('bold').setFontSize(13);
+  sh.getRange('D28').setValue('📅 기간:').setFontWeight('bold').setHorizontalAlignment('right');
+  sh.getRange('E28').setBackground('#FFF59D').setFontWeight('bold').setHorizontalAlignment('center')
+    .setDataValidation(SpreadsheetApp.newDataValidation()
+      .requireValueInList(['어제','최근 7일','최근 30일'], true).setAllowInvalid(false).build());
+  if (sh.getRange('E28').getValue() === '') sh.getRange('E28').setValue('최근 30일');
+
+  sh.getRange('M28').setValue('기간▶').setFontColor('#BBBBBB').setFontSize(8).setHorizontalAlignment('right');
+  sh.getRange('N28').setFormula('=IF($E$28="어제",TODAY()-1,IF($E$28="최근 7일",TODAY()-6,TODAY()-29))')
+    .setNumberFormat('m/d').setFontColor('#BBBBBB');
+  sh.getRange('O28').setFormula('=IF($E$28="어제",TODAY()-1,TODAY())')
+    .setNumberFormat('m/d').setFontColor('#BBBBBB');
+
+  const h = ['채널','포스트수','총 조회수','평균','최고','팔로워','시트'];
+  sh.getRange(29, 1, 1, 7).setValues([h])
+    .setBackground('#D9E1F2').setFontWeight('bold').setHorizontalAlignment('center');
+
+  const sns = [
+    {row: 30, name: '스레드', sheet: '스레드'},
+    {row: 31, name: '인스타', sheet: '인스타'},
+    {row: 32, name: '유튜브', sheet: '유튜브'},
+    {row: 33, name: '틱톡',   sheet: '틱톡'},
+  ];
+
+  sns.forEach(({row, name, sheet}) => {
+    sh.getRange(row, 1).setValue(name).setFontWeight('bold');
+    sh.getRange(row, 2).setFormula(
+      `=COUNTIFS('${sheet}'!A:A,">="&$N$28,'${sheet}'!A:A,"<="&$O$28)`
+    ).setNumberFormat('#,##0');
+    sh.getRange(row, 3).setFormula(
+      `=SUMIFS('${sheet}'!E:E,'${sheet}'!A:A,">="&$N$28,'${sheet}'!A:A,"<="&$O$28)`
+    ).setNumberFormat('#,##0');
+    sh.getRange(row, 4).setFormula(
+      `=IFERROR(IF(B${row}=0,0,C${row}/B${row}),0)`
+    ).setNumberFormat('#,##0');
+    sh.getRange(row, 5).setFormula(
+      `=IFERROR(MAXIFS('${sheet}'!E:E,'${sheet}'!A:A,">="&$N$28,'${sheet}'!A:A,"<="&$O$28),0)`
+    ).setNumberFormat('#,##0');
+    sh.getRange(row, 6).setFormula(
+      `=IFERROR(LOOKUP(2,1/(('${sheet}'!G:G<>"")*('${sheet}'!A:A<=$O$28)),'${sheet}'!G:G),"-")`
+    );
+
+    const tgt = ss.getSheetByName(sheet);
+    if (tgt) {
+      sh.getRange(row, 7).setFormula(
+        `=HYPERLINK("#gid=${tgt.getSheetId()}","→ ${name}")`
+      ).setFontColor('#0066CC').setFontWeight('bold');
+    }
+  });
+
+  sh.getRange('A28:G33').setBorder(true,true,true,true,true,true);
+  sh.getRange('B29:F33').setHorizontalAlignment('center');
+
+  if (showAlert) SpreadsheetApp.getUi().alert('✅ SNS 보고표 갱신 — E28 드롭다운으로 기간 별도 설정 (채널 매트릭스와 분리)');
+}
+
+// ──[수동/일상]── 각 SNS 시트 우측 K:P 월별 합계표 수식 복구
+function repairSNSMonthlySummaries(showAlert) {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const snsSheets = ['스레드', '인스타', '유튜브', '틱톡'];
+  const missingSheets = [];
+
+  snsSheets.forEach(sheetName => {
+    const sh = ss.getSheetByName(sheetName);
+    if (!sh) {
+      missingSheets.push(sheetName);
+      return;
+    }
+
+    sh.getRange('K1:P16').breakApart();
+    sh.getRange('K1:P16').clearContent().clearFormat();
+
+    sh.getRange('K1:P1').merge()
+      .setValue('📊 월별 합계')
+      .setBackground('#1F4E78')
+      .setFontColor('#FFFFFF')
+      .setFontWeight('bold')
+      .setHorizontalAlignment('center');
+
+    sh.getRange('K3:P3').setValues([[
+      '월', '포스트수', '총 조회수', '평균 조회수', '최고 조회수', '월말 팔로워'
+    ]])
+      .setBackground('#D9E1F2')
+      .setFontWeight('bold')
+      .setHorizontalAlignment('center')
+      .setBorder(true, true, true, true, true, true);
+
+    for (let m = 1; m <= 12; m++) {
+      const r = 3 + m;
+      sh.getRange(r, 11)
+        .setFormula(`=DATE(YEAR('통합대시보드'!$B$2),${m},1)`)
+        .setNumberFormat('yyyy.m');
+      sh.getRange(r, 12)
+        .setFormula(`=COUNTIFS($A$4:$A$1000,">="&$K${r},$A$4:$A$1000,"<="&EOMONTH($K${r},0))`)
+        .setNumberFormat('#,##0');
+      sh.getRange(r, 13)
+        .setFormula(`=SUMIFS($E$4:$E$1000,$A$4:$A$1000,">="&$K${r},$A$4:$A$1000,"<="&EOMONTH($K${r},0))`)
+        .setNumberFormat('#,##0');
+      sh.getRange(r, 14)
+        .setFormula(`=IFERROR($M${r}/$L${r},"-")`)
+        .setNumberFormat('#,##0');
+      sh.getRange(r, 15)
+        .setFormula(`=IFERROR(MAXIFS($E$4:$E$1000,$A$4:$A$1000,">="&$K${r},$A$4:$A$1000,"<="&EOMONTH($K${r},0)),0)`)
+        .setNumberFormat('#,##0');
+      sh.getRange(r, 16)
+        .setFormula(`=IFERROR(INDEX(SORT(FILTER({$A$4:$A$1000,$G$4:$G$1000},$A$4:$A$1000>=$K${r},$A$4:$A$1000<=EOMONTH($K${r},0),$G$4:$G$1000<>""),1,FALSE),1,2),"-")`)
+        .setNumberFormat('#,##0');
+    }
+
+    const totalRow = 16;
+    sh.getRange(totalRow, 11)
+      .setFormula(`=YEAR('통합대시보드'!$B$2)&" 합계"`)
+      .setFontWeight('bold');
+    sh.getRange(totalRow, 12)
+      .setFormula('=SUM(L4:L15)')
+      .setNumberFormat('#,##0')
+      .setFontWeight('bold');
+    sh.getRange(totalRow, 13)
+      .setFormula('=SUM(M4:M15)')
+      .setNumberFormat('#,##0')
+      .setFontWeight('bold');
+    sh.getRange(totalRow, 14)
+      .setFormula('=IFERROR(M16/L16,"-")')
+      .setNumberFormat('#,##0')
+      .setFontWeight('bold');
+    sh.getRange(totalRow, 15)
+      .setFormula('=MAX(O4:O15)')
+      .setNumberFormat('#,##0')
+      .setFontWeight('bold');
+    sh.getRange(totalRow, 16)
+      .setFormula(`=IFERROR(INDEX(SORT(FILTER({$A$4:$A$1000,$G$4:$G$1000},YEAR($A$4:$A$1000)=YEAR('통합대시보드'!$B$2),$G$4:$G$1000<>""),1,FALSE),1,2),"-")`)
+      .setNumberFormat('#,##0')
+      .setFontWeight('bold');
+
+    sh.getRange('K3:P16')
+      .setBorder(true, true, true, true, true, true)
+      .setHorizontalAlignment('center');
+
+    sh.setColumnWidths(11, 6, 110);
+  });
+
+  if (showAlert !== false) {
+    const msg = missingSheets.length
+      ? `✅ SNS 월별 합계 수식 복구 완료\n단, 없는 시트: ${missingSheets.join(', ')}`
+      : '✅ SNS 월별 합계 수식 복구 완료';
+    SpreadsheetApp.getUi().alert(msg);
+  }
+}
+
+// ════════════════════════════════════════════════════════════
+//  [일상] 카톡 리포트 × 문의접수 입력률 관리 — 문의접수 시트 내장형
+// ════════════════════════════════════════════════════════════
+
+function getInquirySheet_() {
+  const sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(INQUIRY_SHEET);
+  if (!sh) throw new Error(`'${INQUIRY_SHEET}' 시트를 찾을 수 없습니다.`);
+  return sh;
+}
+
+function normalizeYmd_(value, defaultYear) {
+  const TZ = 'Asia/Seoul';
+  const year = defaultYear || new Date().getFullYear();
+  if (value instanceof Date && !isNaN(value.getTime())) {
+    return Utilities.formatDate(value, TZ, 'yyyy-MM-dd');
+  }
+  if (typeof value === 'number' && !isNaN(value)) {
+    const d = new Date(Math.round((value - 25569) * 86400 * 1000));
+    if (!isNaN(d.getTime())) return Utilities.formatDate(d, TZ, 'yyyy-MM-dd');
+  }
+  const s = String(value || '').trim();
+  if (!s) return '';
+  let m = s.match(/^(\d{4})[-./](\d{1,2})[-./](\d{1,2})/);
+  if (m) {
+    return `${m[1]}-${String(m[2]).padStart(2, '0')}-${String(m[3]).padStart(2, '0')}`;
+  }
+  m = s.match(/^(\d{4})년\s*(\d{1,2})월\s*(\d{1,2})일/);
+  if (m) {
+    return `${m[1]}-${String(m[2]).padStart(2, '0')}-${String(m[3]).padStart(2, '0')}`;
+  }
+  m = s.match(/^(\d{1,2})월\s*(\d{1,2})일/);
+  if (m) {
+    return `${year}-${String(m[1]).padStart(2, '0')}-${String(m[2]).padStart(2, '0')}`;
+  }
+  const d = new Date(s);
+  if (!isNaN(d.getTime())) return Utilities.formatDate(d, TZ, 'yyyy-MM-dd');
+  return '';
+}
+
+function toNumber_(value) {
+  if (typeof value === 'number') return value;
+  const n = Number(String(value || '').replace(/[^0-9.-]/g, ''));
+  return isNaN(n) ? 0 : n;
+}
+
+function kakaoReportCol_(offset) {
+  return KAKAO_REPORT_START_COL + offset;
+}
+
+function setupKakaoDailyReport() {
+  const sh = getInquirySheet_();
+  const startCol = KAKAO_REPORT_START_COL;
+  const numCols = KAKAO_REPORT_NUM_COLS;
+
+  sh.getRange(1, startCol, 4, numCols).breakApart();
+  sh.getRange(1, startCol, 4, numCols).clearContent().clearFormat();
+
+  sh.getRange(1, startCol, 1, numCols).merge()
+    .setValue('■ 카톡 리포트 입력/검증 — H:K 5행부터 원본 붙여넣기')
+    .setBackground('#1F4E78').setFontColor('#FFFFFF')
+    .setFontWeight('bold').setFontSize(12)
+    .setHorizontalAlignment('center');
+
+  const desc = [[
+    '카카오 리포트의 일자',
+    '해당일 기준 채널 전체 친구수',
+    '해당일 새로 추가된 친구수',
+    '카카오 공식 채팅 요청 친구수',
+    '문의접수 A:E에 수기 입력된 건수',
+    '관리대장 입력건 ÷ 채팅 요청 친구수',
+    '채팅 요청 친구수 - 관리대장 입력건',
+    '문의접수에서 개통으로 표시된 건수',
+    '개통수 ÷ 관리대장 입력건',
+    '입력률 기준 자동 진단'
+  ]];
+
+  sh.getRange(2, startCol, 1, numCols).setValues(desc)
+    .setBackground('#F3F6FA')
+    .setFontColor('#555555')
+    .setFontSize(9)
+    .setHorizontalAlignment('center')
+    .setVerticalAlignment('middle')
+    .setWrap(true)
+    .setBorder(true,true,true,true,true,true);
+  sh.setRowHeight(2, 48);
+
+  const groups = [
+    {col: startCol,     cols: 4, label: '① 카카오 공식 리포트', bg: '#D9EAF7'},
+    {col: startCol + 4, cols: 3, label: '② 관리대장 입력 검증', bg: '#FFF2CC'},
+    {col: startCol + 7, cols: 2, label: '③ 개통 성과', bg: '#E2F0D9'},
+    {col: startCol + 9, cols: 1, label: '④ 관리 상태', bg: '#F4CCCC'},
+  ];
+
+  groups.forEach(g => {
+    const range = sh.getRange(3, g.col, 1, g.cols);
+    if (g.cols > 1) range.merge();
+    range.setValue(g.label)
+      .setBackground(g.bg)
+      .setFontWeight('bold')
+      .setHorizontalAlignment('center')
+      .setVerticalAlignment('middle')
+      .setBorder(true,true,true,true,true,true);
+  });
+  sh.setRowHeight(3, 26);
+
+  const headers = ['날짜','친구수','채널 추가수 합계','채팅 요청 친구수','관리대장 입력건','입력률','누락추정','개통수','개통률','상태'];
+  const notes = [[
+    '카카오 비즈니스 리포트에서 복사한 날짜입니다. H5부터 붙여넣습니다.',
+    '카카오 채널의 해당일 전체 친구수입니다. 원본 리포트 값입니다.',
+    '해당일 채널을 새로 추가한 친구 수입니다. 원본 리포트 값입니다.',
+    '카카오가 집계한 해당일 채팅 요청 친구수입니다. 문의 총량의 기준값입니다.',
+    '같은 날짜에 문의접수 A:E 관리대장에 입력된 고객 행 수입니다.',
+    '관리대장 입력건 / 채팅 요청 친구수입니다. 상담원 기록 누락 여부를 보는 핵심 지표입니다.',
+    '채팅 요청 친구수에서 관리대장 입력건을 뺀 값입니다. 0보다 크면 누락 가능성이 있습니다.',
+    '같은 날짜 문의접수 C열에 개통으로 표시된 건수입니다.',
+    '개통수 / 관리대장 입력건입니다. 입력된 문의 기준 전환율입니다.',
+    '입력률 기준 자동 판정입니다. 정상/일부누락/관리불안정/대량누락/수기>리포트로 표시됩니다.'
+  ]];
+
+  sh.getRange(KAKAO_REPORT_HEADER_ROW, startCol, 1, headers.length).setValues([headers])
+    .setBackground('#D9E1F2').setFontWeight('bold')
+    .setHorizontalAlignment('center')
+    .setVerticalAlignment('middle')
+    .setBorder(true,true,true,true,true,true)
+    .setNotes(notes);
+  sh.setRowHeight(KAKAO_REPORT_HEADER_ROW, 24);
+
+  sh.setColumnWidths(startCol, 1, 115);
+  sh.setColumnWidths(startCol + 1, 3, 120);
+  sh.setColumnWidths(startCol + 4, 6, 110);
+
+  sh.getRange(1, startCol, 4, numCols).setWrap(true);
+
+  sh.getRange(KAKAO_REPORT_DATA_ROW, startCol, sh.getMaxRows() - KAKAO_REPORT_DATA_ROW + 1, 1).setNumberFormat('yyyy-mm-dd');
+  sh.getRange(KAKAO_REPORT_DATA_ROW, startCol + 1, sh.getMaxRows() - KAKAO_REPORT_DATA_ROW + 1, 4).setNumberFormat('#,##0');
+  sh.getRange(KAKAO_REPORT_DATA_ROW, startCol + 5, sh.getMaxRows() - KAKAO_REPORT_DATA_ROW + 1, 1).setNumberFormat('0.0%');
+  sh.getRange(KAKAO_REPORT_DATA_ROW, startCol + 6, sh.getMaxRows() - KAKAO_REPORT_DATA_ROW + 1, 2).setNumberFormat('#,##0');
+  sh.getRange(KAKAO_REPORT_DATA_ROW, startCol + 8, sh.getMaxRows() - KAKAO_REPORT_DATA_ROW + 1, 1).setNumberFormat('0.0%');
+
+  SpreadsheetApp.getUi().alert('✅ 문의접수 시트 우측에 카톡 리포트 영역 정비 완료\nH:K 5행부터 카카오 리포트를 붙여넣은 뒤 입력률 갱신을 실행하세요.');
+}
+
+function setupKakaoDailyReportHeadersOnly_(sh) {
+  const startCol = KAKAO_REPORT_START_COL;
+  const headers = ['날짜','친구수','채널 추가수 합계','채팅 요청 친구수','관리대장 입력건','입력률','누락추정','개통수','개통률','상태'];
+  const current = sh.getRange(KAKAO_REPORT_HEADER_ROW, startCol, 1, headers.length).getValues()[0].join('');
+  if (current.indexOf('채팅 요청 친구수') === -1 || current.indexOf('입력률') === -1) {
+    setupKakaoDailyReport();
+  }
+}
+
+function updateKakaoInquiryCoverage(showAlert) {
+  const sh = getInquirySheet_();
+  setupKakaoDailyReportHeadersOnly_(sh);
+
+  const defaultYear = new Date().getFullYear();
+  const sheetLastRow = Math.max(sh.getLastRow(), KAKAO_REPORT_DATA_ROW);
+
+  const inqValues = sheetLastRow >= 2 ? sh.getRange(2, 1, sheetLastRow - 1, 3).getValues() : [];
+  const inputByDate = {};
+  const openedByDate = {};
+
+  inqValues.forEach(row => {
+    const ymd = normalizeYmd_(row[0], defaultYear);
+    const name = String(row[1] || '').trim();
+    const status = String(row[2] || '').trim();
+    if (!ymd || !name) return;
+    inputByDate[ymd] = (inputByDate[ymd] || 0) + 1;
+    if (status === '개통') openedByDate[ymd] = (openedByDate[ymd] || 0) + 1;
+  });
+
+  const startCol = KAKAO_REPORT_START_COL;
+  const rawNumRows = Math.max(sheetLastRow - KAKAO_REPORT_DATA_ROW + 1, 1);
+  const rawValues = sh.getRange(KAKAO_REPORT_DATA_ROW, startCol, rawNumRows, 4).getValues();
+
+  let lastDataIndex = -1;
+  rawValues.forEach((row, i) => {
+    if (row.some(v => String(v || '').trim() !== '')) lastDataIndex = i;
+  });
+
+  if (lastDataIndex < 0) {
+    if (showAlert !== false) SpreadsheetApp.getUi().alert('문의접수 시트 H:K 5행부터 카톡 리포트를 먼저 붙여넣어야 합니다.');
+    return;
+  }
+
+  sh.getRange(KAKAO_REPORT_DATA_ROW, startCol + 4, rawNumRows, 6).clearContent();
+
+  const reportValues = rawValues.slice(0, lastDataIndex + 1);
+  const normalizedDates = [];
+  const out = [];
+
+  reportValues.forEach(row => {
+    const ymd = normalizeYmd_(row[0], defaultYear);
+    const chatReq = toNumber_(row[3]);
+    const input = ymd ? (inputByDate[ymd] || 0) : 0;
+    const opened = ymd ? (openedByDate[ymd] || 0) : 0;
+    const inputRate = chatReq > 0 ? input / chatReq : '';
+    const missing = chatReq - input;
+    const openRate = input > 0 ? opened / input : '';
+    let status = '';
+    if (!ymd) status = '날짜 확인';
+    else if (chatReq === 0 && input === 0) status = '-';
+    else if (missing < 0) status = '수기>리포트';
+    else if (inputRate === '') status = '-';
+    else if (inputRate >= 0.9) status = '정상';
+    else if (inputRate >= 0.7) status = '일부누락';
+    else if (inputRate >= 0.5) status = '관리불안정';
+    else status = '대량누락';
+    normalizedDates.push([ymd ? new Date(ymd + 'T00:00:00+09:00') : row[0]]);
+    out.push([input, inputRate, missing, opened, openRate, status]);
+  });
+
+  sh.getRange(KAKAO_REPORT_DATA_ROW, startCol, normalizedDates.length, 1)
+    .setValues(normalizedDates).setNumberFormat('yyyy-mm-dd');
+  sh.getRange(KAKAO_REPORT_DATA_ROW, startCol + 4, out.length, 6).setValues(out);
+  sh.getRange(KAKAO_REPORT_DATA_ROW, startCol + 1, out.length, 4).setNumberFormat('#,##0');
+  sh.getRange(KAKAO_REPORT_DATA_ROW, startCol + 4, out.length, 1).setNumberFormat('#,##0');
+  sh.getRange(KAKAO_REPORT_DATA_ROW, startCol + 5, out.length, 1).setNumberFormat('0.0%');
+  sh.getRange(KAKAO_REPORT_DATA_ROW, startCol + 6, out.length, 2).setNumberFormat('#,##0');
+  sh.getRange(KAKAO_REPORT_DATA_ROW, startCol + 8, out.length, 1).setNumberFormat('0.0%');
+  sh.getRange(KAKAO_REPORT_DATA_ROW, startCol + 9, out.length, 1).setHorizontalAlignment('center');
+
+  updateKakaoReportDashboard(false);
+
+  if (showAlert !== false) {
+    SpreadsheetApp.getUi().alert('✅ 문의접수 입력률 갱신 완료');
+  }
+}
+
+function updateKakaoReportDashboard(showAlert) {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const dash = ss.getSheetByName('통합대시보드');
+  const inquiry = ss.getSheetByName(INQUIRY_SHEET);
+  if (!dash || !inquiry) return;
+
+  dash.getRange('A36:Z44').breakApart();
+  dash.getRange('A36:Z44').clearContent().clearFormat();
+
+  dash.getRange('A36:C36').merge().setValue('★ 카톡 문의 입력률 리포트')
+    .setBackground('#1F4E78').setFontColor('#FFFFFF')
+    .setFontWeight('bold').setFontSize(13);
+  dash.getRange('D36').setValue('📅 기간:').setFontWeight('bold').setHorizontalAlignment('right');
+  dash.getRange('E36').setBackground('#FFF59D').setFontWeight('bold').setHorizontalAlignment('center')
+    .setDataValidation(SpreadsheetApp.newDataValidation()
+      .requireValueInList(['어제','최근 7일','최근 30일'], true).setAllowInvalid(false).build());
+  if (dash.getRange('E36').getValue() === '') dash.getRange('E36').setValue('최근 30일');
+
+  dash.getRange('M36').setValue('기간▶').setFontColor('#BBBBBB').setFontSize(8).setHorizontalAlignment('right');
+  dash.getRange('N36').setFormula('=IF($E$36="어제",TODAY()-1,IF($E$36="최근 7일",TODAY()-6,TODAY()-29))')
+    .setNumberFormat('m/d').setFontColor('#BBBBBB');
+  dash.getRange('O36').setFormula('=IF($E$36="어제",TODAY()-1,TODAY())')
+    .setNumberFormat('m/d').setFontColor('#BBBBBB');
+
+  const headers = ['카톡 채팅요청','관리대장 입력','입력률','누락추정','개통','개통률','친구증가','판단'];
+  dash.getRange(37, 1, 1, headers.length).setValues([headers])
+    .setBackground('#D9E1F2').setFontWeight('bold')
+    .setHorizontalAlignment('center').setBorder(true,true,true,true,true,true);
+
+  const d = `'${INQUIRY_SHEET}'!H:H,">="&$N$36,'${INQUIRY_SHEET}'!H:H,"<="&$O$36`;
+  dash.getRange('A38').setFormula(`=IFERROR(SUMIFS('${INQUIRY_SHEET}'!K:K,${d}),0)`).setNumberFormat('#,##0"건"');
+  dash.getRange('B38').setFormula(`=IFERROR(SUMIFS('${INQUIRY_SHEET}'!L:L,${d}),0)`).setNumberFormat('#,##0"건"');
+  dash.getRange('C38').setFormula('=IFERROR(B38/A38,"-")').setNumberFormat('0.0%');
+  dash.getRange('D38').setFormula('=A38-B38').setNumberFormat('#,##0"건"');
+  dash.getRange('E38').setFormula(`=IFERROR(SUMIFS('${INQUIRY_SHEET}'!O:O,${d}),0)`).setNumberFormat('#,##0"건"');
+  dash.getRange('F38').setFormula('=IFERROR(E38/B38,"-")').setNumberFormat('0.0%');
+  dash.getRange('G38').setFormula(`=IFERROR(SUMIFS('${INQUIRY_SHEET}'!J:J,${d}),0)`).setNumberFormat('#,##0"명"');
+  dash.getRange('H38').setFormula('=IF(C38="-","-",IF(C38>=0.9,"🟢 정상",IF(C38>=0.7,"🟡 일부누락",IF(C38>=0.5,"🟠 관리불안정","🔴 대량누락"))))');
+
+  dash.getRange('A37:H38').setBorder(true,true,true,true,true,true).setHorizontalAlignment('center');
+
+  dash.getRange('A40').setFormula(`=HYPERLINK("#gid=${inquiry.getSheetId()}","→ 문의접수 H:Q 카톡 리포트 영역")`)
+    .setFontColor('#0066CC').setFontWeight('bold');
+  dash.getRange('B40:H40').merge()
+    .setValue('※ 문의 총량은 문의접수 H:K의 카톡 공식 리포트, 고객별 상태/개통/유입채널은 문의접수 A:E 관리대장 기준')
+    .setFontColor('#666666').setFontStyle('italic');
+
+  if (showAlert !== false) SpreadsheetApp.getUi().alert('✅ 카톡 문의 입력률 대시보드 갱신 완료');
+}
+
+function inspectAdCreativeLayout() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheetByName('광고소재');
+  if (!sh) {
+    var names = ss.getSheets().map(function(s){return s.getName();});
+    SpreadsheetApp.getUi().alert("'광고소재' 시트 없음.\n전체 시트 목록:\n" + names.join('\n'));
+    return;
+  }
+  var lastRow = sh.getLastRow(), lastCol = sh.getLastColumn();
+  var out = '시트=광고소재  마지막행=' + lastRow + '  마지막열=' + lastCol + '\n\n';
+  var top = sh.getRange(1, 1, Math.min(3,lastRow), Math.min(11,lastCol)).getDisplayValues();
+  for (var r=0;r<top.length;r++){
+    out += '행' + (r+1) + ': ' + top[r].map(function(v){return v===''?'·':v;}).join(' | ') + '\n';
+  }
+  out += '\n[K열 내용 있는 행]\n';
+  var kvals = sh.getRange(1, 11, lastRow, 1).getValues();
+  for (var i=0;i<kvals.length;i++){
+    var v = String(kvals[i][0]||'').trim();
+    if (v) out += 'K' + (i+1) + ': ' + v.substring(0,40) + '\n';
+  }
+  SpreadsheetApp.getUi().alert(out);
+  Logger.log(out);
+}
+
+// ──[Web App]── generator.html 호스팅 + API 라우팅 (2026-06-09 C-4: createTemplateFromFile)
+function doGet(e) {
+  // 권한 체크: Owner Execute일 때 빈 문자열 통과
+  const allowed = ['313jongmin@gmail.com', 'mazision@gmail.com'];
+  let user = '';
+  try { user = Session.getActiveUser().getEmail(); } catch (err) {}
+  if (user && allowed.indexOf(user) === -1) {
+    return HtmlService.createHtmlOutput(
+      '<h1>🔒 접근 권한 없음</h1><p>접속 계정: ' + user + '</p>'
+    );
+  }
+
+  // API 라우팅: ?api=meta_creatives
+  if (e && e.parameter && e.parameter.api === 'meta_creatives') {
+    return getMetaCreativesAsJSON_();
+  }
+
+  // 페이지 라우팅: ?page=generator (default) / ?page=index
+  const page = (e && e.parameter && e.parameter.page) || 'generator';
+  if (page === 'generator') {
+    return HtmlService.createTemplateFromFile('generator')
+      .evaluate()
+      .setTitle('폰스팟 광고 생성기')
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+  }
+  if (page === 'index') {
+    return HtmlService.createTemplateFromFile('index')
+      .evaluate()
+      .setTitle('폰스팟 인덱스')
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+  }
+  return HtmlService.createHtmlOutput('<h1>404</h1>');
+}
+
+// ──[Web App utility]── HTML 파일 include 함수 (2026-06-09 C-4)
+// styles.html 등 공통 자원을 generator.html에서 <?!= include('styles') ?>로 호출
+function include(filename) {
+  return HtmlService.createHtmlOutputFromFile(filename).getContent();
+}

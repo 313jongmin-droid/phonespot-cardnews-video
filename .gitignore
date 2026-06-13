@@ -163,3 +163,5 @@ upload/tokens/*.json
 upload/tokens/*.token
 upload/tokens/*secret*
 !upload/tokens/.gitkeep
+apps_script/.clasp.json 
+apps_script/.clasprc.json 
