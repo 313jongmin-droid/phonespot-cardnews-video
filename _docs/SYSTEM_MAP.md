@@ -281,6 +281,10 @@
 **함정**
 - 노트북엔 Git for Windows가 없음 → "git not found"는 보통 **bat 탐색 코드 문제**지 미설치가 아님. 먼저 GitHub Desktop 경로 확인.
 - 실행 PC에서 push 금지(분기). 막히면 `git fetch origin && git reset --hard origin/main`(gitignore 자산 안 건드림).
+- **★ 미커밋(untracked) 기사 JSON 유실 사고 (2026-06-13)**: `git stash --include-untracked`(pull 전 단계)는 **추적 안 된 파일을 working tree에서 stash로 쓸어담는다.** 다른 task가 `cardnews/articles/NNN_*.json`을 만들고 **커밋 전**일 때 auto-update/pull bat이 돌면 그 기사가 사라져 "article not found" → 준비/렌더 exit 1. **데이터는 stash에 보존**되어 복구 가능: `git ls-tree -r --name-only "stash@{0}^3"`로 확인 → `git show "stash@{0}^3:<path>" > <path>`로 개별 복원(통째 pop 금지).
+  - **근본 원인**: **노트북(개발기)에 auto-update 마커(`CODEX_VIDEO_DESK/TEMP/panel/auto_update.on`)가 켜져 있으면** 패널 켤 때마다 stash가 돈다. 노트북=push only(STEP 0)이므로 **마커 꺼야 함**(`수신PC_자동업데이트_끄기.bat` 또는 마커 삭제). 러너(부사수/사무실)는 켜둠이 정상.
+  - **재발 방지(코드)**: `dashboard/auto_update.cmd` + `부사수PC_원클릭_셋업.bat`의 `stash --include-untracked` **직전에 기사 자동 커밋** 박음: `git add cardnews/articles` → `git -c user.email=phonespot@local -c user.name=phonespot commit -m "auto-save articles before update"`(없으면 no-op). 추적되면 stash가 못 쓸어감.
+  - 운영 룰: 새 기사는 만들면 **즉시 커밋**(`기사_깃에_올리기.bat`). articles는 git 추적 대상(중복방지 DB).
 
 ---
 
@@ -393,6 +397,7 @@
 ---
 
 ## 변경 이력 (이 맵 자체)
+- 2026-06-13: **F단원 함정에 미커밋 기사 유실 사고 박음** — auto-update `stash --include-untracked`가 untracked 기사를 쓸어감(노트북 마커 ON이 원인). 복구법(`stash@{0}^3`) + 재발방지(노트북 마커 OFF + pull bat `auto_update.cmd`/`부사수PC_원클릭_셋업.bat`에 기사 자동커밋 박음).
 - 2026-06-13: **B 단원 인사이트 누적 학습 + 가중치 라벨 매트릭스 박음.** 마스터 룰 문서에 `_docs/INSIGHTS_LOOP.md`(시트 직접 Read 단일 모델 — 코덱스·GitHub·Drive MD·mklink 폐기) + `cardnews/templates/caption_template.md`(5채널+영상 나레이션) 명시. 가중치 라벨 6종(yt+30/yt-hook+20/meta+20·30/store-active+30/season+30/freshness+10/dup-100) 정본 위치 = `INSIGHTS_LOOP.md` §3. 함정에 "시트 운영 메모 7일 스캔 빼먹으면 매장 핵심 캠페인 누락(예: 삼성 페스티벌)" 박음. H 단원 outbox 파일명 표준(`<YYYY-MM-DD>_collect*.txt` 후보표 / `<NNN>_ready.txt` 작성 완료 통지) + listener 함정(부팅 자동시작·송신 검증) 박음.
 - 2026-06-13: **C단원에 커버(9:16 표지) 기능 박음** — `Cover.tsx`(CoverShort) + `Root.tsx` id=Cover + `render_cover.mjs`(renderStill, 번들캐시 재사용) + `run_codex_casual.bat` Step6 직후 best-effort. 결과 = `RESULTDIR\<RESULTKEY>_cover.jpg`. Remotion 4.0.404.
 - 2026-06-13: **문서화 규약 박음** — "가이드 박아"는 이 3층 구조(헤드→SYSTEM_MAP 대단원→마스터 가이드)에 합류시키는 것이지 1회성 요약본 생성이 아님. 절차 정본 = CLAUDE.md "문서화 규약" 절. 헤드+이 파일 상단에 동시 명시.
