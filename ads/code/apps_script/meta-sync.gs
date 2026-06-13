@@ -25,6 +25,7 @@ const META_API_VERSION = 'v22.0';
 const SHEET_META = '메타';
 const SHEET_META_CREATIVES = '메타_소재';
 const SHEET_META_INTEGRATED = '메타_통합';  // ★ 신규
+const SHEET_UTM_MAPPING = 'UTM_매핑';  // ★ 복구 2026-06-12 (선언 누락 → ReferenceError 수정)
 const SHEET_GA4 = 'GA4_자동';
 const SHEET_SYNC_LOG = '동기화_로그';
 
@@ -225,15 +226,14 @@ function autoAssignPSId(sheet, adId) {
   return `PS-${String(max + 1).padStart(3, '0')}`;
 }
 
-// ============ ★ 신규 3. 캠페인별 통합 (메타_통합 시트) ============
-//   - 메타 API: 캠페인별 노출/클릭/지출
-//   - GA4 매핑: 캠페인명 기반 세션/카톡클릭/전화클릭/시티마켓
-//   - 한 행 = 1일 × 1캠페인. 자동/수기 통합 분석용
+// ============ ★ 신규 3. 광고그룹별 통합 (메타_통합 시트) — 2026-06-10 광고그룹 단위 전환 ============
+//   - 메타 API: level=adset, 광고그룹별 노출/클릭/지출
+//   - GA4 매핑: UTM_매핑 시트 (한글 광고그룹명 → 영문 슬러그) VLOOKUP → GA4 utm_campaign 매칭
+//   - 한 행 = 1일 × 1광고그룹. KT 캠페인 자동 제외.
 function syncMetaCampaignIntegrated(targetDate) {
-  Logger.log('=== syncMetaCampaignIntegrated 시작 ===');
+  Logger.log('=== syncMetaCampaignIntegrated 시작 (광고그룹 단위) ===');
   const adAccountId = getAdAccountId();
 
-  // 어제 (또는 targetDate)
   const tz = 'Asia/Seoul';
   const target = targetDate ? new Date(targetDate) : (function(){
     const y = new Date(); y.setDate(y.getDate()-1); return y;
@@ -241,32 +241,57 @@ function syncMetaCampaignIntegrated(targetDate) {
   const ymd = Utilities.formatDate(target, tz, 'yyyy-MM-dd');
   Logger.log(`날짜: ${ymd}`);
 
-  // Meta API — campaign 레벨
+  // Meta API — adset 레벨 (★ 2026-06-10: campaign → adset 전환)
   const data = metaFetch(`/${adAccountId}/insights`, {
-    fields: 'campaign_id,campaign_name,impressions,clicks,spend',
+    fields: 'campaign_id,campaign_name,adset_id,adset_name,impressions,clicks,spend',
     time_range: JSON.stringify({ since: ymd, until: ymd }),
-    level: 'campaign'
+    level: 'adset'
   });
   if (!data.data || data.data.length === 0) {
     Logger.log('데이터 없음: ' + ymd);
     return;
   }
 
-  // 시트
+  // KT 캠페인 자동 제외
+  const filtered = data.data.filter(item => {
+    const camp = String(item.campaign_name || '');
+    return !['KT', '다이렉트샵'].some(kw => camp.includes(kw));
+  });
+  if (filtered.length === 0) {
+    Logger.log('KT 제외 후 데이터 없음');
+    return;
+  }
+
+  // 시트 + 19컬럼 헤더 (광고그룹ID·광고그룹명 박힘)
   const ss = SpreadsheetApp.getActive();
   let sh = ss.getSheetByName(SHEET_META_INTEGRATED);
   if (!sh) {
     sh = ss.insertSheet(SHEET_META_INTEGRATED);
-    const headers = ['날짜','캠페인ID','캠페인명','노출','클릭','지출','CTR','CPC',
+    const headers = ['날짜','캠페인ID','캠페인명','광고그룹ID','광고그룹명',
+                     '노출','클릭','지출','CTR','CPC',
                      'GA4세션','카톡클릭','전화클릭','시티마켓','카톡전환률','카톡당CPC',
                      '문의수','개통수','메모'];
     sh.getRange(1, 1, 1, headers.length).setValues([headers])
       .setBackground('#1F4E78').setFontColor('#FFFFFF')
       .setFontWeight('bold').setHorizontalAlignment('center');
     sh.setFrozenRows(1);
-    sh.setColumnWidth(1, 90); sh.setColumnWidth(2, 130); sh.setColumnWidth(3, 200);
-    for (let c = 4; c <= 14; c++) sh.setColumnWidth(c, 90);
-    for (let c = 15; c <= 17; c++) sh.setColumnWidth(c, 100);
+    sh.setColumnWidth(1, 90);
+    sh.setColumnWidth(2, 130); sh.setColumnWidth(3, 180);
+    sh.setColumnWidth(4, 130); sh.setColumnWidth(5, 180);
+    for (let c = 6; c <= 16; c++) sh.setColumnWidth(c, 90);
+    for (let c = 17; c <= 19; c++) sh.setColumnWidth(c, 100);
+  } else {
+    // 헤더 자동 갱신 (17→19컬럼 마이그레이션)
+    const curHeader = sh.getRange(1, 1, 1, 19).getValues()[0];
+    if (curHeader[3] !== '광고그룹ID' || curHeader[4] !== '광고그룹명') {
+      const headers = ['날짜','캠페인ID','캠페인명','광고그룹ID','광고그룹명',
+                       '노출','클릭','지출','CTR','CPC',
+                       'GA4세션','카톡클릭','전화클릭','시티마켓','카톡전환률','카톡당CPC',
+                       '문의수','개통수','메모'];
+      sh.getRange(1, 1, 1, headers.length).setValues([headers])
+        .setBackground('#1F4E78').setFontColor('#FFFFFF')
+        .setFontWeight('bold').setHorizontalAlignment('center');
+    }
   }
 
   // 같은 날짜 행 중복 제거 (재실행 안전)
@@ -278,45 +303,116 @@ function syncMetaCampaignIntegrated(targetDate) {
     }
   }
 
+  // 신규 광고그룹명 자동 발견 → UTM_매핑 시트에 추가
+  const adsetNames = filtered.map(item => item.adset_name).filter(Boolean);
+  autoDiscoverAdsets_(adsetNames);
+
   // 데이터 추가
   const startRow = sh.getLastRow() + 1;
-  data.data.forEach((item, i) => {
+  filtered.forEach((item, i) => {
     const r = startRow + i;
     sh.getRange(r, 1).setValue(new Date(ymd)).setNumberFormat('yyyy-mm-dd');
     sh.getRange(r, 2).setValue(item.campaign_id);
     sh.getRange(r, 3).setValue(item.campaign_name);
-    sh.getRange(r, 4).setValue(Number(item.impressions) || 0).setNumberFormat('#,##0');
-    sh.getRange(r, 5).setValue(Number(item.clicks) || 0).setNumberFormat('#,##0');
-    sh.getRange(r, 6).setValue(Math.round(Number(item.spend) || 0)).setNumberFormat('#,##0"원"');
-    sh.getRange(r, 7).setFormula(`=IFERROR(E${r}/D${r},0)`).setNumberFormat('0.00%');
-    sh.getRange(r, 8).setFormula(`=IFERROR(F${r}/E${r},0)`).setNumberFormat('#,##0"원"');
+    sh.getRange(r, 4).setValue(item.adset_id);             // ★ 광고그룹ID
+    sh.getRange(r, 5).setValue(item.adset_name);           // ★ 광고그룹명
+    sh.getRange(r, 6).setValue(Number(item.impressions) || 0).setNumberFormat('#,##0');
+    sh.getRange(r, 7).setValue(Number(item.clicks) || 0).setNumberFormat('#,##0');
+    sh.getRange(r, 8).setValue(Math.round(Number(item.spend) || 0)).setNumberFormat('#,##0"원"');
+    sh.getRange(r, 9).setFormula(`=IFERROR(G${r}/F${r},0)`).setNumberFormat('0.00%');
+    sh.getRange(r, 10).setFormula(`=IFERROR(H${r}/G${r},0)`).setNumberFormat('#,##0"원"');
 
-    // GA4 매핑 — 캠페인명 기반
+    // GA4 매핑 — 광고그룹명(E열) → UTM_매핑 VLOOKUP → 영문 슬러그 → GA4 D열 매칭
     const ymdText = `TEXT(A${r},"yyyymmdd")`;
-    const ga4Base = `'GA4_자동'!A:A,${ymdText},'GA4_자동'!B:B,"meta",'GA4_자동'!D:D,C${r}`;
-    sh.getRange(r, 9).setFormula(
+    // ★ 2026-06-12 B2 수정: 슬러그 미입력 시 ""가 GA4 빈 campaign 행을 오매칭 → 과대계상.
+    //   미매핑이면 실제 campaign에 절대 없는 토큰으로 치환해 SUMIFS가 0 반환하도록 가드.
+    const slugRaw = `IFERROR(VLOOKUP(E${r},'${SHEET_UTM_MAPPING}'!A:B,2,FALSE),"")`;
+    const slugLookup = `IF(${slugRaw}="","__UNMAPPED_NO_MATCH__",${slugRaw})`;
+    const ga4Base = `'GA4_자동'!A:A,${ymdText},'GA4_자동'!B:B,"meta",'GA4_자동'!D:D,${slugLookup}`;
+    sh.getRange(r, 11).setFormula(
       `=IFERROR(SUMIFS('GA4_자동'!G:G,${ga4Base},'GA4_자동'!E:E,"session_start"),0)`
     ).setNumberFormat('#,##0');
-    sh.getRange(r, 10).setFormula(
+    sh.getRange(r, 12).setFormula(
       `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"kakao_chat_click"),0)`
     ).setNumberFormat('#,##0');
-    sh.getRange(r, 11).setFormula(
+    sh.getRange(r, 13).setFormula(
       `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"phone_click"),0)`
     ).setNumberFormat('#,##0');
-    sh.getRange(r, 12).setFormula(
+    sh.getRange(r, 14).setFormula(
       `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_click"),0)`
     ).setNumberFormat('#,##0');
-    sh.getRange(r, 13).setFormula(
-      `=IFERROR(IF(I${r}=0,0,J${r}/I${r}),0)`
+    sh.getRange(r, 15).setFormula(
+      `=IFERROR(IF(K${r}=0,0,L${r}/K${r}),0)`
     ).setNumberFormat('0.00%');
-    sh.getRange(r, 14).setFormula(
-      `=IFERROR(IF(J${r}=0,"-",F${r}/J${r}),"-")`
+    sh.getRange(r, 16).setFormula(
+      `=IFERROR(IF(L${r}=0,"-",H${r}/L${r}),"-")`
     ).setNumberFormat('#,##0"원"');
   });
 
-  const msg = `✅ 메타_통합 ${ymd} ${data.data.length}개 캠페인 입력`;
+  const msg = `✅ 메타_통합 ${ymd} ${filtered.length}개 광고그룹 (KT 제외 ${data.data.length - filtered.length})`;
   Logger.log(msg);
   logSync_('syncMetaCampaignIntegrated', msg);
+}
+
+// ============ ★ UTM_매핑 시트 자동 발견 (2026-06-10) ============
+function autoDiscoverAdsets_(adsetNames) {
+  const ss = SpreadsheetApp.getActive();
+  let sheet = ss.getSheetByName(SHEET_UTM_MAPPING);
+  if (!sheet) {
+    sheet = ss.insertSheet(SHEET_UTM_MAPPING);
+    sheet.appendRow(['메타 광고그룹명', '영문 슬러그', '첫 발견일', '상태', '메모']);
+    sheet.getRange(1, 1, 1, 5).setBackground('#1F4E78').setFontColor('#FFFFFF').setFontWeight('bold');
+    sheet.setFrozenRows(1);
+    sheet.setColumnWidth(1, 220); sheet.setColumnWidth(2, 180);
+    sheet.setColumnWidth(3, 110); sheet.setColumnWidth(4, 100); sheet.setColumnWidth(5, 200);
+  }
+  const existingSet = new Set();
+  if (sheet.getLastRow() >= 2) {
+    sheet.getRange(2, 1, sheet.getLastRow() - 1, 1).getValues()
+      .forEach(r => { if (r[0]) existingSet.add(String(r[0]).trim()); });
+  }
+  const today = Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyy-MM-dd');
+  let added = 0;
+  const newNames = [];
+  (adsetNames || []).forEach(name => {
+    const n = String(name || '').trim();
+    if (!n) return;
+    if (existingSet.has(n)) return;
+    sheet.appendRow([n, '', today, '⚠️ 매핑 필요', '']);
+    existingSet.add(n);
+    newNames.push(n);
+    added++;
+  });
+  if (added > 0) {
+    Logger.log(`UTM_매핑: 신규 광고그룹 ${added}개 발견 — ${newNames.join(', ')}`);
+    logSync_('autoDiscoverAdsets', `신규 ${added}개: ${newNames.slice(0, 3).join(', ')}...`);
+  }
+  return added;
+}
+
+// 메뉴 호출 — 미매핑 광고그룹 보기 (B열 비어있는 행)
+function showUnmappedAdsets() {
+  const ss = SpreadsheetApp.getActive();
+  const sheet = ss.getSheetByName(SHEET_UTM_MAPPING);
+  if (!sheet) {
+    SpreadsheetApp.getUi().alert('UTM_매핑 시트 아직 없음. syncMetaCampaignIntegrated 1회 실행 후 확인.');
+    return;
+  }
+  if (sheet.getLastRow() < 2) {
+    SpreadsheetApp.getUi().alert('UTM_매핑 시트 비어있음.');
+    return;
+  }
+  const data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 2).getValues();
+  const unmapped = data.filter(r => r[0] && !r[1]);
+  if (unmapped.length === 0) {
+    SpreadsheetApp.getUi().alert('✅ 미매핑 광고그룹 없음. 모두 영문 슬러그 박혀있음.');
+    return;
+  }
+  const msg = unmapped.map((r, i) => `${i + 1}. ${r[0]}`).join('\n');
+  SpreadsheetApp.getUi().alert(
+    `⚠️ 미매핑 광고그룹 ${unmapped.length}개\n\n${msg}\n\n` +
+    `UTM_매핑 시트 B열에 영문 슬러그 박기 (1회). 박으면 메타_통합 GA4 컬럼 자동 매칭.`
+  );
 }
 
 // ──[수동 1회]── 30일 백필 (초기 1회만 실행)
@@ -423,20 +519,22 @@ function logSync_(funcName, message) {
   } catch (e) { Logger.log('로그 기록 실패: ' + e.message); }
 }
 
-// ============ Trigger 설정 ============
+// ============ Trigger 설정 (★ 2026-06-10/11: syncAll + 인사이트 MD 듀얼) ============
 function setupTriggers() {
   ScriptApp.getProjectTriggers().forEach(t => {
-    if (t.getHandlerFunction() === 'syncAll') {
+    const fn = t.getHandlerFunction();
+    if (fn === 'syncAll' || fn === 'generateMetaInsightsMarkdown') {
       ScriptApp.deleteTrigger(t);
     }
   });
   ScriptApp.newTrigger('syncAll')
-    .timeBased()
-    .everyDays(1)
-    .atHour(1)
-    .nearMinute(30)
-    .create();
-  Logger.log('Trigger 설정 완료: 매일 01:30');
+    .timeBased().everyDays(1).atHour(1).nearMinute(30).create();
+  ScriptApp.newTrigger('generateMetaInsightsMarkdown')
+    .timeBased().everyDays(1).atHour(1).nearMinute(45).create();
+  Logger.log('Trigger 설정 완료: 01:30 syncAll + 01:45 generateMetaInsightsMarkdown');
+  SpreadsheetApp.getUi().alert('트리거 2개 등록',
+    '01:30 데이터 sync (syncAll)\n01:45 인사이트 MD 생성 + Drive 저장\n매일 새벽 자동.',
+    SpreadsheetApp.getUi().ButtonSet.OK);
 }
 
 // ============ 유틸 ============
@@ -746,7 +844,8 @@ function getMetaCreativesForGenerator() {
   try {
     const sheet = SpreadsheetApp.getActive().getSheetByName(SHEET_META_CREATIVES);
     if (!sheet || sheet.getLastRow() < 3) return [];
-    const data = sheet.getRange(3, 1, sheet.getLastRow() - 2, 15).getValues();
+    // ★ 2026-06-12 B1 수정: 15→17열 (16열 카테고리 / 17열 지역 = 종민 수기 라벨 포함)
+    const data = sheet.getRange(3, 1, sheet.getLastRow() - 2, 17).getValues();
     return data.map(row => ({
       id: row[12] || ('PS-' + row[0]),
       metaAdId: String(row[0] || ''),
@@ -761,7 +860,9 @@ function getMetaCreativesForGenerator() {
       ctr: row[9],
       cpc: row[10],
       evaluation: row[11],
-      createdDate: row[13] ? String(row[13]) : ''
+      createdDate: row[13] ? String(row[13]) : '',
+      category: String(row[15] || '').trim(),  // ★ 16열 카테고리 (드롭다운 9개)
+      region: String(row[16] || '').trim()      // ★ 17열 지역 (공백=전국)
     }));
   } catch (e) {
     return { error: e.message };
@@ -775,7 +876,8 @@ function getMetaCreativesAsJSON_() {
     if (!sheet || sheet.getLastRow() < 3) {
       return ContentService.createTextOutput('[]').setMimeType(ContentService.MimeType.JSON);
     }
-    const data = sheet.getRange(3, 1, sheet.getLastRow() - 2, 15).getValues();
+    // 16열 = 카테고리, 17열 = 지역 (종민 수기 라벨, 2026-06-12 ~ Task 44). 1~15열 자동 동기화 영역 + 16·17열 보호 영역.
+    const data = sheet.getRange(3, 1, sheet.getLastRow() - 2, 17).getValues();
     const json = data.map(row => ({
       id: row[12] || `PS-${row[0]}`,
       metaAdId: row[0],
@@ -790,7 +892,9 @@ function getMetaCreativesAsJSON_() {
       ctr: row[9],
       cpc: row[10],
       evaluation: row[11],
-      createdDate: row[13]
+      createdDate: row[13],
+      category: String(row[15] || '').trim(),  // ★ 16열 — 종민 수기 라벨링 (카테고리 9개 드롭다운)
+      region: String(row[16] || '').trim()      // ★ 17열 — 종민 수기 자유 텍스트 (공백=전국, "광교점"·"수원점" 등)
     }));
     return ContentService.createTextOutput(JSON.stringify(json))
       .setMimeType(ContentService.MimeType.JSON);
@@ -1002,15 +1106,16 @@ function getBenchmarkForGenerator() {
     const sheet = SpreadsheetApp.getActive().getSheetByName(SHEET_BM_CP);
     if (!sheet) return { ok: true, items: [] };
     if (sheet.getLastRow() < 3) return { ok: true, items: [] };
-    // 헤더 정의: ID/구분/페이지명/페이지ID/팔로워/본문 발췌/광고 형식/CTA/게재 시작일/게재 위치/운영 일수/위치 수/변형 수/점수/등급/썸네일 URL/Ad Library URL/검색 키워드/수집일
-    const data = sheet.getRange(3, 1, sheet.getLastRow() - 2, 19).getValues();
+    // 헤더 정의: ID/구분/페이지명/페이지ID/팔로워/본문 발췌/광고 형식/CTA/게재 시작일/게재 위치/운영 일수/위치 수/변형 수/점수/등급/썸네일 URL/Ad Library URL/검색 키워드/수집일 / 카테고리(★수기) / 후킹 구조(★수기) / 지역(★수기)
+    // 20·21·22열 = 종민 수기 라벨 (Task 43 + Task 44). 1~19열 자동 수집 + 20·21·22열 보호 영역.
+    const data = sheet.getRange(3, 1, sheet.getLastRow() - 2, 22).getValues();
     const items = [];
     for (const row of data) {
       const id = String(row[0] || '');
       if (!id.startsWith('BM') && !id.startsWith('CP')) continue;
       items.push({
         id: id,
-        category: String(row[1] || 'BM'),
+        kind: String(row[1] || 'BM'),      // BM/CP 구분자 (옛 'category' 키였으나 의미상 'kind'로 변경)
         pageName: String(row[2] || '-'),
         pageId: String(row[3] || '-'),
         followers: parseInt(row[4]) || 0,
@@ -1027,12 +1132,51 @@ function getBenchmarkForGenerator() {
         thumbnail: String(row[15] || ''),
         adLibraryUrl: String(row[16] || ''),
         searchTerm: String(row[17] || ''),
-        collectedAt: String(row[18] || '')
+        collectedAt: String(row[18] || ''),
+        category: String(row[19] || '').trim(),       // ★ 20열 — 종민 수기 라벨 (상품 카테고리)
+        hookStructure: String(row[20] || '').trim(),  // ★ 21열 — 종민 수기 라벨 (후킹 구조)
+        region: String(row[21] || '').trim()           // ★ 22열 — 종민 수기 자유 텍스트 (공백=전국)
       });
     }
     return { ok: true, items: items, count: items.length };
   } catch (e) {
     return { ok: false, error: e.message, items: [] };
+  }
+}
+
+// ★ 2026-06-12: 컨셉/지역 앵글 → 라이브러리·벤치마크 광고 의미(주제) 매칭 (Gemini)
+// generator.html이 google.script.run으로 호출. payload={concept,region,category,usp,candidates:[{id,text}]}
+function getSemanticAdMatches(payload) {
+  try {
+    payload = payload || {};
+    const key = PropertiesService.getScriptProperties().getProperty('GEMINI_API_KEY');
+    if (!key) return { ok: false, error: 'GEMINI_API_KEY 없음 (스크립트 속성 추가 필요)', scores: {} };
+    const cands = (payload.candidates || []).slice(0, 40);
+    if (cands.length === 0) return { ok: true, scores: {} };
+    const angle = [payload.concept, payload.region, payload.category, payload.usp]
+      .map(function(s){ return String(s || '').trim(); }).filter(Boolean).join(' / ');
+    if (!angle) return { ok: true, scores: {} };
+    const list = cands.map(function(c){ return '[' + c.id + '] ' + String(c.text || '').slice(0, 140); }).join('\n');
+    const prompt =
+      '광고 캠페인 앵글: "' + angle + '".\n' +
+      '아래 기존 광고들 중 이 앵글과 주제·맥락이 유사한 것을 0~100으로 평가해라. ' +
+      '단어가 정확히 같지 않아도 의미가 통하면 높게 (예: "액정 깨진 폰" 앵글 ↔ "중고폰 보상/파손/수리" 광고 = 높음). 무관하면 낮게.\n\n' +
+      '광고 목록:\n' + list + '\n\n' +
+      'JSON 배열로만 응답: [{"id":"광고ID","score":0-100}]. 모든 광고에 점수. 다른 설명 금지.';
+    const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + key;
+    const res = UrlFetchApp.fetch(url, {
+      method: 'POST', contentType: 'application/json',
+      payload: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { temperature: 0.2, response_mime_type: 'application/json' } }),
+      muteHttpExceptions: true
+    });
+    if (res.getResponseCode() !== 200) return { ok: false, error: 'Gemini ' + res.getResponseCode() + ': ' + res.getContentText().slice(0, 200), scores: {} };
+    const data = JSON.parse(res.getContentText());
+    const arr = JSON.parse(data.candidates[0].content.parts[0].text);
+    const scores = {};
+    (Array.isArray(arr) ? arr : []).forEach(function(x){ if (x && x.id != null) scores[String(x.id)] = Number(x.score) || 0; });
+    return { ok: true, scores: scores };
+  } catch (e) {
+    return { ok: false, error: e.message, scores: {} };
   }
 }
 
@@ -1189,8 +1333,12 @@ function buildMetaSyncMenu_(ui) {
     .addItem('🔄 지금 동기화 (테스트)', 'manualSyncToday')
     .addItem('📥 어제 성과만 가져오기', 'syncMetaDaily')
     .addItem('🎨 광고소재 라이브러리 갱신', 'syncMetaCreatives')
-    .addItem('📊 캠페인별 통합 (어제)', 'syncMetaCampaignIntegrated')
+    .addItem('📊 광고그룹별 통합 (어제)', 'syncMetaCampaignIntegrated')
     .addItem('⏪ 30일 백필 (1회만)', 'backfillMetaCampaign30Days')
+    .addSeparator()
+    .addItem('🔍 미매핑 광고그룹 보기', 'showUnmappedAdsets')
+    .addItem('🧠 인사이트 MD 생성', 'generateMetaInsightsMarkdown')
+    .addItem('🏷️ 라벨링 드롭다운 설정 (1회)', 'setupLabelingDropdowns')
     .addSeparator()
     .addItem('📊 마지막 동기화 정보', 'showLastSyncInfo')
     .addItem('🔑 토큰 연결 테스트 (메타)', 'testTokenAndAccount')
@@ -1217,4 +1365,287 @@ function showLastSyncInfo() {
   } else {
     SpreadsheetApp.getUi().alert('아직 동기화 안 됨. 먼저 🎨 광고소재 라이브러리 갱신 실행하세요.');
   }
+}
+
+// ============ ★ 2026-06-10/11 패치 — 메타 자동 학습 (Drive MD) ============
+const META_INSIGHTS_DRIVE_FOLDER = 'phonespot_cardnews_state';
+const META_INSIGHTS_FILE = 'meta_insights.md';
+const META_GEMINI_MODEL = 'gemini-2.5-flash';
+
+function generateMetaInsightsMarkdown() {
+  Logger.log('=== generateMetaInsightsMarkdown 시작 ===');
+  const ss = SpreadsheetApp.getActive();
+  const creativesSheet = ss.getSheetByName(SHEET_META_CREATIVES);
+  const integratedSheet = ss.getSheetByName(SHEET_META_INTEGRATED);
+
+  if (!creativesSheet || creativesSheet.getLastRow() < 3) {
+    Logger.log('메타_소재 데이터 없음 → 종료');
+    return;
+  }
+  const cData = creativesSheet.getRange(3, 1, creativesSheet.getLastRow() - 2, 15).getValues();
+  const ads = cData.map(row => ({
+    id: row[0], name: row[1], status: row[2],
+    headline: String(row[3] || '').trim(),
+    body: String(row[4] || '').trim(),
+    impressions: Number(row[6]) || 0,
+    clicks: Number(row[7]) || 0,
+    spend: Number(row[8]) || 0,
+    ctr: Number(row[9]) || 0,
+    cpc: Number(row[10]) || 0,
+    evaluation: row[11]
+  })).filter(a => a.headline && a.headline !== '-' && a.spend >= EVAL_MIN_SPEND);
+
+  if (ads.length === 0) {
+    Logger.log('유효 광고 없음');
+    return;
+  }
+  const avgCTR = ads.reduce((s, a) => s + a.ctr, 0) / ads.length;
+  const cpcSamples = ads.filter(a => a.cpc > 0);
+  const avgCPC = cpcSamples.length > 0
+    ? cpcSamples.reduce((s, a) => s + a.cpc, 0) / cpcSamples.length : 0;
+  const outperformers = ads.filter(a => a.ctr >= EVAL_CTR_GOOD).sort((a, b) => b.ctr - a.ctr);
+  const underperformers = ads.filter(a => a.ctr < EVAL_CTR_AVERAGE).sort((a, b) => a.ctr - b.ctr);
+  const topByCTR = ads.slice().sort((a, b) => b.ctr - a.ctr).slice(0, 10);
+
+  // 광고그룹별 카톡전환 효율 (메타_통합 19컬럼: 광고그룹명=E열, 노출=F, 클릭=G, 지출=H, GA4세션=K, 카톡클릭=L)
+  let topCampaigns = [];
+  if (integratedSheet && integratedSheet.getLastRow() >= 2) {
+    const iData = integratedSheet.getRange(2, 1, integratedSheet.getLastRow() - 1, 16).getValues();
+    const byCamp = {};
+    iData.forEach(row => {
+      const name = String(row[4] || '').trim();  // E열=광고그룹명
+      if (!name) return;
+      if (!byCamp[name]) byCamp[name] = { name, spend: 0, kakaoClicks: 0, sessions: 0 };
+      byCamp[name].spend += Number(row[7]) || 0;       // H열=지출
+      byCamp[name].kakaoClicks += Number(row[11]) || 0; // L열=카톡클릭
+      byCamp[name].sessions += Number(row[10]) || 0;    // K열=GA4세션
+    });
+    topCampaigns = Object.keys(byCamp).map(k => {
+      const c = byCamp[k];
+      return {
+        name: c.name, spend: c.spend, kakaoClicks: c.kakaoClicks, sessions: c.sessions,
+        kakaoConvRate: c.sessions > 0 ? c.kakaoClicks / c.sessions : 0,
+        costPerKakao: c.kakaoClicks > 0 ? c.spend / c.kakaoClicks : 0
+      };
+    }).filter(c => c.spend > 0 && c.kakaoClicks > 0)
+      .sort((a, b) => a.costPerKakao - b.costPerKakao)
+      .slice(0, 10);
+  }
+
+  const insights = analyzeMetaWithGemini_(topByCTR, outperformers, underperformers, topCampaigns, avgCTR);
+  const md = buildMetaMarkdown_(insights, {
+    totalAds: ads.length, avgCTR, avgCPC: Math.round(avgCPC),
+    topByCTR, outperformers: outperformers.slice(0, 10),
+    underperformers: underperformers.slice(0, 10), topCampaigns
+  });
+  saveMetaInsightsToDrive_(md);
+  logSync_('generateMetaInsightsMarkdown', `OK (${ads.length} ads / ${topCampaigns.length} 광고그룹)`);
+}
+
+function analyzeMetaWithGemini_(topByCTR, outperformers, underperformers, topCampaigns, avgCTR) {
+  const key = PropertiesService.getScriptProperties().getProperty('GEMINI_API_KEY');
+  if (!key) return fallbackMetaAnalyze_(topByCTR);
+
+  const topAds = topByCTR.map(a =>
+    '[CTR ' + a.ctr + '% / CPC ' + a.cpc + '원] ' + a.headline +
+    (a.body && a.body !== '-' ? ' :: ' + a.body.substring(0, 100) : '')
+  ).join('\n');
+  const outAds = outperformers.slice(0, 10).map(a => '[CTR ' + a.ctr + '%] ' + a.headline).join('\n');
+  const underAds = underperformers.slice(0, 10).map(a => '[CTR ' + a.ctr + '%] ' + a.headline).join('\n');
+  const campaigns = topCampaigns.slice(0, 5).map(c =>
+    '[카톡당 ' + Math.round(c.costPerKakao) + '원, 전환률 ' + (c.kakaoConvRate * 100).toFixed(2) + '%] ' + c.name
+  ).join('\n');
+
+  const prompt =
+    '폰스팟 (휴대폰 매장, 안양/광교) 메타 광고 성과 분석. 평균 CTR ' + avgCTR.toFixed(2) + '%.\n\n' +
+    '=== Top CTR 광고 ===\n' + topAds + '\n\n' +
+    '=== 우수 광고 (CTR ' + EVAL_CTR_GOOD + '% 이상) ===\n' + (outAds || '(없음)') + '\n\n' +
+    '=== 저조 광고 (CTR ' + EVAL_CTR_AVERAGE + '% 미만) ===\n' + (underAds || '(없음)') + '\n\n' +
+    '=== 카톡전환 효율 Top 광고그룹 ===\n' + (campaigns || '(없음)') + '\n\n' +
+    'JSON 형식으로만 응답:\n' +
+    '{\n' +
+    '  "top_keywords": [{"keyword":"키워드","count":빈도,"avg_ctr":평균CTR}],\n' +
+    '  "winning_headline_patterns": [{"pattern":"패턴명","examples":["헤드라인 예시"]}],\n' +
+    '  "winning_body_patterns": [{"pattern":"패턴명","examples":["본문 발췌"]}],\n' +
+    '  "outperformer_traits": ["우수 광고 공통점"],\n' +
+    '  "underperformer_traits": ["저조 광고 공통점"],\n' +
+    '  "high_conversion_campaign_traits": ["카톡전환 좋은 광고그룹 공통점"],\n' +
+    '  "next_ad_recommendation": "다음 광고 카피 룰 3-5문장",\n' +
+    '  "cardnews_hooking_suggestion": "카드뉴스/쇼츠 후킹 적용 2-3문장"\n' +
+    '}\n\n' +
+    '키워드: 한국어 명사, 휴대폰/통신 도메인. 조사 제거. 최대 15개.\n' +
+    '헤드라인 패턴: 의문/숫자/가격/감정/시간/긴급 등. 최대 5개.';
+
+  const url = 'https://generativelanguage.googleapis.com/v1beta/models/' +
+    META_GEMINI_MODEL + ':generateContent?key=' + key;
+  const payload = {
+    contents: [{ parts: [{ text: prompt }] }],
+    generationConfig: { temperature: 0.3, response_mime_type: 'application/json' }
+  };
+  try {
+    const res = UrlFetchApp.fetch(url, {
+      method: 'POST', contentType: 'application/json',
+      payload: JSON.stringify(payload), muteHttpExceptions: true
+    });
+    if (res.getResponseCode() !== 200) return fallbackMetaAnalyze_(topByCTR);
+    const data = JSON.parse(res.getContentText());
+    return JSON.parse(data.candidates[0].content.parts[0].text);
+  } catch (e) {
+    return fallbackMetaAnalyze_(topByCTR);
+  }
+}
+
+function fallbackMetaAnalyze_(topByCTR) {
+  const stopwords = ['은','는','이','가','을','를','의','에','와','과','로','으로','도','만','폰스팟','지금','바로'];
+  const wordCount = {};
+  topByCTR.forEach(a => {
+    const text = (a.headline + ' ' + a.body).split(/[\s,/!?.~()|\[\]]+/);
+    text.filter(w => w.length >= 2 && stopwords.indexOf(w) === -1).forEach(w => {
+      if (!wordCount[w]) wordCount[w] = { count: 0, totalCTR: 0 };
+      wordCount[w].count++;
+      wordCount[w].totalCTR += a.ctr;
+    });
+  });
+  const keywords = Object.keys(wordCount).map(k => ({
+    keyword: k, count: wordCount[k].count,
+    avg_ctr: Number((wordCount[k].totalCTR / wordCount[k].count).toFixed(2))
+  })).sort((a, b) => (b.count * b.avg_ctr) - (a.count * a.avg_ctr)).slice(0, 15);
+
+  return {
+    top_keywords: keywords,
+    winning_headline_patterns: [
+      { pattern: '숫자 포함', examples: topByCTR.filter(a => /\d/.test(a.headline)).slice(0, 3).map(a => a.headline) },
+      { pattern: '의문문', examples: topByCTR.filter(a => /\?/.test(a.headline)).slice(0, 3).map(a => a.headline) }
+    ],
+    winning_body_patterns: [],
+    outperformer_traits: ['(Gemini 비활성 — GEMINI_API_KEY 설정 시 정확 분석)'],
+    underperformer_traits: [],
+    high_conversion_campaign_traits: [],
+    next_ad_recommendation: 'PropertiesService에 GEMINI_API_KEY 저장 후 정확 분석 활성화.',
+    cardnews_hooking_suggestion: '(Gemini 분석 활성화 필요)'
+  };
+}
+
+function buildMetaMarkdown_(insights, stats) {
+  const nowStr = Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyy-MM-dd HH:mm');
+  let md = '';
+  md += '# 폰스팟 메타 광고 인사이트 (자동 학습)\n\n';
+  md += '> **자동 생성** | 갱신: ' + nowStr + ' | 분석 광고 ' + stats.totalAds +
+        '개 | 평균 CTR ' + stats.avgCTR.toFixed(2) + '% | 평균 CPC ' + stats.avgCPC.toLocaleString() + '원\n\n';
+  md += '광고 카피 작성 (generator.html) + 카드뉴스/쇼츠 후킹 reference 자동 Read.\n\n---\n\n';
+  md += '## 💡 다음 광고 카피 권장\n\n' + insights.next_ad_recommendation + '\n\n---\n\n';
+  md += '## 📰 카드뉴스/쇼츠 후킹 적용\n\n' + insights.cardnews_hooking_suggestion + '\n\n---\n\n';
+  md += '## ★ Top 키워드 (가중치 +30%)\n\n| 키워드 | 빈도 | 평균 CTR |\n|---|---|---|\n';
+  insights.top_keywords.forEach(k => {
+    md += '| ' + k.keyword + ' | ' + k.count + ' | ' + k.avg_ctr + '% |\n';
+  });
+  md += '\n---\n\n## ★ 우수 헤드라인 패턴 (+20%)\n\n';
+  insights.winning_headline_patterns.forEach(p => {
+    md += '### ' + p.pattern + '\n';
+    (p.examples || []).forEach(ex => { md += '- ' + ex + '\n'; });
+    md += '\n';
+  });
+  md += '---\n\n## ★ 우수 광고 공통점\n\n';
+  insights.outperformer_traits.forEach(t => { md += '- ✓ ' + t + '\n'; });
+  md += '\n---\n\n';
+  if (insights.underperformer_traits && insights.underperformer_traits.length > 0) {
+    md += '## ★ 회피 패턴 (-40%)\n\n';
+    insights.underperformer_traits.forEach(t => { md += '- ✗ ' + t + '\n'; });
+    md += '\n---\n\n';
+  }
+  if (insights.high_conversion_campaign_traits && insights.high_conversion_campaign_traits.length > 0) {
+    md += '## ★ 카톡전환 우수 광고그룹 공통점\n\n';
+    insights.high_conversion_campaign_traits.forEach(t => { md += '- 🟢 ' + t + '\n'; });
+    md += '\n---\n\n';
+  }
+  md += '## Top 10 CTR 광고\n\n';
+  stats.topByCTR.forEach((a, i) => {
+    md += (i + 1) + '. **[CTR ' + a.ctr + '% / CPC ' + a.cpc.toLocaleString() + '원]** ' + a.headline + '\n';
+    if (a.body && a.body !== '-') {
+      md += '   - 본문: ' + a.body.substring(0, 100) + (a.body.length > 100 ? '...' : '') + '\n';
+    }
+  });
+  md += '\n---\n\n';
+  if (stats.topCampaigns.length > 0) {
+    md += '## Top 광고그룹 (카톡전환 효율)\n\n';
+    md += '| 광고그룹 | 지출 | 카톡클릭 | 카톡당CPC | 전환률 |\n|---|---|---|---|---|\n';
+    stats.topCampaigns.forEach(c => {
+      md += '| ' + c.name + ' | ' + Math.round(c.spend).toLocaleString() + '원 | ' +
+            c.kakaoClicks + ' | ' + Math.round(c.costPerKakao).toLocaleString() + '원 | ' +
+            (c.kakaoConvRate * 100).toFixed(2) + '% |\n';
+    });
+    md += '\n---\n\n';
+  }
+  md += '## 매장 정합 (휴대폰 도메인)\n\n';
+  md += '- 모델명 (갤럭시/아이폰 + 숫자) 강조\n';
+  md += '- 가격/지원금/공시지원 우선\n';
+  md += '- 통신사 (SKT/KT/LG) + 매장 지역 (안양/광교) 노출 시 가중\n';
+  return md;
+}
+
+function saveMetaInsightsToDrive_(content) {
+  const folders = DriveApp.getFoldersByName(META_INSIGHTS_DRIVE_FOLDER);
+  const folder = folders.hasNext() ? folders.next() : DriveApp.createFolder(META_INSIGHTS_DRIVE_FOLDER);
+  const files = folder.getFilesByName(META_INSIGHTS_FILE);
+  if (files.hasNext()) {
+    files.next().setContent(content);
+  } else {
+    folder.createFile(META_INSIGHTS_FILE, content, MimeType.PLAIN_TEXT);
+  }
+}
+
+// ============ 🏷️ 카테고리/지역/후킹 구조 라벨링 설정 (Task 43 + 44, 2026-06-12) ============
+function setupLabelingDropdowns() {
+  const ss = SpreadsheetApp.getActive();
+  const ui = SpreadsheetApp.getUi();
+  const categories = ['휴대폰', '유심만', '알뜰폰', '중고폰', '키즈폰', '효도폰', '공짜폰', '인터넷', '인터넷+TV'];
+  const hookStructures = ['질문형', '단언형', '비교형', '한정형', '가격강조', '감성/공감', '위협형', 'FOMO형'];
+  const msgs = [];
+
+  // 메타_소재 시트 16·17열 (P·Q)
+  const ms = ss.getSheetByName(SHEET_META_CREATIVES);
+  if (ms) {
+    const lastRow = Math.max(ms.getLastRow(), 100);
+    ms.getRange(2, 16).setValue('카테고리').setFontWeight('bold').setBackground('#f5f5f7');
+    ms.setColumnWidth(16, 110);
+    const rule = SpreadsheetApp.newDataValidation()
+      .requireValueInList(categories, true).setAllowInvalid(false)
+      .setHelpText('카테고리 9개 중 선택.').build();
+    ms.getRange(3, 16, lastRow - 2, 1).setDataValidation(rule);
+    ms.getRange(2, 17).setValue('지역').setFontWeight('bold').setBackground('#f5f5f7');
+    ms.setColumnWidth(17, 110);
+    msgs.push('✅ 메타_소재 P열: 카테고리 ' + categories.length + '개');
+    msgs.push('✅ 메타_소재 Q열: 지역 자유 텍스트 (공백=전국)');
+  } else {
+    msgs.push('⚠️ 메타_소재 시트 없음');
+  }
+
+  // 벤치마크 시트 20·21·22열 (T·U·V)
+  const bm = ss.getSheetByName(SHEET_BM_CP);
+  if (bm) {
+    const lastRow = Math.max(bm.getLastRow(), 100);
+    bm.getRange(2, 20).setValue('카테고리').setFontWeight('bold').setBackground('#1F4E78').setFontColor('#FFFFFF');
+    bm.setColumnWidth(20, 110);
+    const catRule = SpreadsheetApp.newDataValidation()
+      .requireValueInList(categories, true).setAllowInvalid(false)
+      .setHelpText('카테고리 9개 중 선택.').build();
+    bm.getRange(3, 20, lastRow - 2, 1).setDataValidation(catRule);
+    bm.getRange(2, 21).setValue('후킹 구조').setFontWeight('bold').setBackground('#1F4E78').setFontColor('#FFFFFF');
+    bm.setColumnWidth(21, 110);
+    const hookRule = SpreadsheetApp.newDataValidation()
+      .requireValueInList(hookStructures, true).setAllowInvalid(false)
+      .setHelpText('후킹 구조 8개 중 선택.').build();
+    bm.getRange(3, 21, lastRow - 2, 1).setDataValidation(hookRule);
+    bm.getRange(2, 22).setValue('지역').setFontWeight('bold').setBackground('#1F4E78').setFontColor('#FFFFFF');
+    bm.setColumnWidth(22, 110);
+    msgs.push('✅ 벤치마크 T열: 카테고리 ' + categories.length + '개');
+    msgs.push('✅ 벤치마크 U열: 후킹 구조 ' + hookStructures.length + '개');
+    msgs.push('✅ 벤치마크 V열: 지역 자유 텍스트 (공백=전국)');
+  } else {
+    msgs.push('⚠️ 벤치마크 시트 없음');
+  }
+
+  ui.alert('🏷️ 라벨링 컬럼 설정 완료',
+    msgs.join('\n') + '\n\n다음:\n1. 카테고리/후킹 구조: 드롭다운 선택\n2. 지역: 직접 입력 ("광교점", 공백=전국)',
+    ui.ButtonSet.OK);
 }

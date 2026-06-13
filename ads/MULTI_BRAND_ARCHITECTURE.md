@@ -1,8 +1,73 @@
-# 멀티 브랜드 모노레포 아키텍처 (2026-06-11 제안)
+# 멀티 브랜드 모노레포 아키텍처 (2026-06-11)
 
-> **상태: 제안 (Phase 1 진행 대기).** 다른 task의 `generator.html` 작업 종료 후 시작.
+> **상태: Phase 1 셋업 완료 (2026-06-11 16:00 KST). 멀티 브랜드 활성화 = 다른 task `generator.html` 작업 종료 후 KT/국민/진짜폰스팟 신설 시점.**
 > 폰스팟 본점 외에 KT다이렉트샵·국민인터넷·진짜 폰스팟(판매점 가입형) 등 브랜드 확장 예정.
 > 공용 업데이트(코드 1곳 → N브랜드 반영) + 브랜드 전체 통합(광고/카드뉴스/영상 모듈 한 폴더).
+
+---
+
+## ✅ Phase 1 셋업 완료 (2026-06-11)
+
+### 구성
+- **로컬**: `apps_script/` 폴더 (clasp clone 9파일: Code.js, meta-sync.js, naver-synce.js, youtube_sync.js, generator.html, index.html, style.html, test.js, appsscript.json)
+- **GitHub repo**: `313jongmin-droid/phonespot-cardnews-video` (단일 진실 원천)
+- **인증**: `313jongmin@gmail.com` OAuth (clasp 3.3.0 + scopes: script/drive/userinfo)
+- **자동 배포**: `.github/workflows/deploy-apps-script.yml` (Node 20 + clasp 3.3.0 + clasp push --force)
+- **GitHub Secrets**:
+  - `CLASPRC_JSON` — `C:\Users\<user>\.clasprc.json` 통째 (multiline OK)
+  - `CLASP_JSON` — `apps_script/.clasp.json` (★ **반드시 한 줄 압축 JSON**)
+- **보안**: `.gitignore`에 `apps_script/.clasp.json`+`apps_script/.clasprc.json` 박힘
+- **Git for Windows 2.54.0** 설치 (PowerShell/cmd에서 git 명령 사용 가능)
+
+### 동작 (자동 배포 흐름)
+```
+사용자 → Apps Script 콘솔 수정 (또는 로컬 수정)
+   ↓
+cd apps_script && clasp pull          (로컬 동기화, 콘솔 수정 시)
+   ↓
+cd .. && git add apps_script && git commit && git push origin main
+   ↓
+GitHub Actions 자동 트리거 (paths: apps_script/** OR workflow_dispatch)
+   ↓
+Node 설치 → clasp 설치 → CLASPRC_JSON 복원 → CLASP_JSON 복원 → clasp push --force
+   ↓
+폰스팟 본점 Apps Script 콘솔에 자동 배포 ✅
+   ↓ (멀티 브랜드 신설 시, 같은 workflow에 step 추가)
+KT/국민/진짜폰스팟 Apps Script도 자동 배포
+```
+
+### ⚠️ 함정 (실제 사고 사례)
+1. **CLASP_JSON Secret은 한 줄 압축 JSON이어야 함.**
+   - 12줄 multiline JSON (메모장 그대로 복사) → `JSON5: invalid character 'P' at 12:1` 에러로 clasp push 실패
+   - GitHub Actions `echo "$CLASP_JSON" > file` 처리 시 줄바꿈 처리 깨짐
+   - **해결**: `{"scriptId":"...","rootDir":"."}` 한 줄로 압축해서 Secret에 박기
+2. **`rootDir`은 `"."` 권장** (빈 문자열 `""`보다 안정적)
+3. **clasprc.json은 multiline 그대로 OK** (clasp 인증 토큰. 줄바꿈 보존 필수)
+4. **PowerShell vs cmd 차이**: `%USERPROFILE%` (cmd) ≠ `$env:USERPROFILE` (PowerShell). 직접 경로 `C:\Users\<user>\.clasprc.json` 권장
+5. **clasp push --force** = 콘솔 변경 무시하고 강제 덮어쓰기. **다른 task가 콘솔 직접 수정 중이면 작업 사라짐.** 책임 분담 표 엄수
+6. **Node.js 20 deprecation** (2026-06-16부터 강제 24): workflow의 `node-version: '20'` → `'24'`로 1줄 수정 필요 (그 전까지는 무시 가능)
+
+### 멀티 브랜드 활성화 (KT/국민/진짜폰스팟 신설 시)
+1. 새 Google 스프레드시트 + 새 Apps Script 프로젝트 생성
+2. 새 Script ID 확보 → GitHub Secret 추가 (예: `CLASP_JSON_KT`)
+3. workflow에 step 1개 추가 (`brands/kt/` 또는 별도 폴더):
+   ```yaml
+   - name: Push to Apps Script (KT)
+     working-directory: brands/kt
+     env:
+       CLASP_JSON_KT: ${{ secrets.CLASP_JSON_KT }}
+     run: |
+       echo "$CLASP_JSON_KT" > .clasp.json
+       clasp push --force
+   ```
+4. git push 1번 → 폰스팟 + KT 동시 배포
+
+### 검증 결과 (2026-06-11)
+- ✅ Workflow run #1 (자동 push 트리거) — 1차 실패 (CLASP_JSON multiline) → 한 줄 압축 후 #3 성공 27초
+- ✅ Apps Script 콘솔에 자동 반영 확인
+- ✅ 다른 task 영역 무영향 (ads/code/, cardnews/, shorts/, _docs/ 등 unstaged 그대로)
+
+---
 
 ---
 

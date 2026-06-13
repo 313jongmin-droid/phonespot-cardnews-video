@@ -75,14 +75,27 @@ function doGet(e) {
     return getMetaCreativesAsJSON_();
   }
 
-  // 페이지 라우팅: ?page=generator (default)
+  // 페이지 라우팅: ?page=generator (default) / ?page=index (옛 페이지, 2026-06-09 추가)
+  // ★ 2026-06-09 C-4: createTemplateFromFile 사용 (styles.html include 지원)
   const page = (e && e.parameter && e.parameter.page) || 'generator';
   if (page === 'generator') {
-    return HtmlService.createHtmlOutputFromFile('generator')
+    return HtmlService.createTemplateFromFile('generator')
+      .evaluate()
       .setTitle('폰스팟 광고 생성기')
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
   }
+  if (page === 'index') {
+    return HtmlService.createTemplateFromFile('index')
+      .evaluate()
+      .setTitle('폰스팟 인덱스')
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+  }
   return HtmlService.createHtmlOutput('<h1>404</h1>');
+}
+
+// ──[Web App utility]── HTML 파일 include용 (styles.html 등 공통 자원 분리, 2026-06-09 C-4)
+function include(filename) {
+  return HtmlService.createHtmlOutputFromFile(filename).getContent();
 }
 
 // ──[일상]── 전체 새로고침: GA4 수집 + KPI + 매트릭스 + 차트

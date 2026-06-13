@@ -5,120 +5,426 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>폰스팟 광고 소재 생성기 v11 (자가점검 통합)</title>
 <style>
+  /* === Pretendard (iOS-style Korean) — dynamic-subset (lightweight) === */
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css');
+
+  /* === Design Tokens — Apple HIG light === */
+  :root {
+    --system-bg: #F2F2F7;
+    --card-bg: #FFFFFF;
+    --secondary-bg: #F2F2F7;
+    --tertiary-bg: #FAFAFA;
+
+    --label: #1D1D1F;
+    --label-secondary: #3C3C43;
+    --label-tertiary: #86868B;
+    --label-quaternary: #C7C7CC;
+
+    --separator: rgba(60, 60, 67, 0.12);
+    --separator-opaque: #E5E5EA;
+
+    --accent: #007AFF;
+    --accent-hover: #0051D5;
+    --accent-soft: rgba(0, 122, 255, 0.08);
+    --accent-tint: rgba(0, 122, 255, 0.04);
+
+    --success: #34C759;
+    --warning: #FF9500;
+    --danger: #FF3B30;
+    --info: #FFCC00;
+
+    --r-sm: 8px;
+    --r-md: 12px;
+    --r-lg: 16px;
+    --r-xl: 22px;
+
+    --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.05), 0 6px 20px rgba(0, 0, 0, 0.05);
+    --shadow-elevated: 0 10px 34px rgba(0, 0, 0, 0.12), 0 0 0 0.5px rgba(0, 0, 0, 0.04);
+
+    --t-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
+
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', sans-serif;
-    background: #f5f5f7; color: #1d1d1f; line-height: 1.5; padding: 20px;
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont,
+                 'Apple SD Gothic Neo', 'SF Pro Text', 'SF Pro Display',
+                 system-ui, 'Segoe UI', 'Malgun Gothic', sans-serif;
+    background: var(--system-bg);
+    color: var(--label);
+    line-height: 1.47;
+    letter-spacing: -0.2px;
+    padding: 24px 20px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  .container { max-width: 1200px; margin: 0 auto; }
-  h1 { font-size: 22px; margin-bottom: 4px; }
-  .subtitle { color: #86868b; font-size: 12px; margin-bottom: 16px; }
-  .tabs { display: flex; gap: 4px; margin-bottom: 16px; border-bottom: 1px solid #d2d2d7; }
+
+  .container { max-width: 1180px; margin: 0 auto; }
+
+  h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 5px; }
+  .subtitle { color: var(--label-tertiary); font-size: 13px; margin-bottom: 28px; font-weight: 400; }
+
+  /* === Tabs — segmented control === */
+  .tabs {
+    display: inline-flex; gap: 2px; margin-bottom: 20px;
+    background: rgba(118, 118, 128, 0.08);
+    border-radius: var(--r-md); padding: 3px;
+  }
   .tab {
-    padding: 10px 16px; cursor: pointer; font-size: 14px; font-weight: 500;
-    border-bottom: 2px solid transparent; color: #86868b;
+    padding: 8px 16px; cursor: pointer; font-size: 13px; font-weight: 500;
+    color: var(--label); border-radius: 7px;
+    transition: var(--t-fast);
+    user-select: none;
   }
-  .tab.active { color: #007aff; border-bottom-color: #007aff; font-weight: 600; }
+  .tab:hover { color: var(--accent); }
+  .tab.active {
+    background: var(--card-bg);
+    color: var(--label);
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
   .tab-panel { display: none; }
   .tab-panel.active { display: block; }
+
+  /* === Section / Card === */
   section {
-    background: #fff; border-radius: 12px; padding: 18px;
-    margin-bottom: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    background: var(--card-bg);
+    border-radius: var(--r-xl);
+    padding: 24px 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow-subtle);
   }
-  h2 { font-size: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
-  h2 .toggle { font-size: 12px; color: #007aff; cursor: pointer; user-select: none; font-weight: normal; }
-  h3 { font-size: 13px; margin: 12px 0 6px; color: #424245; }
-  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-  label { display: block; font-size: 11px; font-weight: 600; margin-bottom: 4px; color: #424245; }
+
+  h2 {
+    font-size: 20px; font-weight: 700; letter-spacing: -0.3px;
+    margin-bottom: 18px;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 12px;
+  }
+  h2 .toggle { font-size: 13px; color: var(--accent); cursor: pointer; user-select: none; font-weight: 400; }
+
+  h3 { font-size: 14px; font-weight: 600; margin: 14px 0 8px; color: var(--label-secondary); }
+
+  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+
+  /* === Form group — iOS list-section style === */
+  .form-group { padding: 18px 0; }
+  .form-group:first-of-type { padding-top: 0; }
+  .form-group:last-of-type { padding-bottom: 0; }
+  .form-group + .form-group { border-top: 1px solid var(--separator); }
+  .form-group-header {
+    font-size: 11px; font-weight: 600;
+    color: var(--label-tertiary);
+    text-transform: uppercase; letter-spacing: 0.6px;
+    margin-bottom: 14px;
+  }
+  .form-group--accent .form-group-header { color: var(--accent); }
+  .form-stack > * + * { margin-top: 14px; }
+
+  /* === Form controls === */
+  label { display: block; font-size: 12px; font-weight: 500; margin-bottom: 6px; color: var(--label-secondary); }
+
   input, select, textarea {
-    width: 100%; padding: 7px 10px; border: 1px solid #d2d2d7;
-    border-radius: 8px; font-size: 13px; font-family: inherit; background: #fff;
+    width: 100%;
+    padding: 10px 12px;
+    border: none;
+    background: var(--secondary-bg);
+    border-radius: var(--r-md);
+    font-size: 14px; font-family: inherit;
+    color: var(--label);
+    transition: var(--t-fast);
   }
-  input[type=password] { font-family: monospace; }
-  textarea { resize: vertical; min-height: 50px; }
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    background: var(--card-bg);
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+  input::placeholder { color: var(--label-tertiary); }
+
+  input[type=password] { font-family: 'SF Mono', Consolas, monospace; }
+  textarea { resize: vertical; min-height: 60px; }
+
+  /* === Checkbox group — chip / pill === */
   .checkbox-group { display: flex; flex-wrap: wrap; gap: 6px; }
   .checkbox-group label {
-    display: inline-flex; align-items: center; gap: 4px;
-    padding: 5px 9px; background: #f5f5f7; border-radius: 6px;
-    font-weight: 400; cursor: pointer; margin: 0; font-size: 12px;
+    display: inline-flex; align-items: center;
+    padding: 7px 14px;
+    background: var(--secondary-bg);
+    border-radius: 100px;
+    font-weight: 500; cursor: pointer; margin: 0; font-size: 12.5px;
+    color: var(--label);
+    transition: var(--t-fast);
+    user-select: none;
   }
-  .checkbox-group input[type=checkbox] { width: auto; margin: 0; }
-  .radio-group { display: flex; gap: 4px; }
+  .checkbox-group label:hover { background: rgba(118, 118, 128, 0.16); }
+  .checkbox-group input[type=checkbox] { display: none; }
+  .checkbox-group label:has(input:checked) { background: var(--accent); color: #fff; }
+
+  /* === Radio group === */
+  .radio-group {
+    display: flex; gap: 2px; padding: 3px;
+    background: rgba(118, 118, 128, 0.08);
+    border-radius: var(--r-md);
+  }
   .radio-group label {
-    flex: 1; padding: 8px; background: #f5f5f7; border-radius: 6px;
-    font-weight: 500; cursor: pointer; margin: 0; font-size: 12px;
-    text-align: center; border: 1px solid transparent;
+    flex: 1; padding: 8px; cursor: pointer; margin: 0;
+    font-size: 12.5px; text-align: center;
+    border-radius: 7px;
+    transition: var(--t-fast);
+    font-weight: 500; color: var(--label);
   }
   .radio-group input[type=radio] { display: none; }
-  .radio-group input[type=radio]:checked + span { color: #007aff; font-weight: 600; }
-  .radio-group label:has(input:checked) { background: #e6f0ff; border-color: #007aff; }
+  .radio-group label:has(input:checked) {
+    background: var(--card-bg);
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+
+  /* === Buttons — Apple HIG === */
   button {
-    background: #007aff; color: #fff; border: none;
-    padding: 9px 18px; border-radius: 8px; font-size: 13px;
-    font-weight: 600; cursor: pointer; font-family: inherit;
+    background: var(--accent); color: #fff; border: none;
+    padding: 10px 18px; border-radius: var(--r-md);
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    font-family: inherit; letter-spacing: -0.1px;
+    transition: var(--t-fast);
   }
-  button:hover { background: #0051d5; }
-  button:disabled { background: #c7c7cc; cursor: not-allowed; }
-  button.secondary { background: #f5f5f7; color: #1d1d1f; }
-  button.secondary:hover { background: #e8e8ed; }
-  button.danger { background: #ff3b30; }
-  button.small { padding: 4px 9px; font-size: 11px; }
-  .btn-row { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+  button:hover { background: var(--accent-hover); }
+  button:active { transform: scale(0.98); }
+  button:disabled { background: var(--label-quaternary); cursor: not-allowed; transform: none; }
+
+  button.secondary { background: var(--secondary-bg); color: var(--label); }
+  button.secondary:hover { background: rgba(118, 118, 128, 0.16); }
+
+  button.danger { background: var(--danger); }
+  button.danger:hover { background: #D70015; }
+
+  button.small { padding: 6px 12px; font-size: 12.5px; border-radius: 8px; }
+  button.btn-large {
+    flex: 1; min-width: 240px;
+    padding: 15px 18px; font-size: 15px; font-weight: 700;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #0A84FF 0%, #5E5CE6 100%);
+    box-shadow: 0 6px 18px rgba(10, 132, 255, 0.32);
+  }
+  button.btn-large:hover { background: linear-gradient(135deg, #0070E0 0%, #4F4DD0 100%); }
+  button.btn-text { background: transparent; color: var(--accent); padding: 8px 12px; }
+  button.btn-text:hover { background: var(--accent-soft); }
+
+  .btn-row { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+  .btn-caption {
+    display: block; margin-top: 6px;
+    font-size: 12px; color: var(--label-tertiary); line-height: 1.4;
+  }
+
+  /* === Candidate (copy result card) === */
   .candidate {
-    border: 1px solid #d2d2d7; border-radius: 8px;
-    padding: 10px; margin-bottom: 6px; cursor: pointer;
-    transition: all 0.15s;
+    background: var(--card-bg);
+    border: 1px solid var(--separator-opaque);
+    border-radius: var(--r-md);
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: var(--t-fast);
   }
-  .candidate:hover { border-color: #007aff; }
-  .candidate.selected { border-color: #007aff; background: #f0f7ff; }
-  .candidate-header { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 4px; }
-  .pattern-tag { font-size: 10px; background: #e8e8ed; padding: 2px 6px; border-radius: 4px; color: #424245; white-space: nowrap; }
-  .candidate-text { font-size: 14px; font-weight: 600; }
-  .candidate-meta { font-size: 11px; color: #86868b; }
+  .candidate:hover { border-color: var(--accent); background: var(--accent-tint); }
+  .candidate.selected {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    box-shadow: 0 0 0 0.5px var(--accent);
+  }
+  .candidate-header { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .pattern-tag {
+    font-size: 11px; background: var(--secondary-bg);
+    padding: 3px 9px; border-radius: 100px;
+    color: var(--label-secondary); white-space: nowrap; font-weight: 500;
+  }
+  .candidate-text { font-size: 15px; font-weight: 600; letter-spacing: -0.2px; color: var(--label); }
+  .candidate-meta { font-size: 12px; color: var(--label-tertiary); font-weight: 500; }
+
+  /* === Visual card === */
   .visual-card {
-    border: 1px solid #d2d2d7; border-radius: 8px;
-    padding: 12px; margin-bottom: 8px; cursor: pointer;
+    border: 1px solid var(--separator-opaque);
+    border-radius: var(--r-md);
+    padding: 14px; margin-bottom: 8px;
+    cursor: pointer; background: var(--card-bg);
+    transition: var(--t-fast);
   }
-  .visual-card:hover { border-color: #007aff; }
-  .visual-card.selected { border-color: #007aff; background: #f0f7ff; }
-  .visual-card .title { font-weight: 600; margin-bottom: 4px; font-size: 13px; }
-  .visual-card .desc { font-size: 11px; color: #424245; margin-bottom: 6px; }
+  .visual-card:hover { border-color: var(--accent); }
+  .visual-card.selected { border-color: var(--accent); background: var(--accent-tint); }
+  .visual-card .title { font-weight: 600; margin-bottom: 4px; font-size: 14px; }
+  .visual-card .desc { font-size: 12px; color: var(--label-secondary); margin-bottom: 6px; }
   .palette { display: flex; gap: 4px; margin-bottom: 6px; align-items: center; }
-  .swatch { width: 18px; height: 18px; border-radius: 4px; border: 1px solid rgba(0,0,0,0.1); }
+  .swatch { width: 18px; height: 18px; border-radius: var(--r-sm); border: 1px solid var(--separator); }
   .visual-card .prompt {
-    font-size: 11px; color: #424245; background: #f5f5f7;
-    padding: 6px 8px; border-radius: 4px; font-family: monospace;
+    font-size: 11px; color: var(--label-secondary);
+    background: var(--secondary-bg);
+    padding: 8px 10px; border-radius: var(--r-sm);
+    font-family: 'SF Mono', Consolas, monospace;
     max-height: 80px; overflow-y: auto;
   }
-  .library-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-  .library-table th, .library-table td { padding: 6px 8px; border-bottom: 1px solid #e8e8ed; text-align: left; }
-  .library-table th { background: #f5f5f7; font-weight: 600; font-size: 11px; }
+
+  /* === Guide table === */
+  .guide-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .guide-table th { font-weight: 600; font-size: 11px; color: var(--label-tertiary); text-transform: uppercase; letter-spacing: 0.6px; padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--separator); }
+  .guide-table td { padding: 10px 12px; border-bottom: 1px solid var(--separator); vertical-align: top; color: var(--label-secondary); }
+  .guide-table tr.guide-group td { background: rgba(0, 122, 255, 0.04); color: var(--accent); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 12px; }
+  .guide-table tr:last-child td { border-bottom: none; }
+  .guide-table td strong { color: var(--label); font-weight: 600; }
+  .guide-table .guide-example { color: var(--label-tertiary); font-size: 12px; }
+  .guide-table .guide-where { font-size: 11px; color: var(--label-tertiary); font-weight: 500; letter-spacing: 0.3px; white-space: nowrap; }
+
+  /* === Library table === */
+  .library-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .library-table th, .library-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--separator);
+    text-align: left;
+  }
+  .library-table th {
+    background: transparent;
+    font-weight: 600; font-size: 11px;
+    color: var(--label-tertiary);
+    text-transform: uppercase; letter-spacing: 0.3px;
+  }
+  .library-table tr:last-child td { border-bottom: none; }
+
   .hidden { display: none !important; }
+
+  /* === Info box === */
   .info-box {
-    background: #fff8e1; border-left: 3px solid #ffc107;
-    padding: 8px 12px; font-size: 12px; border-radius: 4px;
-    margin-bottom: 12px; color: #5d4e00;
+    background: var(--accent-soft);
+    padding: 12px 14px; font-size: 13px;
+    border-radius: var(--r-md);
+    margin-bottom: 14px;
+    color: var(--label); line-height: 1.5;
   }
-  .info-box.error { background: #ffebee; border-color: #f44336; color: #b71c1c; }
-  .info-box.success { background: #e8f5e9; border-color: #4caf50; color: #1b5e20; }
-  .stats { display: flex; gap: 16px; font-size: 12px; color: #424245; margin-bottom: 12px; flex-wrap: wrap; }
-  .stat-item strong { color: #007aff; font-size: 14px; }
-  .selection-bar {
-    position: sticky; bottom: 0; background: #fff; padding: 10px 14px;
-    border: 1px solid #d2d2d7; border-radius: 8px; margin-top: 10px;
+  .info-box.error { background: rgba(255, 59, 48, 0.1); color: #C62828; }
+  .info-box.success { background: rgba(52, 199, 89, 0.1); color: #1B5E20; }
+
+  /* === Result boxes (3 종 — 일반/라이브러리/벤치마크) === */
+  .result-box {
+    padding: 18px 20px; margin-bottom: 16px;
+    border-radius: var(--r-lg);
+    border-left: 4px solid var(--accent);
+    background: var(--accent-soft);
+  }
+  .result-box.result-general   { border-left-color: #5E5CE6; background: linear-gradient(135deg, rgba(94,92,230,0.10), rgba(10,132,255,0.06)); }
+  .result-box.result-library   { border-left-color: #34C759; background: rgba(52, 199, 89, 0.09); }
+  .result-box.result-benchmark { border-left-color: #FF9500; background: rgba(255, 149, 0, 0.09); }
+  .result-box-header {
     display: flex; justify-content: space-between; align-items: center;
-    box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+    gap: 10px; margin-bottom: 8px; flex-wrap: wrap;
   }
-  .selection-bar .count { font-size: 13px; color: #424245; }
-  .loading { text-align: center; padding: 30px; color: #86868b; }
+  .result-box-title { font-size: 16px; font-weight: 700; letter-spacing: -0.2px; color: var(--label); }
+  .result-general   .result-box-title { color: #5E5CE6; }
+  .result-library   .result-box-title { color: #248A3D; }
+  .result-benchmark .result-box-title { color: #C25E00; }
+  .result-box-desc {
+    font-size: 12px; color: var(--label-secondary);
+    margin-bottom: 12px; line-height: 1.6;
+    display: flex; align-items: center; gap: 4px; flex-wrap: wrap;
+  }
+  .result-box-body {
+    background: transparent; padding: 2px 0 0; font-size: 13px;
+  }
+  .result-box-body:empty { display: none; }
+  .match-card {
+    padding: 12px 14px; margin-bottom: 8px;
+    background: var(--card-bg);
+    border-radius: var(--r-md);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 2px 8px rgba(0,0,0,0.03);
+    font-size: 12.5px;
+  }
+  .match-card:last-child { margin-bottom: 0; }
+  .match-card .match-headline { font-weight: 500; color: var(--label); margin-bottom: 4px; }
+  .match-card .match-meta { font-size: 11px; color: var(--label-tertiary); }
+  .match-empty {
+    padding: 12px; text-align: center; font-size: 12px;
+    color: var(--label-tertiary);
+  }
+
+  /* === Stats === */
+  .stats { display: flex; gap: 20px; font-size: 13px; color: var(--label-secondary); margin-bottom: 14px; flex-wrap: wrap; }
+  .stat-item strong { color: var(--accent); font-size: 16px; font-weight: 700; }
+
+  /* === Selection bar === */
+  .selection-bar {
+    position: sticky; bottom: 0; background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    padding: 12px 16px;
+    border: 1px solid var(--separator-opaque);
+    border-radius: var(--r-md);
+    margin-top: 12px;
+    display: flex; justify-content: space-between; align-items: center;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.04);
+  }
+  .selection-bar .count { font-size: 13px; color: var(--label-secondary); }
+
+  .loading { text-align: center; padding: 32px; color: var(--label-tertiary); font-size: 14px; }
   .loading::after { content: '...'; animation: dots 1.5s steps(4) infinite; }
   @keyframes dots { 0%,20% { content: ''; } 40% { content: '.'; } 60% { content: '..'; } 80%,100% { content: '...'; } }
-  .api-status { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; padding: 3px 8px; border-radius: 10px; }
-  .api-status.connected { background: #e8f5e9; color: #2e7d32; }
-  .api-status.disconnected { background: #ffebee; color: #c62828; }
-  .api-status.checking { background: #fff8e1; color: #f57c00; }
-  code { background: #f5f5f7; padding: 1px 4px; border-radius: 3px; font-family: 'Consolas', monospace; font-size: 11px; }
+
+  /* === Micro-interactions (C-3) === */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.96); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  @keyframes slideUpToast {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .tab-panel.active { animation: fadeIn 240ms cubic-bezier(0.4, 0, 0.2, 1); }
+  .candidate { animation: fadeIn 220ms cubic-bezier(0.4, 0, 0.2, 1) backwards; }
+  .candidate:nth-child(1)  { animation-delay: 0ms; }
+  .candidate:nth-child(2)  { animation-delay: 30ms; }
+  .candidate:nth-child(3)  { animation-delay: 60ms; }
+  .candidate:nth-child(4)  { animation-delay: 90ms; }
+  .candidate:nth-child(5)  { animation-delay: 120ms; }
+  .candidate:nth-child(6)  { animation-delay: 150ms; }
+  .candidate:nth-child(7)  { animation-delay: 180ms; }
+  .candidate:nth-child(8)  { animation-delay: 210ms; }
+  .candidate:nth-child(n+9) { animation-delay: 240ms; }
+  .info-box { animation: fadeIn 200ms ease-out; }
+  .toast { animation: slideUpToast 260ms cubic-bezier(0.4, 0, 0.2, 1); }
+  section { animation: fadeIn 200ms ease-out; }
+
+  /* 사용자 모션 줄이기 환경 존중 */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* === API status pill === */
+  .api-status {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; font-weight: 500;
+    padding: 4px 10px; border-radius: 100px;
+  }
+  .api-status.connected { background: rgba(52, 199, 89, 0.15); color: #1B5E20; }
+  .api-status.disconnected { background: rgba(255, 59, 48, 0.15); color: #C62828; }
+  .api-status.checking { background: rgba(255, 149, 0, 0.15); color: #B25A00; }
+
+  /* === Code === */
+  code {
+    background: var(--secondary-bg);
+    padding: 2px 6px; border-radius: var(--r-sm);
+    font-family: 'SF Mono', Consolas, monospace;
+    font-size: 12px; color: var(--accent);
+  }
+
+  /* === Scrollbar === */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-thumb { background: rgba(118, 118, 128, 0.3); border-radius: 100px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(118, 118, 128, 0.5); }
+  ::-webkit-scrollbar-track { background: transparent; }
 </style>
 </head>
 <body>
@@ -137,132 +443,135 @@
   <div class="tab-panel active" id="panel-copy">
     <section>
       <h2>
-        <span>📖 입력 가이드</span>
-        <span class="toggle" onclick="toggle('copy-guide-body')">접기/펼치기</span>
-      </h2>
-      <div id="copy-guide-body">
-        <table style="width:100%; font-size:12px; border-collapse:collapse">
-          <thead>
-            <tr style="background:#f5f5f7">
-              <th style="padding:6px; text-align:left; border-bottom:1px solid #d2d2d7">슬롯</th>
-              <th style="padding:6px; text-align:left; border-bottom:1px solid #d2d2d7">의미</th>
-              <th style="padding:6px; text-align:left; border-bottom:1px solid #d2d2d7">예시</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td style="padding:5px; border-bottom:1px solid #f5f5f7"><strong>카테고리</strong></td><td style="padding:5px">무엇을 파는가</td><td style="padding:5px; color:#86868b">휴대폰 판매 / 요금제 / 액세서리</td></tr>
-            <tr><td style="padding:5px; border-bottom:1px solid #f5f5f7"><strong>타겟 연령/성별</strong></td><td style="padding:5px">누구한테 보이는가</td><td style="padding:5px; color:#86868b">30대 여성 / 20대 남성</td></tr>
-            <tr><td style="padding:5px; border-bottom:1px solid #f5f5f7"><strong>제품</strong></td><td style="padding:5px">카피에 박힐 구체 명칭</td><td style="padding:5px; color:#86868b">아이폰15 Pro / 내 휴대폰</td></tr>
-            <tr><td style="padding:5px; border-bottom:1px solid #f5f5f7"><strong>핵심 USP</strong> (가장 중요)</td><td style="padding:5px">광고의 한 줄 메시지</td><td style="padding:5px; color:#86868b">1분 견적 / 가격 조회 편리함</td></tr>
-            <tr><td style="padding:5px; border-bottom:1px solid #f5f5f7"><strong>시즌</strong></td><td style="padding:5px">계절·이벤트 모티브</td><td style="padding:5px; color:#86868b">시즌리스 / 봄 / 블프</td></tr>
-            <tr><td style="padding:5px; border-bottom:1px solid #f5f5f7"><strong>강조 감정</strong></td><td style="padding:5px">어떤 감정 자극</td><td style="padding:5px; color:#86868b">호기심 / 손실회피 / 안심</td></tr>
-            <tr><td style="padding:5px; border-bottom:1px solid #f5f5f7"><strong>추가 키워드</strong></td><td style="padding:5px">자연스럽게 녹일 단어</td><td style="padding:5px; color:#86868b">학생, 자취, 효도폰</td></tr>
-            <tr><td style="padding:5px; border-bottom:1px solid #f5f5f7"><strong>길이 선호</strong></td><td style="padding:5px">글자 수</td><td style="padding:5px; color:#86868b">15자 내외 / 짧게</td></tr>
-            <tr><td style="padding:5px"><strong>톤 (다중)</strong></td><td style="padding:5px">분위기</td><td style="padding:5px; color:#86868b">감성 + 직설</td></tr>
-          </tbody>
-        </table>
-        <div class="info-box" style="margin-top:10px">
-          <strong>슬롯이 채워질수록 카피 다양성↓ 정밀도↑</strong> · 빈칸으로 두면 LLM이 자유롭게 변형 · 시즌·감정·키워드를 바꿔 시도하면 같은 USP로도 다른 톤 카피 풀이 나옴
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <h2>
         <span>카피 입력 폼</span>
         <button class="secondary small" onclick="randomFillCopy(true)">🎲 랜덤 + 즉시 생성</button>
       </h2>
-      <div class="grid-3">
-        <div>
-          <label>카테고리</label>
-          <select id="c-category">
-            <option>휴대폰 판매</option><option>통신요금제</option><option>액세서리</option><option>중고폰</option><option>수리</option>
-          </select>
-        </div>
-        <div>
-          <label>타겟 연령</label>
-          <select id="c-age">
-            <option>10대</option><option>20대</option><option>30대</option><option>40대</option><option>50대+</option><option selected>전 연령</option>
-          </select>
-        </div>
-        <div>
-          <label>타겟 성별</label>
-          <select id="c-gender">
-            <option>여성</option><option>남성</option><option selected>전체</option>
-          </select>
-        </div>
-        <div>
-          <label>시즌/이벤트</label>
-          <select id="c-season">
-            <option selected>시즌리스</option><option>봄</option><option>여름</option><option>가을</option><option>겨울</option>
-            <option>설</option><option>추석</option><option>블랙프라이데이</option><option>크리스마스</option><option>신학기</option>
-          </select>
-        </div>
-        <div>
-          <label>제품 (구체적)</label>
-          <input type="text" id="c-product" placeholder="아이폰15, 갤럭시S24...">
-        </div>
-        <div>
-          <label>길이 선호</label>
-          <select id="c-length">
-            <option value="짧게 10자 이내">짧게 (10자 이내)</option>
-            <option value="중간 15자 내외">중간 (15자 내외)</option>
-            <option value="길게 20-25자">길게 (20-25자)</option>
-            <option value="자유" selected>자유</option>
-          </select>
+      <!-- 그룹 1: 분류 · 타겟 -->
+      <div class="form-group">
+        <div class="form-group-header">🎯 분류 · 타겟</div>
+        <div class="grid-3">
+          <div>
+            <label>카테고리</label>
+            <select id="c-category">
+              <option>휴대폰</option>
+              <option>유심만</option>
+              <option>알뜰폰</option>
+              <option>중고폰</option>
+              <option>키즈폰</option>
+              <option>효도폰</option>
+              <option>공짜폰</option>
+              <option>인터넷</option>
+              <option>인터넷+TV</option>
+            </select>
+          </div>
+          <div>
+            <label>타겟 연령</label>
+            <select id="c-age">
+              <option>10대</option><option>20대</option><option>30대</option><option>40대</option><option>50대+</option><option selected>전 연령</option>
+            </select>
+          </div>
+          <div>
+            <label>타겟 성별</label>
+            <select id="c-gender">
+              <option>여성</option><option>남성</option><option selected>전체</option>
+            </select>
+          </div>
         </div>
       </div>
-      <div style="margin-top:10px; padding:10px; background:#fff9c4; border-left:3px solid #fbc02d; border-radius:6px">
-        <label style="color:#5d4e00">🆕 신규 컨셉 (자유 입력, 선택)</label>
-        <input type="text" id="c-new-concept" placeholder="예: 휴대폰대란, 키즈폰, 광교매장 픽업, 보상기변 3년차...">
-        <div style="font-size:10px; color:#86868b; margin-top:4px">
-          ⚠️ <strong>🤖 LLM 프롬프트 버튼</strong> + 카드의 <strong>📋 슬로건 / 🎨 이미지</strong> 버튼에서만 반영. 📚 라이브러리 버튼은 정적 패턴이라 자유 텍스트 반영 ❌.
+
+      <!-- 그룹 2: 컨텍스트 -->
+      <div class="form-group">
+        <div class="form-group-header">🗓 컨텍스트</div>
+        <div class="grid-3">
+          <div>
+            <label>시즌 · 이벤트</label>
+            <select id="c-season">
+              <option selected>시즌리스</option><option>봄</option><option>여름</option><option>가을</option><option>겨울</option>
+              <option>설</option><option>추석</option><option>블랙프라이데이</option><option>크리스마스</option><option>신학기</option>
+            </select>
+          </div>
+          <div>
+            <label>제품</label>
+            <input type="text" id="c-product" placeholder="아이폰15, 갤럭시 S24, 인터넷 500M...">
+          </div>
+          <div>
+            <label>길이 선호</label>
+            <select id="c-length">
+              <option value="짧게 10자 이내">짧게 (10자 이내)</option>
+              <option value="중간 15자 내외">중간 (15자 내외)</option>
+              <option value="길게 20-25자">길게 (20-25자)</option>
+              <option value="자유" selected>자유</option>
+            </select>
+          </div>
         </div>
       </div>
-      <div style="margin-top:10px">
-        <label>핵심 USP (한 줄)</label>
-        <input type="text" id="c-usp" placeholder="1분 견적, 최저가 보장, 가격 조회 편리함...">
-      </div>
-      <div style="margin-top:10px">
-        <label>강조 감정 (선택)</label>
-        <select id="c-emotion">
-          <option value="자유">자유</option>
-          <option value="불안/손실회피">불안/손실회피</option>
-          <option value="호기심">호기심</option>
-          <option value="자부심/우월감">자부심/우월감</option>
-          <option value="안심/신뢰">안심/신뢰</option>
-          <option value="긴급/FOMO">긴급/FOMO</option>
-          <option value="공감/위로">공감/위로</option>
-          <option value="유머/재미">유머/재미</option>
-        </select>
-      </div>
-      <div style="margin-top:10px">
-        <label>추가 키워드 (선택, 쉼표로)</label>
-        <input type="text" id="c-keywords" placeholder="예: 학생, 첫 폰, 효도폰, 자취">
-      </div>
-      <div style="margin-top:10px">
-        <label>톤 선호 (다중)</label>
-        <div class="checkbox-group" id="c-tones">
-          <label><input type="checkbox" value="감성/부드러움"> 감성</label>
-          <label><input type="checkbox" value="직설/강력"> 직설</label>
-          <label><input type="checkbox" value="유머/B급"> 유머</label>
-          <label><input type="checkbox" value="정보성/신뢰"> 정보성</label>
-          <label><input type="checkbox" value="미니멀/프리미엄"> 프리미엄</label>
+
+      <!-- 그룹 3: 카피 메시지 -->
+      <div class="form-group">
+        <div class="form-group-header">✍️ 카피 메시지</div>
+        <div class="form-stack">
+          <div>
+            <label>핵심 USP <span style="font-weight:400; color:var(--label-tertiary)">— 짧은 카피 문구, 템플릿 <code>{USP}</code> 슬롯 + LLM 반영</span></label>
+            <input type="text" id="c-usp" placeholder="1분 견적, 최저가 보장, 가격 조회 편리함...">
+          </div>
+          <div>
+            <label>톤 · 감정 <span style="font-weight:400; color:var(--label-tertiary)">— 다중 선택</span></label>
+            <div class="checkbox-group" id="c-tones">
+              <label><input type="checkbox" value="감성/공감"> 감성·공감</label>
+              <label><input type="checkbox" value="직설/강력"> 직설·강력</label>
+              <label><input type="checkbox" value="유머/B급"> 유머</label>
+              <label><input type="checkbox" value="정보성/신뢰"> 정보성·신뢰</label>
+              <label><input type="checkbox" value="미니멀/프리미엄"> 프리미엄</label>
+              <label><input type="checkbox" value="호기심"> 호기심</label>
+              <label><input type="checkbox" value="긴급/FOMO"> 긴급·FOMO</label>
+              <label><input type="checkbox" value="손실회피"> 손실회피</label>
+              <label><input type="checkbox" value="자부심"> 자부심</label>
+            </div>
+          </div>
+          <div>
+            <label>후킹 구조 <span style="font-weight:400; color:var(--label-tertiary)">— 문장 골격(정서 톤과 별개), 다중 선택 / 비우면 LLM 자유</span></label>
+            <div class="checkbox-group" id="c-hooks">
+              <label><input type="checkbox" value="질문형"> 질문형</label>
+              <label><input type="checkbox" value="단언형"> 단언형</label>
+              <label><input type="checkbox" value="비교형"> 비교형</label>
+              <label><input type="checkbox" value="한정형"> 한정형</label>
+              <label><input type="checkbox" value="가격강조"> 가격강조</label>
+              <label><input type="checkbox" value="감성/공감"> 감성·공감</label>
+              <label><input type="checkbox" value="위협형"> 위협형</label>
+              <label><input type="checkbox" value="FOMO형"> FOMO형</label>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="btn-row" style="margin-top:14px; flex-wrap:wrap; gap:8px">
-        <button onclick="generateCopiesFromLibrary()" style="flex:1; min-width:280px; padding:12px; font-size:13px">
-          📚 라이브러리 + 벤치마크 기반 생성<br>
-          <span style="font-size:10px; opacity:0.85; font-weight:400">메타 우수 광고 패턴 + 60+ 검증 템플릿에서 20개 즉시 (벤치마크 apify 크롤링: 구현 예정)</span>
-        </button>
-        <button onclick="generateCopiesViaLLM()" style="flex:1; min-width:280px; padding:12px; font-size:13px">
-          🤖 LLM 프롬프트 생성 (Claude/GPT 챗용)<br>
-          <span style="font-size:10px; opacity:0.85; font-weight:400">신규 컨셉 반영 · 무한 다양성 · 챗에 붙여넣기</span>
-        </button>
+
+      <!-- 그룹 4: LLM 강조 (지역 + 신규 컨셉) -->
+      <div class="form-group form-group--accent">
+        <div class="form-group-header">✨ LLM 강조</div>
+        <div class="form-stack">
+          <div>
+            <label>지역 <span style="font-weight:400; color:var(--label-tertiary)">— 공백=전국 / "광교점" 등 매장명 자유 입력</span></label>
+            <input type="text" id="c-region" placeholder="예: 광교점 (공백이면 지역 고려 ❌, 전국용 카피)">
+          </div>
+          <div>
+            <label>신규 컨셉 <span style="font-weight:400; color:var(--label-tertiary)">— 추상 키워드 (선택)</span></label>
+            <input type="text" id="c-new-concept" placeholder="예: 휴대폰대란, 보상기변 3년차">
+          </div>
+        </div>
+        <div style="font-size:12px; color:var(--label-tertiary); margin-top:8px; line-height:1.5">
+          지역·신규 컨셉 = LLM 프롬프트에 박힘. 매칭은 지역 입력 시 시트 지역 매칭 광고 우선 + 전국 광고 폴백.
+        </div>
       </div>
-      <div class="btn-row" style="margin-top:8px; gap:6px">
-        <button class="secondary" onclick="randomFillCopy(false)">🎲 랜덤 채우기</button>
-        <button class="danger" onclick="resetAllForm()">🧹 전체 초기화</button>
+
+      <!-- 그룹 5: 라이브러리 합류 옵션 (기본 OFF — 폼 값 기반 순수 템플릿만) -->
+      <div class="btn-row">
+        <button class="btn-large" onclick="generateAdCopyGuide()">광고 카피 가이드 생성</button>
+      </div>
+      <div class="btn-caption">
+        결과 3종: 🤖 일반 LLM 프롬프트 + ✨ 라이브러리 매칭 + 🎯 벤치마크 매칭. 카테고리 매칭이 없으면 일반만 표시.
+      </div>
+      <div class="btn-row" style="margin-top:10px">
+        <button class="secondary small" onclick="randomFillCopy(false)">🎲 랜덤 채우기</button>
+        <button class="btn-text small" onclick="resetAllForm()">전체 초기화</button>
       </div>
       <!-- D1: 폼 프리셋 저장 -->
       <div style="margin-top:10px; padding:8px; background:#f5f5f7; border-radius:6px; display:flex; gap:6px; align-items:center; flex-wrap:wrap">
@@ -274,19 +583,83 @@
       </div>
     </section>
 
+    <!-- 🔄 메타 비율 변환 (1:1 → 4:5/9:16/1.91:1) — 카피 결과 위에 배치 (스크롤 부담 X) -->
+    <section id="resize-section" class="hidden">
+      <h2>
+        <span>🔄 메타 비율 변환 (1:1 → 다른 비율)</span>
+      </h2>
+      <div class="info-box" style="background:#e8f5e9; border-left:3px solid #4caf50">
+        <strong>사용법</strong>: 🎨 이미지 버튼으로 1:1 영문 프롬프트 → ChatGPT 4o에 입력 → 1:1 이미지 받음 → 아래 비율 버튼 클릭(한글 재구성 프롬프트 복사) → ChatGPT에 <strong>1:1 이미지 첨부</strong> + 복사한 프롬프트 입력 → 비율별 이미지.
+      </div>
+      <div class="btn-row" style="gap:6px; flex-wrap:wrap">
+        <button onclick="copyResizePrompt('1:1')" style="flex:1; min-width:160px; padding:10px">
+          🟦 1:1 (1080×1080)<br>
+          <span style="font-size:10px; opacity:0.85; font-weight:400">피드 정사각형 / 영문 프롬프트</span>
+        </button>
+        <button onclick="copyResizePrompt('4:5')" style="flex:1; min-width:160px; padding:10px">
+          📱 4:5 (1080×1350)<br>
+          <span style="font-size:10px; opacity:0.85; font-weight:400">피드 세로형 / 한글 재구성</span>
+        </button>
+        <button onclick="copyResizePrompt('9:16')" style="flex:1; min-width:160px; padding:10px">
+          📲 9:16 (1080×1920)<br>
+          <span style="font-size:10px; opacity:0.85; font-weight:400">스토리/릴스 / 한글 재구성</span>
+        </button>
+        <button onclick="copyResizePrompt('1.91:1')" style="flex:1; min-width:160px; padding:10px">
+          🖼 1.91:1 (1200×628)<br>
+          <span style="font-size:10px; opacity:0.85; font-weight:400">링크 광고 / 한글 재구성</span>
+        </button>
+      </div>
+      <div style="margin-top:8px; padding:8px; background:#fff3e0; border-left:3px solid #ff9800; border-radius:4px; font-size:11px; color:#5d4e00">
+        ⚠️ <strong>한계</strong>: GPT 이미지 모델은 텍스트 재생성하므로 한글 철자 깨질 수 있음. 생성 후 원본과 대조 확인. <strong>픽셀 단위 보존</strong>이 필요하면 Figma/Canva에서 원본 요소 재배치 권장.
+      </div>
+    </section>
+
     <section id="copy-results-section" class="hidden">
       <h2>
-        <span>생성된 카피 후보 <span id="copy-count">0</span>개</span>
-        <span class="toggle" onclick="generateCopies()">↻ 다시 생성</span>
+        <span>광고 카피 가이드 결과</span>
+        <span class="toggle" onclick="generateAdCopyGuide()">↻ 다시 생성</span>
       </h2>
-      <div class="info-box">📋 카피 = 그 카피 텍스트만 복사 / 🎨 이미지 프롬프트 = 그 카피 + 폼 컨텍스트로 영문 이미지 프롬프트 자동 생성·복사 → ChatGPT 4o에 붙여넣기 / 카드 클릭 = 라이브러리 저장용 선택</div>
-      <div id="copy-results"></div>
-      <div class="selection-bar">
-        <div class="count">선택: <strong id="copy-selected-count">0</strong>개</div>
-        <div style="display:flex; gap:6px">
-          <button class="secondary small" onclick="copySelectedCopies()">📋 선택 복사</button>
-          <button class="secondary small" onclick="setActiveCopies()">✓ 라이브러리용으로 설정</button>
+
+      <!-- 🎲 랜덤 변주 (1순위, 항상 표시) — 코어 고정 / 톤·후킹 변주 -->
+      <div class="result-box result-general">
+        <div class="result-box-header">
+          <span class="result-box-title">🎲 랜덤 변주 — 코어 고정 / 톤·후킹 변주 8개</span>
+          <button class="secondary small" onclick="redrawVariations()">🎲 다시 뽑기</button>
         </div>
+        <div class="result-box-desc">선택한 톤·후킹은 고정, 비운 축은 랜덤. 행마다 슬로건 / 이미지 프롬프트 복사.</div>
+        <div style="display:flex; gap:6px; align-items:center; margin-bottom:10px; flex-wrap:wrap">
+          <span style="font-size:12px; font-weight:600; white-space:nowrap">✍️ 슬로건→이미지:</span>
+          <input type="text" id="img-headline" placeholder="LLM에서 고른 헤드라인 붙여넣기 → 그 문구로 배너 이미지" style="flex:1; min-width:200px; font-size:12px; padding:8px 10px">
+          <button class="secondary small" onclick="copyImageWithHeadline()">🎨 이 슬로건으로 이미지 프롬프트</button>
+        </div>
+        <div id="result-variations-body" class="result-box-body"></div>
+      </div>
+
+      <!-- ✨ 추천 — 라이브러리 검증 매칭 (매칭 있을 때만 표시) -->
+      <div class="result-box result-library hidden" id="result-library-box">
+        <div class="result-box-header">
+          <span class="result-box-title">✨ 추천 — 라이브러리 검증 매칭</span>
+          <button class="secondary small" onclick="copyLibraryPrompt()">🖋️ 슬로건용 프롬프트 (매칭 박힘)</button>
+          <button class="secondary small" onclick="copyLibraryImagePrompt()">🎨 이미지생성용 프롬프트</button>
+        </div>
+        <div class="result-box-desc">
+          폼 카테고리 매칭 + 최소 CTR ≥ <input type="number" id="result-min-ctr" min="0" max="20" step="0.5" style="width:60px; padding:2px 6px" onchange="renderAdCopyGuide()">% · 매칭 시 검증된 톤·후킹이라 랜덤 변주 불필요
+        </div>
+        <div id="result-library-body" class="result-box-body"></div>
+      </div>
+
+      <!-- 🎯 추천 — 벤치마크 검증 매칭 (매칭 있을 때만) -->
+      <div class="result-box result-benchmark hidden" id="result-benchmark-box">
+        <div class="result-box-header">
+          <span class="result-box-title">🎯 추천 — 벤치마크 검증 매칭</span>
+          <button class="secondary small" onclick="copyBenchmarkPrompt()">🖋️ 슬로건용 프롬프트 (후킹 박힘)</button>
+          <button class="secondary small" onclick="copyBenchmarkImagePrompt()">🎨 이미지생성용 프롬프트</button>
+        </div>
+        <div class="result-box-desc">
+          폼 카테고리 매칭 + 운영 ≥ <input type="number" id="result-min-days" min="0" max="365" step="10" style="width:60px; padding:2px 6px" onchange="renderAdCopyGuide()">일
+          + 등급 ≥ <input type="number" id="result-min-grade" min="0" max="3" step="1" style="width:50px; padding:2px 6px" onchange="renderAdCopyGuide()">★
+        </div>
+        <div id="result-benchmark-body" class="result-box-body"></div>
       </div>
     </section>
   </div>
@@ -560,7 +933,37 @@ const CATALOG = {
     { name: '호기심',         template: '{키워드}이라면 꼭 봐야 할 {제품}' },
     { name: '감정+공감',      template: '{키워드}들의 {USP}' },
     { name: '제안형',         template: '{키워드}을 위한 {제품}' },
-    { name: '단언형',         template: '{키워드}, 이게 정답입니다' }
+    { name: '단언형',         template: '{키워드}, 이게 정답입니다' },
+    // ============ 인터넷 · 인터넷+TV 전용 패턴 (2026-06-12 D) ============
+    // categories 메타로 카테고리 매칭 시에만 풀에 들어감
+    { name: '결합할인',       template: '인터넷+휴대폰 묶으면 월 {숫자}만원', categories: ['인터넷','인터넷+TV'] },
+    { name: '결합할인',       template: '결합 시 통신비 매월 {숫자}만원 절약', categories: ['인터넷','인터넷+TV'] },
+    { name: '위약금대납',     template: '이전 회선 위약금 {숫자}만원 대납', categories: ['인터넷','인터넷+TV'] },
+    { name: '위약금대납',     template: '위약금 부담 없이 갈아타기 {USP}', categories: ['인터넷','인터넷+TV'] },
+    { name: '사은품강조',     template: '인터넷 가입하면 {혜택} 무료', categories: ['인터넷','인터넷+TV'] },
+    { name: '사은품강조',     template: '신규 가입 + {혜택} 즉시 지급', categories: ['인터넷','인터넷+TV'] },
+    { name: '속도자랑',       template: '{숫자}Gbps 인터넷 + 와이파이 {혜택}', categories: ['인터넷','인터넷+TV'] },
+    { name: '속도자랑',       template: '광랜 {숫자}Mbps, 끊김 없는 스트리밍', categories: ['인터넷','인터넷+TV'] },
+    { name: '견적비교',       template: '24개월 총 비용 비교, 진짜 싼 곳', categories: ['인터넷','인터넷+TV'] },
+    { name: '견적비교',       template: '월 요금 {USP}, 1분 만에 확인', categories: ['인터넷','인터넷+TV'] },
+    { name: '설치당일',       template: '신청하면 당일 설치 가능', categories: ['인터넷','인터넷+TV'] },
+    { name: '설치당일',       template: '예약 후 {숫자}일 안에 설치 완료', categories: ['인터넷','인터넷+TV'] },
+    { name: '이사할인',       template: '이사 시 인터넷 옮기면 {혜택}', categories: ['인터넷','인터넷+TV'] },
+    { name: '신혼특가',       template: '신혼부부 인터넷+TV 묶음 특가', categories: ['인터넷','인터넷+TV'] },
+    { name: '자영업견적',     template: '자영업자 인터넷 견적, 1분 확인', categories: ['인터넷','인터넷+TV'] },
+    { name: '통신사비교',     template: 'KT vs SK vs U+, 진짜 싼 곳은?', categories: ['인터넷','인터넷+TV'] },
+    { name: '약정만료',       template: '약정 만료 됐다면 위약금 없이 변경', categories: ['인터넷','인터넷+TV'] },
+    { name: 'TV채널혜택',     template: '인터넷+TV {숫자}채널, 월 {숫자}만원', categories: ['인터넷+TV'] },
+    { name: 'IPTV프리미엄',   template: 'IPTV 프리미엄 채널 {혜택}', categories: ['인터넷+TV'] },
+    { name: '셋톱박스무료',   template: '셋톱박스 무료 설치 + {혜택}', categories: ['인터넷+TV'] },
+    { name: '월요금절약',     template: '인터넷+TV 월 {숫자}만원 절약', categories: ['인터넷+TV'] },
+    { name: '결합최저가',     template: '인터넷+TV 결합, 진짜 최저가 비교', categories: ['인터넷','인터넷+TV'] },
+    { name: '인터넷속도진단', template: '내 집 인터넷 속도 1분 진단', categories: ['인터넷','인터넷+TV'] },
+    { name: '재계약혜택',     template: '재계약 시 {혜택} 다시 받기', categories: ['인터넷','인터넷+TV'] },
+    { name: '와이파이속도',   template: '와이파이 5G 빠르게, 끊김 X', categories: ['인터넷','인터넷+TV'] },
+    { name: '비교형',         template: '같은 인터넷인데 가격이 왜 다를까?', categories: ['인터넷','인터넷+TV'] },
+    { name: '질문형+손실회피', template: '인터넷 위약금 그대로 내고 계세요?', categories: ['인터넷','인터넷+TV'] },
+    { name: '결과지향',       template: '클릭 한 번으로 인터넷 견적 확인', categories: ['인터넷','인터넷+TV'] }
   ],
   tones: {
     // 시즌리스 - 모든 톤 bgDesc는 시즌 모티브 없이 중립적으로 작성
@@ -695,35 +1098,36 @@ const TARGET_WORDS = {
   '전체':    ['누구나','모두']
 };
 
-// 패턴 → 감정 매칭 (감정 입력 시 매칭 패턴 가중치↑)
+// 패턴 → 톤·감정 매칭 (2026-06-12 통합 9개 키로 정규화)
+// 값: ctx.tones (다중 체크박스) 와 매칭 시 패턴 가중치 ↑
 const PATTERN_EMOTION = {
-  '질문형+손실회피': ['불안/손실회피'],
-  '수치형+베네핏':   ['긴급/FOMO'],
-  '비교형':           ['호기심'],
-  'FOMO+긴급':        ['긴급/FOMO','불안/손실회피'],
-  '사회적증명':       ['안심/신뢰'],
+  '질문형+손실회피': ['손실회피','호기심'],
+  '수치형+베네핏':   ['긴급/FOMO','정보성/신뢰'],
+  '비교형':           ['호기심','직설/강력'],
+  'FOMO+긴급':        ['긴급/FOMO','손실회피'],
+  '사회적증명':       ['정보성/신뢰'],
   '호기심':           ['호기심'],
-  '단언형':           ['자부심/우월감'],
-  '스토리형':         ['공감/위로'],
-  '명령형+긴급':      ['긴급/FOMO'],
-  '진단형':           ['안심/신뢰','불안/손실회피'],
-  '권위형':           ['안심/신뢰','자부심/우월감'],
-  '결과지향':         ['안심/신뢰'],
-  '대조+선택':        ['호기심','자부심/우월감'],
-  '감정+공감':        ['공감/위로'],
+  '단언형':           ['자부심','직설/강력'],
+  '스토리형':         ['감성/공감'],
+  '명령형+긴급':      ['긴급/FOMO','직설/강력'],
+  '진단형':           ['정보성/신뢰','손실회피'],
+  '권위형':           ['정보성/신뢰','자부심','직설/강력'],
+  '결과지향':         ['정보성/신뢰','직설/강력'],
+  '대조+선택':        ['호기심','자부심'],
+  '감정+공감':        ['감성/공감'],
   '한정형':           ['긴급/FOMO'],
-  '가격조회':         ['안심/신뢰','호기심'],
-  '후기+신뢰':        ['안심/신뢰'],
-  '부정+반전':        ['호기심','자부심/우월감'],
-  '약속형':           ['안심/신뢰'],
-  '제안형':           ['안심/신뢰','자부심/우월감'],
-  '경고형':           ['불안/손실회피'],
-  '시간단축':         ['긴급/FOMO']
+  '가격조회':         ['정보성/신뢰','호기심'],
+  '후기+신뢰':        ['정보성/신뢰','감성/공감'],
+  '부정+반전':        ['호기심','자부심','유머/B급'],
+  '약속형':           ['정보성/신뢰','자부심'],
+  '제안형':           ['정보성/신뢰','자부심'],
+  '경고형':           ['손실회피','직설/강력'],
+  '시간단축':         ['긴급/FOMO','직설/강력']
 };
 
 // 랜덤 풀 (폰스팟 컨텍스트 가중치 적용)
 const RANDOM_POOLS = {
-  category: ['휴대폰 판매','휴대폰 판매','휴대폰 판매','휴대폰 판매','통신요금제','액세서리','중고폰'],
+  category: ['휴대폰','휴대폰','휴대폰','유심만','알뜰폰','중고폰','키즈폰','효도폰','공짜폰','인터넷','인터넷+TV'],
   age: ['10대','20대','20대','30대','30대','30대','40대','40대','50대+','전 연령'],
   gender: ['전체','전체','전체','여성','남성'],
   season: ['시즌리스','시즌리스','시즌리스','시즌리스','봄','여름','가을','겨울','설','추석','블랙프라이데이','크리스마스','신학기'],
@@ -732,7 +1136,7 @@ const RANDOM_POOLS = {
   emotion: ['자유','불안/손실회피','호기심','자부심/우월감','안심/신뢰','긴급/FOMO','공감/위로','유머/재미'],
   keywords: ['','학생','첫 폰','효도폰','자취','알뜰','직장인','신규가입','기변'],
   length: ['짧게 10자 이내','중간 15자 내외','중간 15자 내외','중간 15자 내외','길게 20-25자','자유'],
-  copyTones: ['감성/부드러움','직설/강력','유머/B급','정보성/신뢰','미니멀/프리미엄'],
+  copyTones: ['감성/공감','직설/강력','유머/B급','정보성/신뢰','미니멀/프리미엄','호기심','긴급/FOMO','손실회피','자부심'],
   visualTones: ['감성_봄','직설_강력','미니멀_프리미엄','정보_신뢰','유머_B급','시즌_여름','시즌_가을','시즌_겨울'],
   layouts: ['vertical-stacked','horizontal-split','centered-product','full-bleed-product','collage-multi','hero-with-callouts'],
   textMode: ['blank','blank','blank','korean']
@@ -743,6 +1147,120 @@ let currentCopies = [];
 let selectedCopies = new Set();
 let activeCopies = []; // 라이브러리용 활성 카피
 let library = [];
+
+// ============ 🔄 메타 비율 변환 프롬프트 (2026-06-09) ============
+// 1:1은 buildImagePrompt 사용 안내, 나머지 한글 재구성 프롬프트
+const RESIZE_PROMPTS = {
+  '1:1': `# 역할
+너는 광고 배너 리터칭 전문가다.
+
+# 작업
+첨부한 1:1 배너 이미지를 동일한 1:1 비율(1080×1080 px)로 재출력한다.
+
+# 규칙
+- 로고, 제품/피사체, 모든 카피 문구, CTA 버튼, 브랜드 컬러·폰트·그래픽 스타일을 그대로 유지한다.
+- 요소를 한 방향으로 늘리거나 찌그러뜨리지 않는다. 추가·삭제하지 않는다.
+- 화질 저하, 텍스트 번짐, 색상 변형이 없도록 한다.
+- 핵심 요소는 가장자리에서 최소 5% 안전 여백을 둔다.
+
+# 출력
+- 비율: 1:1 / 해상도: 1080×1080 px
+- 형식: 텍스트가 선명한 고해상도 이미지 1장`,
+
+  '4:5': `# 역할
+너는 광고 배너를 게재 규격에 맞게 재디자인하는 아트디렉터다.
+
+# 작업
+첨부한 1:1 배너 이미지를, 세로로 더 긴 4:5 비율(1080×1350 px)의 광고로 "처음부터 그 비율로 디자인된 것처럼" 레이아웃을 재구성한다.
+
+# 가장 중요한 규칙
+- 원본을 가운데 두고 위아래 배경만 늘리지 마라. 그러면 빈 여백 띠가 생긴다.
+- 대신, 늘어난 세로 공간을 요소들이 자연스럽게 채우도록 크기와 위치를 다시 잡아라.
+
+# 콘텐츠 규칙
+- 로고, 제품/피사체, 모든 카피 문구, CTA 버튼, 브랜드 컬러·폰트·그래픽 스타일은 변경·삭제·추가하지 않는다.
+- 요소는 가로세로 같은 비율로만 확대/축소한다(비례 리사이징 허용, 한 방향 왜곡 금지).
+- 원본의 시각적 위계(메인 카피 > 제품 > CTA > 로고 등 강조 순서)를 유지한다.
+
+# 레이아웃 지침
+- 세로 흐름으로 재구성: 상단에 로고/헤드라인, 중앙에 제품/피사체, 하단에 서브카피와 CTA.
+- 늘어난 세로 공간만큼 제품·헤드라인을 적절히 키워 화면을 시원하게 채운다.
+- 요소 간 간격을 균형 있게 분배해 빈 띠가 생기지 않게 한다.
+- 배경은 원본의 색·질감·그라데이션을 이어 자연스럽게 확장한다.
+- 텍스트는 원본 문구 그대로, 선명하게, 잘리지 않게.
+- 핵심 요소는 가장자리에서 최소 5% 여백.
+
+# 출력
+- 비율: 4:5 (세로형) / 해상도: 1080×1350 px
+- 형식: 텍스트가 선명한 고해상도 이미지 1장`,
+
+  '9:16': `# 역할
+너는 광고 배너를 게재 규격에 맞게 재디자인하는 아트디렉터다.
+
+# 작업
+첨부한 1:1 배너 이미지를, 풀스크린 세로형 9:16 비율(1080×1920 px)의 스토리/릴스 광고로 "처음부터 그 비율로 디자인된 것처럼" 레이아웃을 재구성한다.
+
+# 가장 중요한 규칙
+- 원본을 가운데 두고 위아래 배경만 늘리지 마라. 9:16은 세로가 매우 길어서 그렇게 하면 위아래에 거대한 빈 띠가 생긴다.
+- 대신, 화면 전체를 하나의 세로형 광고로 새로 구성하라.
+
+# 콘텐츠 규칙
+- 로고, 제품/피사체, 모든 카피 문구, CTA 버튼, 브랜드 컬러·폰트·그래픽 스타일은 변경·삭제·추가하지 않는다.
+- 요소는 가로세로 같은 비율로만 확대/축소한다(비례 리사이징 허용, 한 방향 왜곡 금지).
+- 원본의 시각적 위계(강조 순서)를 유지한다.
+
+# 레이아웃 지침
+- 위에서 아래로 읽히는 세로 구성으로 재배치:
+  · 상단 영역  → 로고 / 브랜드 요소
+  · 중앙 영역  → 제품/피사체를 크게 배치 (시선이 가장 먼저 닿는 곳)
+  · 중하단 영역 → 메인 헤드라인과 서브카피
+  · 하단 영역  → CTA 버튼
+- 제품·헤드라인을 가로폭(1080px)을 충분히 활용할 만큼 키워 화면을 꽉 채운다.
+- 배경은 원본의 색·질감·그라데이션을 이어 자연스럽게 확장한다.
+- 세이프 영역: Meta 스토리/릴스 UI를 고려해 상단 14%, 하단 20%에는 핵심 요소·텍스트·CTA를 배치하지 않는다.
+- 텍스트는 원본 문구 그대로, 선명하게, 잘리지 않게.
+
+# 출력
+- 비율: 9:16 (풀스크린 세로형) / 해상도: 1080×1920 px
+- 형식: 텍스트가 선명한 고해상도 이미지 1장`,
+
+  '1.91:1': `# 역할
+너는 광고 배너를 게재 규격에 맞게 재디자인하는 아트디렉터다.
+
+# 작업
+첨부한 1:1 배너 이미지를, 가로로 긴 1.91:1 비율(1200×628 px)의 광고로 "처음부터 그 비율로 디자인된 것처럼" 레이아웃을 재구성한다.
+
+# 가장 중요한 규칙
+- 원본을 가운데 두고 좌우 배경만 늘리지 마라. 그러면 양옆에 빈 여백 띠가 생긴다.
+- 대신, 가로로 넓어진 공간을 좌우 분할 구성으로 꽉 채워라.
+
+# 콘텐츠 규칙
+- 로고, 제품/피사체, 모든 카피 문구, CTA 버튼, 브랜드 컬러·폰트·그래픽 스타일은 변경·삭제·추가하지 않는다.
+- 요소는 가로세로 같은 비율로만 확대/축소한다(비례 리사이징 허용, 한 방향 왜곡 금지).
+- 원본의 시각적 위계(강조 순서)를 유지한다.
+
+# 레이아웃 지침
+- 좌우 분할 가로 구성으로 재배치:
+  · 한쪽(예: 좌측) → 제품/피사체를 세로 높이에 맞춰 크게 배치
+  · 다른 쪽(예: 우측) → 헤드라인 + 서브카피 + CTA를 위계 순으로 정렬
+  · 로고는 상단 모서리 등 적절한 위치에 배치
+- 세로 높이(628px)가 줄어든 만큼 요소를 적절히 축소하되, 가로 공간은 좌우 요소로 꽉 채워 빈 여백 띠가 생기지 않게 한다.
+- 배경은 원본의 색·질감·그라데이션을 이어 자연스럽게 확장한다.
+- 텍스트는 원본 문구 그대로, 선명하게, 잘리지 않게. 세로폭이 좁으니 글자가 위아래로 잘리지 않도록 특히 주의한다.
+- 핵심 요소는 가장자리에서 최소 5% 여백.
+
+# 출력
+- 비율: 1.91:1 (가로형) / 해상도: 1200×628 px
+- 형식: 텍스트가 선명한 고해상도 이미지 1장`
+};
+
+function copyResizePrompt(ratio) {
+  const p = RESIZE_PROMPTS[ratio];
+  if (!p) { alert('비율 프롬프트 없음: ' + ratio); return; }
+  copyText(p);
+  const label = { '1:1': '1:1 (1080×1080)', '4:5': '4:5 (1080×1350)', '9:16': '9:16 (1080×1920)', '1.91:1': '1.91:1 (1200×628)' }[ratio];
+  showToast(`📋 ${label} 프롬프트 복사됨. ChatGPT 4o에 1:1 이미지 첨부 + 붙여넣기.`);
+}
 
 // ============ 유틸 ============
 function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
@@ -755,7 +1273,9 @@ function shuffle(arr) {
   return a;
 }
 function fillSlots(template, ctx) {
-  return template.replace(/\{(\w+)\}/g, (_, key) => {
+  // 정규식 ★ 수정 (2026-06-12): \w는 ASCII만 매칭하여 {제품}/{타겟어}/{숫자} 등 한글 슬롯이 매칭 안 됨.
+  // [^\}]+ 로 변경 → 중괄호 안 모든 문자 매칭 (한글 포함).
+  return template.replace(/\{([^\}]+)\}/g, (_, key) => {
     if (key === '제품') return ctx.product;
     if (key === 'USP') return ctx.usp;
     if (key === '타겟') return ctx.targetText || pick(SLOT_VALUES['타겟']);
@@ -1139,6 +1659,7 @@ function renderBenchmarkAnalysis() {
 // ============ 카피 입력 수집 ============
 function getCopyContext() {
   const tones = Array.from(document.querySelectorAll('#c-tones input:checked')).map(el => el.value);
+  const hooks = Array.from(document.querySelectorAll('#c-hooks input:checked')).map(el => el.value);  // ★ Q3 후킹 구조 (문장 골격, 정서 톤과 별개)
   return {
     category: document.getElementById('c-category').value,
     age: document.getElementById('c-age').value,
@@ -1146,11 +1667,15 @@ function getCopyContext() {
     season: document.getElementById('c-season').value,
     product: document.getElementById('c-product').value || '내 휴대폰',
     usp: document.getElementById('c-usp').value || '가격 조회',
-    emotion: document.getElementById('c-emotion').value,
-    keywords: document.getElementById('c-keywords').value,
+    emotion: '자유',  // 폐기, fillSlots 폴백 호환용 더미
+    keywords: '',     // 폐기, fillSlots 폴백 호환용 더미
     length: document.getElementById('c-length').value,
-    tones: tones.length > 0 ? tones : ['감성/부드러움', '직설/강력'],
-    newConcept: (document.getElementById('c-new-concept')?.value || '').trim()  // 🆕 자유 입력 신규 컨셉
+    tones: tones.length > 0 ? tones : ['감성/공감', '직설/강력'],
+    hooks: hooks,  // ★ Q3 — 비우면 빈 배열 (LLM 자유)
+    region: (document.getElementById('c-region')?.value || '').trim(),           // ★ Task 44 — 자유 입력 지역명 (공백=전국)
+    newConcept: (document.getElementById('c-new-concept')?.value || '').trim(),  // 🆕 자유 입력 신규 컨셉
+    includeVerified: !!document.getElementById('c-include-verified')?.checked,    // ✨ 토글 (기본 OFF)
+    includeBenchmark: !!document.getElementById('c-include-benchmark')?.checked  // 🎯 토글 (기본 OFF)
   };
 }
 
@@ -1162,8 +1687,6 @@ function randomFillCopy(thenGenerate) {
   setSelectValue('c-season', pick(RANDOM_POOLS.season));
   document.getElementById('c-product').value = pick(RANDOM_POOLS.product);
   document.getElementById('c-usp').value = pick(RANDOM_POOLS.usp);
-  setSelectValue('c-emotion', pick(RANDOM_POOLS.emotion));
-  document.getElementById('c-keywords').value = pick(RANDOM_POOLS.keywords);
   setSelectValue('c-length', pick(RANDOM_POOLS.length));
   setCheckboxGroup('c-tones', pickSubset(RANDOM_POOLS.copyTones, 1, 3));
   showToast('카피 폼 랜덤 채움');
@@ -1174,59 +1697,241 @@ function randomFillCopy(thenGenerate) {
 
 // ============ 🧹 전체 초기화 ============
 function resetAllForm() {
-  setSelectValue('c-category', '휴대폰 판매');
+  setSelectValue('c-category', '휴대폰');
   setSelectValue('c-age', '전 연령');
   setSelectValue('c-gender', '전체');
   setSelectValue('c-season', '시즌리스');
   document.getElementById('c-product').value = '';
   document.getElementById('c-usp').value = '';
-  setSelectValue('c-emotion', '자유');
-  document.getElementById('c-keywords').value = '';
   setSelectValue('c-length', '자유');
   setCheckboxGroup('c-tones', []);
+  setCheckboxGroup('c-hooks', []);
   const nc = document.getElementById('c-new-concept');
   if (nc) nc.value = '';
+  const rg = document.getElementById('c-region');
+  if (rg) rg.value = '';
   // 카피 결과도 비우기
   currentCopies = [];
   selectedCopies.clear();
   const resultsSection = document.getElementById('copy-results-section');
   if (resultsSection) resultsSection.classList.add('hidden');
+  const resizeEl = document.getElementById('resize-section');
+  if (resizeEl) resizeEl.classList.add('hidden');
   showToast('🧹 폼 + 카피 결과 전체 초기화');
 }
 
-// ============ 📚 라이브러리 + 벤치마크 기반 생성 (즉시) ============
-// 메타 우수 광고 패턴 + 60+ 검증 템플릿 풀에서 20개 추출
-// 벤치마크 apify 크롤링: 구현 예정 (현재는 메타 라이브러리만 사용)
-function generateCopiesFromLibrary() {
+// ============ 광고 카피 가이드 생성 (메인 진입점, 2026-06-12) ============
+// 결과 3종: 🤖 일반 LLM 프롬프트 + ✨ 라이브러리 매칭 + 🎯 벤치마크 매칭
+// 라이브러리·벤치마크 매칭은 카테고리 매칭 광고가 있을 때만 표시.
+let currentGuide = { ctx: null, generalPrompt: '', variations: [], libraryMatches: [], libraryPrompt: '', benchmarkMatches: [], benchmarkPrompt: '', semanticScores: {} };
+
+function generateAdCopyGuide() {
   const ctx = getCopyContext();
-  // 신규 컨셉이 박혀 있으면 경고 (이 모드는 자유 텍스트 반영 X)
-  if (ctx.newConcept) {
-    showToast(`⚠️ 신규 컨셉 "${ctx.newConcept}"은 이 모드에서 반영 ❌. 🤖 LLM 프롬프트 버튼 사용 권장.`);
-  }
-  currentCopies = generateCopiesTemplate(ctx);
-  renderCopies();
-  // 자동 주입 알림
-  if (ctx._autoKeywordsInjected) {
-    showToast(`📡 라이브러리 우수 키워드 자동 적용: ${ctx._autoKeywordsInjected}`);
+  currentGuide.ctx = ctx;
+  currentGuide.semanticScores = {};  // 새 생성마다 의미점수 리셋
+  currentGuide.generalPrompt = buildCopyPrompt(ctx);   // 하위호환 (copyGeneralPrompt 폴백용)
+  currentGuide.variations = drawVariationCombos(ctx, 8); // ★ 8개 랜덤 변주 (축 고정/랜덤)
+  renderAdCopyGuide();
+  const libCnt = currentGuide.libraryMatches.length;
+  const bmCnt = currentGuide.benchmarkMatches.length;
+  if (libCnt === 0 && bmCnt === 0) {
+    showToast(`🎲 랜덤 변주 8개 생성 (검증 매칭 0건 — 카테고리 라벨링 시 추천 표시)`);
   } else {
-    const verifiedCount = currentCopies.filter(c => c.isVerified).length;
-    if (verifiedCount > 0) {
-      showToast(`✨ 검증된 메타 카피 ${verifiedCount}개 포함`);
-    }
+    showToast(`✨ 추천 ${libCnt + bmCnt}건 + 🎲 변주 8개`);
   }
+  // ★ 컨셉/지역 있으면 Gemini 의미 매칭 (비동기 → 끝나면 추천 박스 재렌더)
+  if (ctx.newConcept || ctx.region) requestSemanticMatch(ctx);
 }
 
-// ============ 🤖 LLM 프롬프트 생성 (Claude/GPT 챗용) ============
-function generateCopiesViaLLM() {
-  const ctx = getCopyContext();
-  const prompt = buildCopyPrompt(ctx);
-  copyText(prompt);
-  const conceptMsg = ctx.newConcept ? ` (신규 컨셉 "${ctx.newConcept}" 박힘)` : '';
-  showToast(`🤖 LLM 프롬프트 복사됨${conceptMsg}. Claude/GPT 챗에 붙여넣기.`);
+// ★ 2026-06-12: Gemini 의미 매칭 — 컨셉/지역 앵글과 주제 유사한 라이브러리·벤치마크 광고 추천
+function requestSemanticMatch(ctx) {
+  if (typeof isAppsScriptWebApp === 'function' && !isAppsScriptWebApp()) return;  // 외부환경은 호출 불가 → 스킵
+  const candidates = (library || [])
+    .filter(x => x.id && (x.headline || x.body || (x.meta && x.meta.body)))
+    .map(x => ({ id: x.id, text: ((x.headline || '') + ' ' + (x.body || (x.meta && x.meta.body) || '')).trim().slice(0, 140) }))
+    .slice(0, 40);
+  if (candidates.length === 0) return;
+  setSemanticLoading(true);
+  google.script.run
+    .withSuccessHandler(function(res) {
+      setSemanticLoading(false);
+      if (res && res.ok && res.scores) {
+        currentGuide.semanticScores = res.scores;
+        renderAdCopyGuide();
+        const n = Object.keys(res.scores).filter(k => (res.scores[k] || 0) >= 55).length;
+        if (n > 0) showToast(`🧠 의미 매칭 ${n}건 — 앵글 관련 광고 추천`);
+      } else if (res && !res.ok) {
+        showToast(`🧠 의미 매칭 건너뜀: ${res.error || '-'}`);
+      }
+    })
+    .withFailureHandler(function(err) { setSemanticLoading(false); console.warn('semantic match fail', err); })
+    .getSemanticAdMatches({ concept: ctx.newConcept || '', region: ctx.region || '', category: ctx.category || '', usp: ctx.usp || '', candidates: candidates });
 }
 
-// 하위 호환: 옛 호출(generateCopies)이 남아있을 경우 라이브러리 모드로 폴백
-function generateCopies() { generateCopiesFromLibrary(); }
+function setSemanticLoading(on) {
+  ['result-library-box', 'result-benchmark-box'].forEach(function(id) {
+    const box = document.getElementById(id);
+    if (!box) return;
+    let tag = box.querySelector('.sem-loading');
+    if (on && !tag) {
+      const hdr = box.querySelector('.result-box-title');
+      if (!hdr) return;
+      tag = document.createElement('span');
+      tag.className = 'sem-loading';
+      tag.textContent = ' 🧠 의미 매칭 중…';
+      tag.style.cssText = 'font-size:11px; color:#5E5CE6; font-weight:600';
+      hdr.appendChild(tag);
+    } else if (!on && tag) {
+      tag.remove();
+    }
+  });
+}
+
+// 하위 호환: 옛 호출 폴백
+function generateCopies() { generateAdCopyGuide(); }
+function generateCopiesFromLibrary() { generateAdCopyGuide(); }
+function generateCopiesViaLLM() { generateAdCopyGuide(); }
+
+// ============ 📋 박스별 프롬프트 복사 ============
+function copyGeneralPrompt() {
+  if (!currentGuide.generalPrompt) { alert('먼저 [광고 카피 가이드 생성] 버튼을 눌러주세요'); return; }
+  copyText(currentGuide.generalPrompt);
+  showToast('🤖 일반 LLM 프롬프트 복사됨. ChatGPT/Claude 챗에 붙여넣기.');
+}
+function copyLibraryPrompt() {
+  if (!currentGuide.libraryPrompt) { alert('라이브러리 매칭 0건 — 시트 카테고리 라벨링 필요'); return; }
+  copyText(currentGuide.libraryPrompt);
+  showToast('✨ 라이브러리 강화 LLM 프롬프트 복사됨.');
+}
+function copyBenchmarkPrompt() {
+  if (!currentGuide.benchmarkPrompt) { alert('벤치마크 매칭 0건 — 시트 카테고리/후킹 구조 라벨링 필요'); return; }
+  copyText(currentGuide.benchmarkPrompt);
+  showToast('🎯 벤치마크 강화 LLM 프롬프트 복사됨.');
+}
+
+// ============ 🎲 랜덤 변주 엔진 (코어 고정 / 톤·후킹만 변주) — 2026-06-12 ============
+const ALL_TONES_V = ['감성/공감','직설/강력','유머/B급','정보성/신뢰','미니멀/프리미엄','호기심','긴급/FOMO','손실회피','자부심'];
+const ALL_HOOKS_V = ['질문형','단언형','비교형','한정형','가격강조','감성/공감','위협형','FOMO형'];
+const TONE_STYLE_V = {
+  '감성/공감':'따뜻하게 공감 건드리는','직설/강력':'군더더기 없이 강하게','유머/B급':'가볍고 위트있게',
+  '정보성/신뢰':'근거로 신뢰 주는','미니멀/프리미엄':'담백·고급스럽게','호기심':'궁금증 자극',
+  '긴급/FOMO':'지금 아니면 늦는','손실회피':'놓치면 손해 강조','자부심':'우월감·자부심 자극'
+};
+const HOOK_STYLE_V = {
+  '질문형':'의문을 던져 클릭 유도','단언형':'확신에 찬 선언','비교형':'옛 방식↔폰스팟 대조',
+  '한정형':'시간·수량 제한 압박','가격강조':'싸다는 암시','감성/공감':'정서 공명',
+  '위협형':'손실·후회 경고','FOMO형':'놓치면 손해'
+};
+// 후킹 → 로컬 패턴 힌트 (거친 샘플용 근사치 — 템플릿이 후킹축으로 태깅 안 돼있어 best-effort)
+const HOOK_PATTERN_HINT = {
+  '질문형':['질문','?'],'단언형':['단언'],'비교형':['비교','견적'],'한정형':['한정'],
+  '가격강조':['가격','견적','최저'],'감성/공감':['감정','공감'],'위협형':['손실','위협'],'FOMO형':['긴급','한정','FOMO']
+};
+
+// 축 고정/랜덤: 체크된 축은 그 풀에서, 안 체크된 축은 전체에서 뽑음. 둘 다 1개씩이면 8개 동일(의도된 동작).
+// 톤과 의미가 겹치는 후킹 (공감×공감, FOMO×FOMO, 손실회피×위협 같은 중복 방지)
+const TONE_HOOK_EQUIV = { '감성/공감': '감성/공감', '긴급/FOMO': 'FOMO형', '손실회피': '위협형' };
+function drawVariationCombos(ctx, n) {
+  const tonePool = (ctx.tones && ctx.tones.length) ? ctx.tones : ALL_TONES_V;
+  const hookPool = (ctx.hooks && ctx.hooks.length) ? ctx.hooks : ALL_HOOKS_V;
+  const out = [];
+  for (let i = 0; i < (n || 8); i++) {
+    const tone = pick(tonePool);
+    let hook = pick(hookPool);
+    // 톤≡후킹 의미 중복이면 다시 뽑기 (후킹 풀에 대안 있을 때만 — 둘 다 1개로 고정한 경우는 사용자 의도라 허용)
+    let tries = 0;
+    while (TONE_HOOK_EQUIV[tone] === hook && hookPool.length > 1 && tries < 10) {
+      hook = pick(hookPool); tries++;
+    }
+    out.push({ tone, hook });
+  }
+  return out;
+}
+
+// 거친 로컬 샘플 (LLM 없이 fillSlots) — 후킹 힌트로 패턴 bias, 없으면 카테고리 풀에서 랜덤
+function roughSampleForCombo_(ctx, combo) {
+  const pats = CATALOG.copyPatterns || [];
+  let pool = pats.filter(p => !p.categories || p.categories.includes(ctx.category));
+  if (pool.length === 0) pool = pats;
+  const hints = HOOK_PATTERN_HINT[combo.hook] || [];
+  const hinted = pool.filter(p => hints.some(h => (p.name || '').includes(h) || (p.template || '').includes(h)));
+  const chosen = pick(hinted.length ? hinted : pool);
+  if (!chosen) return '';
+  try { return fillSlots(chosen.template, ctx); } catch (e) { return chosen.template; }
+}
+
+function renderVariations() {
+  const body = document.getElementById('result-variations-body');
+  if (!body) return;
+  const ctx = currentGuide.ctx;
+  const vars = currentGuide.variations || [];
+  if (!ctx || vars.length === 0) { body.innerHTML = ''; return; }
+  const coreBox = `
+    <div style="background:#EEF4FF; border:1px solid #CBD9F5; border-radius:8px; padding:10px 14px; margin-bottom:12px">
+      <div style="font-size:12px; font-weight:700; color:#1F4E78; margin-bottom:5px">📌 고정 코어 — 아래 8개 변주가 전부 공통으로 깔고 가는 값</div>
+      <div style="font-size:13px; color:var(--label); line-height:1.8">
+        카테고리 <strong>${escapeHtml(ctx.category || '-')}</strong> · 지역 <strong>${escapeHtml(ctx.region || '전국')}</strong> · 타겟 <strong>${escapeHtml(ctx.age || '-')} ${escapeHtml(ctx.gender || '-')}</strong> · 제품 <strong>${escapeHtml(ctx.product || '-')}</strong> · USP <strong>${escapeHtml(ctx.usp || '-')}</strong> · 길이 <strong>${escapeHtml(ctx.length || '-')}</strong>${ctx.newConcept ? ` · 신규컨셉 <strong>${escapeHtml(ctx.newConcept)}</strong>` : ''}
+      </div>
+    </div>`;
+  const rows = vars.map((v, i) => {
+    const style = `${HOOK_STYLE_V[v.hook] || v.hook} + ${TONE_STYLE_V[v.tone] || v.tone} 톤`;
+    const sample = escapeHtml(roughSampleForCombo_(ctx, v));
+    return `
+      <div class="match-card" style="display:flex; justify-content:space-between; align-items:center; gap:16px; padding:12px 16px">
+        <div style="flex:1; min-width:0">
+          <div style="font-size:14px; font-weight:600">${i + 1}. <span style="color:#0066CC">${escapeHtml(v.hook)}</span> × <span style="color:#AF52DE">${escapeHtml(v.tone)}</span> <span style="font-weight:400; color:var(--label-tertiary); font-size:12px">— ${escapeHtml(style)}</span></div>
+          <div style="font-size:13px; color:var(--label-secondary); margin-top:5px">거친 샘플: "${sample}"</div>
+        </div>
+        <div style="display:flex; gap:8px; flex-shrink:0">
+          <button class="secondary" style="padding:10px 20px; font-size:13px; white-space:nowrap" onclick="copyVariationSlogan(${i})">🖋️ 슬로건</button>
+          <button class="secondary" style="padding:10px 20px; font-size:13px; white-space:nowrap" onclick="copyVariationImage(${i})">🎨 이미지</button>
+        </div>
+      </div>`;
+  }).join('');
+  body.innerHTML = coreBox + rows;
+}
+
+function redrawVariations() {
+  if (!currentGuide.ctx) { alert('먼저 [광고 카피 가이드 생성]을 눌러주세요'); return; }
+  currentGuide.variations = drawVariationCombos(currentGuide.ctx, 8);
+  renderVariations();
+  showToast('🎲 변주 8개 새로 뽑음');
+}
+
+// 행 i의 톤·후킹을 단일 고정한 ctx (코어는 그대로)
+function variationCtx_(i) {
+  const v = currentGuide.variations[i];
+  return { ...currentGuide.ctx, tones: [v.tone], hooks: [v.hook] };
+}
+
+function copyVariationSlogan(i) {
+  const v = currentGuide.variations[i];
+  if (!v) return;
+  copyText(buildCopyPrompt(variationCtx_(i), 12));  // 단일 방향 = 12개 (25개는 필러 생김)
+  showToast(`🖋️ 슬로건 프롬프트 복사 (${v.hook} × ${v.tone}, 12개)`);
+}
+
+function copyVariationImage(i) {
+  const v = currentGuide.variations[i];
+  if (!v) return;
+  const rowCtx = variationCtx_(i);
+  const tone = CATALOG.tones[deriveVisualTone(rowCtx, null)];
+  const layout = pick(tone.layouts);
+  copyText(buildImagePrompt({ ...rowCtx, headline: '', pattern: '' }, tone, layout, 'none'));  // 변주 = 참고 블록 없음
+  showToast(`🎨 이미지 프롬프트 복사 (${v.hook} × ${v.tone} → ${tone.label})`);
+}
+
+// ★ 2026-06-12: 슬로건→이미지 — LLM에서 고른 실제 헤드라인을 그대로 박은 완성 배너 프롬프트
+function copyImageWithHeadline() {
+  const el = document.getElementById('img-headline');
+  const h = (el ? el.value : '').trim();
+  if (!h) { alert('LLM에서 고른 헤드라인을 먼저 붙여넣어주세요'); return; }
+  const cCtx = getCopyContext();
+  const tone = CATALOG.tones[deriveVisualTone(cCtx, null)];
+  const layout = pick(tone.layouts);
+  copyText(buildImagePrompt({ ...cCtx, headline: h, pattern: '' }, tone, layout, 'none'));
+  showToast(`🎨 "${h.slice(0, 14)}…" 이미지 프롬프트 복사 (${tone.label})`);
+}
 
 // 라이브러리 메타 우수 광고 인사이트 추출
 function getMetaLibraryInsights() {
@@ -1274,110 +1979,123 @@ function getMetaLibraryInsights() {
   return { good, topKeywords, patternFreq, verifiedHeadlines, verifiedBenchmark };
 }
 
-function generateCopiesTemplate(ctx) {
-  // ★ 0. 라이브러리 우수 광고 인사이트 추출
-  const insights = getMetaLibraryInsights();
-  const hasInsights = insights.good.length > 0;
+// ★ 2026-06-12 재설계: 시드 카드 폐기 → 라이브러리/벤치마크 매칭 모델
+// 폼 카테고리와 시트 카테고리 컬럼(메타_소재 16열, 벤치마크 20열) 매칭 + 임계값 필터
+//
+// 라이브러리 매칭: ctx.category == lib.category && CTR >= minCtr
+// 벤치마크 매칭: ctx.category == bm.category && days >= minDays && score >= minScore
+//
+// 매칭 0건 가능 시나리오: 시트에 카테고리 라벨링 안 됨 → 빈 카드, 일반 LLM 프롬프트만 박스 표시.
 
-  // ★ 1. 추가 키워드가 비어있고 라이브러리에 우수 광고 있으면 → 자동 주입
-  if ((!ctx.keywords || !ctx.keywords.trim()) && insights.topKeywords.length > 0) {
-    ctx.keywords = insights.topKeywords.slice(0, 3).join(', ');
-    ctx._autoKeywordsInjected = ctx.keywords;
-  }
+// 지역 매칭 도우미 (Task 44):
+//   폼 지역 공백 → 모든 광고 매칭 (시트 지역 무관)
+//   폼 지역 있음 → 우선순위 1: 시트 지역과 일치(includes) / 2: 시트 지역 공백(=전국)
+// regionMatchScore: 2=정확매칭, 1=전국폴백, 0=불일치(제외)
+function regionMatchScore_(formRegion, sheetRegion) {
+  const fr = (formRegion || '').trim();
+  const sr = (sheetRegion || '').trim();
+  if (!fr) return 2;  // 폼 공백 = 모든 광고 동등 매칭
+  if (sr && (sr === fr || sr.includes(fr) || fr.includes(sr))) return 2;  // 정확 또는 부분 매칭
+  if (!sr) return 1;  // 시트 공백(=전국) → 폴백
+  return 0;  // 시트가 다른 지역으로 라벨링됨 → 제외
+}
 
-  // 2. 키워드 슬롯 필요한 패턴은 키워드 입력 없을 때 제외
-  let pool = CATALOG.copyPatterns.filter(p => {
-    if (p.template.includes('{키워드}')) {
-      const list = (ctx.keywords || '').split(',').map(s => s.trim()).filter(Boolean);
-      return list.length > 0;
-    }
-    return true;
+function searchLibraryMatching(ctx, minCtr) {
+  const target = (ctx.category || '').trim();
+  const sem = (currentGuide && currentGuide.semanticScores) || {};
+  const SEM_MIN = 55;  // 의미 매칭 임계
+  return (library || [])
+    .filter(x => x.metaAdId)  // 폰스팟 자체 광고만 (BM/CP 제외)
+    .filter(x => x.headline && x.headline !== '-')
+    .map(x => ({ ...x, _semScore: sem[x.id] || 0, _regionScore: regionMatchScore_(ctx.region, x.region) }))
+    .filter(x => {
+      const cat = (x.category || '').trim();
+      const catMatch = target && cat === target;
+      const semMatch = x._semScore >= SEM_MIN;
+      if (!catMatch && !semMatch) return false;  // 카테고리도 의미도 안 맞으면 제외
+      if (catMatch && !semMatch) {  // 순수 카테고리 매칭엔 CTR 임계 적용 (의미매칭은 주제 우선이라 면제)
+        const ctr = parseFloat(x.performance && x.performance.ctr) || parseFloat(x.ctr) || 0;
+        if (ctr < minCtr) return false;
+      }
+      return true;
+    })
+    .filter(x => x._regionScore > 0)  // 지역 불일치 제외
+    .sort((a, b) => {
+      if ((b._semScore || 0) !== (a._semScore || 0)) return (b._semScore || 0) - (a._semScore || 0);  // 1차: 의미점수
+      if (b._regionScore !== a._regionScore) return b._regionScore - a._regionScore;  // 2차: 지역
+      const ca = parseFloat(a.performance && a.performance.ctr) || parseFloat(a.ctr) || 0;
+      const cb = parseFloat(b.performance && b.performance.ctr) || parseFloat(b.ctr) || 0;
+      return cb - ca;  // 3차: CTR
+    })
+    .slice(0, 10);
+}
+
+function searchBenchmarkMatching(ctx, minDays, minScore) {
+  const target = (ctx.category || '').trim();
+  const sem = (currentGuide && currentGuide.semanticScores) || {};
+  const SEM_MIN = 55;
+  return (library || [])
+    .filter(x => x.id && (x.id.startsWith('BM') || x.id.startsWith('CP')))
+    .filter(x => x.headline && x.headline !== '-')
+    .map(x => ({ ...x, _semScore: sem[x.id] || 0, _regionScore: regionMatchScore_(ctx.region, x.region) }))
+    .filter(x => {
+      const cat = (x.category || '').trim();
+      const catMatch = target && cat === target;
+      const semMatch = x._semScore >= SEM_MIN;
+      if (!catMatch && !semMatch) return false;
+      if (catMatch && !semMatch) {  // 순수 카테고리 매칭엔 운영일/등급 임계 적용 (의미매칭은 면제)
+        if ((x.days || 0) < minDays) return false;
+        if ((x.score || 0) < minScore) return false;
+      }
+      return true;
+    })
+    .filter(x => x._regionScore > 0)
+    .sort((a, b) => {
+      if ((b._semScore || 0) !== (a._semScore || 0)) return (b._semScore || 0) - (a._semScore || 0);
+      if (b._regionScore !== a._regionScore) return b._regionScore - a._regionScore;
+      return (b.score || 0) - (a.score || 0) || (b.days || 0) - (a.days || 0);
+    })
+    .slice(0, 10);
+}
+
+// 라이브러리 매칭 광고 → 강화 LLM 프롬프트 (carbon copy 검증 카피 박힘)
+function buildLibraryEnrichedPrompt(ctx, matches) {
+  if (!matches || matches.length === 0) return '';
+  const examples = matches.map(x => {
+    const ctr = parseFloat(x.performance && x.performance.ctr) || parseFloat(x.ctr) || 0;
+    return `- "${x.headline}" (CTR ${ctr.toFixed(1)}%)`;
+  }).join('\n');
+  const base = buildCopyPrompt(ctx);
+  const refBlock = `# 참고 — 라이브러리 검증 카피 (폰스팟 CTR 7%+ · 톤·구조·길이감 학습용, 복제 ❌)\n${examples}\n\n`;
+  return base.replace('# 출력 양식', refBlock + '# 출력 양식');
+}
+
+// 벤치마크 매칭 광고 → 강화 LLM 프롬프트 (후킹 구조만 박힘, 카피 X)
+function buildBenchmarkEnrichedPrompt(ctx, matches) {
+  if (!matches || matches.length === 0) return '';
+  // 후킹 구조 빈도 집계
+  const hookFreq = {};
+  matches.forEach(x => {
+    const h = (x.hookStructure || '').trim();
+    if (h) hookFreq[h] = (hookFreq[h] || 0) + 1;
   });
+  const topHooks = Object.entries(hookFreq).sort((a, b) => b[1] - a[1]).slice(0, 5);
+  const hookLine = topHooks.length > 0
+    ? topHooks.map(([h, c]) => `${h}(×${c})`).join(' / ')
+    : '(시트 후킹 구조 라벨링 필요)';
 
-  // 3. 감정 매칭 가중치
-  if (ctx.emotion && ctx.emotion !== '자유') {
-    const weighted = [];
-    pool.forEach(p => {
-      const matched = PATTERN_EMOTION[p.name]?.includes(ctx.emotion);
-      const weight = matched ? 3 : 1;
-      for (let i = 0; i < weight; i++) weighted.push(p);
-    });
-    pool = weighted;
-  }
+  // 광고 자체는 참고용으로 짧게만 (페이지명·운영일·등급)
+  const adRefs = matches.map(x =>
+    `- [${x.pageName || '-'}] ${x.days}일 운영 / ${x.grade || '-'} / 후킹: ${x.hookStructure || '미분류'}`
+  ).join('\n');
 
-  // ★ 4. 라이브러리 우수 패턴 추가 가중치 (메타에서 잘됐던 패턴 ×2)
-  if (hasInsights && Object.keys(insights.patternFreq).length > 0) {
-    const weighted = [];
-    pool.forEach(p => {
-      const libBoost = insights.patternFreq[p.name] ? 2 : 1;
-      for (let i = 0; i < libBoost; i++) weighted.push(p);
-    });
-    pool = weighted;
-  }
-
-  // ★ 5. 검증된 헤드라인 일부를 카피 풀에 직접 포함 (메타 5개 + 벤치마크 3개, 셔플)
-  const verifiedToInclude = shuffle(insights.verifiedHeadlines).slice(0, Math.min(5, insights.verifiedHeadlines.length));
-  const benchmarkToInclude = shuffle(insights.verifiedBenchmark || []).slice(0, Math.min(3, (insights.verifiedBenchmark || []).length));
-  const templateCount = Math.max(12, 20 - verifiedToInclude.length - benchmarkToInclude.length);
-
-  // 6. 셔플 + 중복 제거 + 템플릿 카피 N개 픽
-  const shuffled = shuffle(pool);
-  const seen = new Set();
-  const picked = [];
-  for (const p of shuffled) {
-    if (seen.has(p.template)) continue;
-    seen.add(p.template);
-    picked.push(p);
-    if (picked.length >= templateCount) break;
-  }
-
-  // 7. 템플릿 카피 생성
-  const templateCopies = picked.map(p => {
-    const text = fillSlots(p.template, ctx);
-    return { pattern: p.name, text, chars: text.replace(/\s/g, '').length };
-  });
-
-  // 8. 검증 카피 + 벤치마크 카피 + 템플릿 카피 합치고 셔플
-  return shuffle([...verifiedToInclude, ...benchmarkToInclude, ...templateCopies]);
+  const base = buildCopyPrompt(ctx);
+  const refBlock = `# 참고 — 벤치마크 (경쟁사 검증 광고 · 후킹 구조·톤만 흡수, 카피 복제 ❌)\n빈출 후킹 구조: ${hookLine}\n${adRefs}\n경쟁사 가격·상품·매장 정책은 폰스팟과 다름.\n\n`;
+  return base.replace('# 출력 양식', refBlock + '# 출력 양식');
 }
 
 function buildCopyPrompt(ctx, count = 25) {
-  const conceptBlock = ctx.newConcept
-    ? `[🆕 신규 컨셉 — 사람(종민)이 지정한 핵심 키워드. 카피 절반(${Math.round(count*0.5)}개)에 자연스럽게 반영. 단순 단어 박기 ❌, 문맥 활용 ✅]\n${ctx.newConcept}\n\n`
-    : '';
-
-  // 자체 광고 우수 사례 (CTR 7%+)
-  const goodExamples = (library || [])
-    .filter(x => x.performance && x.performance.evaluation === '우수' && x.headline && x.headline !== '-' && x.headline.length < 40)
-    .sort((a, b) => (parseFloat(b.performance.ctr) || 0) - (parseFloat(a.performance.ctr) || 0))
-    .slice(0, 5)
-    .map(x => `- "${x.headline}" (CTR ${x.performance.ctr}%)`);
-  const examplesBlock = goodExamples.length > 0
-    ? `\n[★ 자체 라이브러리 우수 사례 — 폰스팟 메타 CTR 7%+ 검증 카피. 톤·구조·길이감 학습용, 복제 ❌]\n${goodExamples.join('\n')}\n`
-    : '';
-
-  // 🎯 벤치마크 우수 사례 (BM-XXX, 90일+ 운영 = ★★★ 검증)
-  const bmAds = (library || []).filter(x => x.id && x.id.startsWith('BM') && x.headline && x.headline !== '-');
-  const bmGood = bmAds.filter(x => (x.days || 0) >= 90 || (x.score || 0) >= 5).slice(0, 5);
-  const bmHookFreq = {};
-  bmAds.forEach(x => {
-    const first = (x.headline || '').split('|')[0].split('\n')[0].trim();
-    const words = first.split(/[\s,!?.]+/).filter(w => w.length >= 2);
-    words.slice(0, 2).forEach(w => bmHookFreq[w] = (bmHookFreq[w] || 0) + 1);
-  });
-  const topBmHooks = Object.entries(bmHookFreq).sort((a, b) => b[1] - a[1]).slice(0, 6);
-  const bmBlock = bmGood.length > 0 ? `
-[🎯 벤치마크 — 경쟁사 메타 광고 라이브러리 검증된 후킹. 90일+ 운영 = 실제로 잘 굴러간 광고]
-${bmGood.map(x => `- [${x.pageName || '-'}] "${(x.headline || '').slice(0, 100).replace(/\n/g, ' ')}" (${x.days}일 운영, 변형 ${x.collation || 1}개)`).join('\n')}
-${topBmHooks.length > 0 ? `\n경쟁사 본문 첫 줄 빈출 후킹 단어: ${topBmHooks.map(([w, c]) => `${w}(×${c})`).join(', ')}` : ''}
-※ 폰스팟 본질(즉시 가격 확인 + 호기심 갭)을 우선. 벤치마크는 후킹 다양화 학습용, 그대로 복제 ❌. 경쟁사 톤(긴 본문/스토리/매장방문 유도)과 폰스팟 톤(짧고 즉시클릭) 구분 유지.
-` : '';
-
-  // 패턴 풀 60+ → 무작위 8개만 발췌 (GPT가 패턴 이름 채우기에 집중하지 않게)
-  const patternSample = shuffle(CATALOG.copyPatterns).slice(0, 8)
-    .map(p => `- ${p.name}: 예) ${p.template}`).join('\n');
-
-  // 길이 분포 정확히 분배 (count = 25 기준: 5/7/8/5)
+  // 길이 분포 (count 비율: 20/28/32/20). ※ 옛 라이브러리/벤치마크/패턴풀 블록은 1:1 매핑 전환으로 제거됨(2026-06-12) — 참고는 enrich 함수가 주입.
   const dist = {
     short: Math.round(count * 0.20),   // 5개
     mid:   Math.round(count * 0.28),   // 7개
@@ -1385,111 +2103,146 @@ ${topBmHooks.length > 0 ? `\n경쟁사 본문 첫 줄 빈출 후킹 단어: ${to
     xlong: count - Math.round(count * 0.20) - Math.round(count * 0.28) - Math.round(count * 0.32) // 5개
   };
 
-  return `당신은 폰스팟(citymarket.co.kr/pb)의 한국어 광고 헤드라인 카피라이터입니다. ${count}개를 만들어주세요.
+  // ★ 2026-06-12: 단일조합(변주 1행) 감지 → 한 방향 강제. 아니면 다중 분배.
+  const singleCombo = ctx.tones && ctx.tones.length === 1 && ctx.hooks && ctx.hooks.length === 1;
+  // 이번 방향 한 줄 (단일조합=한 방향 강제 / 다중=분배)
+  const direction = singleCombo
+    ? `후킹=${ctx.hooks[0]}(${HOOK_STYLE_V[ctx.hooks[0]] || ''}) · 톤=${ctx.tones[0]}(${TONE_STYLE_V[ctx.tones[0]] || ''}) — ${count}개 전부 이 한 방향으로 통일, 다른 후킹·톤 섞지 말 것`
+    : `톤=${(ctx.tones || []).join(', ') || '자유'}${ctx.hooks && ctx.hooks.length ? ` · 후킹=${ctx.hooks.join(', ')} (고르게 분배)` : ''}`;
 
-${conceptBlock}[브랜드 본질 — 카피의 핵심 메시지에 반드시 녹일 것]
-폰스팟의 차별점:
-1. "회원가입·로그인·상담 없이" 즉시 가격 확인 — 비교·문의·매장 방문 없이 1초 만에 내 가격 조회
-2. 호기심 갭(궁금 → 클릭) 유도 — "얼마인지 보고 싶다"는 충동을 일으키는 게 카피의 1순위
-3. 가격 자체는 명시 ❌. "확인하면 놀랄 만큼 싼 가격"이라는 암시만
-4. 대조 구도가 강력: 옛 방식(전화 문의/매장 방문/긴 상담) ↔ 폰스팟(클릭 1번/즉시 확인/투명)
-5. 톤은 거품 빼고 직설적이거나, 친근하게 옆자리 동료처럼 (꼰대·과장·이모지 남발 X)
+  // ★ 지역 입력 시 — 지역명만 끼워넣지 말고 지역성을 후킹의 중심으로
+  const regionEmphasis = ctx.region ? `
+# 지역 강조 (중요 — "${ctx.region}" 입력됨)
+이번 카피는 지역명을 단순 삽입하지 말고 "${ctx.region}" 지역성을 후킹의 중심에 둔다. **${count}개 모든 카피가 예외 없이 지역성을 담을 것 — 지역성 빠진 카피는 폐기** (막연한 전국 톤 ❌). 단 매번 똑같은 단어로 박지 말고 표현·각도를 다양하게. 로컬 후킹 예: 단독성("${ctx.region} 단독" / "${ctx.region}에서만"), 동네·근접성("${ctx.region} 사는 사람만" / "우리 동네 ${ctx.region}"), 한정성("${ctx.region} 한정" / "${ctx.region} 이번 주만"), 로컬 신뢰("${ctx.region}에서 입소문난" / "${ctx.region} 사람들이 아는").
+` : '';
 
-[조건 — GPT는 이 값들을 단순 조합하지 말고 자연스러운 한국어 문장으로 녹일 것]
-- 타겟: ${ctx.age} ${ctx.gender}
-- 시즌: ${ctx.season}
+  // ★ 신규 컨셉 입력 시 — 키워드 삽입이 아니라 그 "앵글"을 후킹 중심으로 (후킹×톤과 믹스)
+  const conceptEmphasis = ctx.newConcept ? `
+# 신규 컨셉 강조 (중요 — 앵글 "${ctx.newConcept}")
+이 컨셉을 카피의 중심 앵글로 삼는다. 단순 키워드 삽입 ❌ — "${ctx.newConcept}"가 가리키는 상황·감정·이슈를 후킹으로 살린다. 이번 방향(후킹×톤)과 결합해 이 앵글을 여러 각도로 친다. **${count}개 모든 카피가 예외 없이 이 앵글을 중심에 둘 것 — 앵글 빠진 카피는 폐기** (표현·각도는 다양하게). (예: 페인포인트형 = "${ctx.newConcept}, 아직도 그냥 두세요?" / 트렌드 공감형 = "${ctx.newConcept} 시대, 이건 챙기셔야죠")
+` : '';
+
+  // ★ 길이: 특정 선택 시 전부 그 길이 / "자유"일 때만 분포
+  const lengthRule = (ctx.length && ctx.length !== '자유')
+    ? `- 길이 통일: ${count}개 전부 "${ctx.length}" 길이로 (다른 길이대 ❌).`
+    : `- 길이 분포(자유): 8자이내 ${dist.short} / 9-14자 ${dist.mid} / 15-20자 ${dist.long} / 21자+ ${dist.xlong}`;
+  // ★ 타겟: 특정 세대·성별 선택 시 카피가 그 대상에 밀착 (값만 나열 ❌)
+  const tgt = `${ctx.age || ''} ${ctx.gender || ''}`.trim();
+  const isBroadAge = !ctx.age || /전\s*연령|전체|무관/.test(ctx.age);
+  const isBroadGender = !ctx.gender || /전체|무관|남녀/.test(ctx.gender);
+  const targetRule = (!isBroadAge || !isBroadGender)
+    ? `- 타겟 밀착(중요): 카피의 어휘·관심사·고민·말투가 "${tgt}"이(가) "내 얘기네" 느낄 만큼 그 세대·성별에 맞을 것. 막연히 누구나용 ❌.\n`
+    : '';
+
+  return `# 목적
+폰스팟(citymarket.co.kr/pb)의 한국어 광고 헤드라인 카피 ${count}개를 만든다.
+폰스팟 = "회원가입·상담·매장방문 없이" 클릭 1번으로 즉시 내 가격 확인. 카피의 1순위는 "얼마인지 보고 싶다"는 호기심으로 클릭시키는 것. 옛 방식(전화·매장·긴 상담) ↔ 폰스팟(클릭 1번·즉시·투명)의 대조가 강력. 거품 빼고 직설적이거나 옆자리 동료처럼 친근하게.
+
+# 지정값 (모든 카피가 이 값을 깔고 감)
+- 카테고리: ${ctx.category}
 - 제품: ${ctx.product}
 - 핵심 USP: ${ctx.usp}
-- 강조 감정: ${ctx.emotion}
-- 톤: ${ctx.tones.join(', ')}
-- 추가 키워드: ${ctx.keywords || '없음'}
+- 타겟: ${ctx.age} ${ctx.gender}
+- 지역: ${ctx.region || '전국'}
 - 길이 선호: ${ctx.length}
-${examplesBlock}${bmBlock}
-[엄격 규칙 — 위반 시 카피 폐기·재생성]
-1. **단어 반복 금지**: 같은 명사·동사·형용사가 ${count}개 카피 중 **3회 초과 등장 ❌**. (예: "재고확인"이 13/24 등장 = 위반. 최대 3개까지)
-2. **길이 분포 강제**: 총 ${count}개를 정확히 다음 비율로:
-   - 8자 이내 (짧고 강렬) × ${dist.short}개
-   - 9-14자 (중간, 모바일 최적) × ${dist.mid}개
-   - 15-20자 (정보 1개 + 후킹) × ${dist.long}개
-   - 21자 이상 (스토리·반전·문장형) × ${dist.xlong}개
-3. **단순 단어 조합 금지**: "X 재고확인" / "X 직장인 픽" / "X점 Y확인" 같은 명사 나열 ❌. 자연스러운 한국어 문장·의문형·감탄형 우선.
-4. **가격 명시 금지**: 만원/원/숫자가격 표기 ❌. "최대 X만원" "X% 할인" 같은 표현도 ❌.
-5. **인물 묘사 금지**: 사람 외형·이름 ❌. 제품·서비스·상황 중심.
-6. **반복형 패턴 피하기**: 같은 의문 구조("X 안 봐요?"/"X 알아요?") 3개 이상 ❌.
-${ctx.newConcept ? `7. **신규 컨셉 "${ctx.newConcept}"은 ${Math.round(count*0.5)}개 정도에만 자연스럽게 반영**. 모든 카피에 박지 말 것 — 다른 카피는 폰스팟 본질로.\n` : ''}
-[다양화 패턴 풀 — 8개만 발췌 (전체 60+ 중). 참고만 하고 자유 변형 OK. 패턴 이름 채우기에 집중 ❌, 카피 자체에 집중 ✅]
-${patternSample}
+- 이번 방향: ${direction}${ctx.newConcept ? `\n- 신규 컨셉(앵글): ${ctx.newConcept}` : ''}
+${conceptEmphasis}${regionEmphasis}
+# 규칙
+- 제품·카테고리가 카피 다수에서 분명히 드러날 것. 막연한 카피("그냥 살래요?", "먼저 보세요" 류) 금지 — 무엇을 왜 봐야 하는지 드러낼 것.
+- 가격 명시 ❌ (만원/원/숫자/%), "확인하면 놀랄 만큼 싸다"는 암시만. 같은 명사·동사 3회 초과 반복 ❌. 사람 외형·이름 ❌.
+${targetRule}${lengthRule}
 
-[출력 형식 — 마크다운 표만, JSON·코드블록 ❌, 다른 설명 ❌]
-| 번호 | 헤드라인 | 글자수 | 길이층 | 패턴 메모 |
-|------|----------|--------|--------|-----------|
-| 1 | (헤드라인) | (공백제외 글자수) | 8자/9-14/15-20/21+ 중 하나 | (자유, 한 줄 메모) |
-| 2 | ... | ... | ... | ... |
-... (${count}개 모두 채울 것)
-
-[표 다음 마지막 줄에 자가검증 — 형식 그대로]
-✅ 검증
-- 총 ${count}개 작성 확인
-- 길이 분포: 8자 ×N / 9-14 ×N / 15-20 ×N / 21+ ×N (목표: ${dist.short}/${dist.mid}/${dist.long}/${dist.xlong})
-- 최다 반복 명사·동사: "(단어)" ×N회 (룰: 3회 이하)
-${ctx.newConcept ? `- 신규 컨셉 "${ctx.newConcept}" 반영: N/${count} (목표: ${Math.round(count*0.5)}±2)` : ''}`;
+# 출력 양식 (마크다운 표만, 다른 설명·코드블록 ❌)
+| 번호 | 헤드라인 | 글자수 | 길이층 | 메모 |
+|------|----------|--------|--------|------|
+| 1 | (헤드라인) | (공백제외) | 8자/9-14/15-20/21+ | (한 줄) |
+... (${count}개 모두 채울 것)`;
 }
 
-function renderCopies() {
+// ★ 2026-06-12: 시드 카드 렌더링 폐기 → 3종 박스 렌더링
+// 일반 LLM 프롬프트(항상) + 라이브러리 매칭(있을 때만) + 벤치마크 매칭(있을 때만)
+function renderAdCopyGuide() {
+  const ctx = currentGuide.ctx;
+  if (!ctx) return;
+
   document.getElementById('copy-results-section').classList.remove('hidden');
-  document.getElementById('copy-count').textContent = currentCopies.length;
-  selectedCopies.clear();
-  updateSelectedCount('copy');
-  const container = document.getElementById('copy-results');
-  if (currentCopies.length === 0) {
-    container.innerHTML = '<div class="info-box">생성된 카피가 없습니다</div>';
-    return;
-  }
-  // D3: 라이브러리에 이미 있는 슬로건인지 체크
-  const libraryHeadlines = new Set(library.map(x => (x.headline || '').trim()));
-  container.innerHTML = currentCopies.map((c, i) => {
-    const inLibrary = libraryHeadlines.has((c.text || '').trim());
-    let badge = '';
-    let leftBorder = '';
-    let bgTint = '';
-    if (c.isVerified) {
-      badge = '<span style="font-size:10px; background:#4caf50; color:#fff; padding:2px 5px; border-radius:3px; margin-right:4px">✨ 검증</span>';
-      leftBorder = 'border-left:3px solid #4caf50;'; bgTint = 'background:#f1f8e9;';
-    } else if (c.isBenchmark) {
-      // 🎯 벤치마크 검증 배지 (보라색 톤)
-      badge = '<span style="font-size:10px; background:#7b1fa2; color:#fff; padding:2px 5px; border-radius:3px; margin-right:4px">🎯 벤치마크</span>';
-      leftBorder = 'border-left:3px solid #7b1fa2;'; bgTint = 'background:#f3e5f5;';
-    } else if (inLibrary) {
-      badge = '<span style="font-size:10px; background:#ff9800; color:#fff; padding:2px 5px; border-radius:3px; margin-right:4px">🔄 운영중</span>';
-      leftBorder = 'border-left:3px solid #ff9800;';
-    } else {
-      badge = '<span style="font-size:10px; background:#9e9e9e; color:#fff; padding:2px 5px; border-radius:3px; margin-right:4px">🆕 신규</span>';
-    }
-    // 벤치마크 메타 (페이지명·운영일수·등급) 표시
-    const bmMeta = c.isBenchmark
-      ? `<span class="candidate-meta" style="color:#7b1fa2; font-size:10px">${escapeHtml(c.pageName || '-')} · ${c.days}일 · ${escapeHtml(c.grade || '-')}</span>`
-      : '';
-    const bmLink = c.isBenchmark && c.adLibraryUrl
-      ? `<a href="${escapeHtml(c.adLibraryUrl)}" target="_blank" onclick="event.stopPropagation()" class="candidate-meta" style="color:#7b1fa2; font-size:10px; text-decoration:underline">원문↗</a>`
-      : '';
-    return `
-      <div class="candidate ${selectedCopies.has(i) ? 'selected' : ''}" style="${leftBorder}${bgTint}" onclick="toggleCopy(${i})">
-        <div class="candidate-header">
-          <span>${badge}<span class="pattern-tag" style="${c.isVerified ? 'background:#4caf50; color:#fff' : (c.isBenchmark ? 'background:#7b1fa2; color:#fff' : '')}">${c.pattern || '-'}</span></span>
-          <span style="display:flex; gap:6px; align-items:center; flex-wrap:wrap">
-            ${c.ctr ? `<span class="candidate-meta" style="color:#2e7d32; font-weight:600">CTR ${c.ctr}%</span>` : ''}
-            ${bmMeta}
-            ${bmLink}
-            <span class="candidate-meta">${c.chars}자</span>
-            <button class="small secondary" onclick="event.stopPropagation(); copySloganByIndex(${i})" title="슬로건 변형 20개 프롬프트 복사">📋 슬로건</button>
-            <button class="small" onclick="event.stopPropagation(); copyImagePromptForCopy(${i})" title="이 슬로건으로 이미지 프롬프트 생성·복사">🎨 이미지</button>
-          </span>
+  const resizeEl = document.getElementById('resize-section');
+  if (resizeEl) resizeEl.classList.remove('hidden');
+
+  // 임계값 (localStorage 로드 + 슬라이더 현재값)
+  const minCtr = parseFloat(document.getElementById('result-min-ctr').value) || 7;
+  const minDays = parseInt(document.getElementById('result-min-days').value) || 90;
+  const minScore = parseInt(document.getElementById('result-min-grade').value) || 3;
+  localStorage.setItem('gen.minCtr', minCtr);
+  localStorage.setItem('gen.minDays', minDays);
+  localStorage.setItem('gen.minGrade', minScore);
+
+  // ============ 🎲 랜덤 변주 8행 (코어 요약 + 변주 목록) ============
+  renderVariations();
+
+  // ============ ✨ 라이브러리 박스 ============
+  const libMatches = searchLibraryMatching(ctx, minCtr);
+  currentGuide.libraryMatches = libMatches;
+  const libBox = document.getElementById('result-library-box');
+  const libBody = document.getElementById('result-library-body');
+  if (libMatches.length === 0) {
+    libBox.classList.remove('hidden');
+    libBody.innerHTML = `<div class="match-empty">카테고리 "${escapeHtml(ctx.category || '-')}" + CTR ≥ ${minCtr}% 매칭 0건<br><span style="font-size:11px">메타_소재 시트 16열(카테고리)에 라벨링 필요</span></div>`;
+    currentGuide.libraryPrompt = '';
+  } else {
+    libBox.classList.remove('hidden');
+    libBody.innerHTML = libMatches.map(x => {
+      const ctr = parseFloat(x.performance && x.performance.ctr) || parseFloat(x.ctr) || 0;
+      const regionTag = x.region
+        ? `<span style="background:#34C759; color:#fff; padding:1px 5px; border-radius:3px; font-size:10px; margin-right:4px">📍 ${escapeHtml(x.region)}</span>`
+        : `<span style="background:#86868B; color:#fff; padding:1px 5px; border-radius:3px; font-size:10px; margin-right:4px">전국</span>`;
+      const polarBadge = x._regionScore === 1 ? `<span style="font-size:10px; color:var(--label-tertiary)">(폴백)</span>` : '';
+      return `
+        <div class="match-card">
+          <div class="match-headline">${regionTag}${escapeHtml(x.headline)} ${polarBadge}</div>
+          <div class="match-meta">CTR ${ctr.toFixed(1)}% · ${escapeHtml(x.evaluation || x.performance && x.performance.evaluation || '-')} · ${escapeHtml(x.metaAdId || x.id || '-')}</div>
         </div>
-        <div class="candidate-text">${c.text}</div>
-      </div>
-    `;
-  }).join('');
+      `;
+    }).join('');
+    currentGuide.libraryPrompt = buildLibraryEnrichedPrompt(ctx, libMatches);
+  }
+
+  // ============ 🎯 벤치마크 박스 ============
+  const bmMatches = searchBenchmarkMatching(ctx, minDays, minScore);
+  currentGuide.benchmarkMatches = bmMatches;
+  const bmBox = document.getElementById('result-benchmark-box');
+  const bmBody = document.getElementById('result-benchmark-body');
+  if (bmMatches.length === 0) {
+    bmBox.classList.remove('hidden');
+    bmBody.innerHTML = `<div class="match-empty">카테고리 "${escapeHtml(ctx.category || '-')}" + 운영 ≥ ${minDays}일 + 등급 ≥ ${minScore}★ 매칭 0건<br><span style="font-size:11px">벤치마크_경쟁사_광고 시트 20·21열(카테고리·후킹 구조)에 라벨링 필요</span></div>`;
+    currentGuide.benchmarkPrompt = '';
+  } else {
+    bmBox.classList.remove('hidden');
+    bmBody.innerHTML = bmMatches.map(x => {
+      const linkBtn = x.adLibraryUrl
+        ? `<a href="${escapeHtml(x.adLibraryUrl)}" target="_blank" style="font-size:10px; color:#FF9500; text-decoration:underline; margin-left:6px">원문↗</a>`
+        : '';
+      const regionTag = x.region
+        ? `<span style="background:#FF9500; color:#fff; padding:1px 5px; border-radius:3px; font-size:10px; margin-right:4px">📍 ${escapeHtml(x.region)}</span>`
+        : `<span style="background:#86868B; color:#fff; padding:1px 5px; border-radius:3px; font-size:10px; margin-right:4px">전국</span>`;
+      const polarBadge = x._regionScore === 1 ? `<span style="font-size:10px; color:var(--label-tertiary)">(폴백)</span>` : '';
+      return `
+        <div class="match-card">
+          <div class="match-headline">${regionTag}${escapeHtml((x.headline || '').slice(0, 80))} ${polarBadge}</div>
+          <div class="match-meta">
+            [${escapeHtml(x.pageName || '-')}] · ${x.days || 0}일 운영 · ${escapeHtml(x.grade || '-')}
+            · 후킹: <strong style="color:var(--label-secondary)">${escapeHtml(x.hookStructure || '미분류')}</strong>
+            ${linkBtn}
+          </div>
+        </div>
+      `;
+    }).join('');
+    currentGuide.benchmarkPrompt = buildBenchmarkEnrichedPrompt(ctx, bmMatches);
+  }
 }
+
+// 하위 호환
+function renderCopies() { renderAdCopyGuide(); }
 
 function toggleCopy(i) {
   if (selectedCopies.has(i)) selectedCopies.delete(i);
@@ -1539,9 +2292,7 @@ ${conceptBlock}[브랜드 본질 — 변형의 핵심 메시지에 녹일 것]
 - 시즌: ${ctx.season || '시즌리스'}
 - 제품: ${ctx.product || '미정'}
 - 핵심 USP: ${ctx.usp || '미정'}
-- 강조 감정: ${ctx.emotion || '자유'}
-- 톤 선호: ${(ctx.tones || []).join(', ') || '자유'}
-- 추가 키워드: ${ctx.keywords || '없음'}
+- 톤·감정 (다중): ${(ctx.tones || []).join(', ') || '자유'}
 
 [엄격 규칙 — 위반 시 변형 폐기·재생성]
 1. **참고 슬로건의 패턴·골격·길이감 유지**, 표현·단어·뉘앙스·후크는 다양화. A/B 테스트 가능한 수준.
@@ -1567,6 +2318,19 @@ function copySloganByIndex(i) {
   copyText(prompt);
   showToast('슬로건 변형 20개 프롬프트 복사됨. Claude/GPT 챗에 붙여넣기');
 }
+
+// ============ 박스별 이미지 프롬프트 (1:1 매핑 — 라이브러리/벤치마크 각각만) ============
+function copyBoxImagePrompt_(refMode, label) {
+  const cCtx = getCopyContext();
+  const tone = CATALOG.tones[deriveVisualTone(cCtx, null)];
+  const layout = pick(tone.layouts);
+  copyText(buildImagePrompt({ ...cCtx, headline: '', pattern: '' }, tone, layout, refMode));
+  showToast(`🎨 ${label} 이미지 프롬프트 복사 (${tone.label})`);
+}
+function copyLibraryImagePrompt() { copyBoxImagePrompt_('library', '라이브러리'); }
+function copyBenchmarkImagePrompt() { copyBoxImagePrompt_('benchmark', '벤치마크'); }
+// 하위호환 (혹시 남은 호출) — 폼 기준 둘 다 포함
+function copyStandaloneImagePrompt() { copyBoxImagePrompt_('both', '폼 기준'); }
 
 // ============ 카피 → 이미지 프롬프트 자동 생성·복사 ============
 function copyImagePromptForCopy(copyIndex) {
@@ -1747,7 +2511,24 @@ function buildLibraryDesignBlock_() {
   return lines.join('\n');
 }
 
-function buildImagePrompt(ctx, tone, layout) {
+// 매 생성마다 다른 "광고 디자이너"처럼 — 포맷은 고정(완성 배너), 아트 디렉션만 랜덤
+const AD_STYLE_POOL = [
+  "comic pop-art (만화체): halftone dots, thick black outlines, explosive starbursts, high-energy red/yellow",
+  "clean bold flat design: chunky sans-serif, solid color blocks, crisp drop-shadows, blue/white",
+  "neon glow on dark background: electric accents, glossy, futuristic night-sale vibe",
+  "kawaii sticker style: rounded soft shapes, cute mascot/star, hearts, pastel sky-blue",
+  "3D glossy render: inflated balloon-like typography, depth, vibrant gradient, shiny highlights",
+  "retro 80s: bold geometric shapes, high-saturation sunset palette, chrome accents",
+  "Y2K holographic: iridescent chrome, sparkles, bubbly type, silver/violet",
+  "festival sale explosion: confetti, gold burst badges, ribbon banners, celebratory red/gold",
+  "masking-tape scrapbook collage: torn-paper callouts, handwritten-feel accents",
+  "bold high-contrast promo: one strong accent color, huge type, generous negative space — still a finished banner with CTA",
+  "vivid gradient mesh: smooth color blends, soft glow, modern app-store promo feel",
+  "tabloid sale flyer: heavy black headline, '특가/긴급' stamp, urgent red highlights"
+];
+function buildImagePrompt(ctx, tone, layout, refMode) {
+  const mode = refMode || 'both';  // 'none'(변주) | 'library' | 'benchmark' | 'both' — 슬로건과 동일한 1:1 매핑
+  const adStyle = pick(AD_STYLE_POOL);  // ★ 매 생성 랜덤 아트 디렉션
   const productEn = mapProductToEnglish(ctx.product, ctx.category);
   const layoutEn = CATALOG.layoutEnDesc[layout];
 
@@ -1769,22 +2550,20 @@ function buildImagePrompt(ctx, tone, layout) {
     target ? `Target audience: ${target}` : '',
     ctx.season && ctx.season !== '시즌리스' ? `Season/event: ${ctx.season}` : '',
     ctx.usp ? `Core USP / message: ${ctx.usp}` : '',
-    ctx.emotion && ctx.emotion !== '자유' ? `Emphasized emotion: ${ctx.emotion}` : '',
-    ctx.keywords ? `Additional keywords: ${ctx.keywords}` : '',
-    ctx.tones && ctx.tones.length ? `Preferred tone (from copy form): ${ctx.tones.join(', ')}` : ''
+    ctx.tones && ctx.tones.length ? `Tone & emotion: ${ctx.tones.join(', ')}` : '',
+    ctx.hooks && ctx.hooks.length ? `Hook structure (visual intent): ${ctx.hooks.join(', ')}` : ''
   ].filter(Boolean).join('\n');
 
   // 헤드라인은 이미지에 직접 그리도록 (광고 소재 자체로 사용)
   const headlineInstruction = ctx.headline
-    ? `Render the Korean headline "${ctx.headline}" prominently at the top of the image in bold sans-serif Korean typography. The text must be clearly legible Korean characters, large enough to read on mobile. Use ${tone.palette[1]} color for the headline against the ${tone.palette[0]} background area for high contrast. The headline is the primary message of this banner.`
-    : `Leave large empty space at the top for headline text - DO NOT draw any text in this area.`;
+    ? `Render the Korean headline "${ctx.headline}" as the HERO — very large, bold, high-contrast outlined Korean typography at the top. Use ${tone.palette[1]} for the text against the ${tone.palette[0]} area.`
+    : `Compose and render a short punchy Korean HERO headline (one bold phrase aligned to the USP "${ctx.usp || '지금 확인'}", in the energetic style of 공짜폰 / 무료폰 / 반값폰 / 0원부터) — very large, bold, outlined, high-contrast at the top.`;
 
-  // ★ 라이브러리 우수 광고 디자인 분석 (CTR 7%+)
-  const libraryBlock = (typeof buildLibraryDesignBlock_ === 'function') ? buildLibraryDesignBlock_() : '';
-  // 🎯 벤치마크 디자인 코드 (Apify)
-  const benchmarkBlock = (typeof buildBenchmarkDesignBlock_ === 'function') ? buildBenchmarkDesignBlock_() : '';
+  // ★ 1:1 매핑 — refMode에 맞는 참고만 포함 (변주='none' → 둘 다 ❌ / 라이브러리·벤치마크 → 자기 것만)
+  const libraryBlock = ((mode === 'library' || mode === 'both') && typeof buildLibraryDesignBlock_ === 'function') ? buildLibraryDesignBlock_() : '';
+  const benchmarkBlock = ((mode === 'benchmark' || mode === 'both') && typeof buildBenchmarkDesignBlock_ === 'function') ? buildBenchmarkDesignBlock_() : '';
 
-  return `Korean mobile banner ad creative for a smartphone retail store (브랜드: 폰스팟, citymarket.co.kr/pb). Square 1:1 aspect ratio for social/display banner placements (Meta/Instagram/Kakao/Naver/Google/YouTube).
+  return `Create a ready-to-use Korean mobile DISPLAY AD creative (a complete performance-marketing banner) for a smartphone retail store (브랜드: 폰스팟, citymarket.co.kr/pb) — NOT a product visual or background plate. Square 1:1 for social/display placements (Meta/Instagram/Kakao/Naver/Google/YouTube). It must look like a fully finished, high-converting Korean retail/telecom promo banner usable immediately for paid ads.
 
 [Campaign context]
 ${contextLines}
@@ -1800,12 +2579,20 @@ Color palette: ${tone.palette.slice(0,3).join(', ')}.
 Copy pattern: ${ctx.pattern || 'N/A'}.
 ${patternHint}
 
-[Headline]
+[Ad copy & layout — render a COMPLETE, ready-to-run banner. Render ALL Korean text directly inside the image as part of the final design. This is NOT a clean background waiting for later text insertion.]
 ${headlineInstruction}
-The visual composition must reinforce the emotional tone and meaning of this headline. Interpret the headline's intent (questioning, comparing, urgent, skeptical, confident, etc.) and translate it into the visual mood and composition.
+- Typography: large, bold, highly legible Korean lettering (exact treatment follows the art direction below) — understandable in 1 second.
+- Supporting callout: a short Korean sub-headline for the offer based on USP "${ctx.usp || '-'}" (느낌 예: "최대 0원부터!", "지금 조건 확인").
+- Sticker-style elements: speech-bubble boxes, burst/star badges (e.g. "무료폰 가능"), small pop accents — like a real Korean telecom/shopping promo.
+- CTA: a strong rounded CTA button near the bottom with Korean text "지금 조회" or "지금 확인" + arrow — high-contrast, obviously tappable.
+- Every Korean character correctly spelled and crisply legible. No gibberish/garbled glyphs, no empty placeholder bars.
 
-[Style]
-Clean modern advertising photography, sharp product details, high resolution. ${target ? 'Atmosphere should resonate with ' + target + ' demographic.' : ''} Aside from the headline at the top, do NOT add any other text, numbers, letters, or typography anywhere in the image.`;
+[Visual style — VARY EVERY GENERATION, as if a different Korean ad designer made it]
+Art direction for THIS render: ${adStyle}.
+Fully commit to this art direction — reinterpret colors, typography treatment, badges and accents accordingly (do NOT fall back to a generic default look). Keep it direct-response and click-optimized. Product = clean attractive CUTOUT (not a realistic store scene). Hierarchy stays fixed: dominant headline → callout → badge → product → CTA. Polished and usable. ${target ? 'Resonate with the ' + target + ' demographic.' : ''}
+
+[Avoid]
+Empty headline placeholders, text-free product posters, luxury/editorial minimalism, overly realistic store photography, complicated scenes, small unreadable copy, generic corporate design.`;
 }
 
 function mapProductToEnglish(product, category) {
@@ -2010,10 +2797,13 @@ function loadCopyPreset() {
   setSelectValue('c-season', ctx.season);
   document.getElementById('c-product').value = ctx.product || '';
   document.getElementById('c-usp').value = ctx.usp || '';
-  setSelectValue('c-emotion', ctx.emotion);
-  document.getElementById('c-keywords').value = ctx.keywords || '';
   setSelectValue('c-length', ctx.length);
   setCheckboxGroup('c-tones', ctx.tones || []);
+  // 옛 프리셋에 newConcept이 있으면 복원
+  const ncEl = document.getElementById('c-new-concept');
+  if (ncEl) ncEl.value = ctx.newConcept || '';
+  const rgEl = document.getElementById('c-region');
+  if (rgEl) rgEl.value = ctx.region || '';
   showToast(`프리셋 "${name}" 불러옴`);
 }
 function deleteCopyPreset() {
@@ -2127,7 +2917,10 @@ function fetchBenchmarkFromSheetIntoLibrary() {
         const headline = firstLine.slice(0, 60); // 첫 줄 60자 컷
         library.push({
           id: bm.id,
-          category: bm.category,
+          kind: bm.kind,                    // BM/CP 구분자 (옛 'category' 키)
+          category: bm.category || '',      // ★ 종민 수기 라벨 (상품 카테고리)
+          hookStructure: bm.hookStructure || '',  // ★ 종민 수기 라벨 (후킹 구조)
+          region: bm.region || '',          // ★ Task 44 — 종민 수기 자유 텍스트 (공백=전국)
           headline: headline,
           body: bm.body,
           pageName: bm.pageName,
@@ -2238,7 +3031,8 @@ function importFromMetaJSON() {
       id: item.id || existing?.id || `PS-${String(library.length + 1).padStart(3, '0')}`,
       metaAdId: item.metaAdId,
       date: (item.createdDate || '').toString().split('T')[0] || existing?.date || new Date().toISOString().split('T')[0],
-      category: existing?.category || '휴대폰 판매',
+      category: (item.category || '').trim() || existing?.category || '',  // ★ 시트 16열 카테고리 우선 (종민 라벨링)
+      region: (item.region || '').trim() || existing?.region || '',         // ★ 시트 17열 지역 (공백=전국)
       headline: item.headline || existing?.headline || '-',
       pattern: existing?.pattern || '메타 운영중',
       meta: {
@@ -2433,6 +3227,16 @@ updateLastSyncDisplay();
 // 패턴 풀 카운트 표시
 const poolCountEl = document.getElementById('pattern-pool-count');
 if (poolCountEl) poolCountEl.textContent = CATALOG.copyPatterns.length;
+
+// 결과 박스 슬라이더 초기값 (localStorage)
+(function loadGuideThresholds() {
+  const ctrEl = document.getElementById('result-min-ctr');
+  const daysEl = document.getElementById('result-min-days');
+  const gradeEl = document.getElementById('result-min-grade');
+  if (ctrEl) ctrEl.value = parseFloat(localStorage.getItem('gen.minCtr')) || 7;
+  if (daysEl) daysEl.value = parseInt(localStorage.getItem('gen.minDays')) || 90;
+  if (gradeEl) gradeEl.value = parseInt(localStorage.getItem('gen.minGrade')) || 3;
+})();
 </script>
 </body>
 </html>
