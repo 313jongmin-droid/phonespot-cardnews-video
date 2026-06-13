@@ -254,7 +254,7 @@
       ]
     },
     "021_news_galaxy_flip8_exynos": {
-      "used_at": "2026-06-13T21:32:27",
+      "used_at": "2026-06-13T21:50:10",
       "source": "unique_illustration_guard",
       "illustrations": [
         "memory_chip",
@@ -286,7 +286,7 @@
       ]
     }
   },
-  "updated_at": "2026-06-13T21:32:27",
+  "updated_at": "2026-06-13T21:50:11",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -339,7 +339,7 @@
       "variants": []
     },
     "021_news_galaxy_flip8_exynos": {
-      "updated_at": "2026-06-13T21:32:27",
+      "updated_at": "2026-06-13T21:50:11",
       "variants": []
     },
     "022_tip_galaxy_battery_save_5": {

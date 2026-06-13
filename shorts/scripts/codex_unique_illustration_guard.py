@@ -7,6 +7,22 @@ from pathlib import Path
 
 from codex_illustration_db import library_variants, rank_variants, record_usage_snapshot
 
+import os
+
+# 매처(codex_semantic_visual_match)와 동일한 제외 규칙을 가드에도 적용한다.
+# 가드는 '중복 일러스트를 유니크하게' 바꾸는데, 그 대체 풀에서 cpt(미검증 개념아트)·차단목록을
+# 빼야 매처가 걸러낸 그림(예: cpt_496029c6 보이스피싱)이 되살아나지 않는다.
+_BLOCKLIST = set(v.strip() for v in os.getenv("PHONESPOT_ILLUST_BLOCKLIST", "").split(",") if v.strip())
+_EXCLUDE_CPT = os.getenv("PHONESPOT_TRUST_CONCEPT_ART", "0") == "0"
+_NEUTRALS = set(v.strip() for v in os.getenv(
+    "PHONESPOT_NEUTRAL_FILLERS",
+    "smartphone,phone_setup_ready,phone_settings_toggle,device_os_requirement,device_data_transfer",
+).split(",") if v.strip())
+
+
+def _is_bad_variant(variant: str) -> bool:
+    return variant in _BLOCKLIST or (_EXCLUDE_CPT and str(variant).startswith("cpt_"))
+
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 CARD_OUTPUT = ROOT / "cardnews" / "output"
@@ -81,9 +97,16 @@ def replace_duplicate_illustrations(data: dict, slug: str) -> bool:
                 used.add(key)
                 continue
 
+            # 중립 필러(smartphone 등)는 반복 허용 — 억지로 유니크하게 바꾸면 무관/불량 그림을
+            # 끌어온다(매처가 의도적으로 중립으로 둔 것). 의미 있는 일러스트 중복만 교체.
+            if visual.get("type") == "illust" and str(visual.get("value")) in _NEUTRALS:
+                continue
+
             ctx = context(section, idx)
             replacement = None
             for variant in rank_variants(ctx, section_name=section_name, exclude={item.split(":", 1)[1] for item in used if item.startswith("illust:")}):
+                if _is_bad_variant(variant):
+                    continue
                 if variant in available:
                     replacement = {"type": "illust", "value": variant}
                     break
