@@ -176,6 +176,17 @@ if exist "public\shorts_script.json" copy /Y "public\shorts_script.json" "!RESUL
 if exist "..\CODEX_VIDEO_DESK\CHUNK_OVERRIDES\!SLUG!.json" copy /Y "..\CODEX_VIDEO_DESK\CHUNK_OVERRIDES\!SLUG!.json" "!RESULTDIR!\chunk_override.json" >nul 2>nul
 if exist "..\cardnews\output\!SLUG!\captions.md" copy /Y "..\cardnews\output\!SLUG!\captions.md" "!RESULTDIR!\" >nul 2>nul
 
+rem ----- Cover image (9:16 still) - best effort, reuses cached bundle -----
+echo.
+echo ----- Cover image (9:16) -----
+set "COVERFILE=!RESULTDIR!\!RESULTKEY!_cover.jpg"
+call node scripts\render_cover.mjs "!COVERFILE!" Cover >> "!RENDERLOG!" 2>&1
+if exist "!COVERFILE!" (
+    echo  Cover OK: !COVERFILE!
+) else (
+    echo  [WARN] cover image not generated - see !RENDERLOG!
+)
+
 echo.
 echo ----- Step 7/7: Quality check + result package -----
 python scripts\verify_video_quality.py "!OUTFILE!"

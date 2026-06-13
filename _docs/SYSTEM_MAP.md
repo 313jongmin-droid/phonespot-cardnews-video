@@ -142,6 +142,18 @@
 - Remotion: `shorts/` + `render_remotion_fast.mjs`(브라우저 자동탐색 `ensureBrowser`+`findLocalChrome`, Playwright chromium/시스템 Chrome 폴백).
 - 진입 bat: `run_codex_casual.bat`(CLI 폴백에서 `--concurrency` 제거됨 — "%" 깨짐 방지).
 - 트랙 구분: casual/newsroom(카드뉴스 영상) vs `shorts/promo/`(타이포 홍보) vs `shorts/promo_ai/`(실사 AI 광고, Higgsfield).
+- 컴포지션 정의: `shorts/src/Root.tsx`(NewsroomShort/CasualShort/Promo-*/**Cover**, 전부 1080×1920).
+
+**커버(표지) 9:16 정지컷 — 영상과 같이 생성 (2026-06-13 신설)**
+- 컴포넌트: `shorts/src/Cover.tsx`(`CoverShort`). 정적 1프레임. hook 헤드라인(`headline_lines`, 없으면 `video_title` 분할) + 매칭 일러스트(hook→facts의 첫 `illust`/`image` → `background_image` 폴백) + 폰스팟 브랜딩.
+  - 일러스트 경로 규칙: `illust`→`assets/illustrations/<value>.png`, `image`→`assets/<value>`.
+- 컴포지션 등록: `Root.tsx` `id="Cover"`(durationInFrames=1).
+- 렌더 스크립트: `shorts/scripts/render_cover.mjs`(`renderStill`, `render_remotion_fast.mjs`와 **같은 번들 캐시 재사용** → src 미변경이면 재번들 X). 인자 `<outPath> [compId=Cover]`. `.jpg`면 jpeg(q92), 아니면 png.
+- 파이프라인 배선: `run_codex_casual.bat` Step 6(finalize) 직후 **best-effort** 단계 → `RESULTDIR\<RESULTKEY>_cover.jpg` 생성(실패해도 영상 빌드 안 막음, `[WARN]`).
+- 데이터 출처: `shorts/public/shorts_script.json`(semantic match 끝난 effective 스크립트) — 영상과 동일. 그래서 커버 렌더는 영상 렌더 뒤에 둠(매칭된 실제 일러스트 반영).
+
+**수정 시 읽을 것 (커버)**: `Cover.tsx`(레이아웃/헤드라인/비주얼 선택) + `render_cover.mjs`(출력 포맷) + `run_codex_casual.bat` 커버 블록. 버전 4.0.404 기준 `renderStill` 파라미터 = output/frame/imageFormat/jpegQuality.
+**함정(커버)**: src 첫 변경 후 첫 렌더는 1회 재번들(이후 캐시). 헤드라인 폴백까지 비면 빈 텍스트 → `video_title` 필수.
 
 **마스터 룰 문서**
 - `_docs/INSTRUCTIONS_SHORTS.md`(주의: 옛 MoviePy/Typecast 설계 잔존, 현행 Remotion과 일부 불일치).
@@ -382,6 +394,7 @@
 
 ## 변경 이력 (이 맵 자체)
 - 2026-06-13: **B 단원 인사이트 누적 학습 + 가중치 라벨 매트릭스 박음.** 마스터 룰 문서에 `_docs/INSIGHTS_LOOP.md`(시트 직접 Read 단일 모델 — 코덱스·GitHub·Drive MD·mklink 폐기) + `cardnews/templates/caption_template.md`(5채널+영상 나레이션) 명시. 가중치 라벨 6종(yt+30/yt-hook+20/meta+20·30/store-active+30/season+30/freshness+10/dup-100) 정본 위치 = `INSIGHTS_LOOP.md` §3. 함정에 "시트 운영 메모 7일 스캔 빼먹으면 매장 핵심 캠페인 누락(예: 삼성 페스티벌)" 박음. H 단원 outbox 파일명 표준(`<YYYY-MM-DD>_collect*.txt` 후보표 / `<NNN>_ready.txt` 작성 완료 통지) + listener 함정(부팅 자동시작·송신 검증) 박음.
+- 2026-06-13: **C단원에 커버(9:16 표지) 기능 박음** — `Cover.tsx`(CoverShort) + `Root.tsx` id=Cover + `render_cover.mjs`(renderStill, 번들캐시 재사용) + `run_codex_casual.bat` Step6 직후 best-effort. 결과 = `RESULTDIR\<RESULTKEY>_cover.jpg`. Remotion 4.0.404.
 - 2026-06-13: **문서화 규약 박음** — "가이드 박아"는 이 3층 구조(헤드→SYSTEM_MAP 대단원→마스터 가이드)에 합류시키는 것이지 1회성 요약본 생성이 아님. 절차 정본 = CLAUDE.md "문서화 규약" 절. 헤드+이 파일 상단에 동시 명시.
 - 2026-06-13: 신설. 이번 세션 git-bat 탐색 수정(F 단원: GitHub Desktop 내장 git을 `for /d`로 탐색, `dir app-*` 패턴 금지) + 런타임파일 git 비추적 + 인코딩 규칙(I)을 대단원으로 정리. CLAUDE.md STEP 1에 "수정 작업 인덱스"로 등록.
 - 2026-06-12 (세션2 합류): 대단원 G에 광고 생성기 대개편 핵심+함정 박음 — 8행 변주엔진·1:1매핑·이미지배너+랜덤아트·지역/컨셉 무조건반영·길이/타겟 실반영·Gemini 의미매칭(`getSemanticAdMatches`)·슬로건→이미지(`copyImageWithHeadline`). 정본 상세 = IMPLEMENTATION_GUIDE §0-1, 변경이력 = CLAUDE.md STEP8.

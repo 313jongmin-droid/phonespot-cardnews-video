@@ -2,6 +2,7 @@ import React from "react";
 import { Composition, staticFile } from "remotion";
 import { getAudioDurationInSeconds } from "@remotion/media-utils";
 import { NewsShort } from "./Composition";
+import { CoverShort } from "./Cover";
 import { PromoShort } from "./components/promo/PromoShort";
 import { PROMO_STYLES, PROMO_PRESETS } from "./components/promo/styles/registry";
 import script from "../public/shorts_script.json";
@@ -92,6 +93,15 @@ export const RemotionRoot: React.FC = () => {
 
   return (
     <>
+      <Composition
+        id="Cover"
+        component={CoverShort as any}
+        durationInFrames={1}
+        fps={FPS}
+        width={1080}
+        height={1920}
+        defaultProps={{ script: script as any }}
+      />
       <Composition
         id="NewsroomShort"
         component={NewsShort as any}
