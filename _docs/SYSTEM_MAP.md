@@ -165,6 +165,15 @@
 - 트랙 구분: casual/newsroom(카드뉴스 영상) vs `shorts/promo/`(타이포 홍보) vs `shorts/promo_ai/`(실사 AI 광고, Higgsfield).
 - 컴포지션 정의: `shorts/src/Root.tsx`(NewsroomShort/CasualShort/Promo-*/**Cover**, 전부 1080×1920).
 
+**SNS 품질 — 후킹·레이아웃·오디오 (2026-06-13, 021 품질점검발)**
+- **오프닝 후킹**: `shorts/src/components/OpeningHook.tsx` — 검정 → **다크 그라데이션 + 움직이는 주황 글로우 + 주황 키커 pill(채널 태그라인) + 빠른 큰 헤드라인**. `Root.tsx` `OPENING_SEC` 1.5→**1.1**(검은 시간 단축).
+- **제목바 중복 제거**: `shorts/src/components/casual/CasualCard.tsx` — `CasualTitleBar`를 **`type==="hook"`일 때만** 렌더(본문 4개 카드 반복 제거 + 비주얼 영역 확대). 맥락은 오프닝+헤더+비주얼/자막으로 충분.
+- **자막 세이프영역**: 점검 결과 자막은 화면 **중하단**(아래 ~700px 흰 여백)이라 플랫폼 UI 안 가림 → 변경 안 함(`CasualCaption` height 840, padding-top 128).
+- **라우드니스 −14 LUFS**: `shorts/scripts/finalize_sns_video.py` `common_prefix`에 `-af loudnorm=I=-14:TP=-1.5:LRA=11`(나레이션 −16.5가 작던 문제). env `PHONESPOT_TARGET_LUFS`(기본 -14, `off`로 끔).
+- **BGM**: 캐주얼 트랙 현재 나레이션만(무음구간 多) — BGM 추가는 보류(음악풀+Composition 믹싱 필요).
+- **길이 목표**: 35~45초(56초는 길다). 레버는 코드가 아니라 **기사 집필**(J단원 `article_authoring_spec.md`: 카드 본문 문장 ≤35자·6카드 ≈250자).
+- **수정 시 읽을 것(SNS품질)**: `OpeningHook.tsx`(후킹) / `CasualCard.tsx`(레이아웃) / `finalize_sns_video.py`(오디오/인코딩). 함정: TSX는 샌드박스 렌더 불가 → esbuild 구문검증 + **실행PC 재렌더로 시각 확인** 필수.
+
 **커버(표지) 9:16 정지컷 — 영상과 같이 생성 (2026-06-13 신설)**
 - 컴포넌트: `shorts/src/Cover.tsx`(`CoverShort`). 정적 1프레임. hook 헤드라인(`headline_lines`, 없으면 `video_title` 분할) + 매칭 일러스트(hook→facts의 첫 `illust`/`image` → `background_image` 폴백) + 폰스팟 브랜딩.
   - 일러스트 경로 규칙: `illust`→`assets/illustrations/<value>.png`, `image`→`assets/<value>`.
@@ -230,6 +239,12 @@
 
 **핵심 스크립트 (`shorts/scripts/`)**
 - `codex_semantic_visual_match.py` — 렌더 단계 매칭 본체(텍스트→일러스트). 폴백 `NEUTRAL_FILLERS`.
+  - **매칭 경로**(`semantic_match` 청크 루프): ① 소스 카드이미지(prompt.md 설명 임베딩) ② 라이브러리 일러스트 텍스트/태그 임베딩(`best_ill ≥ EMBED_MIN_ILLUST`) ③ 소스/마스코트 유지 ④ 그림내용(CLIP) 매칭 ⑤ 중립 필러(`pick_neutral`). 엔진 없으면 lexical 임계(`MIN_*_SCORE`).
+  - **상수(전부 env 오버라이드)**: `EMBED_MIN_IMAGE`(0.42)·`EMBED_MIN_ILLUST`(**0.48**, 0.42는 너무 관대해 먼 그림 통과)·`EMBED_MIN_ILLUST_IMG`(0.28, CLIP 내용)·`NEUTRAL_FILLERS`(★ 진짜 중립 phone/device만 — newspaper/shield/microphone/meeting_room/forecast는 "특정 의미"라 제외)·`ILLUST_BLOCKLIST`(기본 비움, env 비상용)·`EXCLUDE_UNVERIFIED_CONCEPT`(기본 True).
+  - **★ 범용 오배치 방지 3종 (2026-06-13, SNS 품질점검 후)**:
+    1. **중립 폴백 정상화**: 매칭 실패 시 의미 있는 그림(방패/신문/마이크) 대신 phone/device 일반 그림.
+    2. **content-gate(CLIP)**: 텍스트로 고른 일러스트도 실제 그림이 주제와 맞는지 `EMBED_MIN_ILLUST_IMG`로 검증. **단 CLIP 그림엔진(`codex_image_embed`/`image_embed_cache.json`)이 설치돼야 작동** — 없으면 무력(빈 데이터→통과).
+    3. **미검증 개념아트 정책(`_is_unverified_concept`)**: `cpt_*`(개념요청 텍스트로 자동생성, 그림 미검증)는 **텍스트매칭에서 제외**(CLIP 켜지면 content 경로로만 검증 사용). 이름 하드코딩 대신 카테고리 규칙 — cpt_496029c6(=AI개념인데 보이스피싱 그림) 같은 케이스 일괄 차단. 읽기이름 일러스트는 영향 없음.
 - `codex_illust_embed.py` / `codex_image_embed.py` — 텍스트/이미지 임베딩(jina-clip 계열).
 - `codex_illust_match_preview.py` — 읽기전용 의미매칭 미리보기.
 - `codex_concept_scout.py` — **개념 발굴형 스카우트**: 라이브러리에 없는 갭을 범용 개념으로 발굴.
@@ -244,7 +259,10 @@
 
 **함정**
 - 임베딩 모델 ~1GB. 설치/워밍은 `SETUP_FULL_PRODUCER.bat` / `codex_warm_embeddings.py`.
-- Gemini 키 없으면 readable 이름 폴백(cpt_) — 에러 아님.
+- Gemini 키 없으면 readable 이름 폴백(cpt_) — 에러 아님. **단 cpt_는 그림 미검증이라 텍스트매칭 제외(위 정책 3)**.
+- **★ CLIP 그림엔진(`codex_image_embed`)이 PC에 미설치면 content-gate 무력** → 텍스트/태그 매칭만으로 동작. 즉 "이름↔그림 불일치"의 범용 차단은 **CLIP 켜야 완전**. 안 켜진 동안은 정책 3(cpt_ 제외)+중립폴백+임계 0.48이 방어선. 검증 단서: `shorts/codex/image_embed_cache.json` 존재 여부.
+- **잘못 그려진 정식(비-cpt_) 일러스트**(예: ti_decrease=티타늄'감소'를 슬림화에 사용)는 특정 이름 하드코딩 ❌(원칙). 해결=그 그림을 더 중립/정확한 것으로 교체하거나 CLIP content-gate 활성화.
+- **수정 작업법**: 이 파일은 Edit 누적이 꼬리를 truncate한 적 있음(2026-06-13) → 큰 변경은 **bash-python(assert count==1 + py_compile + tail 확인)**, 깨지면 `git show HEAD:<path>`의 꼬리로 복구.
 
 ---
 
@@ -411,13 +429,17 @@
 **정본**
 - `cardnews/templates/article_authoring_spec.md` — cards 텍스트=영상 대본. 출력 분기: 영상(일러스트 자동매칭, 카드이미지 불필요) vs 카드뉴스(+카드이미지).
 - 진입: CLAUDE.md STEP 2 "기사 써줘/주제 뽑아줘".
+- **★ 영상 길이 목표(2026-06-13)**: 35~45초(SNS 리텐션). 길이는 narration/카드 본문 글자수가 좌우 → **카드 본문 기본 1~2문장·한 문장 ≤35자·6카드 합계 ≈250자**, 군더더기("~전망됩니다" 반복) 줄이기. 사실 못 담으면 팩트 3개로. (스펙 §body 규칙에 박힘)
 
 **함정**
 - 기사 JSON은 git 추적 = 중복방지 DB. 새 주제는 `cardnews/articles/*.json` 중복 회피 먼저.
+- **길이=코드로 못 줄임**(나레이션 TTS 길이 좌우). 56초처럼 길면 집필 단계에서 줄여야 함.
 
 ---
 
 ## 변경 이력 (이 맵 자체)
+- 2026-06-13: **C단원 SNS 레이아웃·오디오 + J단원 길이목표 박음 (P2·P3).** 제목바 hook-only(`CasualCard.tsx`), 자막 세이프영역 안전(변경X), 라우드니스 −14(`finalize_sns_video.py` loudnorm, env off), BGM 보류. 길이 35~45초 목표 = 기사 집필 레버(`article_authoring_spec.md` §body + J단원). 검증=실행PC 재렌더.
+- 2026-06-13: **E단원 의미매칭 범용수정 + C단원 후킹 박음 (SNS 품질점검발).** 중립폴백 정상화·EMBED_MIN_ILLUST 0.48·content-gate(CLIP 미설치면 무력)·미검증 cpt_ 텍스트매칭 제외(`_is_unverified_concept`, 카테고리 규칙·env). 함정에 CLIP 의존성·비-cpt 오배치는 데이터교체 박음. C단원 후킹=`OpeningHook.tsx`(다크+주황글로우+키커 pill, OPENING_SEC 1.5→1.1).
 - 2026-06-13: **A단원 패널 UI 단계적 노출 박음(v31~v32)** — 영상작업 보조버튼 2묶음을 공통 `.foldbar` 접기 토글(보기·편집 + 라이브러리·시스템 관리, 둘 다 기본 접힘·동일 UI·캐럿)로 → 첫 화면에 상태+로그 노출. 보기·편집은 `localStorage panel.viewEdit` 기억. 런타임 4박스 슬림. PANEL_VERSION v30→v32.
 - 2026-06-13: **A단원에 패널 iOS 디자인 시스템 박음(v25~v30)** — 토큰/Pretendard/legacy alias/풀폭 거터/sticky 좌측리스트/우측 페어(상태\|로그·기록\|결과)/2줄 슬러그행(idx+1)/상단 흰카드+컬러점/그림자 단일화. 함정에 **Edit 누적 truncation 실사고 + bash-python 작업법 + 복구법** 박음. 롤백=`server.py.bak_pre_ios_20260613`.
 - 2026-06-13: **F단원 함정에 미커밋 기사 유실 사고 박음** — auto-update `stash --include-untracked`가 untracked 기사를 쓸어감(노트북 마커 ON이 원인). 복구법(`stash@{0}^3`) + 재발방지(노트북 마커 OFF + pull bat `auto_update.cmd`/`부사수PC_원클릭_셋업.bat`에 기사 자동커밋 박음).

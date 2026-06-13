@@ -197,7 +197,9 @@ export const CasualCard: React.FC<Props> = ({
       <Audio src={staticFile(`audio/${audioKey}.mp3`)} volume={1} />
 
       <CasualHeader channelName={channelName} />
-      <CasualTitleBar title={videoTitle} />
+      {/* 제목바는 첫(hook) 카드에만 — 모든 카드 반복 제거 + 본문 카드 비주얼 영역 확대.
+          맥락은 오프닝 헤드라인 + 헤더 '폰스팟 IT' + 비주얼/자막으로 충분. */}
+      {type === "hook" && <CasualTitleBar title={videoTitle} />}
 
       <div
         style={{

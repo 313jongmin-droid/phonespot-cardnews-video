@@ -53,6 +53,12 @@ def common_prefix(ffmpeg: str, src: Path) -> list[str]:
         "bt709",
         "-color_trc",
         "bt709",
+        # 소셜 라우드니스 정규화: 유튜브/릴스/틱톡 타깃 -14 LUFS. 나레이션이 -16.5 로 작던 걸
+        # 표준 레벨로. TP -1.5dB(클리핑 여유). env PHONESPOT_TARGET_LUFS 로 조절(끄려면 "off").
+        *([] if os.getenv("PHONESPOT_TARGET_LUFS", "-14").lower() == "off" else [
+            "-af",
+            f"loudnorm=I={os.getenv('PHONESPOT_TARGET_LUFS', '-14')}:TP=-1.5:LRA=11",
+        ]),
     ]
 
 

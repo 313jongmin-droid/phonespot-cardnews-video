@@ -52,12 +52,21 @@ EMBED_MIN_ILLUST = float(os.getenv("PHONESPOT_EMBED_MIN_ILLUST", "0.48"))
 # 즉 잘 맞던 매칭을 덮어쓰지 않으므로 기존 품질을 떨어뜨리지 않는다.
 EMBED_MIN_ILLUST_IMG = float(os.getenv("PHONESPOT_IMG_MATCH_MIN", "0.28"))
 
-# ★ 내용이 잘못 그려진 라이브러리 그림 차단목록. 텍스트/태그 임베딩엔 맞아도 실제 그림이
-#   주제와 다른 것들(예: cpt_496029c6 = '온디바이스 AI' 개념인데 보이스피싱 장면). 매칭/폴백/
-#   내용매칭 어디서도 선택 안 됨. 라이브러리 그림 자체는 PC 에서 교체/삭제 권장. env 로 확장.
+# 수동 차단목록 = 비상용 escape hatch(기본 비움, env 로만 채움). 특정 그림 1개를 위한
+# 하드코딩은 하지 않는다 — 이름↔그림 불일치는 아래 '그림내용(CLIP) 검증'이 범용으로 잡는다.
 ILLUST_BLOCKLIST = set(
-    v.strip() for v in os.getenv("PHONESPOT_ILLUST_BLOCKLIST", "cpt_496029c6").split(",") if v.strip()
+    v.strip() for v in os.getenv("PHONESPOT_ILLUST_BLOCKLIST", "").split(",") if v.strip()
 )
+
+# ★ 미검증 개념아트(concept-scout cpt_*) 정책 (범용, 이름 하드코딩 아님).
+# cpt_* 는 '개념 요청' 텍스트로 자동 생성/임포트된 아트라 텍스트/태그 임베딩엔 맞아도
+# 실제 그림이 틀릴 수 있다(예: 'AI' 개념인데 보이스피싱 장면). 그림내용(CLIP) 검증이
+# 활성화돼 있지 않으면 텍스트매칭에서 제외하고, 검수된 라이브러리 아트/중립으로 대체한다.
+# CLIP 켜지면 content 경로에서 실제 그림으로 검증되어 다시 쓰일 수 있다. env 로 해제 가능.
+EXCLUDE_UNVERIFIED_CONCEPT = os.getenv("PHONESPOT_TRUST_CONCEPT_ART", "0") == "0"
+CONCEPT_PREFIX = "cpt_"
+def _is_unverified_concept(variant: str) -> bool:
+    return EXCLUDE_UNVERIFIED_CONCEPT and str(variant).startswith(CONCEPT_PREFIX)
 
 
 ALIASES = {
@@ -159,7 +168,7 @@ def illustration_candidates(context: str, used_visuals: set[str]) -> list[tuple[
     for variant, entry in (db.get("illustrations", {}) or {}).items():
         if variant not in available:
             continue
-        if variant in ILLUST_BLOCKLIST:
+        if variant in ILLUST_BLOCKLIST or _is_unverified_concept(variant):
             continue
         key = f"illust:{variant}"
         if key in used_visuals:
@@ -243,7 +252,7 @@ def _embed_image_candidates(slug, cvec, used_images, prompt_map, desc_emb):
 def _embed_illust_candidates(cvec, lib_index, used_visuals):
     rows = []
     for variant, vec in lib_index.items():
-        if variant in ILLUST_BLOCKLIST:
+        if variant in ILLUST_BLOCKLIST or _is_unverified_concept(variant):
             continue
         if f"illust:{variant}" in used_visuals:
             continue
@@ -325,14 +334,28 @@ def semantic_match(data: dict, slug: str) -> bool:
             best_img = imgs[0] if imgs else (0, "", "")
             best_ill = ills[0] if ills else (0, "")
 
+            # ★ 범용 그림내용(CLIP) 검증용 랭킹. 텍스트/태그로 고른 일러스트라도 '실제 그림'이
+            #   주제와 맞는지 같은 잣대(EMBED_MIN_ILLUST_IMG)로 확인한다. 이름 하드코딩 없이
+            #   어떤 이름↔그림 불일치든(예: AI인데 사기장면, 디스플레이인데 티타늄) 거부된다.
+            #   엔진/데이터 없으면 빈 리스트 → 검증 생략(기존 동작 유지, 무회귀).
+            content_rows = []
+            if use_embed and img_index:
+                try:
+                    content_rows = list(ie.rank_for_text(context, index=img_index))
+                except Exception:
+                    content_rows = []
+            content_score = {v: s for v, s in content_rows}
+
             chosen = None
             reason = ""
             if best_img[0] >= min_img and best_img[0] >= best_ill[0]:
                 chosen = {"type": "image", "value": best_img[1]}
                 reason = f"image score {best_img[0]}: {best_img[2][:80]}"
-            elif best_ill[0] >= min_ill:
+            elif best_ill[0] >= min_ill and (
+                not content_score or content_score.get(best_ill[1], 0.0) >= EMBED_MIN_ILLUST_IMG
+            ):
                 chosen = {"type": "illust", "value": best_ill[1]}
-                reason = f"illust score {best_ill[0]}"
+                reason = f"illust score {best_ill[0]} (content {content_score.get(best_ill[1], 'n/a')})"
             elif current.get("type") == "image" and current.get("value") not in used_images:
                 # Source images are generated for THIS article, so an on-topic
                 # source image beats any weak library guess.
@@ -352,7 +375,12 @@ def semantic_match(data: dict, slug: str) -> bool:
                 # CONTENT (CLIP). This reuses the right library art even if its
                 # filename/tags are wrong - and only fires when text matching gave
                 # up, so it never overrides a good match (no regression risk).
-                img_best = _imgcontent_best(context, img_index, used_visuals)
+                img_best = (0.0, "")
+                for _v, _sc in content_rows:
+                    if _v in ILLUST_BLOCKLIST or f"illust:{_v}" in used_visuals:
+                        continue
+                    img_best = (round(float(_sc), 3), _v)
+                    break
                 if img_best[0] >= EMBED_MIN_ILLUST_IMG and img_best[1]:
                     chosen = {"type": "illust", "value": img_best[1]}
                     reason = f"image-content match {img_best[0]}"

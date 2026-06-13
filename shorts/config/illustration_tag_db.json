@@ -437,6 +437,17 @@
       ],
       "note": "자동 발굴 개념: 항공기 모드"
     },
+    "cpt_67a38371": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "손에",
+        "잡히",
+        "느낌"
+      ],
+      "note": "자동 발굴 개념: 손에 잡히"
+    },
     "cpt_6a2e9678": {
       "tags": [
         "auto",
@@ -1229,6 +1240,18 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "mid_release_98cab19a": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "공개",
+        "중순",
+        "하반기",
+        "언팩"
+      ],
+      "note": "자동 발굴 개념: 공개 중순"
+    },
     "mobile_settings_31257fb6": {
       "tags": [
         "auto"
@@ -1805,5 +1828,5 @@
       "available": true
     }
   },
-  "updated_at": "2026-06-13T14:25:28"
+  "updated_at": "2026-06-13T15:23:00"
 }
