@@ -262,7 +262,7 @@
         },
         {
           "type": "illust",
-          "value": "cpt_83fa1e9f"
+          "value": "samsung_ai"
         }
       ],
       "stat": {
@@ -436,11 +436,11 @@
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "camera_battery_ecd040c7"
+          "value": "battery_charge_range"
         },
         {
           "type": "illust",
-          "value": "battery_charge_range"
+          "value": "optimized_charging"
         },
         {
           "type": "illust",
@@ -615,48 +615,6 @@
     "policy": "Match chunks to GPT source images using prompt.md descriptions, then fallback to tagged reusable illustrations.",
     "changes": [
       {
-        "section": "hook",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "self_flip_6728256c"
-        },
-        "to": {
-          "type": "illust",
-          "value": "phone_setup_ready"
-        },
-        "context": "삼성이 7월 언팩에서 공개할 갤럭시 Z 플립8은 자체 칩 엑시노스 2600 탑재와 본체 슬림화에 집중한 변화로 전망됩니다 갤럭시 플립8 엑시노스 2600 슬림화 ['갤럭시 플립8', '엑시노스 2600 슬림화'] 뉴",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "hook",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "cpt_496029c6"
-        },
-        "to": {
-          "type": "illust",
-          "value": "memory_chip"
-        },
-        "context": "플립8은 자체 칩 엑시노스 2600 탑재와 본체 슬림화에 집중한 변화로 전망됩니다 카메라·배터리·충전은 전작과 같지만 갤럭시 플립8 엑시노스 2600 슬림화 ['갤럭시 플립8', '엑시노스 2600 슬림화'] 뉴스",
-        "reason": "illust score 0.495 (content n/a)"
-      },
-      {
-        "section": "hook",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "camera_battery_ecd040c7"
-        },
-        "to": {
-          "type": "illust",
-          "value": "phone_settings_toggle"
-        },
-        "context": "탑재와 본체 슬림화에 집중한 변화로 전망됩니다 카메라·배터리·충전은 전작과 같지만 손에 잡히는 느낌이 달라집니다 갤럭시 플립8 엑시노스 2600 슬림화 ['갤럭시 플립8', '엑시노스 2600 슬림화'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
         "section": "fact_1",
         "chunk": 2,
         "from": {
@@ -727,6 +685,20 @@
         "reason": "neutral filler (no semantic match)"
       },
       {
+        "section": "fact_2",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "cpt_83fa1e9f"
+        },
+        "to": {
+          "type": "illust",
+          "value": "camera_battery_ecd040c7"
+        },
+        "context": "전성비 개선과 온디바이스 AI 처리 효율 강화가 핵심 전작 대비 발열·배터리 효율이 관전 포인트입니다 칩 엑시노스 2600 자체 탑재 ['칩', '엑시노스 2600 자체 탑재'] 뉴스",
+        "reason": "illust score 0.495 (content n/a)"
+      },
+      {
         "section": "fact_3",
         "chunk": 2,
         "from": {
@@ -753,6 +725,34 @@
         },
         "context": "디스플레이는 유지·소폭 개선이 예상됩니다 손에 잡았을 때 두께·무게 체감이 가장 큰 변화 포인트입니다 디자인 본체 슬림화 집중 ['디자인', '본체 슬림화 집중'] 뉴스",
         "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "camera_battery_ecd040c7"
+        },
+        "to": {
+          "type": "illust",
+          "value": "battery_charge_range"
+        },
+        "context": "메인 카메라 구성과 배터리 용량 4300mAh, 충전 속도 25W는 전작과 대동소이할 것으로 전망됩니다 유지 카메라·배터리·충전 ['유지', '카메라·배터리·충전'] 뉴스",
+        "reason": "illust score 0.58 (content n/a)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "battery_charge_range"
+        },
+        "to": {
+          "type": "illust",
+          "value": "optimized_charging"
+        },
+        "context": "메인 카메라 구성과 배터리 용량 4300mAh, 충전 속도 25W는 전작과 대동소이할 것으로 전망됩니다 사진·동영상 사용 패턴이 크게 유지 카메라·배터리·충전 ['유지', '카메라·배터리·충전'] 뉴스",
+        "reason": "illust score 0.5 (content n/a)"
       }
     ],
     "weak": [
@@ -897,7 +897,7 @@
         },
         "context": "충전 속도 25W는 전작과 대동소이할 것으로 전망됩니다 사진·동영상 사용 패턴이 크게 바뀌진 않을 가능성이 큽니다 유지 카메라·배터리·충전 ['유지', '카메라·배터리·충전'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.402
+        "best_illust_score": 0.308
       },
       {
         "section": "fact_4",
@@ -982,6 +982,19 @@
         "context": "탑재가 유력합니다 전성비 개선과 온디바이스 AI 처리 효율 강화가 핵심 전작 대비 발열·배터리 효율이 관전 포인트입니다 칩 엑시노스 2600 자체 탑재 스냅드래곤이 아닌 삼성 엑시노스 2600 탑재가 유력합니다. 전성비 개선과 온디바이스 AI 처리 효율 강화가 핵심. 전작 대비 발열·배"
       },
       {
+        "section": "fact_2",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "camera_battery_ecd040c7"
+        },
+        "to": {
+          "type": "illust",
+          "value": "samsung_ai"
+        },
+        "context": "전성비 개선과 온디바이스 AI 처리 효율 강화가 핵심 전작 대비 발열·배터리 효율이 관전 포인트입니다 칩 엑시노스 2600 자체 탑재 스냅드래곤이 아닌 삼성 엑시노스 2600 탑재가 유력합니다. 전성비 개선과 온디바이스 AI 처리 효율 강화가 핵심. 전작 대비 발열·배터리 효율이 관전 "
+      },
+      {
         "section": "fact_3",
         "chunk": 2,
         "from": {
@@ -1022,15 +1035,6 @@
       }
     ],
     "weak": [
-      {
-        "section": "fact_4",
-        "chunk": 1,
-        "duplicate": {
-          "type": "illust",
-          "value": "camera_battery_ecd040c7"
-        },
-        "context": "메인 카메라 구성과 배터리 용량 4300mAh, 충전 속도 25W는 전작과 대동소이할 것으로 전망됩니다 유지 카메라·배터리·충전 메인 카메라 구성과 배터리 용량 4300mAh, 충전 속도 25W는 전작과 대동소이할 것으로 전망됩니다. 사진·동영상 사용 패턴이 크게 바뀌진 않을 가능성이 "
-      },
       {
         "section": "fact_4",
         "chunk": 3,

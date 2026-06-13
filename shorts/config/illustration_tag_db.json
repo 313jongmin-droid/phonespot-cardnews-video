@@ -1826,7 +1826,63 @@
       ],
       "note": "자동 발굴 개념: 일요일 주간",
       "available": true
+    },
+    "personal_data_63b96014": {
+      "keywords": [
+        "Personal",
+        "Data"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: Personal Data",
+      "available": false
+    },
+    "smart_482e7bdd": {
+      "keywords": [
+        "Intelligence"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: Intelligence",
+      "available": false
+    },
+    "mobile_user_b10a54bf": {
+      "keywords": [
+        "사용자",
+        "휴대폰",
+        "쓰는",
+        "시간대"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 사용자 휴대폰",
+      "available": false
+    },
+    "series_06379766": {
+      "keywords": [
+        "시리즈"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 시리즈",
+      "available": false
+    },
+    "cpt_f28de659": {
+      "keywords": [
+        "AOD",
+        "Always",
+        "Display"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: AOD Always",
+      "available": false
     }
   },
-  "updated_at": "2026-06-13T15:23:00"
+  "updated_at": "2026-06-13T16:10:10"
 }

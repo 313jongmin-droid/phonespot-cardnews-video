@@ -6,6 +6,7 @@ import { HookCard } from "./components/HookCard";
 import { FactCard } from "./components/FactCard";
 import { CtaCard } from "./components/CtaCard";
 import { CasualCard } from "./components/casual/CasualCard";
+import { CasualCta } from "./components/casual/CasualCta";
 import { NoiseOverlay } from "./components/NoiseOverlay";
 
 export interface Script {
@@ -125,14 +126,7 @@ export const NewsShort: React.FC<NewsShortProps> = ({
 
       <Sequence from={ctaStart} durationInFrames={ctaFrames}>
         {isCasual ? (
-          <CasualCard
-            data={script.cta}
-            channelName={chCasual}
-            videoTitle={script.video_title}
-            audioKey="cta"
-            type="cta"
-            durFrames={ctaFrames}
-          />
+          <CasualCta data={script.cta} audioKey="cta" durFrames={ctaFrames} />
         ) : (
           <CtaCard data={script.cta} channelName={ch} durFrames={ctaFrames} />
         )}

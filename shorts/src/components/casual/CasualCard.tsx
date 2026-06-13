@@ -191,6 +191,11 @@ export const CasualCard: React.FC<Props> = ({
         extrapolateRight: "clamp",
       })
     : 1;
+  // 카드 등장: 모든 비주얼(일러스트 포함)이 매 카드 시작에 살짝 슬라이드업+페이드 → 하드컷 완화.
+  const cardEnter = interpolate(frame, [0, 7], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#FFFFFF" }}>
@@ -213,10 +218,10 @@ export const CasualCard: React.FC<Props> = ({
           style={{
             position: "absolute",
             inset: 0,
-            opacity: visualOpacity,
-            transform: `scale(${visualScale})`,
+            opacity: visualOpacity * cardEnter,
+            transform: `scale(${visualScale}) translateY(${(1 - cardEnter) * 26}px)`,
             transformOrigin: "center center",
-            willChange: imageMotionEnabled ? "opacity, transform" : "auto",
+            willChange: "opacity, transform",
           }}
         >
           {renderVisual()}
