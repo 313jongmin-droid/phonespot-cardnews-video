@@ -165,8 +165,11 @@
 - 트랙 구분: casual/newsroom(카드뉴스 영상) vs `shorts/promo/`(타이포 홍보) vs `shorts/promo_ai/`(실사 AI 광고, Higgsfield).
 - 컴포지션 정의: `shorts/src/Root.tsx`(NewsroomShort/CasualShort/Promo-*/**Cover**, 전부 1080×1920).
 
-**SNS 품질 — 후킹·레이아웃·오디오 (2026-06-13, 021 품질점검발)**
-- **오프닝 후킹**: `shorts/src/components/OpeningHook.tsx` — 검정 → **다크 그라데이션 + 움직이는 주황 글로우 + 주황 키커 pill(채널 태그라인) + 빠른 큰 헤드라인**. `Root.tsx` `OPENING_SEC` 1.5→**1.1**(검은 시간 단축).
+**SNS 품질 — 후킹·레이아웃·오디오·닫기 (2026-06-13, 021 품질점검발, 재렌더 검증)**
+- **오프닝 후킹**: `shorts/src/components/OpeningHook.tsx` — 검정 → **다크 그라데이션 + 움직이는 주황 글로우 + 주황 키커 pill(채널 태그라인) + 빠른 큰 헤드라인**. `Root.tsx` `OPENING_SEC` 1.5→1.1→**2.0**(후킹 읽을 시간 확보).
+- **닫기 CTA 디자인 카드**: `shorts/src/components/casual/CasualCta.tsx`(신설) — 일러스트 폐기, 오프닝과 같은 결(다크+주황글로우+키커 "폰스팟 광교점" + "휴대폰 구매할 땐?" + 주황 펀치 + 연락처 박스 kakao/location/litt). `Composition.tsx` casual cta 분기를 `CasualCard type=cta` → **`CasualCta`** 로 교체(데이터=`script.cta`, audioKey=cta). newsroom은 기존 `CtaCard` 유지.
+- **아웃트로 +2초**: `Root.tsx` `OUTRO_SEC` 1.2→**3.2**(끝화면 = `ChannelOutro` 로고+구독 더 길게).
+- **카드 전환 애니메이션**: `CasualCard.tsx` `cardEnter`(frame 0~7 페이드+슬라이드업)를 비주얼 컨테이너에 적용 → 하드컷 완화(일러스트 포함 전 카드).
 - **제목바 중복 제거**: `shorts/src/components/casual/CasualCard.tsx` — `CasualTitleBar`를 **`type==="hook"`일 때만** 렌더(본문 4개 카드 반복 제거 + 비주얼 영역 확대). 맥락은 오프닝+헤더+비주얼/자막으로 충분.
 - **자막 세이프영역**: 점검 결과 자막은 화면 **중하단**(아래 ~700px 흰 여백)이라 플랫폼 UI 안 가림 → 변경 안 함(`CasualCaption` height 840, padding-top 128).
 - **라우드니스 −14 LUFS**: `shorts/scripts/finalize_sns_video.py` `common_prefix`에 `-af loudnorm=I=-14:TP=-1.5:LRA=11`(나레이션 −16.5가 작던 문제). env `PHONESPOT_TARGET_LUFS`(기본 -14, `off`로 끔).
@@ -430,6 +433,7 @@
 - `cardnews/templates/article_authoring_spec.md` — cards 텍스트=영상 대본. 출력 분기: 영상(일러스트 자동매칭, 카드이미지 불필요) vs 카드뉴스(+카드이미지).
 - 진입: CLAUDE.md STEP 2 "기사 써줘/주제 뽑아줘".
 - **★ 영상 길이 목표(2026-06-13)**: 35~45초(SNS 리텐션). 길이는 narration/카드 본문 글자수가 좌우 → **카드 본문 기본 1~2문장·한 문장 ≤35자·6카드 합계 ≈250자**, 군더더기("~전망됩니다" 반복) 줄이기. 사실 못 담으면 팩트 3개로. (스펙 §body 규칙에 박힘)
+- **★ 후킹 공식(2026-06-13)**: 오프닝/인트로 첫 문장 + cards[0] = 설명형 ❌ → **호기심 갭/긴장형 5패턴**(질문·반전·손해회피·숫자단정·대상지목). 결론/궁금증 먼저, 과장·낚시 금지. (스펙 narration_md §후킹 공식에 박힘)
 
 **함정**
 - 기사 JSON은 git 추적 = 중복방지 DB. 새 주제는 `cardnews/articles/*.json` 중복 회피 먼저.
@@ -438,6 +442,7 @@
 ---
 
 ## 변경 이력 (이 맵 자체)
+- 2026-06-13: **고퀄 batch 박음 (재렌더 181856 검증).** C단원: 오프닝 2.0초·아웃트로 3.2초(+2)·**닫기 CTA 디자인카드 `CasualCta`(일러스트 폐기)**·카드 전환 애니메이션(`cardEnter`). J단원: 후킹 공식 5패턴. (1 CLIP·9 제품이미지는 제외/대기.)
 - 2026-06-13: **C단원 SNS 레이아웃·오디오 + J단원 길이목표 박음 (P2·P3).** 제목바 hook-only(`CasualCard.tsx`), 자막 세이프영역 안전(변경X), 라우드니스 −14(`finalize_sns_video.py` loudnorm, env off), BGM 보류. 길이 35~45초 목표 = 기사 집필 레버(`article_authoring_spec.md` §body + J단원). 검증=실행PC 재렌더.
 - 2026-06-13: **E단원 의미매칭 범용수정 + C단원 후킹 박음 (SNS 품질점검발).** 중립폴백 정상화·EMBED_MIN_ILLUST 0.48·content-gate(CLIP 미설치면 무력)·미검증 cpt_ 텍스트매칭 제외(`_is_unverified_concept`, 카테고리 규칙·env). 함정에 CLIP 의존성·비-cpt 오배치는 데이터교체 박음. C단원 후킹=`OpeningHook.tsx`(다크+주황글로우+키커 pill, OPENING_SEC 1.5→1.1).
 - 2026-06-13: **A단원 패널 UI 단계적 노출 박음(v31~v32)** — 영상작업 보조버튼 2묶음을 공통 `.foldbar` 접기 토글(보기·편집 + 라이브러리·시스템 관리, 둘 다 기본 접힘·동일 UI·캐럿)로 → 첫 화면에 상태+로그 노출. 보기·편집은 `localStorage panel.viewEdit` 기억. 런타임 4박스 슬림. PANEL_VERSION v30→v32.

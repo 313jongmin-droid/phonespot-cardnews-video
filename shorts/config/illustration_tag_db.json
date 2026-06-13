@@ -746,6 +746,17 @@
       ],
       "note": "자동 발굴 개념: 활용법 와의"
     },
+    "cpt_f28de659": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "AOD",
+        "Always",
+        "Display"
+      ],
+      "note": "자동 발굴 개념: AOD Always"
+    },
     "cpt_f35df68f": {
       "tags": [
         "auto"
@@ -1265,6 +1276,18 @@
       ],
       "note": "자동 발굴 개념: 설정 모바일"
     },
+    "mobile_user_b10a54bf": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "사용자",
+        "휴대폰",
+        "쓰는",
+        "시간대"
+      ],
+      "note": "자동 발굴 개념: 사용자 휴대폰"
+    },
     "module_install": {
       "tags": [
         "library"
@@ -1401,6 +1424,16 @@
       ],
       "note": "Reusable editorial illustration.",
       "available": true
+    },
+    "personal_data_63b96014": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "Personal",
+        "Data"
+      ],
+      "note": "자동 발굴 개념: Personal Data"
     },
     "personal_data_leak": {
       "tags": [
@@ -1614,6 +1647,15 @@
       "note": "자동 발굴 개념: 플립 자체",
       "available": true
     },
+    "series_06379766": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "시리즈"
+      ],
+      "note": "자동 발굴 개념: 시리즈"
+    },
     "settings_screen_ab73a8fa": {
       "tags": [
         "auto"
@@ -1649,6 +1691,15 @@
       ],
       "note": "Reusable editorial illustration.",
       "available": true
+    },
+    "smart_482e7bdd": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "Intelligence"
+      ],
+      "note": "자동 발굴 개념: Intelligence"
     },
     "smartphone": {
       "tags": [
@@ -1826,63 +1877,7 @@
       ],
       "note": "자동 발굴 개념: 일요일 주간",
       "available": true
-    },
-    "personal_data_63b96014": {
-      "keywords": [
-        "Personal",
-        "Data"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: Personal Data",
-      "available": false
-    },
-    "smart_482e7bdd": {
-      "keywords": [
-        "Intelligence"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: Intelligence",
-      "available": false
-    },
-    "mobile_user_b10a54bf": {
-      "keywords": [
-        "사용자",
-        "휴대폰",
-        "쓰는",
-        "시간대"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 사용자 휴대폰",
-      "available": false
-    },
-    "series_06379766": {
-      "keywords": [
-        "시리즈"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 시리즈",
-      "available": false
-    },
-    "cpt_f28de659": {
-      "keywords": [
-        "AOD",
-        "Always",
-        "Display"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: AOD Always",
-      "available": false
     }
   },
-  "updated_at": "2026-06-13T16:10:10"
+  "updated_at": "2026-06-13T18:18:42"
 }

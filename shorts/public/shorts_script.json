@@ -689,7 +689,7 @@
         "chunk": 4,
         "from": {
           "type": "illust",
-          "value": "cpt_83fa1e9f"
+          "value": "samsung_ai"
         },
         "to": {
           "type": "illust",
@@ -725,34 +725,6 @@
         },
         "context": "디스플레이는 유지·소폭 개선이 예상됩니다 손에 잡았을 때 두께·무게 체감이 가장 큰 변화 포인트입니다 디자인 본체 슬림화 집중 ['디자인', '본체 슬림화 집중'] 뉴스",
         "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "camera_battery_ecd040c7"
-        },
-        "to": {
-          "type": "illust",
-          "value": "battery_charge_range"
-        },
-        "context": "메인 카메라 구성과 배터리 용량 4300mAh, 충전 속도 25W는 전작과 대동소이할 것으로 전망됩니다 유지 카메라·배터리·충전 ['유지', '카메라·배터리·충전'] 뉴스",
-        "reason": "illust score 0.58 (content n/a)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "battery_charge_range"
-        },
-        "to": {
-          "type": "illust",
-          "value": "optimized_charging"
-        },
-        "context": "메인 카메라 구성과 배터리 용량 4300mAh, 충전 속도 25W는 전작과 대동소이할 것으로 전망됩니다 사진·동영상 사용 패턴이 크게 유지 카메라·배터리·충전 ['유지', '카메라·배터리·충전'] 뉴스",
-        "reason": "illust score 0.5 (content n/a)"
       }
     ],
     "weak": [

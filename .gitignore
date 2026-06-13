@@ -165,3 +165,6 @@ upload/tokens/*secret*
 !upload/tokens/.gitkeep
 apps_script/.clasp.json 
 apps_script/.clasprc.json 
+
+# 실사(제품/인물) 포토 라이브러리 - 대용량/저작권, git 비추적 (Drive/로컬 공유)
+shorts/public/assets/photos/

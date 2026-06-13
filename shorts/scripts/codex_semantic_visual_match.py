@@ -69,6 +69,39 @@ def _is_unverified_concept(variant: str) -> bool:
     return EXCLUDE_UNVERIFIED_CONCEPT and str(variant).startswith(CONCEPT_PREFIX)
 
 
+# ★ 실사(제품/인물) 포토 라이브러리 — 일러스트와 별개 폴더. '사용 가능한' 실사만 한글
+# 파일명으로 넣어두면(예: 갤럭시Z플립8_제품_폴더블.jpg) 파일명을 라벨로 임베딩해 매칭한다.
+# 정책: 포토 1순위 + 매우 확신할 때만(>= PHOTO_MIN). 애매하면 건너뛰고 → 일러스트(기존) → 생성요청.
+# PHOTO_MIN 은 텍스트 임베딩 코사인(0~1). 0.80 은 매우 엄격 → 사진이 안 뜨면 env 로 낮춰 검증.
+PHOTO_DIR = SHORTS / "public" / "assets" / "photos"
+PHOTO_MIN = float(os.getenv("PHONESPOT_PHOTO_MIN", "0.80"))
+PHOTO_EXTS = (".png", ".jpg", ".jpeg", ".webp")
+
+
+def list_photos() -> list[str]:
+    if not PHOTO_DIR.exists():
+        return []
+    return sorted(
+        x.name for x in PHOTO_DIR.iterdir() if x.is_file() and x.suffix.lower() in PHOTO_EXTS
+    )
+
+
+def photo_label(fname: str) -> str:
+    base = re.sub(r"\.[^.]+$", "", fname)
+    return clean(base.replace("_", " ").replace("-", " "))
+
+
+def build_photo_index() -> dict:
+    """{filename: 벡터}. 파일명 라벨을 임베딩. 모델/폴더 없으면 {}."""
+    files = list_photos()
+    if not files or not ce.available():
+        return {}
+    vecs = ce.embed([photo_label(f) for f in files])
+    if vecs is None:
+        return {}
+    return {files[i]: vecs[i] for i in range(len(files))}
+
+
 ALIASES = {
     "일정": ["일정", "날짜", "달력", "캘린더", "키노트", "행사", "공개", "출시", "사전예약", "예약", "7월", "8월", "6월"],
     "폴드": ["폴드", "폴더블", "fold", "foldable", "와이드", "펼친", "내부 화면"],
@@ -301,7 +334,9 @@ def semantic_match(data: dict, slug: str) -> bool:
     # 그림 내용(CLIP) 인덱스: 있으면 확신 매칭이 없을 때 중립 필러 대신 내용으로 채운다.
     img_index = ie.library_image_index() if ie.available() else {}
     img_engine = f", image-content={len(img_index)}장(min={EMBED_MIN_ILLUST_IMG})" if img_index else ""
-    print(f"[semantic_visual] engine={'embedding' if use_embed else 'lexical'} (min_img={min_img}, min_ill={min_ill}){img_engine}")
+    photo_index = build_photo_index() if use_embed else {}
+    photo_engine = f", photos={len(photo_index)}장(min={PHOTO_MIN})" if photo_index else ""
+    print(f"[semantic_visual] engine={'embedding' if use_embed else 'lexical'} (min_img={min_img}, min_ill={min_ill}){img_engine}{photo_engine}")
 
     for section_name, section in section_items(data):
         chunks = section_chunks(section)
@@ -334,6 +369,16 @@ def semantic_match(data: dict, slug: str) -> bool:
             best_img = imgs[0] if imgs else (0, "", "")
             best_ill = ills[0] if ills else (0, "")
 
+            # 0순위: 실사 포토(매우 확신할 때만, >= PHOTO_MIN). 애매하면 건너뛰고 기존 일러스트로.
+            best_photo = (0.0, "")
+            if use_embed and photo_index and cvec is not None:
+                for _pf, _pv in photo_index.items():
+                    if f"image:photos/{_pf}" in used_visuals:
+                        continue
+                    _sc = ce.cosine(cvec, _pv)
+                    if _sc > best_photo[0]:
+                        best_photo = (round(float(_sc), 3), _pf)
+
             # ★ 범용 그림내용(CLIP) 검증용 랭킹. 텍스트/태그로 고른 일러스트라도 '실제 그림'이
             #   주제와 맞는지 같은 잣대(EMBED_MIN_ILLUST_IMG)로 확인한다. 이름 하드코딩 없이
             #   어떤 이름↔그림 불일치든(예: AI인데 사기장면, 디스플레이인데 티타늄) 거부된다.
@@ -348,7 +393,11 @@ def semantic_match(data: dict, slug: str) -> bool:
 
             chosen = None
             reason = ""
-            if best_img[0] >= min_img and best_img[0] >= best_ill[0]:
+            if best_photo[0] >= PHOTO_MIN and best_photo[1]:
+                # 실사 포토 = 1순위. 렌더는 ImageVisual(assets/photos/<file>) 켄번스 모션.
+                chosen = {"type": "image", "value": f"photos/{best_photo[1]}"}
+                reason = f"photo {best_photo[0]} (>= {PHOTO_MIN})"
+            elif best_img[0] >= min_img and best_img[0] >= best_ill[0]:
                 chosen = {"type": "image", "value": best_img[1]}
                 reason = f"image score {best_img[0]}: {best_img[2][:80]}"
             elif best_ill[0] >= min_ill and (
