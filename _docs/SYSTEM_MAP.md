@@ -441,6 +441,13 @@
 
 ---
 
+**★ 대형파일 안전규칙 + 커밋 검증 게이트 (2026-06-14, D 적용)**
+- **~31KB 도구 캡**: Edit 도구·Read·cat·grep·git show 는 ~31KB 넘는 파일을 그 지점에서 잘라 읽는다. **그 캡된 내용을 되쓰면 호스트 파일이 truncate**(매처 main 소실·bat 꼬리 소실의 진짜 뿌리). **bash-python(open/write)은 캡 없음 → 대형파일은 이걸로만.**
+- **규칙(절대): 26KB+ 파일은 Edit 도구 금지, bash-python(read→`assert count==1`→write)으로만.** 매 쓰기 후 ① byte수 비교 ② `py_compile`(.py) ③ CRLF·`:end`/끝마커(.bat) 확인. **진실 확인도 Read 말고 `python -c "..open(p).read().."`**(Read·grep은 캡됨).
+- **대형 추적 파일**(분할은 비추천 — 다른 task 영역이거나 쪼개도 캡 밑 안 됨, 규칙으로 관리): `apps_script/generator.html`·`ads/.../generator.html`(173KB, **광고 task**)·`server.py`(165KB, 패널)·`meta-sync.gs`(73KB)·`Code.gs`(46KB, **광고**)·`apps_script/index.html`(41KB)·`APPLY_..._V2.py`(38KB)·`codex_semantic_visual_match.py`(32KB).
+- **★ 커밋 검증 게이트(D) — `CODEX_VIDEO_DESK/MAINTENANCE/codex_github_upload.py` main()**: `git add -A` 직후, 변경된 **.py 는 `py_compile`, .bat 는 CRLF(lone LF 0)** 검사 → 하나라도 깨지면 `git reset -q` + `return 3`(커밋·푸시 중단). **편집 손상이 HEAD까지 오염되는 것을 원천 차단**(과거: 깨진 매처·bat 이 자동커밋으로 git 에 올라가 복구 난항). 정상본만 커밋되므로 git 이 항상 안전한 롤백 지점.
+- **복구법 요약**: 큰 .py 꼬리 소실 = `git log -- <path>` → main 있는 커밋 블롭과 공통 앵커로 `cur[:i]+good[j:]` splice. bat 꼬리 소실 = 읽기 없이 **바이너리 append** + 전체 CRLF 정규화(`b.replace(CRLF,LF).replace(LF,CRLF)`). DB NUL 손상 = `cp`(‧`git checkout`은 .gitattributes 필터가 NUL 유발 → 우회).
+
 ## J. 기사 작성 스펙 (클로드 집필)
 
 **목적**: 클로드가 주제선정→사실수집→기사 JSON을 일관되게 작성.
@@ -461,10 +468,11 @@
 - 2026-06-13: **★ 매칭 망가짐의 진짜 뿌리 = `codex_unique_illustration_guard` 버그(검증완료).** 가드가 semantic_match 뒤에 중복 중립을 유니크화하며 cpt·무관 그림을 되살림 → cpt·blocklist 제외 + 중립 반복 허용으로 수정. 재렌더 224859에서 cpt=0 확인. 포토 "일러스트보다 우수할 때만" 규칙(`photo ≥ best_ill`)도 추가. 남은 appliance/ti_decrease는 매처 약한픽/그리디 = 에셋 보강으로(함정 박음).
 - 2026-06-13: **E단원에 실사 포토 라이브러리 박음 (사장님 설계).** `assets/photos/`(한글 파일명=라벨) → 매칭 1순위(`≥PHOTO_MIN` 기본 0.80, env) → 일러스트 → 생성요청. `build_photo_index`+`best_photo` 게이트, `ImageVisual`로 렌더. 텍스트 엔진만 써 CLIP 미설치여도 작동. git 비추적(렌더 PC에 직접). 함정에 "안 뜨는 3원인" 박음. **검증 대기**(사진 넣고 0.6으로 재렌더).
 - 2026-06-14: **★ 매처 main 소실/복구 + 중립 로테이션 + 원자적쓰기 (검증 214114).** Edit 도구가 큰 파일(>~31KB) 꼬리를 캡해 되쓰며 `codex_semantic_visual_match.py`의 main()을 날림 → 매처가 죽어 022 사진/매칭 0(에러 없음). git 이력서 main 있는 커밋(6144576)으로 splice 복구(본문=내 수정 보존). `pick_neutral` 라운드로빈(smartphone 11→5종×3), `write_json` 원자적. **규칙: 대형 .py/.md는 Edit 금지·bash-python만.** 함정 E단원에 박음.
+- 2026-06-14: **★ 대형파일 안전규칙 + 커밋 검증 게이트(D) 박음 (I단원).** ~31KB 도구캡(Edit/Read/grep) → 대형파일 bash-python only·매쓰기후 검증 규칙. `codex_github_upload.py` main()에 검증 게이트(.py py_compile + .bat CRLF, 깨지면 git reset+return3) → 손상 HEAD 오염 차단. C(물리분할)는 다른task영역/위험대비이득 적어 비채택, 규칙+D로 대체.
 - 2026-06-14: **★ 일러스트도 렉시컬 키워드 신호로 안정화 + 태그DB 손상 재발방지 (E단원, 검증완료 170444).** 일러스트가 안 쓰인 진짜 원인 = ① 렌더 PC는 일러스트도 임베딩만 씀 → 해시이름+헤드라인 희석으로 정확 키워드 매칭도 임계 미달(불안정) ② 태그DB가 비원자적 write로 NUL/truncate 손상되면 read_json이 빈 DB 반환 → 라이브러리 통째 상실. 수정: ① `codex_semantic_visual_match.py` 일러스트 렉시컬 키워드(`build_illust_keyword_index`/`illust_lexical_hits`/`best_lex_ill`, hits≥`MIN_ILLUST_KEYWORDS` 기본2 → 임베딩보다 우선, 약하면 임베딩 유지=무회귀) ② `codex_illustration_db.py` `write_json` 원자적(temp+os.replace). 검증: mid_release/official_sale/mounted_body 키워드대로 제자리, smartphone 6→4, PNG 전부 존재(깨짐0). 함정에 DB손상·stale포토·마운트괴리 박음.
 - 2026-06-14: **★ 포토 매칭 = 임베딩 폐기 → 렉시컬 모델명 일치로 전환 (E단원 갱신).** 한글 임베딩이 모델명(갤럭시A/엑시노스/S25)을 못 구분(렌더 증거: 플립청크에 갤럭시A, 엑시노스청크에 S25, 통신사로고 곳곳) → 정답·오답 점수가 ~0.5에 겹쳐 PHOTO_MIN 임계 무의미. 신호를 렉시컬로 교체: `_photo_tokens`/`_is_distinctive`/`photo_lexical_score`/`PHOTO_STOP`, `best_photo=(dist,gen,file)`, chosen 0순위 = **구별토큰 dist≥1**. 일반토큰(삼성/갤럭시/로고)만으론 미채택 → `갤럭시A`·`S25`가 무관 영상에 안 붙음(커버 오염 차단). **임베딩 불필요 → 부사수PC(모델 미설치)에서도 작동.** 021 검증: 엑시노스→엑시노스, 플립→플립, 배터리→배터리 정확. **필수 일러 추천 `MAX_REQUESTS` 3→5**(`codex_illustration_scout.py`, graceful degradation). 교훈: 임계값은 정답>오답 간격 있을 때만 작동, 겹치면 신호를 바꿔야 함. **함정: `codex_illustration_scout.py` Edit 누적 truncation → git HEAD 꼬리로 복구.**
 - 2026-06-13: **고퀄 batch 박음 (재렌더 181856 검증).** C단원: 오프닝 2.0초·아웃트로 3.2초(+2)·**닫기 CTA 디자인카드 `CasualCta`(일러스트 폐기)**·카드 전환 애니메이션(`cardEnter`). J단원: 후킹 공식 5패턴. (1 CLIP·9 제품이미지는 제외/대기.)
 - 2026-06-13: **C단원 SNS 레이아웃·오디오 + J단원 길이목표 박음 (P2·P3).** 제목바 hook-only(`CasualCard.tsx`), 자막 세이프영역 안전(변경X), 라우드니스 −14(`finalize_sns_video.py` loudnorm, env off), BGM 보류. 길이 35~45초 목표 = 기사 집필 레버(`article_authoring_spec.md` §body + J단원). 검증=실행PC 재렌더.
 - 2026-06-13: **E단원 의미매칭 범용수정 + C단원 후킹 박음 (SNS 품질점검발).** 중립폴백 정상화·EMBED_MIN_ILLUST 0.48·content-gate(CLIP 미설치면 무력)·미검증 cpt_ 텍스트매칭 제외(`_is_unverified_concept`, 카테고리 규칙·env). 함정에 CLIP 의존성·비-cpt 오배치는 데이터교체 박음. C단원 후킹=`OpeningHook.tsx`(다크+주황글로우+키커 pill, OPENING_SEC 1.5→1.1).
 - 2026-06-13: **A단원 패널 UI 단계적 노출 박음(v31~v32)** — 영상작업 보조버튼 2묶음을 공통 `.foldbar` 접기 토글(보기·편집 + 라이브러리·시스템 관리, 둘 다 기본 접힘·동일 UI·캐럿)로 → 첫 화면에 상태+로그 노출. 보기·편집은 `localStorage panel.viewEdit` 기억. 런타임 4박스 슬림. PANEL_VERSION v30→v32.
-- 2026-06-13: **A단원에 패널 iOS 디자인 시스템 박음(v25~v30)** — 토큰/Pretendard/legacy alias/풀폭 거터/sticky 좌측리스트/우측 페어(상태\|로그·기록\|결과)/2줄 슬러그행(idx+1)/상단 흰카드+컬러점/그림자 단일화. 함정에 **Edit 누적 truncation 실사고 + bash-python 작업법 + 복구법** 박음. 롤백=`server.py.bak_p
+- 2026-06-13: **A단원에 패널 iOS 디자인 시스템 박음(v25~v30)** — 토큰/Pretendard/legacy alias/풀폭 거터/sticky 좌측리스트/우측 페어(상태\|로그·기록\|결과)/2줄 슬러그행(idx+1)/상단 흰카드+컬러점/그림자 단일화. 함정에 **Edit 누적 truncation 실사고 + bash-python 작업법 + 복구법** 박음. 롤백=`server.py.bak_pre_ios_20260613`.

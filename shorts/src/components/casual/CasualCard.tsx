@@ -123,12 +123,14 @@ export const CasualCard: React.FC<Props> = ({
   const frame = useCurrentFrame();
   const captionChunks = repairListChunkBoundaries(data.caption_chunks || []);
   const displayChunks = repairListChunkBoundaries(data.display_chunks || captionChunks);
-  const chunkIdx = chunkIndexFromList(captionChunks, frame, durFrames, data.tts_chunk_weights);
-  const chunkWindow = getChunkWindow(captionChunks, chunkIdx, durFrames, data.tts_chunk_weights);
+  // 정밀 타이밍(word_boundary 실측)이면 자막이 발화에 정확히 붙도록 가독바닥 끄기 신호.
+  const preciseTiming = (data as any)._tts_timing?.mode === "word_boundary_text_align";
+  const chunkIdx = chunkIndexFromList(captionChunks, frame, durFrames, data.tts_chunk_weights, preciseTiming);
+  const chunkWindow = getChunkWindow(captionChunks, chunkIdx, durFrames, data.tts_chunk_weights, preciseTiming);
   const visualWindow =
     type === "cta"
       ? { ...chunkWindow, visualIndex: chunkIdx }
-      : getVisualWindow(captionChunks, frame, durFrames, data.tts_chunk_weights);
+      : getVisualWindow(captionChunks, frame, durFrames, data.tts_chunk_weights, preciseTiming);
   const visualChunkFrame = Math.max(0, frame - visualWindow.start);
   const visualIdx = visualWindow.visualIndex;
   const visuals = data.chunk_visuals || [];
@@ -266,6 +268,7 @@ export const CasualCard: React.FC<Props> = ({
         emphasisWords={data.caption_emphasis}
         timingWeights={data.tts_chunk_weights}
         durFrames={durFrames}
+        precise={preciseTiming}
       />
     </AbsoluteFill>
   );

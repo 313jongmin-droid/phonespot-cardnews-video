@@ -107,6 +107,32 @@ def main() -> int:
     run([GIT, "add", "-A"])
     diff = run([GIT, "diff", "--cached", "--name-only"], check=False)
     changed = [line.strip() for line in (diff.stdout or "").splitlines() if line.strip()]
+    # 검증 게이트(D): 깨진 .py/.bat 은 커밋하지 않는다. 편집/마운트 손상이 HEAD까지
+    #   오염돼 복구가 어려웠던 사고(매처 main 소실 / bat truncation) 재발 방지.
+    import py_compile as _pyc
+    _bad = []
+    for _rel in changed:
+        _r = _rel.strip().strip('"')
+        _full = ROOT / _r
+        try:
+            if _r.endswith(".py"):
+                _pyc.compile(str(_full), doraise=True)
+            elif _r.endswith(".bat"):
+                _b = _full.read_bytes()
+                if _b and _b.count(b"\n") != _b.count(b"\r\n"):
+                    _bad.append((_r, "LF(CRLF 아님) - cmd 파싱 깨짐"))
+        except FileNotFoundError:
+            pass
+        except Exception as _e:
+            _bad.append((_r, (str(_e).splitlines() or [""])[0] or type(_e).__name__))
+    if _bad:
+        log("")
+        log("[ABORT] 검증 실패 - 깨진 파일이 있어 커밋/푸시 중단(HEAD 오염 차단):")
+        for _r, _why in _bad:
+            log("   X " + _r + ": " + str(_why))
+        log("[ABORT] 정상본 복구 후 재시도 (git restore <file>).")
+        run([GIT, "reset", "-q"], check=False)
+        return 3
     if changed:
         stamp = datetime.now().strftime("%Y-%m-%d %H:%M")
         message = f"Update PhoneSpot Codex system {stamp}"

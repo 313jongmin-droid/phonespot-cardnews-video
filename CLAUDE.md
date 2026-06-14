@@ -361,4 +361,6 @@ git ls-files -z | grep -ziE '\.(bat|ps1|cmd|vbs)$' | xargs -0 md5sum | sort \
 
 - 2026-06-14: **일러스트도 렉시컬 키워드 신호로 안정화 + 태그DB 손상 재발방지 (E단원 정본, 검증 170444).** 일러스트 미사용 원인 = 임베딩이 해시이름+헤드라인에 희석돼 정확 키워드도 임계 미달 + 태그DB가 비원자적 write로 NUL 손상 시 빈 DB 반환. 수정: `codex_semantic_visual_match.py` 일러스트 렉시컬 키워드(`build_illust_keyword_index`/`illust_lexical_hits`/`best_lex_ill`, hits≥2면 임베딩보다 우선, 약하면 임베딩 유지=무회귀) + `codex_illustration_db.py` `write_json` 원자적(temp+os.replace) + keep-source 분기서 `photos/` 제외(stale 포토 되살아남 차단). 검증: mid_release/official_sale/mounted_body 제자리, smartphone 6→4. 정본 = SYSTEM_MAP E단원.
 
+- 2026-06-14: **대형파일 안전규칙 + 커밋 검증 게이트(D) (I단원 정본).** 이번 세션 파일 손상 반복(매처 main 소실·bat CRLF→truncation)의 뿌리 = Edit 도구·Read·grep이 ~31KB 넘는 파일을 그 지점에서 잘라 읽고 되씀(bash-python은 캡 없음). **규칙: 26KB+ 파일은 Edit 금지·bash-python only + 매 쓰기후 byte/py_compile/CRLF 검증.** `codex_github_upload.py` main()에 **검증 게이트**(변경된 .py py_compile + .bat CRLF, 깨지면 git reset+return3) → 손상이 HEAD로 못 넘어감(정상본만 커밋=항상 안전 롤백점). C(물리 분할)는 대형파일 대부분이 다른 task 영역(generator.html 등)이거나 쪼개도 캡 밑 안 돼 비채택 → 규칙+D로 대체. 정본 = SYSTEM_MAP I단원.
+
 이 파일이 업그레이드되면 변경 이력 1줄 추가. 가이드 추가·제거 시 STEP 1 리스트 동기화.

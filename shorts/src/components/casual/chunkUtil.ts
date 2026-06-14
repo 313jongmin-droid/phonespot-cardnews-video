@@ -399,7 +399,7 @@ export function formatCaptionLines(text: string, _maxLineChars = 18, maxLines = 
   return best.lines.join("\n");
 }
 
-export function getChunkWindows(chunks: string[], durFrames: number, timingWeights?: number[]) {
+export function getChunkWindows(chunks: string[], durFrames: number, timingWeights?: number[], precise: boolean = false) {
   const clean = chunks && chunks.length ? chunks : [""];
   const hasTimingWeights =
     timingWeights?.length === clean.length && timingWeights.every((value) => Number.isFinite(value) && value > 0);
@@ -411,10 +411,14 @@ export function getChunkWindows(chunks: string[], durFrames: number, timingWeigh
   // the section timeline always follows the real speech weights (prevents the
   // old "equal-spacing" desync). See MAINTENANCE/CODEX_SYNC_AND_VISUAL_MATCH_FIX_GUIDE.md
   const avgFrames = durFrames / clean.length;
-  const minFrames = Math.max(
-    4,
-    Math.min(CAPTION_MIN_READABLE_FRAMES, Math.floor(avgFrames * 0.5))
-  );
+  // precise(word_boundary 실측 타이밍)면 가독 바닥을 끈다 → 자막이 실제 발화에 정확히 붙음.
+  // 추정(char fallback) 모드에서만 바닥으로 가독성 보호.
+  const minFrames = precise
+    ? 0
+    : Math.max(
+        4,
+        Math.min(CAPTION_MIN_READABLE_FRAMES, Math.floor(avgFrames * 0.5))
+      );
   const spareFrames = Math.max(0, durFrames - minFrames * clean.length);
 
   let cursor = 0;
@@ -435,16 +439,16 @@ export function getChunkWindows(chunks: string[], durFrames: number, timingWeigh
   });
 }
 
-export function getChunkWindow(chunks: string[], idx: number, durFrames: number, timingWeights?: number[]) {
-  const windows = getChunkWindows(chunks, durFrames, timingWeights);
+export function getChunkWindow(chunks: string[], idx: number, durFrames: number, timingWeights?: number[], precise: boolean = false) {
+  const windows = getChunkWindows(chunks, durFrames, timingWeights, precise);
   return windows[Math.min(Math.max(idx, 0), windows.length - 1)];
 }
 
 // Captions follow TTS boundaries. Visuals use a calmer, independent timeline.
 // This prevents source images from flashing past when a narration sentence is
 // split into multiple readable Korean caption chunks.
-export function getVisualWindow(chunks: string[], frame: number, durFrames: number, timingWeights?: number[]) {
-  const windows = getChunkWindows(chunks, durFrames, timingWeights);
+export function getVisualWindow(chunks: string[], frame: number, durFrames: number, timingWeights?: number[], precise: boolean = false) {
+  const windows = getChunkWindows(chunks, durFrames, timingWeights, precise);
   if (!windows.length) {
     return { start: 0, end: Math.max(1, durFrames), duration: Math.max(1, durFrames), visualIndex: 0 };
   }
@@ -487,8 +491,8 @@ export function chunkInfo(text: string, frame: number, durFrames: number, maxCha
   return { chunks, idx, count: chunks.length };
 }
 
-export function chunkIndexFromList(chunks: string[], frame: number, durFrames: number, timingWeights?: number[]) {
-  const windows = getChunkWindows(chunks, durFrames, timingWeights);
+export function chunkIndexFromList(chunks: string[], frame: number, durFrames: number, timingWeights?: number[], precise: boolean = false) {
+  const windows = getChunkWindows(chunks, durFrames, timingWeights, precise);
   let idx = 0;
   for (let i = 0; i < windows.length; i++) {
     if (frame >= windows[i].start) {

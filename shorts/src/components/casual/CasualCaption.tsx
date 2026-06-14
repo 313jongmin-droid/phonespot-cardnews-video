@@ -8,6 +8,7 @@ interface Props {
   emphasisWords?: string[];
   timingWeights?: number[];
   durFrames: number;
+  precise?: boolean;
 }
 
 const AUTO_EMPHASIS_PATTERNS: RegExp[] = [
@@ -134,11 +135,12 @@ export const CasualCaption: React.FC<Props> = ({
   emphasisWords = [],
   timingWeights,
   durFrames,
+  precise = false,
 }) => {
   const frame = useCurrentFrame();
   const list = repairListChunkBoundaries(chunks && chunks.length ? chunks : [""]);
   const repairedDisplayChunks = repairListChunkBoundaries(displayChunks.length ? displayChunks : list);
-  const idx = chunkIndexFromList(list, frame, durFrames, timingWeights);
+  const idx = chunkIndexFromList(list, frame, durFrames, timingWeights, precise);
   const current = list[idx] || "";
   const displaySource = repairedDisplayChunks[idx] || current;
   const displayText = formatCaptionLines(displaySource, 18, 3);

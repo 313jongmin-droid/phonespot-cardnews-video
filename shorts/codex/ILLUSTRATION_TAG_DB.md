@@ -5,10 +5,10 @@
 
 | illustration | tags | use count | last slug |
 |---|---|---:|---|
-| `aluminum_label` | materials, hardware, library | 3 | 021_news_galaxy_flip8_exynos |
+| `aluminum_label` | materials, hardware, library | 4 | 023_qa_senior_phone_recommendation |
 | `android_user_a91efa70` | auto | 0 |  |
-| `appliance` | hardware, device, library | 3 | 021_news_galaxy_flip8_exynos |
-| `battery_charge_range` | battery, charging, tips, library | 2 | 021_news_galaxy_flip8_exynos |
+| `appliance` | hardware, device, library | 4 | 023_qa_senior_phone_recommendation |
+| `battery_charge_range` | battery, charging, tips, library | 3 | 023_qa_senior_phone_recommendation |
 | `battery_health_check` | battery, health, tips | 0 |  |
 | `battery_overheat` | battery, heat, warning, library | 1 | 017_tip_summer_travel_phone_5min |
 | `biometric` | security, privacy, authentication, library | 3 | 020_qa_apple_pay_korea_card |
@@ -147,7 +147,7 @@
 | `shield` | security, privacy, protection, library | 11 | 020_qa_apple_pay_korea_card |
 | `slim_body_e2dca0be` | auto, library | 0 |  |
 | `smart_482e7bdd` | auto, library | 0 |  |
-| `smartphone` | device, purchase, cta, library | 13 | 022_tip_galaxy_battery_save_5 |
+| `smartphone` | device, purchase, cta, library | 14 | 023_qa_senior_phone_recommendation |
 | `smishing_fake_link` | security, smishing, warning, link | 0 |  |
 | `stock_chart` | price, data, market, library | 0 |  |
 | `store` | store, purchase, cta, library | 3 | 014_scam_voicephishing_zero_relief |
@@ -167,6 +167,7 @@
 
 ## Recent videos
 
+- `023_qa_senior_phone_recommendation`: smartphone, aluminum_label, appliance, battery_charge_range
 - `022_tip_galaxy_battery_save_5`: smartphone, phone_setup_ready, phone_settings_toggle, device_os_requirement, device_data_transfer, personal_data_63b96014, lock_screen_only_e80c4860
 - `021_news_galaxy_flip8_exynos`: unpack_867ebe81, mounted_body_496029c6, cpt_67a38371, mid_release_98cab19a, official_sale_9dc82f05, device_data_transfer, smartphone, appliance, camera_battery_ecd040c7, ti_decrease, aluminum_label, battery_charge_range, optimized_charging
 - `020_qa_apple_pay_korea_card`: smartphone, newspaper, microphone, shield, meeting_room, forecast, cpt_f59129df, cpt_a1caaea6, biometric, cpt_83fa1e9f, cpt_6a2e9678, device_data_transfer, nfc_pay, cpt_fd9edf65, gift_voucher
@@ -178,4 +179,3 @@
 - `014_scam_voicephishing_zero_relief`: impersonation_call, cpt_fd9edf65, cpt_75c6eba6, cpt_6a2e9678, cpt_ea7bc1d6, cpt_83fa1e9f, microphone, shield, meeting_room, forecast, market_cap, store, smartphone, emergency_account_freeze, handshake, gift_voucher
 - `013_tip_galaxy_camera_hidden`: phone_settings_toggle, smartphone, newspaper, microphone, shield, meeting_room, forecast, gift_voucher
 - `010_tip_iphone_call_record`: phone_settings_toggle, phone_setup_ready, smartphone, device_data_transfer, newspaper, microphone, shield, call_recording_notice, meeting_room, forecast, recording_archive, impersonation_call, chat_backup_restore, samsung_ai, prohibit, warning, gemini, memory_chip, chatbot, gift_voucher
-- `012_news_galaxy_unpack_july`: smartphone, newspaper, microphone, shield, meeting_room, forecast, foldable, final_update, phone_settings_toggle, phone_setup_ready, health_sensor_watch, gift_voucher, chatbot, telecom_discount_compare, store
