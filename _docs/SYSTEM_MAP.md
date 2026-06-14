@@ -248,17 +248,20 @@
     1. **중립 폴백 정상화**: 매칭 실패 시 의미 있는 그림(방패/신문/마이크) 대신 phone/device 일반 그림.
     2. **content-gate(CLIP)**: 텍스트로 고른 일러스트도 실제 그림이 주제와 맞는지 `EMBED_MIN_ILLUST_IMG`로 검증. **단 CLIP 그림엔진(`codex_image_embed`/`image_embed_cache.json`)이 설치돼야 작동** — 없으면 무력(빈 데이터→통과).
     3. **미검증 개념아트 정책(`_is_unverified_concept`)**: `cpt_*`(개념요청 텍스트로 자동생성, 그림 미검증)는 **텍스트매칭에서 제외**(CLIP 켜지면 content 경로로만 검증 사용). 이름 하드코딩 대신 카테고리 규칙 — cpt_496029c6(=AI개념인데 보이스피싱 그림) 같은 케이스 일괄 차단. 읽기이름 일러스트는 영향 없음.
-  - **★ 실사 포토 라이브러리 (2026-06-13, 사장님 설계)**: 일러스트와 별개 폴더 `shorts/public/assets/photos/`. 사장님이 '사용 권리 확보된' 실사를 **한글 파일명(=라벨)**으로 넣음(예 `갤럭시Z플립8_제품_폴더블.jpg`, 언더스코어=공백). 매칭 우선순위 = **① 포토(매우 확신 `≥ PHOTO_MIN`) → ② 일러스트(기존) → ③ 일러스트 생성요청**.
-    - 함수: `list_photos()`/`photo_label()`/`build_photo_index()`(파일명 라벨 임베딩) + 루프 `best_photo`(코사인) + chosen 로직 **0순위 게이트**. 선택 시 `{"type":"image","value":"photos/<file>"}` → 기존 `ImageVisual`이 `staticFile('assets/photos/<file>')` 켄번스 모션으로 렌더(렌더러 변경 X).
-    - `PHOTO_MIN` = env `PHONESPOT_PHOTO_MIN`(기본 **0.80**, 텍스트 코사인 0~1). **0.80은 매우 엄격 — 긴 문장 청크 vs 짧은 라벨이라 안 뜰 수 있음 → 검증 시 0.60으로 낮춰서.**
-    - **★ 포토 매칭은 텍스트 엔진(`ce`, 이미 작동)만 씀 → CLIP 미설치여도 작동**(content-gate와 무관). 한 사진은 used_visuals로 **한 청크에만**. 한글 라벨이 한글 자막과 직접 매칭이라 영어보다 정확.
+  - **★ 실사 포토 라이브러리 (2026-06-13, 사장님 설계)**: 일러스트와 별개 폴더 `shorts/public/assets/photos/`. 사장님이 '사용 권리 확보된' 실사를 **한글 파일명(=라벨)**으로 넣음(예 `삼성_엑시노스.JPG`, `갤럭시z플립7_z폴드7.JPG`, 언더스코어=공백). 매칭 우선순위 = **① 포토(모델명 일치) → ② 일러스트(기존) → ③ 일러스트 생성요청**.
+    - **★★ 매칭 방식 = 임베딩 아님, 렉시컬 모델명 일치 (2026-06-14 전환).** 한글 임베딩(MiniLM)이 모델명(갤럭시A vs 엑시노스 vs S25)을 못 구분 → 임베딩 코사인으론 엉뚱한 폰이 매칭됨(렌더 증거: 플립 청크에 갤럭시A, 엑시노스 청크에 S25, 통신사 로고 곳곳). **임계값은 "정답>오답 간격"이 있을 때만 작동하는데, 여기선 정답·오답이 다 ~0.5에 겹쳐 어떤 PHOTO_MIN으로도 못 가름** → 신호 자체를 렉시컬로 교체.
+    - **렉시컬 규칙**: 파일명을 토큰화(`_photo_tokens`: 공백/_/- + 한글|영문|숫자 경계) → 그 토큰이 **청크 텍스트에 실제 등장**할 때만 채택. **구별 토큰**(`_is_distinctive`: 한글≥2·영문≥3·숫자≥3, `PHOTO_STOP` 제외)이 ≥1개여야 함. `photo_lexical_score(label,chunk)→(구별수,일반수)`. 동점이면 일반토큰 일치수로. `best_photo=(dist,gen,file)`, chosen **0순위 = dist≥1**.
+    - **`PHOTO_STOP`**(env `PHONESPOT_PHOTO_STOP`): 삼성/갤럭시/애플/퀄컴/로고/폰/스마트폰 등 일반 토큰 — **이것만으론 채택 X**. 그래서 `삼성_갤럭시A`·`S25`가 무관 청크(예 플립영상)에 안 붙음 = 커버 오염의 근본 차단. `엑시노스`/`스냅드래곤`/`플립`/`폴드`/`배터리`/`아이폰`은 구별 토큰 → 그 단어 있는 청크에만.
+    - **결과(021 검증)**: 엑시노스→엑시노스칩청크, 플립→플립청크, 배터리→배터리청크 정확. `갤럭시A`·`S25`·통신사로고는 해당 단어 없는 영상에서 자동 제외.
+    - **★ 임베딩 완전 불필요 → 모델 미설치 PC(부사수)에서도 작동.** `build_photo_index()`/`PHOTO_MIN`은 더 이상 매칭에 안 씀(상수는 잔존, 무해). bat의 `PHONESPOT_PHOTO_MIN`도 미사용. 한 사진은 used_visuals로 **한 청크에만**(중복 사용 시 다음 청크는 일러스트 폴백).
+    - 선택 시 `{"type":"image","value":"photos/<file>"}` → 기존 `ImageVisual`이 `staticFile('assets/photos/<file>')` 켄번스 모션으로 렌더(렌더러 변경 X). 진단 로그 `[photo] <sec> c<i>: <file> dist=.. gen=..`.
     - 폴더 README(명명·예시·저작권 주의) + `.gitignore` 등록(실사=대용량/저작권, **git 비추적 → 렌더하는 PC에 직접 있어야 함**, Drive/로컬 공유).
 - `codex_illust_embed.py`(텍스트 임베딩 `ce`, fastembed `paraphrase-multilingual-MiniLM-L12-v2`) / `codex_image_embed.py`(이미지 CLIP `ie`, jina-clip-v1).
 - `codex_illust_match_preview.py` — 읽기전용 의미매칭 미리보기.
 - `codex_concept_scout.py` — **개념 발굴형 스카우트**: 라이브러리에 없는 갭을 범용 개념으로 발굴.
   - `readable_variant()`: Gemini 번역으로 `<english_slug>_<hash8>` 사람읽기 이름. 키 없으면 `cpt_<hash8>` 폴백.
   - 캐시 `shorts/config/concept_name_cache.json`(git 비추적). 키파일 `_secrets/gemini_key.txt`.
-- `codex_illustration_scout.py` / `codex_illustration_db.py` / `codex_unique_illustration_guard.py` / `codex_warm_embeddings.py`.
+- `codex_illustration_scout.py`(필수 일러 요청, 13 고정규칙 RULES, `MAX_REQUESTS` = **5**[2026-06-14, 3→5]) / `codex_illustration_db.py` / `codex_unique_illustration_guard.py` / `codex_warm_embeddings.py`. ※ 서브(자동발굴)=`codex_concept_scout.py` `MAX_NEW_CONCEPTS`=5. 패널 "신규 일러스트 요청서" = 필수 5 + 서브 5. 생성단계에서 많이 채울수록 렌더 매칭 품질↑(graceful degradation: 채운 만큼 고퀄, 못 채우면 렉시컬로 최선).
   - **★ `codex_unique_illustration_guard.py` 버그 수정(2026-06-13)**: 이 가드는 semantic_match **다음에** 돌며 "중복 일러스트를 유니크하게" 바꾸는데, **매처의 제외 규칙(cpt·blocklist)을 무시**하고 반복된 중립 필러까지 강제 교체해 **매처가 걸러낸 cpt_496029c6(사기그림)·무관 그림을 되살렸다**(매칭 망가짐의 진짜 뿌리). 수정: `_is_bad_variant`(cpt·blocklist 제외) + **중립 필러(`_NEUTRALS`)는 반복 허용**(억지 유니크 금지). 매처와 같은 env(`PHONESPOT_ILLUST_BLOCKLIST`/`_TRUST_CONCEPT_ART`/`_NEUTRAL_FILLERS`) 사용. **교훈: semantic_match 뒤에 비주얼을 만지는 모든 단계(guard·scout·apply)는 같은 제외 규칙을 따라야 한다.**
 - 지문/사용이력: `shorts/codex/ILLUSTRATION_TAG_DB.md`, `shorts/codex/illustration_usage_history.json`(런타임, git 비추적).
 
@@ -271,7 +274,7 @@
 - Gemini 키 없으면 readable 이름 폴백(cpt_) — 에러 아님. **단 cpt_는 그림 미검증이라 텍스트매칭 제외(위 정책 3)**.
 - **★ CLIP 그림엔진(`codex_image_embed`)이 PC에 미설치면 content-gate 무력** → 텍스트/태그 매칭만으로 동작. 즉 "이름↔그림 불일치"의 범용 차단은 **CLIP 켜야 완전**. 안 켜진 동안은 정책 3(cpt_ 제외)+중립폴백+임계 0.48이 방어선. 검증 단서: `shorts/codex/image_embed_cache.json` 존재 여부.
 - **잘못 그려진 정식(비-cpt_) 일러스트**(예: ti_decrease=티타늄'감소'를 슬림화에 사용)는 특정 이름 하드코딩 ❌(원칙). 해결=그 그림을 더 중립/정확한 것으로 교체하거나 CLIP content-gate 활성화.
-- **실사 포토가 안 뜸**: ① 사진이 **렌더하는 PC에 없음**(git 비추적 → 노트북에 넣고 사무실 렌더면 누락) ② `PHONESPOT_PHOTO_MIN` 0.80 너무 엄격(0.60으로 검증) ③ 새 코드 미전파(push→pull). 로그 `[semantic_visual] ... photos=N장(min=...)`로 로드 여부·장수 확인.
+- **실사 포토가 안 뜸**: ① 사진이 **렌더하는 PC에 없음**(git 비추적 → 노트북에 넣고 사무실 렌더면 누락) ② **모델명이 청크에 안 나옴**(렉시컬 = 단어 실제 등장 필요. 예 "갤럭시 A" 영상인데 청크가 "A"만 쓰면 너무 짧아 미채택 — 이게 정상, 무관 청크 오염 방지의 대가) ③ 파일명이 일반 토큰뿐(삼성·갤럭시·로고)이라 `PHOTO_STOP`에 걸림 → **구별되는 모델명/키워드를 파일명에 넣어야**(예 `삼성_갤럭시A` X → `갤럭시A33_보급형` 처럼 구별 토큰 추가) ④ 새 코드 미전파(push→pull). 로그 `[photo] <sec> c<i>: <file> dist/gen` + `photos=N장(렉시컬 모델명 매칭)`로 확인.
 - **약한/그리디 매칭(appliance·ti_decrease 류)**: 매처가 0.48 턱걸이로 약한 일러스트를 고르거나(예 "엑시노스"에 appliance), 적합 일러스트가 1개뿐일 때 **앞 청크에서 소진**돼 정작 핵심 청크가 차선을 받음(그리디 per-chunk). 범용 해결 = ① 그 주제 **사진/일러스트 보강**(photo가 0.48을 이기면 대체) ② CLIP content-gate 활성화 ③ `EMBED_MIN_ILLUST` 상향(약한 건 중립으로, 단 중립 반복↑). **특정 이름 하드코딩 ❌.**
 - **수정 작업법**: 이 파일은 Edit 누적이 꼬리를 truncate한 적 있음(2026-06-13) → 큰 변경은 **bash-python(assert count==1 + py_compile + tail 확인)**, 깨지면 `git show HEAD:<path>`의 꼬리로 복구.
 
@@ -452,6 +455,7 @@
 ## 변경 이력 (이 맵 자체)
 - 2026-06-13: **★ 매칭 망가짐의 진짜 뿌리 = `codex_unique_illustration_guard` 버그(검증완료).** 가드가 semantic_match 뒤에 중복 중립을 유니크화하며 cpt·무관 그림을 되살림 → cpt·blocklist 제외 + 중립 반복 허용으로 수정. 재렌더 224859에서 cpt=0 확인. 포토 "일러스트보다 우수할 때만" 규칙(`photo ≥ best_ill`)도 추가. 남은 appliance/ti_decrease는 매처 약한픽/그리디 = 에셋 보강으로(함정 박음).
 - 2026-06-13: **E단원에 실사 포토 라이브러리 박음 (사장님 설계).** `assets/photos/`(한글 파일명=라벨) → 매칭 1순위(`≥PHOTO_MIN` 기본 0.80, env) → 일러스트 → 생성요청. `build_photo_index`+`best_photo` 게이트, `ImageVisual`로 렌더. 텍스트 엔진만 써 CLIP 미설치여도 작동. git 비추적(렌더 PC에 직접). 함정에 "안 뜨는 3원인" 박음. **검증 대기**(사진 넣고 0.6으로 재렌더).
+- 2026-06-14: **★ 포토 매칭 = 임베딩 폐기 → 렉시컬 모델명 일치로 전환 (E단원 갱신).** 한글 임베딩이 모델명(갤럭시A/엑시노스/S25)을 못 구분(렌더 증거: 플립청크에 갤럭시A, 엑시노스청크에 S25, 통신사로고 곳곳) → 정답·오답 점수가 ~0.5에 겹쳐 PHOTO_MIN 임계 무의미. 신호를 렉시컬로 교체: `_photo_tokens`/`_is_distinctive`/`photo_lexical_score`/`PHOTO_STOP`, `best_photo=(dist,gen,file)`, chosen 0순위 = **구별토큰 dist≥1**. 일반토큰(삼성/갤럭시/로고)만으론 미채택 → `갤럭시A`·`S25`가 무관 영상에 안 붙음(커버 오염 차단). **임베딩 불필요 → 부사수PC(모델 미설치)에서도 작동.** 021 검증: 엑시노스→엑시노스, 플립→플립, 배터리→배터리 정확. **필수 일러 추천 `MAX_REQUESTS` 3→5**(`codex_illustration_scout.py`, graceful degradation). 교훈: 임계값은 정답>오답 간격 있을 때만 작동, 겹치면 신호를 바꿔야 함. **함정: `codex_illustration_scout.py` Edit 누적 truncation → git HEAD 꼬리로 복구.**
 - 2026-06-13: **고퀄 batch 박음 (재렌더 181856 검증).** C단원: 오프닝 2.0초·아웃트로 3.2초(+2)·**닫기 CTA 디자인카드 `CasualCta`(일러스트 폐기)**·카드 전환 애니메이션(`cardEnter`). J단원: 후킹 공식 5패턴. (1 CLIP·9 제품이미지는 제외/대기.)
 - 2026-06-13: **C단원 SNS 레이아웃·오디오 + J단원 길이목표 박음 (P2·P3).** 제목바 hook-only(`CasualCard.tsx`), 자막 세이프영역 안전(변경X), 라우드니스 −14(`finalize_sns_video.py` loudnorm, env off), BGM 보류. 길이 35~45초 목표 = 기사 집필 레버(`article_authoring_spec.md` §body + J단원). 검증=실행PC 재렌더.
 - 2026-06-13: **E단원 의미매칭 범용수정 + C단원 후킹 박음 (SNS 품질점검발).** 중립폴백 정상화·EMBED_MIN_ILLUST 0.48·content-gate(CLIP 미설치면 무력)·미검증 cpt_ 텍스트매칭 제외(`_is_unverified_concept`, 카테고리 규칙·env). 함정에 CLIP 의존성·비-cpt 오배치는 데이터교체 박음. C단원 후킹=`OpeningHook.tsx`(다크+주황글로우+키커 pill, OPENING_SEC 1.5→1.1).

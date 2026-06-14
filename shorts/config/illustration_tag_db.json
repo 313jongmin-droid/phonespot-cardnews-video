@@ -886,6 +886,20 @@
       "note": "Reusable editorial illustration.",
       "available": false
     },
+    "display_maintenance_c1ff39c1": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "디스플레이",
+        "유지",
+        "소폭",
+        "개선"
+      ],
+      "note": "자동 발굴 개념: 디스플레이 유지",
+      "available": true
+    },
     "display_ratio_change": {
       "tags": [
         "library"
@@ -1253,7 +1267,8 @@
     },
     "mid_release_98cab19a": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "공개",
@@ -1261,7 +1276,8 @@
         "하반기",
         "언팩"
       ],
-      "note": "자동 발굴 개념: 공개 중순"
+      "note": "자동 발굴 개념: 공개 중순",
+      "available": true
     },
     "mobile_settings_31257fb6": {
       "tags": [
@@ -1305,6 +1321,21 @@
         "월요일"
       ],
       "note": "자동 발굴 개념: 월요일",
+      "available": true
+    },
+    "mounted_body_496029c6": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "탑재",
+        "본체",
+        "슬림화",
+        "집중한",
+        "변화로"
+      ],
+      "note": "자동 발굴 개념: 탑재 본체",
       "available": true
     },
     "newspaper": {
@@ -1692,6 +1723,19 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "slim_body_e2dca0be": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "본체",
+        "슬림화",
+        "외부"
+      ],
+      "note": "자동 발굴 개념: 본체 슬림화",
+      "available": true
+    },
     "smart_482e7bdd": {
       "tags": [
         "auto"
@@ -1879,5 +1923,5 @@
       "available": true
     }
   },
-  "updated_at": "2026-06-14T11:22:48"
+  "updated_at": "2026-06-14T13:29:04"
 }

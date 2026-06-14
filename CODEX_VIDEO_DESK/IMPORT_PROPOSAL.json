@@ -1,8 +1,100 @@
 {
   "slug": "021_news_galaxy_flip8_exynos",
-  "engine": "none",
-  "generated_at": 1781330736.2046068,
-  "requests": [],
-  "assignments": [],
+  "engine": "fallback-mtime",
+  "generated_at": 1781411228.3443778,
+  "requests": [
+    {
+      "filename": "mounted_body_496029c6.png",
+      "variant": "mounted_body_496029c6",
+      "section": "hook",
+      "chunk_index": 2,
+      "concept_label": "탑재 본체",
+      "optional": true,
+      "concept_text": "탑재 본체 mounted body 496029c6 탑재 본체 슬림화 집중한 변화로 auto concept 탑재와 본체 슬림화에 집중한 변화로 전망됩니다"
+    },
+    {
+      "filename": "mid_release_98cab19a.png",
+      "variant": "mid_release_98cab19a",
+      "section": "fact_1",
+      "chunk_index": 0,
+      "concept_label": "공개 중순",
+      "optional": true,
+      "concept_text": "공개 중순 mid release 98cab19a 공개 중순 하반기 언팩 auto concept 공개는 2026년 7월 중순 하반기 언팩,"
+    },
+    {
+      "filename": "slim_body_e2dca0be.png",
+      "variant": "slim_body_e2dca0be",
+      "section": "fact_3",
+      "chunk_index": 0,
+      "concept_label": "본체 슬림화",
+      "optional": true,
+      "concept_text": "본체 슬림화 slim body e2dca0be 본체 슬림화 외부 auto concept 본체 슬림화에 집중하면서도 외부"
+    },
+    {
+      "filename": "display_maintenance_c1ff39c1.png",
+      "variant": "display_maintenance_c1ff39c1",
+      "section": "fact_3",
+      "chunk_index": 1,
+      "concept_label": "디스플레이 유지",
+      "optional": true,
+      "concept_text": "디스플레이 유지 display maintenance c1ff39c1 디스플레이 유지 소폭 개선 auto concept 디스플레이는 유지·소폭 개선이 예상됩니다"
+    }
+  ],
+  "assignments": [
+    {
+      "candidate_path": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\CODEX_VIDEO_DESK\\ILLUSTRATION_DROP\\smartphone.png",
+      "candidate_name": "smartphone.png",
+      "proposed_filename": "mounted_body_496029c6.png",
+      "confidence": null,
+      "exact_name": false,
+      "alternatives": [],
+      "dedup": null
+    },
+    {
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 14일 오후 01_25_54 (1).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 14일 오후 01_25_54 (1).png",
+      "proposed_filename": "mid_release_98cab19a.png",
+      "confidence": null,
+      "exact_name": false,
+      "alternatives": [],
+      "dedup": null
+    },
+    {
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 14일 오후 01_25_54 (2).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 14일 오후 01_25_54 (2).png",
+      "proposed_filename": "slim_body_e2dca0be.png",
+      "confidence": null,
+      "exact_name": false,
+      "alternatives": [],
+      "dedup": null
+    },
+    {
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 14일 오후 01_25_54 (3).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 14일 오후 01_25_54 (3).png",
+      "proposed_filename": "display_maintenance_c1ff39c1.png",
+      "confidence": null,
+      "exact_name": false,
+      "alternatives": [],
+      "dedup": null
+    },
+    {
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 14일 오후 01_25_55 (4).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 14일 오후 01_25_55 (4).png",
+      "proposed_filename": null,
+      "confidence": null,
+      "exact_name": false,
+      "alternatives": [],
+      "dedup": null
+    },
+    {
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 14일 오후 01_25_55 (5).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 14일 오후 01_25_55 (5).png",
+      "proposed_filename": null,
+      "confidence": null,
+      "exact_name": false,
+      "alternatives": [],
+      "dedup": null
+    }
+  ],
   "unmatched_requests": []
 }

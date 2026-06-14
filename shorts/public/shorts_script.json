@@ -49,7 +49,7 @@
       },
       {
         "type": "illust",
-        "value": "memory_chip"
+        "value": "mounted_body_496029c6"
       },
       {
         "type": "image",
@@ -151,11 +151,11 @@
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "smartphone"
+          "value": "mid_release_98cab19a"
         },
         {
           "type": "illust",
-          "value": "phone_setup_ready"
+          "value": "official_sale_9dc82f05"
         },
         {
           "type": "image",
@@ -348,11 +348,11 @@
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "ti_decrease"
+          "value": "slim_body_e2dca0be"
         },
         {
           "type": "illust",
-          "value": "device_os_requirement"
+          "value": "display_maintenance_c1ff39c1"
         },
         {
           "type": "illust",
@@ -596,18 +596,28 @@
   "_codex_uploaded_illustrations": [
     {
       "section": "hook",
-      "chunk": 2,
-      "variant": "self_flip_6728256c"
-    },
-    {
-      "section": "hook",
       "chunk": 3,
-      "variant": "cpt_496029c6"
+      "variant": "mounted_body_496029c6"
     },
     {
-      "section": "hook",
-      "chunk": 4,
-      "variant": "camera_battery_ecd040c7"
+      "section": "fact_1",
+      "chunk": 1,
+      "variant": "mid_release_98cab19a"
+    },
+    {
+      "section": "fact_1",
+      "chunk": 2,
+      "variant": "official_sale_9dc82f05"
+    },
+    {
+      "section": "fact_3",
+      "chunk": 1,
+      "variant": "slim_body_e2dca0be"
+    },
+    {
+      "section": "fact_3",
+      "chunk": 2,
+      "variant": "display_maintenance_c1ff39c1"
     }
   ],
   "_codex_semantic_visual_match": {
@@ -618,8 +628,8 @@
         "section": "hook",
         "chunk": 3,
         "from": {
-          "type": "image",
-          "value": "photos/퀄컴_스냅드래곤.jpg"
+          "type": "illust",
+          "value": "mounted_body_496029c6"
         },
         "to": {
           "type": "illust",
@@ -629,88 +639,60 @@
         "reason": "illust score 0.495 (content n/a)"
       },
       {
-        "section": "hook",
-        "chunk": 4,
-        "from": {
-          "type": "image",
-          "value": "photos/삼성_엑시노스.JPG"
-        },
-        "to": {
-          "type": "image",
-          "value": "photos/배터리_충전.JPG"
-        },
-        "context": "탑재와 본체 슬림화에 집중한 변화로 전망됩니다 카메라·배터리·충전은 전작과 같지만 손에 잡히는 느낌이 달라집니다 갤럭시 플립8 엑시노스 2600 슬림화 ['갤럭시 플립8', '엑시노스 2600 슬림화'] 뉴스",
-        "reason": "photo lexical dist=2 gen=0: 배터리_충전.JPG"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 1,
-        "from": {
-          "type": "image",
-          "value": "photos/삼성_갤럭시S25.JPG"
-        },
-        "to": {
-          "type": "image",
-          "value": "photos/삼성_엑시노스.JPG"
-        },
-        "context": "스냅드래곤이 아닌 삼성 엑시노스 2600 탑재가 유력합니다 칩 엑시노스 2600 자체 탑재 ['칩', '엑시노스 2600 자체 탑재'] 뉴스",
-        "reason": "photo lexical dist=1 gen=1: 삼성_엑시노스.JPG"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "memory_chip"
-        },
-        "to": {
-          "type": "illust",
-          "value": "appliance"
-        },
-        "context": "스냅드래곤이 아닌 삼성 엑시노스 2600 탑재가 유력합니다 전성비 개선과 온디바이스 AI 처리 효율 강화가 핵심 칩 엑시노스 2600 자체 탑재 ['칩', '엑시노스 2600 자체 탑재'] 뉴스",
-        "reason": "illust score 0.488 (content n/a)"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "appliance"
-        },
-        "to": {
-          "type": "illust",
-          "value": "camera_battery_ecd040c7"
-        },
-        "context": "전성비 개선과 온디바이스 AI 처리 효율 강화가 핵심 전작 대비 발열·배터리 효율이 관전 포인트입니다 칩 엑시노스 2600 자체 탑재 ['칩', '엑시노스 2600 자체 탑재'] 뉴스",
-        "reason": "illust score 0.495 (content n/a)"
-      },
-      {
-        "section": "fact_4",
+        "section": "fact_1",
         "chunk": 1,
         "from": {
           "type": "illust",
-          "value": "camera_battery_ecd040c7"
+          "value": "mid_release_98cab19a"
         },
         "to": {
           "type": "illust",
-          "value": "battery_charge_range"
+          "value": "smartphone"
         },
-        "context": "메인 카메라 구성과 배터리 용량 4300mAh, 충전 속도 25W는 전작과 대동소이할 것으로 전망됩니다 유지 카메라·배터리·충전 ['유지', '카메라·배터리·충전'] 뉴스",
-        "reason": "illust score 0.58 (content n/a)"
+        "context": "공개는 2026년 7월 중순 하반기 언팩, 정식 판매는 7월 말에서 8월 초 사이 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
       },
       {
-        "section": "fact_4",
+        "section": "fact_1",
         "chunk": 2,
         "from": {
-          "type": "image",
-          "value": "photos/배터리_충전.JPG"
+          "type": "illust",
+          "value": "official_sale_9dc82f05"
         },
         "to": {
           "type": "illust",
-          "value": "optimized_charging"
+          "value": "phone_setup_ready"
         },
-        "context": "메인 카메라 구성과 배터리 용량 4300mAh, 충전 속도 25W는 전작과 대동소이할 것으로 전망됩니다 사진·동영상 사용 패턴이 크게 유지 카메라·배터리·충전 ['유지', '카메라·배터리·충전'] 뉴스",
-        "reason": "illust score 0.5 (content n/a)"
+        "context": "공개는 2026년 7월 중순 하반기 언팩, 정식 판매는 7월 말에서 8월 초 사이 글로벌 동시 출시가 유력합니다 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "slim_body_e2dca0be"
+        },
+        "to": {
+          "type": "illust",
+          "value": "ti_decrease"
+        },
+        "context": "본체 슬림화에 집중하면서도 외부 디스플레이는 유지·소폭 개선이 예상됩니다 디자인 본체 슬림화 집중 ['디자인', '본체 슬림화 집중'] 뉴스",
+        "reason": "illust score 0.524 (content n/a)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "display_maintenance_c1ff39c1"
+        },
+        "to": {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        "context": "본체 슬림화에 집중하면서도 외부 디스플레이는 유지·소폭 개선이 예상됩니다 손에 잡았을 때 두께·무게 체감이 가장 큰 변화 포인트입니다 디자인 본체 슬림화 집중 ['디자인', '본체 슬림화 집중'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
       }
     ],
     "weak": [

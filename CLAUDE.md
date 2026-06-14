@@ -357,4 +357,6 @@ git ls-files -z | grep -ziE '\.(bat|ps1|cmd|vbs)$' | xargs -0 md5sum | sort \
   - **메타_인사이트 시트 셋업 대기**: 현재 `generateMetaInsightsMarkdown()` 함수가 Drive MD에 저장 중 → 시트 출력으로 함수 수정 필요(사장님 직접, Apps Script Editor). 그 전까지 메타 가중치 0건. 유튜브_인사이트 시트는 이미 동작 중.
   - **다운그레이드 없음**: 기존 성능 유지. 새 가이드는 추가만, STEP 1·2·4·8 기존 박힘은 보존.
 
+- 2026-06-14: **포토 매칭 = 임베딩 폐기 → 렉시컬 모델명 일치 + 필수 일러 3→5 (E단원 정본).** 한글 임베딩이 모델명(갤럭시A/엑시노스/S25)을 못 구분 → 임계값(PHOTO_MIN)으로는 정답·오답(둘 다 ~0.5)을 못 가름. `codex_semantic_visual_match.py`에 `_photo_tokens`/`_is_distinctive`/`photo_lexical_score`/`PHOTO_STOP` 추가, 포토 채택 = 구별토큰이 청크에 실제 등장(dist≥1). 일반토큰(삼성/갤럭시/로고)만으론 미채택 → `갤럭시A`·`S25`가 무관 영상에 안 붙음(커버 오염 차단). **임베딩 불필요 → 부사수PC에서도 작동**(사진 에셋은 git 비추적이라 렌더 PC에 직접 있어야 함). 필수 일러 추천 `MAX_REQUESTS` 3→5(`codex_illustration_scout.py`). graceful degradation: 생성단계 많이 채울수록 고퀄, 못 채우면 렉시컬로 최선. 함정: scout.py Edit truncation → git HEAD 복구. 정본 = SYSTEM_MAP E단원.
+
 이 파일이 업그레이드되면 변경 이력 1줄 추가. 가이드 추가·제거 시 STEP 1 리스트 동기화.
