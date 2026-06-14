@@ -273,24 +273,18 @@
       ]
     },
     "022_tip_galaxy_battery_save_5": {
-      "used_at": "2026-06-14T21:40:58",
-      "source": "codex_enhance",
+      "used_at": "2026-06-14T22:53:59",
+      "source": "semantic_visual_match",
       "illustrations": [
-        "battery_charge_range",
-        "optimized_charging",
         "smartphone",
         "phone_setup_ready",
         "phone_settings_toggle",
-        "meeting_room",
-        "appliance",
-        "personal_data_63b96014",
         "device_os_requirement",
-        "device_data_transfer",
-        "lock_screen_only_e80c4860"
+        "device_data_transfer"
       ]
     }
   },
-  "updated_at": "2026-06-14T21:41:11",
+  "updated_at": "2026-06-14T22:54:01",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -347,7 +341,7 @@
       "variants": []
     },
     "022_tip_galaxy_battery_save_5": {
-      "updated_at": "2026-06-14T21:41:11",
+      "updated_at": "2026-06-14T22:54:01",
       "variants": []
     }
   }

@@ -7,8 +7,8 @@
 |---|---|---:|---|
 | `aluminum_label` | materials, hardware, library | 3 | 021_news_galaxy_flip8_exynos |
 | `android_user_a91efa70` | auto | 0 |  |
-| `appliance` | hardware, device, library | 4 | 022_tip_galaxy_battery_save_5 |
-| `battery_charge_range` | battery, charging, tips, library | 3 | 022_tip_galaxy_battery_save_5 |
+| `appliance` | hardware, device, library | 3 | 021_news_galaxy_flip8_exynos |
+| `battery_charge_range` | battery, charging, tips, library | 2 | 021_news_galaxy_flip8_exynos |
 | `battery_health_check` | battery, health, tips | 0 |  |
 | `battery_overheat` | battery, heat, warning, library | 1 | 017_tip_summer_travel_phone_5min |
 | `biometric` | security, privacy, authentication, library | 3 | 020_qa_apple_pay_korea_card |
@@ -102,10 +102,10 @@
 | `launch_event` | library | 0 |  |
 | `liquid_titanium` | materials, hardware, library | 0 |  |
 | `lock` | security, privacy, lock, library | 3 | 018_scam_wedding_invite_smishing |
-| `lock_screen_only_e80c4860` | auto, library | 1 | 022_tip_galaxy_battery_save_5 |
+| `lock_screen_only_e80c4860` | auto, library | 0 |  |
 | `logout` | security, privacy, account, library | 1 | 015_qa_msafer_pass_identity_block |
 | `market_cap` | price, data, market, library | 1 | 014_scam_voicephishing_zero_relief |
-| `meeting_room` | policy, news, strategy, library | 12 | 022_tip_galaxy_battery_save_5 |
+| `meeting_room` | policy, news, strategy, library | 11 | 020_qa_apple_pay_korea_card |
 | `memory_chip` | ai, hardware, chip, library | 2 | 010_tip_iphone_call_record |
 | `microphone` | news, quote, library | 10 | 020_qa_apple_pay_korea_card |
 | `mid_release_98cab19a` | auto, library | 1 | 021_news_galaxy_flip8_exynos |
@@ -121,9 +121,9 @@
 | `official_sale_9dc82f05` | auto, library | 1 | 021_news_galaxy_flip8_exynos |
 | `official_site_check` | security, official-site, check | 0 |  |
 | `ondevice_ai_chip` | ai, hardware, privacy | 0 |  |
-| `optimized_charging` | battery, charging, tips, library | 2 | 022_tip_galaxy_battery_save_5 |
+| `optimized_charging` | battery, charging, tips, library | 1 | 021_news_galaxy_flip8_exynos |
 | `password` | security, privacy, authentication, library | 0 |  |
-| `personal_data_63b96014` | auto, library | 1 | 022_tip_galaxy_battery_save_5 |
+| `personal_data_63b96014` | auto, library | 0 |  |
 | `personal_data_leak` | security, privacy, leak | 0 |  |
 | `phone_settings_toggle` | library | 7 | 022_tip_galaxy_battery_save_5 |
 | `phone_setup_ready` | library | 5 | 022_tip_galaxy_battery_save_5 |
@@ -167,7 +167,7 @@
 
 ## Recent videos
 
-- `022_tip_galaxy_battery_save_5`: battery_charge_range, optimized_charging, smartphone, phone_setup_ready, phone_settings_toggle, meeting_room, appliance, personal_data_63b96014, device_os_requirement, device_data_transfer, lock_screen_only_e80c4860
+- `022_tip_galaxy_battery_save_5`: smartphone, phone_setup_ready, phone_settings_toggle, device_os_requirement, device_data_transfer
 - `021_news_galaxy_flip8_exynos`: unpack_867ebe81, mounted_body_496029c6, cpt_67a38371, mid_release_98cab19a, official_sale_9dc82f05, device_data_transfer, smartphone, appliance, camera_battery_ecd040c7, ti_decrease, aluminum_label, battery_charge_range, optimized_charging
 - `020_qa_apple_pay_korea_card`: smartphone, newspaper, microphone, shield, meeting_room, forecast, cpt_f59129df, cpt_a1caaea6, biometric, cpt_83fa1e9f, cpt_6a2e9678, device_data_transfer, nfc_pay, cpt_fd9edf65, gift_voucher
 - `019_news_samsung_thank_you_festival`: monday_d77265f0, weekly_sunday_82b74c0a, festival_41b2e7cf, unlocked_baa71ac6, event_period_8cafdac4, microphone, shield, meeting_room, forecast, gift_voucher, smartphone, cpt_a1caaea6, biometric, cpt_4729c912, cpt_fd9edf65
