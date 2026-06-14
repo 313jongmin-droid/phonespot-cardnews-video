@@ -370,7 +370,7 @@
         },
         {
           "type": "illust",
-          "value": "lock_screen_only_e80c4860"
+          "value": "final_update"
         },
         {
           "type": "illust",
@@ -673,69 +673,17 @@
     "policy": "Illustrations and mascots should not repeat inside one video. CTA logo is exempt.",
     "replacements": [
       {
-        "section": "fact_1",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "aluminum_label"
-        },
-        "to": {
-          "type": "illust",
-          "value": "camera_battery_ecd040c7"
-        },
-        "context": "설정 → 배터리 → 절전 모드 사용하지 않는 앱의 Wi-Fi와 모바일 데이터를 차단하고 Always On 1 절전 모드 ON 설정 → 배터리 → 절전 모드. 사용하지 않는 앱의 Wi-Fi와 모바일 데이터를 차단하고 Always On Display 같은 전력 소모 기능을 자동 비활성화합니"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "battery_charge_range"
-        },
-        "to": {
-          "type": "illust",
-          "value": "clock"
-        },
-        "context": "Intelligence 사용자가 휴대폰을 안 쓰는 시간대를 학습해 네트워크 성능을 자동 제한합니다 2 PDI 활용 (One UI 8.5) One UI 8.5의 새 기능 Personal Data Intelligence. 사용자가 휴대폰을 안 쓰는 시간대를 학습해 네트워크 성능을 자동 제한"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "aluminum_label"
-        },
-        "to": {
-          "type": "illust",
-          "value": "lock_screen_only_e80c4860"
-        },
-        "context": "AOD(Always On Display)는 항상 켜져있어 전력 소모가 큰 기능 잠금 화면만으로 충분하면 끄세요 3·4 AOD + 자동 업데이트 OFF AOD(Always On Display)는 항상 켜져있어 전력 소모가 큰 기능. 잠금 화면만으로 충분하면 끄세요. Play 스토어 자동 "
-      },
-      {
         "section": "fact_3",
         "chunk": 3,
         "from": {
           "type": "illust",
-          "value": "lock_screen_only_e80c4860"
+          "value": "aluminum_label"
         },
         "to": {
           "type": "illust",
           "value": "final_update"
         },
         "context": "항상 켜져있어 전력 소모가 큰 기능 잠금 화면만으로 충분하면 끄세요 Play 스토어 자동 업데이트도 Wi-Fi 3·4 AOD + 자동 업데이트 OFF AOD(Always On Display)는 항상 켜져있어 전력 소모가 큰 기능. 잠금 화면만으로 충분하면 끄세요. Play 스토어 자동 "
-      },
-      {
-        "section": "fact_3",
-        "chunk": 5,
-        "from": {
-          "type": "illust",
-          "value": "battery_overheat"
-        },
-        "to": {
-          "type": "illust",
-          "value": "lock"
-        },
-        "context": "Play 스토어 자동 업데이트도 Wi-Fi 전용으로 제한하면 배터리·데이터 동시 절약됩니다 3·4 AOD + 자동 업데이트 OFF AOD(Always On Display)는 항상 켜져있어 전력 소모가 큰 기능. 잠금 화면만으로 충분하면 끄세요. Play 스토어 자동 업데이트도 Wi-Fi"
       }
     ],
     "weak": [

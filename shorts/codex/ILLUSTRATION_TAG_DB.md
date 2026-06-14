@@ -86,7 +86,7 @@
 | `event_period_8cafdac4` | auto, library | 1 | 019_news_samsung_thank_you_festival |
 | `fake_government_page` | security, smishing, government, warning | 0 |  |
 | `festival_41b2e7cf` | auto, library | 1 | 019_news_samsung_thank_you_festival |
-| `final_update` | software, update, library | 3 | 016_news_ios_26_3_release |
+| `final_update` | software, update, library | 4 | 022_tip_galaxy_battery_save_5 |
 | `foldable` | hardware, foldable, library | 1 | 012_news_galaxy_unpack_july |
 | `forecast` | news, forecast, library | 11 | 020_qa_apple_pay_korea_card |
 | `friend_wedding_suspicion_884c4f09` | auto, library | 1 | 018_scam_wedding_invite_smishing |
@@ -167,7 +167,7 @@
 
 ## Recent videos
 
-- `022_tip_galaxy_battery_save_5`: smartphone, aluminum_label, camera_battery_ecd040c7, appliance, battery_charge_range, battery_overheat, personal_data_63b96014, smart_482e7bdd, clock, series_06379766, lock_screen_only_e80c4860, cpt_7ea57558, lock
+- `022_tip_galaxy_battery_save_5`: smartphone, aluminum_label, camera_battery_ecd040c7, appliance, battery_charge_range, battery_overheat, personal_data_63b96014, smart_482e7bdd, clock, series_06379766, lock_screen_only_e80c4860, final_update, cpt_7ea57558, lock
 - `021_news_galaxy_flip8_exynos`: unpack_867ebe81, mounted_body_496029c6, cpt_67a38371, mid_release_98cab19a, official_sale_9dc82f05, device_data_transfer, smartphone, appliance, camera_battery_ecd040c7, ti_decrease, aluminum_label, battery_charge_range, optimized_charging
 - `020_qa_apple_pay_korea_card`: smartphone, newspaper, microphone, shield, meeting_room, forecast, cpt_f59129df, cpt_a1caaea6, biometric, cpt_83fa1e9f, cpt_6a2e9678, device_data_transfer, nfc_pay, cpt_fd9edf65, gift_voucher
 - `019_news_samsung_thank_you_festival`: monday_d77265f0, weekly_sunday_82b74c0a, festival_41b2e7cf, unlocked_baa71ac6, event_period_8cafdac4, microphone, shield, meeting_room, forecast, gift_voucher, smartphone, cpt_a1caaea6, biometric, cpt_4729c912, cpt_fd9edf65

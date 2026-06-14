@@ -273,8 +273,8 @@
       ]
     },
     "022_tip_galaxy_battery_save_5": {
-      "used_at": "2026-06-14T17:30:59",
-      "source": "uploaded_illustrations",
+      "used_at": "2026-06-14T17:58:57",
+      "source": "unique_illustration_guard",
       "illustrations": [
         "smartphone",
         "aluminum_label",
@@ -287,12 +287,13 @@
         "clock",
         "series_06379766",
         "lock_screen_only_e80c4860",
+        "final_update",
         "cpt_7ea57558",
         "lock"
       ]
     }
   },
-  "updated_at": "2026-06-14T17:31:00",
+  "updated_at": "2026-06-14T17:58:57",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -349,7 +350,7 @@
       "variants": []
     },
     "022_tip_galaxy_battery_save_5": {
-      "updated_at": "2026-06-14T17:31:00",
+      "updated_at": "2026-06-14T17:58:57",
       "variants": []
     }
   }
