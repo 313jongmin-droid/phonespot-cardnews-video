@@ -542,11 +542,13 @@ def semantic_match(data: dict, slug: str) -> bool:
             elif (
                 best_lex_ill[0] >= MIN_ILLUST_KEYWORDS
                 and f"illust:{best_lex_ill[1]}" not in used_visuals
-                and (not content_score or content_score.get(best_lex_ill[1], 0.0) >= EMBED_MIN_ILLUST_IMG)
             ):
-                # 렉시컬 키워드 다중 일치 = 확신 → 임베딩 best_ill보다 우선(불안정 보완).
+                # 렉시컬 키워드 다중 일치(≥2, cpt 제외) = 작성자 확정 신호 → content-gate 면제.
+                # CLIP은 '범용/추상'으로 그린 일러스트를 거부할 수 있는데, 키워드가 청크에 실제로
+                # 여러 개 박혀 있으면 그게 더 신뢰할 신호다(임베딩 best_ill보다 우선). content-gate는
+                # 약한 임베딩 픽(best_ill)에만 적용 → 이름↔그림 불일치는 거기서 계속 잡힌다.
                 chosen = {"type": "illust", "value": best_lex_ill[1]}
-                reason = f"illust lexical kw hits={best_lex_ill[0]}: {best_lex_ill[1]}"
+                reason = f"illust lexical kw hits={best_lex_ill[0]} (content-gate 면제): {best_lex_ill[1]}"
             elif best_ill[0] >= min_ill and (
                 not content_score or content_score.get(best_ill[1], 0.0) >= EMBED_MIN_ILLUST_IMG
             ):

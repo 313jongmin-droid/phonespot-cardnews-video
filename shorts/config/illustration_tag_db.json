@@ -5,14 +5,16 @@
     "aluminum_label": {
       "tags": [
         "materials",
-        "hardware"
+        "hardware",
+        "library"
       ],
       "keywords": [
         "알루미늄",
         "소재",
         "합금"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "android_user_a91efa70": {
       "tags": [
@@ -29,7 +31,8 @@
     "appliance": {
       "tags": [
         "hardware",
-        "device"
+        "device",
+        "library"
       ],
       "keywords": [
         "전자제품",
@@ -37,20 +40,23 @@
         "콘솔",
         "가전"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "battery_charge_range": {
       "tags": [
         "battery",
         "charging",
-        "tips"
+        "tips",
+        "library"
       ],
       "keywords": [
         "20~80",
         "충전 범위",
         "과충전"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "battery_health_check": {
       "tags": [
@@ -64,13 +70,15 @@
         "교체 시기",
         "최대 용량"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": false
     },
     "battery_overheat": {
       "tags": [
         "battery",
         "heat",
-        "warning"
+        "warning",
+        "library"
       ],
       "keywords": [
         "고온",
@@ -78,13 +86,15 @@
         "발열",
         "충전 중 게임"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "biometric": {
       "tags": [
         "security",
         "privacy",
-        "authentication"
+        "authentication",
+        "library"
       ],
       "keywords": [
         "생체",
@@ -92,31 +102,45 @@
         "지문",
         "인증"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "calendar_75c6eba6": {
-      "tags": [],
+      "tags": [
+        "library"
+      ],
       "keywords": [],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "call_filter_rules": {
-      "tags": [],
+      "tags": [
+        "library"
+      ],
       "keywords": [],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "call_recording_notice": {
-      "tags": [],
+      "tags": [
+        "library"
+      ],
       "keywords": [],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "calling_066b1a1b": {
-      "tags": [],
+      "tags": [
+        "library"
+      ],
       "keywords": [],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "camera_battery_ecd040c7": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "카메라",
@@ -125,7 +149,8 @@
         "전작",
         "같지"
       ],
-      "note": "자동 발굴 개념: 카메라 배터리"
+      "note": "자동 발굴 개념: 카메라 배터리",
+      "available": true
     },
     "card_struggle_81529308": {
       "tags": [
@@ -144,7 +169,8 @@
       "tags": [
         "price",
         "data",
-        "decrease"
+        "decrease",
+        "library"
       ],
       "keywords": [
         "감소",
@@ -152,13 +178,15 @@
         "줄어",
         "낮아"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "chart_up": {
       "tags": [
         "price",
         "data",
-        "increase"
+        "increase",
+        "library"
       ],
       "keywords": [
         "증가",
@@ -166,14 +194,16 @@
         "급등",
         "오르"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "chat_backup_restore": {
       "tags": [
         "messenger",
         "backup",
         "restore",
-        "tips"
+        "tips",
+        "library"
       ],
       "keywords": [
         "대화 백업",
@@ -181,13 +211,15 @@
         "메신저",
         "카카오톡"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "chatbot": {
       "tags": [
         "ai",
         "assistant",
-        "software"
+        "software",
+        "library"
       ],
       "keywords": [
         "챗봇",
@@ -195,12 +227,14 @@
         "대화형",
         "시리"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "clock": {
       "tags": [
         "time",
-        "tips"
+        "tips",
+        "library"
       ],
       "keywords": [
         "시간",
@@ -208,29 +242,36 @@
         "주기",
         "수명"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "cloud_backup": {
       "tags": [
         "security",
         "privacy",
-        "cloud"
+        "cloud",
+        "library"
       ],
       "keywords": [
         "클라우드",
         "백업",
         "복원"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "cover_screen_widgets": {
-      "tags": [],
+      "tags": [
+        "library"
+      ],
       "keywords": [],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "cpt_066b1a1b": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "발신번호",
@@ -238,7 +279,8 @@
         "지인",
         "표시되고"
       ],
-      "note": "자동 발굴 개념: 발신번호 저장된"
+      "note": "자동 발굴 개념: 발신번호 저장된",
+      "available": true
     },
     "cpt_09b8db78": {
       "tags": [
@@ -319,17 +361,20 @@
     },
     "cpt_4729c912": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "신청",
         "경로"
       ],
-      "note": "자동 발굴 개념: 신청 경로"
+      "note": "자동 발굴 개념: 신청 경로",
+      "available": true
     },
     "cpt_496029c6": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "탑재",
@@ -338,7 +383,8 @@
         "집중한",
         "변화로"
       ],
-      "note": "자동 발굴 개념: 탑재 본체"
+      "note": "자동 발굴 개념: 탑재 본체",
+      "available": true
     },
     "cpt_55c40fb8": {
       "tags": [
@@ -409,25 +455,29 @@
     },
     "cpt_67a38371": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "손에",
         "잡히",
         "느낌"
       ],
-      "note": "자동 발굴 개념: 손에 잡히"
+      "note": "자동 발굴 개념: 손에 잡히",
+      "available": true
     },
     "cpt_6a2e9678": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "사업",
         "신한은행",
         "금융감독원"
       ],
-      "note": "자동 발굴 개념: 사업 신한은행"
+      "note": "자동 발굴 개념: 사업 신한은행",
+      "available": true
     },
     "cpt_6ec7317d": {
       "tags": [
@@ -444,7 +494,8 @@
     },
     "cpt_6f69bf84": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "진짜",
@@ -453,18 +504,21 @@
         "문자로",
         "오인하게"
       ],
-      "note": "자동 발굴 개념: 진짜 지인"
+      "note": "자동 발굴 개념: 진짜 지인",
+      "available": true
     },
     "cpt_75c6eba6": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "월요일",
         "오전",
         "시부터"
       ],
-      "note": "자동 발굴 개념: 월요일 오전"
+      "note": "자동 발굴 개념: 월요일 오전",
+      "available": true
     },
     "cpt_7a87dd35": {
       "tags": [
@@ -490,16 +544,19 @@
     },
     "cpt_7b7a2f91": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "KISA"
       ],
-      "note": "자동 발굴 개념: KISA"
+      "note": "자동 발굴 개념: KISA",
+      "available": true
     },
     "cpt_7ea57558": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "Play",
@@ -507,18 +564,21 @@
         "자동",
         "업데이트"
       ],
-      "note": "자동 발굴 개념: Play 스토어"
+      "note": "자동 발굴 개념: Play 스토어",
+      "available": true
     },
     "cpt_83fa1e9f": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "굿네이버스",
         "전기통신",
         "금융사기"
       ],
-      "note": "자동 발굴 개념: 굿네이버스 전기통신"
+      "note": "자동 발굴 개념: 굿네이버스 전기통신",
+      "available": true
     },
     "cpt_8b587f6c": {
       "tags": [
@@ -535,13 +595,15 @@
     },
     "cpt_8bffef74": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "명의도용방지서비스",
         "활용하시면"
       ],
-      "note": "자동 발굴 개념: 명의도용방지서비스 활용하시면"
+      "note": "자동 발굴 개념: 명의도용방지서비스 활용하시면",
+      "available": true
     },
     "cpt_8d09d703": {
       "tags": [
@@ -556,7 +618,8 @@
     },
     "cpt_98cab19a": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "공개",
@@ -564,7 +627,8 @@
         "하반기",
         "언팩"
       ],
-      "note": "자동 발굴 개념: 공개 중순"
+      "note": "자동 발굴 개념: 공개 중순",
+      "available": true
     },
     "cpt_9ebf277e": {
       "tags": [
@@ -588,7 +652,8 @@
     },
     "cpt_a1caaea6": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "추가",
@@ -596,7 +661,8 @@
         "사전",
         "차단할"
       ],
-      "note": "자동 발굴 개념: 추가 개통"
+      "note": "자동 발굴 개념: 추가 개통",
+      "available": true
     },
     "cpt_a91efa70": {
       "tags": [
@@ -612,13 +678,15 @@
     },
     "cpt_b5a15155": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "운영하",
         "Msafer"
       ],
-      "note": "자동 발굴 개념: 운영하 Msafer"
+      "note": "자동 발굴 개념: 운영하 Msafer",
+      "available": true
     },
     "cpt_b90dc475": {
       "tags": [
@@ -679,13 +747,15 @@
     },
     "cpt_ea7bc1d6": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "경찰청",
         "사회복지공동모금회"
       ],
-      "note": "자동 발굴 개념: 경찰청 사회복지공동모금회"
+      "note": "자동 발굴 개념: 경찰청 사회복지공동모금회",
+      "available": true
     },
     "cpt_ea93eb2b": {
       "tags": [
@@ -733,7 +803,8 @@
     },
     "cpt_f59129df": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "결혼",
@@ -742,7 +813,8 @@
         "청첩장",
         "사칭"
       ],
-      "note": "자동 발굴 개념: 결혼 시즌"
+      "note": "자동 발굴 개념: 결혼 시즌",
+      "available": true
     },
     "cpt_f5cc7e27": {
       "tags": [
@@ -781,14 +853,16 @@
     },
     "cpt_fd9edf65": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "시작된",
         "지원",
         "사업"
       ],
-      "note": "자동 발굴 개념: 시작된 지원"
+      "note": "자동 발굴 개념: 시작된 지원",
+      "available": true
     },
     "cut_theft_43505b9f": {
       "tags": [
@@ -804,16 +878,20 @@
       "note": "자동 발굴 개념: 끊김 도난"
     },
     "deal_fd9edf65": {
-      "tags": [],
+      "tags": [
+        "library"
+      ],
       "keywords": [],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "device_data_transfer": {
       "tags": [
         "device",
         "migration",
         "backup",
-        "tips"
+        "tips",
+        "library"
       ],
       "keywords": [
         "데이터 이전",
@@ -822,12 +900,16 @@
         "iCloud",
         "USB 케이블"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "device_os_requirement": {
-      "tags": [],
+      "tags": [
+        "library"
+      ],
       "keywords": [],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "device_price_rise": {
       "tags": [
@@ -841,11 +923,13 @@
         "인상 폭",
         "가격 조정"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": false
     },
     "display_maintenance_c1ff39c1": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "디스플레이",
@@ -853,19 +937,24 @@
         "소폭",
         "개선"
       ],
-      "note": "자동 발굴 개념: 디스플레이 유지"
+      "note": "자동 발굴 개념: 디스플레이 유지",
+      "available": true
     },
     "display_ratio_change": {
-      "tags": [],
+      "tags": [
+        "library"
+      ],
       "keywords": [],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "emergency_account_freeze": {
       "tags": [
         "security",
         "bank",
         "response",
-        "golden-time"
+        "golden-time",
+        "library"
       ],
       "keywords": [
         "지급정지",
@@ -873,11 +962,13 @@
         "송금",
         "거래 은행"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "event_period_8cafdac4": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "행사",
@@ -885,7 +976,8 @@
         "부터",
         "까지"
       ],
-      "note": "자동 발굴 개념: 행사 기간"
+      "note": "자동 발굴 개념: 행사 기간",
+      "available": true
     },
     "fake_government_page": {
       "tags": [
@@ -899,21 +991,25 @@
         "공식 사이트",
         "정부 사칭"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": false
     },
     "festival_41b2e7cf": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "페스티벌"
       ],
-      "note": "자동 발굴 개념: 페스티벌"
+      "note": "자동 발굴 개념: 페스티벌",
+      "available": true
     },
     "final_update": {
       "tags": [
         "software",
-        "update"
+        "update",
+        "library"
       ],
       "keywords": [
         "업데이트",
@@ -921,24 +1017,28 @@
         "버전",
         "공개"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "foldable": {
       "tags": [
         "hardware",
-        "foldable"
+        "foldable",
+        "library"
       ],
       "keywords": [
         "폴더블",
         "폴드",
         "플립"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "forecast": {
       "tags": [
         "news",
-        "forecast"
+        "forecast",
+        "library"
       ],
       "keywords": [
         "전망",
@@ -946,11 +1046,13 @@
         "가능성",
         "예정"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "friend_wedding_suspicion_884c4f09": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "친구",
@@ -959,39 +1061,45 @@
         "시기일수록",
         "의심"
       ],
-      "note": "자동 발굴 개념: 친구 결혼"
+      "note": "자동 발굴 개념: 친구 결혼",
+      "available": true
     },
     "gemini": {
       "tags": [
         "ai",
         "assistant",
-        "google"
+        "google",
+        "library"
       ],
       "keywords": [
         "제미나이",
         "Gemini",
         "구글 AI"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "gift_prohibit": {
       "tags": [
         "price",
         "security",
-        "warning"
+        "warning",
+        "library"
       ],
       "keywords": [
         "결제 제거",
         "결제 차단",
         "카드 제거"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "gift_voucher": {
       "tags": [
         "price",
         "subsidy",
-        "purchase"
+        "purchase",
+        "library"
       ],
       "keywords": [
         "지원금",
@@ -999,7 +1107,8 @@
         "혜택",
         "구매"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "global_adoption_3a84a22d": {
       "tags": [
@@ -1017,7 +1126,8 @@
       "tags": [
         "policy",
         "access",
-        "partnership"
+        "partnership",
+        "library"
       ],
       "keywords": [
         "협력",
@@ -1025,18 +1135,23 @@
         "개방",
         "동등"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "health_sensor_watch": {
-      "tags": [],
+      "tags": [
+        "library"
+      ],
       "keywords": [],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "heat_release": {
       "tags": [
         "battery",
         "heat",
-        "hardware"
+        "hardware",
+        "library"
       ],
       "keywords": [
         "발열",
@@ -1044,14 +1159,16 @@
         "열 처리",
         "방열"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "impersonation_call": {
       "tags": [
         "security",
         "voice-phishing",
         "call",
-        "warning"
+        "warning",
+        "library"
       ],
       "keywords": [
         "기관사칭",
@@ -1059,7 +1176,8 @@
         "보이스피싱",
         "위험 통화"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "korean_broken_36986e9e": {
       "tags": [
@@ -1072,27 +1190,33 @@
       "note": "자동 발굴 개념: 한국 작동하지"
     },
     "launch_event": {
-      "tags": [],
+      "tags": [
+        "library"
+      ],
       "keywords": [],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "liquid_titanium": {
       "tags": [
         "materials",
-        "hardware"
+        "hardware",
+        "library"
       ],
       "keywords": [
         "액체 금속",
         "티타늄",
         "합금"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "lock": {
       "tags": [
         "security",
         "privacy",
-        "lock"
+        "lock",
+        "library"
       ],
       "keywords": [
         "잠금",
@@ -1100,11 +1224,13 @@
         "도난",
         "접근 제한"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "lock_screen_only_e80c4860": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "잠금",
@@ -1112,25 +1238,29 @@
         "충분하면",
         "끄세요"
       ],
-      "note": "자동 발굴 개념: 잠금 화면만"
+      "note": "자동 발굴 개념: 잠금 화면만",
+      "available": true
     },
     "logout": {
       "tags": [
         "security",
         "privacy",
-        "account"
+        "account",
+        "library"
       ],
       "keywords": [
         "로그아웃",
         "계정 제거"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "market_cap": {
       "tags": [
         "price",
         "data",
-        "market"
+        "market",
+        "library"
       ],
       "keywords": [
         "시가총액",
@@ -1138,13 +1268,15 @@
         "매출",
         "실적"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "meeting_room": {
       "tags": [
         "policy",
         "news",
-        "strategy"
+        "strategy",
+        "library"
       ],
       "keywords": [
         "회의",
@@ -1152,13 +1284,15 @@
         "검토",
         "집행위"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "memory_chip": {
       "tags": [
         "ai",
         "hardware",
-        "chip"
+        "chip",
+        "library"
       ],
       "keywords": [
         "메모리",
@@ -1167,12 +1301,14 @@
         "칩",
         "반도체"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "microphone": {
       "tags": [
         "news",
-        "quote"
+        "quote",
+        "library"
       ],
       "keywords": [
         "발언",
@@ -1180,11 +1316,13 @@
         "팁스터",
         "기자"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "mid_release_98cab19a": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "공개",
@@ -1192,7 +1330,8 @@
         "하반기",
         "언팩"
       ],
-      "note": "자동 발굴 개념: 공개 중순"
+      "note": "자동 발굴 개념: 공개 중순",
+      "available": true
     },
     "mobile_settings_31257fb6": {
       "tags": [
@@ -1220,22 +1359,28 @@
       "note": "자동 발굴 개념: 사용자 휴대폰"
     },
     "module_install": {
-      "tags": [],
+      "tags": [
+        "library"
+      ],
       "keywords": [],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "monday_d77265f0": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "월요일"
       ],
-      "note": "자동 발굴 개념: 월요일"
+      "note": "자동 발굴 개념: 월요일",
+      "available": true
     },
     "mounted_body_496029c6": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "탑재",
@@ -1244,17 +1389,22 @@
         "집중한",
         "변화로"
       ],
-      "note": "자동 발굴 개념: 탑재 본체"
+      "note": "자동 발굴 개념: 탑재 본체",
+      "available": true
     },
     "new_release_98cab19a": {
-      "tags": [],
+      "tags": [
+        "library"
+      ],
       "keywords": [],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "newspaper": {
       "tags": [
         "news",
-        "source"
+        "source",
+        "library"
       ],
       "keywords": [
         "보도",
@@ -1262,7 +1412,8 @@
         "외신",
         "기사"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "nfc_open_access": {
       "tags": [
@@ -1275,13 +1426,15 @@
         "상호운용",
         "경쟁 서비스"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": false
     },
     "nfc_pay": {
       "tags": [
         "payment",
         "nfc",
-        "access"
+        "access",
+        "library"
       ],
       "keywords": [
         "NFC",
@@ -1289,18 +1442,21 @@
         "결제",
         "단말기"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "official_sale_9dc82f05": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "정식",
         "판매",
         "사이"
       ],
-      "note": "자동 발굴 개념: 정식 판매"
+      "note": "자동 발굴 개념: 정식 판매",
+      "available": true
     },
     "official_site_check": {
       "tags": [
@@ -1314,7 +1470,8 @@
         "정부24",
         "mygov"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": false
     },
     "ondevice_ai_chip": {
       "tags": [
@@ -1328,43 +1485,50 @@
         "자체 칩",
         "클라우드를 거치지"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": false
     },
     "optimized_charging": {
       "tags": [
         "battery",
         "charging",
-        "tips"
+        "tips",
+        "library"
       ],
       "keywords": [
         "최적화 충전",
         "배터리 보호",
         "적응형 보호"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "password": {
       "tags": [
         "security",
         "privacy",
-        "authentication"
+        "authentication",
+        "library"
       ],
       "keywords": [
         "비밀번호",
         "암호",
         "계정"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "personal_data_63b96014": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "Personal",
         "Data"
       ],
-      "note": "자동 발굴 개념: Personal Data"
+      "note": "자동 발굴 개념: Personal Data",
+      "available": true
     },
     "personal_data_leak": {
       "tags": [
@@ -1379,17 +1543,24 @@
         "인증번호",
         "유출"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": false
     },
     "phone_settings_toggle": {
-      "tags": [],
+      "tags": [
+        "library"
+      ],
       "keywords": [],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "phone_setup_ready": {
-      "tags": [],
+      "tags": [
+        "library"
+      ],
       "keywords": [],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "plan_price_tier_compare": {
       "tags": [
@@ -1404,12 +1575,14 @@
         "중저가 요금제",
         "분기점"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": false
     },
     "price_hike": {
       "tags": [
         "price",
-        "increase"
+        "increase",
+        "library"
       ],
       "keywords": [
         "가격 인상",
@@ -1417,7 +1590,8 @@
         "비싸",
         "가격 조정"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "price_shock_7abfd08b": {
       "tags": [
@@ -1436,7 +1610,8 @@
       "tags": [
         "security",
         "warning",
-        "restriction"
+        "restriction",
+        "library"
       ],
       "keywords": [
         "금지",
@@ -1444,12 +1619,16 @@
         "제한",
         "주의"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "recording_archive": {
-      "tags": [],
+      "tags": [
+        "library"
+      ],
       "keywords": [],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "register_14135bd2": {
       "tags": [
@@ -1461,9 +1640,12 @@
       "note": "자동 발굴 개념: 등록할"
     },
     "release_calendar": {
-      "tags": [],
+      "tags": [
+        "library"
+      ],
       "keywords": [],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "repair_privacy": {
       "tags": [
@@ -1477,26 +1659,30 @@
         "개인정보",
         "보안 폴더"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": false
     },
     "reset": {
       "tags": [
         "security",
         "privacy",
-        "software"
+        "software",
+        "library"
       ],
       "keywords": [
         "초기화",
         "복원",
         "리셋"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "samsung_ai": {
       "tags": [
         "ai",
         "assistant",
-        "software"
+        "software",
+        "library"
       ],
       "keywords": [
         "AI",
@@ -1504,14 +1690,16 @@
         "AI 앱",
         "AI 기능"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "secure_app_reregistration": {
       "tags": [
         "security",
         "bank",
         "authentication",
-        "setup"
+        "setup",
+        "library"
       ],
       "keywords": [
         "인증서",
@@ -1520,12 +1708,16 @@
         "기기 인증",
         "재등록"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "security_feature_lock": {
-      "tags": [],
+      "tags": [
+        "library"
+      ],
       "keywords": [],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "select_option_76495b69": {
       "tags": [
@@ -1539,23 +1731,27 @@
     },
     "self_flip_6728256c": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "플립",
         "자체",
         "엑시노스"
       ],
-      "note": "자동 발굴 개념: 플립 자체"
+      "note": "자동 발굴 개념: 플립 자체",
+      "available": true
     },
     "series_06379766": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "시리즈"
       ],
-      "note": "자동 발굴 개념: 시리즈"
+      "note": "자동 발굴 개념: 시리즈",
+      "available": true
     },
     "settings_screen_ab73a8fa": {
       "tags": [
@@ -1570,15 +1766,19 @@
       "note": "자동 발굴 개념: 설정 화면"
     },
     "settings_steps": {
-      "tags": [],
+      "tags": [
+        "library"
+      ],
       "keywords": [],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "shield": {
       "tags": [
         "security",
         "privacy",
-        "protection"
+        "protection",
+        "library"
       ],
       "keywords": [
         "보호",
@@ -1586,33 +1786,39 @@
         "차단",
         "방어"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "slim_body_e2dca0be": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "본체",
         "슬림화",
         "외부"
       ],
-      "note": "자동 발굴 개념: 본체 슬림화"
+      "note": "자동 발굴 개념: 본체 슬림화",
+      "available": true
     },
     "smart_482e7bdd": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "Intelligence"
       ],
-      "note": "자동 발굴 개념: Intelligence"
+      "note": "자동 발굴 개념: Intelligence",
+      "available": true
     },
     "smartphone": {
       "tags": [
         "device",
         "purchase",
-        "cta"
+        "cta",
+        "library"
       ],
       "keywords": [
         "휴대폰",
@@ -1620,7 +1826,8 @@
         "구매",
         "상담"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "smishing_fake_link": {
       "tags": [
@@ -1635,13 +1842,15 @@
         "악성 앱",
         "가짜 페이지"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": false
     },
     "stock_chart": {
       "tags": [
         "price",
         "data",
-        "market"
+        "market",
+        "library"
       ],
       "keywords": [
         "목표주가",
@@ -1649,13 +1858,15 @@
         "증시",
         "매출"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "store": {
       "tags": [
         "store",
         "purchase",
-        "cta"
+        "cta",
+        "library"
       ],
       "keywords": [
         "매장",
@@ -1663,23 +1874,27 @@
         "상담",
         "점검"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "surge_b56b4f67": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "급증하고"
       ],
-      "note": "자동 발굴 개념: 급증하고"
+      "note": "자동 발굴 개념: 급증하고",
+      "available": true
     },
     "telecom_discount_compare": {
       "tags": [
         "price",
         "subsidy",
         "compare",
-        "telecom"
+        "telecom",
+        "library"
       ],
       "keywords": [
         "공시지원금",
@@ -1687,7 +1902,8 @@
         "단말 할인",
         "월 요금 할인"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "theft_auto_lock": {
       "tags": [
@@ -1700,64 +1916,88 @@
         "강제 탈취",
         "자동 잠금"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": false
     },
     "ti_decrease": {
       "tags": [
         "materials",
         "hardware",
-        "decrease"
+        "decrease",
+        "library"
       ],
       "keywords": [
         "티타늄",
         "사용을 줄",
         "감소"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "transfer_interruption_warning": {
-      "tags": [],
+      "tags": [
+        "library"
+      ],
       "keywords": [],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "transfer_path_steps": {
-      "tags": [],
+      "tags": [
+        "library"
+      ],
       "keywords": [],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "unknown_message_6f69bf84": {
-      "tags": [],
+      "tags": [
+        "library"
+      ],
       "keywords": [],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "unlocked_baa71ac6": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "자급제"
       ],
-      "note": "자동 발굴 개념: 자급제"
+      "note": "자동 발굴 개념: 자급제",
+      "available": true
     },
     "unpack_867ebe81": {
-      "tags": [],
+      "tags": [
+        "library"
+      ],
       "keywords": [],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "usim_a1caaea6": {
-      "tags": [],
+      "tags": [
+        "library"
+      ],
       "keywords": [],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "voicefishing_83fa1e9f": {
-      "tags": [],
+      "tags": [
+        "library"
+      ],
       "keywords": [],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "warning": {
       "tags": [
         "security",
-        "warning"
+        "warning",
+        "library"
       ],
       "keywords": [
         "경고",
@@ -1765,11 +2005,13 @@
         "주의",
         "악성"
       ],
-      "note": "Reusable editorial illustration."
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "weekly_sunday_82b74c0a": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "일요일",
@@ -1777,8 +2019,9 @@
         "삼성전자",
         "고객감사"
       ],
-      "note": "자동 발굴 개념: 일요일 주간"
+      "note": "자동 발굴 개념: 일요일 주간",
+      "available": true
     }
   },
-  "updated_at": "2026-06-14 23:30:36"
+  "updated_at": "2026-06-14T23:39:32"
 }

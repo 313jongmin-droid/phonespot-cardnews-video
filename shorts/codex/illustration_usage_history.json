@@ -273,7 +273,7 @@
       ]
     },
     "022_tip_galaxy_battery_save_5": {
-      "used_at": "2026-06-14T23:04:41",
+      "used_at": "2026-06-14T23:39:32",
       "source": "codex_enhance",
       "illustrations": [
         "smartphone",
@@ -284,7 +284,7 @@
       ]
     }
   },
-  "updated_at": "2026-06-14T23:06:05",
+  "updated_at": "2026-06-14T23:40:11",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -341,7 +341,7 @@
       "variants": []
     },
     "022_tip_galaxy_battery_save_5": {
-      "updated_at": "2026-06-14T23:06:05",
+      "updated_at": "2026-06-14T23:40:11",
       "variants": []
     }
   }
