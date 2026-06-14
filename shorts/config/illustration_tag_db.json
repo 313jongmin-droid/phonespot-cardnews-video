@@ -105,6 +105,14 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "calendar_75c6eba6": {
+      "tags": [
+        "library"
+      ],
+      "keywords": [],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
     "call_filter_rules": {
       "tags": [
         "library"
@@ -114,6 +122,14 @@
       "available": true
     },
     "call_recording_notice": {
+      "tags": [
+        "library"
+      ],
+      "keywords": [],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "calling_066b1a1b": {
       "tags": [
         "library"
       ],
@@ -439,14 +455,16 @@
     },
     "cpt_67a38371": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "손에",
         "잡히",
         "느낌"
       ],
-      "note": "자동 발굴 개념: 손에 잡히"
+      "note": "자동 발굴 개념: 손에 잡히",
+      "available": true
     },
     "cpt_6a2e9678": {
       "tags": [
@@ -844,6 +862,14 @@
         "이면"
       ],
       "note": "자동 발굴 개념: 끊김 도난"
+    },
+    "deal_fd9edf65": {
+      "tags": [
+        "library"
+      ],
+      "keywords": [],
+      "note": "Reusable editorial illustration.",
+      "available": true
     },
     "device_data_transfer": {
       "tags": [
@@ -1336,6 +1362,14 @@
         "변화로"
       ],
       "note": "자동 발굴 개념: 탑재 본체",
+      "available": true
+    },
+    "new_release_98cab19a": {
+      "tags": [
+        "library"
+      ],
+      "keywords": [],
+      "note": "Reusable editorial illustration.",
       "available": true
     },
     "newspaper": {
@@ -1882,6 +1916,14 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "unknown_message_6f69bf84": {
+      "tags": [
+        "library"
+      ],
+      "keywords": [],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
     "unlocked_baa71ac6": {
       "tags": [
         "auto",
@@ -1891,6 +1933,30 @@
         "자급제"
       ],
       "note": "자동 발굴 개념: 자급제",
+      "available": true
+    },
+    "unpack_867ebe81": {
+      "tags": [
+        "library"
+      ],
+      "keywords": [],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "usim_a1caaea6": {
+      "tags": [
+        "library"
+      ],
+      "keywords": [],
+      "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "voicefishing_83fa1e9f": {
+      "tags": [
+        "library"
+      ],
+      "keywords": [],
+      "note": "Reusable editorial illustration.",
       "available": true
     },
     "warning": {
@@ -1923,5 +1989,5 @@
       "available": true
     }
   },
-  "updated_at": "2026-06-14T13:46:01"
+  "updated_at": "2026-06-14T14:23:39"
 }

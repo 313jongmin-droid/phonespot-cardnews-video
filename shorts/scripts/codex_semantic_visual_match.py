@@ -154,6 +154,52 @@ def photo_lexical_score(label: str, chunk: str) -> tuple[int, int]:
     return dist, gen
 
 
+# ─ 일러스트 렉시컬 키워드 매칭 (임베딩 보조). DB의 keywords가 청크에 '실제로' 여러 개
+#   등장하면 결정론적으로 우선. 해시 이름(cpt/_xxxx)·헤드라인 문맥에 희석되는 임베딩 코사인의
+#   불안정을 보완 — 포토를 렉시컬로 고친 것과 같은 처방. 임베딩은 키워드 약할 때의 보조로 유지.
+MIN_ILLUST_KEYWORDS = int(os.getenv("PHONESPOT_MIN_ILLUST_KEYWORDS", "2"))
+ILLUST_KW_STOP = set(v.strip().lower() for v in os.getenv(
+    "PHONESPOT_ILLUST_KW_STOP",
+    "폰,스마트폰,휴대폰,단말,기기,화면,사용,기능,제품",  # 너무 흔한 키워드는 임계 계산에서 제외
+).split(",") if v.strip())
+
+
+def illust_lexical_hits(keywords: list, chunk: str) -> int:
+    """청크에 등장하는 '구별되는' 키워드 개수(한글=부분문자열, 영문/숫자=단어경계)."""
+    c_low = chunk.lower()
+    hits = 0
+    seen: set = set()
+    for kw in keywords:
+        kw = str(kw).strip()
+        if not kw or kw in seen:
+            continue
+        seen.add(kw)
+        if len(kw) < 2 or kw.lower() in ILLUST_KW_STOP:
+            continue
+        if re.fullmatch(r"[A-Za-z0-9]+", kw):
+            ok = re.search(r"(?<![A-Za-z0-9])" + re.escape(kw.lower()) + r"(?![A-Za-z0-9])", c_low) is not None
+        else:
+            ok = kw in chunk
+        if ok:
+            hits += 1
+    return hits
+
+
+def build_illust_keyword_index() -> dict:
+    """{variant: [keywords]} — available 한 일러스트만. cpt 미검증/blocklist 제외(매처와 동일)."""
+    db = load_db()
+    out: dict = {}
+    for variant, entry in (db.get("illustrations", {}) or {}).items():
+        if not isinstance(entry, dict) or not entry.get("available"):
+            continue
+        if variant in ILLUST_BLOCKLIST or _is_unverified_concept(variant):
+            continue
+        kws = [str(k).strip() for k in (entry.get("keywords") or []) if str(k).strip()]
+        if kws:
+            out[variant] = kws
+    return out
+
+
 ALIASES = {
     "일정": ["일정", "날짜", "달력", "캘린더", "키노트", "행사", "공개", "출시", "사전예약", "예약", "7월", "8월", "6월"],
     "폴드": ["폴드", "폴더블", "fold", "foldable", "와이드", "펼친", "내부 화면"],
@@ -388,7 +434,10 @@ def semantic_match(data: dict, slug: str) -> bool:
     img_engine = f", image-content={len(img_index)}장(min={EMBED_MIN_ILLUST_IMG})" if img_index else ""
     photo_files = list_photos()
     photo_engine = f", photos={len(photo_files)}장(렉시컬 모델명 매칭)" if photo_files else ""
-    print(f"[semantic_visual] engine={'embedding' if use_embed else 'lexical'} (min_img={min_img}, min_ill={min_ill}){img_engine}{photo_engine}")
+    # 일러스트 렉시컬 키워드 인덱스(임베딩 경로 보조). lexical 폴백 경로는 이미 word-overlap 사용.
+    illust_kw_index = build_illust_keyword_index() if use_embed else {}
+    illust_kw_engine = f", illust-kw={len(illust_kw_index)}개(min={MIN_ILLUST_KEYWORDS})" if illust_kw_index else ""
+    print(f"[semantic_visual] engine={'embedding' if use_embed else 'lexical'} (min_img={min_img}, min_ill={min_ill}){img_engine}{photo_engine}{illust_kw_engine}")
 
     for section_name, section in section_items(data):
         chunks = section_chunks(section)
@@ -420,6 +469,19 @@ def semantic_match(data: dict, slug: str) -> bool:
                 ills = illustration_candidates(context, used_visuals)
             best_img = imgs[0] if imgs else (0, "", "")
             best_ill = ills[0] if ills else (0, "")
+
+            # 일러스트 렉시컬 키워드 매칭(청크 자체 기준, 헤드라인 제외). 임베딩 보조.
+            best_lex_ill = (0, "")
+            if illust_kw_index:
+                _ichunk = clean(chunks[idx]) if idx < len(chunks) else context
+                for _iv, _kws in illust_kw_index.items():
+                    if f"illust:{_iv}" in used_visuals:
+                        continue
+                    _h = illust_lexical_hits(_kws, _ichunk)
+                    if _h > best_lex_ill[0]:
+                        best_lex_ill = (_h, _iv)
+                if best_lex_ill[1] and best_lex_ill[0] >= MIN_ILLUST_KEYWORDS:
+                    print(f"[illust-kw] {section_name} c{idx+1}: {best_lex_ill[1]} hits={best_lex_ill[0]}")
 
             # 0순위: 실사 포토 — 렉시컬 모델명 매칭(임베딩 X, 청크 자체 기준). 구별 토큰이
             #   청크에 실제 등장할 때만. 동점이면 일반토큰 일치수로. 없으면 일러스트로 폴백.
@@ -457,6 +519,14 @@ def semantic_match(data: dict, slug: str) -> bool:
             elif best_img[0] >= min_img and best_img[0] >= best_ill[0]:
                 chosen = {"type": "image", "value": best_img[1]}
                 reason = f"image score {best_img[0]}: {best_img[2][:80]}"
+            elif (
+                best_lex_ill[0] >= MIN_ILLUST_KEYWORDS
+                and f"illust:{best_lex_ill[1]}" not in used_visuals
+                and (not content_score or content_score.get(best_lex_ill[1], 0.0) >= EMBED_MIN_ILLUST_IMG)
+            ):
+                # 렉시컬 키워드 다중 일치 = 확신 → 임베딩 best_ill보다 우선(불안정 보완).
+                chosen = {"type": "illust", "value": best_lex_ill[1]}
+                reason = f"illust lexical kw hits={best_lex_ill[0]}: {best_lex_ill[1]}"
             elif best_ill[0] >= min_ill and (
                 not content_score or content_score.get(best_ill[1], 0.0) >= EMBED_MIN_ILLUST_IMG
             ):
@@ -573,26 +643,4 @@ def semantic_match(data: dict, slug: str) -> bool:
         print(f"[semantic_visual] report: {report_path}")
         if changes:
             record_usage_snapshot(data, slug, source="semantic_visual_match")
-        return bool(changes)
-    print("[semantic_visual] no changes")
-    return False
-
-
-def main() -> int:
-    if len(sys.argv) < 2:
-        print("Usage: python scripts/codex_semantic_visual_match.py <slug>")
-        return 2
-    slug = sys.argv[1].strip()
-    path = CARD_OUTPUT / slug / "shorts_script.json"
-    if not path.exists():
-        print(f"[semantic_visual] missing: {path}")
-        return 1
-    data = read_json(path)
-    changed = semantic_match(data, slug)
-    if changed:
-        write_json(path, data)
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
+        return boo

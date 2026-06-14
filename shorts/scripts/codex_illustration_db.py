@@ -121,7 +121,11 @@ def write_json(path: Path, value: dict) -> None:
     payload = json.dumps(value, ensure_ascii=False, indent=2) + "\n"
     try:
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(payload, encoding="utf-8")
+        # 원자적 쓰기: temp 에 쓰고 os.replace 로 교체. 렌더 중 쓰기가 끊겨도(크래시·동시실행)
+        # 본 파일이 truncate/NUL 로 손상되지 않음 — illustration_tag_db.json NUL 손상의 뿌리 차단.
+        tmp = path.with_name(path.name + ".tmp")
+        tmp.write_text(payload, encoding="utf-8")
+        os.replace(tmp, path)
         return
     except PermissionError:
         fallback = local_state_path(path)

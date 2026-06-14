@@ -40,8 +40,8 @@
     ],
     "chunk_visuals": [
       {
-        "type": "image",
-        "value": "photos/삼성_갤럭시A.JPG"
+        "type": "illust",
+        "value": "unpack_867ebe81"
       },
       {
         "type": "image",
@@ -49,15 +49,15 @@
       },
       {
         "type": "illust",
-        "value": "memory_chip"
+        "value": "mounted_body_496029c6"
       },
       {
         "type": "image",
         "value": "photos/배터리_충전.JPG"
       },
       {
-        "type": "image",
-        "value": "photos/lgu로고.png"
+        "type": "illust",
+        "value": "cpt_67a38371"
       }
     ],
     "stat": {
@@ -151,19 +151,19 @@
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "smartphone"
+          "value": "mid_release_98cab19a"
         },
         {
           "type": "illust",
-          "value": "phone_setup_ready"
+          "value": "official_sale_9dc82f05"
         },
         {
-          "type": "image",
-          "value": "photos/알뜰폰_로고.JPG"
+          "type": "illust",
+          "value": "device_data_transfer"
         },
         {
-          "type": "image",
-          "value": "photos/kt로고.png"
+          "type": "illust",
+          "value": "smartphone"
         }
       ],
       "stat": {
@@ -258,7 +258,7 @@
         },
         {
           "type": "illust",
-          "value": "phone_settings_toggle"
+          "value": "smartphone"
         },
         {
           "type": "illust",
@@ -352,11 +352,11 @@
         },
         {
           "type": "illust",
-          "value": "device_os_requirement"
+          "value": "smartphone"
         },
         {
           "type": "illust",
-          "value": "device_data_transfer"
+          "value": "aluminum_label"
         }
       ],
       "stat": {
@@ -596,8 +596,18 @@
   "_codex_uploaded_illustrations": [
     {
       "section": "hook",
+      "chunk": 1,
+      "variant": "unpack_867ebe81"
+    },
+    {
+      "section": "hook",
       "chunk": 3,
       "variant": "mounted_body_496029c6"
+    },
+    {
+      "section": "hook",
+      "chunk": 5,
+      "variant": "cpt_67a38371"
     },
     {
       "section": "fact_1",
@@ -608,16 +618,6 @@
       "section": "fact_1",
       "chunk": 2,
       "variant": "official_sale_9dc82f05"
-    },
-    {
-      "section": "fact_3",
-      "chunk": 1,
-      "variant": "slim_body_e2dca0be"
-    },
-    {
-      "section": "fact_3",
-      "chunk": 2,
-      "variant": "display_maintenance_c1ff39c1"
     }
   ],
   "_codex_semantic_visual_match": {
@@ -626,28 +626,42 @@
     "changes": [
       {
         "section": "hook",
-        "chunk": 3,
+        "chunk": 1,
         "from": {
-          "type": "illust",
-          "value": "mounted_body_496029c6"
+          "type": "image",
+          "value": "photos/삼성_갤럭시A.JPG"
         },
         "to": {
           "type": "illust",
-          "value": "memory_chip"
+          "value": "smartphone"
         },
-        "context": "플립8은 자체 칩 엑시노스 2600 탑재와 본체 슬림화에 집중한 변화로 전망됩니다 카메라·배터리·충전은 전작과 같지만 갤럭시 플립8 엑시노스 2600 슬림화 ['갤럭시 플립8', '엑시노스 2600 슬림화'] 뉴스",
-        "reason": "illust score 0.495 (content n/a)"
+        "context": "삼성이 7월 언팩에서 공개할 갤럭시 Z 플립8은 자체 칩 엑시노스 2600 갤럭시 플립8 엑시노스 2600 슬림화 ['갤럭시 플립8', '엑시노스 2600 슬림화'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "hook",
+        "chunk": 5,
+        "from": {
+          "type": "image",
+          "value": "photos/lgu로고.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "카메라·배터리·충전은 전작과 같지만 손에 잡히는 느낌이 달라집니다 갤럭시 플립8 엑시노스 2600 슬림화 ['갤럭시 플립8', '엑시노스 2600 슬림화'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
       },
       {
         "section": "fact_1",
         "chunk": 1,
         "from": {
           "type": "illust",
-          "value": "mid_release_98cab19a"
+          "value": "smartphone"
         },
         "to": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "phone_settings_toggle"
         },
         "context": "공개는 2026년 7월 중순 하반기 언팩, 정식 판매는 7월 말에서 8월 초 사이 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
         "reason": "neutral filler (no semantic match)"
@@ -657,41 +671,83 @@
         "chunk": 2,
         "from": {
           "type": "illust",
-          "value": "official_sale_9dc82f05"
+          "value": "phone_setup_ready"
         },
         "to": {
           "type": "illust",
-          "value": "phone_setup_ready"
+          "value": "device_os_requirement"
         },
         "context": "공개는 2026년 7월 중순 하반기 언팩, 정식 판매는 7월 말에서 8월 초 사이 글로벌 동시 출시가 유력합니다 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
-        "section": "fact_3",
-        "chunk": 1,
+        "section": "fact_1",
+        "chunk": 3,
         "from": {
-          "type": "illust",
-          "value": "slim_body_e2dca0be"
+          "type": "image",
+          "value": "photos/알뜰폰_로고.JPG"
         },
         "to": {
           "type": "illust",
-          "value": "ti_decrease"
+          "value": "device_data_transfer"
         },
-        "context": "본체 슬림화에 집중하면서도 외부 디스플레이는 유지·소폭 개선이 예상됩니다 디자인 본체 슬림화 집중 ['디자인', '본체 슬림화 집중'] 뉴스",
-        "reason": "illust score 0.524 (content n/a)"
+        "context": "정식 판매는 7월 말에서 8월 초 사이 글로벌 동시 출시가 유력합니다 폴드8과 함께 발표됩니다 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 4,
+        "from": {
+          "type": "image",
+          "value": "photos/kt로고.png"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "글로벌 동시 출시가 유력합니다 폴드8과 함께 발표됩니다 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "탑재가 유력합니다 전성비 개선과 온디바이스 AI 처리 효율 강화가 핵심 전작 대비 발열·배터리 효율이 관전 포인트입니다 칩 엑시노스 2600 자체 탑재 ['칩', '엑시노스 2600 자체 탑재'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
       },
       {
         "section": "fact_3",
         "chunk": 2,
         "from": {
           "type": "illust",
-          "value": "display_maintenance_c1ff39c1"
+          "value": "device_os_requirement"
         },
         "to": {
           "type": "illust",
-          "value": "device_os_requirement"
+          "value": "smartphone"
         },
         "context": "본체 슬림화에 집중하면서도 외부 디스플레이는 유지·소폭 개선이 예상됩니다 손에 잡았을 때 두께·무게 체감이 가장 큰 변화 포인트입니다 디자인 본체 슬림화 집중 ['디자인', '본체 슬림화 집중'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "디스플레이는 유지·소폭 개선이 예상됩니다 손에 잡았을 때 두께·무게 체감이 가장 큰 변화 포인트입니다 디자인 본체 슬림화 집중 ['디자인', '본체 슬림화 집중'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       }
     ],
@@ -700,8 +756,8 @@
         "section": "hook",
         "chunk": 1,
         "current": {
-          "type": "image",
-          "value": "photos/삼성_갤럭시A.JPG"
+          "type": "illust",
+          "value": "smartphone"
         },
         "context": "삼성이 7월 언팩에서 공개할 갤럭시 Z 플립8은 자체 칩 엑시노스 2600 갤럭시 플립8 엑시노스 2600 슬림화 ['갤럭시 플립8', '엑시노스 2600 슬림화'] 뉴스",
         "best_image_score": 0,
@@ -733,8 +789,8 @@
         "section": "hook",
         "chunk": 5,
         "current": {
-          "type": "image",
-          "value": "photos/lgu로고.png"
+          "type": "illust",
+          "value": "phone_setup_ready"
         },
         "context": "카메라·배터리·충전은 전작과 같지만 손에 잡히는 느낌이 달라집니다 갤럭시 플립8 엑시노스 2600 슬림화 ['갤럭시 플립8', '엑시노스 2600 슬림화'] 뉴스",
         "best_image_score": 0,
@@ -745,7 +801,7 @@
         "chunk": 1,
         "current": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "phone_settings_toggle"
         },
         "context": "공개는 2026년 7월 중순 하반기 언팩, 정식 판매는 7월 말에서 8월 초 사이 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
         "best_image_score": 0,
@@ -756,7 +812,7 @@
         "chunk": 2,
         "current": {
           "type": "illust",
-          "value": "phone_setup_ready"
+          "value": "device_os_requirement"
         },
         "context": "공개는 2026년 7월 중순 하반기 언팩, 정식 판매는 7월 말에서 8월 초 사이 글로벌 동시 출시가 유력합니다 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
         "best_image_score": 0,
@@ -766,8 +822,8 @@
         "section": "fact_1",
         "chunk": 3,
         "current": {
-          "type": "image",
-          "value": "photos/알뜰폰_로고.JPG"
+          "type": "illust",
+          "value": "device_data_transfer"
         },
         "context": "정식 판매는 7월 말에서 8월 초 사이 글로벌 동시 출시가 유력합니다 폴드8과 함께 발표됩니다 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
         "best_image_score": 0,
@@ -777,8 +833,8 @@
         "section": "fact_1",
         "chunk": 4,
         "current": {
-          "type": "image",
-          "value": "photos/kt로고.png"
+          "type": "illust",
+          "value": "smartphone"
         },
         "context": "글로벌 동시 출시가 유력합니다 폴드8과 함께 발표됩니다 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
         "best_image_score": 0,
@@ -789,7 +845,7 @@
         "chunk": 3,
         "current": {
           "type": "illust",
-          "value": "phone_settings_toggle"
+          "value": "smartphone"
         },
         "context": "탑재가 유력합니다 전성비 개선과 온디바이스 AI 처리 효율 강화가 핵심 전작 대비 발열·배터리 효율이 관전 포인트입니다 칩 엑시노스 2600 자체 탑재 ['칩', '엑시노스 2600 자체 탑재'] 뉴스",
         "best_image_score": 0,
@@ -800,7 +856,7 @@
         "chunk": 2,
         "current": {
           "type": "illust",
-          "value": "device_os_requirement"
+          "value": "smartphone"
         },
         "context": "본체 슬림화에 집중하면서도 외부 디스플레이는 유지·소폭 개선이 예상됩니다 손에 잡았을 때 두께·무게 체감이 가장 큰 변화 포인트입니다 디자인 본체 슬림화 집중 ['디자인', '본체 슬림화 집중'] 뉴스",
         "best_image_score": 0,
@@ -811,7 +867,7 @@
         "chunk": 3,
         "current": {
           "type": "illust",
-          "value": "device_data_transfer"
+          "value": "smartphone"
         },
         "context": "디스플레이는 유지·소폭 개선이 예상됩니다 손에 잡았을 때 두께·무게 체감이 가장 큰 변화 포인트입니다 디자인 본체 슬림화 집중 ['디자인', '본체 슬림화 집중'] 뉴스",
         "best_image_score": 0,
