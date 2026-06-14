@@ -438,6 +438,17 @@ def semantic_match(data: dict, slug: str) -> bool:
     illust_kw_index = build_illust_keyword_index() if use_embed else {}
     illust_kw_engine = f", illust-kw={len(illust_kw_index)}개(min={MIN_ILLUST_KEYWORDS})" if illust_kw_index else ""
     print(f"[semantic_visual] engine={'embedding' if use_embed else 'lexical'} (min_img={min_img}, min_ill={min_ill}){img_engine}{photo_engine}{illust_kw_engine}")
+    # 진단(무조건 기록): 이 렌더가 실제로 본 photo_files 수/경로. changes 없어 리포트가 안 나와도 남김.
+    try:
+        (CARD_OUTPUT / slug).mkdir(parents=True, exist_ok=True)
+        (CARD_OUTPUT / slug / "_visual_engine_diag.txt").write_text(
+            f"use_embed={use_embed}\nphoto_files={len(photo_files)}\nphotos={photo_files}\n"
+            f"PHOTO_DIR={PHOTO_DIR}\nPHOTO_DIR_exists={PHOTO_DIR.exists()}\n"
+            f"illust_kw_index={len(illust_kw_index)}\n",
+            encoding="utf-8",
+        )
+    except Exception:
+        pass
 
     for section_name, section in section_items(data):
         chunks = section_chunks(section)
