@@ -359,4 +359,6 @@ git ls-files -z | grep -ziE '\.(bat|ps1|cmd|vbs)$' | xargs -0 md5sum | sort \
 
 - 2026-06-14: **포토 매칭 = 임베딩 폐기 → 렉시컬 모델명 일치 + 필수 일러 3→5 (E단원 정본).** 한글 임베딩이 모델명(갤럭시A/엑시노스/S25)을 못 구분 → 임계값(PHOTO_MIN)으로는 정답·오답(둘 다 ~0.5)을 못 가름. `codex_semantic_visual_match.py`에 `_photo_tokens`/`_is_distinctive`/`photo_lexical_score`/`PHOTO_STOP` 추가, 포토 채택 = 구별토큰이 청크에 실제 등장(dist≥1). 일반토큰(삼성/갤럭시/로고)만으론 미채택 → `갤럭시A`·`S25`가 무관 영상에 안 붙음(커버 오염 차단). **임베딩 불필요 → 부사수PC에서도 작동**(사진 에셋은 git 비추적이라 렌더 PC에 직접 있어야 함). 필수 일러 추천 `MAX_REQUESTS` 3→5(`codex_illustration_scout.py`). graceful degradation: 생성단계 많이 채울수록 고퀄, 못 채우면 렉시컬로 최선. 함정: scout.py Edit truncation → git HEAD 복구. 정본 = SYSTEM_MAP E단원.
 
+- 2026-06-14: **일러스트도 렉시컬 키워드 신호로 안정화 + 태그DB 손상 재발방지 (E단원 정본, 검증 170444).** 일러스트 미사용 원인 = 임베딩이 해시이름+헤드라인에 희석돼 정확 키워드도 임계 미달 + 태그DB가 비원자적 write로 NUL 손상 시 빈 DB 반환. 수정: `codex_semantic_visual_match.py` 일러스트 렉시컬 키워드(`build_illust_keyword_index`/`illust_lexical_hits`/`best_lex_ill`, hits≥2면 임베딩보다 우선, 약하면 임베딩 유지=무회귀) + `codex_illustration_db.py` `write_json` 원자적(temp+os.replace) + keep-source 분기서 `photos/` 제외(stale 포토 되살아남 차단). 검증: mid_release/official_sale/mounted_body 제자리, smartphone 6→4. 정본 = SYSTEM_MAP E단원.
+
 이 파일이 업그레이드되면 변경 이력 1줄 추가. 가이드 추가·제거 시 STEP 1 리스트 동기화.

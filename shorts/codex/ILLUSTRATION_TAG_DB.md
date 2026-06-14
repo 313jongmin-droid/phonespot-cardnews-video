@@ -5,10 +5,10 @@
 
 | illustration | tags | use count | last slug |
 |---|---|---:|---|
-| `aluminum_label` | materials, hardware, library | 4 | 021_news_galaxy_flip8_exynos |
+| `aluminum_label` | materials, hardware, library | 4 | 022_tip_galaxy_battery_save_5 |
 | `android_user_a91efa70` | auto | 0 |  |
-| `appliance` | hardware, device, library | 4 | 021_news_galaxy_flip8_exynos |
-| `battery_charge_range` | battery, charging, tips, library | 3 | 021_news_galaxy_flip8_exynos |
+| `appliance` | hardware, device, library | 4 | 022_tip_galaxy_battery_save_5 |
+| `battery_charge_range` | battery, charging, tips, library | 3 | 022_tip_galaxy_battery_save_5 |
 | `battery_health_check` | battery, health, tips | 0 |  |
 | `battery_overheat` | battery, heat, warning, library | 2 | 022_tip_galaxy_battery_save_5 |
 | `biometric` | security, privacy, authentication, library | 3 | 020_qa_apple_pay_korea_card |
@@ -16,13 +16,13 @@
 | `call_filter_rules` | library | 0 |  |
 | `call_recording_notice` | library | 1 | 010_tip_iphone_call_record |
 | `calling_066b1a1b` | library | 0 |  |
-| `camera_battery_ecd040c7` | auto, library | 1 | 021_news_galaxy_flip8_exynos |
+| `camera_battery_ecd040c7` | auto, library | 2 | 022_tip_galaxy_battery_save_5 |
 | `card_struggle_81529308` | auto | 0 |  |
 | `chart_down` | price, data, decrease, library | 1 | 011_qa_combo_discount_check |
 | `chart_up` | price, data, increase, library | 1 | 001_apple_ondevice_ai_wwdc26 |
 | `chat_backup_restore` | messenger, backup, restore, tips, library | 1 | 010_tip_iphone_call_record |
 | `chatbot` | ai, assistant, software, library | 4 | 016_news_ios_26_3_release |
-| `clock` | time, tips, library | 2 | 011_qa_combo_discount_check |
+| `clock` | time, tips, library | 3 | 022_tip_galaxy_battery_save_5 |
 | `cloud_backup` | security, privacy, cloud, library | 1 | 001_apple_ondevice_ai_wwdc26 |
 | `cover_screen_widgets` | library | 0 |  |
 | `cpt_066b1a1b` | auto, library | 1 | 018_scam_wedding_invite_smishing |
@@ -49,6 +49,7 @@
 | `cpt_7a87dd35` | auto | 0 |  |
 | `cpt_7b46d1e4` | auto | 0 |  |
 | `cpt_7b7a2f91` | auto, library | 1 | 015_qa_msafer_pass_identity_block |
+| `cpt_7ea57558` | auto, library | 1 | 022_tip_galaxy_battery_save_5 |
 | `cpt_83fa1e9f` | auto, library | 3 | 020_qa_apple_pay_korea_card |
 | `cpt_8b587f6c` | auto | 0 |  |
 | `cpt_8bffef74` | auto, library | 1 | 015_qa_msafer_pass_identity_block |
@@ -100,7 +101,8 @@
 | `korean_broken_36986e9e` | auto | 0 |  |
 | `launch_event` | library | 0 |  |
 | `liquid_titanium` | materials, hardware, library | 0 |  |
-| `lock` | security, privacy, lock, library | 3 | 018_scam_wedding_invite_smishing |
+| `lock` | security, privacy, lock, library | 4 | 022_tip_galaxy_battery_save_5 |
+| `lock_screen_only_e80c4860` | auto, library | 1 | 022_tip_galaxy_battery_save_5 |
 | `logout` | security, privacy, account, library | 1 | 015_qa_msafer_pass_identity_block |
 | `market_cap` | price, data, market, library | 1 | 014_scam_voicephishing_zero_relief |
 | `meeting_room` | policy, news, strategy, library | 11 | 020_qa_apple_pay_korea_card |
@@ -121,7 +123,7 @@
 | `ondevice_ai_chip` | ai, hardware, privacy | 0 |  |
 | `optimized_charging` | battery, charging, tips, library | 1 | 021_news_galaxy_flip8_exynos |
 | `password` | security, privacy, authentication, library | 0 |  |
-| `personal_data_63b96014` | auto | 0 |  |
+| `personal_data_63b96014` | auto, library | 1 | 022_tip_galaxy_battery_save_5 |
 | `personal_data_leak` | security, privacy, leak | 0 |  |
 | `phone_settings_toggle` | library | 6 | 018_scam_wedding_invite_smishing |
 | `phone_setup_ready` | library | 4 | 018_scam_wedding_invite_smishing |
@@ -139,13 +141,13 @@
 | `security_feature_lock` | library | 2 | 018_scam_wedding_invite_smishing |
 | `select_option_76495b69` | auto | 0 |  |
 | `self_flip_6728256c` | auto, library | 0 |  |
-| `series_06379766` | auto | 0 |  |
+| `series_06379766` | auto, library | 1 | 022_tip_galaxy_battery_save_5 |
 | `settings_screen_ab73a8fa` | auto | 0 |  |
 | `settings_steps` | library | 0 |  |
 | `shield` | security, privacy, protection, library | 11 | 020_qa_apple_pay_korea_card |
 | `slim_body_e2dca0be` | auto, library | 0 |  |
-| `smart_482e7bdd` | auto | 0 |  |
-| `smartphone` | device, purchase, cta, library | 13 | 021_news_galaxy_flip8_exynos |
+| `smart_482e7bdd` | auto, library | 1 | 022_tip_galaxy_battery_save_5 |
+| `smartphone` | device, purchase, cta, library | 13 | 022_tip_galaxy_battery_save_5 |
 | `smishing_fake_link` | security, smishing, warning, link | 0 |  |
 | `stock_chart` | price, data, market, library | 0 |  |
 | `store` | store, purchase, cta, library | 3 | 014_scam_voicephishing_zero_relief |
@@ -165,8 +167,8 @@
 
 ## Recent videos
 
+- `022_tip_galaxy_battery_save_5`: smartphone, aluminum_label, camera_battery_ecd040c7, appliance, battery_charge_range, battery_overheat, personal_data_63b96014, smart_482e7bdd, clock, series_06379766, lock_screen_only_e80c4860, cpt_7ea57558, lock
 - `021_news_galaxy_flip8_exynos`: unpack_867ebe81, mounted_body_496029c6, cpt_67a38371, mid_release_98cab19a, official_sale_9dc82f05, device_data_transfer, smartphone, appliance, camera_battery_ecd040c7, ti_decrease, aluminum_label, battery_charge_range, optimized_charging
-- `022_tip_galaxy_battery_save_5`: smartphone, aluminum_label, appliance, battery_charge_range, battery_overheat
 - `020_qa_apple_pay_korea_card`: smartphone, newspaper, microphone, shield, meeting_room, forecast, cpt_f59129df, cpt_a1caaea6, biometric, cpt_83fa1e9f, cpt_6a2e9678, device_data_transfer, nfc_pay, cpt_fd9edf65, gift_voucher
 - `019_news_samsung_thank_you_festival`: monday_d77265f0, weekly_sunday_82b74c0a, festival_41b2e7cf, unlocked_baa71ac6, event_period_8cafdac4, microphone, shield, meeting_room, forecast, gift_voucher, smartphone, cpt_a1caaea6, biometric, cpt_4729c912, cpt_fd9edf65
 - `018_scam_wedding_invite_smishing`: cpt_f59129df, surge_b56b4f67, cpt_066b1a1b, phone_settings_toggle, phone_setup_ready, cpt_6f69bf84, friend_wedding_suspicion_884c4f09, meeting_room, security_feature_lock, lock, impersonation_call, gift_prohibit, shield, prohibit, warning, forecast, nfc_pay, cpt_4729c912, gift_voucher

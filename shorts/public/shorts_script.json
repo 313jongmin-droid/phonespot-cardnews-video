@@ -1,63 +1,53 @@
 {
-  "slug": "021_news_galaxy_flip8_exynos",
-  "title_short": "갤럭시 플립8 엑시노스 2600 + 슬림화",
-  "video_title": "갤럭시 플립8 엑시노스 2600 + 슬림화",
+  "slug": "022_tip_galaxy_battery_save_5",
+  "title_short": "갤럭시 배터리 절약 5가지",
+  "video_title": "갤럭시 배터리 절약 5가지",
   "publication_date": "2026.06.13",
-  "sources": "나무위키 갤럭시 Z 플립8 + 싸당 + 스마트리더 Tech + 폰스팟 광교점 자료",
+  "sources": "삼성전자 갤럭시 배터리 최적화 공식 + 베타뉴스 One UI 8.5 PDI + 폰스팟 광교점 자료",
   "channel_name": "폰스팟",
   "channel_tagline": "광교 미니 IT 브리핑",
   "opening": {
     "line1": "광교 미니 IT 브리핑",
-    "line2": "갤럭시 플립8 엑시노스 2600 + 슬림화"
+    "line2": "갤럭시 배터리 절약 5가지"
   },
   "hook": {
-    "tts": "삼성이 7월 언팩에서 공개할 갤럭시 Z 플립8은 자체 칩 엑시노스 2600 탑재와 본체 슬림화에 집중한 변화로 전망됩니다. 카메라·배터리·충전은 전작과 같지만 손에 잡히는 느낌이 달라집니다.",
+    "tts": "충전기 자주 꽂으시는 갤럭시 사용자라면 5분만 설정 손봐도 하루 사용량이 눈에 띄게 늘어납니다. 삼성 공식 가이드 기준 가장 효과 큰 5가지를 정리했습니다.",
     "caption_body": [
-      "갤럭시 플립8",
-      "엑시노스 2600 슬림화"
+      "갤럭시 배터리",
+      "5분 안 5가지 OFF"
     ],
     "caption_emphasis": [
-      "엑시노스 2600"
+      "5분"
     ],
     "headline_lines": [
       {
-        "text": "갤럭시 플립8"
+        "text": "갤럭시 배터리"
       },
       {
-        "text": "엑시노스 2600 슬림화",
+        "text": "5분 안 5가지 OFF",
         "accent": true
       }
     ],
-    "meta": "출처: 나무위키 갤럭시 Z 플립8",
+    "meta": "출처: 삼성전자 배터리 최적화 공식",
     "topic": "뉴스",
     "background_image": "",
     "caption_chunks": [
-      "삼성이 7월 언팩에서 공개할 갤럭시 Z",
-      "플립8은 자체 칩 엑시노스 2600",
-      "탑재와 본체 슬림화에 집중한 변화로 전망됩니다.",
-      "카메라·배터리·충전은 전작과 같지만",
-      "손에 잡히는 느낌이 달라집니다."
+      "충전기 자주 꽂으시는 갤럭시 사용자라면 5분만",
+      "설정 손봐도 하루 사용량이 눈에 띄게 늘어납니다.",
+      "삼성 공식 가이드 기준 가장 효과 큰 5가지를 정리했습니다."
     ],
     "chunk_visuals": [
       {
         "type": "illust",
-        "value": "unpack_867ebe81"
-      },
-      {
-        "type": "image",
-        "value": "photos/갤럭시z플립7_z폴드7.JPG"
+        "value": "smartphone"
       },
       {
         "type": "illust",
-        "value": "mounted_body_496029c6"
+        "value": "aluminum_label"
       },
       {
-        "type": "image",
-        "value": "photos/배터리_충전.JPG"
-      },
-      {
-        "type": "illust",
-        "value": "cpt_67a38371"
+        "type": "mascot",
+        "value": "surprised"
       }
     ],
     "stat": {
@@ -66,104 +56,95 @@
       "note": ""
     },
     "display_chunks": [
-      "삼성이 7월 언팩에서 공개할 갤럭시 Z",
-      "플립8은 자체 칩 엑시노스 2600",
-      "탑재와 본체 슬림화에 집중한 변화로 전망됩니다",
-      "카메라·배터리·충전은 전작과 같지만",
-      "손에 잡히는 느낌이 달라집니다"
+      "충전기 자주 꽂으시는 갤럭시 사용자라면 5분만",
+      "설정 손봐도 하루 사용량이 눈에 띄게 늘어납니다",
+      "삼성 공식 가이드 기준 가장 효과 큰 5가지를 정리했습니다"
     ],
     "_codex_caption_lockstep": {
       "version": 2,
       "compiler": "korean_caption_compiler_v2",
       "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-      "chunk_count": 5
+      "chunk_count": 3
     },
     "_codex_contextual_narrative": true,
     "_codex_sync_mode": "global999_tts_caption_lockstep",
     "tts_chunk_weights": [
-      2197.88,
-      1778.16,
-      3075.0,
-      1742.96,
-      1637.33
+      2594.0,
+      2898.96,
+      3019.37
     ],
     "_tts_timing": {
       "mode": "word_boundary_text_align",
       "windows": [
         {
           "start_ms": 0.0,
-          "end_ms": 2197.88,
-          "duration_ms": 2197.88
+          "end_ms": 2594.0,
+          "duration_ms": 2594.0
         },
         {
-          "start_ms": 2197.88,
-          "end_ms": 3976.04,
-          "duration_ms": 1778.16
+          "start_ms": 2594.0,
+          "end_ms": 5492.96,
+          "duration_ms": 2898.96
         },
         {
-          "start_ms": 3976.04,
-          "end_ms": 7051.04,
-          "duration_ms": 3075.0
-        },
-        {
-          "start_ms": 7051.04,
-          "end_ms": 8794.0,
-          "duration_ms": 1742.96
-        },
-        {
-          "start_ms": 8794.0,
-          "end_ms": 10431.33,
-          "duration_ms": 1637.33
+          "start_ms": 5492.96,
+          "end_ms": 8512.33,
+          "duration_ms": 3019.37
         }
       ],
-      "boundary_count": 27,
-      "caption_signature": "0236ee15efdc5f75a5fc10ced73c2bb869a840fbdbaad1c864b879ecc26fef4c"
+      "boundary_count": 22,
+      "caption_signature": "24e6838d5ad0c6614bf7c321216769aaaa44d62f9c300cb7d5f42993eb8deecb"
     }
   },
   "facts": [
     {
-      "tts": "공개는 2026년 7월 중순 하반기 언팩, 정식 판매는 7월 말에서 8월 초 사이 글로벌 동시 출시가 유력합니다. 폴드8과 함께 발표됩니다.",
+      "tts": "설정 → 배터리 → 절전 모드. 사용하지 않는 앱의 Wi-Fi와 모바일 데이터를 차단하고 Always On Display 같은 전력 소모 기능을 자동 비활성화합니다. 가장 효과 큰 설정 하나입니다.",
       "caption_body": [
-        "공개·출시",
-        "7월 중순 언팩"
+        "1",
+        "절전 모드 ON"
       ],
       "caption_emphasis": [
-        "7월 중순"
+        "절전 모드"
       ],
       "headline_lines": [
         {
-          "text": "공개·출시"
+          "text": "1"
         },
         {
-          "text": "7월 중순 언팩",
+          "text": "절전 모드 ON",
           "accent": true
         }
       ],
-      "meta": "출처: 싸당 폴드/플립8 루머",
+      "meta": "출처: 삼성 절전 모드 가이드",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "공개는 2026년 7월 중순 하반기 언팩,",
-        "정식 판매는 7월 말에서 8월 초 사이",
-        "글로벌 동시 출시가 유력합니다.",
-        "폴드8과 함께 발표됩니다."
+        "설정 → 배터리 → 절전 모드.",
+        "사용하지 않는 앱의 Wi-Fi와 모바일",
+        "데이터를 차단하고 Always On",
+        "Display 같은 전력 소모 기능을 자동 비활성화합니다.",
+        "가장 효과 큰 설정 하나입니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "mid_release_98cab19a"
-        },
-        {
-          "type": "illust",
-          "value": "official_sale_9dc82f05"
-        },
-        {
-          "type": "illust",
-          "value": "device_data_transfer"
-        },
-        {
-          "type": "illust",
           "value": "smartphone"
+        },
+        {
+          "type": "illust",
+          "value": "camera_battery_ecd040c7"
+        },
+        {
+          "type": "illust",
+          "value": "appliance"
+        },
+        {
+          "type": "illust",
+          "value": "battery_charge_range"
+        },
+        {
+          "type": "illust",
+          "value": "battery_overheat"
         }
       ],
       "stat": {
@@ -173,96 +154,113 @@
       },
       "id": "fact_1",
       "display_chunks": [
-        "공개는 2026년 7월 중순 하반기 언팩,",
-        "정식 판매는 7월 말에서 8월 초 사이",
-        "글로벌 동시 출시가 유력합니다",
-        "폴드8과 함께 발표됩니다"
+        "설정 → 배터리 → 절전 모드",
+        "사용하지 않는 앱의 Wi-Fi와 모바일",
+        "데이터를 차단하고 Always On",
+        "Display 같은 전력 소모 기능을 자동 비활성화합니다",
+        "가장 효과 큰 설정 하나입니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 4
+        "chunk_count": 5
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        2356.33,
-        1963.05,
-        2150.7,
-        1470.05
+        2051.04,
+        2007.04,
+        1408.46,
+        3274.67,
+        1566.87
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 2356.33,
-            "duration_ms": 2356.33
+            "end_ms": 2051.04,
+            "duration_ms": 2051.04
           },
           {
-            "start_ms": 2356.33,
-            "end_ms": 4319.38,
-            "duration_ms": 1963.05
+            "start_ms": 2051.04,
+            "end_ms": 4058.08,
+            "duration_ms": 2007.04
           },
           {
-            "start_ms": 4319.38,
-            "end_ms": 6470.08,
-            "duration_ms": 2150.7
+            "start_ms": 4058.08,
+            "end_ms": 5466.54,
+            "duration_ms": 1408.46
           },
           {
-            "start_ms": 6470.08,
-            "end_ms": 7940.13,
-            "duration_ms": 1470.05
+            "start_ms": 5466.54,
+            "end_ms": 8741.21,
+            "duration_ms": 3274.67
+          },
+          {
+            "start_ms": 8741.21,
+            "end_ms": 10308.08,
+            "duration_ms": 1566.87
           }
         ],
-        "boundary_count": 20,
-        "caption_signature": "20c20e9044f575759e2779fd7c4b741f085919414502778d38870450144bf8f9"
+        "boundary_count": 25,
+        "caption_signature": "d544c6509fe2fb853d7c29db02ba3560ab946532613b1f5516fee80a920f3728"
       }
     },
     {
-      "tts": "스냅드래곤이 아닌 삼성 엑시노스 2600 탑재가 유력합니다. 전성비 개선과 온디바이스 AI 처리 효율 강화가 핵심. 전작 대비 발열·배터리 효율이 관전 포인트입니다.",
+      "tts": "One UI 8.5의 새 기능 Personal Data Intelligence. 사용자가 휴대폰을 안 쓰는 시간대를 학습해 네트워크 성능을 자동 제한합니다. S26 시리즈부터 우선 적용됩니다.",
       "caption_body": [
-        "칩",
-        "엑시노스 2600 자체 탑재"
+        "2",
+        "PDI 활용 (One UI 8.5)"
       ],
       "caption_emphasis": [
-        "엑시노스 2600"
+        "PDI"
       ],
       "headline_lines": [
         {
-          "text": "칩"
+          "text": "2"
         },
         {
-          "text": "엑시노스 2600 자체 탑재",
+          "text": "PDI 활용 (One UI 8.5)",
           "accent": true
         }
       ],
-      "meta": "출처: 스마트리더 Tech 루머",
+      "meta": "출처: 베타뉴스 One UI 8.5",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "스냅드래곤이 아닌 삼성 엑시노스 2600",
-        "탑재가 유력합니다.",
-        "전성비 개선과 온디바이스 AI 처리 효율 강화가 핵심.",
-        "전작 대비 발열·배터리 효율이 관전 포인트입니다."
+        "One UI 8.5의 새",
+        "기능 Personal Data",
+        "Intelligence.",
+        "사용자가 휴대폰을 안 쓰는 시간대를",
+        "학습해 네트워크 성능을 자동 제한합니다.",
+        "S26 시리즈부터 우선 적용됩니다."
       ],
       "chunk_visuals": [
-        {
-          "type": "image",
-          "value": "photos/삼성_엑시노스.JPG"
-        },
-        {
-          "type": "illust",
-          "value": "appliance"
-        },
         {
           "type": "illust",
           "value": "smartphone"
         },
         {
           "type": "illust",
-          "value": "camera_battery_ecd040c7"
+          "value": "personal_data_63b96014"
+        },
+        {
+          "type": "illust",
+          "value": "smart_482e7bdd"
+        },
+        {
+          "type": "illust",
+          "value": "clock"
+        },
+        {
+          "type": "mascot",
+          "value": "suspicious"
+        },
+        {
+          "type": "illust",
+          "value": "series_06379766"
         }
       ],
       "stat": {
@@ -272,91 +270,115 @@
       },
       "id": "fact_2",
       "display_chunks": [
-        "스냅드래곤이 아닌 삼성 엑시노스 2600",
-        "탑재가 유력합니다",
-        "전성비 개선과 온디바이스 AI 처리 효율 강화가 핵심",
-        "전작 대비 발열·배터리 효율이 관전 포인트입니다"
+        "One UI 8.5의 새",
+        "기능 Personal Data",
+        "Intelligence",
+        "사용자가 휴대폰을 안 쓰는 시간대를",
+        "학습해 네트워크 성능을 자동 제한합니다",
+        "S26 시리즈부터 우선 적용됩니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 4
+        "chunk_count": 6
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        2285.92,
-        1604.91,
-        3345.09,
-        2429.58
+        1264.79,
+        897.88,
+        1332.04,
+        1575.71,
+        2667.25,
+        2112.71
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 2285.92,
-            "duration_ms": 2285.92
+            "end_ms": 1264.79,
+            "duration_ms": 1264.79
           },
           {
-            "start_ms": 2285.92,
-            "end_ms": 3890.83,
-            "duration_ms": 1604.91
+            "start_ms": 1264.79,
+            "end_ms": 2162.67,
+            "duration_ms": 897.88
           },
           {
-            "start_ms": 3890.83,
-            "end_ms": 7235.92,
-            "duration_ms": 3345.09
+            "start_ms": 2162.67,
+            "end_ms": 3494.71,
+            "duration_ms": 1332.04
           },
           {
-            "start_ms": 7235.92,
-            "end_ms": 9665.5,
-            "duration_ms": 2429.58
+            "start_ms": 3494.71,
+            "end_ms": 5070.42,
+            "duration_ms": 1575.71
+          },
+          {
+            "start_ms": 5070.42,
+            "end_ms": 7737.67,
+            "duration_ms": 2667.25
+          },
+          {
+            "start_ms": 7737.67,
+            "end_ms": 9850.38,
+            "duration_ms": 2112.71
           }
         ],
-        "boundary_count": 23,
-        "caption_signature": "346ed8955e7c47ff35705f76ca468bb83986bc36af67765e4c986e5dfa70b553"
+        "boundary_count": 22,
+        "caption_signature": "99334528b9501267f47910e309472c4bafcce5480de05c30fc4c133cd0f0aa7c"
       }
     },
     {
-      "tts": "본체 슬림화에 집중하면서도 외부 디스플레이는 유지·소폭 개선이 예상됩니다. 손에 잡았을 때 두께·무게 체감이 가장 큰 변화 포인트입니다.",
+      "tts": "AOD(Always On Display)는 항상 켜져있어 전력 소모가 큰 기능. 잠금 화면만으로 충분하면 끄세요. Play 스토어 자동 업데이트도 Wi-Fi 전용으로 제한하면 배터리·데이터 동시 절약됩니다.",
       "caption_body": [
-        "디자인",
-        "본체 슬림화 집중"
+        "3·4",
+        "AOD + 자동 업데이트 OFF"
       ],
       "caption_emphasis": [
-        "본체 슬림화"
+        "AOD + 자동 업데이트"
       ],
       "headline_lines": [
         {
-          "text": "디자인"
+          "text": "3·4"
         },
         {
-          "text": "본체 슬림화 집중",
+          "text": "AOD + 자동 업데이트 OFF",
           "accent": true
         }
       ],
-      "meta": "출처: 플립8 디자인 루머",
+      "meta": "출처: 갤럭시 배터리 절약 설정",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "본체 슬림화에 집중하면서도 외부",
-        "디스플레이는 유지·소폭 개선이 예상됩니다.",
-        "손에 잡았을 때 두께·무게 체감이 가장 큰 변화 포인트입니다."
+        "AOD(Always On Display)는",
+        "항상 켜져있어 전력 소모가 큰 기능.",
+        "잠금 화면만으로 충분하면 끄세요.",
+        "Play 스토어 자동 업데이트도 Wi-Fi",
+        "전용으로 제한하면 배터리·데이터 동시 절약됩니다."
       ],
       "chunk_visuals": [
-        {
-          "type": "illust",
-          "value": "ti_decrease"
-        },
         {
           "type": "illust",
           "value": "smartphone"
         },
         {
           "type": "illust",
-          "value": "aluminum_label"
+          "value": "lock_screen_only_e80c4860"
+        },
+        {
+          "type": "illust",
+          "value": "lock_screen_only_e80c4860"
+        },
+        {
+          "type": "illust",
+          "value": "cpt_7ea57558"
+        },
+        {
+          "type": "illust",
+          "value": "lock"
         }
       ],
       "stat": {
@@ -366,85 +388,104 @@
       },
       "id": "fact_3",
       "display_chunks": [
-        "본체 슬림화에 집중하면서도 외부",
-        "디스플레이는 유지·소폭 개선이 예상됩니다",
-        "손에 잡았을 때 두께·무게 체감이 가장 큰 변화 포인트입니다"
+        "AOD(Always On Display)는",
+        "항상 켜져있어 전력 소모가 큰 기능",
+        "잠금 화면만으로 충분하면 끄세요",
+        "Play 스토어 자동 업데이트도 Wi-Fi",
+        "전용으로 제한하면 배터리·데이터 동시 절약됩니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 3
+        "chunk_count": 5
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        1748.96,
-        2705.25,
-        3142.62
+        1925.0,
+        2520.42,
+        2227.12,
+        1725.34,
+        2438.37
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 1748.96,
-            "duration_ms": 1748.96
+            "end_ms": 1925.0,
+            "duration_ms": 1925.0
           },
           {
-            "start_ms": 1748.96,
-            "end_ms": 4454.21,
-            "duration_ms": 2705.25
+            "start_ms": 1925.0,
+            "end_ms": 4445.42,
+            "duration_ms": 2520.42
           },
           {
-            "start_ms": 4454.21,
-            "end_ms": 7596.83,
-            "duration_ms": 3142.62
+            "start_ms": 4445.42,
+            "end_ms": 6672.54,
+            "duration_ms": 2227.12
+          },
+          {
+            "start_ms": 6672.54,
+            "end_ms": 8397.88,
+            "duration_ms": 1725.34
+          },
+          {
+            "start_ms": 8397.88,
+            "end_ms": 10836.25,
+            "duration_ms": 2438.37
           }
         ],
-        "boundary_count": 19,
-        "caption_signature": "cd0fba3bb4f5939e0c07f1b77409ac320e824603c7a154676d8541199916a7b8"
+        "boundary_count": 26,
+        "caption_signature": "552b951ceeddf54de7cb5ad07e7244471bb10e17bdbc61d53d4e7af544a50757"
       }
     },
     {
-      "tts": "메인 카메라 구성과 배터리 용량 4300mAh, 충전 속도 25W는 전작과 대동소이할 것으로 전망됩니다. 사진·동영상 사용 패턴이 크게 바뀌진 않을 가능성이 큽니다.",
+      "tts": "설정 → 연결 → 데이터 사용. 앱별로 Wi-Fi만 사용 / 모바일만 사용 / 둘 다 사용 선택 가능합니다. 영상 앱·게임은 Wi-Fi 전용으로 두면 배터리·데이터 모두 크게 절약됩니다.",
       "caption_body": [
-        "유지",
-        "카메라·배터리·충전"
+        "5",
+        "앱별 데이터 Wi-Fi 전용"
       ],
       "caption_emphasis": [
-        "카메라·배터리·충전"
+        "앱별 데이터"
       ],
       "headline_lines": [
         {
-          "text": "유지"
+          "text": "5"
         },
         {
-          "text": "카메라·배터리·충전",
+          "text": "앱별 데이터 Wi-Fi 전용",
           "accent": true
         }
       ],
-      "meta": "출처: 플립8 스펙 루머",
+      "meta": "출처: 갤럭시 데이터 사용 설정",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "메인 카메라 구성과 배터리 용량 4300mAh,",
-        "충전 속도 25W는 전작과 대동소이할 것으로 전망됩니다.",
-        "사진·동영상 사용 패턴이 크게",
-        "바뀌진 않을 가능성이 큽니다."
+        "설정 → 연결 → 데이터 사용.",
+        "앱별로 Wi-Fi만 사용 / 모바일만",
+        "사용 / 둘 다 사용 선택 가능합니다.",
+        "영상 앱·게임은 Wi-Fi 전용으로 두면",
+        "배터리·데이터 모두 크게 절약됩니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "battery_charge_range"
-        },
-        {
-          "type": "illust",
-          "value": "optimized_charging"
-        },
-        {
-          "type": "illust",
           "value": "smartphone"
+        },
+        {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        {
+          "type": "illust",
+          "value": "appliance"
+        },
+        {
+          "type": "illust",
+          "value": "battery_charge_range"
         },
         {
           "type": "mascot",
@@ -458,51 +499,58 @@
       },
       "id": "fact_4",
       "display_chunks": [
-        "메인 카메라 구성과 배터리 용량 4300mAh,",
-        "충전 속도 25W는 전작과 대동소이할 것으로 전망됩니다",
-        "사진·동영상 사용 패턴이 크게",
-        "바뀌진 않을 가능성이 큽니다"
+        "설정 → 연결 → 데이터 사용",
+        "앱별로 Wi-Fi만 사용 / 모바일만",
+        "사용 / 둘 다 사용 선택 가능합니다",
+        "영상 앱·게임은 Wi-Fi 전용으로 두면",
+        "배터리·데이터 모두 크게 절약됩니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 4
+        "chunk_count": 5
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        3210.21,
-        3832.04,
-        1558.08,
-        1487.71
+        2051.04,
+        1813.38,
+        2315.16,
+        1690.13,
+        1901.42
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 3210.21,
-            "duration_ms": 3210.21
+            "end_ms": 2051.04,
+            "duration_ms": 2051.04
           },
           {
-            "start_ms": 3210.21,
-            "end_ms": 7042.25,
-            "duration_ms": 3832.04
+            "start_ms": 2051.04,
+            "end_ms": 3864.42,
+            "duration_ms": 1813.38
           },
           {
-            "start_ms": 7042.25,
-            "end_ms": 8600.33,
-            "duration_ms": 1558.08
+            "start_ms": 3864.42,
+            "end_ms": 6179.58,
+            "duration_ms": 2315.16
           },
           {
-            "start_ms": 8600.33,
-            "end_ms": 10088.04,
-            "duration_ms": 1487.71
+            "start_ms": 6179.58,
+            "end_ms": 7869.71,
+            "duration_ms": 1690.13
+          },
+          {
+            "start_ms": 7869.71,
+            "end_ms": 9771.13,
+            "duration_ms": 1901.42
           }
         ],
-        "boundary_count": 23,
-        "caption_signature": "96fc314ca817e3807da76a354e08f2e3bbd8ccd0115cfc0cff45f7b0a963355c"
+        "boundary_count": 25,
+        "caption_signature": "1982b2b4f418e32b9652b39aebee6eef37fa40c66c0186469f9c22ababbf5ba5"
       }
     }
   ],
@@ -595,407 +643,135 @@
   "_codex_common_quality_note": "Global 001-999 rule: screen chunks are rebuilt as an ordered, lossless partition of captions.md narration; curated visuals are rebalanced without discarding quality rules.",
   "_codex_uploaded_illustrations": [
     {
-      "section": "hook",
-      "chunk": 1,
-      "variant": "unpack_867ebe81"
-    },
-    {
-      "section": "hook",
-      "chunk": 3,
-      "variant": "mounted_body_496029c6"
-    },
-    {
-      "section": "hook",
-      "chunk": 5,
-      "variant": "cpt_67a38371"
-    },
-    {
-      "section": "fact_1",
-      "chunk": 1,
-      "variant": "mid_release_98cab19a"
-    },
-    {
-      "section": "fact_1",
+      "section": "fact_2",
       "chunk": 2,
-      "variant": "official_sale_9dc82f05"
+      "variant": "personal_data_63b96014"
+    },
+    {
+      "section": "fact_2",
+      "chunk": 3,
+      "variant": "smart_482e7bdd"
+    },
+    {
+      "section": "fact_2",
+      "chunk": 6,
+      "variant": "series_06379766"
+    },
+    {
+      "section": "fact_3",
+      "chunk": 3,
+      "variant": "lock_screen_only_e80c4860"
+    },
+    {
+      "section": "fact_3",
+      "chunk": 4,
+      "variant": "cpt_7ea57558"
     }
   ],
-  "_codex_semantic_visual_match": {
-    "version": 1,
-    "policy": "Match chunks to GPT source images using prompt.md descriptions, then fallback to tagged reusable illustrations.",
-    "changes": [
-      {
-        "section": "hook",
-        "chunk": 1,
-        "from": {
-          "type": "image",
-          "value": "photos/삼성_갤럭시A.JPG"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "삼성이 7월 언팩에서 공개할 갤럭시 Z 플립8은 자체 칩 엑시노스 2600 갤럭시 플립8 엑시노스 2600 슬림화 ['갤럭시 플립8', '엑시노스 2600 슬림화'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "hook",
-        "chunk": 5,
-        "from": {
-          "type": "image",
-          "value": "photos/lgu로고.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "phone_setup_ready"
-        },
-        "context": "카메라·배터리·충전은 전작과 같지만 손에 잡히는 느낌이 달라집니다 갤럭시 플립8 엑시노스 2600 슬림화 ['갤럭시 플립8', '엑시노스 2600 슬림화'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "phone_settings_toggle"
-        },
-        "context": "공개는 2026년 7월 중순 하반기 언팩, 정식 판매는 7월 말에서 8월 초 사이 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "phone_setup_ready"
-        },
-        "to": {
-          "type": "illust",
-          "value": "device_os_requirement"
-        },
-        "context": "공개는 2026년 7월 중순 하반기 언팩, 정식 판매는 7월 말에서 8월 초 사이 글로벌 동시 출시가 유력합니다 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 3,
-        "from": {
-          "type": "image",
-          "value": "photos/알뜰폰_로고.JPG"
-        },
-        "to": {
-          "type": "illust",
-          "value": "device_data_transfer"
-        },
-        "context": "정식 판매는 7월 말에서 8월 초 사이 글로벌 동시 출시가 유력합니다 폴드8과 함께 발표됩니다 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 4,
-        "from": {
-          "type": "image",
-          "value": "photos/kt로고.png"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "글로벌 동시 출시가 유력합니다 폴드8과 함께 발표됩니다 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "phone_settings_toggle"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "탑재가 유력합니다 전성비 개선과 온디바이스 AI 처리 효율 강화가 핵심 전작 대비 발열·배터리 효율이 관전 포인트입니다 칩 엑시노스 2600 자체 탑재 ['칩', '엑시노스 2600 자체 탑재'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "device_os_requirement"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "본체 슬림화에 집중하면서도 외부 디스플레이는 유지·소폭 개선이 예상됩니다 손에 잡았을 때 두께·무게 체감이 가장 큰 변화 포인트입니다 디자인 본체 슬림화 집중 ['디자인', '본체 슬림화 집중'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "device_data_transfer"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "디스플레이는 유지·소폭 개선이 예상됩니다 손에 잡았을 때 두께·무게 체감이 가장 큰 변화 포인트입니다 디자인 본체 슬림화 집중 ['디자인', '본체 슬림화 집중'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      }
-    ],
-    "weak": [
-      {
-        "section": "hook",
-        "chunk": 1,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "삼성이 7월 언팩에서 공개할 갤럭시 Z 플립8은 자체 칩 엑시노스 2600 갤럭시 플립8 엑시노스 2600 슬림화 ['갤럭시 플립8', '엑시노스 2600 슬림화'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.375
-      },
-      {
-        "section": "hook",
-        "chunk": 2,
-        "current": {
-          "type": "image",
-          "value": "photos/갤럭시z플립7_z폴드7.JPG"
-        },
-        "context": "삼성이 7월 언팩에서 공개할 갤럭시 Z 플립8은 자체 칩 엑시노스 2600 탑재와 본체 슬림화에 집중한 변화로 전망됩니다 갤럭시 플립8 엑시노스 2600 슬림화 ['갤럭시 플립8', '엑시노스 2600 슬림화'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.417
-      },
-      {
-        "section": "hook",
-        "chunk": 4,
-        "current": {
-          "type": "image",
-          "value": "photos/배터리_충전.JPG"
-        },
-        "context": "탑재와 본체 슬림화에 집중한 변화로 전망됩니다 카메라·배터리·충전은 전작과 같지만 손에 잡히는 느낌이 달라집니다 갤럭시 플립8 엑시노스 2600 슬림화 ['갤럭시 플립8', '엑시노스 2600 슬림화'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.466
-      },
-      {
-        "section": "hook",
-        "chunk": 5,
-        "current": {
-          "type": "illust",
-          "value": "phone_setup_ready"
-        },
-        "context": "카메라·배터리·충전은 전작과 같지만 손에 잡히는 느낌이 달라집니다 갤럭시 플립8 엑시노스 2600 슬림화 ['갤럭시 플립8', '엑시노스 2600 슬림화'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.448
-      },
-      {
-        "section": "fact_1",
-        "chunk": 1,
-        "current": {
-          "type": "illust",
-          "value": "phone_settings_toggle"
-        },
-        "context": "공개는 2026년 7월 중순 하반기 언팩, 정식 판매는 7월 말에서 8월 초 사이 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.34
-      },
-      {
-        "section": "fact_1",
-        "chunk": 2,
-        "current": {
-          "type": "illust",
-          "value": "device_os_requirement"
-        },
-        "context": "공개는 2026년 7월 중순 하반기 언팩, 정식 판매는 7월 말에서 8월 초 사이 글로벌 동시 출시가 유력합니다 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.333
-      },
-      {
-        "section": "fact_1",
-        "chunk": 3,
-        "current": {
-          "type": "illust",
-          "value": "device_data_transfer"
-        },
-        "context": "정식 판매는 7월 말에서 8월 초 사이 글로벌 동시 출시가 유력합니다 폴드8과 함께 발표됩니다 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.398
-      },
-      {
-        "section": "fact_1",
-        "chunk": 4,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "글로벌 동시 출시가 유력합니다 폴드8과 함께 발표됩니다 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.442
-      },
-      {
-        "section": "fact_2",
-        "chunk": 3,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "탑재가 유력합니다 전성비 개선과 온디바이스 AI 처리 효율 강화가 핵심 전작 대비 발열·배터리 효율이 관전 포인트입니다 칩 엑시노스 2600 자체 탑재 ['칩', '엑시노스 2600 자체 탑재'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.469
-      },
-      {
-        "section": "fact_3",
-        "chunk": 2,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "본체 슬림화에 집중하면서도 외부 디스플레이는 유지·소폭 개선이 예상됩니다 손에 잡았을 때 두께·무게 체감이 가장 큰 변화 포인트입니다 디자인 본체 슬림화 집중 ['디자인', '본체 슬림화 집중'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.474
-      },
-      {
-        "section": "fact_3",
-        "chunk": 3,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "디스플레이는 유지·소폭 개선이 예상됩니다 손에 잡았을 때 두께·무게 체감이 가장 큰 변화 포인트입니다 디자인 본체 슬림화 집중 ['디자인', '본체 슬림화 집중'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.457
-      },
-      {
-        "section": "fact_4",
-        "chunk": 3,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "충전 속도 25W는 전작과 대동소이할 것으로 전망됩니다 사진·동영상 사용 패턴이 크게 바뀌진 않을 가능성이 큽니다 유지 카메라·배터리·충전 ['유지', '카메라·배터리·충전'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.308
-      },
-      {
-        "section": "fact_4",
-        "chunk": 4,
-        "current": {
-          "type": "mascot",
-          "value": "serious"
-        },
-        "context": "사진·동영상 사용 패턴이 크게 바뀌진 않을 가능성이 큽니다 유지 카메라·배터리·충전 ['유지', '카메라·배터리·충전'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.388
-      }
-    ]
-  },
   "_codex_unique_illustration_guard": {
     "version": 1,
     "policy": "Illustrations and mascots should not repeat inside one video. CTA logo is exempt.",
     "replacements": [
       {
-        "section": "fact_2",
+        "section": "fact_1",
         "chunk": 2,
         "from": {
           "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "self_flip_6728256c"
-        },
-        "context": "스냅드래곤이 아닌 삼성 엑시노스 2600 탑재가 유력합니다 전성비 개선과 온디바이스 AI 처리 효율 강화가 핵심 칩 엑시노스 2600 자체 탑재 스냅드래곤이 아닌 삼성 엑시노스 2600 탑재가 유력합니다. 전성비 개선과 온디바이스 AI 처리 효율 강화가 핵심. 전작 대비 발열·배터리 효"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
+          "value": "aluminum_label"
         },
         "to": {
           "type": "illust",
           "value": "camera_battery_ecd040c7"
         },
-        "context": "탑재가 유력합니다 전성비 개선과 온디바이스 AI 처리 효율 강화가 핵심 전작 대비 발열·배터리 효율이 관전 포인트입니다 칩 엑시노스 2600 자체 탑재 스냅드래곤이 아닌 삼성 엑시노스 2600 탑재가 유력합니다. 전성비 개선과 온디바이스 AI 처리 효율 강화가 핵심. 전작 대비 발열·배"
+        "context": "설정 → 배터리 → 절전 모드 사용하지 않는 앱의 Wi-Fi와 모바일 데이터를 차단하고 Always On 1 절전 모드 ON 설정 → 배터리 → 절전 모드. 사용하지 않는 앱의 Wi-Fi와 모바일 데이터를 차단하고 Always On Display 같은 전력 소모 기능을 자동 비활성화합니"
       },
       {
         "section": "fact_2",
         "chunk": 4,
         "from": {
           "type": "illust",
-          "value": "camera_battery_ecd040c7"
+          "value": "battery_charge_range"
         },
         "to": {
           "type": "illust",
-          "value": "samsung_ai"
+          "value": "clock"
         },
-        "context": "전성비 개선과 온디바이스 AI 처리 효율 강화가 핵심 전작 대비 발열·배터리 효율이 관전 포인트입니다 칩 엑시노스 2600 자체 탑재 스냅드래곤이 아닌 삼성 엑시노스 2600 탑재가 유력합니다. 전성비 개선과 온디바이스 AI 처리 효율 강화가 핵심. 전작 대비 발열·배터리 효율이 관전 "
+        "context": "Intelligence 사용자가 휴대폰을 안 쓰는 시간대를 학습해 네트워크 성능을 자동 제한합니다 2 PDI 활용 (One UI 8.5) One UI 8.5의 새 기능 Personal Data Intelligence. 사용자가 휴대폰을 안 쓰는 시간대를 학습해 네트워크 성능을 자동 제한"
       },
       {
         "section": "fact_3",
         "chunk": 2,
         "from": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "aluminum_label"
         },
         "to": {
           "type": "illust",
-          "value": "cpt_496029c6"
+          "value": "lock_screen_only_e80c4860"
         },
-        "context": "본체 슬림화에 집중하면서도 외부 디스플레이는 유지·소폭 개선이 예상됩니다 손에 잡았을 때 두께·무게 체감이 가장 큰 변화 포인트입니다 디자인 본체 슬림화 집중 본체 슬림화에 집중하면서도 외부 디스플레이는 유지·소폭 개선이 예상됩니다. 손에 잡았을 때 두께·무게 체감이 가장 큰 변화 포인"
+        "context": "AOD(Always On Display)는 항상 켜져있어 전력 소모가 큰 기능 잠금 화면만으로 충분하면 끄세요 3·4 AOD + 자동 업데이트 OFF AOD(Always On Display)는 항상 켜져있어 전력 소모가 큰 기능. 잠금 화면만으로 충분하면 끄세요. Play 스토어 자동 "
       },
       {
         "section": "fact_3",
         "chunk": 3,
         "from": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "lock_screen_only_e80c4860"
         },
         "to": {
           "type": "illust",
-          "value": "forecast"
+          "value": "final_update"
         },
-        "context": "디스플레이는 유지·소폭 개선이 예상됩니다 손에 잡았을 때 두께·무게 체감이 가장 큰 변화 포인트입니다 디자인 본체 슬림화 집중 본체 슬림화에 집중하면서도 외부 디스플레이는 유지·소폭 개선이 예상됩니다. 손에 잡았을 때 두께·무게 체감이 가장 큰 변화 포인트입니다."
+        "context": "항상 켜져있어 전력 소모가 큰 기능 잠금 화면만으로 충분하면 끄세요 Play 스토어 자동 업데이트도 Wi-Fi 3·4 AOD + 자동 업데이트 OFF AOD(Always On Display)는 항상 켜져있어 전력 소모가 큰 기능. 잠금 화면만으로 충분하면 끄세요. Play 스토어 자동 "
       },
       {
-        "section": "cta",
-        "chunk": 1,
+        "section": "fact_3",
+        "chunk": 5,
         "from": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "battery_overheat"
         },
         "to": {
           "type": "illust",
-          "value": "gift_voucher"
+          "value": "lock"
         },
-        "context": "휴대폰 구매할 땐? 지원금부터 무료로 조회해보세요 휴대폰 구매할 땐? 지원금부터 무료로 조회해보세요 휴대폰 구매할 땐? 지원금부터 무료로 조회해보세요."
+        "context": "Play 스토어 자동 업데이트도 Wi-Fi 전용으로 제한하면 배터리·데이터 동시 절약됩니다 3·4 AOD + 자동 업데이트 OFF AOD(Always On Display)는 항상 켜져있어 전력 소모가 큰 기능. 잠금 화면만으로 충분하면 끄세요. Play 스토어 자동 업데이트도 Wi-Fi"
       }
     ],
     "weak": [
       {
         "section": "fact_4",
+        "chunk": 2,
+        "duplicate": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "context": "설정 → 연결 → 데이터 사용 앱별로 Wi-Fi만 사용 / 모바일만 사용 / 둘 다 사용 선택 가능합니다 5 앱별 데이터 Wi-Fi 전용 설정 → 연결 → 데이터 사용. 앱별로 Wi-Fi만 사용 / 모바일만 사용 / 둘 다 사용 선택 가능합니다. 영상 앱·게임은 Wi-Fi 전용으로 두면"
+      },
+      {
+        "section": "fact_4",
         "chunk": 3,
         "duplicate": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "appliance"
         },
-        "context": "충전 속도 25W는 전작과 대동소이할 것으로 전망됩니다 사진·동영상 사용 패턴이 크게 바뀌진 않을 가능성이 큽니다 유지 카메라·배터리·충전 메인 카메라 구성과 배터리 용량 4300mAh, 충전 속도 25W는 전작과 대동소이할 것으로 전망됩니다. 사진·동영상 사용 패턴이 크게 바뀌진 않을"
+        "context": "앱별로 Wi-Fi만 사용 / 모바일만 사용 / 둘 다 사용 선택 가능합니다 영상 앱·게임은 Wi-Fi 전용으로 두면 5 앱별 데이터 Wi-Fi 전용 설정 → 연결 → 데이터 사용. 앱별로 Wi-Fi만 사용 / 모바일만 사용 / 둘 다 사용 선택 가능합니다. 영상 앱·게임은 Wi-Fi 전"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 4,
+        "duplicate": {
+          "type": "illust",
+          "value": "battery_charge_range"
+        },
+        "context": "사용 / 둘 다 사용 선택 가능합니다 영상 앱·게임은 Wi-Fi 전용으로 두면 배터리·데이터 모두 크게 절약됩니다 5 앱별 데이터 Wi-Fi 전용 설정 → 연결 → 데이터 사용. 앱별로 Wi-Fi만 사용 / 모바일만 사용 / 둘 다 사용 선택 가능합니다. 영상 앱·게임은 Wi-Fi 전용"
       }
     ]
   },
   "_codex_effective_script": {
     "version": 2,
-    "slug": "021_news_galaxy_flip8_exynos",
-    "source": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\021_news_galaxy_flip8_exynos\\shorts_script.json",
+    "slug": "022_tip_galaxy_battery_save_5",
+    "source": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\022_tip_galaxy_battery_save_5\\shorts_script.json",
     "override_applied": false,
     "override_sections": []
   }

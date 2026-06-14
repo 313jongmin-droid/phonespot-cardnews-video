@@ -553,6 +553,20 @@
       "note": "자동 발굴 개념: KISA",
       "available": true
     },
+    "cpt_7ea57558": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "Play",
+        "스토어",
+        "자동",
+        "업데이트"
+      ],
+      "note": "자동 발굴 개념: Play 스토어",
+      "available": true
+    },
     "cpt_83fa1e9f": {
       "tags": [
         "auto",
@@ -1213,6 +1227,20 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "lock_screen_only_e80c4860": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "잠금",
+        "화면만",
+        "충분하면",
+        "끄세요"
+      ],
+      "note": "자동 발굴 개념: 잠금 화면만",
+      "available": true
+    },
     "logout": {
       "tags": [
         "security",
@@ -1492,13 +1520,15 @@
     },
     "personal_data_63b96014": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "Personal",
         "Data"
       ],
-      "note": "자동 발굴 개념: Personal Data"
+      "note": "자동 발굴 개념: Personal Data",
+      "available": true
     },
     "personal_data_leak": {
       "tags": [
@@ -1714,12 +1744,14 @@
     },
     "series_06379766": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "시리즈"
       ],
-      "note": "자동 발굴 개념: 시리즈"
+      "note": "자동 발굴 개념: 시리즈",
+      "available": true
     },
     "settings_screen_ab73a8fa": {
       "tags": [
@@ -1772,12 +1804,14 @@
     },
     "smart_482e7bdd": {
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "keywords": [
         "Intelligence"
       ],
-      "note": "자동 발굴 개념: Intelligence"
+      "note": "자동 발굴 개념: Intelligence",
+      "available": true
     },
     "smartphone": {
       "tags": [
@@ -1989,5 +2023,5 @@
       "available": true
     }
   },
-  "updated_at": "2026-06-14T14:23:39"
+  "updated_at": "2026-06-14T17:30:56"
 }

@@ -254,8 +254,8 @@
       ]
     },
     "021_news_galaxy_flip8_exynos": {
-      "used_at": "2026-06-14T14:23:40",
-      "source": "uploaded_illustrations",
+      "used_at": "2026-06-14T17:04:29",
+      "source": "codex_enhance",
       "illustrations": [
         "unpack_867ebe81",
         "mounted_body_496029c6",
@@ -273,18 +273,26 @@
       ]
     },
     "022_tip_galaxy_battery_save_5": {
-      "used_at": "2026-06-13T16:10:09",
-      "source": "codex_enhance",
+      "used_at": "2026-06-14T17:30:59",
+      "source": "uploaded_illustrations",
       "illustrations": [
         "smartphone",
         "aluminum_label",
+        "camera_battery_ecd040c7",
         "appliance",
         "battery_charge_range",
-        "battery_overheat"
+        "battery_overheat",
+        "personal_data_63b96014",
+        "smart_482e7bdd",
+        "clock",
+        "series_06379766",
+        "lock_screen_only_e80c4860",
+        "cpt_7ea57558",
+        "lock"
       ]
     }
   },
-  "updated_at": "2026-06-14T14:23:40",
+  "updated_at": "2026-06-14T17:31:00",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -337,11 +345,11 @@
       "variants": []
     },
     "021_news_galaxy_flip8_exynos": {
-      "updated_at": "2026-06-14T14:23:40",
+      "updated_at": "2026-06-14T17:04:31",
       "variants": []
     },
     "022_tip_galaxy_battery_save_5": {
-      "updated_at": "2026-06-13T16:10:09",
+      "updated_at": "2026-06-14T17:31:00",
       "variants": []
     }
   }
