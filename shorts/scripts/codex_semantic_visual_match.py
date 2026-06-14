@@ -102,6 +102,58 @@ def build_photo_index() -> dict:
     return {files[i]: vecs[i] for i in range(len(files))}
 
 
+# ─ 포토 매칭 = 임베딩이 아니라 '모델명 토큰의 실제 등장'(렉시컬). 한글 임베딩이 모델명
+#   (갤럭시A vs 엑시노스 vs S25)을 구분 못 해 엉뚱한 폰이 매칭되던 문제(렌더로 확인) 때문.
+#   제품 사진은 파일명에 정확한 모델명이 박혀 있으므로, 그 '구별 토큰'이 청크에 그대로 나올
+#   때만 1순위 채택(=매우 확신). 일반 토큰(삼성/갤럭시/로고)만으론 채택 X → 일러스트로.
+#   범용(이름 하드코딩 아님). 임베딩 불필요 → 모델 미설치 PC에서도 동작.
+PHOTO_STOP = set(v.strip().lower() for v in os.getenv(
+    "PHONESPOT_PHOTO_STOP",
+    "삼성,갤럭시,애플,샤오미,구글,퀄컴,로고,제품,신형,최신,폰,휴대폰,스마트폰,단말,통신사,사진,이미지",
+).split(",") if v.strip())
+
+
+def _photo_tokens(label: str) -> list[str]:
+    out: list[str] = []
+    for part in re.split(r"[\s_\-]+", label):
+        out += re.findall(r"[가-힣]+|[A-Za-z]+|[0-9]+", part)
+    return out
+
+
+def _is_distinctive(tok: str) -> bool:
+    if tok.lower() in PHOTO_STOP:
+        return False
+    if re.fullmatch(r"[가-힣]+", tok):
+        return len(tok) >= 2   # 플립/폴드/워치/배터리/엑시노스/스냅드래곤/알뜰폰
+    if re.fullmatch(r"[A-Za-z]+", tok):
+        return len(tok) >= 3   # ios/lgu (kt 2글자는 오탐 위험 → 제외)
+    if re.fullmatch(r"[0-9]+", tok):
+        return len(tok) >= 3   # 2600 (25 같은 짧은 숫자 제외)
+    return False
+
+
+def photo_lexical_score(label: str, chunk: str) -> tuple[int, int]:
+    """(구별토큰 일치수, 일반토큰 일치수). 한글=부분문자열, 영문=단어경계."""
+    c_low = chunk.lower()
+    dist = gen = 0
+    seen: set[str] = set()
+    for tok in _photo_tokens(label):
+        if tok in seen:
+            continue
+        seen.add(tok)
+        if re.fullmatch(r"[A-Za-z]+", tok):
+            hit = re.search(r"(?<![A-Za-z])" + re.escape(tok.lower()) + r"(?![A-Za-z])", c_low) is not None
+        else:
+            hit = tok in chunk
+        if not hit:
+            continue
+        if _is_distinctive(tok):
+            dist += 1
+        else:
+            gen += 1
+    return dist, gen
+
+
 ALIASES = {
     "일정": ["일정", "날짜", "달력", "캘린더", "키노트", "행사", "공개", "출시", "사전예약", "예약", "7월", "8월", "6월"],
     "폴드": ["폴드", "폴더블", "fold", "foldable", "와이드", "펼친", "내부 화면"],
@@ -334,8 +386,8 @@ def semantic_match(data: dict, slug: str) -> bool:
     # 그림 내용(CLIP) 인덱스: 있으면 확신 매칭이 없을 때 중립 필러 대신 내용으로 채운다.
     img_index = ie.library_image_index() if ie.available() else {}
     img_engine = f", image-content={len(img_index)}장(min={EMBED_MIN_ILLUST_IMG})" if img_index else ""
-    photo_index = build_photo_index() if use_embed else {}
-    photo_engine = f", photos={len(photo_index)}장(min={PHOTO_MIN})" if photo_index else ""
+    photo_files = list_photos()
+    photo_engine = f", photos={len(photo_files)}장(렉시컬 모델명 매칭)" if photo_files else ""
     print(f"[semantic_visual] engine={'embedding' if use_embed else 'lexical'} (min_img={min_img}, min_ill={min_ill}){img_engine}{photo_engine}")
 
     for section_name, section in section_items(data):
@@ -369,18 +421,19 @@ def semantic_match(data: dict, slug: str) -> bool:
             best_img = imgs[0] if imgs else (0, "", "")
             best_ill = ills[0] if ills else (0, "")
 
-            # 0순위: 실사 포토(매우 확신할 때만, >= PHOTO_MIN). 애매하면 건너뛰고 기존 일러스트로.
-            best_photo = (0.0, "")
-            if use_embed and photo_index and cvec is not None:
-                for _pf, _pv in photo_index.items():
+            # 0순위: 실사 포토 — 렉시컬 모델명 매칭(임베딩 X, 청크 자체 기준). 구별 토큰이
+            #   청크에 실제 등장할 때만. 동점이면 일반토큰 일치수로. 없으면 일러스트로 폴백.
+            best_photo = (0, 0, "")  # (구별토큰수, 일반토큰수, 파일명)
+            if photo_files:
+                _pchunk = clean(chunks[idx]) if idx < len(chunks) else context
+                for _pf in photo_files:
                     if f"image:photos/{_pf}" in used_visuals:
                         continue
-                    _sc = ce.cosine(cvec, _pv)
-                    if _sc > best_photo[0]:
-                        best_photo = (round(float(_sc), 3), _pf)
-                if best_photo[1]:
-                    # 진단 로그: 임계와 무관하게 각 청크의 최고 포토 점수 출력 → 적정 PHOTO_MIN 산정용.
-                    print(f"[photo] {section_name} c{idx+1}: {best_photo[1]} {best_photo[0]} (min={PHOTO_MIN})")
+                    _d, _g = photo_lexical_score(photo_label(_pf), _pchunk)
+                    if _d > 0 and (_d, _g) > (best_photo[0], best_photo[1]):
+                        best_photo = (_d, _g, _pf)
+                if best_photo[2]:
+                    print(f"[photo] {section_name} c{idx+1}: {best_photo[2]} dist={best_photo[0]} gen={best_photo[1]}")
 
             # ★ 범용 그림내용(CLIP) 검증용 랭킹. 텍스트/태그로 고른 일러스트라도 '실제 그림'이
             #   주제와 맞는지 같은 잣대(EMBED_MIN_ILLUST_IMG)로 확인한다. 이름 하드코딩 없이
@@ -396,11 +449,11 @@ def semantic_match(data: dict, slug: str) -> bool:
 
             chosen = None
             reason = ""
-            if best_photo[0] >= PHOTO_MIN and best_photo[1] and best_photo[0] >= best_ill[0]:
-                # 실사 포토 우선 — 단 '일러스트보다 잘 맞을 때만'(>= best_ill). 약한 포토가
-                # 좋은 일러스트를 굶기지 않도록 둘을 비교해 더 나은 쪽을 쓴다. 렌더=ImageVisual 켄번스.
-                chosen = {"type": "image", "value": f"photos/{best_photo[1]}"}
-                reason = f"photo {best_photo[0]} (>= {PHOTO_MIN}, ill={best_ill[0]})"
+            if best_photo[2]:
+                # 실사 포토는 모델명이 청크에 실제로 박혔을 때만 뜸(구별토큰≥1) = 확신 매칭이므로
+                # 일러스트보다 우선(실제 제품 > 추상 일러스트). 약한 포토 자체가 안 생겨 굶김 X.
+                chosen = {"type": "image", "value": f"photos/{best_photo[2]}"}
+                reason = f"photo lexical dist={best_photo[0]} gen={best_photo[1]}: {best_photo[2]}"
             elif best_img[0] >= min_img and best_img[0] >= best_ill[0]:
                 chosen = {"type": "image", "value": best_img[1]}
                 reason = f"image score {best_img[0]}: {best_img[2][:80]}"

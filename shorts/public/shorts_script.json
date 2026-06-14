@@ -48,16 +48,16 @@
         "value": "photos/갤럭시z플립7_z폴드7.JPG"
       },
       {
-        "type": "illust",
-        "value": "memory_chip"
-      },
-      {
-        "type": "illust",
-        "value": "smartphone"
+        "type": "image",
+        "value": "photos/퀄컴_스냅드래곤.jpg"
       },
       {
         "type": "image",
-        "value": "photos/삼성_갤럭시S25.JPG"
+        "value": "photos/삼성_엑시노스.JPG"
+      },
+      {
+        "type": "image",
+        "value": "photos/lgu로고.png"
       }
     ],
     "stat": {
@@ -151,19 +151,19 @@
       "chunk_visuals": [
         {
           "type": "illust",
+          "value": "smartphone"
+        },
+        {
+          "type": "illust",
           "value": "phone_setup_ready"
         },
         {
-          "type": "illust",
-          "value": "phone_settings_toggle"
+          "type": "image",
+          "value": "photos/알뜰폰_로고.JPG"
         },
         {
-          "type": "illust",
-          "value": "device_os_requirement"
-        },
-        {
-          "type": "illust",
-          "value": "device_data_transfer"
+          "type": "image",
+          "value": "photos/kt로고.png"
         }
       ],
       "stat": {
@@ -249,20 +249,20 @@
       ],
       "chunk_visuals": [
         {
+          "type": "image",
+          "value": "photos/삼성_갤럭시S25.JPG"
+        },
+        {
+          "type": "illust",
+          "value": "memory_chip"
+        },
+        {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        {
           "type": "illust",
           "value": "appliance"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "camera_battery_ecd040c7"
         }
       ],
       "stat": {
@@ -352,11 +352,11 @@
         },
         {
           "type": "illust",
-          "value": "smartphone"
+          "value": "device_os_requirement"
         },
         {
           "type": "illust",
-          "value": "smartphone"
+          "value": "device_data_transfer"
         }
       ],
       "stat": {
@@ -435,12 +435,12 @@
       ],
       "chunk_visuals": [
         {
-          "type": "image",
-          "value": "photos/배터리_충전.JPG"
+          "type": "illust",
+          "value": "camera_battery_ecd040c7"
         },
         {
-          "type": "illust",
-          "value": "battery_charge_range"
+          "type": "image",
+          "value": "photos/배터리_충전.JPG"
         },
         {
           "type": "illust",
@@ -615,29 +615,127 @@
     "policy": "Match chunks to GPT source images using prompt.md descriptions, then fallback to tagged reusable illustrations.",
     "changes": [
       {
-        "section": "fact_2",
-        "chunk": 2,
+        "section": "hook",
+        "chunk": 3,
+        "from": {
+          "type": "image",
+          "value": "photos/삼성_갤럭시S25.JPG"
+        },
+        "to": {
+          "type": "image",
+          "value": "photos/퀄컴_스냅드래곤.jpg"
+        },
+        "context": "플립8은 자체 칩 엑시노스 2600 탑재와 본체 슬림화에 집중한 변화로 전망됩니다 카메라·배터리·충전은 전작과 같지만 갤럭시 플립8 엑시노스 2600 슬림화 ['갤럭시 플립8', '엑시노스 2600 슬림화'] 뉴스",
+        "reason": "photo 0.922 (>= 0.5, ill=0.495)"
+      },
+      {
+        "section": "hook",
+        "chunk": 5,
         "from": {
           "type": "illust",
-          "value": "self_flip_6728256c"
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "image",
+          "value": "photos/lgu로고.png"
+        },
+        "context": "카메라·배터리·충전은 전작과 같지만 손에 잡히는 느낌이 달라집니다 갤럭시 플립8 엑시노스 2600 슬림화 ['갤럭시 플립8', '엑시노스 2600 슬림화'] 뉴스",
+        "reason": "photo 0.852 (>= 0.5, ill=0.448)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "phone_setup_ready"
         },
         "to": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "스냅드래곤이 아닌 삼성 엑시노스 2600 탑재가 유력합니다 전성비 개선과 온디바이스 AI 처리 효율 강화가 핵심 칩 엑시노스 2600 자체 탑재 ['칩', '엑시노스 2600 자체 탑재'] 뉴스",
+        "context": "공개는 2026년 7월 중순 하반기 언팩, 정식 판매는 7월 말에서 8월 초 사이 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
         "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "공개는 2026년 7월 중순 하반기 언팩, 정식 판매는 7월 말에서 8월 초 사이 글로벌 동시 출시가 유력합니다 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        "to": {
+          "type": "image",
+          "value": "photos/알뜰폰_로고.JPG"
+        },
+        "context": "정식 판매는 7월 말에서 8월 초 사이 글로벌 동시 출시가 유력합니다 폴드8과 함께 발표됩니다 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
+        "reason": "photo 0.569 (>= 0.5, ill=0.398)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "to": {
+          "type": "image",
+          "value": "photos/kt로고.png"
+        },
+        "context": "글로벌 동시 출시가 유력합니다 폴드8과 함께 발표됩니다 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
+        "reason": "photo 0.664 (>= 0.5, ill=0.442)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "memory_chip"
+        },
+        "to": {
+          "type": "image",
+          "value": "photos/삼성_갤럭시S25.JPG"
+        },
+        "context": "스냅드래곤이 아닌 삼성 엑시노스 2600 탑재가 유력합니다 칩 엑시노스 2600 자체 탑재 ['칩', '엑시노스 2600 자체 탑재'] 뉴스",
+        "reason": "photo 0.843 (>= 0.5, ill=0.586)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "memory_chip"
+        },
+        "context": "스냅드래곤이 아닌 삼성 엑시노스 2600 탑재가 유력합니다 전성비 개선과 온디바이스 AI 처리 효율 강화가 핵심 칩 엑시노스 2600 자체 탑재 ['칩', '엑시노스 2600 자체 탑재'] 뉴스",
+        "reason": "illust score 0.605 (content n/a)"
       },
       {
         "section": "fact_2",
         "chunk": 3,
         "from": {
           "type": "illust",
-          "value": "camera_battery_ecd040c7"
+          "value": "smartphone"
         },
         "to": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "phone_settings_toggle"
         },
         "context": "탑재가 유력합니다 전성비 개선과 온디바이스 AI 처리 효율 강화가 핵심 전작 대비 발열·배터리 효율이 관전 포인트입니다 칩 엑시노스 2600 자체 탑재 ['칩', '엑시노스 2600 자체 탑재'] 뉴스",
         "reason": "neutral filler (no semantic match)"
@@ -647,25 +745,25 @@
         "chunk": 4,
         "from": {
           "type": "illust",
-          "value": "samsung_ai"
+          "value": "camera_battery_ecd040c7"
         },
         "to": {
           "type": "illust",
-          "value": "camera_battery_ecd040c7"
+          "value": "appliance"
         },
         "context": "전성비 개선과 온디바이스 AI 처리 효율 강화가 핵심 전작 대비 발열·배터리 효율이 관전 포인트입니다 칩 엑시노스 2600 자체 탑재 ['칩', '엑시노스 2600 자체 탑재'] 뉴스",
-        "reason": "illust score 0.495 (content n/a)"
+        "reason": "illust score 0.5 (content n/a)"
       },
       {
         "section": "fact_3",
         "chunk": 2,
         "from": {
           "type": "illust",
-          "value": "cpt_496029c6"
+          "value": "smartphone"
         },
         "to": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "device_os_requirement"
         },
         "context": "본체 슬림화에 집중하면서도 외부 디스플레이는 유지·소폭 개선이 예상됩니다 손에 잡았을 때 두께·무게 체감이 가장 큰 변화 포인트입니다 디자인 본체 슬림화 집중 ['디자인', '본체 슬림화 집중'] 뉴스",
         "reason": "neutral filler (no semantic match)"
@@ -675,14 +773,42 @@
         "chunk": 3,
         "from": {
           "type": "illust",
-          "value": "forecast"
+          "value": "aluminum_label"
         },
         "to": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "device_data_transfer"
         },
         "context": "디스플레이는 유지·소폭 개선이 예상됩니다 손에 잡았을 때 두께·무게 체감이 가장 큰 변화 포인트입니다 디자인 본체 슬림화 집중 ['디자인', '본체 슬림화 집중'] 뉴스",
         "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 1,
+        "from": {
+          "type": "image",
+          "value": "photos/배터리_충전.JPG"
+        },
+        "to": {
+          "type": "illust",
+          "value": "camera_battery_ecd040c7"
+        },
+        "context": "메인 카메라 구성과 배터리 용량 4300mAh, 충전 속도 25W는 전작과 대동소이할 것으로 전망됩니다 유지 카메라·배터리·충전 ['유지', '카메라·배터리·충전'] 뉴스",
+        "reason": "illust score 0.663 (content n/a)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "battery_charge_range"
+        },
+        "to": {
+          "type": "image",
+          "value": "photos/배터리_충전.JPG"
+        },
+        "context": "메인 카메라 구성과 배터리 용량 4300mAh, 충전 속도 25W는 전작과 대동소이할 것으로 전망됩니다 사진·동영상 사용 패턴이 크게 유지 카메라·배터리·충전 ['유지', '카메라·배터리·충전'] 뉴스",
+        "reason": "photo 0.621 (>= 0.5, ill=0.599)"
       }
     ],
     "weak": [
@@ -712,8 +838,8 @@
         "section": "hook",
         "chunk": 4,
         "current": {
-          "type": "illust",
-          "value": "smartphone"
+          "type": "image",
+          "value": "photos/삼성_엑시노스.JPG"
         },
         "context": "탑재와 본체 슬림화에 집중한 변화로 전망됩니다 카메라·배터리·충전은 전작과 같지만 손에 잡히는 느낌이 달라집니다 갤럭시 플립8 엑시노스 2600 슬림화 ['갤럭시 플립8', '엑시노스 2600 슬림화'] 뉴스",
         "best_image_score": 0,
@@ -724,7 +850,7 @@
         "chunk": 5,
         "current": {
           "type": "image",
-          "value": "photos/삼성_갤럭시S25.JPG"
+          "value": "photos/lgu로고.png"
         },
         "context": "카메라·배터리·충전은 전작과 같지만 손에 잡히는 느낌이 달라집니다 갤럭시 플립8 엑시노스 2600 슬림화 ['갤럭시 플립8', '엑시노스 2600 슬림화'] 뉴스",
         "best_image_score": 0,
@@ -735,7 +861,7 @@
         "chunk": 1,
         "current": {
           "type": "illust",
-          "value": "phone_setup_ready"
+          "value": "smartphone"
         },
         "context": "공개는 2026년 7월 중순 하반기 언팩, 정식 판매는 7월 말에서 8월 초 사이 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
         "best_image_score": 0,
@@ -746,7 +872,7 @@
         "chunk": 2,
         "current": {
           "type": "illust",
-          "value": "phone_settings_toggle"
+          "value": "phone_setup_ready"
         },
         "context": "공개는 2026년 7월 중순 하반기 언팩, 정식 판매는 7월 말에서 8월 초 사이 글로벌 동시 출시가 유력합니다 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
         "best_image_score": 0,
@@ -756,8 +882,8 @@
         "section": "fact_1",
         "chunk": 3,
         "current": {
-          "type": "illust",
-          "value": "device_os_requirement"
+          "type": "image",
+          "value": "photos/알뜰폰_로고.JPG"
         },
         "context": "정식 판매는 7월 말에서 8월 초 사이 글로벌 동시 출시가 유력합니다 폴드8과 함께 발표됩니다 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
         "best_image_score": 0,
@@ -767,8 +893,8 @@
         "section": "fact_1",
         "chunk": 4,
         "current": {
-          "type": "illust",
-          "value": "device_data_transfer"
+          "type": "image",
+          "value": "photos/kt로고.png"
         },
         "context": "글로벌 동시 출시가 유력합니다 폴드8과 함께 발표됩니다 공개·출시 7월 중순 언팩 ['공개·출시', '7월 중순 언팩'] 뉴스",
         "best_image_score": 0,
@@ -776,21 +902,10 @@
       },
       {
         "section": "fact_2",
-        "chunk": 2,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "스냅드래곤이 아닌 삼성 엑시노스 2600 탑재가 유력합니다 전성비 개선과 온디바이스 AI 처리 효율 강화가 핵심 칩 엑시노스 2600 자체 탑재 ['칩', '엑시노스 2600 자체 탑재'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.473
-      },
-      {
-        "section": "fact_2",
         "chunk": 3,
         "current": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "phone_settings_toggle"
         },
         "context": "탑재가 유력합니다 전성비 개선과 온디바이스 AI 처리 효율 강화가 핵심 전작 대비 발열·배터리 효율이 관전 포인트입니다 칩 엑시노스 2600 자체 탑재 ['칩', '엑시노스 2600 자체 탑재'] 뉴스",
         "best_image_score": 0,
@@ -801,7 +916,7 @@
         "chunk": 2,
         "current": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "device_os_requirement"
         },
         "context": "본체 슬림화에 집중하면서도 외부 디스플레이는 유지·소폭 개선이 예상됩니다 손에 잡았을 때 두께·무게 체감이 가장 큰 변화 포인트입니다 디자인 본체 슬림화 집중 ['디자인', '본체 슬림화 집중'] 뉴스",
         "best_image_score": 0,
@@ -812,7 +927,7 @@
         "chunk": 3,
         "current": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "device_data_transfer"
         },
         "context": "디스플레이는 유지·소폭 개선이 예상됩니다 손에 잡았을 때 두께·무게 체감이 가장 큰 변화 포인트입니다 디자인 본체 슬림화 집중 ['디자인', '본체 슬림화 집중'] 뉴스",
         "best_image_score": 0,
@@ -827,7 +942,7 @@
         },
         "context": "충전 속도 25W는 전작과 대동소이할 것으로 전망됩니다 사진·동영상 사용 패턴이 크게 바뀌진 않을 가능성이 큽니다 유지 카메라·배터리·충전 ['유지', '카메라·배터리·충전'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.402
+        "best_illust_score": 0.47
       },
       {
         "section": "fact_4",
