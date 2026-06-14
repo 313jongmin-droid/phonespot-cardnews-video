@@ -273,27 +273,24 @@
       ]
     },
     "022_tip_galaxy_battery_save_5": {
-      "used_at": "2026-06-14T20:30:22",
-      "source": "codex_enhance",
+      "used_at": "2026-06-14T20:44:36",
+      "source": "semantic_visual_match",
       "illustrations": [
-        "smartphone",
-        "aluminum_label",
-        "camera_battery_ecd040c7",
-        "appliance",
         "battery_charge_range",
-        "battery_overheat",
+        "optimized_charging",
+        "smartphone",
+        "phone_setup_ready",
+        "phone_settings_toggle",
+        "meeting_room",
+        "appliance",
         "personal_data_63b96014",
-        "smart_482e7bdd",
-        "clock",
-        "series_06379766",
-        "lock_screen_only_e80c4860",
-        "final_update",
-        "cpt_7ea57558",
-        "lock"
+        "device_os_requirement",
+        "device_data_transfer",
+        "lock_screen_only_e80c4860"
       ]
     }
   },
-  "updated_at": "2026-06-14T20:30:24",
+  "updated_at": "2026-06-14T20:44:37",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -350,7 +347,7 @@
       "variants": []
     },
     "022_tip_galaxy_battery_save_5": {
-      "updated_at": "2026-06-14T20:30:24",
+      "updated_at": "2026-06-14T20:44:37",
       "variants": []
     }
   }

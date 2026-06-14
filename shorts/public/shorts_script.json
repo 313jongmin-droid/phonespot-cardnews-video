@@ -38,16 +38,16 @@
     ],
     "chunk_visuals": [
       {
-        "type": "illust",
-        "value": "smartphone"
+        "type": "image",
+        "value": "photos/배터리_충전.JPG"
       },
       {
         "type": "illust",
-        "value": "aluminum_label"
+        "value": "battery_charge_range"
       },
       {
-        "type": "mascot",
-        "value": "surprised"
+        "type": "illust",
+        "value": "optimized_charging"
       }
     ],
     "stat": {
@@ -132,19 +132,19 @@
         },
         {
           "type": "illust",
-          "value": "camera_battery_ecd040c7"
+          "value": "phone_setup_ready"
+        },
+        {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        {
+          "type": "illust",
+          "value": "meeting_room"
         },
         {
           "type": "illust",
           "value": "appliance"
-        },
-        {
-          "type": "illust",
-          "value": "battery_charge_range"
-        },
-        {
-          "type": "illust",
-          "value": "battery_overheat"
         }
       ],
       "stat": {
@@ -240,19 +240,19 @@
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "smartphone"
-        },
-        {
-          "type": "illust",
           "value": "personal_data_63b96014"
         },
         {
           "type": "illust",
-          "value": "smart_482e7bdd"
+          "value": "device_os_requirement"
         },
         {
           "type": "illust",
-          "value": "clock"
+          "value": "device_data_transfer"
+        },
+        {
+          "type": "illust",
+          "value": "smartphone"
         },
         {
           "type": "mascot",
@@ -260,7 +260,7 @@
         },
         {
           "type": "illust",
-          "value": "series_06379766"
+          "value": "smartphone"
         }
       ],
       "stat": {
@@ -366,19 +366,19 @@
         },
         {
           "type": "illust",
+          "value": "smartphone"
+        },
+        {
+          "type": "illust",
           "value": "lock_screen_only_e80c4860"
         },
         {
           "type": "illust",
-          "value": "final_update"
+          "value": "smartphone"
         },
         {
           "type": "illust",
-          "value": "cpt_7ea57558"
-        },
-        {
-          "type": "illust",
-          "value": "lock"
+          "value": "smartphone"
         }
       ],
       "stat": {
@@ -477,15 +477,15 @@
         },
         {
           "type": "illust",
-          "value": "aluminum_label"
+          "value": "smartphone"
         },
         {
           "type": "illust",
-          "value": "appliance"
+          "value": "smartphone"
         },
         {
           "type": "illust",
-          "value": "battery_charge_range"
+          "value": "smartphone"
         },
         {
           "type": "mascot",
@@ -713,6 +713,478 @@
           "value": "battery_charge_range"
         },
         "context": "사용 / 둘 다 사용 선택 가능합니다 영상 앱·게임은 Wi-Fi 전용으로 두면 배터리·데이터 모두 크게 절약됩니다 5 앱별 데이터 Wi-Fi 전용 설정 → 연결 → 데이터 사용. 앱별로 Wi-Fi만 사용 / 모바일만 사용 / 둘 다 사용 선택 가능합니다. 영상 앱·게임은 Wi-Fi 전용"
+      }
+    ]
+  },
+  "_codex_semantic_visual_match": {
+    "version": 1,
+    "policy": "Match chunks to GPT source images using prompt.md descriptions, then fallback to tagged reusable illustrations.",
+    "changes": [
+      {
+        "section": "hook",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "image",
+          "value": "photos/배터리_충전.JPG"
+        },
+        "context": "충전기 자주 꽂으시는 갤럭시 사용자라면 5분만 설정 손봐도 하루 사용량이 눈에 띄게 늘어납니다 갤럭시 배터리 5분 안 5가지 OFF ['갤럭시 배터리', '5분 안 5가지 OFF'] 뉴스",
+        "reason": "photo lexical dist=1 gen=0: 배터리_충전.JPG"
+      },
+      {
+        "section": "hook",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "battery_charge_range"
+        },
+        "context": "충전기 자주 꽂으시는 갤럭시 사용자라면 5분만 설정 손봐도 하루 사용량이 눈에 띄게 늘어납니다 삼성 공식 가이드 기준 가장 효과 큰 5가지를 정리했습니다 갤럭시 배터리 5분 안 5가지 OFF ['갤럭시 배터리', '",
+        "reason": "illust score 0.615 (content n/a)"
+      },
+      {
+        "section": "hook",
+        "chunk": 3,
+        "from": {
+          "type": "mascot",
+          "value": "surprised"
+        },
+        "to": {
+          "type": "illust",
+          "value": "optimized_charging"
+        },
+        "context": "설정 손봐도 하루 사용량이 눈에 띄게 늘어납니다 삼성 공식 가이드 기준 가장 효과 큰 5가지를 정리했습니다 갤럭시 배터리 5분 안 5가지 OFF ['갤럭시 배터리', '5분 안 5가지 OFF'] 뉴스",
+        "reason": "illust score 0.505 (content n/a)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "camera_battery_ecd040c7"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "설정 → 배터리 → 절전 모드 사용하지 않는 앱의 Wi-Fi와 모바일 데이터를 차단하고 Always On 1 절전 모드 ON ['1', '절전 모드 ON'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "사용하지 않는 앱의 Wi-Fi와 모바일 데이터를 차단하고 Always On Display 같은 전력 소모 기능을 자동 비활성화합니다 1 절전 모드 ON ['1', '절전 모드 ON'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "battery_charge_range"
+        },
+        "to": {
+          "type": "illust",
+          "value": "meeting_room"
+        },
+        "context": "데이터를 차단하고 Always On Display 같은 전력 소모 기능을 자동 비활성화합니다 가장 효과 큰 설정 하나입니다 1 절전 모드 ON ['1', '절전 모드 ON'] 뉴스",
+        "reason": "illust score 0.5 (content n/a)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 5,
+        "from": {
+          "type": "illust",
+          "value": "battery_overheat"
+        },
+        "to": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "context": "Display 같은 전력 소모 기능을 자동 비활성화합니다 가장 효과 큰 설정 하나입니다 1 절전 모드 ON ['1', '절전 모드 ON'] 뉴스",
+        "reason": "illust score 0.524 (content n/a)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "personal_data_63b96014"
+        },
+        "context": "One UI 8.5의 새 기능 Personal Data 2 PDI 활용 (One UI 8.5) ['2', 'PDI 활용 (One UI 8.5)'] 뉴스",
+        "reason": "illust score 0.495 (content n/a)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "personal_data_63b96014"
+        },
+        "to": {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        "context": "One UI 8.5의 새 기능 Personal Data Intelligence 2 PDI 활용 (One UI 8.5) ['2', 'PDI 활용 (One UI 8.5)'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "smart_482e7bdd"
+        },
+        "to": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "기능 Personal Data Intelligence 사용자가 휴대폰을 안 쓰는 시간대를 2 PDI 활용 (One UI 8.5) ['2', 'PDI 활용 (One UI 8.5)'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "clock"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "Intelligence 사용자가 휴대폰을 안 쓰는 시간대를 학습해 네트워크 성능을 자동 제한합니다 2 PDI 활용 (One UI 8.5) ['2', 'PDI 활용 (One UI 8.5)'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 6,
+        "from": {
+          "type": "illust",
+          "value": "series_06379766"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "학습해 네트워크 성능을 자동 제한합니다 S26 시리즈부터 우선 적용됩니다 2 PDI 활용 (One UI 8.5) ['2', 'PDI 활용 (One UI 8.5)'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "lock_screen_only_e80c4860"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "AOD(Always On Display)는 항상 켜져있어 전력 소모가 큰 기능 잠금 화면만으로 충분하면 끄세요 3·4 AOD + 자동 업데이트 OFF ['3·4', 'AOD + 자동 업데이트 OFF'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "final_update"
+        },
+        "to": {
+          "type": "illust",
+          "value": "lock_screen_only_e80c4860"
+        },
+        "context": "항상 켜져있어 전력 소모가 큰 기능 잠금 화면만으로 충분하면 끄세요 Play 스토어 자동 업데이트도 Wi-Fi 3·4 AOD + 자동 업데이트 OFF ['3·4', 'AOD + 자동 업데이트 OFF'] 뉴스",
+        "reason": "illust lexical kw hits=4: lock_screen_only_e80c4860"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "cpt_7ea57558"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "잠금 화면만으로 충분하면 끄세요 Play 스토어 자동 업데이트도 Wi-Fi 전용으로 제한하면 배터리·데이터 동시 절약됩니다 3·4 AOD + 자동 업데이트 OFF ['3·4', 'AOD + 자동 업데이트 OFF'] ",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 5,
+        "from": {
+          "type": "illust",
+          "value": "lock"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "Play 스토어 자동 업데이트도 Wi-Fi 전용으로 제한하면 배터리·데이터 동시 절약됩니다 3·4 AOD + 자동 업데이트 OFF ['3·4', 'AOD + 자동 업데이트 OFF'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "설정 → 연결 → 데이터 사용 앱별로 Wi-Fi만 사용 / 모바일만 사용 / 둘 다 사용 선택 가능합니다 5 앱별 데이터 Wi-Fi 전용 ['5', '앱별 데이터 Wi-Fi 전용'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "앱별로 Wi-Fi만 사용 / 모바일만 사용 / 둘 다 사용 선택 가능합니다 영상 앱·게임은 Wi-Fi 전용으로 두면 5 앱별 데이터 Wi-Fi 전용 ['5', '앱별 데이터 Wi-Fi 전용'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "battery_charge_range"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "사용 / 둘 다 사용 선택 가능합니다 영상 앱·게임은 Wi-Fi 전용으로 두면 배터리·데이터 모두 크게 절약됩니다 5 앱별 데이터 Wi-Fi 전용 ['5', '앱별 데이터 Wi-Fi 전용'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      }
+    ],
+    "weak": [
+      {
+        "section": "fact_1",
+        "chunk": 1,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "설정 → 배터리 → 절전 모드 사용하지 않는 앱의 Wi-Fi와 모바일 1 절전 모드 ON ['1', '절전 모드 ON'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.419
+      },
+      {
+        "section": "fact_1",
+        "chunk": 2,
+        "current": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "설정 → 배터리 → 절전 모드 사용하지 않는 앱의 Wi-Fi와 모바일 데이터를 차단하고 Always On 1 절전 모드 ON ['1', '절전 모드 ON'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.372
+      },
+      {
+        "section": "fact_1",
+        "chunk": 3,
+        "current": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "사용하지 않는 앱의 Wi-Fi와 모바일 데이터를 차단하고 Always On Display 같은 전력 소모 기능을 자동 비활성화합니다 1 절전 모드 ON ['1', '절전 모드 ON'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.456
+      },
+      {
+        "section": "fact_2",
+        "chunk": 2,
+        "current": {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        "context": "One UI 8.5의 새 기능 Personal Data Intelligence 2 PDI 활용 (One UI 8.5) ['2', 'PDI 활용 (One UI 8.5)'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.451
+      },
+      {
+        "section": "fact_2",
+        "chunk": 3,
+        "current": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "기능 Personal Data Intelligence 사용자가 휴대폰을 안 쓰는 시간대를 2 PDI 활용 (One UI 8.5) ['2', 'PDI 활용 (One UI 8.5)'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.375
+      },
+      {
+        "section": "fact_2",
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "Intelligence 사용자가 휴대폰을 안 쓰는 시간대를 학습해 네트워크 성능을 자동 제한합니다 2 PDI 활용 (One UI 8.5) ['2', 'PDI 활용 (One UI 8.5)'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.432
+      },
+      {
+        "section": "fact_2",
+        "chunk": 5,
+        "current": {
+          "type": "mascot",
+          "value": "suspicious"
+        },
+        "context": "사용자가 휴대폰을 안 쓰는 시간대를 학습해 네트워크 성능을 자동 제한합니다 S26 시리즈부터 우선 적용됩니다 2 PDI 활용 (One UI 8.5) ['2', 'PDI 활용 (One UI 8.5)'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.398
+      },
+      {
+        "section": "fact_2",
+        "chunk": 6,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "학습해 네트워크 성능을 자동 제한합니다 S26 시리즈부터 우선 적용됩니다 2 PDI 활용 (One UI 8.5) ['2', 'PDI 활용 (One UI 8.5)'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.395
+      },
+      {
+        "section": "fact_3",
+        "chunk": 1,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "AOD(Always On Display)는 항상 켜져있어 전력 소모가 큰 기능 3·4 AOD + 자동 업데이트 OFF ['3·4', 'AOD + 자동 업데이트 OFF'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.388
+      },
+      {
+        "section": "fact_3",
+        "chunk": 2,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "AOD(Always On Display)는 항상 켜져있어 전력 소모가 큰 기능 잠금 화면만으로 충분하면 끄세요 3·4 AOD + 자동 업데이트 OFF ['3·4', 'AOD + 자동 업데이트 OFF'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.34
+      },
+      {
+        "section": "fact_3",
+        "chunk": 3,
+        "current": {
+          "type": "illust",
+          "value": "lock_screen_only_e80c4860"
+        },
+        "context": "항상 켜져있어 전력 소모가 큰 기능 잠금 화면만으로 충분하면 끄세요 Play 스토어 자동 업데이트도 Wi-Fi 3·4 AOD + 자동 업데이트 OFF ['3·4', 'AOD + 자동 업데이트 OFF'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.235
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "잠금 화면만으로 충분하면 끄세요 Play 스토어 자동 업데이트도 Wi-Fi 전용으로 제한하면 배터리·데이터 동시 절약됩니다 3·4 AOD + 자동 업데이트 OFF ['3·4', 'AOD + 자동 업데이트 OFF'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.39
+      },
+      {
+        "section": "fact_3",
+        "chunk": 5,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "Play 스토어 자동 업데이트도 Wi-Fi 전용으로 제한하면 배터리·데이터 동시 절약됩니다 3·4 AOD + 자동 업데이트 OFF ['3·4', 'AOD + 자동 업데이트 OFF'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.378
+      },
+      {
+        "section": "fact_4",
+        "chunk": 1,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "설정 → 연결 → 데이터 사용 앱별로 Wi-Fi만 사용 / 모바일만 5 앱별 데이터 Wi-Fi 전용 ['5', '앱별 데이터 Wi-Fi 전용'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.307
+      },
+      {
+        "section": "fact_4",
+        "chunk": 2,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "설정 → 연결 → 데이터 사용 앱별로 Wi-Fi만 사용 / 모바일만 사용 / 둘 다 사용 선택 가능합니다 5 앱별 데이터 Wi-Fi 전용 ['5', '앱별 데이터 Wi-Fi 전용'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.311
+      },
+      {
+        "section": "fact_4",
+        "chunk": 3,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "앱별로 Wi-Fi만 사용 / 모바일만 사용 / 둘 다 사용 선택 가능합니다 영상 앱·게임은 Wi-Fi 전용으로 두면 5 앱별 데이터 Wi-Fi 전용 ['5', '앱별 데이터 Wi-Fi 전용'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.335
+      },
+      {
+        "section": "fact_4",
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "사용 / 둘 다 사용 선택 가능합니다 영상 앱·게임은 Wi-Fi 전용으로 두면 배터리·데이터 모두 크게 절약됩니다 5 앱별 데이터 Wi-Fi 전용 ['5', '앱별 데이터 Wi-Fi 전용'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.42
+      },
+      {
+        "section": "fact_4",
+        "chunk": 5,
+        "current": {
+          "type": "mascot",
+          "value": "serious"
+        },
+        "context": "영상 앱·게임은 Wi-Fi 전용으로 두면 배터리·데이터 모두 크게 절약됩니다 5 앱별 데이터 Wi-Fi 전용 ['5', '앱별 데이터 Wi-Fi 전용'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.442
       }
     ]
   },
