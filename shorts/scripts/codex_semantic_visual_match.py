@@ -462,9 +462,17 @@ def semantic_match(data: dict, slug: str) -> bool:
             ):
                 chosen = {"type": "illust", "value": best_ill[1]}
                 reason = f"illust score {best_ill[0]} (content {content_score.get(best_ill[1], 'n/a')})"
-            elif current.get("type") == "image" and current.get("value") not in used_images:
+            elif (
+                current.get("type") == "image"
+                and not str(current.get("value")).startswith("photos/")
+                and current.get("value") not in used_images
+            ):
                 # Source images are generated for THIS article, so an on-topic
                 # source image beats any weak library guess.
+                # ★ 단 photos/ 는 제외 — 실사 포토는 '렉시컬 매처만' (재)배정한다. 이전 렌더가
+                #   남긴 낡은 포토(예 임베딩 시절 갤럭시A)가 이 '유지' 분기로 되살아나면 안 됨
+                #   (매처가 이번엔 dist=0으로 거부했는데 stale 값이 살아남던 버그). photos/ 면
+                #   여기서 안 잡고 아래 일러스트/중립으로 떨어뜨린다.
                 chosen = current
                 reason = "kept source image (no semantic match)"
             elif current.get("type") == "mascot" and visual_key(current) not in used_visuals:

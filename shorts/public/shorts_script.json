@@ -49,7 +49,7 @@
       },
       {
         "type": "illust",
-        "value": "mounted_body_496029c6"
+        "value": "memory_chip"
       },
       {
         "type": "image",
@@ -151,11 +151,11 @@
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "mid_release_98cab19a"
+          "value": "smartphone"
         },
         {
           "type": "illust",
-          "value": "official_sale_9dc82f05"
+          "value": "phone_setup_ready"
         },
         {
           "type": "image",
@@ -348,11 +348,11 @@
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "slim_body_e2dca0be"
+          "value": "ti_decrease"
         },
         {
           "type": "illust",
-          "value": "display_maintenance_c1ff39c1"
+          "value": "device_os_requirement"
         },
         {
           "type": "illust",

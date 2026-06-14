@@ -254,21 +254,20 @@
       ]
     },
     "021_news_galaxy_flip8_exynos": {
-      "used_at": "2026-06-14T13:29:17",
-      "source": "uploaded_illustrations",
+      "used_at": "2026-06-14T13:46:15",
+      "source": "semantic_visual_match",
       "illustrations": [
-        "mounted_body_496029c6",
-        "mid_release_98cab19a",
-        "official_sale_9dc82f05",
+        "memory_chip",
+        "smartphone",
+        "phone_setup_ready",
         "appliance",
         "phone_settings_toggle",
         "camera_battery_ecd040c7",
-        "slim_body_e2dca0be",
-        "display_maintenance_c1ff39c1",
+        "ti_decrease",
+        "device_os_requirement",
         "device_data_transfer",
         "battery_charge_range",
-        "optimized_charging",
-        "smartphone"
+        "optimized_charging"
       ]
     },
     "022_tip_galaxy_battery_save_5": {
@@ -283,7 +282,7 @@
       ]
     }
   },
-  "updated_at": "2026-06-14T13:29:18",
+  "updated_at": "2026-06-14T13:46:16",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -336,7 +335,7 @@
       "variants": []
     },
     "021_news_galaxy_flip8_exynos": {
-      "updated_at": "2026-06-14T13:29:18",
+      "updated_at": "2026-06-14T13:46:16",
       "variants": []
     },
     "022_tip_galaxy_battery_save_5": {
