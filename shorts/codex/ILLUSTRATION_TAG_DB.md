@@ -8,7 +8,7 @@
 | `aluminum_label` | materials, hardware, library | 3 | 022_tip_galaxy_battery_save_5 |
 | `android_user_a91efa70` | auto | 0 |  |
 | `appliance` | hardware, device, library | 4 | 021_news_galaxy_flip8_exynos |
-| `battery_charge_range` | battery, charging, tips, library | 2 | 022_tip_galaxy_battery_save_5 |
+| `battery_charge_range` | battery, charging, tips, library | 3 | 021_news_galaxy_flip8_exynos |
 | `battery_health_check` | battery, health, tips | 0 |  |
 | `battery_overheat` | battery, heat, warning, library | 2 | 022_tip_galaxy_battery_save_5 |
 | `biometric` | security, privacy, authentication, library | 3 | 020_qa_apple_pay_korea_card |
@@ -113,7 +113,7 @@
 | `official_sale_9dc82f05` | auto, library | 0 |  |
 | `official_site_check` | security, official-site, check | 0 |  |
 | `ondevice_ai_chip` | ai, hardware, privacy | 0 |  |
-| `optimized_charging` | battery, charging, tips, library | 0 |  |
+| `optimized_charging` | battery, charging, tips, library | 1 | 021_news_galaxy_flip8_exynos |
 | `password` | security, privacy, authentication, library | 0 |  |
 | `personal_data_63b96014` | auto | 0 |  |
 | `personal_data_leak` | security, privacy, leak | 0 |  |
@@ -154,7 +154,7 @@
 
 ## Recent videos
 
-- `021_news_galaxy_flip8_exynos`: smartphone, phone_setup_ready, memory_chip, phone_settings_toggle, appliance, ti_decrease, device_os_requirement, device_data_transfer, camera_battery_ecd040c7
+- `021_news_galaxy_flip8_exynos`: memory_chip, smartphone, phone_setup_ready, appliance, phone_settings_toggle, camera_battery_ecd040c7, ti_decrease, device_os_requirement, device_data_transfer, battery_charge_range, optimized_charging
 - `022_tip_galaxy_battery_save_5`: smartphone, aluminum_label, appliance, battery_charge_range, battery_overheat
 - `020_qa_apple_pay_korea_card`: smartphone, newspaper, microphone, shield, meeting_room, forecast, cpt_f59129df, cpt_a1caaea6, biometric, cpt_83fa1e9f, cpt_6a2e9678, device_data_transfer, nfc_pay, cpt_fd9edf65, gift_voucher
 - `019_news_samsung_thank_you_festival`: monday_d77265f0, weekly_sunday_82b74c0a, festival_41b2e7cf, unlocked_baa71ac6, event_period_8cafdac4, microphone, shield, meeting_room, forecast, gift_voucher, smartphone, cpt_a1caaea6, biometric, cpt_4729c912, cpt_fd9edf65

@@ -3,7 +3,7 @@
 
 Clean V3 policy:
 - Recommend only reusable editorial illustrations, not one-off article art.
-- Suggest at most three new images per video.
+- Suggest at most five new images per video.
 - If weak mapping exists, do not stop at warnings; create prompt candidates
   whenever a reusable concept can cover the gap.
 """
@@ -25,7 +25,7 @@ ILLUST_DIRS = [
     DESK / "ILLUSTRATION_DROP",
     SHORTS / "public" / "assets" / "illustrations",
 ]
-MAX_REQUESTS = 3
+MAX_REQUESTS = 5  # 필수 일러스트 요청 상한(3->5). 생성단계에서 더 많이 채워두면 렌더 매칭 품질이 올라감.
 
 STYLE = """한국 휴대폰·IT 뉴스 쇼츠용 고품질 에디토리얼 일러스트.
 본문의 핵심 의미를 한눈에 이해할 수 있게 표현하되, 한 기사에서만 쓸 수 있는 세부 묘사는 피하세요.
