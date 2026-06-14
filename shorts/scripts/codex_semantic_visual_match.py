@@ -654,4 +654,26 @@ def semantic_match(data: dict, slug: str) -> bool:
         print(f"[semantic_visual] report: {report_path}")
         if changes:
             record_usage_snapshot(data, slug, source="semantic_visual_match")
-        return boo
+        return bool(changes)
+    print("[semantic_visual] no changes")
+    return False
+
+
+def main() -> int:
+    if len(sys.argv) < 2:
+        print("Usage: python scripts/codex_semantic_visual_match.py <slug>")
+        return 2
+    slug = sys.argv[1].strip()
+    path = CARD_OUTPUT / slug / "shorts_script.json"
+    if not path.exists():
+        print(f"[semantic_visual] missing: {path}")
+        return 1
+    data = read_json(path)
+    changed = semantic_match(data, slug)
+    if changed:
+        write_json(path, data)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
