@@ -273,7 +273,7 @@
       ]
     },
     "022_tip_galaxy_battery_save_5": {
-      "used_at": "2026-06-14T20:44:36",
+      "used_at": "2026-06-14T20:57:33",
       "source": "semantic_visual_match",
       "illustrations": [
         "battery_charge_range",
@@ -290,7 +290,7 @@
       ]
     }
   },
-  "updated_at": "2026-06-14T20:44:37",
+  "updated_at": "2026-06-14T20:57:34",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -347,7 +347,7 @@
       "variants": []
     },
     "022_tip_galaxy_battery_save_5": {
-      "updated_at": "2026-06-14T20:44:37",
+      "updated_at": "2026-06-14T20:57:34",
       "variants": []
     }
   }
