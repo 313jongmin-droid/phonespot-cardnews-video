@@ -72,24 +72,26 @@ function matchLoose(text: string, needle: string): [number, number] | null {
   return [start, end];
 }
 
+function escapeRegExp(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 function buildSegments(text: string, emphasisWords: string[]): { text: string; emph: boolean }[] {
   const ranges: Array<[number, number]> = [];
 
-  for (const re of AUTO_EMPHASIS_PATTERNS) {
-    re.lastIndex = 0;
-    let match: RegExpExecArray | null;
-    while ((match = re.exec(text)) !== null) {
-      addRange(ranges, match.index, match.index + match[0].length);
-      if (match[0].length === 0) {
-        re.lastIndex += 1;
-      }
-    }
-  }
-
+  // 작성자가 지정한 caption_emphasis 구절만 강조한다. 자동 숫자/단위 강조는 OFF
+  // (과다·번짐의 원인). 토큰 사이 공백/줄바꿈만 허용하는 정확 매칭 → 부분 매칭·경계
+  // 가로지르기 불가. 깔끔히 못 맞으면 스킵해서 색을 안 칠한다("애매하면 안 칠한다").
   for (const word of emphasisWords || []) {
-    const loose = matchLoose(text, word);
-    if (loose) {
-      addRange(ranges, loose[0], loose[1]);
+    const phrase = String(word || "").trim();
+    if (phrase.length < 2) continue;
+    const tokens = phrase.split(/\s+/).filter(Boolean).map(escapeRegExp);
+    if (!tokens.length) continue;
+    const re = new RegExp(tokens.join("\\s*"), "gi");
+    let m: RegExpExecArray | null;
+    while ((m = re.exec(text)) !== null) {
+      addRange(ranges, m.index, m.index + m[0].length);
+      if (m[0].length === 0) re.lastIndex += 1;
     }
   }
 
@@ -175,7 +177,7 @@ export const CasualCaption: React.FC<Props> = ({
           <span
             key={i}
             style={{
-              color: "#1A1A1A",
+              color: seg.emph ? "#F74B0B" : "#1A1A1A",
               backgroundColor: "transparent",
               borderRadius: 0,
               padding: 0,

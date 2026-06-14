@@ -70,6 +70,9 @@ echo.
 rem ----- real-photo match threshold: TEST default 0.5 (headline boosts photo scores ~0.5-0.6;
 rem        0.6 blocked relevant chip photos. 'photo >= best_ill' rule still guards weak photos) -----
 if "%PHONESPOT_PHOTO_MIN%"=="" set "PHONESPOT_PHOTO_MIN=0.5"
+rem ----- CLIP content-gate threshold: 0.28 too strict (rejected topical concepts too). 0.20 lets
+rem        on-topic illustrations pass while clearly-wrong (meeting_room etc., lower) stay rejected. -----
+if "%PHONESPOT_IMG_MATCH_MIN%"=="" set "PHONESPOT_IMG_MATCH_MIN=0.20"
 echo ----- Step 3/7: Build script + copy assets -----
 python scripts\build_script.py !SLUG!
 if errorlevel 1 goto :fail
@@ -210,8 +213,4 @@ echo [ERROR] Codex Remotion build failed.
 
 :hold
 echo.
-if "!PHONESPOT_NO_PAUSE!"=="1" goto :end
-echo Press any key to close this window...
-pause >nul
-:end
-exit /b !EXITCODE!
+if "!PHONESPOT_NO_PAUSE!"=="1" go
