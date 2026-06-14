@@ -311,17 +311,22 @@ def illustration_candidates(context: str, used_visuals: set[str]) -> list[tuple[
     return rows
 
 
+_NEUTRAL_RR = [0]  # 라운드로빈 커서(프로세스=영상 1편이라 안전)
+
+
 def pick_neutral(used_visuals: set[str]) -> str:
-    """Return a topic-neutral filler illustration that actually exists in the
-    library, preferring one not yet used in this video. Empty string if none."""
-    available = set(library_variants())
-    for variant in NEUTRAL_FILLERS:
-        if variant in available and f"illust:{variant}" not in used_visuals:
+    """토픽 중립 필러를 반환. ① 아직 안 쓴 중립 우선 ② 전부 한 번씩 쓰면 라운드로빈으로
+    분산(예전엔 항상 첫 번째=smartphone 반환 → 영문/설정 청크 많은 기사에서 smartphone 11회
+    쏠림). 라이브러리에 실제 존재하는 것만. 없으면 빈 문자열."""
+    available = [v for v in NEUTRAL_FILLERS if v in set(library_variants())]
+    if not available:
+        return ""
+    for variant in available:
+        if f"illust:{variant}" not in used_visuals:
             return variant
-    for variant in NEUTRAL_FILLERS:
-        if variant in available:
-            return variant
-    return ""
+    variant = available[_NEUTRAL_RR[0] % len(available)]
+    _NEUTRAL_RR[0] += 1
+    return variant
 
 
 def section_items(data: dict) -> list[tuple[str, dict]]:
