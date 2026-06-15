@@ -290,16 +290,20 @@
 
 ---
 
-## F. Git & 멀티PC 역할 & 리포 위생  ★ 이번 세션 핵심 변경
+## F. Git & 멀티PC 역할 & 리포 위생  ★ 2026-06-15 머신 모델 갱신 (CLAUDE.md STEP 0 정본)
 
-**머신 역할 (CLAUDE.md STEP 0이 최우선)**
-- **노트북**(`C:\Users\di898\Documents\phonespot_cardnews`) = 개발. **push only**. — 이 세션이 돌아간 PC.
-- **실행 PC / 부사수**(`C:\PhoneSpot\phonespot_cardnews`) = 생산. **pull only**.
+**머신 역할 (CLAUDE.md STEP 0이 최우선, 2026-06-15 갱신)**
+- **로컬 PC**(사무실, `C:\Users\di898\Documents\phonespot_cardnews`) = **개발+편집+운영 단일 작업 머신**. 모든 task(광고운영·카드뉴스·영상·기사·.bat) 여기서 수정 → commit → push. **push only**.
+- **노트북** = 크롬 원격 입구만(사무실 못 갈 때 로컬 PC 조종). **직접 작업·git 수정 ❌**.
+- **부사수 PC**(`C:\PhoneSpot\phonespot_cardnews`) = 카드뉴스·영상·패널 렌더링 전용 단독 생산기. **pull only**.
 - **메인 PC**(192.168.0.7) = 카드 이미지 원본 자산.
-- 원칙: 노트북 수정 → push → 실행 PC pull → 실행 PC에서 실행. **push는 노트북에서만**(다중 writer 분기 방지).
+- 원칙: 로컬 PC 수정 → push → 부사수 PC pull → 부사수 PC에서 실행(렌더링만). 광고운영은 부사수 거치지 않음(Google 클라우드). **push는 로컬 PC에서만**(다중 writer 분기 방지).
+- **광고운영 트랙 자동 배포(Phase 1, 2026-06-11)**: 로컬 PC `apps_script/` 수정 → git push → GitHub Actions가 `clasp push --force` → Apps Script 콘솔 자동 반영. **콘솔 직접 수정 ❌**(force push로 덮어쓰임).
+- ※ 옛 모델("노트북=push only", 2026-06-08~14) 폐기. 옛 가이드 `_docs/DEV_LAPTOP_OFFICE_RUN_GITHUB.md`의 사무실 push 모델도 폐기 상태 유지.
 
-**git 실행파일 탐색 (★ 이번 세션 수정의 핵심)**
-- 이 환경엔 Git for Windows가 **설치 안 됨**. git은 **GitHub Desktop 내장본**만 존재:
+**git 실행파일 탐색**
+- **로컬 PC**: Git for Windows 2.54.0 설치 완료(2026-06-11 Phase 1 셋업 시). PATH에 잡힘 → `git` 직접 호출 OK.
+- 이 환경엔 Git for Windows가 **설치 안 됨**(옛 사실 = 노트북 시점 기록 = 다른 머신에서 셋업 시 참고용). git은 **GitHub Desktop 내장본**만 존재:
   `%LOCALAPPDATA%\GitHubDesktop\app-*\resources\app\git\cmd\git.exe` (현재 app-3.5.12).
 - 패널 파이썬(`MAINTENANCE/codex_github_upload.py`의 `find_git()`)은 PATH→`C:\Program Files\Git`→GitHub Desktop glob 순으로 찾아 **정상 작동**.
 - **bat의 git 탐색은 cmd `dir`로 경로 중간 와일드카드(`app-*\…`)를 못 푼다.** 반드시 아래 패턴 사용:
@@ -315,9 +319,9 @@
   **`dir /b /s "...app-*\resources\...git.exe"` 패턴은 금지**(항상 빈 결과 → "git not found" 오진).
 
 **push/pull bat (위 GIT 패턴 적용 완료)**
-- `CODEX_VIDEO_DESK/런타임파일_git정리_1회.bat` — **런타임 생성물 git 추적 해제(1회, 메인/노트북)**. `git rm --cached` 후 commit → `pull --no-rebase --no-edit` → push.
+- `CODEX_VIDEO_DESK/런타임파일_git정리_1회.bat` — **런타임 생성물 git 추적 해제(1회, 메인/로컬 PC)**. `git rm --cached` 후 commit → `pull --no-rebase --no-edit` → push.
 - `CODEX_VIDEO_DESK/기사_깃에_올리기.bat` — articles+.gitignore push(pull→push).
-- `노트북_깃허브_올리기.bat`(리포 루트) — 노트북 전용 `git add -A`+commit+push.
+- `노트북_깃허브_올리기.bat`(리포 루트) — **파일명은 옛 모델 잔재**. 실제 용도 = **로컬 PC 전용** `git add -A`+commit+push(=push 머신용).
 - `CODEX_VIDEO_DESK/부사수PC_원클릭_셋업.bat` — 빈 PC 1파일: winget git/node/python → clone(stash 후 pull) → `SETUP_FULL_PRODUCER` → Drive Y/N. UNC 경로 가드.
 
 **자동 업데이트 (수신PC 옵트인)**
@@ -328,7 +332,7 @@
 **런타임 파일 git 비추적 (★ "가만히 있어도 M 뜨는" 원인 차단)**
 - 패널/렌더/동기화가 계속 재생성하는 git 추적 파일이 가짜 M·pull충돌의 뿌리.
 - `.gitignore`에 추가(이미 반영): `shorts/config/illustration_tag_db.json`, `shorts/codex/ILLUSTRATION_TAG_DB.md`, `shorts/codex/illustration_usage_history.json`, `shorts/public/shorts_script.json`, `shorts/public/assets/illustrations/`, `shorts/config/library_share_path.txt`, `shorts/config/concept_name_cache.json`. **un-ignore**: `cardnews/articles/`.
-- 적용 = `런타임파일_git정리_1회.bat` 1회 실행(메인/노트북). 이후 그 파일들 재생성돼도 git이 안 잡음.
+- 적용 = `런타임파일_git정리_1회.bat` 1회 실행(메인/로컬 PC). 이후 그 파일들 재생성돼도 git이 안 잡음.
 
 **git 전파 vs 비전파**
 - 전파(코드 허브): 코드·`.bat/.ps1/.mjs`·`cardnews/articles/*.json`·가이드·`.gitattributes`.
@@ -339,13 +343,13 @@
 
 **수정 시 읽을 것**
 - 새 git bat 만들 때: **이 단원의 GIT 패턴만** 복붙 + I 단원 인코딩 규칙.
-- push 실패: `TEMP/github_upload.log` + 머신 역할(노트북만 push).
+- push 실패: `TEMP/github_upload.log` + 머신 역할(로컬 PC만 push).
 
 **함정**
-- 노트북엔 Git for Windows가 없음 → "git not found"는 보통 **bat 탐색 코드 문제**지 미설치가 아님. 먼저 GitHub Desktop 경로 확인.
-- 실행 PC에서 push 금지(분기). 막히면 `git fetch origin && git reset --hard origin/main`(gitignore 자산 안 건드림).
+- (옛 사실, 노트북 시점) 노트북엔 Git for Windows가 없음 → "git not found"는 보통 **bat 탐색 코드 문제**지 미설치가 아님. 먼저 GitHub Desktop 경로 확인. **★ 새 모델(2026-06-15)**: 로컬 PC에는 Git for Windows 2.54.0 설치 완료 → `git` PATH 호출 정상. 옛 함정은 노트북/메인 PC 등 다른 머신에서만 해당.
+- 부사수 PC(옛 표현 "실행 PC")에서 push 금지(분기). 막히면 `git fetch origin && git reset --hard origin/main`(gitignore 자산 안 건드림).
 - **★ 미커밋(untracked) 기사 JSON 유실 사고 (2026-06-13)**: `git stash --include-untracked`(pull 전 단계)는 **추적 안 된 파일을 working tree에서 stash로 쓸어담는다.** 다른 task가 `cardnews/articles/NNN_*.json`을 만들고 **커밋 전**일 때 auto-update/pull bat이 돌면 그 기사가 사라져 "article not found" → 준비/렌더 exit 1. **데이터는 stash에 보존**되어 복구 가능: `git ls-tree -r --name-only "stash@{0}^3"`로 확인 → `git show "stash@{0}^3:<path>" > <path>`로 개별 복원(통째 pop 금지).
-  - **근본 원인**: **노트북(개발기)에 auto-update 마커(`CODEX_VIDEO_DESK/TEMP/panel/auto_update.on`)가 켜져 있으면** 패널 켤 때마다 stash가 돈다. 노트북=push only(STEP 0)이므로 **마커 꺼야 함**(`수신PC_자동업데이트_끄기.bat` 또는 마커 삭제). 러너(부사수/사무실)는 켜둠이 정상.
+  - **근본 원인**: **로컬 PC(개발기)에 auto-update 마커(`CODEX_VIDEO_DESK/TEMP/panel/auto_update.on`)가 켜져 있으면** 패널 켤 때마다 stash가 돈다. 로컬 PC=push only(STEP 0)이므로 **마커 꺼야 함**(`수신PC_자동업데이트_끄기.bat` 또는 마커 삭제). 부사수 PC는 켜둠이 정상.
   - **재발 방지(코드)**: `dashboard/auto_update.cmd` + `부사수PC_원클릭_셋업.bat`의 `stash --include-untracked` **직전에 기사 자동 커밋** 박음: `git add cardnews/articles` → `git -c user.email=phonespot@local -c user.name=phonespot commit -m "auto-save articles before update"`(없으면 no-op). 추적되면 stash가 못 쓸어감.
   - 운영 룰: 새 기사는 만들면 **즉시 커밋**(`기사_깃에_올리기.bat`). articles는 git 추적 대상(중복방지 DB).
 
@@ -482,3 +486,4 @@
 - 2026-06-13: **E단원 의미매칭 범용수정 + C단원 후킹 박음 (SNS 품질점검발).** 중립폴백 정상화·EMBED_MIN_ILLUST 0.48·content-gate(CLIP 미설치면 무력)·미검증 cpt_ 텍스트매칭 제외(`_is_unverified_concept`, 카테고리 규칙·env). 함정에 CLIP 의존성·비-cpt 오배치는 데이터교체 박음. C단원 후킹=`OpeningHook.tsx`(다크+주황글로우+키커 pill, OPENING_SEC 1.5→1.1).
 - 2026-06-13: **A단원 패널 UI 단계적 노출 박음(v31~v32)** — 영상작업 보조버튼 2묶음을 공통 `.foldbar` 접기 토글(보기·편집 + 라이브러리·시스템 관리, 둘 다 기본 접힘·동일 UI·캐럿)로 → 첫 화면에 상태+로그 노출. 보기·편집은 `localStorage panel.viewEdit` 기억. 런타임 4박스 슬림. PANEL_VERSION v30→v32.
 - 2026-06-13: **A단원에 패널 iOS 디자인 시스템 박음(v25~v30)** — 토큰/Pretendard/legacy alias/풀폭 거터/sticky 좌측리스트/우측 페어(상태\|로그·기록\|결과)/2줄 슬러그행(idx+1)/상단 흰카드+컬러점/그림자 단일화. 함정에 **Edit 누적 truncation 실사고 + bash-python 작업법 + 복구법** 박음. 롤백=`server.py.bak_pre_ios_20260613`.
+- 2026-06-15: **F단원 머신 모델 갱신 — 노트북 → 로컬 PC push 주체 변경 (CLAUDE.md STEP 0 2026-06-15 갱신과 동기화).** 머신 역할 표 4행(로컬 PC=push only / 노트북=크롬 원격 입구만, git ❌ / 부사수 PC=pull only / 메인 PC=자산 소스), 원칙·git 탐색·함정의 옛 "노트북=push" 표현을 새 모델로 갱신. **Git for Windows 2.54.0 설치 사실(Phase 1 셋업 2026-06-11)** 박음 — 옛 함정 "노트북엔 Git for Windows 없음"은 다른 머신 셋업 시 참고용으로 보존(통째 삭제 X). **광고운영 트랙 자동 배포 흐름** (`apps_script/` 수정 → git push → GitHub Actions → clasp push --force → 콘솔 자동 반영, **콘솔 직접 수정 ❌**) 명시. `노트북_깃허브_올리기.bat` 파일명은 옛 모델 잔재 — 실제 용도는 로컬 PC 전용 push로 갱신.
