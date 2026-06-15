@@ -1,7 +1,8 @@
 # ads/ — 폰스팟 광고운영 관리 허브
 
 > **AI 진입점.** 광고운영 관련 작업을 시작할 때 가장 먼저 읽는 파일.
-> 마지막 갱신: 2026-06-12 (광고 소재 생성기 대규모 리팩 + Apify 벤치마크 합류)
+> 마지막 갱신: 2026-06-15 (Phase 1 자동 배포 셋업 + GitHub Actions 실패 알림)
+> 옛 갱신: 2026-06-12 (광고 소재 생성기 대규모 리팩 + Apify 벤치마크 합류)
 
 ## 🚀 첫 진입 시 (다른 클로드 세션)
 
@@ -88,6 +89,45 @@ ads/
     ├── danggn/            당근 (API 없으면 수동 입력 가이드)
     └── ga4/               GA4 Data API (현재 Apps Script로 처리됨)
 ```
+
+---
+
+## ★ Apps Script 자동 배포 (Phase 1 셋업 완료 2026-06-11)
+
+**옛 모델 (~2026-06-10)**: Apps Script 콘솔에서 직접 함수 수정 → 로컬 `apps_script/` 폴더와 drift → 사고(예: 인사이트 함수 누락 6/11) 재발 위험.
+
+**새 모델 (Phase 1, 2026-06-11~)**: 로컬 PC에서만 코드 수정 → git push → GitHub Actions 자동 `clasp push --force` → 콘솔 자동 반영.
+
+### 흐름
+```
+로컬 PC apps_script/ 수정
+   ↓
+git push origin main
+   ↓
+GitHub Actions (.github/workflows/deploy-apps-script.yml) 자동 trigger
+   (paths: apps_script/**)
+   ↓
+clasp push --force → 폰스팟 본점 Apps Script 콘솔 자동 반영
+   ↓
+실패 시 → 텔레그램 알림 자동 (카드뉴스용 봇 재활용, 2026-06-15)
+```
+
+### 룰
+1. **Apps Script 콘솔에서 직접 함수 수정 ❌** — 다음 git push 시 `clasp push --force`가 콘솔 변경 무시하고 덮어씌움 = 작업 사라짐. 코드 수정은 **로컬 PC `apps_script/` 폴더만**.
+2. **로컬 PC만 push** (CLAUDE.md STEP 0). 노트북 = 크롬 원격 입구만, 부사수 PC = pull only.
+3. **콘솔 코드 백업이 필요하면** `cd apps_script && clasp pull` (콘솔 → 로컬 동기화. 단 다른 task가 콘솔 수정 중이 아닌 시점만).
+4. **다른 task와 영역 분리** = `apps_script/`(광고운영) / `cardnews/`(카드뉴스) / `shorts/`(영상). 동시 작업 시 영역 안 겹치면 git 충돌 거의 0.
+5. **시크릿** = Apps Script `PropertiesService` (Google 클라우드 저장, PC 손상 무관) + GitHub Secrets (`CLASPRC_JSON`, `CLASP_JSON`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`).
+
+### 정본
+- **Phase 1 셋업 + 알림 + 멀티 브랜드 확장**: `ads/MULTI_BRAND_ARCHITECTURE.md`
+- **머신 역할 표**: `CLAUDE.md` STEP 0 + `_docs/SYSTEM_MAP.md` F단원
+- **재해 복구 + 시크릿 재발급**: `_docs/DISASTER_RECOVERY.md` (`_secrets/` 손실 시 재발급 절차)
+
+### 자주 묻는 질문
+- **Q: 콘솔에서 빨리 한 줄만 고치고 싶은데?** → ❌. 어차피 다음 push 때 덮어씌움. 로컬에서 수정 → push (1분).
+- **Q: 실패 알림 안 옴?** → workflow 성공 시 알림 X (=정상). 실패 시만 트리거.
+- **Q: 새 브랜드(KT 등) 추가?** → `ads/MULTI_BRAND_ARCHITECTURE.md` "멀티 브랜드 활성화" 섹션. workflow step + Secret 1줄씩 추가.
 
 ---
 

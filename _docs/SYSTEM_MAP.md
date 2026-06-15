@@ -395,6 +395,12 @@
 - **멀티 브랜드 모노레포 제안**: 신설 `ads/MULTI_BRAND_ARCHITECTURE.md`. `_shared/`(공용 코드 = `apps_script/`+`cardnews/`+`shorts/`+`automation/`) + `brands/<brand>/`(데이터·설정 분리, `config.json`+`.clasp.json`+`articles/`+`images/`+`output/`) + clasp+GitHub. **Phase 1**(Apps Script만 멀티 배포) 다른 task `generator.html` 작업 종료 후 시작. KT/국민인터넷/진짜 폰스팟(판매점 가입형) 등 확장 대비. **충돌 방지 = 책임 분담 표** (gen.html=다른 task / Code.gs·meta-sync·naver-sync=광고운영 task / cardnews·shorts=영상 task).
 - **Phase 1 셋업 완료** (2026-06-11 16:00 KST): 로컬 `apps_script/` clasp clone(9파일) + GitHub repo `313jongmin-droid/phonespot-cardnews-video`(commit 5e0a776) + `.github/workflows/deploy-apps-script.yml`(Node 20 + clasp 3.3.0 + `clasp push --force`, paths: `apps_script/**`) + Secrets `CLASPRC_JSON`/`CLASP_JSON`. 동작 검증: workflow_dispatch 27초 성공 → Apps Script 콘솔 자동 반영 확인. **함정**: `CLASP_JSON`은 **한 줄 압축 JSON 필수** (multiline은 `JSON5: invalid character 'P' at 12:1` 에러). `rootDir="."`. `clasp push --force`는 콘솔 변경 무시 강제 덮어쓰기 → 다른 task가 콘솔 직접 수정 중이면 작업 사라짐, 책임 분담 표 엄수. 위 단원 함정 "Apps Script는 git pull로 자동 반영 안 됨"은 여전히 유효 — 단, **GitHub 측은 `git push` → Actions가 자동 `clasp push` 로 해결**(웹 배포는 별도). 멀티 브랜드 활성화는 신설 시점에 workflow step + `CLASP_JSON_<BRAND>` Secret 1줄씩 추가. 2026-06-16부터 Node 20 deprecation → `node-version` 20→24. 정본 = `ads/MULTI_BRAND_ARCHITECTURE.md` "Phase 1 셋업 완료" 섹션.
 
+**2026-06-15 세션 — 광고운영 인프라 안정화 (상세 = `CLAUDE.md` STEP 8 + 각 정본)**
+- **STEP 0 머신 모델 갱신**: 노트북 → 로컬 PC로 push 주체 변경. F단원 동기화. 정본 = `CLAUDE.md` STEP 0.
+- **GitHub Actions 실패 알림**: `deploy-apps-script.yml`에 `Notify Telegram on failure` step + GitHub Secrets `TELEGRAM_BOT_TOKEN`/`TELEGRAM_CHAT_ID` 등록. workflow #4 `d4157c0` 29초 성공 = 알림 트리거 안 됨(=정상). 다음 진짜 실패 시점에 첫 알림 = 자동 검증. 정본 = `ads/MULTI_BRAND_ARCHITECTURE.md` "🔔 실패 알림 셋업".
+- **`_secrets/` 백업 정책**: 별도 백업 비채택(사장님 결정) + 재발급 절차로 처리. **★ 핵심**: Apps Script PropertiesService 키(메타·네이버·인스타·GA4·유튜브·Gemini·Apify)는 Google 클라우드 저장 = `_secrets/` 손실 무영향. 영향 = 로컬 텔레그램 listener 정도. 정본 = `_docs/DISASTER_RECOVERY.md`.
+- **`ads/README_FOR_AI.md` 갱신**: Phase 1 자동 배포 흐름 + **콘솔 직접 수정 ❌** 룰 박음. 다음 광고운영 클로드 진입점에서 즉시 파악.
+
 ---
 
 ## H. 자동화 / 텔레그램 / outbox
