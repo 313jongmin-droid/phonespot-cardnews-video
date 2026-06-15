@@ -144,21 +144,156 @@ function doGet(e) {
 /**
  * 콘솔에서 직접 실행할 수 있는 자가 검증 함수
  * Apps Script Editor에서 testSelf 선택 후 실행 → 시트 ID + 토큰 작동 확인
+ * (V8 런타임에서 Logger.log는 좌측 "실행" 메뉴 → Cloud 로그에 박힘)
  */
 function testSelf() {
   var expected = PropertiesService.getScriptProperties().getProperty('EXPORT_TOKEN');
   if (!expected) {
-    Logger.log('FAIL: EXPORT_TOKEN not set in Script Properties');
+    console.log('FAIL: EXPORT_TOKEN not set in Script Properties');
     return;
   }
-  Logger.log('EXPORT_TOKEN set: ' + (expected.length > 0));
+  console.log('EXPORT_TOKEN set: ' + (expected.length > 0));
 
   try {
     var ss = SpreadsheetApp.openById(SHEET_ID);
-    Logger.log('Sheet OK: ' + ss.getName());
-    Logger.log('Tab count: ' + ss.getSheets().length);
-    Logger.log('Tabs: ' + ss.getSheets().map(function (s) { return s.getName(); }).join(', '));
+    console.log('Sheet OK: ' + ss.getName());
+    console.log('Tab count: ' + ss.getSheets().length);
+    console.log('Tabs: ' + ss.getSheets().map(function (s) { return s.getName(); }).join(', '));
   } catch (err) {
-    Logger.log('FAIL: ' + err);
+    console.log('FAIL: ' + err);
   }
+}
+
+/* ============================================================
+ *  Drive Snapshot 자동 export (2026-06-15 추가)
+ *
+ *  목적: 클로드 workspace proxy가 script.google.com 차단해서
+ *        web_fetch로 직접 호출 불가. 대신 Drive에 JSON 파일
+ *        저장하면 Drive MCP로 read 가능.
+ *
+ *  흐름:
+ *    1. setupExportTrigger() 1회 실행 → 매일 03:00 자동 트리거 등록
+ *    2. exportAllSheetsToDrive() 매일 03:00 자동 실행
+ *    3. 각 탭을 <탭명>.json 으로 Drive 폴더에 저장 (덮어쓰기)
+ *    4. __meta.json 에 전체 탭 목록 + 타임스탬프 박음
+ *    5. 클로드는 Drive MCP read_file_content로 각 JSON read
+ *
+ *  사장님 작업 (1회):
+ *    A. Drive에 폴더 생성 (예: "PhoneSpot Sheet Snapshots")
+ *    B. 폴더 ID 받기 (URL 끝부분 = .../folders/<ID>)
+ *    C. Apps Script 스크립트 속성에 SNAPSHOT_FOLDER_ID 등록
+ *    D. setupExportTrigger() 1회 실행 → 트리거 등록
+ *    E. exportAllSheetsToDrive() 1회 수동 실행 → 첫 snapshot 생성
+ * ============================================================ */
+
+function exportAllSheetsToDrive() {
+  var folderId = PropertiesService.getScriptProperties().getProperty('SNAPSHOT_FOLDER_ID');
+  if (!folderId) {
+    var msg = 'SNAPSHOT_FOLDER_ID not set in script properties. ' +
+              'Drive 폴더 만들고 ID 등록 필요 (가이드: ads/MULTI_BRAND_ARCHITECTURE.md).';
+    console.log(msg);
+    throw new Error(msg);
+  }
+
+  var folder;
+  try {
+    folder = DriveApp.getFolderById(folderId);
+  } catch (err) {
+    throw new Error('Drive folder not found: ' + folderId + ' (' + err + ')');
+  }
+
+  var ss = SpreadsheetApp.openById(SHEET_ID);
+  var sheets = ss.getSheets();
+  var summary = [];
+  var startedAt = new Date();
+
+  sheets.forEach(function (sheet) {
+    var name = sheet.getName();
+    try {
+      var lastRow = sheet.getLastRow();
+      var lastCol = sheet.getLastColumn();
+
+      if (lastRow === 0 || lastCol === 0) {
+        summary.push({ name: name, rows: 0, cols: 0, skipped: true });
+        return;
+      }
+
+      var range = sheet.getRange(1, 1, lastRow, lastCol);
+      var data = {
+        sheet: name,
+        timestamp: startedAt.toISOString(),
+        timezone: 'Asia/Seoul',
+        totalRows: lastRow,
+        totalCols: lastCol,
+        hidden: sheet.isSheetHidden(),
+        values: range.getValues(),
+        formulas: range.getFormulas(),
+      };
+
+      // 파일명 안전화 (윈도우 금지 문자 제거)
+      var safeFileName = name.replace(/[<>:"/\\|?*]/g, '_') + '.json';
+      var content = JSON.stringify(data);
+
+      // 기존 파일 있으면 덮어쓰기 (최신본만 유지, 용량 증가 방지)
+      var existing = folder.getFilesByName(safeFileName);
+      if (existing.hasNext()) {
+        var file = existing.next();
+        file.setContent(content);
+        summary.push({ name: name, rows: lastRow, cols: lastCol, action: 'updated', fileId: file.getId() });
+      } else {
+        var created = folder.createFile(safeFileName, content, MimeType.PLAIN_TEXT);
+        summary.push({ name: name, rows: lastRow, cols: lastCol, action: 'created', fileId: created.getId() });
+      }
+    } catch (err) {
+      summary.push({ name: name, error: String(err && err.message || err) });
+    }
+  });
+
+  // 메타 파일 (전체 탭 목록 + 타임스탬프)
+  var metaContent = JSON.stringify({
+    timestamp: startedAt.toISOString(),
+    timezone: 'Asia/Seoul',
+    sheetId: SHEET_ID,
+    spreadsheetName: ss.getName(),
+    spreadsheetLocale: ss.getSpreadsheetLocale(),
+    count: sheets.length,
+    durationMs: new Date().getTime() - startedAt.getTime(),
+    summary: summary,
+  });
+
+  var metaExisting = folder.getFilesByName('__meta.json');
+  if (metaExisting.hasNext()) {
+    metaExisting.next().setContent(metaContent);
+  } else {
+    folder.createFile('__meta.json', metaContent, MimeType.PLAIN_TEXT);
+  }
+
+  console.log('Exported ' + summary.length + ' sheets to Drive folder ' + folderId);
+  console.log('Duration: ' + (new Date().getTime() - startedAt.getTime()) + 'ms');
+  return summary;
+}
+
+/**
+ * 매일 03:00 KST 자동 export 트리거 등록 (1회 실행)
+ * 기존 트리거 있으면 제거 후 재등록 = idempotent
+ */
+function setupExportTrigger() {
+  // 기존 트리거 제거
+  var removed = 0;
+  ScriptApp.getProjectTriggers().forEach(function (t) {
+    if (t.getHandlerFunction() === 'exportAllSheetsToDrive') {
+      ScriptApp.deleteTrigger(t);
+      removed++;
+    }
+  });
+
+  // 매일 03:00 KST 트리거 등록
+  ScriptApp.newTrigger('exportAllSheetsToDrive')
+    .timeBased()
+    .atHour(3)
+    .everyDays(1)
+    .create();
+
+  console.log('Trigger registered: exportAllSheetsToDrive daily at 03:00 KST');
+  console.log('Removed old triggers: ' + removed);
 }
