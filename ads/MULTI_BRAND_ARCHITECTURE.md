@@ -67,6 +67,41 @@ KT/국민/진짜폰스팟 Apps Script도 자동 배포
 - ✅ Apps Script 콘솔에 자동 반영 확인
 - ✅ 다른 task 영역 무영향 (ads/code/, cardnews/, shorts/, _docs/ 등 unstaged 그대로)
 
+### 📊 B1 시트 read 인프라 (2026-06-15 추가)
+
+**목적**: 클로드가 광고운영 관리대장 시트를 자유롭게 read. 본점 generator.html doGet과 충돌 없는 별도 프로젝트 = 멀티 브랜드 패턴 차용.
+
+**구성**:
+- 별도 Apps Script 프로젝트 **PhoneSpot Sheet Export** (Script ID 별도)
+- 로컬 폴더 `apps_script_sheet_export/Code.js` + `appsscript.json`
+- GitHub Secret `CLASP_JSON_EXPORT` (한 줄 압축 JSON)
+- workflow step `Push to Apps Script (Sheet Export)` 추가
+- 토큰 인증 `EXPORT_TOKEN` (Script Properties) + `_secrets/sheet_export_url.txt` + `_secrets/sheet_export_token.txt`
+- Drive 폴더 `PhoneSpot Sheet Snapshots` (ID `1M-w-Dx0oFAw8Bieq9hwiF17E-6BvWM1k`)
+  - 매일 03:00 자동: 30탭 → `<탭명>.json` + `__meta.json` + `__headers.json` (전체 탭 첫 5행 한 파일)
+  - `setupExportTrigger()` 1회 실행으로 트리거 등록
+
+**클로드 read 흐름**:
+1. **작은 파일** (< 30KB) = Drive MCP `read_file_content` 한 번에 read
+2. **큰 파일** (메타_통합 137KB / 네이버_통합 330KB / GA4_자동 230KB) = 토큰 한계 초과 → `__headers.json` 단일 파일로 헤더 + 첫 5행 한 번에 read (27KB)
+3. **실시간 호출** (사용자 PC) = `<URL>?token=...&sheet=<name>` 으로 시트 1개 JSON
+
+**★ 함정**:
+- Anthropic workspace proxy = `script.google.com` allowlist 차단 (`X-Proxy-Error: blocked-by-allowlist`)
+  → 클로드 web_fetch 직접 호출 ❌
+  → **Drive snapshot으로 우회 = 영구 해결책**
+- 큰 파일 = `__headers.json` 전용 모델로 토큰 한계 우회
+- Apps Script API 토글 OFF면 첫 push 실패 ("User has not enabled the Apps Script API") → https://script.google.com/home/usersettings → 토글 ON
+- web app 배포 시 "본인 인증 + 누구나 접근" 모드 (URL+토큰 없으면 거부)
+
+**셋업 검증 결과** (2026-06-15):
+- workflow #5 (`c393ad4`) 실패 (Apps Script API OFF) → 토글 ON 후 #6 성공 23초
+- 첫 `exportAllSheetsToDrive` 실행: 30탭 60초
+- `__headers.json` 추가 후 재실행: 80초 (오버헤드 20초)
+- 클로드 read 검증: ✅ Drive MCP로 작은 파일 전부 read, `__headers.json`로 큰 파일 헤더 파악
+
+---
+
 ### 🔔 실패 알림 셋업 (2026-06-15 추가)
 workflow 실패 시 (CLASPRC_JSON 만료, clasp push 에러, Node 버전 deprecation 등) **텔레그램 자동 알림**. 카드뉴스용 봇 재활용.
 

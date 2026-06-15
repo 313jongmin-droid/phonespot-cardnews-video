@@ -25,7 +25,7 @@
 | **카카오 모먼트** | ⚠️ 가능 | 카카오 모먼트 API | 카카오 비즈니스 인증 | 미정 |
 | **카카오톡 채널** | ❌ 불가 | 통계 API 미공개 | — | 자동수집 불가 확인 (2026-06-11) |
 | **네이버 검색광고** | ✅ 완료 | 네이버 검색광고 API (HMAC-SHA256) | API 라이선스 + Secret Key | `naver-sync.gs` 광고그룹 단위 (매일 02:15) |
-| **당근 광고** | ❌ 불가 | 공식 API 공개 X (현재) | — | 수기 입력 유지 |
+| **당근 광고** | ⚠️ 부분 자동 (2026-06-15) | 공식 API 공개 X → 노출/클릭/지출 수기, GA4 매칭만 자동 | `apps_script/danggn-sync.gs` | 당근_통합 17컬럼 + 당근_UTM_매핑. `syncDanggnGA4` 매일 02:30. 시트 메뉴 🥕 당근 자동화. `DANGGN_UTM_SOURCE` Script Property 등록 필수. 정본 = `DANGGN_AUTOMATION.md` |
 
 ---
 

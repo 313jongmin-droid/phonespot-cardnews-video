@@ -1,7 +1,7 @@
 # ads/ — 폰스팟 광고운영 관리 허브
 
 > **AI 진입점.** 광고운영 관련 작업을 시작할 때 가장 먼저 읽는 파일.
-> 마지막 갱신: 2026-06-15 (Phase 1 자동 배포 셋업 + GitHub Actions 실패 알림)
+> 마지막 갱신: 2026-06-15 (B1 시트 read 인프라 + 당근 자동화 + Phase 1 + Actions 알림)
 > 옛 갱신: 2026-06-12 (광고 소재 생성기 대규모 리팩 + Apify 벤치마크 합류)
 
 ## 🚀 첫 진입 시 (다른 클로드 세션)
@@ -44,6 +44,9 @@
 |------|--------|
 | **운영 매뉴얼 확인** (매일/주간 루틴, 트러블슈팅) | `MANUAL.md` |
 | **메타 API + GA4 + UTM 매핑 자동화** ★ | `META_AUTOMATION.md` → `code/apps_script/meta-sync.gs` |
+| **네이버 검색광고 자동화** ★ | `NAVER_AUTOMATION.md` → `code/apps_script/naver-sync.gs` |
+| **당근 광고 자동화** (API 없음, 수기 + GA4 매칭) ★ 2026-06-15 신설 | `DANGGN_AUTOMATION.md` → `code/apps_script/danggn-sync.gs`. 시트 메뉴 🥕 당근 자동화 |
+| **시트 read / 시트 구조 확인** (클로드용) ★ 2026-06-15 B1 셋업 | `apps_script_sheet_export/` 별도 프로젝트 + Drive 폴더 `PhoneSpot Sheet Snapshots` (매일 03:00 30탭 JSON + `__headers.json`). Drive MCP `read_file_content`로 read. 정본 = `MULTI_BRAND_ARCHITECTURE.md` |
 | **UTM_매핑 시트 설계** | `data/utm_mapping_design.md` |
 | **Apps Script 코드 수정/백업** | `code/apps_script/Code.gs` + `code/apps_script/functions.md` |
 | **시트 구조·컬럼 확인** | `data/sheet_structure.md` |
