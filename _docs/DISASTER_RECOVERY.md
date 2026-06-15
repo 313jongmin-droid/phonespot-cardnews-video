@@ -7,7 +7,7 @@
 
 ## 한 줄 요약
 
-GitHub repo (`313jongmin-droid/phonespot-cardnews-video`) + Google 클라우드 + Drive 데스크톱 sync = 3중 백업. 로컬 PC 망가져도 코드/데이터 거의 100% 복구. 단 `_secrets/`는 별도 백업 필수.
+GitHub repo (`313jongmin-droid/phonespot-cardnews-video`) + Google 클라우드 + Drive 데스크톱 sync = 3중 백업. 로컬 PC 망가져도 코드/데이터 거의 100% 복구. `_secrets/`는 백업 안 함 (사장님 결정 2026-06-15) — 손실 시 재발급 절차(아래 섹션)로 45분~1h.
 
 ---
 
@@ -25,7 +25,7 @@ GitHub repo (`313jongmin-droid/phonespot-cardnews-video`) + Google 클라우드 
 | **Google Sheets 데이터** (광고운영 관리대장 등) | Google 클라우드 | 영향 0 |
 | **Apps Script 콘솔 코드** | Google 클라우드 | 영향 0 |
 | **Drive 일러스트 허브** (PhoneSpot_Library) | Drive 클라우드 + 데스크톱 sync | 영향 0 (데스크톱 sync만 재설정) |
-| `_secrets/` (API 키 / 토큰) | ⚠️ **로컬 PC만** | ⚠️ **별도 백업 필수** |
+| `_secrets/` (API 키 / 토큰) | 로컬 PC만 (사장님 결정: 백업 X) | 손실 시 재발급(45분~1h). 광고운영 Apps Script는 PropertiesService 사용이라 무영향 |
 | `.clasprc.json` (clasp OAuth 토큰) | 로컬 `C:\Users\<user>\.clasprc.json` | `clasp login` 재실행으로 복구 |
 | `apps_script/.clasp.json` (Script ID) | 로컬 + GitHub Secrets `CLASP_JSON` | Apps Script 콘솔에서 다시 확인 가능 |
 | `node_modules/` | 로컬만 | `npm install`로 재생성 |
@@ -50,8 +50,8 @@ git clone https://github.com/313jongmin-droid/phonespot-cardnews-video.git phone
 cd phonespot_cardnews\apps_script
 clasp pull             # Apps Script 콘솔 최신 코드 다운로드
 
-# 4. _secrets/ 별도 백업에서 복원 (있으면)
-copy <백업위치>\_secrets phonespot_cardnews\_secrets
+# 4. _secrets/ 재발급 (백업 안 함, 사장님 결정 2026-06-15)
+# → 아래 "_secrets/ 손실 시 재발급 절차" 섹션 참고. 45분~1h.
 
 # 5. 일러스트 Drive sync 확인 (PhoneSpot_Library 데스크톱 sync 활성 상태)
 
@@ -96,8 +96,9 @@ clasp pull
 cd ..
 ```
 
-### 6. _secrets/ 별도 백업에서 복원
-- 1Password / Bitwarden / 외장 HDD 등에서 복원
+### 6. _secrets/ 재발급 (백업 안 함, 사장님 결정 2026-06-15)
+- 아래 "_secrets/ 손실 시 재발급 절차" 섹션의 키별 발급 URL + 절차대로. 45분~1h.
+- **광고운영 Apps Script 자동화는 PropertiesService 사용이라 무영향** = 6번 step 생략 가능 (로컬 텔레그램 listener 사용 안 하면).
 
 ### 7. (카드뉴스/영상 사용 시) 풀 셋업
 ```cmd
@@ -122,30 +123,62 @@ CODEX_VIDEO_DESK\SETUP_FULL_PRODUCER.bat
 
 ---
 
-## ⚠️ _secrets/ 별도 백업 절차 (필수)
+## _secrets/ 손실 시 재발급 절차 (사장님 결정 2026-06-15: 백업 안 함 / 재발급으로 처리)
 
-`_secrets/`는 git에 안 들어감 (보안). PC 망가지면 사라짐. **별도 백업 필수.**
+`_secrets/`는 git에 안 들어감 (보안 룰, `.gitignore` 3회 박힘). **사장님 결정 = 별도 백업 안 함**. PC 손상 시 = 재발급(45분~1시간). HDD 손상 확률 낮음 + 재발급 시간 감수 가능 = 합리적 결정.
 
-### 박힌 비밀
-- `_secrets/meta_token.txt` (메타 시스템 사용자 토큰)
-- `_secrets/naver_api_license.txt` / `naver_secret_key.txt` (네이버 검색광고)
-- `_secrets/gemini_key.txt` (Gemini API)
-- `_secrets/telegram_token.txt` / `telegram_chat_id.txt` (텔레그램 listener)
-- 기타 채널별 API 키
+### 저장 위치 (어디서 사용되나)
+| 키 | 저장 위치 | 사용처 |
+|---|---|---|
+| `META_TOKEN` / `META_AD_ACCOUNT_ID` / `INSTAGRAM_BUSINESS_ID` | **Apps Script PropertiesService** (Google 클라우드) | 메타·인스타 자동화 (Apps Script) — **PC 손상 무관** |
+| `NAVER_API_LICENSE` / `NAVER_SECRET_KEY` / `NAVER_CUSTOMER_ID` | **Apps Script PropertiesService** | 네이버 검색광고 자동화 — **PC 손상 무관** |
+| `GEMINI_API_KEY` | **Apps Script PropertiesService** | 메타·유튜브 인사이트 분석 — **PC 손상 무관** |
+| `APIFY_TOKEN` | **Apps Script PropertiesService** | Apify Meta Ad Library 벤치마크 — **PC 손상 무관** |
+| `TELEGRAM_BOT_TOKEN` / `TELEGRAM_CHAT_ID` | **로컬 `_secrets/telegram_token.txt` + GitHub Secrets** | 카드뉴스 텔레그램 listener (로컬) + Actions 실패 알림 (GitHub) — **PC 손상 시 로컬만 영향, GitHub은 무관** |
+| `CLASPRC_JSON` / `CLASP_JSON` | **GitHub Secrets** (GitHub 클라우드) | Apps Script 자동 배포 — **PC 손상 무관** |
 
-### 권장 백업 방법
-1. **1Password / Bitwarden** — 비밀번호 관리자에 텍스트로 저장 (가장 안전)
-2. **외장 HDD / USB** — `_secrets/` 폴더 통째 복사 (분기/연 1회)
-3. **개인 Drive** — 암호화한 zip으로 업로드 (단 Drive 손상 위험 고려)
+→ **결론**: `_secrets/` 폴더 사라져도 **광고운영 자동화(Apps Script)는 무영향**. 영향 받는 건 **로컬 텔레그램 listener** 정도 — 텔레그램 봇 토큰 재발급 또는 GitHub Secrets에서 복사.
 
-### Apps Script PropertiesService에 있는 것 (재발급 절차)
-- `META_TOKEN` / `META_AD_ACCOUNT_ID` — Meta Business Manager에서 재발급
-- `INSTAGRAM_BUSINESS_ID` — 메타 페이지 설정에서 확인 (`17841474706647015`)
-- `NAVER_API_LICENSE` / `NAVER_SECRET_KEY` / `NAVER_CUSTOMER_ID` — ads.naver.com → API 사용 관리
-- `APIFY_TOKEN` — apify.com 계정 설정
-- `GEMINI_API_KEY` — Google AI Studio
+### 재발급 절차 (각 키별)
 
-→ **Apps Script PropertiesService 자체는 Google 클라우드라 PC와 무관.** 콘솔에서 그대로 보임.
+**1. META_TOKEN (메타 시스템 사용자 토큰)**
+- URL: https://business.facebook.com → 비즈니스 설정 → 시스템 사용자 (`phonespot-sync`)
+- 절차: 시스템 사용자 선택 → "새 토큰 생성" → 권한 선택 (`ads_read`, `ads_management`, `business_management`, `pages_read_engagement`, `instagram_basic`, `instagram_manage_insights`) → 토큰 복사
+- **★ 인스타 시스템 사용자 자산 추가는 토큰 발급 전에 미리** (발급 후 자산 추가하면 scopes 반영 안 됨 — 2026-06-11 학습 사실)
+- 등록: Apps Script 콘솔 → 프로젝트 설정 → 스크립트 속성 → `META_TOKEN` 값 갱신
+- 검증: 시트 메뉴 🛠 폰스팟 운영 → 🔑 토큰 연결 테스트 → ✅
+
+**2. NAVER_API_LICENSE / NAVER_SECRET_KEY (네이버 검색광고)**
+- URL: https://manage.searchad.naver.com → 도구 → API 사용 관리
+- 절차: 새 API 키 생성 (License Key + Secret Key 동시 발급)
+- 등록: Apps Script 콘솔 → 스크립트 속성 → `NAVER_API_LICENSE`, `NAVER_SECRET_KEY` 값 갱신
+- 검증: 시트 메뉴 🔍 네이버 자동화 → 🔑 연결 테스트 → ✅
+
+**3. GEMINI_API_KEY**
+- URL: https://aistudio.google.com/apikey
+- 절차: "Create API key" → Google Cloud 프로젝트 선택 → 키 생성 (즉시 발급)
+- 등록: Apps Script 콘솔 → 스크립트 속성 → `GEMINI_API_KEY` 값 갱신
+- 검증: 시트 메뉴에서 인사이트 MD 생성 함수 수동 실행 (`generateMetaInsightsMarkdown`)
+
+**4. APIFY_TOKEN**
+- URL: https://console.apify.com/account/integrations
+- 절차: "API tokens" → "Create new token" → 권한 선택 → 토큰 복사
+- 등록: Apps Script 콘솔 → 스크립트 속성 → `APIFY_TOKEN` 값 갱신
+- 검증: generator.html → 🎯 벤치마크 탭 → 수집 테스트 → ✅
+
+**5. TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID**
+- URL: https://t.me/BotFather (텔레그램 앱 또는 웹)
+- 절차: `/mybots` → 봇 선택 → "API Token" → 토큰 복사. 또는 새 봇 만들기 `/newbot`
+- chat_id 확인: 봇과 대화 시작 → `https://api.telegram.org/bot<TOKEN>/getUpdates` → `chat.id` 확인
+- 등록 (2곳):
+  - 로컬: `_secrets/telegram_token.txt` + `_secrets/telegram_chat_id.txt` 파일 새로 만들기
+  - GitHub Secrets: https://github.com/313jongmin-droid/phonespot-cardnews-video/settings/secrets/actions → `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` 갱신
+- 검증: workflow 일부러 실패시켜서 알림 도착 확인 (또는 로컬 `automation/scripts/tg_send.py` 테스트)
+
+### 정직한 한계
+- `INSTAGRAM_BUSINESS_ID` = 메타 페이지 자산 ID (`17841474706647015`). 변하지 않는 값 = **이 가이드 자체에 박혀있어서 재발급 불필요**. 메타 페이지 → 설정 → 비즈니스 통합에서도 다시 확인 가능.
+- `META_AD_ACCOUNT_ID` = 광고 계정 ID. 메타 비즈매니저에서 확인 (변하지 않음, 한 번 등록하면 영구).
+- 키마다 **재발급 시 옛 키 무효화** = 다른 자동화에서 같은 키 쓰면 동시에 갱신 필요.
 
 ---
 
@@ -208,13 +241,16 @@ KT/국민/진짜폰스팟 추가할 때도 같은 Bootstrap 활용:
 ### 복구 못 하는 것 (사전 방지가 유일)
 - **GitHub 계정 자체 잃음** — 2FA + 백업 코드로 사전 방지
 - **Google 계정 잃음** (313jongmin@gmail.com) — 2FA + 복구 이메일 사전 등록
-- **`_secrets/` 백업 안 했는데 PC 망가짐** — 모든 API 키 재발급 필요
+
+### `_secrets/` (사장님 결정 2026-06-15: 백업 안 함)
+- 손실 시 = 위 "재발급 절차"대로 45분~1h 작업.
+- **광고운영 자동화 (Apps Script PropertiesService)는 무영향** — `_secrets/` 사라져도 메타·네이버·인스타·GA4 동기화 계속 작동.
+- 영향 받는 건 로컬 텔레그램 listener 정도 — 텔레그램 토큰만 재발급하면 복구.
 
 ### 권장 사전 대비
 1. GitHub + Google 계정 모두 **2FA 활성화**
-2. `_secrets/` **월 1회 백업** (1Password 또는 외장 HDD)
-3. 분기별 **복구 절차 한 번 시뮬레이션** (다른 폴더에 clone해서 동작 확인)
+2. 분기별 **복구 절차 한 번 시뮬레이션** (다른 폴더에 clone해서 동작 확인)
 
 ---
 
-작성: 2026-06-11
+작성: 2026-06-11 / 2026-06-15 _secrets 섹션 갱신 (백업 X 결정 + 재발급 절차)
