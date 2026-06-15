@@ -3,6 +3,7 @@
   "title_short": "3가지 체크(N가지)",
   "video_title": "3가지 체크(N가지)",
   "preset": "showcase",
+  "hook_pattern": "",
   "channel_name": "",
   "channel_tagline": "",
   "publication_date": "2026.05.29",
@@ -28,7 +29,7 @@
       "style": "table",
       "sfx": "tick",
       "caption_chunks": [
-        "①",
+        "1",
         "가격 공개",
         "돼 있나?"
       ],
@@ -39,7 +40,7 @@
       "style": "barcompare",
       "sfx": "tick",
       "caption_chunks": [
-        "②",
+        "2",
         "조회가",
         "= 개통가?"
       ],
@@ -50,7 +51,7 @@
       "style": "checklist",
       "sfx": "pop",
       "caption_chunks": [
-        "③",
+        "3",
         "상담 없이",
         "가격부터?"
       ],

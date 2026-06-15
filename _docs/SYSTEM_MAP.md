@@ -38,6 +38,8 @@
 
 ## A. 패널 (웹 대시보드)
 
+**디자인 토큰 정본** = `server.py INDEX_HTML <style> :root` (색·radius·shadow·transition·Pretendard). 추출 참조 = **`_docs/DESIGN_SYSTEM.md`**(패널·광고 생성기·브랜드 페이지 공용). 값 변경은 server.py에서 → 문서 동기화. server.py 165KB 대형 = CSS 수정 bash-python only(I단원).
+
 **목적**: 카드뉴스+영상 생산을 한 화면에서 제어. 단일 파이썬 HTTP 서버 + 인라인 HTML.
 
 **핵심 파일**
@@ -172,6 +174,8 @@
 - **카드 전환 애니메이션**: `CasualCard.tsx` `cardEnter`(frame 0~7 페이드+슬라이드업)를 비주얼 컨테이너에 적용 → 하드컷 완화(일러스트 포함 전 카드).
 - **제목바 중복 제거**: `shorts/src/components/casual/CasualCard.tsx` — `CasualTitleBar`를 **`type==="hook"`일 때만** 렌더(본문 4개 카드 반복 제거 + 비주얼 영역 확대). 맥락은 오프닝+헤더+비주얼/자막으로 충분.
 - **자막 세이프영역**: 점검 결과 자막은 화면 **중하단**(아래 ~700px 흰 여백)이라 플랫폼 UI 안 가림 → 변경 안 함(`CasualCaption` height 840, padding-top 128).
+- **★ 자막 정밀 싱크 (B, 2026-06-14)**: 자막 청크 타이밍은 `chunkUtil.ts getChunkWindows`가 잡는데, 원래 **모든 청크에 최소 가독시간 바닥(`CAPTION_MIN_READABLE_FRAMES`=0.5초)** 을 깔고 남는 시간만 weights로 분배 → 짧은 청크가 음성보다 길게 잡혀 **미묘한 드리프트**. 수정: 타이밍이 **정밀 모드(`_tts_timing.mode==="word_boundary_text_align"`)면 바닥=0** → 자막이 실제 발화에 정확히 비례(=정확 동기화). 추정(char fallback) 모드만 바닥 유지(가독 보호). 전파: `CasualCard`가 `data._tts_timing.mode` 읽어 `preciseTiming` → `chunkIndexFromList`/`getChunkWindow`/`getVisualWindow`/`CasualCaption`에 `precise` 전달. 잔여 오차=±1프레임(33ms, 30fps 한계). 검증 023 전섹션 정밀. **+ 자막 페이드인(2026-06-14)**: 청크 바뀔 때 `CasualCaption`이 청크 윈도우 시작 기준 `opacity 0.45→1`+`translateY 9→0`(4~5프레임)으로 살짝 떠오름 — 비주얼 `cardEnter`와 결 맞춤(하드 스위치 완화). 카드 간 크로스디졸브는 **각 카드가 자체 TTS 오디오를 가져 오버랩 시 음성 겹침** → 비채택(cardEnter로 대체).
+- **★ 자막 강조 = 작성자 구절만 (2026-06-14, `CasualCaption.tsx`)**: 자동 숫자/단위 강조(`AUTO_EMPHASIS_PATTERNS`)는 과다·번짐으로 **OFF**, `caption_emphasis`(카드당 1구절)만 **브랜드 오렌지(#F74B0B)**. 매칭=토큰 사이 공백/줄바꿈만 허용하는 정확 정규식(`escapeRegExp`+`\s*`), **못 맞으면 스킵(색 X)**=「애매하면 안 칠한다」. 검증 022 "5분" 오렌지.
 - **라우드니스 −14 LUFS**: `shorts/scripts/finalize_sns_video.py` `common_prefix`에 `-af loudnorm=I=-14:TP=-1.5:LRA=11`(나레이션 −16.5가 작던 문제). env `PHONESPOT_TARGET_LUFS`(기본 -14, `off`로 끔).
 - **BGM**: 캐주얼 트랙 현재 나레이션만(무음구간 多) — BGM 추가는 보류(음악풀+Composition 믹싱 필요).
 - **길이 목표**: 35~45초(56초는 길다). 레버는 코드가 아니라 **기사 집필**(J단원 `article_authoring_spec.md`: 카드 본문 문장 ≤35자·6카드 ≈250자).
@@ -243,7 +247,7 @@
 **핵심 스크립트 (`shorts/scripts/`)**
 - `codex_semantic_visual_match.py` — 렌더 단계 매칭 본체(텍스트→일러스트). 폴백 `NEUTRAL_FILLERS`.
   - **매칭 경로**(`semantic_match` 청크 루프): ① 실사 포토(렉시컬 모델명) ② 소스 카드이미지 ③ **일러스트 렉시컬 키워드**(아래 ★) ④ 라이브러리 일러스트 텍스트/태그 임베딩(`best_ill ≥ EMBED_MIN_ILLUST`) ⑤ 소스(photos/ 제외)/마스코트 유지 ⑥ 그림내용(CLIP) ⑦ 중립 필러(`pick_neutral`). 엔진 없으면 lexical 임계(`MIN_*_SCORE`).
-  - **★ 일러스트 렉시컬 키워드 매칭 (2026-06-14, 임베딩 보조)**: 한글 임베딩이 해시 이름(`mid_release_98cab19a`)+헤드라인 문맥에 희석돼, DB keywords가 청크와 정확히 겹쳐도 코사인이 임계를 못 넘던 불안정 해결(포토를 렉시컬로 고친 것과 같은 처방). `build_illust_keyword_index`(available+키워드 보유, cpt/blocklist 제외) + `illust_lexical_hits(keywords,chunk)`(한글=부분문자열·영문/숫자=단어경계, `ILLUST_KW_STOP` 흔한단어 제외) → `best_lex_ill`. chosen에서 **`hits ≥ MIN_ILLUST_KEYWORDS`(env, 기본 2)면 임베딩 best_ill보다 우선**. 청크 자체 기준(헤드라인 제외). 약한 청크(h<2)는 임베딩 유지 = 무회귀. 검증(021): mid_release/official_sale/mounted_body가 키워드대로 제자리, smartphone 반복 6→4. 로그 `[illust-kw] <sec> c<i>: <variant> hits=N`.
+  - **★ 일러스트 렉시컬 키워드 매칭 (2026-06-14, 임베딩 보조)**: 한글 임베딩이 해시 이름(`mid_release_98cab19a`)+헤드라인 문맥에 희석돼, DB keywords가 청크와 정확히 겹쳐도 코사인이 임계를 못 넘던 불안정 해결(포토를 렉시컬로 고친 것과 같은 처방). `build_illust_keyword_index`(available+키워드 보유, cpt/blocklist 제외) + `illust_lexical_hits(keywords,chunk)`(한글=부분문자열·영문/숫자=단어경계, `ILLUST_KW_STOP` 흔한단어 제외) → `best_lex_ill`. chosen에서 **`hits ≥ MIN_ILLUST_KEYWORDS`(env, 기본 2)면 임베딩 best_ill보다 우선**. 청크 자체 기준(헤드라인 제외). 약한 청크(h<2)는 임베딩 유지 = 무회귀. 검증(021): mid_release/official_sale/mounted_body가 키워드대로 제자리, smartphone 반복 6→4. 로그 `[illust-kw] <sec> c<i>: <variant> hits=N`. **★ content-gate 면제 (2026-06-14)**: 키워드 ≥2 매칭(cpt 제외)은 **CLIP content-gate를 건너뛴다** — '범용/추상'으로 그린 일러스트를 CLIP이 거부해도, 키워드가 청크에 실제로 박혀 있으면 그게 더 신뢰할 신호. content-gate는 약한 임베딩 픽(best_ill)에만 적용(이름↔그림 불일치는 거기서 계속 차단). 검증 022: personal_data(2히트)·lock_screen_only(4히트) 복귀.
   - **상수(전부 env 오버라이드)**: `EMBED_MIN_IMAGE`(0.42)·`EMBED_MIN_ILLUST`(**0.48**, 0.42는 너무 관대해 먼 그림 통과)·`EMBED_MIN_ILLUST_IMG`(0.28, CLIP 내용)·`NEUTRAL_FILLERS`(★ 진짜 중립 phone/device만 — newspaper/shield/microphone/meeting_room/forecast는 "특정 의미"라 제외)·`ILLUST_BLOCKLIST`(기본 비움, env 비상용)·`EXCLUDE_UNVERIFIED_CONCEPT`(기본 True).
   - **★ 범용 오배치 방지 3종 (2026-06-13, SNS 품질점검 후)**:
     1. **중립 폴백 정상화**: 매칭 실패 시 의미 있는 그림(방패/신문/마이크) 대신 phone/device 일반 그림.
@@ -274,6 +278,7 @@
 - 임베딩 모델 ~1GB. 설치/워밍은 `SETUP_FULL_PRODUCER.bat` / `codex_warm_embeddings.py`.
 - Gemini 키 없으면 readable 이름 폴백(cpt_) — 에러 아님. **단 cpt_는 그림 미검증이라 텍스트매칭 제외(위 정책 3)**.
 - **★ CLIP 그림엔진(`codex_image_embed`)이 PC에 미설치면 content-gate 무력** → 텍스트/태그 매칭만으로 동작. 즉 "이름↔그림 불일치"의 범용 차단은 **CLIP 켜야 완전**. 안 켜진 동안은 정책 3(cpt_ 제외)+중립폴백+임계 0.48이 방어선. 검증 단서: `shorts/codex/image_embed_cache.json` 존재 여부.
+- **★ CLIP 설치/워밍 (2026-06-14 완료)**: `fastembed`의 `jinaai/jina-clip-v1`(이미지+텍스트 768차원). 설치=`pip install fastembed numpy pillow onnxruntime`. **함정: ImageEmbedding만 받으면 텍스트 모델(`onnx/text_model.onnx`)이 안 받아져 `available()=False`** → `huggingface_hub.snapshot_download('jinaai/jina-clip-v1', cache_dir=<TEMP>/fastembed_cache)`로 저장소 전체 받아 채움. 워밍=`codex_warm_embeddings.py`(라이브러리 지문 → `image_embed_cache.json`). **캐시가 `%TEMP%\fastembed_cache`(휘발)** → 청소도구에 지워지면 content-gate 조용히 OFF(에러 없이 텍스트 폴백). 임계 `EMBED_MIN_ILLUST_IMG`=교차모달이라 0.2~0.32가 정상(0.6 걸면 전멸). **0.28 너무 엄격 → bat env `PHONESPOT_IMG_MATCH_MIN=0.24`**(run_codex_casual.bat). 단 022처럼 영문/추상 기사는 0.24도 다 거부(콘텐츠 한계, 임계 아님 → 기사 한글화가 레버).
 - **잘못 그려진 정식(비-cpt_) 일러스트**(예: ti_decrease=티타늄'감소'를 슬림화에 사용)는 특정 이름 하드코딩 ❌(원칙). 해결=그 그림을 더 중립/정확한 것으로 교체하거나 CLIP content-gate 활성화.
 - **실사 포토가 안 뜸**: ① 사진이 **렌더하는 PC에 없음**(git 비추적 → 노트북에 넣고 사무실 렌더면 누락) ② **모델명이 청크에 안 나옴**(렉시컬 = 단어 실제 등장 필요. 예 "갤럭시 A" 영상인데 청크가 "A"만 쓰면 너무 짧아 미채택 — 이게 정상, 무관 청크 오염 방지의 대가) ③ 파일명이 일반 토큰뿐(삼성·갤럭시·로고)이라 `PHOTO_STOP`에 걸림 → **구별되는 모델명/키워드를 파일명에 넣어야**(예 `삼성_갤럭시A` X → `갤럭시A33_보급형` 처럼 구별 토큰 추가) ④ 새 코드 미전파(push→pull). 로그 `[photo] <sec> c<i>: <file> dist/gen` + `photos=N장(렉시컬 모델명 매칭)`로 확인.
 - **약한/그리디 매칭(appliance·ti_decrease 류)**: 매처가 0.48 턱걸이로 약한 일러스트를 고르거나(예 "엑시노스"에 appliance), 적합 일러스트가 1개뿐일 때 **앞 청크에서 소진**돼 정작 핵심 청크가 차선을 받음(그리디 per-chunk). 범용 해결 = ① 그 주제 **사진/일러스트 보강**(photo가 0.48을 이기면 대체) ② CLIP content-gate 활성화 ③ `EMBED_MIN_ILLUST` 상향(약한 건 중립으로, 단 중립 반복↑). **특정 이름 하드코딩 ❌.**
@@ -465,6 +470,7 @@
 ---
 
 ## 변경 이력 (이 맵 자체)
+- 2026-06-14: **★ 자막 정밀싱크(B)+오렌지강조 + content-gate 키워드면제 + CLIP 설치 + 한글화룰 (C·E·J단원).** ① B=`chunkUtil` 정밀모드(word_boundary)면 가독바닥 OFF→자막 발화에 정확 비례(`CasualCard`가 `_tts_timing.mode` 읽어 `precise` 전파). ② 자막강조=`CasualCaption` 작성자 `caption_emphasis`만 오렌지·정확매칭·못맞으면 스킵(자동패턴 OFF). ③ 키워드≥2 매칭은 CLIP content-gate 면제(추상 일러 거부 보완, cpt 제외). ④ CLIP(jina-clip) 설치완료(text_model snapshot_download로 채움) + 임계 0.28→0.24(bat env). ⑤ 기사스펙에 영문기능명→한글구체어 룰(`article_authoring_spec.md`). 검증: 023(한글) 주제비주얼 8개·smartphone 2·전섹션 정밀싱크 vs 022(영문) 2개·19중립 = 한글화 효과 입증. **콘텐츠 한계(영문/추상)는 임계/일러 아니라 기사집필 레버.**
 - 2026-06-13: **★ 매칭 망가짐의 진짜 뿌리 = `codex_unique_illustration_guard` 버그(검증완료).** 가드가 semantic_match 뒤에 중복 중립을 유니크화하며 cpt·무관 그림을 되살림 → cpt·blocklist 제외 + 중립 반복 허용으로 수정. 재렌더 224859에서 cpt=0 확인. 포토 "일러스트보다 우수할 때만" 규칙(`photo ≥ best_ill`)도 추가. 남은 appliance/ti_decrease는 매처 약한픽/그리디 = 에셋 보강으로(함정 박음).
 - 2026-06-13: **E단원에 실사 포토 라이브러리 박음 (사장님 설계).** `assets/photos/`(한글 파일명=라벨) → 매칭 1순위(`≥PHOTO_MIN` 기본 0.80, env) → 일러스트 → 생성요청. `build_photo_index`+`best_photo` 게이트, `ImageVisual`로 렌더. 텍스트 엔진만 써 CLIP 미설치여도 작동. git 비추적(렌더 PC에 직접). 함정에 "안 뜨는 3원인" 박음. **검증 대기**(사진 넣고 0.6으로 재렌더).
 - 2026-06-14: **★ 매처 main 소실/복구 + 중립 로테이션 + 원자적쓰기 (검증 214114).** Edit 도구가 큰 파일(>~31KB) 꼬리를 캡해 되쓰며 `codex_semantic_visual_match.py`의 main()을 날림 → 매처가 죽어 022 사진/매칭 0(에러 없음). git 이력서 main 있는 커밋(6144576)으로 splice 복구(본문=내 수정 보존). `pick_neutral` 라운드로빈(smartphone 11→5종×3), `write_json` 원자적. **규칙: 대형 .py/.md는 Edit 금지·bash-python만.** 함정 E단원에 박음.

@@ -22,12 +22,21 @@ for /f "tokens=1-4 delims=|" %%a in ('python scripts\promo_get.py') do (
   copy /Y "!FILE!" "public\shorts_script.json" >nul
   python scripts\promo_merge_brand.py
   python scripts\promo_pick_music.py !PRESET! !NN!
-  call npx remotion render src/index.ts !COMPID! "out\promo\!NN!_!SLUG!_!PRESET!.mp4" --concurrency=2 --pixel-format yuv420p --crf 18
+  call :uniq "out\promo\!NN!_!SLUG!_!PRESET!"
+  call npx remotion render src/index.ts !COMPID! "!OUTFILE!" --concurrency=2 --pixel-format yuv420p --crf 18
+  python scripts\promo_manifest.py "!OUTFILE!" !NN! !SLUG! !PRESET!
   set /a CNT+=1
 )
 echo.
 echo  done. rendered !CNT! -^> out\promo\
 goto :hold
+:uniq
+set "BASE=%~1"
+set "OUTFILE=!BASE!.mp4"
+set /a K=1
+:uniqloop
+if exist "!OUTFILE!" ( set "OUTFILE=!BASE!_!K!.mp4" & set /a K+=1 & goto uniqloop )
+exit /b
 :hold
 endlocal
 pause

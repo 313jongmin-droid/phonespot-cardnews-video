@@ -359,6 +359,21 @@
       ],
       "note": "자동 발굴 개념: 모델"
     },
+    "cpt_392743cd": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "너무",
+        "작으면",
+        "글씨",
+        "보이고",
+        "크면"
+      ],
+      "note": "자동 발굴 개념: 너무 작으면",
+      "available": true
+    },
     "cpt_4729c912": {
       "tags": [
         "auto",
@@ -1503,6 +1518,36 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "parents_chat_c1d70b74": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "부모님",
+        "카톡",
+        "유튜브",
+        "충분히",
+        "쓰시려면"
+      ],
+      "note": "자동 발굴 개념: 부모님 카톡",
+      "available": true
+    },
+    "parents_vision_231bf461": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "부모님",
+        "시력",
+        "크기",
+        "가장",
+        "맞는"
+      ],
+      "note": "자동 발굴 개념: 부모님 시력",
+      "available": true
+    },
     "password": {
       "tags": [
         "security",
@@ -1577,6 +1622,21 @@
       ],
       "note": "Reusable editorial illustration.",
       "available": false
+    },
+    "post_parents_phone_5e1d6c3b": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "어버이날",
+        "지나고",
+        "효도폰",
+        "문의",
+        "끊이지"
+      ],
+      "note": "자동 발굴 개념: 어버이날 지나고",
+      "available": true
     },
     "price_hike": {
       "tags": [
@@ -1787,6 +1847,19 @@
         "방어"
       ],
       "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "size_guide_afe009df": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "크기",
+        "에서",
+        "인치"
+      ],
+      "note": "자동 발굴 개념: 크기 에서",
       "available": true
     },
     "slim_body_e2dca0be": {
@@ -2021,75 +2094,7 @@
       ],
       "note": "자동 발굴 개념: 일요일 주간",
       "available": true
-    },
-    "post_parents_phone_5e1d6c3b": {
-      "keywords": [
-        "어버이날",
-        "지나고",
-        "효도폰",
-        "문의",
-        "끊이지"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 어버이날 지나고",
-      "available": false
-    },
-    "parents_chat_c1d70b74": {
-      "keywords": [
-        "부모님",
-        "카톡",
-        "유튜브",
-        "충분히",
-        "쓰시려면"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 부모님 카톡",
-      "available": false
-    },
-    "parents_vision_231bf461": {
-      "keywords": [
-        "부모님",
-        "시력",
-        "크기",
-        "가장",
-        "맞는"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 부모님 시력",
-      "available": false
-    },
-    "size_guide_afe009df": {
-      "keywords": [
-        "크기",
-        "에서",
-        "인치"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 크기 에서",
-      "available": false
-    },
-    "cpt_392743cd": {
-      "keywords": [
-        "너무",
-        "작으면",
-        "글씨",
-        "보이고",
-        "크면"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 너무 작으면",
-      "available": false
     }
   },
-  "updated_at": "2026-06-15T01:13:34"
+  "updated_at": "2026-06-15T01:28:37"
 }

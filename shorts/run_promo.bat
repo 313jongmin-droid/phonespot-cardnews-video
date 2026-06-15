@@ -31,11 +31,16 @@ copy /Y "%FILE%" "public\shorts_script.json" >nul || ( echo [ERROR] copy failed 
 python scripts\promo_merge_brand.py
 python scripts\promo_pick_music.py %PRESET% %NN%
 if not exist out\promo mkdir out\promo
-set "OUTFILE=out\promo\%NN%_%SLUG%_%PRESET%.mp4"
-echo  rendering -^> %OUTFILE%
-call npx remotion render src/index.ts %COMPID% "%OUTFILE%" --concurrency=2 --pixel-format yuv420p --crf 18 || ( echo [ERROR] render failed & goto :hold )
+set "BASE=out\promo\%NN%_%SLUG%_%PRESET%"
+set "OUTFILE=%BASE%.mp4"
+set /a K=1
+:nextname
+if exist "!OUTFILE!" ( set "OUTFILE=!BASE!_!K!.mp4" & set /a K+=1 & goto nextname )
+echo  rendering -^> !OUTFILE!
+call npx remotion render src/index.ts %COMPID% "!OUTFILE!" --concurrency=2 --pixel-format yuv420p --crf 18 || ( echo [ERROR] render failed & goto :hold )
+python scripts\promo_manifest.py "!OUTFILE!" %NN% %SLUG% %PRESET%
 echo.
-echo  DONE: %OUTFILE%
+echo  DONE: !OUTFILE!
 goto :hold
 :hold
 endlocal

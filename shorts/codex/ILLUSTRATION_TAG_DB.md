@@ -5,10 +5,10 @@
 
 | illustration | tags | use count | last slug |
 |---|---|---:|---|
-| `aluminum_label` | materials, hardware, library | 4 | 023_qa_senior_phone_recommendation |
+| `aluminum_label` | materials, hardware, library | 3 | 021_news_galaxy_flip8_exynos |
 | `android_user_a91efa70` | auto | 0 |  |
-| `appliance` | hardware, device, library | 4 | 023_qa_senior_phone_recommendation |
-| `battery_charge_range` | battery, charging, tips, library | 3 | 023_qa_senior_phone_recommendation |
+| `appliance` | hardware, device, library | 3 | 021_news_galaxy_flip8_exynos |
+| `battery_charge_range` | battery, charging, tips, library | 2 | 021_news_galaxy_flip8_exynos |
 | `battery_health_check` | battery, health, tips | 0 |  |
 | `battery_overheat` | battery, heat, warning, library | 1 | 017_tip_summer_travel_phone_5min |
 | `biometric` | security, privacy, authentication, library | 3 | 020_qa_apple_pay_korea_card |
@@ -33,6 +33,7 @@
 | `cpt_1a196d6d` | auto | 0 |  |
 | `cpt_313e9e00` | auto | 0 |  |
 | `cpt_3317f8c6` | auto | 0 |  |
+| `cpt_392743cd` | auto, library | 1 | 023_qa_senior_phone_recommendation |
 | `cpt_4729c912` | auto, library | 3 | 019_news_samsung_thank_you_festival |
 | `cpt_496029c6` | auto, library | 0 |  |
 | `cpt_55c40fb8` | auto | 0 |  |
@@ -77,8 +78,8 @@
 | `cpt_fd9edf65` | auto, library | 3 | 020_qa_apple_pay_korea_card |
 | `cut_theft_43505b9f` | auto | 0 |  |
 | `deal_fd9edf65` | library | 0 |  |
-| `device_data_transfer` | device, migration, backup, tips, library | 5 | 022_tip_galaxy_battery_save_5 |
-| `device_os_requirement` | library | 1 | 022_tip_galaxy_battery_save_5 |
+| `device_data_transfer` | device, migration, backup, tips, library | 6 | 023_qa_senior_phone_recommendation |
+| `device_os_requirement` | library | 2 | 023_qa_senior_phone_recommendation |
 | `device_price_rise` | price, increase, device | 0 |  |
 | `display_maintenance_c1ff39c1` | auto, library | 0 |  |
 | `display_ratio_change` | library | 0 |  |
@@ -122,12 +123,15 @@
 | `official_site_check` | security, official-site, check | 0 |  |
 | `ondevice_ai_chip` | ai, hardware, privacy | 0 |  |
 | `optimized_charging` | battery, charging, tips, library | 1 | 021_news_galaxy_flip8_exynos |
+| `parents_chat_c1d70b74` | auto, library | 1 | 023_qa_senior_phone_recommendation |
+| `parents_vision_231bf461` | auto, library | 1 | 023_qa_senior_phone_recommendation |
 | `password` | security, privacy, authentication, library | 0 |  |
 | `personal_data_63b96014` | auto, library | 1 | 022_tip_galaxy_battery_save_5 |
 | `personal_data_leak` | security, privacy, leak | 0 |  |
-| `phone_settings_toggle` | library | 7 | 022_tip_galaxy_battery_save_5 |
-| `phone_setup_ready` | library | 5 | 022_tip_galaxy_battery_save_5 |
+| `phone_settings_toggle` | library | 8 | 023_qa_senior_phone_recommendation |
+| `phone_setup_ready` | library | 6 | 023_qa_senior_phone_recommendation |
 | `plan_price_tier_compare` | price, plan, compare, telecom | 0 |  |
+| `post_parents_phone_5e1d6c3b` | auto, library | 1 | 023_qa_senior_phone_recommendation |
 | `price_hike` | price, increase, library | 0 |  |
 | `price_shock_7abfd08b` | auto | 0 |  |
 | `prohibit` | security, warning, restriction, library | 3 | 018_scam_wedding_invite_smishing |
@@ -145,6 +149,7 @@
 | `settings_screen_ab73a8fa` | auto | 0 |  |
 | `settings_steps` | library | 0 |  |
 | `shield` | security, privacy, protection, library | 11 | 020_qa_apple_pay_korea_card |
+| `size_guide_afe009df` | auto, library | 1 | 023_qa_senior_phone_recommendation |
 | `slim_body_e2dca0be` | auto, library | 0 |  |
 | `smart_482e7bdd` | auto, library | 0 |  |
 | `smartphone` | device, purchase, cta, library | 14 | 023_qa_senior_phone_recommendation |
@@ -167,7 +172,7 @@
 
 ## Recent videos
 
-- `023_qa_senior_phone_recommendation`: smartphone, aluminum_label, appliance, battery_charge_range
+- `023_qa_senior_phone_recommendation`: post_parents_phone_5e1d6c3b, parents_chat_c1d70b74, parents_vision_231bf461, size_guide_afe009df, cpt_392743cd, phone_setup_ready, phone_settings_toggle, device_os_requirement, device_data_transfer, smartphone
 - `022_tip_galaxy_battery_save_5`: smartphone, phone_setup_ready, phone_settings_toggle, device_os_requirement, device_data_transfer, personal_data_63b96014, lock_screen_only_e80c4860
 - `021_news_galaxy_flip8_exynos`: unpack_867ebe81, mounted_body_496029c6, cpt_67a38371, mid_release_98cab19a, official_sale_9dc82f05, device_data_transfer, smartphone, appliance, camera_battery_ecd040c7, ti_decrease, aluminum_label, battery_charge_range, optimized_charging
 - `020_qa_apple_pay_korea_card`: smartphone, newspaper, microphone, shield, meeting_room, forecast, cpt_f59129df, cpt_a1caaea6, biometric, cpt_83fa1e9f, cpt_6a2e9678, device_data_transfer, nfc_pay, cpt_fd9edf65, gift_voucher

@@ -14,7 +14,7 @@ def getv(s, key):
 def realval(v):
     return None if (v is None or v == "" or v.startswith("(")) else v
 def build(md, nn, label):
-    cur = None; meta = {"preset": "showcase", "title": label}; opening = {}; secs = {}; order = []
+    cur = None; meta = {"preset": "showcase", "title": label, "hook_pattern": ""}; opening = {}; secs = {}; order = []
     for raw in open(md, encoding="utf-8"):
         s = raw.strip()
         if s.startswith("## "):
@@ -26,6 +26,7 @@ def build(md, nn, label):
         if cur is None:
             v = getv(c, "preset");  meta["preset"] = v if v else meta["preset"]
             v = getv(c, "title");   meta["title"] = v if v else meta["title"]
+            v = getv(c, "후킹");    meta["hook_pattern"] = v if realval(v) else meta["hook_pattern"]
         elif cur == "오프닝":
             for k in ("line1", "line2"):
                 v = getv(c, k);  opening[k] = v if v is not None else opening.get(k, "")
@@ -51,7 +52,7 @@ def build(md, nn, label):
     cta = secs.get("CTA", {})
     cta.setdefault("kakao", ""); cta.setdefault("litt", ""); cta.setdefault("location", "")
     d = {"slug": f"{nn}_{label}", "title_short": meta["title"], "video_title": meta["title"],
-         "preset": meta["preset"], "channel_name": "", "channel_tagline": "", "publication_date": "2026.05.29",
+         "preset": meta["preset"], "hook_pattern": meta.get("hook_pattern",""), "channel_name": "", "channel_tagline": "", "publication_date": "2026.05.29",
          "opening": {"line1": opening.get("line1", ""), "line2": opening.get("line2", "")},
          "hook": secs.get("훅", {}), "facts": facts, "cta": cta}
     for k in ("style", "sfx"):

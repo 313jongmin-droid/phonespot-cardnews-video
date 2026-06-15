@@ -1,98 +1,167 @@
 {
-  "slug": "022_tip_galaxy_battery_save_5",
-  "engine": "fallback-mtime",
-  "generated_at": 1781425794.427913,
+  "slug": "023_qa_senior_phone_recommendation",
+  "engine": "image-embedding",
+  "generated_at": 1781454489.8913438,
   "requests": [
     {
-      "filename": "personal_data_63b96014.png",
-      "variant": "personal_data_63b96014",
-      "section": "fact_2",
+      "filename": "post_parents_phone_5e1d6c3b.png",
+      "variant": "post_parents_phone_5e1d6c3b",
+      "section": "hook",
+      "chunk_index": 0,
+      "concept_label": "어버이날 지나고",
+      "optional": true,
+      "concept_text": "어버이날 지나고 post parents phone 5e1d6c3b 어버이날 지나고 효도폰 문의 끊이지 auto concept 어버이날 지나고도 효도폰 문의는 끊이지 않습니다"
+    },
+    {
+      "filename": "parents_chat_c1d70b74.png",
+      "variant": "parents_chat_c1d70b74",
+      "section": "hook",
       "chunk_index": 1,
-      "concept_label": "Personal Data",
+      "concept_label": "부모님 카톡",
       "optional": true,
-      "concept_text": "Personal Data personal data 63b96014 Personal Data auto concept 기능 Personal Data"
+      "concept_text": "부모님 카톡 parents chat c1d70b74 부모님 카톡 유튜브 충분히 쓰시려면 auto concept 부모님이 카톡·유튜브 충분히 쓰시려면 어떤 폰이 좋을까요?"
     },
     {
-      "filename": "smart_482e7bdd.png",
-      "variant": "smart_482e7bdd",
-      "section": "fact_2",
+      "filename": "parents_vision_231bf461.png",
+      "variant": "parents_vision_231bf461",
+      "section": "fact_1",
+      "chunk_index": 0,
+      "concept_label": "부모님 시력",
+      "optional": true,
+      "concept_text": "부모님 시력 parents vision 231bf461 부모님 시력 크기 가장 맞는 auto concept 부모님 시력과 손 크기에 가장 잘 맞는 화면"
+    },
+    {
+      "filename": "size_guide_afe009df.png",
+      "variant": "size_guide_afe009df",
+      "section": "fact_1",
+      "chunk_index": 1,
+      "concept_label": "크기 에서",
+      "optional": true,
+      "concept_text": "크기 에서 size guide afe009df 크기 에서 인치 auto concept 크기는 5.5에서 6.5인치 사이입니다"
+    },
+    {
+      "filename": "cpt_392743cd.png",
+      "variant": "cpt_392743cd",
+      "section": "fact_1",
       "chunk_index": 2,
-      "concept_label": "Intelligence",
+      "concept_label": "너무 작으면",
       "optional": true,
-      "concept_text": "Intelligence smart 482e7bdd Intelligence auto concept Intelligence"
-    },
-    {
-      "filename": "series_06379766.png",
-      "variant": "series_06379766",
-      "section": "fact_2",
-      "chunk_index": 5,
-      "concept_label": "시리즈",
-      "optional": true,
-      "concept_text": "시리즈 series 06379766 시리즈 auto concept S26 시리즈부터 우선 적용됩니다"
-    },
-    {
-      "filename": "lock_screen_only_e80c4860.png",
-      "variant": "lock_screen_only_e80c4860",
-      "section": "fact_3",
-      "chunk_index": 2,
-      "concept_label": "잠금 화면만",
-      "optional": true,
-      "concept_text": "잠금 화면만 lock screen only e80c4860 잠금 화면만 충분하면 끄세요 auto concept 잠금 화면만으로 충분하면 끄세요"
-    },
-    {
-      "filename": "cpt_7ea57558.png",
-      "variant": "cpt_7ea57558",
-      "section": "fact_3",
-      "chunk_index": 3,
-      "concept_label": "Play 스토어",
-      "optional": true,
-      "concept_text": "Play 스토어 cpt 7ea57558 Play 스토어 자동 업데이트 auto concept Play 스토어 자동 업데이트도 Wi-Fi"
+      "concept_text": "너무 작으면 cpt 392743cd 너무 작으면 글씨 보이고 크면 auto concept 너무 작으면 글씨 잘 안 보이고 너무 크면"
     }
   ],
   "assignments": [
     {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 14일 오후 05_29_22 (1).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 14일 오후 05_29_22 (1).png",
-      "proposed_filename": "personal_data_63b96014.png",
-      "confidence": null,
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 15일 오전 01_19_55 (1).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 15일 오전 01_19_55 (1).png",
+      "proposed_filename": "parents_vision_231bf461.png",
+      "confidence": 0.0356,
       "exact_name": false,
-      "alternatives": [],
+      "alternatives": [
+        {
+          "filename": "parents_chat_c1d70b74.png",
+          "score": 0.1073
+        },
+        {
+          "filename": "post_parents_phone_5e1d6c3b.png",
+          "score": 0.0981
+        },
+        {
+          "filename": "parents_vision_231bf461.png",
+          "score": 0.0356
+        }
+      ],
       "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 14일 오후 05_29_23 (2).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 14일 오후 05_29_23 (2).png",
-      "proposed_filename": "smart_482e7bdd.png",
-      "confidence": null,
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 15일 오전 01_19_55 (2).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 15일 오전 01_19_55 (2).png",
+      "proposed_filename": "parents_chat_c1d70b74.png",
+      "confidence": 0.1776,
       "exact_name": false,
-      "alternatives": [],
+      "alternatives": [
+        {
+          "filename": "parents_chat_c1d70b74.png",
+          "score": 0.1776
+        },
+        {
+          "filename": "post_parents_phone_5e1d6c3b.png",
+          "score": 0.1735
+        },
+        {
+          "filename": "parents_vision_231bf461.png",
+          "score": 0.1039
+        }
+      ],
       "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 14일 오후 05_29_25 (4).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 14일 오후 05_29_25 (4).png",
-      "proposed_filename": "series_06379766.png",
-      "confidence": null,
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 15일 오전 01_19_56 (3).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 15일 오전 01_19_56 (3).png",
+      "proposed_filename": "post_parents_phone_5e1d6c3b.png",
+      "confidence": 0.1041,
       "exact_name": false,
-      "alternatives": [],
+      "alternatives": [
+        {
+          "filename": "post_parents_phone_5e1d6c3b.png",
+          "score": 0.1041
+        },
+        {
+          "filename": "parents_chat_c1d70b74.png",
+          "score": 0.0979
+        },
+        {
+          "filename": "parents_vision_231bf461.png",
+          "score": 0.0431
+        }
+      ],
       "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 14일 오후 05_29_23 (3).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 14일 오후 05_29_23 (3).png",
-      "proposed_filename": "lock_screen_only_e80c4860.png",
-      "confidence": null,
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 15일 오전 01_19_56 (4).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 15일 오전 01_19_56 (4).png",
+      "proposed_filename": "size_guide_afe009df.png",
+      "confidence": 0.0788,
       "exact_name": false,
-      "alternatives": [],
-      "dedup": null
+      "alternatives": [
+        {
+          "filename": "post_parents_phone_5e1d6c3b.png",
+          "score": 0.1007
+        },
+        {
+          "filename": "parents_chat_c1d70b74.png",
+          "score": 0.0819
+        },
+        {
+          "filename": "size_guide_afe009df.png",
+          "score": 0.0788
+        }
+      ],
+      "dedup": {
+        "variant": "series_06379766",
+        "score": 0.9057,
+        "skip": false
+      }
     },
     {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 14일 오후 05_29_26 (5).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 14일 오후 05_29_26 (5).png",
-      "proposed_filename": "cpt_7ea57558.png",
-      "confidence": null,
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 15일 오전 01_19_57 (5).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 15일 오전 01_19_57 (5).png",
+      "proposed_filename": "cpt_392743cd.png",
+      "confidence": -0.015,
       "exact_name": false,
-      "alternatives": [],
+      "alternatives": [
+        {
+          "filename": "post_parents_phone_5e1d6c3b.png",
+          "score": 0.0727
+        },
+        {
+          "filename": "parents_chat_c1d70b74.png",
+          "score": 0.0622
+        },
+        {
+          "filename": "size_guide_afe009df.png",
+          "score": 0.0121
+        }
+      ],
       "dedup": null
     }
   ],

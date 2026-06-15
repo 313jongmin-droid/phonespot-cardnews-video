@@ -3,7 +3,7 @@ pat = re.compile(r"^(\d{3})_(.+)\.json$")
 def to_md(f):
     d = json.load(open(f, encoding="utf-8"))
     m = pat.match(os.path.basename(f)); nn, label = m.group(1), m.group(2)
-    L = [f"# {nn} {label}", f"- preset: {d.get('preset','showcase')}", f"- title: {d.get('title_short','')}", "",
+    L = [f"# {nn} {label}", f"- preset: {d.get('preset','showcase')}", f"- title: {d.get('title_short','')}", f"- 후킹: {d.get('hook_pattern','(미지정)')}", "",
          "## 오프닝", f"- line1: {d['opening']['line1']}", f"- line2: {d['opening']['line2']}",
          f"- 스타일: {d['opening'].get('style','(프리셋 기본)')}", f"- 효과음: {d['opening'].get('sfx','(자동)')}"]
     def sec(name, s, iscta=False):

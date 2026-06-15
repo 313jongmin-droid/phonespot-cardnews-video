@@ -2,24 +2,27 @@ import React from "react";
 import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 
 export const FONT = "Pretendard, sans-serif";
+
+// ★ 3색 체계 (세련): 검정 바탕 + 흰색 주체 + 오렌지 강조(10%만).
+// COL 키는 기존 컴포넌트 호환 위해 유지하되 값은 3색으로 수렴 — 보조색(RED/YELLOW→오렌지, CREAM→화이트, BLUE/DIM→중립그레이).
 export const COL = {
-  WHITE: "#F4F1EA",   // 따뜻한 오프화이트
-  INK: "#0E1116",     // 딥 차콜
-  ORANGE: "#E0670F",  // 리파인드 앰버(브랜드)
-  BLUE: "#9FB7C2",    // 스틸 톤(보조)
-  RED: "#C2603F",     // 뮤트 테라코타
-  YELLOW: "#E9C46A",  // 샴페인 골드
-  DIM: "#8A8F99",     // 뮤트 그레이
-  CREAM: "#EAD9C4",   // 샌드 베이지
+  WHITE: "#FFFFFF",   // 주체(제목·본문)
+  INK: "#0E0E10",     // 바탕(딥 블랙, 순흑보다 살짝 들어 밴딩↓)
+  ORANGE: "#FF5A1F",  // 단일 강조(밝은 오렌지)
+  BLUE: "#8C8C92",    // (수렴) 중립 그레이
+  RED: "#FF5A1F",     // (수렴) 오렌지
+  YELLOW: "#FF5A1F",  // (수렴) 오렌지
+  DIM: "#8C8C92",     // 보조 텍스트용 중립 그레이(검정/흰색 사이 톤)
+  CREAM: "#FFFFFF",   // (수렴) 화이트
 };
 
-// 섹션 순서(hook, fact1, fact2, fact3, cta)별 컬러 변주
+// 섹션 순서(hook, fact1, fact2, fact3, cta)별 변주 — 3색 체계라 바탕=검정 고정, 강조만 오렌지.
 export const VARIANTS: { bg: string; fg: string; accent: string }[] = [
-  { bg: "#14181F", fg: COL.WHITE, accent: COL.ORANGE },   // hook  딥 그래파이트
-  { bg: "#1B1417", fg: COL.WHITE, accent: COL.RED },       // 문제  딥 와인차콜 + 테라코타
-  { bg: "#0F1F26", fg: COL.WHITE, accent: COL.YELLOW },    // 해결  딥 틸 + 골드
-  { bg: "#14181F", fg: COL.WHITE, accent: COL.ORANGE },   // 신뢰
-  { bg: "#9A3E0C", fg: COL.WHITE, accent: COL.CREAM },     // CTA  딥 앰버
+  { bg: COL.INK, fg: COL.WHITE, accent: COL.ORANGE },
+  { bg: COL.INK, fg: COL.WHITE, accent: COL.ORANGE },
+  { bg: COL.INK, fg: COL.WHITE, accent: COL.ORANGE },
+  { bg: COL.INK, fg: COL.WHITE, accent: COL.ORANGE },
+  { bg: COL.INK, fg: COL.WHITE, accent: COL.ORANGE },
 ];
 export const variantFor = (i: number) => VARIANTS[Math.min(i, VARIANTS.length - 1)];
 
@@ -57,7 +60,7 @@ export interface PromoStyle {
   Outro: React.FC<{ durFrames: number }>;
 }
 
-// 두 스타일이 공유하는 CTA 블록 (브랜드 정보 — 결과는 동일하게 마무리)
+// 공유 CTA 블록 — 검정 바탕 + 흰색 주체 + 오렌지 강조(핵심 단어·litt 버튼만).
 export const CtaBlock: React.FC<{ data: any; ctaInfo?: CtaInfo }> = ({ data, ctaInfo }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -65,10 +68,10 @@ export const CtaBlock: React.FC<{ data: any; ctaInfo?: CtaInfo }> = ({ data, cta
   const a = (d: number) => interpolate(spring({ frame: frame - d, fps, config: { damping: 200 } }), [0, 1], [0, 1]);
   return (
     <AbsoluteFill
-      style={{ backgroundColor: COL.ORANGE, fontFamily: FONT, justifyContent: "center", alignItems: "center" }}
+      style={{ backgroundColor: COL.INK, fontFamily: FONT, justifyContent: "center", alignItems: "center" }}
     >
-      <div style={{ fontSize: 72, fontWeight: 700, color: COL.CREAM, opacity: a(0) }}>{head[0] ?? "휴대폰도 이제"}</div>
-      <div style={{ fontSize: 190, fontWeight: 900, color: COL.WHITE, opacity: a(6), marginBottom: 40 }}>
+      <div style={{ fontSize: 72, fontWeight: 700, color: COL.DIM, opacity: a(0) }}>{head[0] ?? "휴대폰도 이제"}</div>
+      <div style={{ fontSize: 190, fontWeight: 900, color: COL.ORANGE, opacity: a(6), marginBottom: 40 }}>
         {head[1] ?? "정찰제"}
       </div>
       <div style={{ fontSize: 92, fontWeight: 900, color: COL.WHITE, letterSpacing: 2, opacity: a(16) }}>폰스팟</div>
@@ -82,8 +85,8 @@ export const CtaBlock: React.FC<{ data: any; ctaInfo?: CtaInfo }> = ({ data, cta
           style={{
             fontSize: 52,
             fontWeight: 900,
-            color: COL.ORANGE,
-            background: COL.WHITE,
+            color: COL.WHITE,
+            background: COL.ORANGE,
             borderRadius: 60,
             padding: "22px 56px",
             marginTop: 26,
@@ -94,7 +97,7 @@ export const CtaBlock: React.FC<{ data: any; ctaInfo?: CtaInfo }> = ({ data, cta
         </div>
       ) : null}
       {ctaInfo?.location ? (
-        <div style={{ fontSize: 40, fontWeight: 700, color: COL.CREAM, marginTop: 22, opacity: a(30) }}>
+        <div style={{ fontSize: 40, fontWeight: 700, color: COL.DIM, marginTop: 22, opacity: a(30) }}>
           {ctaInfo.location}
         </div>
       ) : null}
@@ -102,7 +105,7 @@ export const CtaBlock: React.FC<{ data: any; ctaInfo?: CtaInfo }> = ({ data, cta
   );
 };
 
-// ---- 14종 스타일이 공유하는 추가 헬퍼 ----
+// ---- 스타일 공용 헬퍼 ----
 export const beatAt = (frame: number, durFrames: number, count: number) => {
   const n = Math.max(1, count);
   const beatDur = durFrames / n;
@@ -122,8 +125,10 @@ export const BasicOpening: React.FC<{ line1: string; line2: string; durFrames: n
   );
 };
 
+// 아웃트로 — 검정 바탕 + 흰색 로고 + 오렌지 언더라인(강조 1점).
 export const BasicOutro: React.FC<{ durFrames: number }> = () => (
-  <AbsoluteFill style={{ backgroundColor: COL.ORANGE, fontFamily: FONT, justifyContent: "center", alignItems: "center" }}>
+  <AbsoluteFill style={{ backgroundColor: COL.INK, fontFamily: FONT, justifyContent: "center", alignItems: "center", gap: 28 }}>
     <div style={{ fontSize: 150, fontWeight: 900, color: COL.WHITE, letterSpacing: 3 }}>폰스팟</div>
+    <div style={{ width: 120, height: 12, borderRadius: 6, backgroundColor: COL.ORANGE }} />
   </AbsoluteFill>
 );

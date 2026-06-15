@@ -7,9 +7,8 @@ const Scene: React.FC<SceneProps> = ({ data, variant, isCta, ctaInfo }) => {
   const { fps } = useVideoConfig();
   if (isCta) return <CtaBlock data={data} ctaInfo={ctaInfo} />;
   const c = chunksOf(data);
-  const bad = variant.bg === "#1B1417";
-  const mark = bad ? "X" : "✓";
-  const mc = bad ? COL.RED : "#4FA672";
+  const mark = "✓"; // ✓
+  const mc = COL.ORANGE;
   return (
     <AbsoluteFill style={{ backgroundColor: variant.bg, fontFamily: FONT, justifyContent: "center", padding: "0 110px" }}>
       {c.map((ln, i) => {

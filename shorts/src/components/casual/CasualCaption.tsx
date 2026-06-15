@@ -1,6 +1,6 @@
 import React from "react";
-import { useCurrentFrame } from "remotion";
-import { chunkIndexFromList, formatCaptionLines, repairListChunkBoundaries } from "./chunkUtil";
+import { interpolate, useCurrentFrame } from "remotion";
+import { chunkIndexFromList, formatCaptionLines, getChunkWindows, repairListChunkBoundaries } from "./chunkUtil";
 
 interface Props {
   chunks: string[];
@@ -141,6 +141,12 @@ export const CasualCaption: React.FC<Props> = ({
   const list = repairListChunkBoundaries(chunks && chunks.length ? chunks : [""]);
   const repairedDisplayChunks = repairListChunkBoundaries(displayChunks.length ? displayChunks : list);
   const idx = chunkIndexFromList(list, frame, durFrames, timingWeights, precise);
+  // 자막 페이드인: 청크 바뀔 때 살짝 떠오르며 나타남(하드 스위치 완화). 비주얼 cardEnter와 결 맞춤.
+  const _windows = getChunkWindows(list, durFrames, timingWeights, precise);
+  const _winStart = _windows[Math.min(idx, _windows.length - 1)]?.start ?? 0;
+  const _since = frame - _winStart;
+  const fadeIn = interpolate(_since, [0, 4], [0.45, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const riseIn = interpolate(_since, [0, 5], [9, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const current = list[idx] || "";
   const displaySource = repairedDisplayChunks[idx] || current;
   const displayText = formatCaptionLines(displaySource, 18, 3);
@@ -173,6 +179,9 @@ export const CasualCaption: React.FC<Props> = ({
           overflowWrap: "normal",
           lineBreak: "strict",
           maxWidth: 960,
+          opacity: fadeIn,
+          transform: `translateY(${riseIn}px)`,
+          willChange: "opacity, transform",
         }}
       >
         {segments.map((seg, i) => (

@@ -14,8 +14,8 @@ const FALLBACK_SEC = 4.0;
 const INTRO_SEC = 0;
 const OPENING_SEC = 2.0;
 const OUTRO_SEC = 3.2;
-const PROMO_SEC = 2.4;   // 섹션 기본 길이(초) — 나레이션 없으니 고정
-const PROMO_CTA = 3.0;   // CTA는 조금 길게
+const PROMO_SEC = 2.2;   // 섹션 기본 길이(초) — 나레이션 없으니 고정 (살짝 빠르게)
+const PROMO_CTA = 2.8;   // CTA는 조금 길게
 
 const audioPath = (key: string) => `audio/${key}.mp3`;
 const tryDuration = async (key: string): Promise<number> => {

@@ -16,8 +16,8 @@ const Scene: React.FC<SceneProps> = ({ data, durFrames, variant, isCta, ctaInfo 
   return (
     <AbsoluteFill style={{ backgroundColor: variant.bg, fontFamily: FONT, justifyContent: "center", alignItems: "center", padding: 90 }}>
       <div style={{ position: "relative", opacity: a }}>
-        <div style={{ ...base, position: "absolute", inset: 0, transform: `translate(${j}px,0)`, color: "#E0670F", mixBlendMode: "screen" }}>{txt}</div>
-        <div style={{ ...base, position: "absolute", inset: 0, transform: `translate(${-j2}px,0)`, color: "#7FB5C2", mixBlendMode: "screen" }}>{txt}</div>
+        <div style={{ ...base, position: "absolute", inset: 0, transform: `translate(${j}px,0)`, color: COL.ORANGE, mixBlendMode: "screen" }}>{txt}</div>
+        <div style={{ ...base, position: "absolute", inset: 0, transform: `translate(${-j2}px,0)`, color: COL.WHITE, mixBlendMode: "screen" }}>{txt}</div>
         <div style={{ ...base, position: "relative", color: variant.fg }}>{txt}</div>
       </div>
     </AbsoluteFill>

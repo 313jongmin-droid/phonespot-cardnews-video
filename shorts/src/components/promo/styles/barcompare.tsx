@@ -19,8 +19,8 @@ const Scene: React.FC<SceneProps> = ({ data, durFrames, variant, isCta, ctaInfo 
   const w2 = easeOut(clamp((frame - 12) / (durFrames * 0.55))) * 100;
   return (
     <AbsoluteFill style={{ backgroundColor: variant.bg, fontFamily: FONT, justifyContent: "center", padding: "0 110px" }}>
-      <Bar label="조회한 가격" w={w1} col={variant.accent} fg={variant.fg} />
-      <Bar label="개통할 때 가격" w={w2} col="#16A34A" fg={variant.fg} />
+      <Bar label="조회한 가격" w={w1} col={COL.DIM} fg={variant.fg} />
+      <Bar label="개통할 때 가격" w={w2} col={variant.accent} fg={variant.fg} />
       <div style={{ fontSize: 66, fontWeight: 900, color: variant.fg, marginTop: 18, textAlign: "center", opacity: clamp((frame - 32) / 12), wordBreak: "keep-all" }}>{c[c.length - 1]}</div>
     </AbsoluteFill>
   );

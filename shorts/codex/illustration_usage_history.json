@@ -286,17 +286,23 @@
       ]
     },
     "023_qa_senior_phone_recommendation": {
-      "used_at": "2026-06-15T01:13:32",
-      "source": "codex_enhance",
+      "used_at": "2026-06-15T01:29:14",
+      "source": "uploaded_illustrations",
       "illustrations": [
-        "smartphone",
-        "aluminum_label",
-        "appliance",
-        "battery_charge_range"
+        "post_parents_phone_5e1d6c3b",
+        "parents_chat_c1d70b74",
+        "parents_vision_231bf461",
+        "size_guide_afe009df",
+        "cpt_392743cd",
+        "phone_setup_ready",
+        "phone_settings_toggle",
+        "device_os_requirement",
+        "device_data_transfer",
+        "smartphone"
       ]
     }
   },
-  "updated_at": "2026-06-15T01:13:33",
+  "updated_at": "2026-06-15T01:29:15",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -357,7 +363,7 @@
       "variants": []
     },
     "023_qa_senior_phone_recommendation": {
-      "updated_at": "2026-06-15T01:13:33",
+      "updated_at": "2026-06-15T01:29:15",
       "variants": []
     }
   }
