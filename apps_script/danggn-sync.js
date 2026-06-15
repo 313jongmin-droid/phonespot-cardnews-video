@@ -45,7 +45,7 @@ const DANGGN_HEADERS = [
   '날짜', '캠페인명', '광고그룹명',
   '노출', '클릭', '지출',
   'CTR', 'CPC',
-  'GA4세션', '카톡클릭', '전화클릭', '시티마켓',
+  'GA4세션', '카톡클릭', '전화클릭', '시티마켓 클릭', '시티마켓 직접',
   '카톡전환률', '카톡당CPC',
   '문의수', '개통수', '메모'
 ];
@@ -53,6 +53,62 @@ const DANGGN_HEADERS = [
 const DANGGN_UTM_HEADERS = [
   '당근 광고그룹명(한글)', 'utm_campaign(영문)', '첫 발견일', '상태', '메모'
 ];
+
+/**
+ * ★ 1회 실행: 시티마켓 컬럼 분리 마이그레이션 (2026-06-15)
+ *
+ * 옛 구조 (17컬럼): ... L 시티마켓 / M 카톡전환률 / N 카톡당CPC / ...
+ * 새 구조 (18컬럼): ... L 시티마켓 클릭 / M 시티마켓 직접 / N 카톡전환률 / O 카톡당CPC / ...
+ *
+ * 메타_통합 / 네이버_통합 / 당근_통합 3개 시트 자동 마이그레이션:
+ *   - 컬럼 수 점검
+ *   - 시티마켓 컬럼 옆에 새 컬럼 1개 삽입 (기존 데이터 자동 우측 이동)
+ *   - 헤더 갱신
+ *   - idempotent (이미 분리됐으면 스킵)
+ */
+function migrateCitymarketColumns() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ui = SpreadsheetApp.getUi();
+  const results = [];
+
+  // 메타_통합 (19→20컬럼, N열 옆에 O열 삽입)
+  results.push(migrateOneSheet_(ss, '메타_통합', 14, '시티마켓 클릭', '시티마켓 직접', 19, 20));
+
+  // 네이버_통합 (19→20컬럼, N열 옆에 O열 삽입)
+  results.push(migrateOneSheet_(ss, '네이버_통합', 14, '시티마켓 클릭', '시티마켓 직접', 19, 20));
+
+  // 당근_통합 (17→18컬럼, L열 옆에 M열 삽입)
+  results.push(migrateOneSheet_(ss, '당근_통합', 12, '시티마켓 클릭', '시티마켓 직접', 17, 18));
+
+  const msg = '시티마켓 컬럼 분리 마이그레이션 결과:\n\n' + results.join('\n');
+  Logger.log(msg);
+  try { ui.alert(msg); } catch (e) {}
+}
+
+function migrateOneSheet_(ss, sheetName, oldCityColIdx, newColAName, newColBName, oldColCount, newColCount) {
+  const sh = ss.getSheetByName(sheetName);
+  if (!sh) return `❌ ${sheetName}: 시트 없음 (스킵)`;
+
+  const curCols = sh.getLastColumn();
+
+  // 이미 마이그레이션 됨 (새 컬럼 수 이상)
+  if (curCols >= newColCount) {
+    const headers = sh.getRange(1, 1, 1, newColCount).getValues()[0];
+    if (headers[oldCityColIdx - 1] === newColAName && headers[oldCityColIdx] === newColBName) {
+      return `✅ ${sheetName}: 이미 분리됨 (스킵)`;
+    }
+  }
+
+  // 컬럼 삽입 (oldCityColIdx 우측에 1개)
+  sh.insertColumnAfter(oldCityColIdx);
+
+  // 헤더 갱신 = 새 컬럼만
+  sh.getRange(1, oldCityColIdx).setValue(newColAName);
+  sh.getRange(1, oldCityColIdx + 1).setValue(newColBName);
+
+  return `✅ ${sheetName}: ${curCols}→${sh.getLastColumn()}컬럼 (시티마켓 분리 완료)`;
+}
+
 
 /**
  * 1회 실행: 당근_통합 + 당근_UTM_매핑 시트 신설 + 헤더 박음
@@ -199,16 +255,19 @@ function syncDanggnGA4(opts) {
     sheet.getRange(row, 11).setFormula(
       `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"phone_click"),0)`
     );
-    // L 시티마켓 = citymarket_click(리틀리 클릭) + citymarket_arrival(직접 도달, GTM 2026-06-15)
-    // 당근은 시티마켓 직접 유입이라 click 발생 X → arrival로 잡힘
+    // L (12) 시티마켓 클릭 (리틀리 경유, 당근 광고에 리틀리 URL 포함 시)
     sheet.getRange(row, 12).setFormula(
-      `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_click")+SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_arrival"),0)`
+      `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_click"),0)`
+    );
+    // M (13) 시티마켓 직접 (광고→시티마켓 직접 도달, citymarket_arrival, GTM 2026-06-15)
+    sheet.getRange(row, 13).setFormula(
+      `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_arrival"),0)`
     );
 
-    // M 카톡전환률 (=J/I)
-    sheet.getRange(row, 13).setFormula(`=IFERROR(J${row}/I${row},"")`);
-    // N 카톡당CPC (=F/J)
-    sheet.getRange(row, 14).setFormula(`=IFERROR(F${row}/J${row},"")`);
+    // N (14) 카톡전환률 (=J/I)
+    sheet.getRange(row, 14).setFormula(`=IFERROR(J${row}/I${row},"")`);
+    // O (15) 카톡당CPC (=F/J)
+    sheet.getRange(row, 15).setFormula(`=IFERROR(F${row}/J${row},"")`);
 
     updated++;
   }
@@ -286,6 +345,8 @@ function buildDanggnSyncMenu_(ui) {
     .addSeparator()
     .addItem('🆕 시트 신설 / 헤더 갱신', 'createDanggnIntegratedSheet')
     .addItem('🔍 미매핑 광고그룹 보기', 'showUnmappedDanggnAdgroups')
+    .addSeparator()
+    .addItem('🔧 시티마켓 컬럼 분리 마이그레이션 (1회)', 'migrateCitymarketColumns')
     .addSeparator()
     .addItem('⏰ 당근 Daily Trigger 설정 (02:30)', 'setupDanggnTrigger')
     .addItem('🔑 utm_source 값 확인', 'showDanggnUtmSource')

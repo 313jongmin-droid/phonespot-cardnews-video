@@ -269,7 +269,7 @@ function syncMetaCampaignIntegrated(targetDate) {
     sh = ss.insertSheet(SHEET_META_INTEGRATED);
     const headers = ['날짜','캠페인ID','캠페인명','광고그룹ID','광고그룹명',
                      '노출','클릭','지출','CTR','CPC',
-                     'GA4세션','카톡클릭','전화클릭','시티마켓','카톡전환률','카톡당CPC',
+                     'GA4세션','카톡클릭','전화클릭','시티마켓 클릭','시티마켓 직접','카톡전환률','카톡당CPC',
                      '문의수','개통수','메모'];
     sh.getRange(1, 1, 1, headers.length).setValues([headers])
       .setBackground('#1F4E78').setFontColor('#FFFFFF')
@@ -282,8 +282,8 @@ function syncMetaCampaignIntegrated(targetDate) {
     for (let c = 17; c <= 19; c++) sh.setColumnWidth(c, 100);
   } else {
     // 헤더 자동 갱신 (17→19컬럼 마이그레이션)
-    const curHeader = sh.getRange(1, 1, 1, 19).getValues()[0];
-    if (curHeader[3] !== '광고그룹ID' || curHeader[4] !== '광고그룹명') {
+    const curHeader = sh.getRange(1, 1, 1, 20).getValues()[0];
+    if (curHeader[3] !== '광고그룹ID' || curHeader[4] !== '광고그룹명' || curHeader[14] !== '시티마켓 직접') {
       const headers = ['날짜','캠페인ID','캠페인명','광고그룹ID','광고그룹명',
                        '노출','클릭','지출','CTR','CPC',
                        'GA4세션','카톡클릭','전화클릭','시티마켓','카톡전환률','카톡당CPC',
@@ -338,14 +338,20 @@ function syncMetaCampaignIntegrated(targetDate) {
     sh.getRange(r, 13).setFormula(
       `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"phone_click"),0)`
     ).setNumberFormat('#,##0');
-    // 시티마켓 = citymarket_click(리틀리 경유 클릭) + citymarket_arrival(직접 도달, GTM 2026-06-15) 합산
+    // N (14) = 시티마켓 클릭 (리틀리 경유, citymarket_click 이벤트만)
     sh.getRange(r, 14).setFormula(
-      `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_click")+SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_arrival"),0)`
+      `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_click"),0)`
     ).setNumberFormat('#,##0');
+    // O (15) = 시티마켓 직접 (광고→시티마켓 직접 도달, citymarket_arrival 이벤트만, GTM 2026-06-15)
     sh.getRange(r, 15).setFormula(
+      `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_arrival"),0)`
+    ).setNumberFormat('#,##0');
+    // P (16) = 카톡전환률 (L=카톡클릭 / K=세션, 컬럼 위치 그대로)
+    sh.getRange(r, 16).setFormula(
       `=IFERROR(IF(K${r}=0,0,L${r}/K${r}),0)`
     ).setNumberFormat('0.00%');
-    sh.getRange(r, 16).setFormula(
+    // Q (17) = 카톡당CPC (H=지출 / L=카톡클릭)
+    sh.getRange(r, 17).setFormula(
       `=IFERROR(IF(L${r}=0,"-",H${r}/L${r}),"-")`
     ).setNumberFormat('#,##0"원"');
   });

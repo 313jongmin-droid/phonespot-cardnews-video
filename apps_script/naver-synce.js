@@ -367,7 +367,7 @@ function syncNaverIntegrated(targetDate) {
     sh = ss.insertSheet(SHEET_NAVER_INTEGRATED);
     const headers = ['날짜', '캠페인ID', '캠페인명', '광고그룹ID', '광고그룹명',
                      '노출', '클릭', '지출', 'CTR', 'CPC',
-                     'GA4세션', '카톡클릭', '전화클릭', '시티마켓', '카톡전환률', '카톡당CPC',
+                     'GA4세션', '카톡클릭', '전화클릭', '시티마켓 클릭', '시티마켓 직접', '카톡전환률', '카톡당CPC',
                      '문의수', '개통수', '메모'];
     sh.getRange(1, 1, 1, headers.length).setValues([headers])
       .setBackground('#03C75A').setFontColor('#FFFFFF')
@@ -420,14 +420,20 @@ function syncNaverIntegrated(targetDate) {
     sh.getRange(row, 13).setFormula(
       `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"phone_click"),0)`
     ).setNumberFormat('#,##0');
-    // 시티마켓 = citymarket_click + citymarket_arrival 합산 (GTM 2026-06-15)
+    // N (14) = 시티마켓 클릭 (리틀리 경유)
     sh.getRange(row, 14).setFormula(
-      `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_click")+SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_arrival"),0)`
+      `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_click"),0)`
     ).setNumberFormat('#,##0');
+    // O (15) = 시티마켓 직접 (광고→시티마켓 직접 도달, GTM 2026-06-15)
     sh.getRange(row, 15).setFormula(
+      `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_arrival"),0)`
+    ).setNumberFormat('#,##0');
+    // P (16) = 카톡전환률 (위치만 +1)
+    sh.getRange(row, 16).setFormula(
       `=IFERROR(IF(K${row}=0,0,L${row}/K${row}),0)`
     ).setNumberFormat('0.00%');
-    sh.getRange(row, 16).setFormula(
+    // Q (17) = 카톡당CPC (위치만 +1)
+    sh.getRange(row, 17).setFormula(
       `=IFERROR(IF(L${row}=0,"-",H${row}/L${row}),"-")`
     ).setNumberFormat('#,##0"원"');
   });
