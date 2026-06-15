@@ -35,6 +35,9 @@ function onOpen() {
 
   // 🔍 네이버 자동화 메뉴 (naver-sync.gs)
   try { buildNaverSyncMenu_(SpreadsheetApp.getUi()); } catch (e) {}
+
+  // 🥕 당근 자동화 메뉴 (danggn-sync.gs, 2026-06-15)
+  try { buildDanggnSyncMenu_(SpreadsheetApp.getUi()); } catch (e) {}
 }
 
 // ──[일상]── 전체 새로고침: GA4 + 메타 + 유튜브 sync + 대시보드 빌드 + 인사이트 MD 생성

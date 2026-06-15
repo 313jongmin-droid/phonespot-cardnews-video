@@ -249,3 +249,89 @@ function logSync_(funcName, status, message) {
     // 로그 실패는 무시
   }
 }
+
+
+// ============ 당근 자동화 메뉴 (네이버 패턴 그대로) ============
+
+/**
+ * 시트 메뉴에 🥕 당근 자동화 박음
+ * Code.js onOpen에서 buildDanggnSyncMenu_(SpreadsheetApp.getUi()) 호출.
+ */
+function buildDanggnSyncMenu_(ui) {
+  ui.createMenu('🥕 당근 자동화')
+    .addItem('🔄 당근_통합 GA4 매칭 (오늘)', 'syncDanggnGA4')
+    .addSeparator()
+    .addItem('🆕 시트 신설 / 헤더 갱신', 'createDanggnIntegratedSheet')
+    .addItem('🔍 미매핑 광고그룹 보기', 'showUnmappedDanggnAdgroups')
+    .addSeparator()
+    .addItem('⏰ 당근 Daily Trigger 설정 (02:30)', 'setupDanggnTrigger')
+    .addItem('🔑 utm_source 값 확인', 'showDanggnUtmSource')
+    .addToUi();
+}
+
+/**
+ * 당근_통합 시트의 광고그룹명 중 당근_UTM_매핑에 없는 것 찾기
+ */
+function showUnmappedDanggnAdgroups() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = ss.getSheetByName(DANGGN_SHEET);
+  const utmSheet = ss.getSheetByName(DANGGN_UTM_SHEET);
+
+  if (!sheet || !utmSheet) {
+    SpreadsheetApp.getUi().alert('당근_통합 또는 당근_UTM_매핑 시트가 없습니다. 먼저 "🆕 시트 신설" 실행.');
+    return;
+  }
+
+  // 당근_통합 광고그룹명 (C열)
+  const lastRow = sheet.getLastRow();
+  if (lastRow < 2) {
+    SpreadsheetApp.getUi().alert('당근_통합 시트에 데이터가 없습니다.');
+    return;
+  }
+  const adgroupNames = sheet.getRange(2, 3, lastRow - 1, 1).getValues()
+    .map(function (r) { return r[0]; })
+    .filter(function (v) { return v; });
+  const uniqueNames = Array.from(new Set(adgroupNames));
+
+  // 당근_UTM_매핑 (A열 = 광고그룹명, B열 = utm_campaign)
+  const utmLastRow = utmSheet.getLastRow();
+  const mappings = {};
+  if (utmLastRow >= 2) {
+    const utmData = utmSheet.getRange(2, 1, utmLastRow - 1, 2).getValues();
+    utmData.forEach(function (r) {
+      if (r[0]) mappings[r[0]] = r[1] || '';
+    });
+  }
+
+  const unmapped = uniqueNames.filter(function (name) {
+    return !mappings.hasOwnProperty(name) || !mappings[name];
+  });
+
+  if (unmapped.length === 0) {
+    SpreadsheetApp.getUi().alert('✅ 모든 광고그룹이 utm_campaign에 매핑되어 있습니다 (' + uniqueNames.length + '개).');
+    return;
+  }
+
+  SpreadsheetApp.getUi().alert(
+    '⚠️ 미매핑 광고그룹 ' + unmapped.length + '개:\n\n' + unmapped.join('\n') +
+    '\n\n→ 당근_UTM_매핑 시트에 추가해 주세요.'
+  );
+}
+
+/**
+ * 현재 등록된 DANGGN_UTM_SOURCE 값 표시
+ */
+function showDanggnUtmSource() {
+  const value = PropertiesService.getScriptProperties().getProperty('DANGGN_UTM_SOURCE');
+  const ui = SpreadsheetApp.getUi();
+  if (!value) {
+    ui.alert(
+      '⚠️ DANGGN_UTM_SOURCE 미설정\n\n' +
+      'Apps Script 콘솔 → 프로젝트 설정 → 스크립트 속성에서\n' +
+      '속성 "DANGGN_UTM_SOURCE", 값 "danggn" (또는 GA4 실제 값) 등록 필요.\n\n' +
+      '미설정 시 기본값 "danggn" 사용.'
+    );
+  } else {
+    ui.alert('✅ DANGGN_UTM_SOURCE = "' + value + '"\n\nGA4 sessionSource와 일치하는지 확인하세요.');
+  }
+}
