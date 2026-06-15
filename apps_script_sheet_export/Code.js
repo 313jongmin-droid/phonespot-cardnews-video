@@ -268,6 +268,45 @@ function exportAllSheetsToDrive() {
     folder.createFile('__meta.json', metaContent, MimeType.PLAIN_TEXT);
   }
 
+  // 헤더 전용 단일 파일 (큰 파일 read 한계 우회용)
+  // 각 탭의 첫 5행 + 컬럼 헤더만 모은 단일 JSON
+  // 30탭 × 5행 × 20-30열 ≈ 5KB 이하 = 토큰 한계 안 걸림
+  var headers = {};
+  sheets.forEach(function (sheet) {
+    var name = sheet.getName();
+    try {
+      var lastRow = sheet.getLastRow();
+      var lastCol = sheet.getLastColumn();
+      if (lastRow === 0 || lastCol === 0) {
+        headers[name] = { rows: 0, cols: 0 };
+        return;
+      }
+      var headRows = Math.min(5, lastRow);
+      var headRange = sheet.getRange(1, 1, headRows, lastCol);
+      headers[name] = {
+        totalRows: lastRow,
+        totalCols: lastCol,
+        head: headRange.getValues(),
+      };
+    } catch (err) {
+      headers[name] = { error: String(err && err.message || err) };
+    }
+  });
+
+  var headersContent = JSON.stringify({
+    timestamp: startedAt.toISOString(),
+    sheetId: SHEET_ID,
+    spreadsheetName: ss.getName(),
+    headers: headers,
+  });
+
+  var headersExisting = folder.getFilesByName('__headers.json');
+  if (headersExisting.hasNext()) {
+    headersExisting.next().setContent(headersContent);
+  } else {
+    folder.createFile('__headers.json', headersContent, MimeType.PLAIN_TEXT);
+  }
+
   console.log('Exported ' + summary.length + ' sheets to Drive folder ' + folderId);
   console.log('Duration: ' + (new Date().getTime() - startedAt.getTime()) + 'ms');
   return summary;
