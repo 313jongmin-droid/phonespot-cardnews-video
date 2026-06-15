@@ -420,8 +420,9 @@ function syncNaverIntegrated(targetDate) {
     sh.getRange(row, 13).setFormula(
       `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"phone_click"),0)`
     ).setNumberFormat('#,##0');
+    // 시티마켓 = citymarket_click + citymarket_arrival 합산 (GTM 2026-06-15)
     sh.getRange(row, 14).setFormula(
-      `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_click"),0)`
+      `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_click")+SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_arrival"),0)`
     ).setNumberFormat('#,##0');
     sh.getRange(row, 15).setFormula(
       `=IFERROR(IF(K${row}=0,0,L${row}/K${row}),0)`

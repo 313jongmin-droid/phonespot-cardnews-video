@@ -44,8 +44,14 @@
 GA4_자동!A열(date)              = 당근_통합!A열 (YYYYMMDD 텍스트로 변환)
 GA4_자동!B열(sessionSource)     = DANGGN_UTM_SOURCE (Script Property, 기본 "danggn")
 GA4_자동!D열(sessionCampaignName) = 당근_UTM_매핑 VLOOKUP (C열 광고그룹명 → 영문 utm_campaign)
-GA4_자동!E열(eventName)         = session_start / kakao_chat_click / phone_click / citymarket_click
+GA4_자동!E열(eventName)         = session_start / kakao_chat_click / phone_click
+                                  / citymarket_click + citymarket_arrival (합산, 2026-06-15)
 ```
+
+★ **시티마켓 컬럼 = `citymarket_click` + `citymarket_arrival` 합산** (2026-06-15 갱신).
+- `citymarket_click` = 리틀리 페이지에서 시티마켓 링크 클릭 시 발생 (메타·네이버 광고 → 리틀리 → 시티마켓 경로)
+- `citymarket_arrival` = 시티마켓 페이지 도달 시 발생 (GTM `GTM-TMXR6VL9` 페이지뷰 트리거)
+- **당근 광고 = 시티마켓 직접 유입 → click 발생 X → arrival로 잡힘**
 
 ## 사장님 1회 셋업
 

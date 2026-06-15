@@ -199,9 +199,10 @@ function syncDanggnGA4(opts) {
     sheet.getRange(row, 11).setFormula(
       `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"phone_click"),0)`
     );
-    // L 시티마켓
+    // L 시티마켓 = citymarket_click(리틀리 클릭) + citymarket_arrival(직접 도달, GTM 2026-06-15)
+    // 당근은 시티마켓 직접 유입이라 click 발생 X → arrival로 잡힘
     sheet.getRange(row, 12).setFormula(
-      `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_click"),0)`
+      `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_click")+SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_arrival"),0)`
     );
 
     // M 카톡전환률 (=J/I)

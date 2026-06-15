@@ -338,8 +338,9 @@ function syncMetaCampaignIntegrated(targetDate) {
     sh.getRange(r, 13).setFormula(
       `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"phone_click"),0)`
     ).setNumberFormat('#,##0');
+    // 시티마켓 = citymarket_click(리틀리 경유 클릭) + citymarket_arrival(직접 도달, GTM 2026-06-15) 합산
     sh.getRange(r, 14).setFormula(
-      `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_click"),0)`
+      `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_click")+SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_arrival"),0)`
     ).setNumberFormat('#,##0');
     sh.getRange(r, 15).setFormula(
       `=IFERROR(IF(K${r}=0,0,L${r}/K${r}),0)`
