@@ -67,6 +67,18 @@ KT/국민/진짜폰스팟 Apps Script도 자동 배포
 - ✅ Apps Script 콘솔에 자동 반영 확인
 - ✅ 다른 task 영역 무영향 (ads/code/, cardnews/, shorts/, _docs/ 등 unstaged 그대로)
 
+### 🔔 실패 알림 셋업 (2026-06-15 추가)
+workflow 실패 시 (CLASPRC_JSON 만료, clasp push 에러, Node 버전 deprecation 등) **텔레그램 자동 알림**. 카드뉴스용 봇 재활용.
+
+- **workflow step**: `Notify Telegram on failure` (`if: failure()` — 직전 step 실패 시만 트리거, 성공 시 발송 X = 노이즈 차단)
+- **GitHub Secrets 필요 (등록 완료)**: `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` (값 = 로컬 `_secrets/telegram_token.txt`, `telegram_chat_id.txt`)
+- **알림 내용**: 리포명 / 브랜치 / 커밋 SHA / 실행자 / Actions run 직링크
+- **API**: `https://api.telegram.org/bot<TOKEN>/sendMessage`, URL-encoded text (`%0A` = 줄바꿈)
+- **검증 방법**: workflow가 실패하도록 일부러 깨뜨림 (예: `clasp push --force` 직전 `exit 1` step 추가) → 텔레그램 알림 도착 확인 → 원복. 별도 검증 안 해도 첫 실패 시 자동 작동.
+- **확장**: 멀티 브랜드 step 추가 시 알림 step은 그대로 — 모든 step의 failure를 캐치. 별도 작업 없음.
+
+성공 알림은 안 박음 (매번 알림 = 노이즈). 필요 시 별도 step 추가 가능.
+
 ---
 
 ---
