@@ -26,27 +26,34 @@
 
 ---
 
-## STEP 0 — 머신 역할 & 업데이트 적용 (★ 최우선 전제, 2026-06-08)
+## STEP 0 — 머신 역할 & 업데이트 적용 (★ 최우선 전제, 2026-06-08 / 2026-06-15 갱신)
 
-세 역할로 고정. **모든 해결책은 이 구조 안에서만** 준다.
+네 역할로 고정. **모든 해결책은 이 구조 안에서만** 준다.
 
 | 머신 | 역할 | git |
 |---|---|---|
-| **노트북** | 개발/편집 전용(Claude 작업). 코드·가이드·articles·.bat 수정 → commit → push | **push only** |
-| **실행 PC** (부사수=사무실, `C:\PhoneSpot\phonespot_cardnews`) | 단독 생산기. 카드뉴스·영상·패널 전부 실행 | **pull only** |
+| **로컬 PC** (사무실, `C:\Users\di898\Documents\phonespot_cardnews`) | **개발/편집/운영 단일 작업 머신**. 모든 task(광고운영·카드뉴스·영상·기사·.bat) 여기서 수정 → commit → push. 영역 분리 = `apps_script/`(광고운영) / `cardnews/·_docs/`(카드뉴스) / `shorts/·CODEX_VIDEO_DESK/`(영상) → 충돌 거의 0 | **push only** |
+| **노트북** | 크롬 원격 입구만. 사무실 못 갈 때 로컬 PC 조종용. **직접 작업·git 수정 ❌** | — |
+| **부사수 PC** (`C:\PhoneSpot\phonespot_cardnews`) | 카드뉴스·영상·패널 렌더링 전용 단독 생산기 | **pull only** |
 | 메인 PC (`192.168.0.7`) | 카드 이미지 원본 자산 소스(git 비공유 자산 LAN sync 출처) | — |
 
 ### 원칙
-1. 해결 = **노트북 수정 → push → 실행 PC pull → 실행 PC에서 실행.** 노트북 실행 결과 신뢰 ❌(검증은 실행 PC 로그).
-2. **실행 PC는 pull only.** 패널 "GitHub 업로드"(`codex_github_upload`)·자동커밋을 실행 PC에서 쓰면 origin/main 분기 → pull 충돌. **push는 노트북에서만.** ※ `_docs/DEV_LAPTOP_OFFICE_RUN_GITHUB.md`의 "사무실도 push" 모델은 **폐기**(이 STEP 0이 우선).
+1. 해결 = **로컬 PC 수정 → push → 부사수 PC pull → 부사수 PC에서 실행.** 로컬 PC 실행 결과 신뢰 ❌(렌더링 검증은 부사수 PC 로그).
+2. **부사수 PC는 pull only.** 패널 "GitHub 업로드"(`codex_github_upload`)·자동커밋을 부사수 PC에서 쓰면 origin/main 분기 → pull 충돌. **push는 로컬 PC에서만.** ※ `_docs/DEV_LAPTOP_OFFICE_RUN_GITHUB.md`의 "사무실도 push" 모델은 **폐기**(이 STEP 0이 우선).
 3. **git 전파 vs 비전파**(STEP 7 위생 연동): 전파=코드·`.bat/.ps1/.mjs`·`cardnews/articles/*.json`·가이드·`.gitattributes` / 비전파(셋업·LAN sync·Drive로 따로)=`cardnews/images`·`output`·`_secrets`·`node_modules`·`.playwright`·임베딩 1GB·`library_share_path.txt`.
-4. 진단은 실행 PC 로그 기준(노트북에서 못 봄).
+4. 렌더링 진단은 부사수 PC 로그 기준(로컬 PC에서 못 봄). 광고운영 동기화 진단은 Apps Script 콘솔 로그.
+5. **다른 task 충돌**: 같은 로컬 PC 안에서 광고운영 클로드 + 카드뉴스 클로드 동시 작업 가능. 영역 별개라 git 충돌 거의 0. 단 같은 파일 동시 수정은 회피 (책임 분담 표 = `ads/MULTI_BRAND_ARCHITECTURE.md`).
 
-### 노트북 업데이트를 실행 PC에 적용 (브랜치 `main`, 원격 origin)
-- **자동(권장,1회)**: 실행 PC `CODEX_VIDEO_DESK\수신PC_자동업데이트_켜기.bat` → 이후 패널 켤 때마다 `git pull --ff-only` 자동.
+### 로컬 PC 업데이트를 부사수 PC에 적용 (브랜치 `main`, 원격 origin)
+- **자동(권장,1회)**: 부사수 PC `CODEX_VIDEO_DESK\수신PC_자동업데이트_켜기.bat` → 이후 패널 켤 때마다 `git pull --ff-only` 자동.
 - **수동**: `cd C:\PhoneSpot\phonespot_cardnews` → `git pull --ff-only`.
 - **막히면(드리프트)**: `git fetch origin && git reset --hard origin/main` (gitignore 자산은 안 건드림).
 - 코드·.bat·.mjs는 pull 즉시 반영. 의존성(pip/npm/임베딩) 변경 시에만 `SETUP_FULL_PRODUCER.bat`/패널 "시스템 업데이트" 재실행.
+
+### 광고운영 트랙 자동 배포 (Phase 1 셋업 완료, 2026-06-11)
+- 로컬 PC `apps_script/` 수정 → git push → GitHub Actions workflow가 `clasp push --force` → Apps Script 콘솔 자동 반영.
+- 부사수 PC 거치지 않음 (광고운영은 Google 클라우드 + 시트만 사용).
+- 콘솔에서 직접 함수 수정 = 다음 push 때 `--force`로 덮어쓰임. **콘솔 수정 ❌, 로컬 PC에서만 수정.**
 
 ---
 
@@ -287,6 +294,7 @@ git ls-files -z | grep -ziE '\.(bat|ps1|cmd|vbs)$' | xargs -0 md5sum | sort \
 - 2026-06-11: **멀티 브랜드 모노레포 아키텍처 제안.** `ads/MULTI_BRAND_ARCHITECTURE.md` 신설. `_shared/`(공용 코드 = `apps_script/`+`cardnews/`+`shorts/`+`automation/`) + `brands/<brand>/`(데이터·설정 분리, `config.json`+`.clasp.json`+`articles/`+`images/`+`output/`) + clasp+GitHub 단일 진실 원천. **공용 업데이트** = 1곳 수정 → `./push-all-apps-script.sh` 1줄 → N개 브랜드 동시 반영. **브랜드 전체 통합** = 한 폴더에 광고/카드뉴스/영상 모든 모듈. **Phase 1**(Apps Script만 멀티 배포) 다른 task `generator.html` 작업 종료 후 시작. Phase 2/3/4 = 카드뉴스/영상/자동화 순차 확장. KT/국민인터넷/진짜 폰스팟(판매점 가입형) 등 확장 대비. **충돌 방지 = 책임 분담 표** (gen.html=다른 task / Code.gs·meta-sync·naver-sync=광고운영 task / cardnews·shorts=영상 task). 자산은 git 비전파 (STEP 0/7 룰 그대로 = `images/`·`output/`·`node_modules/`·`_secrets/`). STEP 1·2·4 동기화 (조건부 Read + 명령 패턴 + 진입점 추가).
 - 2026-06-11: **Phase 1 셋업 완료 (clasp + GitHub Actions 자동 배포).** 로컬 `apps_script/` clasp clone(9파일) + `.gitignore` 보안(`.clasp.json` 제외) + Git for Windows 2.54.0 + GitHub repo `313jongmin-droid/phonespot-cardnews-video`(commit 5e0a776) + Actions workflow `.github/workflows/deploy-apps-script.yml`(Node 20 + clasp 3.3.0 + clasp push --force) + Secrets `CLASPRC_JSON`/`CLASP_JSON`. **동작 검증**: workflow_dispatch 수동 실행 27초 성공. git push 시 Apps Script 콘솔 자동 배포. **함정**: `CLASP_JSON` Secret은 **한 줄 압축 JSON 필수** (12줄 multiline은 `JSON5: invalid character 'P' at 12:1` 에러로 실패). `rootDir`은 `"."` 권장. PowerShell `%USERPROFILE%` 대신 직접 경로 `C:\Users\<user>\.clasprc.json`. **2026-06-16부터 Node 20 deprecation** → workflow `node-version` 20→24 1줄 수정 필요. **clasp push --force는 콘솔 변경 무시 강제 덮어쓰기** → 다른 task가 콘솔 직접 수정 중이면 작업 사라짐, 책임 분담 표 엄수. 멀티 브랜드 활성화(KT/국민/진짜폰스팟)는 신설 시점에 workflow step 추가 + `CLASP_JSON_<BRAND>` Secret 추가로 1줄씩 확장. 정본 = `ads/MULTI_BRAND_ARCHITECTURE.md` "Phase 1 셋업 완료" 섹션.
 - 2026-06-11: **재해 복구 가이드 신설** `_docs/DISASTER_RECOVERY.md`. 자산별 백업 출처 매트릭스(GitHub 100% 복구 = 코드/가이드/articles / Google 클라우드 자동 보호 = 시트·Apps Script 콘솔·Drive 일러스트 / 별도 백업 필수 = `_secrets/`·`.clasprc.json`·임베딩 DB). 시나리오 A(로컬 폴더만 손상, 5분 복구) / B(PC 교체 Bootstrap, 30분~1시간) / C(GitHub repo 삭제, 다른 PC clone본 또는 GitHub Support 30일 이내). `_secrets/` 권장 백업 = 1Password/외장 HDD/암호화 zip. 사전 대비: GitHub+Google 계정 2FA, `_secrets/` 월 1회 백업, 분기별 복구 시뮬레이션. **멀티 브랜드 신설 Bootstrap에도 동일 절차 활용** = 시나리오 B의 4~5번 그대로. STEP 1 조건부 Read에 추가.
+- 2026-06-15: **STEP 0 머신 모델 갱신 — 노트북 → 로컬 PC로 push 주체 변경.** 사장님 운영 패턴 = 노트북은 크롬 원격 입구만, 실제 작업/git push는 **로컬 PC**(사무실, `C:\Users\di898\Documents\phonespot_cardnews`)에서 수행. 옛 표 "노트북=push only"는 옛 모델 → "**로컬 PC=push only**"로 갱신. 노트북 = git 직접 안 만짐 / 부사수 PC = pull only 그대로 / 메인 PC = 자산 소스 그대로. 원칙 1·2·4 + 적용 흐름 표현 모두 "노트북" → "로컬 PC"로 치환. 원칙 5 추가 = 같은 로컬 PC 안에서 광고운영/카드뉴스/영상 task 동시 작업 시 영역 분리(`apps_script/` vs `cardnews/` vs `shorts/`)로 git 충돌 거의 0. 광고운영 트랙 자동 배포 흐름(Phase 1) 명시 = clasp push --force 라 콘솔 직접 수정 ❌, 로컬 PC에서만 수정. 노트북 안전망(clone본 보관)은 사장님 결정으로 비채택 — GitHub 백업만 신뢰(시나리오 C 발생 확률 낮음 + GitHub Support 30일).
 
 - 2026-06-12: **광고 소재 생성기(generator.html) 대규모 리팩 + Apify 벤치마크 합류 (34 task).** 진입점: `ads/IMPLEMENTATION_GUIDE_2026-06-09.md` (단일 클로드 참조 문서, §6 함수 인덱스 + §11~12 디자인 토큰 + §14 다음 작업 후보). 핵심 변경:
   - **카피 생성 2모드**: 📚 라이브러리·벤치마크 기반 (템플릿 + 검증 카피) + 🤖 LLM 프롬프트 (Claude/GPT 챗용). 신규 컨셉 자유 입력바, 옵션 C 컬럼 시스템은 폐기.
