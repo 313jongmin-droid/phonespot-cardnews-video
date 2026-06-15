@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - 'apps_script/**'
+      - 'apps_script_sheet_export/**'
       - '.github/workflows/deploy-apps-script.yml'
   workflow_dispatch:   # 수동 실행 버튼 (GitHub Actions 탭에서)
 
@@ -41,6 +42,16 @@ jobs:
       - name: Push to Apps Script (폰스팟 본점)
         working-directory: apps_script
         run: clasp push --force
+
+      # Sheet Export 별도 프로젝트 (B1 셋업, 2026-06-15)
+      # 시트 read 전용 web app. 본점 doGet과 충돌 0.
+      - name: Push to Apps Script (Sheet Export)
+        working-directory: apps_script_sheet_export
+        env:
+          CLASP_JSON_EXPORT: ${{ secrets.CLASP_JSON_EXPORT }}
+        run: |
+          echo "$CLASP_JSON_EXPORT" > .clasp.json
+          clasp push --force
 
       # 멀티 브랜드 신설 시 (KT/국민/진짜폰스팟) 아래 패턴으로 1개씩 추가
       # - name: Push to Apps Script (KT)
