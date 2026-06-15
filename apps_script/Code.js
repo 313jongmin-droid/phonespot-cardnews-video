@@ -206,6 +206,7 @@ function updateKPISummary() {
     {sh:'구글',        spd:'G'},
     {sh:'네이버_통합', spd:'H'},
     {sh:'카카오',      spd:'G'},
+    // 당근 KPI 광고비: 옛 당근 시트 G열. 전환 시 {sh:'당근_통합', spd:'F'} 로 교체
     {sh:'당근',        spd:'G'},
   ];
 
@@ -273,6 +274,10 @@ function updateChannelMatrixWithGA4() {
     {row:19, name:'구글',   adSheet:'구글',        impCol:'E', clkCol:'F', spdCol:'G', inq:'구글',   ga4:true,  sources:['google']},
     {row:20, name:'네이버', adSheet:'네이버_통합', impCol:'F', clkCol:'G', spdCol:'H', inq:'네이버', ga4:true,  sources:['naver','naver_blog','ad.search.naver.com','m.ad.search.naver.com','m.search.naver.com']},
     {row:21, name:'카카오', adSheet:'카카오',      impCol:'E', clkCol:'F', spdCol:'G', inq:'카카오', ga4:true,  sources:['kakao']},
+    // 당근 (현재 = 옛 당근 시트 11컬럼 G열 지출 합산 유지. 다운그레이드 0)
+    // ★ 2026-06-15 신설된 당근_통합 시트 (17컬럼)로 전환 시 = 아래 줄로 교체:
+    //   {row:22, name:'당근', adSheet:'당근_통합', impCol:'D', clkCol:'E', spdCol:'F', inq:'당근', ga4:true, sources:['daangn','danggn']},
+    // 전환 조건: 사장님이 옛 당근 시트 입력 중단 + 당근_통합으로 일원화. 이중 합산 위험 회피.
     {row:22, name:'당근',   adSheet:'당근',        impCol:'E', clkCol:'F', spdCol:'G', inq:'당근',   ga4:true,  sources:['daangn','danggn']},
   ];
 
@@ -337,6 +342,7 @@ function addTimeSeriesChart() {
     {disp:'구글',   sheet:'구글',        spdCol:'G'},
     {disp:'네이버', sheet:'네이버_통합', spdCol:'H'},
     {disp:'카카오', sheet:'카카오',      spdCol:'G'},
+    // 당근 추세: 옛 당근 시트 G열. 전환 시 {disp:'당근', sheet:'당근_통합', spdCol:'F'} 로 교체
     {disp:'당근',   sheet:'당근',        spdCol:'G'},
   ];
 

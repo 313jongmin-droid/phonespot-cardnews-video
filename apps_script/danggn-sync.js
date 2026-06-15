@@ -134,18 +134,24 @@ function createDanggnIntegratedSheet() {
  * 빈 행 (날짜 또는 광고그룹명 없음) = 스킵.
  * 광고그룹명이 당근_UTM_매핑에 없으면 = VLOOKUP 빈 결과 = GA4 매칭 0.
  */
-function syncDanggnGA4() {
+function syncDanggnGA4(opts) {
+  opts = opts || {};
+  const interactive = opts.interactive !== false;  // 기본 = 메뉴 호출, 트리거에선 opts.interactive=false 전달
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const sheet = ss.getSheetByName(DANGGN_SHEET);
   if (!sheet) {
-    Logger.log('당근_통합 시트 없음. createDanggnIntegratedSheet() 먼저 실행.');
+    const msg = '❌ 당근_통합 시트가 없습니다.\n\n시트 메뉴 → 🥕 당근 자동화 → 🆕 시트 신설 / 헤더 갱신 먼저 실행하세요.';
+    Logger.log(msg);
     logSync_('syncDanggnGA4', 'fail', '당근_통합 시트 없음');
+    if (interactive) { try { SpreadsheetApp.getUi().alert(msg); } catch (e) {} }
     return { ok: false, error: 'sheet not found' };
   }
 
   const lastRow = sheet.getLastRow();
   if (lastRow < 2) {
-    Logger.log('당근_통합 시트 데이터 없음 (헤더만).');
+    const msg = '⚠️ 당근_통합 시트가 비어있습니다 (헤더만).\n\n시트에 데이터 (A 날짜, B 캠페인명, C 광고그룹명, D~F 노출/클릭/지출) 먼저 입력하세요.';
+    Logger.log(msg);
+    if (interactive) { try { SpreadsheetApp.getUi().alert(msg); } catch (e) {} }
     return { ok: true, updated: 0 };
   }
 
@@ -209,6 +215,22 @@ function syncDanggnGA4() {
   Logger.log('syncDanggnGA4: updated=' + updated + ' skipped=' + skipped);
   logSync_('syncDanggnGA4', 'ok', `당근_통합 ${updated} rows GA4 매칭 (skipped: ${skipped})`);
 
+  if (interactive) {
+    try {
+      const utmSource = PropertiesService.getScriptProperties().getProperty('DANGGN_UTM_SOURCE') || 'danggn(기본값)';
+      SpreadsheetApp.getUi().alert(
+        '✅ GA4 매칭 새로고침 완료\n\n' +
+        '· 갱신: ' + updated + '개 행\n' +
+        '· 스킵: ' + skipped + '개 (날짜 또는 광고그룹명 빈 행)\n' +
+        '· utm_source: "' + utmSource + '" 기준\n\n' +
+        (updated > 0 ? '시트 가서 I~N (GA4 컬럼) 확인하세요. 매칭 0이면:\n1. 시트 메뉴 → 🔍 미매핑 광고그룹 보기\n2. 메뉴 → 🔑 utm_source 값 확인'
+                     : '갱신된 행 없음. 시트에 데이터 입력 필요.')
+      );
+    } catch (uiErr) {
+      // 트리거 환경 등 UI 없는 곳에서 호출되면 무시
+    }
+  }
+
   return { ok: true, updated: updated, skipped: skipped };
 }
 
@@ -259,7 +281,7 @@ function logSync_(funcName, status, message) {
  */
 function buildDanggnSyncMenu_(ui) {
   ui.createMenu('🥕 당근 자동화')
-    .addItem('🔄 당근_통합 GA4 매칭 (오늘)', 'syncDanggnGA4')
+    .addItem('🔄 GA4 매칭 새로고침 (전체 행)', 'syncDanggnGA4')
     .addSeparator()
     .addItem('🆕 시트 신설 / 헤더 갱신', 'createDanggnIntegratedSheet')
     .addItem('🔍 미매핑 광고그룹 보기', 'showUnmappedDanggnAdgroups')

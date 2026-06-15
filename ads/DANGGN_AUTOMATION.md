@@ -50,10 +50,28 @@ GA4_자동!E열(eventName)         = session_start / kakao_chat_click / phone_cl
 ## 사장님 1회 셋업
 
 1. 시트 메뉴 **🥕 당근 자동화 → 🆕 시트 신설 / 헤더 갱신** → 시트 2개 자동 생성
-2. Apps Script 콘솔 → 프로젝트 설정 → 스크립트 속성 → `DANGGN_UTM_SOURCE` 등록 (GA4에서 잡히는 정확한 값, 예: `danggn`)
-3. 메뉴 **🔑 utm_source 값 확인** → 등록값 검증
+2. Apps Script 콘솔 → 프로젝트 설정 → 스크립트 속성 → `DANGGN_UTM_SOURCE` = **`daangn`** 등록
+   - ★ 정확한 값은 **`daangn`** (g 사이에 `aa`). `danggn` 아님 (옛 GA4 셋업 시 일부 오타 `danggn` 행 있지만 소수 = 무시)
+   - 검증: GA4_자동 시트 B열에서 당근 광고 행 sessionSource 확인
+3. 메뉴 **🔑 utm_source 값 확인** → 팝업에 `daangn` 보이면 OK
 4. 메뉴 **⏰ 당근 Daily Trigger 설정 (02:30)** → 매일 자동 실행
-5. 시트에 첫 데이터 입력 → 메뉴 **🔄 당근_통합 GA4 매칭 (오늘)** 수동 검증
+5. 시트에 첫 데이터 입력 → 메뉴 **🔄 GA4 매칭 새로고침** 수동 검증
+
+## GA4 sessionCampaignName 영문값 매핑 표 (실제 GA4 데이터 기준, 2026-06-15)
+
+당근_UTM_매핑 시트의 B열(utm_campaign 영문)에 박을 값. **광고그룹명(한글)은 사장님 자유 입력**.
+
+| 광고 유형 | GA4 sessionCampaignName (영문, 그대로 박기) |
+|---|---|
+| 가격확인 | `price_check` |
+| 삼성 페스티벌 | `sm_festival` 또는 `sm_festa` |
+| 갤럭시 A17 | `a17` |
+| 무료폰 | `free_phone` |
+| 지역광고 | `region` |
+| 키즈폰 | `kids` |
+| SA 광고 시리즈 (커뮤니티) | `sa_01`, `sa_02`, `sa_03`, `sa_04`, `sa_05` |
+
+→ GA4_자동 시트 D열 검색으로 신규 광고 영문값 확인 가능.
 
 ## 운영 흐름 (매일)
 
@@ -64,10 +82,13 @@ GA4_자동!E열(eventName)         = session_start / kakao_chat_click / phone_cl
 
 ## 함정
 
-- **`DANGGN_UTM_SOURCE` 미등록 또는 GA4 실제 값과 다름** → 매칭 0건. 시트 메뉴 "🔑 utm_source 값 확인" 으로 검증.
+- **`DANGGN_UTM_SOURCE` 미등록 또는 GA4 실제 값과 다름** → 매칭 0건. ★ 정확한 값 = **`daangn`** (2026-06-15 검증). 시트 메뉴 "🔑 utm_source 값 확인" 으로 검증.
 - **광고그룹명이 `당근_UTM_매핑`에 없음** → VLOOKUP 빈 결과 → 매칭 0. 메뉴 "🔍 미매핑 광고그룹 보기" 로 진단.
-- **17컬럼 단순화** = 통합대시보드 합산 시 지출 위치가 메타_통합(H)과 다름(F). `Code.gs updateChannelMatrixWithGA4` 분기 추가 필요 (미구현).
-- **옛 "당근" 시트는 그대로 유지** = 수기 영업 일지용. 새 당근_통합과 별개. 통합대시보드 합산 시 둘 다 합산되지 않도록 1개만 선택 필요.
+- **17컬럼 단순화** = 통합대시보드 합산 시 지출 위치가 메타_통합(H)과 다름(F).
+- **옛 "당근" 시트와 당근_통합 이중 운영 위험**:
+  - 현재(2026-06-15 셋업 직후): 옛 당근 시트(G열 지출)가 통합대시보드 매트릭스 합산. 당근_통합은 GA4 매칭만.
+  - 사장님이 운영을 당근_통합으로 전환하면 `Code.js` `updateChannelMatrixWithGA4` 의 `channels` 배열에서 `당근` 행을 `당근_통합` + `spdCol:'F'` 로 갱신 필요 (현재 주석으로 박혀있음).
+  - **이중 입력 절대 X** (양쪽에 같은 데이터 = 매트릭스 이중 합산).
 
 ## 코드 위치
 
