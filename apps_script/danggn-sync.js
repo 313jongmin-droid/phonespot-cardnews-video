@@ -276,7 +276,8 @@ function syncDanggnGA4(opts) {
 
     // 광고그룹명 escape (따옴표 처리)
     const escapedName = String(adgroupName).replace(/"/g, '""');
-    const slugLookup = `IFERROR(VLOOKUP("${escapedName}",'${DANGGN_UTM_SHEET}'!A:B,2,FALSE),"")`;
+    // ★ 2026-06-15: UTM 매핑 통합 시트(UTM_매핑) + A채널="당근" 필터
+    const slugLookup = `IFERROR(VLOOKUP("${escapedName}", FILTER('UTM_매핑'!B:C, 'UTM_매핑'!A:A="당근"), 2, FALSE),"")`;
     const ga4Base = `'GA4_자동'!A:A,${ymdText},'GA4_자동'!B:B,"${utmSource}",'GA4_자동'!D:D,${slugLookup}`;
 
     // G CTR (수식, =E/D)
@@ -397,6 +398,106 @@ function buildDanggnSyncMenu_(ui) {
     .addItem('🆕 시트 신설 / 헤더 갱신', 'createDanggnIntegratedSheet')
     .addItem('🔍 미매핑 광고그룹 보기', 'showUnmappedDanggnAdgroups')
     .addItem('📋 문의접수 D열 표준화', 'setupInquirySheetDropdowns')
-    .addSeparator()
-    .addItem('⏰ 당근 Daily Trigger 설정 (02:30)', 'setupDanggnTrigger')
-    .addItem('🔑 utm_source 값 확인
+    .addItem('🔄 UTM 
+
+// ============ UTM 매핑 통합 마이그레이션 (1회용, 2026-06-15) ============
+
+/**
+ * 3개 UTM 매핑 시트 → 1개 통합 시트 (UTM_매핑, 6컬럼)
+ *
+ * 새 구조:
+ *   A 채널 / B 광고그룹명(한글) / C utm_campaign(영문) / D 첫발견일 / E 상태 / F 메모
+ *
+ * 처리:
+ *   1. UTM_매핑 시트 = A열에 "채널" 컬럼 삽입 + 기존 행 "페북" 박음 (5→6컬럼)
+ *   2. 네이버_UTM_매핑 데이터 → UTM_매핑에 append (채널="네이버")
+ *   3. 당근_UTM_매핑 데이터 → UTM_매핑에 append (채널="당근")
+ *   4. 옛 네이버_UTM_매핑/당근_UTM_매핑 시트 자동 삭제
+ *   5. A열 채널 드롭다운 설정
+ *
+ * idempotent — 이미 통합됐으면 스킵.
+ * 안전: 실행 전 PhoneSpot Sheet Export → exportAllSheetsToDrive 백업 권장.
+ */
+function migrateUtmMappingsUnified() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ui = SpreadsheetApp.getUi();
+  const results = [];
+
+  const mainSheet = ss.getSheetByName('UTM_매핑');
+  if (!mainSheet) {
+    try { ui.alert('❌ UTM_매핑 시트가 없습니다. 메타 sync 1회 실행 후 다시 시도.'); } catch (e) {}
+    return;
+  }
+
+  // 1. 채널 컬럼 점검 — 이미 있으면 스킵
+  const firstHeader = mainSheet.getRange(1, 1).getValue();
+  if (firstHeader !== '채널') {
+    mainSheet.insertColumnBefore(1);
+    mainSheet.getRange(1, 1).setValue('채널');
+    mainSheet.getRange(1, 1).setFontWeight('bold').setBackground('#1F4E78').setFontColor('#FFFFFF').setHorizontalAlignment('center');
+    const lastRow = mainSheet.getLastRow();
+    if (lastRow >= 2) {
+      const channels = [];
+      for (let i = 0; i < lastRow - 1; i++) channels.push(['페북']);
+      mainSheet.getRange(2, 1, lastRow - 1, 1).setValues(channels);
+    }
+    results.push('✅ UTM_매핑: A열 "채널" 컬럼 추가 + ' + (lastRow - 1) + '행 "페북" 박음');
+  } else {
+    results.push('ℹ️ UTM_매핑: 이미 통합됨 (채널 컬럼 있음)');
+  }
+
+  // 2. 네이버_UTM_매핑 → UTM_매핑 통합
+  const naverSheet = ss.getSheetByName('네이버_UTM_매핑');
+  if (naverSheet) {
+    const lastRow = naverSheet.getLastRow();
+    let moved = 0;
+    if (lastRow >= 2) {
+      const data = naverSheet.getRange(2, 1, lastRow - 1, 5).getValues();
+      data.forEach(function (row) {
+        if (row[0] && !String(row[0]).startsWith('※')) {
+          mainSheet.appendRow(['네이버', row[0], row[1], row[2], row[3], row[4]]);
+          moved++;
+        }
+      });
+    }
+    ss.deleteSheet(naverSheet);
+    results.push('✅ 네이버_UTM_매핑 → UTM_매핑 (' + moved + '행 이관 + 시트 삭제)');
+  } else {
+    results.push('ℹ️ 네이버_UTM_매핑: 시트 없음 (이미 처리됨)');
+  }
+
+  // 3. 당근_UTM_매핑 → UTM_매핑 통합
+  const danggnSheet = ss.getSheetByName('당근_UTM_매핑');
+  if (danggnSheet) {
+    const lastRow = danggnSheet.getLastRow();
+    let moved = 0;
+    if (lastRow >= 2) {
+      const data = danggnSheet.getRange(2, 1, lastRow - 1, 5).getValues();
+      data.forEach(function (row) {
+        if (row[0] && !String(row[0]).startsWith('※')) {
+          mainSheet.appendRow(['당근', row[0], row[1], row[2], row[3], row[4]]);
+          moved++;
+        }
+      });
+    }
+    ss.deleteSheet(danggnSheet);
+    results.push('✅ 당근_UTM_매핑 → UTM_매핑 (' + moved + '행 이관 + 시트 삭제)');
+  } else {
+    results.push('ℹ️ 당근_UTM_매핑: 시트 없음 (이미 처리됨)');
+  }
+
+  // 4. A열 채널 드롭다운 설정
+  const finalLastRow = Math.max(mainSheet.getLastRow(), 1000);
+  const channelRange = mainSheet.getRange(2, 1, finalLastRow - 1, 1);
+  const channelRule = SpreadsheetApp.newDataValidation()
+    .requireValueInList(['페북', '네이버', '당근', '구글', '카카오'], true)
+    .setAllowInvalid(true)
+    .build();
+  channelRange.setDataValidation(channelRule);
+  results.push('✅ A열 채널 드롭다운 설정 (페북/네이버/당근/구글/카카오)');
+
+  const msg = 'UTM 매핑 통합 마이그레이션 완료:\n\n' + results.join('\n') +
+    '\n\n다음 = 각 채널 sync 실행 → 새 매칭 적용.';
+  Logger.log(msg);
+  try { ui.alert(msg); } catch (e) {}
+}

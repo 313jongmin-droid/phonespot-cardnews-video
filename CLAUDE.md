@@ -321,6 +321,15 @@ git ls-files -z | grep -ziE '\.(bat|ps1|cmd|vbs)$' | xargs -0 md5sum | sort \
   - **⑤ 1회성 코드 정리** (사장님 요청): `migrateCitymarketColumns` / `migrateOneSheet_` / `migrateDanggnInquirySplit_` / `migrateAddCplColumn_` / `autoDiscoverDanggnAdgroups_` 통째 삭제 (사장님 실행 완료 + 당근 자동 발견 보류 결정). `setupInquirySheetDropdowns`만 유지 (미래 브랜드 신설 시 재사용).
   - **⚠️ 사장님 수동 정리 필요**: 당근_통합 L1 "시티마켓 " (공백) → "시티마켓 클릭" / 당근_통합 Q1 "앱\n문의" (줄바꿈) → "앱문의" / 당근_UTM_매핑 A1 "ㅇ" → "당근 광고그룹명(한글)" / 네이버_통합 22~28열 빈 컬럼 삭제 (선택).
 
+- 2026-06-15 (세션 6): **UTM 매핑 통합 시트 (3개→1개)** — 멀티 브랜드 확장 대비.
+  - **통합 구조**: 옛 3개 시트(`UTM_매핑` 메타용 + `네이버_UTM_매핑` + `당근_UTM_매핑`) → **1개 `UTM_매핑` (6컬럼)**. A 채널(페북/네이버/당근/구글/카카오 드롭다운) / B 광고그룹명(한글) / C utm_campaign(영문) / D 첫발견일 / E 상태 / F 메모.
+  - **마이그레이션 함수** `migrateUtmMappingsUnified()` (`apps_script/danggn-sync.js`): A열에 "채널" 컬럼 삽입 + 기존 행 "페북" 박음 → 네이버/당근 UTM 매핑 데이터 통합 시트에 append (채널 박음) → 옛 2개 시트 자동 삭제 → A열 드롭다운 설정. idempotent. 메뉴 🟠 당근 자동화 → 🔄 UTM 매핑 통합 마이그레이션 (1회).
+  - **매칭 SUMIFS 변경** (3개 .js 파일): VLOOKUP → **FILTER + 채널 필터**. 메타_통합: `VLOOKUP(E${r}, FILTER('UTM_매핑'!B:C, 'UTM_매핑'!A:A="페북"), 2, FALSE)`. 네이버_통합/당근_통합 동일 패턴 (채널만 다름).
+  - **자동 발견 함수 갱신**: `autoDiscoverAdsets_` (메타) = 통합 시트에 채널="페북" 박음. `autoDiscoverNaverAdgroups_` (네이버) = 통합 시트에 채널="네이버" 박음. 당근 = API 없음 = 수기 입력.
+  - **★ 함정 발견 및 복구**: 1회성 함수 삭제 시(세션 5) Python 정규식이 욕심내서 `buildDanggnSyncMenu_` / `setupDanggnTrigger` / `logSync_` / `showDanggnUtmSource` 함수까지 같이 잘림 → `git show ab5288d:apps_script/danggn-sync.js` 로 정상 401줄 복구 후 통합 변경 다시 박음 (503줄). **★ 룰: bash sed/python 정규식으로 큰 파일 편집 시 = `tail`로 검증 필수.**
+  - **안전**: 마이그레이션 실행 전 = `exportAllSheetsToDrive` 수동 실행 = B1 Drive snapshot 즉시 백업 = 문제 발생 시 1일 이전 시점 복구 가능.
+  - **미래 확장**: KT/국민/진짜폰스팟 신설 시 = 통합 시트에 채널 컬럼만 다르게 박으면 됨. 시트 신설 X.
+
 - 2026-06-12: **광고 소재 생성기(generator.html) 대규모 리팩 + Apify 벤치마크 합류 (34 task).** 진입점: `ads/IMPLEMENTATION_GUIDE_2026-06-09.md` (단일 클로드 참조 문서, §6 함수 인덱스 + §11~12 디자인 토큰 + §14 다음 작업 후보). 핵심 변경:
   - **카피 생성 2모드**: 📚 라이브러리·벤치마크 기반 (템플릿 + 검증 카피) + 🤖 LLM 프롬프트 (Claude/GPT 챗용). 신규 컨셉 자유 입력바, 옵션 C 컬럼 시스템은 폐기.
   - **buildCopyPrompt 강화**: brand voice 5가지 + 단어 반복 ≤3회 + 길이 분포 강제 (5/7/8/5) + 라이브러리 우수 사례 박힘 + 벤치마크 후킹 reference + 출력 마크다운 표 + 자가검증.
