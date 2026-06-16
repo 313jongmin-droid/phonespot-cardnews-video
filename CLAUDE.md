@@ -416,4 +416,6 @@ git ls-files -z | grep -ziE '\.(bat|ps1|cmd|vbs)$' | xargs -0 md5sum | sort \
 
 - 2026-06-16: **오프닝 스팅 BGM + 수동 일러스트 등록 (C·E단원).** ① 오프닝 후킹 썰렁함 해소 = `shorts/src/Composition.tsx` 루트(오프닝 Sequence 밖=0초부터) casual 한정 `<Audio src=staticFile("music/opening_sting.mp3") vol .7>`. 에셋 `shorts/public/music/opening_sting.mp3` = 3.0초·페이드인없음·2~3초 페이드아웃, 오프닝 2초 고정(`Root.tsx OPENING_SEC=2.0`)과 정합. `*.mp3` git 비전파 → 렌더PC `shorts/public/music/`에 직접(코드는 git 전파, 번들 자동 재빌드=패널 재시작 불필요). ② 임의 일러스트는 ILLUSTRATION_DROP 떨구기만으론 매칭 X — 매처가 DB(keywords) 순회라 `shorts/config/illustration_tag_db.json` 엔트리(available:true)+`shorts/public/assets/illustrations/<variant>.png` 둘 다 필요(둘 다 git 추적). `camera_quality`/`document_article`/`fast_charging`/`battery_capacity` 4개 등록(텍스트 박힌 그림은 keywords 좁히기). 정본 = SYSTEM_MAP C·E단원.
 
+- 2026-06-16: **CTA 스팅 추가 (C단원, 검토대기).** 오프닝 스팅에 더해 닫기 CTA(`ctaStart`)부터 5초(0~4초 풀·4~5초 페이드아웃, vol 0.6) `shorts/public/music/cta_sting.mp3` 깔기(`Composition.tsx:82-87`, casual 한정). 두 스팅 모두 트랙 앞부분 사용(북엔드). `*.mp3` git 비전파 → 렌더PC 직접. 사장님 검토 = 2026-06-17.
+
 이 파일이 업그레이드되면 변경 이력 1줄 추가. 가이드 추가·제거 시 STEP 1 리스트 동기화.
