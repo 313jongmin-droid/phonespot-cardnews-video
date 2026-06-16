@@ -2161,7 +2161,155 @@
       ],
       "note": "자동 발굴 개념: 일요일 주간",
       "available": true
+    },
+    "public_uk_abbc8a1e": {
+      "keywords": [
+        "공개",
+        "영국"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 공개 영국",
+      "available": false
+    },
+    "cpt_3be04d33": {
+      "keywords": [
+        "정식",
+        "판매",
+        "글로벌"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 정식 판매",
+      "available": false
+    },
+    "mystery_number_63279925": {
+      "keywords": [
+        "모르",
+        "번호",
+        "받기"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 모르 번호",
+      "available": false
+    },
+    "new_policy_f48caded": {
+      "keywords": [
+        "부담스러우셨다면",
+        "부터",
+        "도입된"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 부담스러우셨다면 부터",
+      "available": false
+    },
+    "cpt_e9fd442e": {
+      "keywords": [
+        "통화",
+        "스크리닝",
+        "켜보세요"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 통화 스크리닝",
+      "available": false
+    },
+    "cpt_915bf475": {
+      "keywords": [
+        "전화",
+        "받자마자",
+        "이름",
+        "용건",
+        "알려주세요"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 전화 받자마자",
+      "available": false
+    },
+    "cpt_f2dc70a6": {
+      "keywords": [
+        "발신자",
+        "답한"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 발신자 답한",
+      "available": false
+    },
+    "camera_quality": {
+      "tags": [
+        "camera",
+        "hardware",
+        "library"
+      ],
+      "keywords": [
+        "카메라 성능",
+        "카메라 화질",
+        "선명",
+        "고화소",
+        "카메라 업그레이드"
+      ],
+      "note": "Reusable editorial illustration. 카메라 성능 강조(텍스트 포함, 카메라 화질 기사 전용).",
+      "available": true
+    },
+    "document_article": {
+      "tags": [
+        "news",
+        "document",
+        "library"
+      ],
+      "keywords": [
+        "문서",
+        "자료",
+        "정리",
+        "안내",
+        "내용 정리"
+      ],
+      "note": "Reusable editorial illustration. 문서/자료 카드.",
+      "available": true
+    },
+    "fast_charging": {
+      "tags": [
+        "battery",
+        "charging",
+        "library"
+      ],
+      "keywords": [
+        "고속 충전",
+        "충전 속도",
+        "급속 충전",
+        "충전 중",
+        "충전기"
+      ],
+      "note": "Reusable editorial illustration. 고속 충전.",
+      "available": true
+    },
+    "battery_capacity": {
+      "tags": [
+        "battery",
+        "hardware",
+        "library"
+      ],
+      "keywords": [
+        "배터리 용량",
+        "대용량",
+        "배터리 효율",
+        "사용 시간",
+        "mAh"
+      ],
+      "note": "Reusable editorial illustration. 배터리 용량/효율.",
+      "available": true
     }
   },
-  "updated_at": "2026-06-16T17:31:15"
+  "updated_at": "2026-06-16T17:59:41"
 }

@@ -302,7 +302,7 @@
       ]
     },
     "024_news_galaxy_fold8_widefold": {
-      "used_at": "2026-06-16T17:31:15",
+      "used_at": "2026-06-16T17:58:47",
       "source": "codex_enhance",
       "illustrations": [
         "basic_fold_202d754f",
@@ -314,9 +314,19 @@
         "device_os_requirement",
         "device_data_transfer"
       ]
+    },
+    "025_tip_galaxy_ai_call_screening": {
+      "used_at": "2026-06-16T17:59:40",
+      "source": "codex_enhance",
+      "illustrations": [
+        "smartphone",
+        "aluminum_label",
+        "appliance",
+        "basic_fold_202d754f"
+      ]
     }
   },
-  "updated_at": "2026-06-16T17:31:57",
+  "updated_at": "2026-06-16T17:59:41",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -381,7 +391,11 @@
       "variants": []
     },
     "024_news_galaxy_fold8_widefold": {
-      "updated_at": "2026-06-16T17:31:57",
+      "updated_at": "2026-06-16T17:58:48",
+      "variants": []
+    },
+    "025_tip_galaxy_ai_call_screening": {
+      "updated_at": "2026-06-16T17:59:41",
       "variants": []
     }
   }

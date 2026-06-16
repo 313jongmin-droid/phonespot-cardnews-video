@@ -1,5 +1,5 @@
 import React from "react";
-import { AbsoluteFill, Sequence, useVideoConfig } from "remotion";
+import { AbsoluteFill, Audio, Sequence, staticFile, useVideoConfig } from "remotion";
 import { ChannelOutro } from "./components/ChannelOutro";
 import { OpeningHook } from "./components/OpeningHook";
 import { HookCard } from "./components/HookCard";
@@ -76,6 +76,9 @@ export const NewsShort: React.FC<NewsShortProps> = ({
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#000000" }}>
+      {/* 오프닝 스팅: 0초부터 3초(0~2초 풀, 2~3초 페이드아웃이 후킹 나레이션 위로 빠짐). casual 한정. */}
+      {isCasual && <Audio src={staticFile("music/opening_sting.mp3")} volume={0.7} />}
+
       <Sequence from={openingStart} durationInFrames={openingFrames}>
         <OpeningHook line1={script.opening.line1} line2={script.opening.line2} durFrames={openingFrames} />
       </Sequence>
