@@ -544,7 +544,7 @@ function logSync_(funcName, message) {
 function setupTriggers() {
   ScriptApp.getProjectTriggers().forEach(t => {
     const fn = t.getHandlerFunction();
-    if (fn === 'syncAll' || fn === 'generateMetaInsightsMarkdown') {
+    if (fn === 'syncAll' || fn === 'generateMetaInsightsMarkdown' || fn === 'syncInstagramDaily') {
       ScriptApp.deleteTrigger(t);
     }
   });
@@ -552,9 +552,11 @@ function setupTriggers() {
     .timeBased().everyDays(1).atHour(1).nearMinute(30).create();
   ScriptApp.newTrigger('generateMetaInsightsMarkdown')
     .timeBased().everyDays(1).atHour(1).nearMinute(45).create();
-  Logger.log('Trigger 설정 완료: 01:30 syncAll + 01:45 generateMetaInsightsMarkdown');
-  SpreadsheetApp.getUi().alert('트리거 2개 등록',
-    '01:30 데이터 sync (syncAll)\n01:45 인사이트 MD 생성 + Drive 저장\n매일 새벽 자동.',
+  ScriptApp.newTrigger('syncInstagramDaily')
+    .timeBased().everyDays(1).atHour(2).nearMinute(0).create();
+  Logger.log('Trigger 설정 완료: 01:30 syncAll + 01:45 generateMetaInsightsMarkdown + 02:00 syncInstagramDaily');
+  SpreadsheetApp.getUi().alert('트리거 3개 등록',
+    '01:30 데이터 sync (syncAll)\n01:45 인사이트 MD 생성 + Drive 저장\n02:00 인스타 sync (최근 7일)\n매일 새벽 자동.',
     SpreadsheetApp.getUi().ButtonSet.OK);
 }
 
@@ -1361,6 +1363,9 @@ function buildMetaSyncMenu_(ui) {
     .addItem('🧠 인사이트 MD 생성', 'generateMetaInsightsMarkdown')
     .addItem('🏷️ 라벨링 드롭다운 설정 (1회)', 'setupLabelingDropdowns')
     .addSeparator()
+    .addItem('📷 인스타 동기화 (최근 7일)', 'syncInstagramDaily')
+    .addItem('⏪ 인스타 전체 백필 (1회만)', 'backfillInstagramAll')
+    .addSeparator()
     .addItem('📊 마지막 동기화 정보', 'showLastSyncInfo')
     .addItem('🔑 토큰 연결 테스트 (메타)', 'testTokenAndAccount')
     .addItem('⏰ Daily Trigger 설정', 'setupTriggers')
@@ -1387,6 +1392,165 @@ function showLastSyncInfo() {
     SpreadsheetApp.getUi().alert('아직 동기화 안 됨. 먼저 🎨 광고소재 라이브러리 갱신 실행하세요.');
   }
 }
+
+// ============ ★ 인스타 자동 동기화 (Instagram Graph API) ============
+//   - 매일 02:00 syncInstagramDaily(): 시트 비어있으면 전체 / 데이터 있으면 최근 7일
+//   - 초기 1회 backfillInstagramAll(): 강제 전체 백필 (UI alert)
+//
+//   시트 구조 (인스타 시트, 4행부터 데이터):
+//     A 날짜 / B 포맷(수기) / C 주제 / D 링크(매칭 키) / E 조회수(views) / F 좋아요 / G 팔로워 / H 메모(수기) / I 비고(수기)
+//
+//   매칭: D 링크(permalink) — 있으면 E·F·G 갱신 / 없으면 신규 append (timestamp 오름차순)
+//   사전: PropertiesService INSTAGRAM_BUSINESS_ID 등록 (17841474706647015 = @phonespot.kr)
+//   토큰: 기존 META_TOKEN 재활용 (instagram_basic + instagram_manage_insights scopes 필요)
+
+const SHEET_INSTAGRAM = '인스타';
+const INSTAGRAM_DATA_START_ROW = 4;
+
+function getInstagramBusinessId_() {
+  const id = PropertiesService.getScriptProperties().getProperty('INSTAGRAM_BUSINESS_ID');
+  if (!id) throw new Error('INSTAGRAM_BUSINESS_ID 없음. 스크립트 속성에 17841474706647015 박기.');
+  return id;
+}
+
+function syncInstagramDaily() {
+  // 매일 02:00 자동: 시트 비어있으면 전체 / 데이터 있으면 최근 7일
+  syncInstagram_('auto');
+}
+
+function backfillInstagramAll() {
+  // 초기 1회만 (강제 전체)
+  syncInstagram_('full');
+  try {
+    SpreadsheetApp.getUi().alert('✅ 인스타 전체 백필 완료. 이후 매일 02:00 최근 7일만 자동 갱신.');
+  } catch (e) { /* trigger 환경에서는 UI 없음 */ }
+}
+
+function syncInstagram_(mode) {
+  Logger.log('=== syncInstagram_ 시작 (mode: ' + mode + ') ===');
+  const igUserId = getInstagramBusinessId_();
+  const ss = SpreadsheetApp.getActive();
+  const sheet = ss.getSheetByName(SHEET_INSTAGRAM);
+  if (!sheet) throw new Error('"' + SHEET_INSTAGRAM + '" 시트 없음');
+
+  // 시트 비어있으면 mode 강제 full (auto의 분기)
+  const isEmpty = sheet.getLastRow() < INSTAGRAM_DATA_START_ROW;
+  const fetchMode = (mode === 'full' || (mode === 'auto' && isEmpty)) ? 'full' : 'recent';
+  Logger.log('실제 모드: ' + fetchMode);
+
+  // 팔로워 수 (계정 전체, 현재 시점)
+  let followers = 0;
+  try {
+    const userRes = metaFetch('/' + igUserId, { fields: 'followers_count' });
+    followers = Number(userRes.followers_count) || 0;
+    Logger.log('팔로워: ' + followers);
+  } catch (e) {
+    Logger.log('팔로워 조회 실패: ' + e.message);
+  }
+
+  // 게시물 fetch (recent 모드는 since=7일 전)
+  const sinceTs = fetchMode === 'recent'
+    ? Math.floor((Date.now() - 7 * 86400 * 1000) / 1000)
+    : null;
+  const allMedia = fetchInstagramMedia_(igUserId, sinceTs);
+  Logger.log('수집 게시물: ' + allMedia.length + '개');
+  if (allMedia.length === 0) {
+    logSync_('syncInstagram', 'OK (' + fetchMode + ') 게시물 0건');
+    return;
+  }
+
+  // 게시물별 조회수(views) fetch (Reels/Image/Video 통합 metric)
+  for (let i = 0; i < allMedia.length; i++) {
+    const m = allMedia[i];
+    try {
+      const insightRes = metaFetch('/' + m.id + '/insights', { metric: 'views' });
+      const v = (insightRes.data || []).find(function(d){ return d.name === 'views'; });
+      m.views = (v && v.values && v.values[0]) ? Number(v.values[0].value) || 0 : 0;
+    } catch (e) {
+      // views 미지원 시 reach 폴백
+      try {
+        const r2 = metaFetch('/' + m.id + '/insights', { metric: 'reach' });
+        const r = (r2.data || []).find(function(d){ return d.name === 'reach'; });
+        m.views = (r && r.values && r.values[0]) ? Number(r.values[0].value) || 0 : 0;
+      } catch (e2) {
+        m.views = 0;
+      }
+    }
+    if ((i + 1) % 10 === 0) Utilities.sleep(500);
+  }
+
+  // 기존 행 매칭 (D열 permalink)
+  const existingMap = {};
+  if (sheet.getLastRow() >= INSTAGRAM_DATA_START_ROW) {
+    const lastRow = sheet.getLastRow();
+    const links = sheet.getRange(INSTAGRAM_DATA_START_ROW, 4, lastRow - INSTAGRAM_DATA_START_ROW + 1, 1).getValues();
+    links.forEach(function(row, idx) {
+      const link = String(row[0] || '').trim();
+      if (link) existingMap[link] = INSTAGRAM_DATA_START_ROW + idx;
+    });
+  }
+
+  // 정렬: timestamp 오름차순 (최신 하단)
+  allMedia.sort(function(a, b) { return new Date(a.timestamp) - new Date(b.timestamp); });
+
+  let updated = 0, added = 0;
+  allMedia.forEach(function(m) {
+    const dateStr = Utilities.formatDate(new Date(m.timestamp), 'Asia/Seoul', 'yyyy-MM-dd');
+    const caption = String(m.caption || '').replace(/\n/g, ' ').slice(0, 60);
+    const existRow = existingMap[m.permalink];
+    if (existRow) {
+      // 기존: E·F·G만 갱신 (날짜·주제·링크·메모·비고는 보존)
+      sheet.getRange(existRow, 5).setValue(m.views);
+      sheet.getRange(existRow, 6).setValue(Number(m.like_count) || 0);
+      sheet.getRange(existRow, 7).setValue(followers);
+      updated++;
+    } else {
+      // 신규 append
+      const newRow = Math.max(sheet.getLastRow() + 1, INSTAGRAM_DATA_START_ROW);
+      sheet.getRange(newRow, 1).setValue(dateStr);
+      // B열 포맷 = 수기, 안 박음
+      sheet.getRange(newRow, 3).setValue(caption);
+      sheet.getRange(newRow, 4).setValue(m.permalink);
+      sheet.getRange(newRow, 5).setValue(m.views);
+      sheet.getRange(newRow, 6).setValue(Number(m.like_count) || 0);
+      sheet.getRange(newRow, 7).setValue(followers);
+      existingMap[m.permalink] = newRow;
+      added++;
+    }
+  });
+
+  const msg = '✅ 인스타 ' + fetchMode + ' — 신규 ' + added + ' / 갱신 ' + updated + ' / 팔로워 ' + followers;
+  Logger.log(msg);
+  logSync_('syncInstagram', msg);
+}
+
+function fetchInstagramMedia_(igUserId, sinceTs) {
+  const all = [];
+  const endpoint = '/' + igUserId + '/media';
+  const baseParams = {
+    fields: 'id,caption,media_type,timestamp,permalink,like_count',
+    limit: 100
+  };
+  if (sinceTs) baseParams.since = sinceTs;
+
+  let nextCursor = null;
+  let safety = 0;
+  while (safety < 30) {  // max 30 페이지 (3000 게시물 상한)
+    safety++;
+    const params = Object.assign({}, baseParams);
+    if (nextCursor) params.after = nextCursor;
+    const res = metaFetch(endpoint, params);
+    if (!res.data || res.data.length === 0) break;
+    res.data.forEach(function(m) { all.push(m); });
+    if (res.paging && res.paging.cursors && res.paging.cursors.after && res.paging.next) {
+      nextCursor = res.paging.cursors.after;
+    } else {
+      break;
+    }
+  }
+  return all;
+}
+
 
 // ============ ★ 2026-06-10/11 패치 — 메타 자동 학습 (Drive MD) ============
 const META_INSIGHTS_DRIVE_FOLDER = 'phonespot_cardnews_state';
