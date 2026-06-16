@@ -207,19 +207,37 @@ git push
 
 ---
 
-## 다른 task 충돌 방지 — 책임 분담
+## 다른 task 충돌 방지 — 책임 분담 (2026-06-15 갱신)
 
 | 파일/폴더 | 책임자 | 비고 |
 |---|---|---|
 | `_shared/apps_script/generator.html` | 다른 task (Claude 광고생성기) | 광고 생성기 UI |
-| `_shared/apps_script/Code.gs`, `meta-sync.gs`, `naver-sync.gs`, `youtube_sync.gs` | 사용자 + 이 task (광고운영) | 자동화 코드 |
+| `_shared/apps_script/Code.gs`, `meta-sync.gs`, `naver-sync.gs`, `youtube_sync.gs`, `danggn-sync.gs` | **광고운영 task** | 시트 자동화 코드 |
+| **Phase 2~4 멀티 브랜드 셋업** (`_shared/` 폴더 분리, `brands/<brand>/`, workflow step 추가, KT/국민/진짜폰스팟 신설) | **★ 멀티 브랜드 task (별도, 2026-06-15 사장님 결정)** | 광고운영 task가 안 만짐 |
+| `apps_script_sheet_export/` (B1 시트 read 인프라) | 광고운영 task | 별도 Apps Script 프로젝트 |
 | `_shared/cardnews/`, `_shared/shorts/` | 영상 task / 코덱스 | 카드뉴스/영상 |
 | `brands/<brand>/articles/` | 사용자 + Claude (기사작성 spec) | 콘텐츠 |
 | `brands/<brand>/config.json` | 사용자 | 브랜드 설정 |
 
 → 같은 파일 동시 수정 금지. 충돌 시 git merge 또는 협의.
 
-**Apps Script 콘솔 직접 수정 시 룰**: 수정 후 즉시 `clasp pull` + `git commit` (GitHub 어긋남 방지).
+**Apps Script 콘솔 직접 수정 시 룰**: 수정 후 즉시 `clasp pull` + `git commit` (GitHub 어긋남 방지). 단 콘솔 직접 수정 ❌ (Phase 1 자동 배포 = force push로 덮어쓰임).
+
+### ★ 멀티 브랜드 task 시작 명령 (2026-06-15 결정)
+
+광고운영 task = 시트 관리 + GA4 매칭 + 자동화에 집중. **멀티 브랜드 (Phase 2~4) 작업은 별도 task로 분리.**
+
+별도 클로드 세션 (다른 task) 시작 시 다음 명령으로 입장:
+
+| 작업 시점 | 명령 (사장님 입력) |
+|---|---|
+| Phase 2 (`_shared/` 폴더 분리 + `brands/phonespot/` 셋업) | `ads/MULTI_BRAND_ARCHITECTURE.md 읽고 Phase 2 진행. _shared/ 폴더 분리 + brands/phonespot/ 셋업` |
+| KT 시트 신설 | `KT다이렉트샵 멀티 브랜드 신설. ads/MULTI_BRAND_ARCHITECTURE.md "멀티 브랜드 활성화" 절차 + DISASTER_RECOVERY.md Bootstrap 시나리오 B 참고` |
+| 국민인터넷 / 진짜폰스팟 신설 | 동일 패턴 (`<brand>` 자리에 brand 이름) |
+
+별도 task가 처음 들어올 때 = 이 가이드 + `CLAUDE.md` STEP 8 2026-06-11 "Phase 1 셋업 완료" 섹션 자동 Read = 컨텍스트 인계 완성.
+
+**광고운영 task (이 task)는 멀티 브랜드 폴더 절대 안 만짐.** 시트 관리 + GA4 매칭 + 자동화만 진행.
 
 ---
 
