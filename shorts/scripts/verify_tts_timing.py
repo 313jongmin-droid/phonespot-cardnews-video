@@ -69,22 +69,25 @@ def main() -> int:
                 warnings.append(message)
             else:
                 errors.append(message)
-        windows = timing.get("windows") or []
-        if len(windows) != len(chunks):
-            errors.append(f"{key}: timing window count {len(windows)} != chunk count {len(chunks)}")
-        previous_end = 0.0
-        for idx, window in enumerate(windows, 1):
-            start = float(window.get("start_ms") or 0)
-            end = float(window.get("end_ms") or 0)
-            if start < previous_end - 0.5 or end <= start:
-                errors.append(f"{key}.chunk[{idx}]: invalid timing window {start:.0f}-{end:.0f}ms")
-            previous_end = end
-        for idx, value in enumerate(weights, 1):
-            visible_ms = float(value)
-            if visible_ms < 650:
-                errors.append(f"{key}.chunk[{idx}]: unusably short visible window {visible_ms:.0f}ms")
-            elif visible_ms < 1100:
-                warnings.append(f"{key}.chunk[{idx}]: short visible window {visible_ms:.0f}ms")
+        # ms/window 기반 검사는 word_boundary(정밀) 모드에서만 의미 있다. char_fallback 은
+        # weights=글자수·windows=[] 라 ms로 보면 안 됨(위 char_fallback WARN 으로 이미 통지).
+        if timing.get("mode") == "word_boundary_text_align":
+            windows = timing.get("windows") or []
+            if len(windows) != len(chunks):
+                errors.append(f"{key}: timing window count {len(windows)} != chunk count {len(chunks)}")
+            previous_end = 0.0
+            for idx, window in enumerate(windows, 1):
+                start = float(window.get("start_ms") or 0)
+                end = float(window.get("end_ms") or 0)
+                if start < previous_end - 0.5 or end <= start:
+                    errors.append(f"{key}.chunk[{idx}]: invalid timing window {start:.0f}-{end:.0f}ms")
+                previous_end = end
+            for idx, value in enumerate(weights, 1):
+                visible_ms = float(value)
+                if visible_ms < 650:
+                    errors.append(f"{key}.chunk[{idx}]: unusably short visible window {visible_ms:.0f}ms")
+                elif visible_ms < 1100:
+                    warnings.append(f"{key}.chunk[{idx}]: short visible window {visible_ms:.0f}ms")
 
     print()
     print("----- TTS timing check -----")

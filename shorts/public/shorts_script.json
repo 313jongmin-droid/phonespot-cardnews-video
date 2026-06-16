@@ -39,8 +39,8 @@
     ],
     "chunk_visuals": [
       {
-        "type": "illust",
-        "value": "cpt_0dfddb85"
+        "type": "image",
+        "value": "photos/갤럭시z플립7_z폴드7.JPG"
       },
       {
         "type": "illust",
@@ -48,7 +48,7 @@
       },
       {
         "type": "illust",
-        "value": "cpt_3a2d2cbd"
+        "value": "smartphone"
       },
       {
         "type": "mascot",
@@ -73,7 +73,19 @@
       "chunk_count": 4
     },
     "_codex_contextual_narrative": true,
-    "_codex_sync_mode": "global999_tts_caption_lockstep"
+    "_codex_sync_mode": "global999_tts_caption_lockstep",
+    "tts_chunk_weights": [
+      22,
+      15,
+      15,
+      19
+    ],
+    "_tts_timing": {
+      "mode": "character_weight_fallback",
+      "windows": [],
+      "boundary_count": 22,
+      "caption_signature": "1c0450ac508e520f94ac8e9944ff600f6795a7aa64637f38351597cabd551830"
+    }
   },
   "facts": [
     {
@@ -107,7 +119,7 @@
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "cpt_abbc8a1e"
+          "value": "phone_setup_ready"
         },
         {
           "type": "illust",
@@ -146,7 +158,46 @@
         "chunk_count": 5
       },
       "_codex_contextual_narrative": true,
-      "_codex_sync_mode": "global999_tts_caption_lockstep"
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        1925.0,
+        1927.83,
+        2024.63,
+        1851.42,
+        1390.86
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 1925.0,
+            "duration_ms": 1925.0
+          },
+          {
+            "start_ms": 1925.0,
+            "end_ms": 3852.83,
+            "duration_ms": 1927.83
+          },
+          {
+            "start_ms": 3852.83,
+            "end_ms": 5877.46,
+            "duration_ms": 2024.63
+          },
+          {
+            "start_ms": 5877.46,
+            "end_ms": 7728.88,
+            "duration_ms": 1851.42
+          },
+          {
+            "start_ms": 7728.88,
+            "end_ms": 9119.74,
+            "duration_ms": 1390.86
+          }
+        ],
+        "boundary_count": 22,
+        "caption_signature": "d06780d0063bbd31958f660ee4069aabd8340e1ed0af4510f6eb7dfddc719b5f"
+      }
     },
     {
       "tts": "와이드폴드 외부 디스플레이는 5.4인치, 펼쳤을 때 내부는 7.6인치입니다. 외부 전면 카메라 펀치홀은 3.7mm에서 2.5mm로 축소되어 화면 가림이 줄어듭니다.",
@@ -212,7 +263,40 @@
         "chunk_count": 4
       },
       "_codex_contextual_narrative": true,
-      "_codex_sync_mode": "global999_tts_caption_lockstep"
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        2488.38,
+        2775.7,
+        3521.13,
+        1566.87
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 2488.38,
+            "duration_ms": 2488.38
+          },
+          {
+            "start_ms": 2488.38,
+            "end_ms": 5264.08,
+            "duration_ms": 2775.7
+          },
+          {
+            "start_ms": 5264.08,
+            "end_ms": 8785.21,
+            "duration_ms": 3521.13
+          },
+          {
+            "start_ms": 8785.21,
+            "end_ms": 10352.08,
+            "duration_ms": 1566.87
+          }
+        ],
+        "boundary_count": 18,
+        "caption_signature": "099f87a210f0e3a09e8285c08127d8afe10a6fd83b033835c76621b742c37e8d"
+      }
     },
     {
       "tts": "배터리 5000mAh에 45W 유선·25W 무선 충전을 지원합니다. 카메라는 50MP 초광각 탑재로 광활한 풍경과 단체 사진에서 더 넓은 화각을 담을 수 있습니다.",
@@ -278,7 +362,40 @@
         "chunk_count": 4
       },
       "_codex_contextual_narrative": true,
-      "_codex_sync_mode": "global999_tts_caption_lockstep"
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        2162.67,
+        2661.29,
+        1963.0,
+        2816.91
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 2162.67,
+            "duration_ms": 2162.67
+          },
+          {
+            "start_ms": 2162.67,
+            "end_ms": 4823.96,
+            "duration_ms": 2661.29
+          },
+          {
+            "start_ms": 4823.96,
+            "end_ms": 6786.96,
+            "duration_ms": 1963.0
+          },
+          {
+            "start_ms": 6786.96,
+            "end_ms": 9603.87,
+            "duration_ms": 2816.91
+          }
+        ],
+        "boundary_count": 25,
+        "caption_signature": "2879fe86f9879c95aa12d60f0b80de2a8b0ae4cef4824a25ec13f376b2d65df2"
+      }
     },
     {
       "tts": "와이드폴드는 외부 화면이 더 넓어 태블릿에 가까운 멀티태스킹 경험을 제공합니다. 기본 폴드8보다 한 화면에 더 많은 정보를 띄울 수 있어 업무·문서 작업에 유리합니다.",
@@ -344,7 +461,40 @@
         "chunk_count": 4
       },
       "_codex_contextual_narrative": true,
-      "_codex_sync_mode": "global999_tts_caption_lockstep"
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        2118.67,
+        2423.58,
+        2077.46,
+        2306.34
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 2118.67,
+            "duration_ms": 2118.67
+          },
+          {
+            "start_ms": 2118.67,
+            "end_ms": 4542.25,
+            "duration_ms": 2423.58
+          },
+          {
+            "start_ms": 4542.25,
+            "end_ms": 6619.71,
+            "duration_ms": 2077.46
+          },
+          {
+            "start_ms": 6619.71,
+            "end_ms": 8926.05,
+            "duration_ms": 2306.34
+          }
+        ],
+        "boundary_count": 25,
+        "caption_signature": "9785d8bcf42cb66f9f41fbfc13f4bcacbdc1e0d639b8e4c53b6ff16d1e8cd87a"
+      }
     }
   ],
   "cta": {
@@ -403,7 +553,28 @@
     "_codex_contextual_narrative": true,
     "_codex_sync_mode": "global999_tts_caption_lockstep",
     "_codex_fixed_cta": true,
-    "_codex_narration_source": "fixed_cta_contract"
+    "_codex_narration_source": "fixed_cta_contract",
+    "tts_chunk_weights": [
+      1707.75,
+      1804.54
+    ],
+    "_tts_timing": {
+      "mode": "word_boundary_text_align",
+      "windows": [
+        {
+          "start_ms": 0.0,
+          "end_ms": 1707.75,
+          "duration_ms": 1707.75
+        },
+        {
+          "start_ms": 1707.75,
+          "end_ms": 3512.29,
+          "duration_ms": 1804.54
+        }
+      ],
+      "boundary_count": 6,
+      "caption_signature": "db4c57a05254654841d0c63b2eea20bad43e358510298ef607bf41bcae3b9e5d"
+    }
   },
   "_auto_generated": true,
   "_chunk_logic_v2": true,
@@ -484,174 +655,6 @@
           "value": "phone_setup_ready"
         },
         "context": "공개는 2026년 7월 22일 영국 런던에서 진행되는 하반기 갤럭시 언팩, 공개·출시 7월 22일 런던 ['공개·출시', '7월 22일 런던'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "appliance"
-        },
-        "to": {
-          "type": "illust",
-          "value": "official_sale_9dc82f05"
-        },
-        "context": "런던에서 진행되는 하반기 갤럭시 언팩, 정식 판매는 7월 말에서 8월 초 글로벌 동시 출시가 유력합니다 공개·출시 7월 22일 런던 ['공개·출시', '7월 22일 런던'] 뉴스",
-        "reason": "illust lexical kw hits=2 (content-gate 면제): official_sale_9dc82f05"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "battery_charge_range"
-        },
-        "to": {
-          "type": "illust",
-          "value": "phone_settings_toggle"
-        },
-        "context": "정식 판매는 7월 말에서 8월 초 글로벌 동시 출시가 유력합니다 플립8과 함께 발표됩니다 공개·출시 7월 22일 런던 ['공개·출시', '7월 22일 런던'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 5,
-        "from": {
-          "type": "illust",
-          "value": "battery_overheat"
-        },
-        "to": {
-          "type": "illust",
-          "value": "device_os_requirement"
-        },
-        "context": "동시 출시가 유력합니다 플립8과 함께 발표됩니다 공개·출시 7월 22일 런던 ['공개·출시', '7월 22일 런던'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "device_data_transfer"
-        },
-        "context": "와이드폴드 외부 디스플레이는 5.4인치, 펼쳤을 때 내부는 7.6인치입니다 화면 외부 5.4 + 내부 7.6 인치 ['화면', '외부 5.4 + 내부 7.6 인치'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "aluminum_label"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "와이드폴드 외부 디스플레이는 5.4인치, 펼쳤을 때 내부는 7.6인치입니다 외부 전면 카메라 펀치홀은 3.7mm에서 2.5mm로 화면 외부 5.4 + 내부 7.6 인치 ['화면', '외부 5.4 + 내부 7.6 인치",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "appliance"
-        },
-        "to": {
-          "type": "illust",
-          "value": "phone_setup_ready"
-        },
-        "context": "펼쳤을 때 내부는 7.6인치입니다 외부 전면 카메라 펀치홀은 3.7mm에서 2.5mm로 축소되어 화면 가림이 줄어듭니다 화면 외부 5.4 + 내부 7.6 인치 ['화면', '외부 5.4 + 내부 7.6 인치'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "image",
-          "value": "photos/배터리_충전.JPG"
-        },
-        "context": "배터리 5000mAh에 45W 유선·25W 무선 충전을 지원합니다 성능 5000mAh + 50MP 초광각 ['성능', '5000mAh + 50MP 초광각'] 뉴스",
-        "reason": "photo lexical dist=1 gen=0: 배터리_충전.JPG"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "aluminum_label"
-        },
-        "to": {
-          "type": "illust",
-          "value": "phone_settings_toggle"
-        },
-        "context": "배터리 5000mAh에 45W 유선·25W 무선 충전을 지원합니다 카메라는 50MP 초광각 탑재로 광활한 성능 5000mAh + 50MP 초광각 ['성능', '5000mAh + 50MP 초광각'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "appliance"
-        },
-        "to": {
-          "type": "illust",
-          "value": "device_os_requirement"
-        },
-        "context": "유선·25W 무선 충전을 지원합니다 카메라는 50MP 초광각 탑재로 광활한 풍경과 단체 사진에서 더 넓은 화각을 담을 수 있습니다 성능 5000mAh + 50MP 초광각 ['성능', '5000mAh + 50MP 초광",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "battery_charge_range"
-        },
-        "to": {
-          "type": "illust",
-          "value": "device_data_transfer"
-        },
-        "context": "카메라는 50MP 초광각 탑재로 광활한 풍경과 단체 사진에서 더 넓은 화각을 담을 수 있습니다 성능 5000mAh + 50MP 초광각 ['성능', '5000mAh + 50MP 초광각'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "aluminum_label"
-        },
-        "to": {
-          "type": "illust",
-          "value": "phone_setup_ready"
-        },
-        "context": "와이드폴드는 외부 화면이 더 넓어 태블릿에 가까운 멀티태스킹 경험을 제공합니다 기본 폴드8보다 한 화면에 더 많은 정보를 차별점 태블릿형 멀티태스킹 ['차별점', '태블릿형 멀티태스킹'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "appliance"
-        },
-        "to": {
-          "type": "illust",
-          "value": "phone_settings_toggle"
-        },
-        "context": "가까운 멀티태스킹 경험을 제공합니다 기본 폴드8보다 한 화면에 더 많은 정보를 띄울 수 있어 업무·문서 작업에 유리합니다 차별점 태블릿형 멀티태스킹 ['차별점', '태블릿형 멀티태스킹'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       }
     ],

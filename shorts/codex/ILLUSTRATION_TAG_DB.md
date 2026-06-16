@@ -30,13 +30,13 @@
 | `cpt_09b8db78` | auto | 0 |  |
 | `cpt_0a1ac199` | auto | 0 |  |
 | `cpt_0ddb8d80` | auto | 0 |  |
-| `cpt_0dfddb85` | auto, library | 1 | 024_news_galaxy_fold8_widefold |
+| `cpt_0dfddb85` | auto, library | 0 |  |
 | `cpt_163f537d` | auto | 0 |  |
 | `cpt_1a196d6d` | auto | 0 |  |
 | `cpt_313e9e00` | auto | 0 |  |
 | `cpt_3317f8c6` | auto | 0 |  |
 | `cpt_392743cd` | auto, library | 1 | 023_qa_senior_phone_recommendation |
-| `cpt_3a2d2cbd` | auto, library | 1 | 024_news_galaxy_fold8_widefold |
+| `cpt_3a2d2cbd` | auto, library | 0 |  |
 | `cpt_4729c912` | auto, library | 3 | 019_news_samsung_thank_you_festival |
 | `cpt_496029c6` | auto, library | 0 |  |
 | `cpt_55c40fb8` | auto | 0 |  |
@@ -63,7 +63,7 @@
 | `cpt_a0d7df46` | auto | 0 |  |
 | `cpt_a1caaea6` | auto, library | 3 | 020_qa_apple_pay_korea_card |
 | `cpt_a91efa70` | auto | 0 |  |
-| `cpt_abbc8a1e` | auto, library | 1 | 024_news_galaxy_fold8_widefold |
+| `cpt_abbc8a1e` | auto, library | 0 |  |
 | `cpt_b5a15155` | auto, library | 1 | 015_qa_msafer_pass_identity_block |
 | `cpt_b90dc475` | auto | 0 |  |
 | `cpt_bf3a83cf` | auto | 0 |  |
@@ -177,7 +177,7 @@
 
 ## Recent videos
 
-- `024_news_galaxy_fold8_widefold`: cpt_0dfddb85, basic_fold_202d754f, cpt_3a2d2cbd, cpt_abbc8a1e, london_unpack_eb61ad77, official_sale_9dc82f05, phone_settings_toggle, device_os_requirement, device_data_transfer, smartphone, phone_setup_ready
+- `024_news_galaxy_fold8_widefold`: basic_fold_202d754f, smartphone, phone_setup_ready, london_unpack_eb61ad77, official_sale_9dc82f05, phone_settings_toggle, device_os_requirement, device_data_transfer
 - `023_qa_senior_phone_recommendation`: post_parents_phone_5e1d6c3b, parents_chat_c1d70b74, parents_vision_231bf461, size_guide_afe009df, cpt_392743cd, phone_setup_ready, phone_settings_toggle, device_os_requirement, device_data_transfer, smartphone
 - `022_tip_galaxy_battery_save_5`: smartphone, phone_setup_ready, phone_settings_toggle, device_os_requirement, device_data_transfer, personal_data_63b96014, lock_screen_only_e80c4860
 - `021_news_galaxy_flip8_exynos`: unpack_867ebe81, mounted_body_496029c6, cpt_67a38371, mid_release_98cab19a, official_sale_9dc82f05, device_data_transfer, smartphone, appliance, camera_battery_ecd040c7, ti_decrease, aluminum_label, battery_charge_range, optimized_charging

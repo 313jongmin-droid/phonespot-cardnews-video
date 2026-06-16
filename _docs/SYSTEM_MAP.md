@@ -199,6 +199,7 @@
 **수정 시 읽을 것**
 - 스크립트 생성 로직: `build_script.py`만.
 - 자막 타이밍/동기: `codex_caption_lockstep.py` + `codex_enhance_script.py`.
+- **★ TTS 타이밍 graceful fallback (2026-06-14)**: `generate_tts.py build_chunk_timing`이 단어경계 정렬 실패 시(날짜 "7월 22일"·영문 "Z 폴드8" 등 **TTS 발음≠글자**) RuntimeError로 **빌드를 죽이던 것 → `character_weight_fallback` 반환**(근사 동기화로 렌더). `verify_tts_timing.py`: ① `mode != word_boundary` 무조건 에러였던 것 → char_fallback은 통과(unexpected 모드만 에러) ② **ms/window 검사를 word_boundary 모드에서만** 실행(char_fallback은 weights=글자수·windows=[] 라 ms로 보면 "22ms 너무짧음" 오탐). `run_codex_casual.bat`: `verify_tts_timing.py --allow-char-fallback`(char_fallback→경고). **결과: 날짜/영문 섹션만 근사싱크+경고, 나머지 정밀, 빌드 성공.** 그 섹션도 정밀 원하면 기사 한글화(날짜·영문 풀어쓰기) 또는 `pip install -U edge-tts`. 검증 024 hook.
 - 일러스트 매칭 품질: E 단원.
 - 유튜브 제목/설명: `publish_codex_package.py`.
 
@@ -484,6 +485,7 @@
 ---
 
 ## 변경 이력 (이 맵 자체)
+- 2026-06-14: **TTS 타이밍 graceful fallback (C단원).** 단어경계 정렬 실패(날짜/영문 발음≠글자)가 빌드를 죽이던 것 수정 → `generate_tts` char_weight_fallback 반환 + `verify_tts_timing` 게이트(char_fallback 모드 통과 + ms/window 검사 word_boundary 한정) + bat `--allow-char-fallback`. 날짜/영문 섹션만 근사싱크+경고, 나머지 정밀, 빌드 성공. 정밀=기사 한글화 레버(024 hook 검증).
 - 2026-06-14: **★ 자막 정밀싱크(B)+오렌지강조 + content-gate 키워드면제 + CLIP 설치 + 한글화룰 (C·E·J단원).** ① B=`chunkUtil` 정밀모드(word_boundary)면 가독바닥 OFF→자막 발화에 정확 비례(`CasualCard`가 `_tts_timing.mode` 읽어 `precise` 전파). ② 자막강조=`CasualCaption` 작성자 `caption_emphasis`만 오렌지·정확매칭·못맞으면 스킵(자동패턴 OFF). ③ 키워드≥2 매칭은 CLIP content-gate 면제(추상 일러 거부 보완, cpt 제외). ④ CLIP(jina-clip) 설치완료(text_model snapshot_download로 채움) + 임계 0.28→0.24(bat env). ⑤ 기사스펙에 영문기능명→한글구체어 룰(`article_authoring_spec.md`). 검증: 023(한글) 주제비주얼 8개·smartphone 2·전섹션 정밀싱크 vs 022(영문) 2개·19중립 = 한글화 효과 입증. **콘텐츠 한계(영문/추상)는 임계/일러 아니라 기사집필 레버.**
 - 2026-06-13: **★ 매칭 망가짐의 진짜 뿌리 = `codex_unique_illustration_guard` 버그(검증완료).** 가드가 semantic_match 뒤에 중복 중립을 유니크화하며 cpt·무관 그림을 되살림 → cpt·blocklist 제외 + 중립 반복 허용으로 수정. 재렌더 224859에서 cpt=0 확인. 포토 "일러스트보다 우수할 때만" 규칙(`photo ≥ best_ill`)도 추가. 남은 appliance/ti_decrease는 매처 약한픽/그리디 = 에셋 보강으로(함정 박음).
 - 2026-06-13: **E단원에 실사 포토 라이브러리 박음 (사장님 설계).** `assets/photos/`(한글 파일명=라벨) → 매칭 1순위(`≥PHOTO_MIN` 기본 0.80, env) → 일러스트 → 생성요청. `build_photo_index`+`best_photo` 게이트, `ImageVisual`로 렌더. 텍스트 엔진만 써 CLIP 미설치여도 작동. git 비추적(렌더 PC에 직접). 함정에 "안 뜨는 3원인" 박음. **검증 대기**(사진 넣고 0.6으로 재렌더).
