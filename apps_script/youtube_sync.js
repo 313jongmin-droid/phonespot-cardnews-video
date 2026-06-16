@@ -386,7 +386,7 @@ function parseISO8601DurationSeconds(s) {
 
 function addYouTubeMenuItem() {
   SpreadsheetApp.getUi()
-    .createMenu('🎬 YouTube')
+    .createMenu('🎥 유튜브 자동화')
     .addItem('🔄 지금 갱신 (데이터)', 'fetchYouTubeAnalyticsDaily')
     .addItem('🧠 인사이트 MD 생성', 'generateYouTubeInsightsMarkdown')
     .addSeparator()

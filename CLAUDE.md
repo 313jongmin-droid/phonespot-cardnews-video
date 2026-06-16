@@ -313,6 +313,14 @@ git ls-files -z | grep -ziE '\.(bat|ps1|cmd|vbs)$' | xargs -0 md5sum | sort \
   - **③ ★ 멀티 브랜드 책임 분담 결정 (사장님)**: 광고운영 task = 시트 관리 + GA4 매칭 + 자동화 집중. **Phase 2~4 멀티 브랜드 셋업(`_shared/` 폴더 분리, `brands/<brand>/`, workflow step 추가, KT/국민/진짜폰스팟 신설)은 별도 task로 분리.** 광고운영 task가 안 만짐. 정본 = `ads/MULTI_BRAND_ARCHITECTURE.md` "다른 task 충돌 방지 — 책임 분담" 섹션 갱신 + 별도 task 시작 명령 박힘.
   - **★ 사장님 단정 확인** (GA4 분석 기반): 당근 광고 = 리틀리 URL + 시티마켓 URL 둘 다 박혀있고, 리틀리 URL = utm_source=littly로 박힘 → sessionSource=`daangn` 행은 **모두 시티마켓 직접 유입**. 즉 당근의 GA4세션(K열, daangn+session_start 매칭) = 당근의 시티마켓 도달 수와 동일 의미. 시티마켓 직접 컬럼(M)은 미래 메타/네이버가 시티마켓 직접 URL 광고 시도 시 정확 추적 위한 일반화 슬롯.
 
+- 2026-06-15 (세션 5): **광고 시트 문의수+CPL 매핑 + 메뉴 통일 + 전체새로고침 강화 + 1회성 코드 정리.**
+  - **① 광고 시트 문의수 자동 매핑 + CPL 컬럼**: 메타_통합 21컬럼 / 네이버_통합 21컬럼 / 당근_통합 20컬럼 (시티마켓 분리 + CPL 신규). 매칭 키: 메타=`COUNTIFS(D,"페북")+COUNTIFS(D,"인스타")+COUNTIFS(D,"스레드")` (메타 산하 전체), 네이버=`COUNTIFS(D,"네이버")`, 당근 P 카톡문의=`COUNTIFS(D,"당근")` 자동 + 당근 Q 앱문의=**수기 입력** (API 없음, sync가 setFormula 박지 않음) + 당근 R CPL=`=F/(P+Q)` 합산.
+  - **② 문의접수 D열 표준값 통일**: `구글/네이버/카카오/페북/당근/인스타/스레드/뽐뿌/내방/지인/기타/(빈)` 12개. 옛값 자동 치환: "메타"→"페북", "불확실"→"기타". `setupInquirySheetDropdowns()` 함수 = 미래 KT/국민/진짜폰스팟 신설 시 같은 함수 호출로 동일 셋업 (멀티 브랜드 일관성 코드 단 보장).
+  - **③ 메뉴 명칭/아이콘 통일**: `🛠 폰스팟 운영 → 🚀 폰스팟 통합` / `📡 메타 자동화 → 📘` / `🔍 네이버 자동화 → 🟢` / `🥕 당근 자동화 → 🟠` / `🎬 YouTube → 🎥 유튜브 자동화` (한글 + "자동화" 통일, 채널 아이덴티티 색).
+  - **④ `refreshAll()` 강화**: 옛 = 메타+GA4+유튜브만. 새 = + `syncNaverIntegrated()` + `syncInstagramDaily()` + `syncDanggnGA4({interactive:false})` 추가 = 전체 새로고침 1번 클릭 = 6개 채널(메타/네이버/인스타/당근/구글GA4/유튜브) 모두 sync + 인사이트 MD + 매트릭스/KPI/추세 차트 갱신. `typeof === 'function'` 가드로 함수 없어도 안전.
+  - **⑤ 1회성 코드 정리** (사장님 요청): `migrateCitymarketColumns` / `migrateOneSheet_` / `migrateDanggnInquirySplit_` / `migrateAddCplColumn_` / `autoDiscoverDanggnAdgroups_` 통째 삭제 (사장님 실행 완료 + 당근 자동 발견 보류 결정). `setupInquirySheetDropdowns`만 유지 (미래 브랜드 신설 시 재사용).
+  - **⚠️ 사장님 수동 정리 필요**: 당근_통합 L1 "시티마켓 " (공백) → "시티마켓 클릭" / 당근_통합 Q1 "앱\n문의" (줄바꿈) → "앱문의" / 당근_UTM_매핑 A1 "ㅇ" → "당근 광고그룹명(한글)" / 네이버_통합 22~28열 빈 컬럼 삭제 (선택).
+
 - 2026-06-12: **광고 소재 생성기(generator.html) 대규모 리팩 + Apify 벤치마크 합류 (34 task).** 진입점: `ads/IMPLEMENTATION_GUIDE_2026-06-09.md` (단일 클로드 참조 문서, §6 함수 인덱스 + §11~12 디자인 토큰 + §14 다음 작업 후보). 핵심 변경:
   - **카피 생성 2모드**: 📚 라이브러리·벤치마크 기반 (템플릿 + 검증 카피) + 🤖 LLM 프롬프트 (Claude/GPT 챗용). 신규 컨셉 자유 입력바, 옵션 C 컬럼 시스템은 폐기.
   - **buildCopyPrompt 강화**: brand voice 5가지 + 단어 반복 ≤3회 + 길이 분포 강제 (5/7/8/5) + 라이브러리 우수 사례 박힘 + 벤치마크 후킹 reference + 출력 마크다운 표 + 자가검증.

@@ -54,41 +54,6 @@ const DANGGN_UTM_HEADERS = [
   '당근 광고그룹명(한글)', 'utm_campaign(영문)', '첫 발견일', '상태', '메모'
 ];
 
-/**
- * ★ 1회 실행: 시티마켓 컬럼 분리 마이그레이션 (2026-06-15)
- *
- * 옛 구조 (17컬럼): ... L 시티마켓 / M 카톡전환률 / N 카톡당CPC / ...
- * 새 구조 (18컬럼): ... L 시티마켓 클릭 / M 시티마켓 직접 / N 카톡전환률 / O 카톡당CPC / ...
- *
- * 메타_통합 / 네이버_통합 / 당근_통합 3개 시트 자동 마이그레이션:
- *   - 컬럼 수 점검
- *   - 시티마켓 컬럼 옆에 새 컬럼 1개 삽입 (기존 데이터 자동 우측 이동)
- *   - 헤더 갱신
- *   - idempotent (이미 분리됐으면 스킵)
- */
-function migrateCitymarketColumns() {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
-  const ui = SpreadsheetApp.getUi();
-  const results = [];
-
-  // ===== 1단계: 시티마켓 컬럼 분리 (옛 단일 "시티마켓" → "시티마켓 클릭" + "시티마켓 직접") =====
-  results.push(migrateOneSheet_(ss, '메타_통합', 14, '시티마켓 클릭', '시티마켓 직접', 19, 20));
-  results.push(migrateOneSheet_(ss, '네이버_통합', 14, '시티마켓 클릭', '시티마켓 직접', 19, 20));
-  results.push(migrateOneSheet_(ss, '당근_통합', 12, '시티마켓 클릭', '시티마켓 직접', 17, 18));
-
-  // ===== 2단계: CPL 컬럼 추가 (문의수 옆에 신규 CPL, 2026-06-15) =====
-  results.push(migrateAddCplColumn_(ss, '메타_통합', 18, 21));   // 문의수=R(18) → S(19) CPL
-  results.push(migrateAddCplColumn_(ss, '네이버_통합', 18, 21));  // 동일
-
-  // ===== 3단계: 당근_통합 = 문의수 → 카톡문의/앱문의 + CPL (18→20) =====
-  results.push(migrateDanggnInquirySplit_(ss));
-
-  const msg = '광고 시트 컬럼 마이그레이션 결과:\n\n' + results.join('\n') +
-    '\n\n다음 = 메뉴에서 광고그룹별 통합 / 30일 백필 또는 GA4 매칭 새로고침 클릭 → 새 컬럼에 수식 박힘.';
-  Logger.log(msg);
-  try { ui.alert(msg); } catch (e) {}
-}
-
 // ============ 문의접수 시트 표준화 (모든 브랜드 공통, 2026-06-15) ============
 
 /**
@@ -184,87 +149,6 @@ function setupInquirySheetDropdowns() {
   try { ui.alert(msg); } catch (e) {}
 }
 
-
-/**
- * 당근_통합 시트 = 문의수 1개 → 카톡문의 / 앱문의 / CPL 3개로 확장 (2026-06-15)
- *
- * 옛 (18컬럼, 시티마켓 분리 후): ... O 카톡당CPC / P 문의수 / Q 개통수 / R 메모
- * 새 (20컬럼): ... O 카톡당CPC / P 카톡문의 / Q 앱문의 / R CPL / S 개통수 / T 메모
- *
- * idempotent — 이미 분리됐으면 스킵.
- */
-function migrateDanggnInquirySplit_(ss) {
-  const sh = ss.getSheetByName('당근_통합');
-  if (!sh) return '❌ 당근_통합: 시트 없음 (스킵)';
-
-  const curCols = sh.getLastColumn();
-
-  // 이미 마이그레이션 됨 점검
-  if (curCols >= 20) {
-    const headers = sh.getRange(1, 1, 1, 20).getValues()[0];
-    if (headers[15] === '카톡문의' && headers[16] === '앱문의' && headers[17] === 'CPL') {
-      return '✅ 당근_통합: 이미 카톡/앱/CPL 분리됨 (스킵)';
-    }
-  }
-
-  // 1. P (16) 문의수 → 카톡문의 (헤더 갱신, 옛 수동 데이터 = 카톡 문의로 간주)
-  sh.getRange(1, 16).setValue('카톡문의');
-
-  // 2. P (16) 옆에 컬럼 2개 삽입 (Q 앱문의 신규 + R CPL 신규)
-  //    기존 Q (개통수) / R (메모) → S / T 로 자동 이동
-  sh.insertColumnsAfter(16, 2);
-  sh.getRange(1, 17).setValue('앱문의');
-  sh.getRange(1, 18).setValue('CPL');
-
-  return `✅ 당근_통합: 카톡문의/앱문의/CPL 분리 (${curCols}→${sh.getLastColumn()})`;
-}
-
-
-/**
- * 문의수 컬럼 옆에 CPL 컬럼 1개 삽입 (idempotent)
- */
-function migrateAddCplColumn_(ss, sheetName, inquiryColIdx, newColCount) {
-  const sh = ss.getSheetByName(sheetName);
-  if (!sh) return `❌ ${sheetName}: 시트 없음 (CPL 스킵)`;
-
-  const curCols = sh.getLastColumn();
-  if (curCols >= newColCount) {
-    const headers = sh.getRange(1, 1, 1, newColCount).getValues()[0];
-    if (headers[inquiryColIdx] === 'CPL') {
-      return `✅ ${sheetName}: CPL 컬럼 이미 박힘 (스킵)`;
-    }
-  }
-
-  // 문의수 옆에 CPL 컬럼 삽입
-  sh.insertColumnAfter(inquiryColIdx);
-  sh.getRange(1, inquiryColIdx + 1).setValue('CPL');
-
-  return `✅ ${sheetName}: CPL 컬럼 추가 (${curCols}→${sh.getLastColumn()})`;
-}
-
-function migrateOneSheet_(ss, sheetName, oldCityColIdx, newColAName, newColBName, oldColCount, newColCount) {
-  const sh = ss.getSheetByName(sheetName);
-  if (!sh) return `❌ ${sheetName}: 시트 없음 (스킵)`;
-
-  const curCols = sh.getLastColumn();
-
-  // 이미 마이그레이션 됨 (새 컬럼 수 이상)
-  if (curCols >= newColCount) {
-    const headers = sh.getRange(1, 1, 1, newColCount).getValues()[0];
-    if (headers[oldCityColIdx - 1] === newColAName && headers[oldCityColIdx] === newColBName) {
-      return `✅ ${sheetName}: 이미 분리됨 (스킵)`;
-    }
-  }
-
-  // 컬럼 삽입 (oldCityColIdx 우측에 1개)
-  sh.insertColumnAfter(oldCityColIdx);
-
-  // 헤더 갱신 = 새 컬럼만
-  sh.getRange(1, oldCityColIdx).setValue(newColAName);
-  sh.getRange(1, oldCityColIdx + 1).setValue(newColBName);
-
-  return `✅ ${sheetName}: ${curCols}→${sh.getLastColumn()}컬럼 (시티마켓 분리 완료)`;
-}
 
 
 /**
@@ -507,83 +391,12 @@ function logSync_(funcName, status, message) {
  * Code.js onOpen에서 buildDanggnSyncMenu_(SpreadsheetApp.getUi()) 호출.
  */
 function buildDanggnSyncMenu_(ui) {
-  ui.createMenu('🥕 당근 자동화')
+  ui.createMenu('🟠 당근 자동화')
     .addItem('🔄 GA4 매칭 새로고침 (전체 행)', 'syncDanggnGA4')
     .addSeparator()
     .addItem('🆕 시트 신설 / 헤더 갱신', 'createDanggnIntegratedSheet')
     .addItem('🔍 미매핑 광고그룹 보기', 'showUnmappedDanggnAdgroups')
-    .addSeparator()
-    .addItem('🔧 광고시트 컬럼 마이그레이션 (시티마켓+CPL, 1회)', 'migrateCitymarketColumns')
-    .addItem('📋 문의접수 D열 표준화 (드롭다운+옛값치환, 1회)', 'setupInquirySheetDropdowns')
+    .addItem('📋 문의접수 D열 표준화', 'setupInquirySheetDropdowns')
     .addSeparator()
     .addItem('⏰ 당근 Daily Trigger 설정 (02:30)', 'setupDanggnTrigger')
-    .addItem('🔑 utm_source 값 확인', 'showDanggnUtmSource')
-    .addToUi();
-}
-
-/**
- * 당근_통합 시트의 광고그룹명 중 당근_UTM_매핑에 없는 것 찾기
- */
-function showUnmappedDanggnAdgroups() {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
-  const sheet = ss.getSheetByName(DANGGN_SHEET);
-  const utmSheet = ss.getSheetByName(DANGGN_UTM_SHEET);
-
-  if (!sheet || !utmSheet) {
-    SpreadsheetApp.getUi().alert('당근_통합 또는 당근_UTM_매핑 시트가 없습니다. 먼저 "🆕 시트 신설" 실행.');
-    return;
-  }
-
-  // 당근_통합 광고그룹명 (C열)
-  const lastRow = sheet.getLastRow();
-  if (lastRow < 2) {
-    SpreadsheetApp.getUi().alert('당근_통합 시트에 데이터가 없습니다.');
-    return;
-  }
-  const adgroupNames = sheet.getRange(2, 3, lastRow - 1, 1).getValues()
-    .map(function (r) { return r[0]; })
-    .filter(function (v) { return v; });
-  const uniqueNames = Array.from(new Set(adgroupNames));
-
-  // 당근_UTM_매핑 (A열 = 광고그룹명, B열 = utm_campaign)
-  const utmLastRow = utmSheet.getLastRow();
-  const mappings = {};
-  if (utmLastRow >= 2) {
-    const utmData = utmSheet.getRange(2, 1, utmLastRow - 1, 2).getValues();
-    utmData.forEach(function (r) {
-      if (r[0]) mappings[r[0]] = r[1] || '';
-    });
-  }
-
-  const unmapped = uniqueNames.filter(function (name) {
-    return !mappings.hasOwnProperty(name) || !mappings[name];
-  });
-
-  if (unmapped.length === 0) {
-    SpreadsheetApp.getUi().alert('✅ 모든 광고그룹이 utm_campaign에 매핑되어 있습니다 (' + uniqueNames.length + '개).');
-    return;
-  }
-
-  SpreadsheetApp.getUi().alert(
-    '⚠️ 미매핑 광고그룹 ' + unmapped.length + '개:\n\n' + unmapped.join('\n') +
-    '\n\n→ 당근_UTM_매핑 시트에 추가해 주세요.'
-  );
-}
-
-/**
- * 현재 등록된 DANGGN_UTM_SOURCE 값 표시
- */
-function showDanggnUtmSource() {
-  const value = PropertiesService.getScriptProperties().getProperty('DANGGN_UTM_SOURCE');
-  const ui = SpreadsheetApp.getUi();
-  if (!value) {
-    ui.alert(
-      '⚠️ DANGGN_UTM_SOURCE 미설정\n\n' +
-      'Apps Script 콘솔 → 프로젝트 설정 → 스크립트 속성에서\n' +
-      '속성 "DANGGN_UTM_SOURCE", 값 "danggn" (또는 GA4 실제 값) 등록 필요.\n\n' +
-      '미설정 시 기본값 "danggn" 사용.'
-    );
-  } else {
-    ui.alert('✅ DANGGN_UTM_SOURCE = "' + value + '"\n\nGA4 sessionSource와 일치하는지 확인하세요.');
-  }
-}
+    .addItem('🔑 utm_source 값 확인

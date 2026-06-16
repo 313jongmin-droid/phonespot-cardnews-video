@@ -17,8 +17,8 @@ const KAKAO_REPORT_DATA_ROW = 5;
 // ──[일상]── 시트 열 때 커스텀 메뉴 생성
 function onOpen() {
   SpreadsheetApp.getUi()
-    .createMenu('🛠 폰스팟 운영')
-    .addItem('⚡ 전체 새로고침', 'refreshAll')
+    .createMenu('🚀 폰스팟 통합')
+    .addItem('⚡ 전체 새로고침 (모든 채널)', 'refreshAll')
     .addSeparator()
     .addItem('🔄 GA4 최신 데이터 가져오기 (어제)', 'fetchGA4Daily')
     .addItem('📥 GA4 30일 다시 가져오기 (백필)', 'fetchGA4Backfill')
@@ -27,27 +27,39 @@ function onOpen() {
     .addItem('📉 문의접수 입력률 갱신', 'updateKakaoInquiryCoverage')
     .addToUi();
 
-  // 📡 메타 자동화 메뉴 (meta-sync.gs) — 같은 프로젝트의 다른 파일 함수
+  // 📘 메타 자동화 메뉴 (meta-sync.gs)
   try { buildMetaSyncMenu_(SpreadsheetApp.getUi()); } catch (e) {}
 
-  // 🎬 YouTube 메뉴 (youtube_sync.gs) — 별도 설치 스크립트. onOpen에서 호출돼야 버튼이 뜸
+  // 🎥 유튜브 자동화 메뉴 (youtube_sync.gs)
   try { addYouTubeMenuItem(); } catch (e) {}
 
-  // 🔍 네이버 자동화 메뉴 (naver-sync.gs)
+  // 🟢 네이버 자동화 메뉴 (naver-sync.gs)
   try { buildNaverSyncMenu_(SpreadsheetApp.getUi()); } catch (e) {}
 
-  // 🥕 당근 자동화 메뉴 (danggn-sync.gs, 2026-06-15)
+  // 🟠 당근 자동화 메뉴 (danggn-sync.gs, 2026-06-15)
   try { buildDanggnSyncMenu_(SpreadsheetApp.getUi()); } catch (e) {}
 }
 
-// ──[일상]── 전체 새로고침: GA4 + 메타 + 유튜브 sync + 대시보드 빌드 + 인사이트 MD 생성
+// ──[일상]── 전체 새로고침: 모든 채널 sync + 대시보드 빌드 + 인사이트 MD 생성 (2026-06-15 강화)
 function refreshAll() {
   const ui = SpreadsheetApp.getUi();
   const errors = [];
 
-  // ===== 1단계: 외부 API 데이터 sync =====
+  // ===== 1단계: 외부 API 데이터 sync (모든 채널) =====
   try { syncAll(); }
   catch (e) { errors.push('syncAll(메타+GA4): ' + e.message); Logger.log(e); }
+
+  // ★ 2026-06-15: 네이버 자동화 추가
+  try { if (typeof syncNaverIntegrated === 'function') syncNaverIntegrated(); }
+  catch (e) { errors.push('syncNaverIntegrated: ' + e.message); Logger.log(e); }
+
+  // ★ 2026-06-15: 인스타 자동화 추가
+  try { if (typeof syncInstagramDaily === 'function') syncInstagramDaily(); }
+  catch (e) { errors.push('syncInstagramDaily: ' + e.message); Logger.log(e); }
+
+  // ★ 2026-06-15: 당근 GA4 매칭 추가 (시트 비어있으면 silent)
+  try { if (typeof syncDanggnGA4 === 'function') syncDanggnGA4({ interactive: false }); }
+  catch (e) { errors.push('syncDanggnGA4: ' + e.message); Logger.log(e); }
 
   try { fetchYouTubeAnalyticsDaily(); }
   catch (e) { errors.push('fetchYouTubeAnalyticsDaily: ' + e.message); Logger.log(e); }
@@ -71,7 +83,7 @@ function refreshAll() {
 
   if (errors.length === 0) {
     ui.alert('✅ 전체 새로고침 완료\n🕐 ' + stamp +
-             '\n\n· GA4 + 메타 + 유튜브 sync\n· 메타 + 유튜브 인사이트 MD\n· 대시보드 + KPI 갱신');
+             '\n\n· GA4 + 메타 + 네이버 + 인스타 + 당근 + 유튜브 sync\n· 메타 + 유튜브 인사이트 MD\n· 대시보드 + KPI 갱신');
   } else {
     ui.alert('⚠️ 부분 완료\n🕐 ' + stamp +
              '\n\n실패 ' + errors.length + '건:\n' + errors.slice(0, 5).join('\n') +

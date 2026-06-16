@@ -562,7 +562,7 @@ function backfillNaverIntegrated30Days() {
 // ============ 네이버 자동화 메뉴 (별도) ============
 
 function buildNaverSyncMenu_(ui) {
-  ui.createMenu('🔍 네이버 자동화')
+  ui.createMenu('🟢 네이버 자동화')
     .addItem('📊 광고그룹별 통합 (어제)', 'syncNaverIntegrated')
     .addItem('⏪ 30일 백필', 'backfillNaverIntegrated30Days')
     .addSeparator()
