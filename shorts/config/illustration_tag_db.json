@@ -43,6 +43,21 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "basic_fold_202d754f": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "이번엔",
+        "기본",
+        "폴드",
+        "외에",
+        "와이드폴드"
+      ],
+      "note": "자동 발굴 개념: 이번엔 기본",
+      "available": true
+    },
     "battery_charge_range": {
       "tags": [
         "battery",
@@ -315,6 +330,20 @@
       ],
       "note": "자동 발굴 개념: 폴드 플립"
     },
+    "cpt_0dfddb85": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "런던",
+        "언팩",
+        "공개될",
+        "폴드"
+      ],
+      "note": "자동 발굴 개념: 런던 언팩",
+      "available": true
+    },
     "cpt_163f537d": {
       "tags": [
         "auto"
@@ -372,6 +401,18 @@
         "크면"
       ],
       "note": "자동 발굴 개념: 너무 작으면",
+      "available": true
+    },
+    "cpt_3a2d2cbd": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "모델",
+        "추가될"
+      ],
+      "note": "자동 발굴 개념: 모델 추가될",
       "available": true
     },
     "cpt_4729c912": {
@@ -690,6 +731,18 @@
         "갈아타려"
       ],
       "note": "자동 발굴 개념: 안드폰 중이신데"
+    },
+    "cpt_abbc8a1e": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "공개",
+        "영국"
+      ],
+      "note": "자동 발굴 개념: 공개 영국",
+      "available": true
     },
     "cpt_b5a15155": {
       "tags": [
@@ -1268,6 +1321,20 @@
         "계정 제거"
       ],
       "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "london_unpack_eb61ad77": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "런던",
+        "진행되",
+        "하반기",
+        "언팩"
+      ],
+      "note": "자동 발굴 개념: 런던 진행되",
       "available": true
     },
     "market_cap": {
@@ -2096,5 +2163,5 @@
       "available": true
     }
   },
-  "updated_at": "2026-06-15T01:28:37"
+  "updated_at": "2026-06-16T17:05:07"
 }

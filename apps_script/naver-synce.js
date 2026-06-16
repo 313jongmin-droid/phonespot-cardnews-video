@@ -273,7 +273,7 @@ function listAllAdgroups() {
 
 // ============ 상수 ============
 const SHEET_NAVER_INTEGRATED = '네이버_통합';
-const SHEET_NAVER_UTM_MAPPING = '네이버_UTM_매핑';
+const SHEET_NAVER_UTM_MAPPING = 'UTM_매핑';  // ★ 2026-06-15 통합 (메타와 공용)
 const NAVER_KT_FILTER = ['KT', '다이렉트샵'];
 
 
@@ -452,7 +452,8 @@ function syncNaverIntegrated(targetDate) {
 }
 
 
-// ============ 네이버_UTM_매핑 시트 + 자동 발견 ============
+// ============ UTM_매핑 통합 시트 + 자동 발견 (2026-06-15 통합 갱신) ============
+// 통합 시트 구조: A 채널 | B 광고그룹명(한글) | C utm_campaign(영문) | D 첫발견일 | E 상태 | F 메모
 
 function ensureNaverUtmMappingSheet_() {
   const ss = SpreadsheetApp.getActive();
@@ -460,52 +461,47 @@ function ensureNaverUtmMappingSheet_() {
   if (sh) return sh;
 
   sh = ss.insertSheet(SHEET_NAVER_UTM_MAPPING);
-  sh.getRange(1, 1, 1, 5).setValues([
-    ['네이버 광고그룹명(한글)', 'utm_campaign(영문)', '첫 발견일', '상태', '메모']
+  sh.getRange(1, 1, 1, 6).setValues([
+    ['채널', '광고그룹명(한글)', 'utm_campaign(영문)', '첫 발견일', '상태', '메모']
   ])
-    .setBackground('#03C75A').setFontColor('#FFFFFF').setFontWeight('bold')
+    .setBackground('#1F4E78').setFontColor('#FFFFFF').setFontWeight('bold')
     .setHorizontalAlignment('center').setBorder(true, true, true, true, true, true);
-  sh.setColumnWidth(1, 280);
-  sh.setColumnWidth(2, 180);
-  sh.setColumnWidth(3, 110);
-  sh.setColumnWidth(4, 110);
-  sh.setColumnWidth(5, 240);
+  sh.setColumnWidth(1, 90); sh.setColumnWidth(2, 220); sh.setColumnWidth(3, 180);
+  sh.setColumnWidth(4, 110); sh.setColumnWidth(5, 110); sh.setColumnWidth(6, 240);
   sh.setFrozenRows(1);
 
-  sh.getRange(2, 1, 1, 5).setValues([[
-    '※ 네이버 API 자동 발견 (덮어쓰지 X)',
-    '※ GA4 utm_campaign 영문 슬러그 입력',
-    '', '',
-    '※ 예: powerlink, iphone, kids_phone'
-  ]]).setFontColor('#888888').setFontStyle('italic').setBackground('#F8F9FA');
+  // 채널 드롭다운
+  const rule = SpreadsheetApp.newDataValidation()
+    .requireValueInList(['페북', '네이버', '당근', '구글', '카카오'], true).build();
+  sh.getRange(2, 1, sh.getMaxRows() - 1, 1).setDataValidation(rule);
 
   const rules = [
     SpreadsheetApp.newConditionalFormatRule()
       .whenTextEqualTo('⚠️ 매핑 필요')
       .setBackground('#FFE5E5').setFontColor('#C0392B').setBold(true)
-      .setRanges([sh.getRange('D3:D1000')]).build(),
+      .setRanges([sh.getRange('E2:E1000')]).build(),
     SpreadsheetApp.newConditionalFormatRule()
       .whenTextEqualTo('✅ 매핑됨')
       .setBackground('#E8F5E9').setFontColor('#1B5E20')
-      .setRanges([sh.getRange('D3:D1000')]).build()
+      .setRanges([sh.getRange('E2:E1000')]).build()
   ];
   sh.setConditionalFormatRules(rules);
 
-  Logger.log('네이버_UTM_매핑 시트 생성 완료');
+  Logger.log('UTM_매핑 통합 시트 생성 완료');
   return sh;
 }
 
 function autoDiscoverNaverAdgroups_(rows, ymd) {
   const sh = ensureNaverUtmMappingSheet_();
-  const dataStartRow = 3;
+  const dataStartRow = 2;
   const lastRow = sh.getLastRow();
 
+  // 네이버 채널 행만 추출
   const existing = new Set();
   if (lastRow >= dataStartRow) {
-    sh.getRange(dataStartRow, 1, lastRow - dataStartRow + 1, 1).getValues()
+    sh.getRange(dataStartRow, 1, lastRow - dataStartRow + 1, 2).getValues()
       .forEach(r => {
-        const name = String(r[0] || '').trim();
-        if (name) existing.add(name);
+        if (r[0] === '네이버' && r[1]) existing.add(String(r[1]).trim());
       });
   }
 
@@ -513,27 +509,57 @@ function autoDiscoverNaverAdgroups_(rows, ymd) {
   rows.forEach(r => {
     const name = String(r.adgroupName || '').trim();
     if (name && !existing.has(name)) {
-      newRows.push([name, '', ymd, '⚠️ 매핑 필요', '']);
+      newRows.push(['네이버', name, '', ymd, '⚠️ 매핑 필요', '']);
       existing.add(name);
     }
   });
 
   if (newRows.length > 0) {
-    sh.getRange(sh.getLastRow() + 1, 1, newRows.length, 5).setValues(newRows);
-    Logger.log('네이버_UTM_매핑: 신규 광고그룹 ' + newRows.length + '건 추가');
+    sh.getRange(sh.getLastRow() + 1, 1, newRows.length, 6).setValues(newRows);
+    Logger.log('UTM_매핑: 신규 네이버 광고그룹 ' + newRows.length + '건 추가');
   }
 
-  if (sh.getLastRow() >= dataStartRow) {
-    const range = sh.getRange(dataStartRow, 1, sh.getLastRow() - dataStartRow + 1, 4).getValues();
+  // 상태 갱신 (네이버 행만)
+  const newLastRow = sh.getLastRow();
+  if (newLastRow >= dataStartRow) {
+    const range = sh.getRange(dataStartRow, 1, newLastRow - dataStartRow + 1, 5).getValues();
     range.forEach((row, i) => {
-      const utm = String(row[1] || '').trim();
-      const status = String(row[3] || '').trim();
+      if (row[0] !== '네이버') return;
+      const utm = String(row[2] || '').trim();
+      const status = String(row[4] || '').trim();
       const desired = utm ? '✅ 매핑됨' : '⚠️ 매핑 필요';
       if (status !== desired) {
-        sh.getRange(dataStartRow + i, 4).setValue(desired);
+        sh.getRange(dataStartRow + i, 5).setValue(desired);
       }
     });
   }
+}
+
+
+
+// ============ 미매핑 네이버 광고그룹 보기 (메뉴 호출) ============
+function showUnmappedNaverAdgroups() {
+  const ss = SpreadsheetApp.getActive();
+  const sheet = ss.getSheetByName(SHEET_NAVER_UTM_MAPPING);
+  if (!sheet) {
+    SpreadsheetApp.getUi().alert('UTM_매핑 시트 아직 없음. syncNaverIntegrated 1회 실행 후 확인.');
+    return;
+  }
+  if (sheet.getLastRow() < 2) {
+    SpreadsheetApp.getUi().alert('UTM_매핑 시트 비어있음.');
+    return;
+  }
+  const data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 3).getValues();
+  const unmapped = data.filter(r => r[0] === '네이버' && r[1] && !r[2]);
+  if (unmapped.length === 0) {
+    SpreadsheetApp.getUi().alert('✅ 미매핑 네이버 광고그룹 없음.');
+    return;
+  }
+  const msg = unmapped.map((r, i) => `${i + 1}. ${r[1]}`).join('\n');
+  SpreadsheetApp.getUi().alert(
+    `⚠️ 미매핑 네이버 광고그룹 ${unmapped.length}개\n\n${msg}\n\n` +
+    `UTM_매핑 시트 C열에 영문 슬러그 박기. 박으면 네이버_통합 GA4 컬럼 자동 매칭.`
+  );
 }
 
 

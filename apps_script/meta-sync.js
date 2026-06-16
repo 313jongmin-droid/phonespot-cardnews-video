@@ -369,22 +369,26 @@ function syncMetaCampaignIntegrated(targetDate) {
   logSync_('syncMetaCampaignIntegrated', msg);
 }
 
-// ============ ★ UTM_매핑 시트 자동 발견 (2026-06-10) ============
+// ============ ★ UTM_매핑 통합 시트 자동 발견 (2026-06-15 통합 갱신) ============
+// 통합 시트 구조: A 채널 | B 광고그룹명(한글) | C utm_campaign(영문) | D 첫발견일 | E 상태 | F 메모
 function autoDiscoverAdsets_(adsetNames) {
   const ss = SpreadsheetApp.getActive();
   let sheet = ss.getSheetByName(SHEET_UTM_MAPPING);
   if (!sheet) {
     sheet = ss.insertSheet(SHEET_UTM_MAPPING);
-    sheet.appendRow(['메타 광고그룹명', '영문 슬러그', '첫 발견일', '상태', '메모']);
-    sheet.getRange(1, 1, 1, 5).setBackground('#1F4E78').setFontColor('#FFFFFF').setFontWeight('bold');
+    sheet.appendRow(['채널', '광고그룹명(한글)', 'utm_campaign(영문)', '첫 발견일', '상태', '메모']);
+    sheet.getRange(1, 1, 1, 6).setBackground('#1F4E78').setFontColor('#FFFFFF').setFontWeight('bold');
     sheet.setFrozenRows(1);
-    sheet.setColumnWidth(1, 220); sheet.setColumnWidth(2, 180);
-    sheet.setColumnWidth(3, 110); sheet.setColumnWidth(4, 100); sheet.setColumnWidth(5, 200);
+    sheet.setColumnWidth(1, 90); sheet.setColumnWidth(2, 220); sheet.setColumnWidth(3, 180);
+    sheet.setColumnWidth(4, 110); sheet.setColumnWidth(5, 100); sheet.setColumnWidth(6, 200);
+    const rule = SpreadsheetApp.newDataValidation()
+      .requireValueInList(['페북', '네이버', '당근', '구글', '카카오'], true).build();
+    sheet.getRange(2, 1, sheet.getMaxRows() - 1, 1).setDataValidation(rule);
   }
   const existingSet = new Set();
   if (sheet.getLastRow() >= 2) {
-    sheet.getRange(2, 1, sheet.getLastRow() - 1, 1).getValues()
-      .forEach(r => { if (r[0]) existingSet.add(String(r[0]).trim()); });
+    sheet.getRange(2, 1, sheet.getLastRow() - 1, 2).getValues()
+      .forEach(r => { if (r[0] === '페북' && r[1]) existingSet.add(String(r[1]).trim()); });
   }
   const today = Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyy-MM-dd');
   let added = 0;
@@ -393,19 +397,21 @@ function autoDiscoverAdsets_(adsetNames) {
     const n = String(name || '').trim();
     if (!n) return;
     if (existingSet.has(n)) return;
-    sheet.appendRow([n, '', today, '⚠️ 매핑 필요', '']);
+    sheet.appendRow(['페북', n, '', today, '⚠️ 매핑 필요', '']);
     existingSet.add(n);
     newNames.push(n);
     added++;
   });
   if (added > 0) {
-    Logger.log(`UTM_매핑: 신규 광고그룹 ${added}개 발견 — ${newNames.join(', ')}`);
-    logSync_('autoDiscoverAdsets', `신규 ${added}개: ${newNames.slice(0, 3).join(', ')}...`);
+    Logger.log(`UTM_매핑: 신규 페북 광고그룹 ${added}개 발견 — ${newNames.join(', ')}`);
+    if (typeof logSync_ === 'function') {
+      logSync_('autoDiscoverAdsets', `신규 ${added}개: ${newNames.slice(0, 3).join(', ')}...`);
+    }
   }
   return added;
 }
 
-// 메뉴 호출 — 미매핑 광고그룹 보기 (B열 비어있는 행)
+// 메뉴 호출 — 미매핑 페북 광고그룹 보기 (채널=페북 + C열 비어있는 행)
 function showUnmappedAdsets() {
   const ss = SpreadsheetApp.getActive();
   const sheet = ss.getSheetByName(SHEET_UTM_MAPPING);
@@ -417,16 +423,16 @@ function showUnmappedAdsets() {
     SpreadsheetApp.getUi().alert('UTM_매핑 시트 비어있음.');
     return;
   }
-  const data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 2).getValues();
-  const unmapped = data.filter(r => r[0] && !r[1]);
+  const data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 3).getValues();
+  const unmapped = data.filter(r => r[0] === '페북' && r[1] && !r[2]);
   if (unmapped.length === 0) {
-    SpreadsheetApp.getUi().alert('✅ 미매핑 광고그룹 없음. 모두 영문 슬러그 박혀있음.');
+    SpreadsheetApp.getUi().alert('✅ 미매핑 페북 광고그룹 없음. 모두 영문 슬러그 박혀있음.');
     return;
   }
-  const msg = unmapped.map((r, i) => `${i + 1}. ${r[0]}`).join('\n');
+  const msg = unmapped.map((r, i) => `${i + 1}. ${r[1]}`).join('\n');
   SpreadsheetApp.getUi().alert(
-    `⚠️ 미매핑 광고그룹 ${unmapped.length}개\n\n${msg}\n\n` +
-    `UTM_매핑 시트 B열에 영문 슬러그 박기 (1회). 박으면 메타_통합 GA4 컬럼 자동 매칭.`
+    `⚠️ 미매핑 페북 광고그룹 ${unmapped.length}개\n\n${msg}\n\n` +
+    `UTM_매핑 시트 C열에 영문 슬러그 박기 (1회). 박으면 메타_통합 GA4 컬럼 자동 매칭.`
   );
 }
 

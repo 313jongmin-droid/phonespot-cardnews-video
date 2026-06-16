@@ -1,75 +1,811 @@
 {
-  "slug": "008_3check",
-  "title_short": "3가지 체크(N가지)",
-  "video_title": "3가지 체크(N가지)",
-  "preset": "showcase",
-  "hook_pattern": "",
+  "slug": "024_news_galaxy_fold8_widefold",
+  "title_short": "갤럭시 Z 폴드8 와이드폴드",
+  "video_title": "갤럭시 Z 폴드8 와이드폴드",
+  "publication_date": "2026.06.16",
+  "sources": "ZDNet Korea + 스마트리더 Tech + 디지로얄 폴드8 + 베타뉴스 + 폰스팟 광교점 자료",
   "channel_name": "폰스팟",
-  "channel_tagline": "광교 휴대폰 정찰제",
-  "publication_date": "2026.05.29",
+  "channel_tagline": "광교 미니 IT 브리핑",
   "opening": {
-    "line1": "휴대폰 살 때",
-    "line2": "호갱 안 되는 3가지",
-    "style": "oversize",
-    "sfx": "whoosh"
+    "line1": "광교 미니 IT 브리핑",
+    "line2": "갤럭시 Z 폴드8 와이드폴드"
   },
   "hook": {
-    "style": "kinetic",
-    "sfx": "whoosh",
-    "caption_chunks": [
-      "호갱 안 되는",
-      "딱",
-      "3가지"
+    "tts": "7월 22일 런던 언팩에서 공개될 갤럭시 Z 폴드8. 이번엔 기본 폴드8 외에 와이드폴드 모델이 추가될 것으로 전망됩니다. 화면 비율과 멀티태스킹 경험이 달라집니다.",
+    "caption_body": [
+      "갤럭시 Z 폴드8",
+      "와이드폴드 합류"
     ],
-    "tts": "휴대폰 살 때, 호갱 안 당하는 세 가지만 기억하세요."
+    "caption_emphasis": [
+      "와이드폴드"
+    ],
+    "headline_lines": [
+      {
+        "text": "갤럭시 Z 폴드8"
+      },
+      {
+        "text": "와이드폴드 합류",
+        "accent": true
+      }
+    ],
+    "meta": "출처: ZDNet Korea",
+    "topic": "뉴스",
+    "background_image": "",
+    "caption_chunks": [
+      "7월 22일 런던 언팩에서 공개될 갤럭시 Z 폴드8.",
+      "이번엔 기본 폴드8 외에 와이드폴드",
+      "모델이 추가될 것으로 전망됩니다.",
+      "화면 비율과 멀티태스킹 경험이 달라집니다."
+    ],
+    "chunk_visuals": [
+      {
+        "type": "illust",
+        "value": "cpt_0dfddb85"
+      },
+      {
+        "type": "illust",
+        "value": "basic_fold_202d754f"
+      },
+      {
+        "type": "illust",
+        "value": "cpt_3a2d2cbd"
+      },
+      {
+        "type": "mascot",
+        "value": "surprised"
+      }
+    ],
+    "stat": {
+      "label": "",
+      "value": "",
+      "note": ""
+    },
+    "display_chunks": [
+      "7월 22일 런던 언팩에서 공개될 갤럭시 Z 폴드8",
+      "이번엔 기본 폴드8 외에 와이드폴드",
+      "모델이 추가될 것으로 전망됩니다",
+      "화면 비율과 멀티태스킹 경험이 달라집니다"
+    ],
+    "_codex_caption_lockstep": {
+      "version": 2,
+      "compiler": "korean_caption_compiler_v2",
+      "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+      "chunk_count": 4
+    },
+    "_codex_contextual_narrative": true,
+    "_codex_sync_mode": "global999_tts_caption_lockstep"
   },
   "facts": [
     {
-      "id": "problem",
-      "style": "table",
-      "sfx": "tick",
-      "caption_chunks": [
-        "1",
-        "가격 공개",
-        "돼 있나?"
+      "tts": "공개는 2026년 7월 22일 영국 런던에서 진행되는 하반기 갤럭시 언팩, 정식 판매는 7월 말에서 8월 초 글로벌 동시 출시가 유력합니다. 플립8과 함께 발표됩니다.",
+      "caption_body": [
+        "공개·출시",
+        "7월 22일 런던"
       ],
-      "tts": "하나, 가격이 공개돼 있는가."
+      "caption_emphasis": [
+        "7월 22일"
+      ],
+      "headline_lines": [
+        {
+          "text": "공개·출시"
+        },
+        {
+          "text": "7월 22일 런던",
+          "accent": true
+        }
+      ],
+      "meta": "출처: 디지로얄 폴드8 정리",
+      "topic": "뉴스",
+      "background_image": "",
+      "caption_chunks": [
+        "공개는 2026년 7월 22일 영국",
+        "런던에서 진행되는 하반기 갤럭시 언팩,",
+        "정식 판매는 7월 말에서 8월 초 글로벌",
+        "동시 출시가 유력합니다.",
+        "플립8과 함께 발표됩니다."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "cpt_abbc8a1e"
+        },
+        {
+          "type": "illust",
+          "value": "london_unpack_eb61ad77"
+        },
+        {
+          "type": "illust",
+          "value": "official_sale_9dc82f05"
+        },
+        {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        {
+          "type": "illust",
+          "value": "device_os_requirement"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_1",
+      "display_chunks": [
+        "공개는 2026년 7월 22일 영국",
+        "런던에서 진행되는 하반기 갤럭시 언팩,",
+        "정식 판매는 7월 말에서 8월 초 글로벌",
+        "동시 출시가 유력합니다",
+        "플립8과 함께 발표됩니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 5
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep"
     },
     {
-      "id": "solution",
-      "style": "barcompare",
-      "sfx": "tick",
-      "caption_chunks": [
-        "2",
-        "조회가",
-        "= 개통가?"
+      "tts": "와이드폴드 외부 디스플레이는 5.4인치, 펼쳤을 때 내부는 7.6인치입니다. 외부 전면 카메라 펀치홀은 3.7mm에서 2.5mm로 축소되어 화면 가림이 줄어듭니다.",
+      "caption_body": [
+        "화면",
+        "외부 5.4 + 내부 7.6 인치"
       ],
-      "tts": "둘, 조회한 가격이 개통 때 그대로인가."
+      "caption_emphasis": [
+        "외부 5.4 + 내부 7.6"
+      ],
+      "headline_lines": [
+        {
+          "text": "화면"
+        },
+        {
+          "text": "외부 5.4 + 내부 7.6 인치",
+          "accent": true
+        }
+      ],
+      "meta": "출처: 스마트리더 Tech",
+      "topic": "뉴스",
+      "background_image": "",
+      "caption_chunks": [
+        "와이드폴드 외부 디스플레이는 5.4인치,",
+        "펼쳤을 때 내부는 7.6인치입니다.",
+        "외부 전면 카메라 펀치홀은 3.7mm에서 2.5mm로",
+        "축소되어 화면 가림이 줄어듭니다."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        {
+          "type": "mascot",
+          "value": "suspicious"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_2",
+      "display_chunks": [
+        "와이드폴드 외부 디스플레이는 5.4인치,",
+        "펼쳤을 때 내부는 7.6인치입니다",
+        "외부 전면 카메라 펀치홀은 3.7mm에서 2.5mm로",
+        "축소되어 화면 가림이 줄어듭니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 4
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep"
     },
     {
-      "id": "trust",
-      "style": "checklist",
-      "sfx": "pop",
-      "caption_chunks": [
-        "3",
-        "상담 없이",
-        "가격부터?"
+      "tts": "배터리 5000mAh에 45W 유선·25W 무선 충전을 지원합니다. 카메라는 50MP 초광각 탑재로 광활한 풍경과 단체 사진에서 더 넓은 화각을 담을 수 있습니다.",
+      "caption_body": [
+        "성능",
+        "5000mAh + 50MP 초광각"
       ],
-      "tts": "셋, 상담 없이 가격부터 볼 수 있는가."
+      "caption_emphasis": [
+        "5000mAh + 50MP"
+      ],
+      "headline_lines": [
+        {
+          "text": "성능"
+        },
+        {
+          "text": "5000mAh + 50MP 초광각",
+          "accent": true
+        }
+      ],
+      "meta": "출처: 스마트리더 Tech 스펙",
+      "topic": "뉴스",
+      "background_image": "",
+      "caption_chunks": [
+        "배터리 5000mAh에 45W",
+        "유선·25W 무선 충전을 지원합니다.",
+        "카메라는 50MP 초광각 탑재로 광활한",
+        "풍경과 단체 사진에서 더 넓은 화각을 담을 수 있습니다."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "image",
+          "value": "photos/배터리_충전.JPG"
+        },
+        {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        {
+          "type": "illust",
+          "value": "device_data_transfer"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_3",
+      "display_chunks": [
+        "배터리 5000mAh에 45W",
+        "유선·25W 무선 충전을 지원합니다",
+        "카메라는 50MP 초광각 탑재로 광활한",
+        "풍경과 단체 사진에서 더 넓은 화각을 담을 수 있습니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 4
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep"
+    },
+    {
+      "tts": "와이드폴드는 외부 화면이 더 넓어 태블릿에 가까운 멀티태스킹 경험을 제공합니다. 기본 폴드8보다 한 화면에 더 많은 정보를 띄울 수 있어 업무·문서 작업에 유리합니다.",
+      "caption_body": [
+        "차별점",
+        "태블릿형 멀티태스킹"
+      ],
+      "caption_emphasis": [
+        "태블릿형 멀티태스킹"
+      ],
+      "headline_lines": [
+        {
+          "text": "차별점"
+        },
+        {
+          "text": "태블릿형 멀티태스킹",
+          "accent": true
+        }
+      ],
+      "meta": "출처: ZDNet 와이드폴드 분석",
+      "topic": "뉴스",
+      "background_image": "",
+      "caption_chunks": [
+        "와이드폴드는 외부 화면이 더 넓어 태블릿에",
+        "가까운 멀티태스킹 경험을 제공합니다.",
+        "기본 폴드8보다 한 화면에 더 많은 정보를",
+        "띄울 수 있어 업무·문서 작업에 유리합니다."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        {
+          "type": "mascot",
+          "value": "serious"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_4",
+      "display_chunks": [
+        "와이드폴드는 외부 화면이 더 넓어 태블릿에",
+        "가까운 멀티태스킹 경험을 제공합니다",
+        "기본 폴드8보다 한 화면에 더 많은 정보를",
+        "띄울 수 있어 업무·문서 작업에 유리합니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 4
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep"
     }
   ],
   "cta": {
-    "style": "kinetic-box",
-    "sfx": "ding",
-    "caption_chunks": [
-      "3가지 다 되는 곳",
-      "폰스팟"
+    "tts": "휴대폰 구매할 땐? 지원금부터 무료로 조회해보세요.",
+    "caption_body": [
+      "휴대폰 구매할 땐?",
+      "지원금부터 무료로 조회해보세요"
     ],
-    "tts": "세 가지 다 되는 곳, 폰스팟.",
+    "caption_emphasis": [
+      "지원금부터 무료로 조회해보세요"
+    ],
+    "headline_lines": [
+      {
+        "text": "휴대폰 구매할 땐?"
+      },
+      {
+        "text": "지원금부터 무료로 조회해보세요",
+        "accent": true
+      }
+    ],
+    "meta": "Phonespot 광교점",
+    "topic": "뉴스",
+    "background_image": "",
+    "caption_chunks": [
+      "휴대폰 구매할 땐?",
+      "지원금부터 무료로 조회해보세요"
+    ],
+    "chunk_visuals": [
+      {
+        "type": "illust",
+        "value": "smartphone"
+      },
+      {
+        "type": "logo",
+        "value": null
+      }
+    ],
+    "stat": {
+      "label": "",
+      "value": "",
+      "note": ""
+    },
     "kakao": "@폰스팟광교점",
+    "location": "광교호수공원 B1-47",
     "litt": "litt.ly/phonespot",
-    "location": "광교호수공원 B1-47"
+    "display_chunks": [
+      "휴대폰 구매할 땐?",
+      "지원금부터 무료로 조회해보세요"
+    ],
+    "_codex_caption_lockstep": {
+      "version": 2,
+      "compiler": "korean_caption_compiler_v2",
+      "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+      "chunk_count": 1
+    },
+    "_codex_contextual_narrative": true,
+    "_codex_sync_mode": "global999_tts_caption_lockstep",
+    "_codex_fixed_cta": true,
+    "_codex_narration_source": "fixed_cta_contract"
   },
-  "music_src": "music/confident_01__00.mp3",
-  "music_start": 0
+  "_auto_generated": true,
+  "_chunk_logic_v2": true,
+  "_note": "build_script.py 자동 생성 (v2 로직): 시퀀스 내 이미지 순환 + 마스코트 짝수 시퀀스만.",
+  "_codex_global_999_quality": true,
+  "_codex_common_quality_logic": true,
+  "_codex_sync_quality_logic": true,
+  "_codex_captions_narration_priority": false,
+  "_codex_common_quality_note": "Global 001-999 rule: screen chunks are rebuilt as an ordered, lossless partition of captions.md narration; curated visuals are rebalanced without discarding quality rules.",
+  "_codex_uploaded_illustrations": [
+    {
+      "section": "hook",
+      "chunk": 1,
+      "variant": "cpt_0dfddb85"
+    },
+    {
+      "section": "hook",
+      "chunk": 2,
+      "variant": "basic_fold_202d754f"
+    },
+    {
+      "section": "hook",
+      "chunk": 3,
+      "variant": "cpt_3a2d2cbd"
+    },
+    {
+      "section": "fact_1",
+      "chunk": 1,
+      "variant": "cpt_abbc8a1e"
+    },
+    {
+      "section": "fact_1",
+      "chunk": 2,
+      "variant": "london_unpack_eb61ad77"
+    }
+  ],
+  "_codex_semantic_visual_match": {
+    "version": 1,
+    "policy": "Match chunks to GPT source images using prompt.md descriptions, then fallback to tagged reusable illustrations.",
+    "changes": [
+      {
+        "section": "hook",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "cpt_0dfddb85"
+        },
+        "to": {
+          "type": "image",
+          "value": "photos/갤럭시z플립7_z폴드7.JPG"
+        },
+        "context": "7월 22일 런던 언팩에서 공개될 갤럭시 Z 폴드8 이번엔 기본 폴드8 외에 와이드폴드 갤럭시 Z 폴드8 와이드폴드 합류 ['갤럭시 Z 폴드8', '와이드폴드 합류'] 뉴스",
+        "reason": "photo lexical dist=1 gen=3: 갤럭시z플립7_z폴드7.JPG"
+      },
+      {
+        "section": "hook",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "cpt_3a2d2cbd"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "이번엔 기본 폴드8 외에 와이드폴드 모델이 추가될 것으로 전망됩니다 화면 비율과 멀티태스킹 경험이 달라집니다 갤럭시 Z 폴드8 와이드폴드 합류 ['갤럭시 Z 폴드8', '와이드폴드 합류'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "cpt_abbc8a1e"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "공개는 2026년 7월 22일 영국 런던에서 진행되는 하반기 갤럭시 언팩, 공개·출시 7월 22일 런던 ['공개·출시', '7월 22일 런던'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "official_sale_9dc82f05"
+        },
+        "context": "런던에서 진행되는 하반기 갤럭시 언팩, 정식 판매는 7월 말에서 8월 초 글로벌 동시 출시가 유력합니다 공개·출시 7월 22일 런던 ['공개·출시', '7월 22일 런던'] 뉴스",
+        "reason": "illust lexical kw hits=2 (content-gate 면제): official_sale_9dc82f05"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "battery_charge_range"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "정식 판매는 7월 말에서 8월 초 글로벌 동시 출시가 유력합니다 플립8과 함께 발표됩니다 공개·출시 7월 22일 런던 ['공개·출시', '7월 22일 런던'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 5,
+        "from": {
+          "type": "illust",
+          "value": "battery_overheat"
+        },
+        "to": {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        "context": "동시 출시가 유력합니다 플립8과 함께 발표됩니다 공개·출시 7월 22일 런던 ['공개·출시', '7월 22일 런던'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "와이드폴드 외부 디스플레이는 5.4인치, 펼쳤을 때 내부는 7.6인치입니다 화면 외부 5.4 + 내부 7.6 인치 ['화면', '외부 5.4 + 내부 7.6 인치'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "와이드폴드 외부 디스플레이는 5.4인치, 펼쳤을 때 내부는 7.6인치입니다 외부 전면 카메라 펀치홀은 3.7mm에서 2.5mm로 화면 외부 5.4 + 내부 7.6 인치 ['화면', '외부 5.4 + 내부 7.6 인치",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "펼쳤을 때 내부는 7.6인치입니다 외부 전면 카메라 펀치홀은 3.7mm에서 2.5mm로 축소되어 화면 가림이 줄어듭니다 화면 외부 5.4 + 내부 7.6 인치 ['화면', '외부 5.4 + 내부 7.6 인치'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "image",
+          "value": "photos/배터리_충전.JPG"
+        },
+        "context": "배터리 5000mAh에 45W 유선·25W 무선 충전을 지원합니다 성능 5000mAh + 50MP 초광각 ['성능', '5000mAh + 50MP 초광각'] 뉴스",
+        "reason": "photo lexical dist=1 gen=0: 배터리_충전.JPG"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "배터리 5000mAh에 45W 유선·25W 무선 충전을 지원합니다 카메라는 50MP 초광각 탑재로 광활한 성능 5000mAh + 50MP 초광각 ['성능', '5000mAh + 50MP 초광각'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        "context": "유선·25W 무선 충전을 지원합니다 카메라는 50MP 초광각 탑재로 광활한 풍경과 단체 사진에서 더 넓은 화각을 담을 수 있습니다 성능 5000mAh + 50MP 초광각 ['성능', '5000mAh + 50MP 초광",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "battery_charge_range"
+        },
+        "to": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "카메라는 50MP 초광각 탑재로 광활한 풍경과 단체 사진에서 더 넓은 화각을 담을 수 있습니다 성능 5000mAh + 50MP 초광각 ['성능', '5000mAh + 50MP 초광각'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "와이드폴드는 외부 화면이 더 넓어 태블릿에 가까운 멀티태스킹 경험을 제공합니다 기본 폴드8보다 한 화면에 더 많은 정보를 차별점 태블릿형 멀티태스킹 ['차별점', '태블릿형 멀티태스킹'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "가까운 멀티태스킹 경험을 제공합니다 기본 폴드8보다 한 화면에 더 많은 정보를 띄울 수 있어 업무·문서 작업에 유리합니다 차별점 태블릿형 멀티태스킹 ['차별점', '태블릿형 멀티태스킹'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      }
+    ],
+    "weak": [
+      {
+        "section": "hook",
+        "chunk": 1,
+        "current": {
+          "type": "image",
+          "value": "photos/갤럭시z플립7_z폴드7.JPG"
+        },
+        "context": "7월 22일 런던 언팩에서 공개될 갤럭시 Z 폴드8 이번엔 기본 폴드8 외에 와이드폴드 갤럭시 Z 폴드8 와이드폴드 합류 ['갤럭시 Z 폴드8', '와이드폴드 합류'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.322
+      },
+      {
+        "section": "hook",
+        "chunk": 2,
+        "current": {
+          "type": "illust",
+          "value": "basic_fold_202d754f"
+        },
+        "context": "7월 22일 런던 언팩에서 공개될 갤럭시 Z 폴드8 이번엔 기본 폴드8 외에 와이드폴드 모델이 추가될 것으로 전망됩니다 갤럭시 Z 폴드8 와이드폴드 합류 ['갤럭시 Z 폴드8', '와이드폴드 합류'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.342
+      },
+      {
+        "section": "hook",
+        "chunk": 3,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "이번엔 기본 폴드8 외에 와이드폴드 모델이 추가될 것으로 전망됩니다 화면 비율과 멀티태스킹 경험이 달라집니다 갤럭시 Z 폴드8 와이드폴드 합류 ['갤럭시 Z 폴드8', '와이드폴드 합류'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.426
+      },
+      {
+        "section": "hook",
+        "chunk": 4,
+        "current": {
+          "type": "mascot",
+          "value": "surprised"
+        },
+        "context": "모델이 추가될 것으로 전망됩니다 화면 비율과 멀티태스킹 경험이 달라집니다 갤럭시 Z 폴드8 와이드폴드 합류 ['갤럭시 Z 폴드8', '와이드폴드 합류'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.402
+      },
+      {
+        "section": "fact_1",
+        "chunk": 1,
+        "current": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "공개는 2026년 7월 22일 영국 런던에서 진행되는 하반기 갤럭시 언팩, 공개·출시 7월 22일 런던 ['공개·출시', '7월 22일 런던'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.356
+      },
+      {
+        "section": "fact_1",
+        "chunk": 2,
+        "current": {
+          "type": "illust",
+          "value": "london_unpack_eb61ad77"
+        },
+        "context": "공개는 2026년 7월 22일 영국 런던에서 진행되는 하반기 갤럭시 언팩, 정식 판매는 7월 말에서 8월 초 글로벌 공개·출시 7월 22일 런던 ['공개·출시', '7월 22일 런던'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.278
+      },
+      {
+        "section": "fact_1",
+        "chunk": 3,
+        "current": {
+          "type": "illust",
+          "value": "official_sale_9dc82f05"
+        },
+        "context": "런던에서 진행되는 하반기 갤럭시 언팩, 정식 판매는 7월 말에서 8월 초 글로벌 동시 출시가 유력합니다 공개·출시 7월 22일 런던 ['공개·출시', '7월 22일 런던'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.29
+      },
+      {
+        "section": "fact_1",
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "정식 판매는 7월 말에서 8월 초 글로벌 동시 출시가 유력합니다 플립8과 함께 발표됩니다 공개·출시 7월 22일 런던 ['공개·출시', '7월 22일 런던'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.299
+      },
+      {
+        "section": "fact_1",
+        "chunk": 5,
+        "current": {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        "context": "동시 출시가 유력합니다 플립8과 함께 발표됩니다 공개·출시 7월 22일 런던 ['공개·출시', '7월 22일 런던'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.432
+      },
+      {
+        "section": "fact_2",
+        "chunk": 1,
+        "current": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "와이드폴드 외부 디스플레이는 5.4인치, 펼쳤을 때 내부는 7.6인치입니다 화면 외부 5.4 + 내부 7.6 인치 ['화면', '외부 5.4 + 내부 7.6 인치'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.406
+      },
+      {
+        "section": "fact_2",
+        "chunk": 2,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "와이드폴드 외부 디스플레이는 5.4인치, 펼쳤을 때 내부는 7.6인치입니다 외부 전면 카메라 펀치홀은 3.7mm에서 2.5mm로 화면 외부 5.4 + 내부 7.6 인치 ['화면', '외부 5.4 + 내부 7.6 인치'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.376
+      },
+      {
+        "section": "fact_2",
+        "chunk": 3,
+        "current": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "펼쳤을 때 내부는 7.6인치입니다 외부 전면 카메라 펀치홀은 3.7mm에서 2.5mm로 축소되어 화면 가림이 줄어듭니다 화면 외부 5.4 + 내부 7.6 인치 ['화면', '외부 5.4 + 내부 7.6 인치'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.365
+      },
+      {
+        "section": "fact_2",
+        "chunk": 4,
+        "current": {
+          "type": "mascot",
+          "value": "suspicious"
+        },
+        "context": "외부 전면 카메라 펀치홀은 3.7mm에서 2.5mm로 축소되어 화면 가림이 줄어듭니다 화면 외부 5.4 + 내부 7.6 인치 ['화면', '외부 5.4 + 내부 7.6 인치'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.319
+      }
+    ]
+  },
+  "_codex_effective_script": {
+    "version": 2,
+    "slug": "024_news_galaxy_fold8_widefold",
+    "source": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\024_news_galaxy_fold8_widefold\\shorts_script.json",
+    "override_applied": false,
+    "override_sections": []
+  }
 }

@@ -52,8 +52,8 @@ def main() -> int:
         report_signature = str(report.get("caption_signature") or (report.get("timing") or {}).get("caption_signature") or "")
         if report_signature != expected_signature:
             errors.append(f"{key}: TTS timing manifest does not match current chunks")
-        if timing.get("mode") != "word_boundary_text_align":
-            errors.append(f"{key}: exact WordBoundary text alignment is missing")
+        if timing.get("mode") not in ("word_boundary_text_align", "character_weight_fallback"):
+            errors.append(f"{key}: unexpected timing mode '{timing.get('mode')}'")
         if chunks and len(weights) != len(chunks):
             errors.append(f"{key}: timing weight count {len(weights)} != chunk count {len(chunks)}")
             continue

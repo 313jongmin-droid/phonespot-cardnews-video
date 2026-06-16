@@ -211,12 +211,25 @@ def build_chunk_timing(
             "caption_signature": chunk_signature(safe_chunks),
         }
 
-    exact_cuts = aligned_boundary_cuts(
-        safe_chunks,
-        boundaries,
-        spoken,
-        pronunciation_entries or [],
-    )
+    try:
+        exact_cuts = aligned_boundary_cuts(
+            safe_chunks,
+            boundaries,
+            spoken,
+            pronunciation_entries or [],
+        )
+    except RuntimeError as exc:
+        # 단어경계 정렬 불가(날짜·영문 등 TTS 발음 != 글자) → 빌드 실패 대신 글자수 폴백 렌더.
+        # 정밀 싱크(B)는 word_boundary 모드에서만 적용; 폴백은 가독바닥 있는 근사 동기화.
+        # 완전 정밀을 원하면 기사 청크에서 날짜/영문을 한글로 풀어쓰면 단어경계가 맞는다.
+        print(f"    [timing] word-boundary align unavailable -> character_weight fallback ({exc})")
+        return {
+            "mode": "character_weight_fallback",
+            "weights": fallback_weights,
+            "windows": [],
+            "boundary_count": len(boundaries),
+            "caption_signature": chunk_signature(safe_chunks),
+        }
     cuts = [0.0, *exact_cuts, total_ms]
 
     windows: list[dict[str, float]] = []

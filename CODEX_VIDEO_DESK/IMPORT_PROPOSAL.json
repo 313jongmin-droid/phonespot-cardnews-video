@@ -1,165 +1,161 @@
 {
-  "slug": "023_qa_senior_phone_recommendation",
+  "slug": "024_news_galaxy_fold8_widefold",
   "engine": "image-embedding",
-  "generated_at": 1781454489.8913438,
+  "generated_at": 1781596307.6869817,
   "requests": [
     {
-      "filename": "post_parents_phone_5e1d6c3b.png",
-      "variant": "post_parents_phone_5e1d6c3b",
+      "filename": "cpt_0dfddb85.png",
+      "variant": "cpt_0dfddb85",
       "section": "hook",
       "chunk_index": 0,
-      "concept_label": "어버이날 지나고",
+      "concept_label": "런던 언팩",
       "optional": true,
-      "concept_text": "어버이날 지나고 post parents phone 5e1d6c3b 어버이날 지나고 효도폰 문의 끊이지 auto concept 어버이날 지나고도 효도폰 문의는 끊이지 않습니다"
+      "concept_text": "런던 언팩 cpt 0dfddb85 런던 언팩 공개될 폴드 auto concept 7월 22일 런던 언팩에서 공개될 갤럭시 Z 폴드8"
     },
     {
-      "filename": "parents_chat_c1d70b74.png",
-      "variant": "parents_chat_c1d70b74",
+      "filename": "basic_fold_202d754f.png",
+      "variant": "basic_fold_202d754f",
       "section": "hook",
       "chunk_index": 1,
-      "concept_label": "부모님 카톡",
+      "concept_label": "이번엔 기본",
       "optional": true,
-      "concept_text": "부모님 카톡 parents chat c1d70b74 부모님 카톡 유튜브 충분히 쓰시려면 auto concept 부모님이 카톡·유튜브 충분히 쓰시려면 어떤 폰이 좋을까요?"
+      "concept_text": "이번엔 기본 basic fold 202d754f 이번엔 기본 폴드 외에 와이드폴드 auto concept 이번엔 기본 폴드8 외에 와이드폴드"
     },
     {
-      "filename": "parents_vision_231bf461.png",
-      "variant": "parents_vision_231bf461",
-      "section": "fact_1",
-      "chunk_index": 0,
-      "concept_label": "부모님 시력",
-      "optional": true,
-      "concept_text": "부모님 시력 parents vision 231bf461 부모님 시력 크기 가장 맞는 auto concept 부모님 시력과 손 크기에 가장 잘 맞는 화면"
-    },
-    {
-      "filename": "size_guide_afe009df.png",
-      "variant": "size_guide_afe009df",
-      "section": "fact_1",
-      "chunk_index": 1,
-      "concept_label": "크기 에서",
-      "optional": true,
-      "concept_text": "크기 에서 size guide afe009df 크기 에서 인치 auto concept 크기는 5.5에서 6.5인치 사이입니다"
-    },
-    {
-      "filename": "cpt_392743cd.png",
-      "variant": "cpt_392743cd",
-      "section": "fact_1",
+      "filename": "cpt_3a2d2cbd.png",
+      "variant": "cpt_3a2d2cbd",
+      "section": "hook",
       "chunk_index": 2,
-      "concept_label": "너무 작으면",
+      "concept_label": "모델 추가될",
       "optional": true,
-      "concept_text": "너무 작으면 cpt 392743cd 너무 작으면 글씨 보이고 크면 auto concept 너무 작으면 글씨 잘 안 보이고 너무 크면"
+      "concept_text": "모델 추가될 cpt 3a2d2cbd 모델 추가될 auto concept 모델이 추가될 것으로 전망됩니다"
+    },
+    {
+      "filename": "cpt_abbc8a1e.png",
+      "variant": "cpt_abbc8a1e",
+      "section": "fact_1",
+      "chunk_index": 0,
+      "concept_label": "공개 영국",
+      "optional": true,
+      "concept_text": "공개 영국 cpt abbc8a1e 공개 영국 auto concept 공개는 2026년 7월 22일 영국"
+    },
+    {
+      "filename": "london_unpack_eb61ad77.png",
+      "variant": "london_unpack_eb61ad77",
+      "section": "fact_1",
+      "chunk_index": 1,
+      "concept_label": "런던 진행되",
+      "optional": true,
+      "concept_text": "런던 진행되 london unpack eb61ad77 런던 진행되 하반기 언팩 auto concept 런던에서 진행되는 하반기 갤럭시 언팩,"
     }
   ],
   "assignments": [
     {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 15일 오전 01_19_55 (1).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 15일 오전 01_19_55 (1).png",
-      "proposed_filename": "parents_vision_231bf461.png",
-      "confidence": 0.0356,
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 16일 오후 04_50_07 (1).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 16일 오후 04_50_07 (1).png",
+      "proposed_filename": "london_unpack_eb61ad77.png",
+      "confidence": 0.1062,
       "exact_name": false,
       "alternatives": [
         {
-          "filename": "parents_chat_c1d70b74.png",
-          "score": 0.1073
+          "filename": "london_unpack_eb61ad77.png",
+          "score": 0.1062
         },
         {
-          "filename": "post_parents_phone_5e1d6c3b.png",
-          "score": 0.0981
+          "filename": "cpt_abbc8a1e.png",
+          "score": 0.0606
         },
         {
-          "filename": "parents_vision_231bf461.png",
-          "score": 0.0356
+          "filename": "cpt_0dfddb85.png",
+          "score": 0.0409
         }
       ],
       "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 15일 오전 01_19_55 (2).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 15일 오전 01_19_55 (2).png",
-      "proposed_filename": "parents_chat_c1d70b74.png",
-      "confidence": 0.1776,
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 16일 오후 04_50_08 (2).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 16일 오후 04_50_08 (2).png",
+      "proposed_filename": "basic_fold_202d754f.png",
+      "confidence": 0.0628,
       "exact_name": false,
       "alternatives": [
         {
-          "filename": "parents_chat_c1d70b74.png",
-          "score": 0.1776
+          "filename": "basic_fold_202d754f.png",
+          "score": 0.0628
         },
         {
-          "filename": "post_parents_phone_5e1d6c3b.png",
-          "score": 0.1735
+          "filename": "cpt_abbc8a1e.png",
+          "score": 0.0496
         },
         {
-          "filename": "parents_vision_231bf461.png",
-          "score": 0.1039
+          "filename": "cpt_0dfddb85.png",
+          "score": 0.041
         }
       ],
       "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 15일 오전 01_19_56 (3).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 15일 오전 01_19_56 (3).png",
-      "proposed_filename": "post_parents_phone_5e1d6c3b.png",
-      "confidence": 0.1041,
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 16일 오후 04_50_08 (3).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 16일 오후 04_50_08 (3).png",
+      "proposed_filename": "cpt_abbc8a1e.png",
+      "confidence": 0.0507,
       "exact_name": false,
       "alternatives": [
         {
-          "filename": "post_parents_phone_5e1d6c3b.png",
-          "score": 0.1041
+          "filename": "basic_fold_202d754f.png",
+          "score": 0.0511
         },
         {
-          "filename": "parents_chat_c1d70b74.png",
-          "score": 0.0979
+          "filename": "cpt_abbc8a1e.png",
+          "score": 0.0507
         },
         {
-          "filename": "parents_vision_231bf461.png",
-          "score": 0.0431
+          "filename": "cpt_0dfddb85.png",
+          "score": 0.0349
         }
       ],
       "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 15일 오전 01_19_56 (4).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 15일 오전 01_19_56 (4).png",
-      "proposed_filename": "size_guide_afe009df.png",
-      "confidence": 0.0788,
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 16일 오후 04_50_09 (4).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 16일 오후 04_50_09 (4).png",
+      "proposed_filename": "cpt_0dfddb85.png",
+      "confidence": 0.0114,
       "exact_name": false,
       "alternatives": [
         {
-          "filename": "post_parents_phone_5e1d6c3b.png",
-          "score": 0.1007
+          "filename": "london_unpack_eb61ad77.png",
+          "score": 0.0718
         },
         {
-          "filename": "parents_chat_c1d70b74.png",
-          "score": 0.0819
+          "filename": "cpt_abbc8a1e.png",
+          "score": 0.0188
         },
         {
-          "filename": "size_guide_afe009df.png",
-          "score": 0.0788
+          "filename": "cpt_0dfddb85.png",
+          "score": 0.0114
         }
       ],
-      "dedup": {
-        "variant": "series_06379766",
-        "score": 0.9057,
-        "skip": false
-      }
+      "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 15일 오전 01_19_57 (5).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 15일 오전 01_19_57 (5).png",
-      "proposed_filename": "cpt_392743cd.png",
-      "confidence": -0.015,
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 16일 오후 04_50_10 (5).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 16일 오후 04_50_10 (5).png",
+      "proposed_filename": "cpt_3a2d2cbd.png",
+      "confidence": -0.0002,
       "exact_name": false,
       "alternatives": [
         {
-          "filename": "post_parents_phone_5e1d6c3b.png",
-          "score": 0.0727
+          "filename": "london_unpack_eb61ad77.png",
+          "score": 0.0644
         },
         {
-          "filename": "parents_chat_c1d70b74.png",
-          "score": 0.0622
+          "filename": "cpt_abbc8a1e.png",
+          "score": 0.0416
         },
         {
-          "filename": "size_guide_afe009df.png",
-          "score": 0.0121
+          "filename": "basic_fold_202d754f.png",
+          "score": 0.0136
         }
       ],
       "dedup": null

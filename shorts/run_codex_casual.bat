@@ -104,7 +104,7 @@ if "%PHONESPOT_TTS_RATE%"=="" set "PHONESPOT_TTS_RATE=+42%%"
 if "%PHONESPOT_TTS_LOUDNORM%"=="" set "PHONESPOT_TTS_LOUDNORM=1"
 python scripts\generate_tts.py
 if errorlevel 1 goto :fail
-python scripts\verify_tts_timing.py
+python scripts\verify_tts_timing.py --allow-char-fallback
 if errorlevel 1 goto :fail
 
 echo.

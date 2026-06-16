@@ -300,9 +300,26 @@
         "device_data_transfer",
         "smartphone"
       ]
+    },
+    "024_news_galaxy_fold8_widefold": {
+      "used_at": "2026-06-16T17:06:08",
+      "source": "uploaded_illustrations",
+      "illustrations": [
+        "cpt_0dfddb85",
+        "basic_fold_202d754f",
+        "cpt_3a2d2cbd",
+        "cpt_abbc8a1e",
+        "london_unpack_eb61ad77",
+        "official_sale_9dc82f05",
+        "phone_settings_toggle",
+        "device_os_requirement",
+        "device_data_transfer",
+        "smartphone",
+        "phone_setup_ready"
+      ]
     }
   },
-  "updated_at": "2026-06-15T01:29:15",
+  "updated_at": "2026-06-16T17:06:08",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -364,6 +381,10 @@
     },
     "023_qa_senior_phone_recommendation": {
       "updated_at": "2026-06-15T01:29:15",
+      "variants": []
+    },
+    "024_news_galaxy_fold8_widefold": {
+      "updated_at": "2026-06-16T17:06:08",
       "variants": []
     }
   }
