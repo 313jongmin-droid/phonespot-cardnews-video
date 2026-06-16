@@ -1,75 +1,984 @@
 {
-  "slug": "004_nosangdam",
-  "title_short": "상담 강요 없음",
-  "video_title": "상담 강요 없음",
-  "preset": "showcase",
-  "hook_pattern": "",
+  "slug": "025_tip_galaxy_ai_call_screening",
+  "title_short": "갤럭시 AI 통화 스크리닝",
+  "video_title": "갤럭시 AI 통화 스크리닝",
+  "publication_date": "2026.06.16",
+  "sources": "삼성전자 갤럭시 AI 공식 + 삼성SVC 빅스비 + 다음 3세대 AI폰 정옥재 + 폰스팟 광교점 자료",
   "channel_name": "폰스팟",
-  "channel_tagline": "광교 휴대폰 정찰제",
-  "publication_date": "2026.05.29",
+  "channel_tagline": "광교 미니 IT 브리핑",
   "opening": {
-    "line1": "가격 물어보면",
-    "line2": "'일단 오세요'",
-    "style": "oversize",
-    "sfx": "whoosh"
+    "line1": "광교 미니 IT 브리핑",
+    "line2": "갤럭시 AI 통화 스크리닝"
   },
   "hook": {
-    "style": "glitch",
-    "sfx": "tick",
-    "caption_chunks": [
-      "물어보면",
-      "'일단 오세요'",
-      "가격은?"
+    "tts": "모르는 번호 무조건 받기 부담스러우셨다면 S26부터 도입된 통화 스크리닝을 켜보세요. AI가 먼저 받아 누가 무슨 용건인지 확인합니다. 스팸·보이스피싱이 자연스럽게 걸러집니다.",
+    "caption_body": [
+      "갤럭시 AI",
+      "통화 스크리닝 켜기"
     ],
-    "tts": "가격 궁금해 물어보면, 일단 오라고만 하고."
+    "caption_emphasis": [
+      "통화 스크리닝"
+    ],
+    "headline_lines": [
+      {
+        "text": "갤럭시 AI"
+      },
+      {
+        "text": "통화 스크리닝 켜기",
+        "accent": true
+      }
+    ],
+    "meta": "출처: 다음 3세대 AI폰 정옥재",
+    "topic": "뉴스",
+    "background_image": "",
+    "caption_chunks": [
+      "모르는 번호 무조건 받기",
+      "부담스러우셨다면 S26부터 도입된",
+      "통화 스크리닝을 켜보세요.",
+      "AI가 먼저 받아 누가 무슨 용건인지 확인합니다.",
+      "스팸·보이스피싱이 자연스럽게 걸러집니다."
+    ],
+    "chunk_visuals": [
+      {
+        "type": "illust",
+        "value": "mystery_number_63279925"
+      },
+      {
+        "type": "illust",
+        "value": "new_policy_f48caded"
+      },
+      {
+        "type": "illust",
+        "value": "cpt_e9fd442e"
+      },
+      {
+        "type": "mascot",
+        "value": "surprised"
+      },
+      {
+        "type": "illust",
+        "value": "phone_setup_ready"
+      }
+    ],
+    "stat": {
+      "label": "",
+      "value": "",
+      "note": ""
+    },
+    "display_chunks": [
+      "모르는 번호 무조건 받기",
+      "부담스러우셨다면 S26부터 도입된",
+      "통화 스크리닝을 켜보세요",
+      "AI가 먼저 받아 누가 무슨 용건인지 확인합니다",
+      "스팸·보이스피싱이 자연스럽게 걸러집니다"
+    ],
+    "_codex_caption_lockstep": {
+      "version": 2,
+      "compiler": "korean_caption_compiler_v2",
+      "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+      "chunk_count": 5
+    },
+    "_codex_contextual_narrative": true,
+    "_codex_sync_mode": "global999_tts_caption_lockstep",
+    "tts_chunk_weights": [
+      1176.75,
+      2139.08,
+      1781.0,
+      2992.96,
+      2103.88
+    ],
+    "_tts_timing": {
+      "mode": "word_boundary_text_align",
+      "windows": [
+        {
+          "start_ms": 0.0,
+          "end_ms": 1176.75,
+          "duration_ms": 1176.75
+        },
+        {
+          "start_ms": 1176.75,
+          "end_ms": 3315.83,
+          "duration_ms": 2139.08
+        },
+        {
+          "start_ms": 3315.83,
+          "end_ms": 5096.83,
+          "duration_ms": 1781.0
+        },
+        {
+          "start_ms": 5096.83,
+          "end_ms": 8089.79,
+          "duration_ms": 2992.96
+        },
+        {
+          "start_ms": 8089.79,
+          "end_ms": 10193.67,
+          "duration_ms": 2103.88
+        }
+      ],
+      "boundary_count": 22,
+      "caption_signature": "188544a86208e7068f015edbe5fea5c4e115040604e64614c7912e5383ca8991"
+    }
   },
   "facts": [
     {
-      "id": "problem",
-      "style": "marker",
-      "sfx": "tick",
-      "caption_chunks": [
-        "상담부터",
-        "가면 또",
-        "권유"
+      "tts": "AI가 전화 받자마자 \"이름과 용건을 먼저 알려주세요\"라고 응대합니다. 발신자가 답한 내용은 텍스트로 화면에 표시되어 내가 직접 받을지 차단할지 판단할 수 있습니다.",
+      "caption_body": [
+        "기능",
+        "이름·용건 먼저 확인"
       ],
-      "tts": "상담받아야 가격 나오고, 가면 또 권유받고."
+      "caption_emphasis": [
+        "이름·용건 먼저"
+      ],
+      "headline_lines": [
+        {
+          "text": "기능"
+        },
+        {
+          "text": "이름·용건 먼저 확인",
+          "accent": true
+        }
+      ],
+      "meta": "출처: 삼성 갤럭시 AI",
+      "topic": "뉴스",
+      "background_image": "",
+      "caption_chunks": [
+        "AI가 전화 받자마자 \"이름과 용건을 먼저 알려주세요\"라고",
+        "응대합니다. 발신자가 답한 내용은",
+        "텍스트로 화면에 표시되어",
+        "내가 직접 받을지 차단할지 판단할 수 있습니다."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "cpt_915bf475"
+        },
+        {
+          "type": "illust",
+          "value": "cpt_f2dc70a6"
+        },
+        {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        {
+          "type": "illust",
+          "value": "smartphone"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_1",
+      "display_chunks": [
+        "AI가 전화 받자마자 \"이름과 용건을 먼저 알려주세요\"라고",
+        "응대합니다 발신자가 답한 내용은",
+        "텍스트로 화면에 표시되어",
+        "내가 직접 받을지 차단할지 판단할 수 있습니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 4
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        3078.17,
+        2247.54,
+        1153.17,
+        2420.74
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 3078.17,
+            "duration_ms": 3078.17
+          },
+          {
+            "start_ms": 3078.17,
+            "end_ms": 5325.71,
+            "duration_ms": 2247.54
+          },
+          {
+            "start_ms": 5325.71,
+            "end_ms": 6478.88,
+            "duration_ms": 1153.17
+          },
+          {
+            "start_ms": 6478.88,
+            "end_ms": 8899.62,
+            "duration_ms": 2420.74
+          }
+        ],
+        "boundary_count": 23,
+        "caption_signature": "badca7b6a6d2cc67bc677806e1973860d975b75e66b0f6658510c197731ef158"
+      }
     },
     {
-      "id": "solution",
-      "style": "kinetic-box",
-      "sfx": "ding",
-      "caption_chunks": [
-        "폰스팟은",
-        "강요 없이",
-        "바로 조회"
+      "tts": "통화 스크리닝은 S26 시리즈부터 우선 적용되는 3세대 AI폰 기능입니다. 이전 모델은 Bixby 텍스트 호출과 별도 스팸 차단 앱으로 보완하시면 됩니다.",
+      "caption_body": [
+        "대상",
+        "S26 시리즈부터"
       ],
-      "tts": "폰스팟은 상담 강요 없이, 바로 가격부터 조회."
+      "caption_emphasis": [
+        "S26 시리즈"
+      ],
+      "headline_lines": [
+        {
+          "text": "대상"
+        },
+        {
+          "text": "S26 시리즈부터",
+          "accent": true
+        }
+      ],
+      "meta": "출처: 갤럭시 S26 AI 기능",
+      "topic": "뉴스",
+      "background_image": "",
+      "caption_chunks": [
+        "통화 스크리닝은 S26 시리즈부터 우선",
+        "적용되는 3세대 AI폰 기능입니다.",
+        "이전 모델은 Bixby 텍스트 호출과",
+        "별도 스팸 차단 앱으로 보완하시면 됩니다."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        {
+          "type": "mascot",
+          "value": "suspicious"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_2",
+      "display_chunks": [
+        "통화 스크리닝은 S26 시리즈부터 우선",
+        "적용되는 3세대 AI폰 기능입니다",
+        "이전 모델은 Bixby 텍스트 호출과",
+        "별도 스팸 차단 앱으로 보완하시면 됩니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 4
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        2365.12,
+        2661.3,
+        1760.54,
+        1910.21
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 2365.12,
+            "duration_ms": 2365.12
+          },
+          {
+            "start_ms": 2365.12,
+            "end_ms": 5026.42,
+            "duration_ms": 2661.3
+          },
+          {
+            "start_ms": 5026.42,
+            "end_ms": 6786.96,
+            "duration_ms": 1760.54
+          },
+          {
+            "start_ms": 6786.96,
+            "end_ms": 8697.17,
+            "duration_ms": 1910.21
+          }
+        ],
+        "boundary_count": 21,
+        "caption_signature": "d31391a2402a595c062702bd3eb985439cab58aacf2545b4c1481e3c283a3c07"
+      }
     },
     {
-      "id": "trust",
-      "style": "reveal",
-      "sfx": "pop",
-      "caption_chunks": [
-        "필요하면",
-        "그때",
-        "문의"
+      "tts": "설정 → 전화 → 통화 스크리닝 메뉴에서 켭니다. 항상 켜기 / 모르는 번호만 / 차단 번호 자동 응대 등 모드 선택 가능합니다. 가족·즐겨찾기 번호는 바로 연결됩니다.",
+      "caption_body": [
+        "설정",
+        "5단계 켜기"
       ],
-      "tts": "필요하면 그때 편하게 문의하세요."
+      "caption_emphasis": [
+        "5단계"
+      ],
+      "headline_lines": [
+        {
+          "text": "설정"
+        },
+        {
+          "text": "5단계 켜기",
+          "accent": true
+        }
+      ],
+      "meta": "출처: 갤럭시 통화 설정",
+      "topic": "뉴스",
+      "background_image": "",
+      "caption_chunks": [
+        "설정 → 전화 → 통화 스크리닝 메뉴에서 켭니다.",
+        "항상 켜기 / 모르는 번호만 / 차단 번호",
+        "자동 응대 등 모드 선택 가능합니다.",
+        "가족·즐겨찾기 번호는 바로 연결됩니다."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_3",
+      "display_chunks": [
+        "설정 → 전화 → 통화 스크리닝 메뉴에서 켭니다",
+        "항상 켜기 / 모르는 번호만 / 차단 번호",
+        "자동 응대 등 모드 선택 가능합니다",
+        "가족·즐겨찾기 번호는 바로 연결됩니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 4
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        2667.25,
+        1725.37,
+        2500.0,
+        2121.46
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 2667.25,
+            "duration_ms": 2667.25
+          },
+          {
+            "start_ms": 2667.25,
+            "end_ms": 4392.62,
+            "duration_ms": 1725.37
+          },
+          {
+            "start_ms": 4392.62,
+            "end_ms": 6892.62,
+            "duration_ms": 2500.0
+          },
+          {
+            "start_ms": 6892.62,
+            "end_ms": 9014.08,
+            "duration_ms": 2121.46
+          }
+        ],
+        "boundary_count": 23,
+        "caption_signature": "2afab44c99bd05f0e9a23d50300674a4d1b983b8aa8a390b8bf468c277d3886b"
+      }
+    },
+    {
+      "tts": "갤럭시 AI는 통화 중 실시간 통역도 지원합니다. 해외에서 걸려오는 영어·일본어·중국어 전화를 한국어로 즉시 변환. 휴가철 외국 호텔·항공사 응대에 유용합니다.",
+      "caption_body": [
+        "보너스",
+        "실시간 통역 함께"
+      ],
+      "caption_emphasis": [
+        "실시간 통역"
+      ],
+      "headline_lines": [
+        {
+          "text": "보너스"
+        },
+        {
+          "text": "실시간 통역 함께",
+          "accent": true
+        }
+      ],
+      "meta": "출처: 삼성SVC 갤럭시 AI 통역",
+      "topic": "뉴스",
+      "background_image": "",
+      "caption_chunks": [
+        "갤럭시 AI는 통화 중 실시간 통역도 지원합니다.",
+        "해외에서 걸려오는 영어·일본어·중국어",
+        "전화를 한국어로 즉시 변환.",
+        "휴가철 외국 호텔·항공사 응대에 유용합니다."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        {
+          "type": "mascot",
+          "value": "serious"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_4",
+      "display_chunks": [
+        "갤럭시 AI는 통화 중 실시간 통역도 지원합니다",
+        "해외에서 걸려오는 영어·일본어·중국어",
+        "전화를 한국어로 즉시 변환",
+        "휴가철 외국 호텔·항공사 응대에 유용합니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 4
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        3248.25,
+        1742.96,
+        2103.87,
+        2235.88
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 3248.25,
+            "duration_ms": 3248.25
+          },
+          {
+            "start_ms": 3248.25,
+            "end_ms": 4991.21,
+            "duration_ms": 1742.96
+          },
+          {
+            "start_ms": 4991.21,
+            "end_ms": 7095.08,
+            "duration_ms": 2103.87
+          },
+          {
+            "start_ms": 7095.08,
+            "end_ms": 9330.96,
+            "duration_ms": 2235.88
+          }
+        ],
+        "boundary_count": 23,
+        "caption_signature": "c6cd797847e13db73ddf371cff09357ee34f67f39c602489397cbfa101d39eb9"
+      }
     }
   ],
   "cta": {
-    "style": "kinetic-box",
-    "sfx": "ding",
-    "caption_chunks": [
-      "가격부터",
-      "폰스팟"
+    "tts": "휴대폰 구매할 땐? 지원금부터 무료로 조회해보세요.",
+    "caption_body": [
+      "휴대폰 구매할 땐?",
+      "지원금부터 무료로 조회해보세요"
     ],
-    "tts": "가격부터 보고 결정하세요. 폰스팟.",
+    "caption_emphasis": [
+      "지원금부터 무료로 조회해보세요"
+    ],
+    "headline_lines": [
+      {
+        "text": "휴대폰 구매할 땐?"
+      },
+      {
+        "text": "지원금부터 무료로 조회해보세요",
+        "accent": true
+      }
+    ],
+    "meta": "Phonespot 광교점",
+    "topic": "뉴스",
+    "background_image": "",
+    "caption_chunks": [
+      "휴대폰 구매할 땐?",
+      "지원금부터 무료로 조회해보세요"
+    ],
+    "chunk_visuals": [
+      {
+        "type": "illust",
+        "value": "smartphone"
+      },
+      {
+        "type": "logo",
+        "value": null
+      }
+    ],
+    "stat": {
+      "label": "",
+      "value": "",
+      "note": ""
+    },
     "kakao": "@폰스팟광교점",
+    "location": "광교호수공원 B1-47",
     "litt": "litt.ly/phonespot",
-    "location": "광교호수공원 B1-47"
+    "display_chunks": [
+      "휴대폰 구매할 땐?",
+      "지원금부터 무료로 조회해보세요"
+    ],
+    "_codex_caption_lockstep": {
+      "version": 2,
+      "compiler": "korean_caption_compiler_v2",
+      "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+      "chunk_count": 1
+    },
+    "_codex_contextual_narrative": true,
+    "_codex_sync_mode": "global999_tts_caption_lockstep",
+    "_codex_fixed_cta": true,
+    "_codex_narration_source": "fixed_cta_contract",
+    "tts_chunk_weights": [
+      1707.75,
+      1804.54
+    ],
+    "_tts_timing": {
+      "mode": "word_boundary_text_align",
+      "windows": [
+        {
+          "start_ms": 0.0,
+          "end_ms": 1707.75,
+          "duration_ms": 1707.75
+        },
+        {
+          "start_ms": 1707.75,
+          "end_ms": 3512.29,
+          "duration_ms": 1804.54
+        }
+      ],
+      "boundary_count": 6,
+      "caption_signature": "db4c57a05254654841d0c63b2eea20bad43e358510298ef607bf41bcae3b9e5d"
+    }
   },
-  "music_src": "music/confident_01__00.mp3",
-  "music_start": 0
+  "_auto_generated": true,
+  "_chunk_logic_v2": true,
+  "_note": "build_script.py 자동 생성 (v2 로직): 시퀀스 내 이미지 순환 + 마스코트 짝수 시퀀스만.",
+  "_codex_global_999_quality": true,
+  "_codex_common_quality_logic": true,
+  "_codex_sync_quality_logic": true,
+  "_codex_captions_narration_priority": false,
+  "_codex_common_quality_note": "Global 001-999 rule: screen chunks are rebuilt as an ordered, lossless partition of captions.md narration; curated visuals are rebalanced without discarding quality rules.",
+  "_codex_uploaded_illustrations": [
+    {
+      "section": "hook",
+      "chunk": 1,
+      "variant": "mystery_number_63279925"
+    },
+    {
+      "section": "hook",
+      "chunk": 2,
+      "variant": "new_policy_f48caded"
+    },
+    {
+      "section": "hook",
+      "chunk": 3,
+      "variant": "cpt_e9fd442e"
+    },
+    {
+      "section": "fact_1",
+      "chunk": 1,
+      "variant": "cpt_915bf475"
+    },
+    {
+      "section": "fact_1",
+      "chunk": 2,
+      "variant": "cpt_f2dc70a6"
+    }
+  ],
+  "_codex_semantic_visual_match": {
+    "version": 1,
+    "policy": "Match chunks to GPT source images using prompt.md descriptions, then fallback to tagged reusable illustrations.",
+    "changes": [
+      {
+        "section": "hook",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "cpt_e9fd442e"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "부담스러우셨다면 S26부터 도입된 통화 스크리닝을 켜보세요 AI가 먼저 받아 누가 무슨 용건인지 확인합니다 갤럭시 AI 통화 스크리닝 켜기 ['갤럭시 AI', '통화 스크리닝 켜기'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "hook",
+        "chunk": 5,
+        "from": {
+          "type": "illust",
+          "value": "basic_fold_202d754f"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "AI가 먼저 받아 누가 무슨 용건인지 확인합니다 스팸·보이스피싱이 자연스럽게 걸러집니다 갤럭시 AI 통화 스크리닝 켜기 ['갤럭시 AI', '통화 스크리닝 켜기'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "cpt_915bf475"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "AI가 전화 받자마자 \"이름과 용건을 먼저 알려주세요\"라고 응대합니다 발신자가 답한 내용은 기능 이름·용건 먼저 확인 ['기능', '이름·용건 먼저 확인'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "cpt_f2dc70a6"
+        },
+        "to": {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        "context": "AI가 전화 받자마자 \"이름과 용건을 먼저 알려주세요\"라고 응대합니다 발신자가 답한 내용은 텍스트로 화면에 표시되어 기능 이름·용건 먼저 확인 ['기능', '이름·용건 먼저 확인'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "응대합니다 발신자가 답한 내용은 텍스트로 화면에 표시되어 내가 직접 받을지 차단할지 판단할 수 있습니다 기능 이름·용건 먼저 확인 ['기능', '이름·용건 먼저 확인'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "basic_fold_202d754f"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "텍스트로 화면에 표시되어 내가 직접 받을지 차단할지 판단할 수 있습니다 기능 이름·용건 먼저 확인 ['기능', '이름·용건 먼저 확인'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "통화 스크리닝은 S26 시리즈부터 우선 적용되는 3세대 AI폰 기능입니다 대상 S26 시리즈부터 ['대상', 'S26 시리즈부터'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "통화 스크리닝은 S26 시리즈부터 우선 적용되는 3세대 AI폰 기능입니다 이전 모델은 Bixby 텍스트 호출과 대상 S26 시리즈부터 ['대상', 'S26 시리즈부터'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        "context": "적용되는 3세대 AI폰 기능입니다 이전 모델은 Bixby 텍스트 호출과 별도 스팸 차단 앱으로 보완하시면 됩니다 대상 S26 시리즈부터 ['대상', 'S26 시리즈부터'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "설정 → 전화 → 통화 스크리닝 메뉴에서 켭니다 항상 켜기 / 모르는 번호만 / 차단 번호 설정 5단계 켜기 ['설정', '5단계 켜기'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "설정 → 전화 → 통화 스크리닝 메뉴에서 켭니다 항상 켜기 / 모르는 번호만 / 차단 번호 자동 응대 등 모드 선택 가능합니다 설정 5단계 켜기 ['설정', '5단계 켜기'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "항상 켜기 / 모르는 번호만 / 차단 번호 자동 응대 등 모드 선택 가능합니다 가족·즐겨찾기 번호는 바로 연결됩니다 설정 5단계 켜기 ['설정', '5단계 켜기'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "basic_fold_202d754f"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "자동 응대 등 모드 선택 가능합니다 가족·즐겨찾기 번호는 바로 연결됩니다 설정 5단계 켜기 ['설정', '5단계 켜기'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        "context": "갤럭시 AI는 통화 중 실시간 통역도 지원합니다 해외에서 걸려오는 영어·일본어·중국어 보너스 실시간 통역 함께 ['보너스', '실시간 통역 함께'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "갤럭시 AI는 통화 중 실시간 통역도 지원합니다 해외에서 걸려오는 영어·일본어·중국어 전화를 한국어로 즉시 변환 보너스 실시간 통역 함께 ['보너스', '실시간 통역 함께'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "해외에서 걸려오는 영어·일본어·중국어 전화를 한국어로 즉시 변환 휴가철 외국 호텔·항공사 응대에 유용합니다 보너스 실시간 통역 함께 ['보너스', '실시간 통역 함께'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      }
+    ],
+    "weak": [
+      {
+        "section": "hook",
+        "chunk": 2,
+        "current": {
+          "type": "illust",
+          "value": "new_policy_f48caded"
+        },
+        "context": "모르는 번호 무조건 받기 부담스러우셨다면 S26부터 도입된 통화 스크리닝을 켜보세요 갤럭시 AI 통화 스크리닝 켜기 ['갤럭시 AI', '통화 스크리닝 켜기'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.431
+      },
+      {
+        "section": "fact_1",
+        "chunk": 1,
+        "current": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "AI가 전화 받자마자 \"이름과 용건을 먼저 알려주세요\"라고 응대합니다 발신자가 답한 내용은 기능 이름·용건 먼저 확인 ['기능', '이름·용건 먼저 확인'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.467
+      },
+      {
+        "section": "fact_1",
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "텍스트로 화면에 표시되어 내가 직접 받을지 차단할지 판단할 수 있습니다 기능 이름·용건 먼저 확인 ['기능', '이름·용건 먼저 확인'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.442
+      },
+      {
+        "section": "fact_2",
+        "chunk": 1,
+        "current": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "통화 스크리닝은 S26 시리즈부터 우선 적용되는 3세대 AI폰 기능입니다 대상 S26 시리즈부터 ['대상', 'S26 시리즈부터'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.471
+      },
+      {
+        "section": "fact_2",
+        "chunk": 2,
+        "current": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "통화 스크리닝은 S26 시리즈부터 우선 적용되는 3세대 AI폰 기능입니다 이전 모델은 Bixby 텍스트 호출과 대상 S26 시리즈부터 ['대상', 'S26 시리즈부터'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.453
+      },
+      {
+        "section": "fact_3",
+        "chunk": 1,
+        "current": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "설정 → 전화 → 통화 스크리닝 메뉴에서 켭니다 항상 켜기 / 모르는 번호만 / 차단 번호 설정 5단계 켜기 ['설정', '5단계 켜기'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.478
+      },
+      {
+        "section": "fact_4",
+        "chunk": 1,
+        "current": {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        "context": "갤럭시 AI는 통화 중 실시간 통역도 지원합니다 해외에서 걸려오는 영어·일본어·중국어 보너스 실시간 통역 함께 ['보너스', '실시간 통역 함께'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.45
+      },
+      {
+        "section": "fact_4",
+        "chunk": 2,
+        "current": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "갤럭시 AI는 통화 중 실시간 통역도 지원합니다 해외에서 걸려오는 영어·일본어·중국어 전화를 한국어로 즉시 변환 보너스 실시간 통역 함께 ['보너스', '실시간 통역 함께'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.429
+      },
+      {
+        "section": "fact_4",
+        "chunk": 3,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "해외에서 걸려오는 영어·일본어·중국어 전화를 한국어로 즉시 변환 휴가철 외국 호텔·항공사 응대에 유용합니다 보너스 실시간 통역 함께 ['보너스', '실시간 통역 함께'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.218
+      },
+      {
+        "section": "fact_4",
+        "chunk": 4,
+        "current": {
+          "type": "mascot",
+          "value": "serious"
+        },
+        "context": "전화를 한국어로 즉시 변환 휴가철 외국 호텔·항공사 응대에 유용합니다 보너스 실시간 통역 함께 ['보너스', '실시간 통역 함께'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0.324
+      }
+    ]
+  },
+  "_codex_effective_script": {
+    "version": 2,
+    "slug": "025_tip_galaxy_ai_call_screening",
+    "source": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\025_tip_galaxy_ai_call_screening\\shorts_script.json",
+    "override_applied": false,
+    "override_sections": []
+  }
 }

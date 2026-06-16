@@ -316,17 +316,23 @@
       ]
     },
     "025_tip_galaxy_ai_call_screening": {
-      "used_at": "2026-06-16T17:59:40",
-      "source": "codex_enhance",
+      "used_at": "2026-06-16T18:38:55",
+      "source": "uploaded_illustrations",
       "illustrations": [
+        "mystery_number_63279925",
+        "new_policy_f48caded",
+        "cpt_e9fd442e",
+        "phone_setup_ready",
+        "cpt_915bf475",
+        "cpt_f2dc70a6",
+        "device_data_transfer",
         "smartphone",
-        "aluminum_label",
-        "appliance",
-        "basic_fold_202d754f"
+        "phone_settings_toggle",
+        "device_os_requirement"
       ]
     }
   },
-  "updated_at": "2026-06-16T17:59:41",
+  "updated_at": "2026-06-16T18:38:56",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -395,7 +401,7 @@
       "variants": []
     },
     "025_tip_galaxy_ai_call_screening": {
-      "updated_at": "2026-06-16T17:59:41",
+      "updated_at": "2026-06-16T18:38:56",
       "variants": []
     }
   }

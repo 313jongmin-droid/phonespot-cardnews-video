@@ -5,10 +5,11 @@
 
 | illustration | tags | use count | last slug |
 |---|---|---:|---|
-| `aluminum_label` | materials, hardware, library | 4 | 025_tip_galaxy_ai_call_screening |
+| `aluminum_label` | materials, hardware, library | 3 | 021_news_galaxy_flip8_exynos |
 | `android_user_a91efa70` | auto | 0 |  |
-| `appliance` | hardware, device, library | 4 | 025_tip_galaxy_ai_call_screening |
-| `basic_fold_202d754f` | auto, library | 2 | 025_tip_galaxy_ai_call_screening |
+| `appliance` | hardware, device, library | 3 | 021_news_galaxy_flip8_exynos |
+| `basic_fold_202d754f` | auto, library | 1 | 024_news_galaxy_fold8_widefold |
+| `battery_capacity` | battery, hardware, library | 0 |  |
 | `battery_charge_range` | battery, charging, tips, library | 2 | 021_news_galaxy_flip8_exynos |
 | `battery_health_check` | battery, health, tips | 0 |  |
 | `battery_overheat` | battery, heat, warning, library | 1 | 017_tip_summer_travel_phone_5min |
@@ -18,6 +19,7 @@
 | `call_recording_notice` | library | 1 | 010_tip_iphone_call_record |
 | `calling_066b1a1b` | library | 0 |  |
 | `camera_battery_ecd040c7` | auto, library | 1 | 021_news_galaxy_flip8_exynos |
+| `camera_quality` | camera, hardware, library | 0 |  |
 | `card_struggle_81529308` | auto | 0 |  |
 | `chart_down` | price, data, decrease, library | 1 | 011_qa_combo_discount_check |
 | `chart_up` | price, data, increase, library | 1 | 001_apple_ondevice_ai_wwdc26 |
@@ -59,6 +61,7 @@
 | `cpt_8b587f6c` | auto | 0 |  |
 | `cpt_8bffef74` | auto, library | 1 | 015_qa_msafer_pass_identity_block |
 | `cpt_8d09d703` | auto | 0 |  |
+| `cpt_915bf475` | auto, library | 1 | 025_tip_galaxy_ai_call_screening |
 | `cpt_98cab19a` | auto, library | 0 |  |
 | `cpt_9ebf277e` | auto | 0 |  |
 | `cpt_a0d7df46` | auto | 0 |  |
@@ -71,10 +74,12 @@
 | `cpt_ca558dbc` | auto | 0 |  |
 | `cpt_d877aced` | auto | 0 |  |
 | `cpt_dff91a6d` | auto | 0 |  |
+| `cpt_e9fd442e` | auto, library | 1 | 025_tip_galaxy_ai_call_screening |
 | `cpt_ea7bc1d6` | auto, library | 1 | 014_scam_voicephishing_zero_relief |
 | `cpt_ea93eb2b` | auto | 0 |  |
 | `cpt_f14977dc` | auto | 0 |  |
 | `cpt_f28de659` | auto | 0 |  |
+| `cpt_f2dc70a6` | auto, library | 1 | 025_tip_galaxy_ai_call_screening |
 | `cpt_f35df68f` | auto | 0 |  |
 | `cpt_f59129df` | auto, library | 2 | 020_qa_apple_pay_korea_card |
 | `cpt_f5cc7e27` | auto | 0 |  |
@@ -83,14 +88,16 @@
 | `cpt_fd9edf65` | auto, library | 3 | 020_qa_apple_pay_korea_card |
 | `cut_theft_43505b9f` | auto | 0 |  |
 | `deal_fd9edf65` | library | 0 |  |
-| `device_data_transfer` | device, migration, backup, tips, library | 7 | 024_news_galaxy_fold8_widefold |
-| `device_os_requirement` | library | 3 | 024_news_galaxy_fold8_widefold |
+| `device_data_transfer` | device, migration, backup, tips, library | 8 | 025_tip_galaxy_ai_call_screening |
+| `device_os_requirement` | library | 4 | 025_tip_galaxy_ai_call_screening |
 | `device_price_rise` | price, increase, device | 0 |  |
 | `display_maintenance_c1ff39c1` | auto, library | 0 |  |
 | `display_ratio_change` | library | 0 |  |
+| `document_article` | news, document, library | 0 |  |
 | `emergency_account_freeze` | security, bank, response, golden-time, library | 2 | 015_qa_msafer_pass_identity_block |
 | `event_period_8cafdac4` | auto, library | 1 | 019_news_samsung_thank_you_festival |
 | `fake_government_page` | security, smishing, government, warning | 0 |  |
+| `fast_charging` | battery, charging, library | 0 |  |
 | `festival_41b2e7cf` | auto, library | 1 | 019_news_samsung_thank_you_festival |
 | `final_update` | software, update, library | 3 | 016_news_ios_26_3_release |
 | `foldable` | hardware, foldable, library | 1 | 012_news_galaxy_unpack_july |
@@ -121,6 +128,8 @@
 | `module_install` | library | 0 |  |
 | `monday_d77265f0` | auto, library | 1 | 019_news_samsung_thank_you_festival |
 | `mounted_body_496029c6` | auto, library | 1 | 021_news_galaxy_flip8_exynos |
+| `mystery_number_63279925` | auto, library | 1 | 025_tip_galaxy_ai_call_screening |
+| `new_policy_f48caded` | auto, library | 1 | 025_tip_galaxy_ai_call_screening |
 | `new_release_98cab19a` | library | 0 |  |
 | `newspaper` | news, source, library | 8 | 020_qa_apple_pay_korea_card |
 | `nfc_open_access` | payment, nfc, access | 0 |  |
@@ -134,8 +143,8 @@
 | `password` | security, privacy, authentication, library | 0 |  |
 | `personal_data_63b96014` | auto, library | 1 | 022_tip_galaxy_battery_save_5 |
 | `personal_data_leak` | security, privacy, leak | 0 |  |
-| `phone_settings_toggle` | library | 9 | 024_news_galaxy_fold8_widefold |
-| `phone_setup_ready` | library | 7 | 024_news_galaxy_fold8_widefold |
+| `phone_settings_toggle` | library | 10 | 025_tip_galaxy_ai_call_screening |
+| `phone_setup_ready` | library | 8 | 025_tip_galaxy_ai_call_screening |
 | `plan_price_tier_compare` | price, plan, compare, telecom | 0 |  |
 | `post_parents_phone_5e1d6c3b` | auto, library | 1 | 023_qa_senior_phone_recommendation |
 | `price_hike` | price, increase, library | 0 |  |
@@ -179,7 +188,7 @@
 
 ## Recent videos
 
-- `025_tip_galaxy_ai_call_screening`: smartphone, aluminum_label, appliance, basic_fold_202d754f
+- `025_tip_galaxy_ai_call_screening`: mystery_number_63279925, new_policy_f48caded, cpt_e9fd442e, phone_setup_ready, cpt_915bf475, cpt_f2dc70a6, device_data_transfer, smartphone, phone_settings_toggle, device_os_requirement
 - `024_news_galaxy_fold8_widefold`: basic_fold_202d754f, smartphone, phone_setup_ready, london_unpack_eb61ad77, official_sale_9dc82f05, phone_settings_toggle, device_os_requirement, device_data_transfer
 - `023_qa_senior_phone_recommendation`: post_parents_phone_5e1d6c3b, parents_chat_c1d70b74, parents_vision_231bf461, size_guide_afe009df, cpt_392743cd, phone_setup_ready, phone_settings_toggle, device_os_requirement, device_data_transfer, smartphone
 - `022_tip_galaxy_battery_save_5`: smartphone, phone_setup_ready, phone_settings_toggle, device_os_requirement, device_data_transfer, personal_data_63b96014, lock_screen_only_e80c4860

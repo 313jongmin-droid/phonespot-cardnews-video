@@ -414,4 +414,6 @@ git ls-files -z | grep -ziE '\.(bat|ps1|cmd|vbs)$' | xargs -0 md5sum | sort \
 
 - 2026-06-14: **TTS 타이밍 graceful fallback — 날짜/영문 청크가 빌드 죽이던 것 수정 (C단원 정본).** 단어경계 정렬 실패(TTS 발음≠글자: "7월 22일"·"Z 폴드8" 등)가 RuntimeError로 렌더 빌드를 죽였음. 수정 3종: ① `generate_tts.py build_chunk_timing` try/except → `character_weight_fallback` 반환 ② `verify_tts_timing.py` char_fallback 모드 통과 + ms/window 검사 word_boundary 한정(char_fallback weights=글자수라 ms 오탐 방지) ③ `run_codex_casual.bat` `--allow-char-fallback`. 결과=날짜/영문 섹션만 근사싱크+경고, 나머지 정밀, 빌드 성공. 정밀 원하면 기사 한글화(날짜·영문 풀어쓰기) 또는 edge-tts 업데이트. 검증 024.
 
+- 2026-06-16: **오프닝 스팅 BGM + 수동 일러스트 등록 (C·E단원).** ① 오프닝 후킹 썰렁함 해소 = `shorts/src/Composition.tsx` 루트(오프닝 Sequence 밖=0초부터) casual 한정 `<Audio src=staticFile("music/opening_sting.mp3") vol .7>`. 에셋 `shorts/public/music/opening_sting.mp3` = 3.0초·페이드인없음·2~3초 페이드아웃, 오프닝 2초 고정(`Root.tsx OPENING_SEC=2.0`)과 정합. `*.mp3` git 비전파 → 렌더PC `shorts/public/music/`에 직접(코드는 git 전파, 번들 자동 재빌드=패널 재시작 불필요). ② 임의 일러스트는 ILLUSTRATION_DROP 떨구기만으론 매칭 X — 매처가 DB(keywords) 순회라 `shorts/config/illustration_tag_db.json` 엔트리(available:true)+`shorts/public/assets/illustrations/<variant>.png` 둘 다 필요(둘 다 git 추적). `camera_quality`/`document_article`/`fast_charging`/`battery_capacity` 4개 등록(텍스트 박힌 그림은 keywords 좁히기). 정본 = SYSTEM_MAP C·E단원.
+
 이 파일이 업그레이드되면 변경 이력 1줄 추가. 가이드 추가·제거 시 STEP 1 리스트 동기화.

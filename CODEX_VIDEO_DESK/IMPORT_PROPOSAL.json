@@ -1,164 +1,264 @@
 {
-  "slug": "024_news_galaxy_fold8_widefold",
+  "slug": "025_tip_galaxy_ai_call_screening",
   "engine": "image-embedding",
-  "generated_at": 1781596307.6869817,
+  "generated_at": 1781602405.6633084,
   "requests": [
     {
-      "filename": "cpt_0dfddb85.png",
-      "variant": "cpt_0dfddb85",
+      "filename": "mystery_number_63279925.png",
+      "variant": "mystery_number_63279925",
       "section": "hook",
       "chunk_index": 0,
-      "concept_label": "런던 언팩",
+      "concept_label": "모르 번호",
       "optional": true,
-      "concept_text": "런던 언팩 cpt 0dfddb85 런던 언팩 공개될 폴드 auto concept 7월 22일 런던 언팩에서 공개될 갤럭시 Z 폴드8"
+      "concept_text": "모르 번호 mystery number 63279925 모르 번호 받기 auto concept 모르는 번호 무조건 받기"
     },
     {
-      "filename": "basic_fold_202d754f.png",
-      "variant": "basic_fold_202d754f",
+      "filename": "new_policy_f48caded.png",
+      "variant": "new_policy_f48caded",
       "section": "hook",
       "chunk_index": 1,
-      "concept_label": "이번엔 기본",
+      "concept_label": "부담스러우셨다면 부터",
       "optional": true,
-      "concept_text": "이번엔 기본 basic fold 202d754f 이번엔 기본 폴드 외에 와이드폴드 auto concept 이번엔 기본 폴드8 외에 와이드폴드"
+      "concept_text": "부담스러우셨다면 부터 new policy f48caded 부담스러우셨다면 부터 도입된 auto concept 부담스러우셨다면 S26부터 도입된"
     },
     {
-      "filename": "cpt_3a2d2cbd.png",
-      "variant": "cpt_3a2d2cbd",
+      "filename": "cpt_e9fd442e.png",
+      "variant": "cpt_e9fd442e",
       "section": "hook",
       "chunk_index": 2,
-      "concept_label": "모델 추가될",
+      "concept_label": "통화 스크리닝",
       "optional": true,
-      "concept_text": "모델 추가될 cpt 3a2d2cbd 모델 추가될 auto concept 모델이 추가될 것으로 전망됩니다"
+      "concept_text": "통화 스크리닝 cpt e9fd442e 통화 스크리닝 켜보세요 auto concept 통화 스크리닝을 켜보세요"
     },
     {
-      "filename": "cpt_abbc8a1e.png",
-      "variant": "cpt_abbc8a1e",
+      "filename": "cpt_915bf475.png",
+      "variant": "cpt_915bf475",
       "section": "fact_1",
       "chunk_index": 0,
-      "concept_label": "공개 영국",
+      "concept_label": "전화 받자마자",
       "optional": true,
-      "concept_text": "공개 영국 cpt abbc8a1e 공개 영국 auto concept 공개는 2026년 7월 22일 영국"
+      "concept_text": "전화 받자마자 cpt 915bf475 전화 받자마자 이름 용건 알려주세요 auto concept AI가 전화 받자마자 \"이름과 용건을 먼저 알려주세요\"라고"
     },
     {
-      "filename": "london_unpack_eb61ad77.png",
-      "variant": "london_unpack_eb61ad77",
+      "filename": "cpt_f2dc70a6.png",
+      "variant": "cpt_f2dc70a6",
       "section": "fact_1",
       "chunk_index": 1,
-      "concept_label": "런던 진행되",
+      "concept_label": "발신자 답한",
       "optional": true,
-      "concept_text": "런던 진행되 london unpack eb61ad77 런던 진행되 하반기 언팩 auto concept 런던에서 진행되는 하반기 갤럭시 언팩,"
+      "concept_text": "발신자 답한 cpt f2dc70a6 발신자 답한 auto concept 응대합니다 발신자가 답한 내용은"
     }
   ],
   "assignments": [
     {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 16일 오후 04_50_07 (1).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 16일 오후 04_50_07 (1).png",
-      "proposed_filename": "london_unpack_eb61ad77.png",
-      "confidence": 0.1062,
+      "candidate_path": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\CODEX_VIDEO_DESK\\ILLUSTRATION_DROP\\battery_capacity.png",
+      "candidate_name": "battery_capacity.png",
+      "proposed_filename": null,
+      "confidence": null,
       "exact_name": false,
       "alternatives": [
         {
-          "filename": "london_unpack_eb61ad77.png",
-          "score": 0.1062
+          "filename": "new_policy_f48caded.png",
+          "score": 0.0681
         },
         {
-          "filename": "cpt_abbc8a1e.png",
-          "score": 0.0606
+          "filename": "mystery_number_63279925.png",
+          "score": 0.0431
         },
         {
-          "filename": "cpt_0dfddb85.png",
-          "score": 0.0409
+          "filename": "cpt_e9fd442e.png",
+          "score": 0.0431
         }
       ],
       "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 16일 오후 04_50_08 (2).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 16일 오후 04_50_08 (2).png",
-      "proposed_filename": "basic_fold_202d754f.png",
-      "confidence": 0.0628,
+      "candidate_path": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\CODEX_VIDEO_DESK\\ILLUSTRATION_DROP\\fast_charging.png",
+      "candidate_name": "fast_charging.png",
+      "proposed_filename": "cpt_e9fd442e.png",
+      "confidence": 0.0497,
       "exact_name": false,
       "alternatives": [
         {
-          "filename": "basic_fold_202d754f.png",
-          "score": 0.0628
+          "filename": "new_policy_f48caded.png",
+          "score": 0.0652
         },
         {
-          "filename": "cpt_abbc8a1e.png",
-          "score": 0.0496
+          "filename": "cpt_e9fd442e.png",
+          "score": 0.0497
         },
         {
-          "filename": "cpt_0dfddb85.png",
-          "score": 0.041
+          "filename": "cpt_f2dc70a6.png",
+          "score": 0.0398
         }
       ],
       "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 16일 오후 04_50_08 (3).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 16일 오후 04_50_08 (3).png",
-      "proposed_filename": "cpt_abbc8a1e.png",
-      "confidence": 0.0507,
+      "candidate_path": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\CODEX_VIDEO_DESK\\ILLUSTRATION_DROP\\camera_quality.png",
+      "candidate_name": "camera_quality.png",
+      "proposed_filename": "new_policy_f48caded.png",
+      "confidence": 0.1411,
       "exact_name": false,
       "alternatives": [
         {
-          "filename": "basic_fold_202d754f.png",
-          "score": 0.0511
+          "filename": "new_policy_f48caded.png",
+          "score": 0.1411
         },
         {
-          "filename": "cpt_abbc8a1e.png",
-          "score": 0.0507
+          "filename": "cpt_f2dc70a6.png",
+          "score": 0.108
         },
         {
-          "filename": "cpt_0dfddb85.png",
-          "score": 0.0349
+          "filename": "cpt_e9fd442e.png",
+          "score": 0.0998
         }
       ],
       "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 16일 오후 04_50_09 (4).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 16일 오후 04_50_09 (4).png",
-      "proposed_filename": "cpt_0dfddb85.png",
-      "confidence": 0.0114,
+      "candidate_path": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\CODEX_VIDEO_DESK\\ILLUSTRATION_DROP\\document_article.png",
+      "candidate_name": "document_article.png",
+      "proposed_filename": "cpt_f2dc70a6.png",
+      "confidence": 0.0442,
       "exact_name": false,
       "alternatives": [
         {
-          "filename": "london_unpack_eb61ad77.png",
-          "score": 0.0718
+          "filename": "new_policy_f48caded.png",
+          "score": 0.0548
         },
         {
-          "filename": "cpt_abbc8a1e.png",
-          "score": 0.0188
+          "filename": "cpt_f2dc70a6.png",
+          "score": 0.0442
         },
         {
-          "filename": "cpt_0dfddb85.png",
-          "score": 0.0114
+          "filename": "cpt_e9fd442e.png",
+          "score": 0.0396
         }
       ],
       "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 16일 오후 04_50_10 (5).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 16일 오후 04_50_10 (5).png",
-      "proposed_filename": "cpt_3a2d2cbd.png",
-      "confidence": -0.0002,
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 16일 오후 06_09_15 (3).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 16일 오후 06_09_15 (3).png",
+      "proposed_filename": null,
+      "confidence": null,
       "exact_name": false,
       "alternatives": [
         {
-          "filename": "london_unpack_eb61ad77.png",
-          "score": 0.0644
+          "filename": "new_policy_f48caded.png",
+          "score": 0.0524
         },
         {
-          "filename": "cpt_abbc8a1e.png",
-          "score": 0.0416
+          "filename": "mystery_number_63279925.png",
+          "score": 0.0516
         },
         {
-          "filename": "basic_fold_202d754f.png",
-          "score": 0.0136
+          "filename": "cpt_915bf475.png",
+          "score": 0.0338
+        }
+      ],
+      "dedup": {
+        "variant": "cpt_4729c912",
+        "score": 0.9343,
+        "skip": false
+      }
+    },
+    {
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 16일 오후 06_09_14 (1).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 16일 오후 06_09_14 (1).png",
+      "proposed_filename": "mystery_number_63279925.png",
+      "confidence": 0.1144,
+      "exact_name": false,
+      "alternatives": [
+        {
+          "filename": "mystery_number_63279925.png",
+          "score": 0.1144
+        },
+        {
+          "filename": "new_policy_f48caded.png",
+          "score": 0.065
+        },
+        {
+          "filename": "cpt_915bf475.png",
+          "score": 0.0571
         }
       ],
       "dedup": null
+    },
+    {
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 16일 오후 06_09_14 (2).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 16일 오후 06_09_14 (2).png",
+      "proposed_filename": null,
+      "confidence": null,
+      "exact_name": false,
+      "alternatives": [
+        {
+          "filename": "new_policy_f48caded.png",
+          "score": 0.1019
+        },
+        {
+          "filename": "mystery_number_63279925.png",
+          "score": 0.0374
+        },
+        {
+          "filename": "cpt_915bf475.png",
+          "score": 0.0344
+        }
+      ],
+      "dedup": null
+    },
+    {
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 16일 오후 06_09_15 (4).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 16일 오후 06_09_15 (4).png",
+      "proposed_filename": null,
+      "confidence": null,
+      "exact_name": false,
+      "alternatives": [
+        {
+          "filename": "mystery_number_63279925.png",
+          "score": 0.0794
+        },
+        {
+          "filename": "cpt_915bf475.png",
+          "score": 0.0491
+        },
+        {
+          "filename": "new_policy_f48caded.png",
+          "score": 0.0266
+        }
+      ],
+      "dedup": {
+        "variant": "call_recording_notice",
+        "score": 0.9337,
+        "skip": false
+      }
+    },
+    {
+      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 16일 오후 06_09_16 (5).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 16일 오후 06_09_16 (5).png",
+      "proposed_filename": "cpt_915bf475.png",
+      "confidence": 0.0508,
+      "exact_name": false,
+      "alternatives": [
+        {
+          "filename": "mystery_number_63279925.png",
+          "score": 0.0678
+        },
+        {
+          "filename": "cpt_915bf475.png",
+          "score": 0.0508
+        },
+        {
+          "filename": "new_policy_f48caded.png",
+          "score": 0.0328
+        }
+      ],
+      "dedup": {
+        "variant": "call_recording_notice",
+        "score": 0.9241,
+        "skip": false
+      }
     }
   ],
   "unmatched_requests": []
