@@ -79,6 +79,13 @@ export const NewsShort: React.FC<NewsShortProps> = ({
       {/* 오프닝 스팅: 0초부터 3초(0~2초 풀, 2~3초 페이드아웃이 후킹 나레이션 위로 빠짐). casual 한정. */}
       {isCasual && <Audio src={staticFile("music/opening_sting.mp3")} volume={0.7} />}
 
+      {/* CTA 스팅: 닫기("휴대폰 구매할 땐?") 시작부터 5초(0~4초 풀, 4~5초 페이드아웃). CTA 나레이션 위로 깔림 → 볼륨 낮춤. casual 한정. */}
+      {isCasual && (
+        <Sequence from={ctaStart} durationInFrames={Math.ceil(5 * fps)}>
+          <Audio src={staticFile("music/cta_sting.mp3")} volume={0.6} />
+        </Sequence>
+      )}
+
       <Sequence from={openingStart} durationInFrames={openingFrames}>
         <OpeningHook line1={script.opening.line1} line2={script.opening.line2} durFrames={openingFrames} />
       </Sequence>
