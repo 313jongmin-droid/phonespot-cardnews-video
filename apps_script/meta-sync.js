@@ -354,9 +354,9 @@ function syncMetaCampaignIntegrated(targetDate) {
     sh.getRange(r, 17).setFormula(
       `=IFERROR(IF(L${r}=0,"-",H${r}/L${r}),"-")`
     ).setNumberFormat('#,##0"원"');
-    // R (18) = 문의수 자동 매핑 = 문의접수 시트 D열="페북" + A열=날짜 매칭 (2026-06-15)
+    // R (18) = 문의수 자동 매핑 = 문의접수 D열 "페북" + "인스타" + "스레드" 합산 (메타 산하 전체)
     sh.getRange(r, 18).setFormula(
-      `=COUNTIFS('문의접수'!D:D,"페북",'문의접수'!A:A,A${r})`
+      `=COUNTIFS('문의접수'!D:D,"페북",'문의접수'!A:A,A${r})+COUNTIFS('문의접수'!D:D,"인스타",'문의접수'!A:A,A${r})+COUNTIFS('문의접수'!D:D,"스레드",'문의접수'!A:A,A${r})`
     ).setNumberFormat('#,##0');
     // S (19) = CPL = 지출 / 문의수 (광고그룹별 행마다 같은 채널 일자 합계, 부정확하지만 0보다 나음)
     sh.getRange(r, 19).setFormula(

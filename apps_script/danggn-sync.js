@@ -47,7 +47,7 @@ const DANGGN_HEADERS = [
   'CTR', 'CPC',
   'GA4세션', '카톡클릭', '전화클릭', '시티마켓 클릭', '시티마켓 직접',
   '카톡전환률', '카톡당CPC',
-  '문의수', 'CPL', '개통수', '메모'
+  '카톡문의', '앱문의', 'CPL', '개통수', '메모'
 ];
 
 const DANGGN_UTM_HEADERS = [
@@ -79,7 +79,9 @@ function migrateCitymarketColumns() {
   // ===== 2단계: CPL 컬럼 추가 (문의수 옆에 신규 CPL, 2026-06-15) =====
   results.push(migrateAddCplColumn_(ss, '메타_통합', 18, 21));   // 문의수=R(18) → S(19) CPL
   results.push(migrateAddCplColumn_(ss, '네이버_통합', 18, 21));  // 동일
-  results.push(migrateAddCplColumn_(ss, '당근_통합', 16, 19));    // 문의수=P(16) → Q(17) CPL
+
+  // ===== 3단계: 당근_통합 = 문의수 → 카톡문의/앱문의 + CPL (18→20) =====
+  results.push(migrateDanggnInquirySplit_(ss));
 
   const msg = '광고 시트 컬럼 마이그레이션 결과:\n\n' + results.join('\n') +
     '\n\n다음 = 메뉴에서 광고그룹별 통합 / 30일 백필 또는 GA4 매칭 새로고침 클릭 → 새 컬럼에 수식 박힘.';
@@ -102,6 +104,8 @@ const INQUIRY_D_OPTIONS = [
  * 옛 값 → 새 값 일괄 치환 (브랜드 신설 시 옛 데이터 이관 자동화)
  * - "메타" → "페북" (호칭 변경)
  * - "불확실" → "기타" (통합)
+ *
+ * 당근: D열은 "당근" 1개 (카톡 문의 = 자동 매칭). 앱문의는 당근_통합 Q열 수기 입력 (API 없음).
  */
 const INQUIRY_D_LEGACY_MAPPING = {
   '메타': '페북',
@@ -386,13 +390,15 @@ function syncDanggnGA4(opts) {
     sheet.getRange(row, 14).setFormula(`=IFERROR(J${row}/I${row},"")`);
     // O (15) 카톡당CPC (=F/J)
     sheet.getRange(row, 15).setFormula(`=IFERROR(F${row}/J${row},"")`);
-    // P (16) 문의수 자동 매핑 = 문의접수 D열="당근" + A열=날짜 (2026-06-15)
+    // P (16) 카톡문의 = 문의접수 D열="당근" 자동 매칭
     sheet.getRange(row, 16).setFormula(
       `=COUNTIFS('문의접수'!D:D,"당근",'문의접수'!A:A,A${row})`
     );
-    // Q (17) CPL = 지출 / 문의수
-    sheet.getRange(row, 17).setFormula(
-      `=IFERROR(IF(P${row}=0,"-",F${row}/P${row}),"-")`
+    // Q (17) 앱문의 = ★ 수기 입력 (당근 API 없음, 사장님이 당근 앱에서 직접 확인하고 박음).
+    //   setFormula 박지 않음 = 매번 sync 실행 시 사장님 수기 입력값 보존.
+    // R (18) CPL = 지출 / (카톡문의 + 앱문의 합산)
+    sheet.getRange(row, 18).setFormula(
+      `=IFERROR(IF((P${row}+Q${row})=0,"-",F${row}/(P${row}+Q${row})),"-")`
     );
 
     updated++;
