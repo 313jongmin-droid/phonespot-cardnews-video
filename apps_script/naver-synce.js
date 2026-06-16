@@ -368,7 +368,7 @@ function syncNaverIntegrated(targetDate) {
     const headers = ['날짜', '캠페인ID', '캠페인명', '광고그룹ID', '광고그룹명',
                      '노출', '클릭', '지출', 'CTR', 'CPC',
                      'GA4세션', '카톡클릭', '전화클릭', '시티마켓 클릭', '시티마켓 직접', '카톡전환률', '카톡당CPC',
-                     '문의수', '개통수', '메모'];
+                     '문의수', 'CPL', '개통수', '메모'];
     sh.getRange(1, 1, 1, headers.length).setValues([headers])
       .setBackground('#03C75A').setFontColor('#FFFFFF')
       .setFontWeight('bold').setHorizontalAlignment('center');
@@ -435,6 +435,14 @@ function syncNaverIntegrated(targetDate) {
     // Q (17) = 카톡당CPC (위치만 +1)
     sh.getRange(row, 17).setFormula(
       `=IFERROR(IF(L${row}=0,"-",H${row}/L${row}),"-")`
+    ).setNumberFormat('#,##0"원"');
+    // R (18) = 문의수 자동 매핑 = 문의접수 D열="네이버" + A열=날짜 (2026-06-15)
+    sh.getRange(row, 18).setFormula(
+      `=COUNTIFS('문의접수'!D:D,"네이버",'문의접수'!A:A,A${row})`
+    ).setNumberFormat('#,##0');
+    // S (19) = CPL = 지출 / 문의수
+    sh.getRange(row, 19).setFormula(
+      `=IFERROR(IF(R${row}=0,"-",H${row}/R${row}),"-")`
     ).setNumberFormat('#,##0"원"');
   });
 

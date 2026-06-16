@@ -270,7 +270,7 @@ function syncMetaCampaignIntegrated(targetDate) {
     const headers = ['날짜','캠페인ID','캠페인명','광고그룹ID','광고그룹명',
                      '노출','클릭','지출','CTR','CPC',
                      'GA4세션','카톡클릭','전화클릭','시티마켓 클릭','시티마켓 직접','카톡전환률','카톡당CPC',
-                     '문의수','개통수','메모'];
+                     '문의수','CPL','개통수','메모'];
     sh.getRange(1, 1, 1, headers.length).setValues([headers])
       .setBackground('#1F4E78').setFontColor('#FFFFFF')
       .setFontWeight('bold').setHorizontalAlignment('center');
@@ -282,8 +282,8 @@ function syncMetaCampaignIntegrated(targetDate) {
     for (let c = 17; c <= 19; c++) sh.setColumnWidth(c, 100);
   } else {
     // 헤더 자동 갱신 (17→19컬럼 마이그레이션)
-    const curHeader = sh.getRange(1, 1, 1, 20).getValues()[0];
-    if (curHeader[3] !== '광고그룹ID' || curHeader[4] !== '광고그룹명' || curHeader[14] !== '시티마켓 직접') {
+    const curHeader = sh.getRange(1, 1, 1, 21).getValues()[0];
+    if (curHeader[3] !== '광고그룹ID' || curHeader[4] !== '광고그룹명' || curHeader[14] !== '시티마켓 직접' || curHeader[18] !== 'CPL') {
       const headers = ['날짜','캠페인ID','캠페인명','광고그룹ID','광고그룹명',
                        '노출','클릭','지출','CTR','CPC',
                        'GA4세션','카톡클릭','전화클릭','시티마켓','카톡전환률','카톡당CPC',
@@ -353,6 +353,14 @@ function syncMetaCampaignIntegrated(targetDate) {
     // Q (17) = 카톡당CPC (H=지출 / L=카톡클릭)
     sh.getRange(r, 17).setFormula(
       `=IFERROR(IF(L${r}=0,"-",H${r}/L${r}),"-")`
+    ).setNumberFormat('#,##0"원"');
+    // R (18) = 문의수 자동 매핑 = 문의접수 시트 D열="페북" + A열=날짜 매칭 (2026-06-15)
+    sh.getRange(r, 18).setFormula(
+      `=COUNTIFS('문의접수'!D:D,"페북",'문의접수'!A:A,A${r})`
+    ).setNumberFormat('#,##0');
+    // S (19) = CPL = 지출 / 문의수 (광고그룹별 행마다 같은 채널 일자 합계, 부정확하지만 0보다 나음)
+    sh.getRange(r, 19).setFormula(
+      `=IFERROR(IF(R${r}=0,"-",H${r}/R${r}),"-")`
     ).setNumberFormat('#,##0"원"');
   });
 

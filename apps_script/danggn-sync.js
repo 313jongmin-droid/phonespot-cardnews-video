@@ -47,7 +47,7 @@ const DANGGN_HEADERS = [
   'CTR', 'CPC',
   'GA4세션', '카톡클릭', '전화클릭', '시티마켓 클릭', '시티마켓 직접',
   '카톡전환률', '카톡당CPC',
-  '문의수', '개통수', '메모'
+  '문의수', 'CPL', '개통수', '메모'
 ];
 
 const DANGGN_UTM_HEADERS = [
@@ -71,18 +71,42 @@ function migrateCitymarketColumns() {
   const ui = SpreadsheetApp.getUi();
   const results = [];
 
-  // 메타_통합 (19→20컬럼, N열 옆에 O열 삽입)
+  // ===== 1단계: 시티마켓 컬럼 분리 (옛 단일 "시티마켓" → "시티마켓 클릭" + "시티마켓 직접") =====
   results.push(migrateOneSheet_(ss, '메타_통합', 14, '시티마켓 클릭', '시티마켓 직접', 19, 20));
-
-  // 네이버_통합 (19→20컬럼, N열 옆에 O열 삽입)
   results.push(migrateOneSheet_(ss, '네이버_통합', 14, '시티마켓 클릭', '시티마켓 직접', 19, 20));
-
-  // 당근_통합 (17→18컬럼, L열 옆에 M열 삽입)
   results.push(migrateOneSheet_(ss, '당근_통합', 12, '시티마켓 클릭', '시티마켓 직접', 17, 18));
 
-  const msg = '시티마켓 컬럼 분리 마이그레이션 결과:\n\n' + results.join('\n');
+  // ===== 2단계: CPL 컬럼 추가 (문의수 옆에 신규 CPL, 2026-06-15) =====
+  results.push(migrateAddCplColumn_(ss, '메타_통합', 18, 21));   // 문의수=R(18) → S(19) CPL
+  results.push(migrateAddCplColumn_(ss, '네이버_통합', 18, 21));  // 동일
+  results.push(migrateAddCplColumn_(ss, '당근_통합', 16, 19));    // 문의수=P(16) → Q(17) CPL
+
+  const msg = '광고 시트 컬럼 마이그레이션 결과:\n\n' + results.join('\n') +
+    '\n\n다음 = 메뉴에서 광고그룹별 통합 / 30일 백필 또는 GA4 매칭 새로고침 클릭 → 새 컬럼에 수식 박힘.';
   Logger.log(msg);
   try { ui.alert(msg); } catch (e) {}
+}
+
+/**
+ * 문의수 컬럼 옆에 CPL 컬럼 1개 삽입 (idempotent)
+ */
+function migrateAddCplColumn_(ss, sheetName, inquiryColIdx, newColCount) {
+  const sh = ss.getSheetByName(sheetName);
+  if (!sh) return `❌ ${sheetName}: 시트 없음 (CPL 스킵)`;
+
+  const curCols = sh.getLastColumn();
+  if (curCols >= newColCount) {
+    const headers = sh.getRange(1, 1, 1, newColCount).getValues()[0];
+    if (headers[inquiryColIdx] === 'CPL') {
+      return `✅ ${sheetName}: CPL 컬럼 이미 박힘 (스킵)`;
+    }
+  }
+
+  // 문의수 옆에 CPL 컬럼 삽입
+  sh.insertColumnAfter(inquiryColIdx);
+  sh.getRange(1, inquiryColIdx + 1).setValue('CPL');
+
+  return `✅ ${sheetName}: CPL 컬럼 추가 (${curCols}→${sh.getLastColumn()})`;
 }
 
 function migrateOneSheet_(ss, sheetName, oldCityColIdx, newColAName, newColBName, oldColCount, newColCount) {
@@ -268,6 +292,14 @@ function syncDanggnGA4(opts) {
     sheet.getRange(row, 14).setFormula(`=IFERROR(J${row}/I${row},"")`);
     // O (15) 카톡당CPC (=F/J)
     sheet.getRange(row, 15).setFormula(`=IFERROR(F${row}/J${row},"")`);
+    // P (16) 문의수 자동 매핑 = 문의접수 D열="당근" + A열=날짜 (2026-06-15)
+    sheet.getRange(row, 16).setFormula(
+      `=COUNTIFS('문의접수'!D:D,"당근",'문의접수'!A:A,A${row})`
+    );
+    // Q (17) CPL = 지출 / 문의수
+    sheet.getRange(row, 17).setFormula(
+      `=IFERROR(IF(P${row}=0,"-",F${row}/P${row}),"-")`
+    );
 
     updated++;
   }
@@ -346,7 +378,7 @@ function buildDanggnSyncMenu_(ui) {
     .addItem('🆕 시트 신설 / 헤더 갱신', 'createDanggnIntegratedSheet')
     .addItem('🔍 미매핑 광고그룹 보기', 'showUnmappedDanggnAdgroups')
     .addSeparator()
-    .addItem('🔧 시티마켓 컬럼 분리 마이그레이션 (1회)', 'migrateCitymarketColumns')
+    .addItem('🔧 광고시트 컬럼 마이그레이션 (시티마켓+CPL, 1회)', 'migrateCitymarketColumns')
     .addSeparator()
     .addItem('⏰ 당근 Daily Trigger 설정 (02:30)', 'setupDanggnTrigger')
     .addItem('🔑 utm_source 값 확인', 'showDanggnUtmSource')
