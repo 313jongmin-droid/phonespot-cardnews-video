@@ -186,6 +186,41 @@ function setupInquirySheetDropdowns() {
 
 
 /**
+ * 당근_통합 시트 = 문의수 1개 → 카톡문의 / 앱문의 / CPL 3개로 확장 (2026-06-15)
+ *
+ * 옛 (18컬럼, 시티마켓 분리 후): ... O 카톡당CPC / P 문의수 / Q 개통수 / R 메모
+ * 새 (20컬럼): ... O 카톡당CPC / P 카톡문의 / Q 앱문의 / R CPL / S 개통수 / T 메모
+ *
+ * idempotent — 이미 분리됐으면 스킵.
+ */
+function migrateDanggnInquirySplit_(ss) {
+  const sh = ss.getSheetByName('당근_통합');
+  if (!sh) return '❌ 당근_통합: 시트 없음 (스킵)';
+
+  const curCols = sh.getLastColumn();
+
+  // 이미 마이그레이션 됨 점검
+  if (curCols >= 20) {
+    const headers = sh.getRange(1, 1, 1, 20).getValues()[0];
+    if (headers[15] === '카톡문의' && headers[16] === '앱문의' && headers[17] === 'CPL') {
+      return '✅ 당근_통합: 이미 카톡/앱/CPL 분리됨 (스킵)';
+    }
+  }
+
+  // 1. P (16) 문의수 → 카톡문의 (헤더 갱신, 옛 수동 데이터 = 카톡 문의로 간주)
+  sh.getRange(1, 16).setValue('카톡문의');
+
+  // 2. P (16) 옆에 컬럼 2개 삽입 (Q 앱문의 신규 + R CPL 신규)
+  //    기존 Q (개통수) / R (메모) → S / T 로 자동 이동
+  sh.insertColumnsAfter(16, 2);
+  sh.getRange(1, 17).setValue('앱문의');
+  sh.getRange(1, 18).setValue('CPL');
+
+  return `✅ 당근_통합: 카톡문의/앱문의/CPL 분리 (${curCols}→${sh.getLastColumn()})`;
+}
+
+
+/**
  * 문의수 컬럼 옆에 CPL 컬럼 1개 삽입 (idempotent)
  */
 function migrateAddCplColumn_(ss, sheetName, inquiryColIdx, newColCount) {
