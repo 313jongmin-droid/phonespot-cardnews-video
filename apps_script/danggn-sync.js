@@ -87,6 +87,100 @@ function migrateCitymarketColumns() {
   try { ui.alert(msg); } catch (e) {}
 }
 
+// ============ 문의접수 시트 표준화 (모든 브랜드 공통, 2026-06-15) ============
+
+/**
+ * 문의접수 D열 표준값 (드롭다운).
+ * ★ 다른 브랜드 시트(KT/국민/진짜폰스팟) 신설 시 = 같은 함수 호출로 동일 셋업.
+ */
+const INQUIRY_D_OPTIONS = [
+  '구글', '네이버', '카카오', '페북', '당근',
+  '인스타', '스레드', '뽐뿌', '내방', '지인', '기타'
+];
+
+/**
+ * 옛 값 → 새 값 일괄 치환 (브랜드 신설 시 옛 데이터 이관 자동화)
+ * - "메타" → "페북" (호칭 변경)
+ * - "불확실" → "기타" (통합)
+ */
+const INQUIRY_D_LEGACY_MAPPING = {
+  '메타': '페북',
+  '불확실': '기타'
+};
+
+/**
+ * 문의접수 C열 표준값 (개통여부, 옛 가이드 유지).
+ */
+const INQUIRY_C_OPTIONS = ['개통', '진행중', '미상'];
+
+/**
+ * 1회 실행: 문의접수 시트 D열 드롭다운 자동 설정 + 옛 값 치환 + C열 드롭다운.
+ * idempotent — 매번 실행해도 안전.
+ *
+ * 미래 브랜드 신설(KT/국민/진짜폰스팟)에서도 같은 함수 호출하면 동일 셋업.
+ */
+function setupInquirySheetDropdowns() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = ss.getSheetByName('문의접수');
+  const ui = SpreadsheetApp.getUi();
+
+  if (!sheet) {
+    try { ui.alert('❌ 문의접수 시트가 없습니다.'); } catch (e) {}
+    return;
+  }
+
+  const results = [];
+
+  // ===== 1. D열 (4) 드롭다운 설정 = 2행~ =====
+  const targetLastRow = Math.max(sheet.getLastRow(), 2000);  // 미래 행 대비 2000행
+  const dRange = sheet.getRange(2, 4, targetLastRow - 1, 1);
+  const dRule = SpreadsheetApp.newDataValidation()
+    .requireValueInList(INQUIRY_D_OPTIONS, true)
+    .setAllowInvalid(true)  // 옛 값 보존 (치환 전)
+    .build();
+  dRange.setDataValidation(dRule);
+  results.push(`✅ D열 드롭다운 설정 (${INQUIRY_D_OPTIONS.length}개 옵션, ${targetLastRow}행까지)`);
+
+  // ===== 2. C열 (3) 드롭다운 설정 (개통여부) =====
+  const cRange = sheet.getRange(2, 3, targetLastRow - 1, 1);
+  const cRule = SpreadsheetApp.newDataValidation()
+    .requireValueInList(INQUIRY_C_OPTIONS, true)
+    .setAllowInvalid(true)
+    .build();
+  cRange.setDataValidation(cRule);
+  results.push(`✅ C열 드롭다운 설정 (개통/진행중/미상)`);
+
+  // ===== 3. 옛 D열 값 일괄 치환 =====
+  const dataLastRow = sheet.getLastRow();
+  if (dataLastRow >= 2) {
+    const dataRange = sheet.getRange(2, 4, dataLastRow - 1, 1);
+    const values = dataRange.getValues();
+    const changedCount = {};
+    for (let i = 0; i < values.length; i++) {
+      const v = values[i][0];
+      if (INQUIRY_D_LEGACY_MAPPING.hasOwnProperty(v)) {
+        values[i][0] = INQUIRY_D_LEGACY_MAPPING[v];
+        changedCount[v] = (changedCount[v] || 0) + 1;
+      }
+    }
+    const totalChanged = Object.values(changedCount).reduce((a, b) => a + b, 0);
+    if (totalChanged > 0) {
+      dataRange.setValues(values);
+      const detail = Object.keys(changedCount).map(k => `"${k}"→"${INQUIRY_D_LEGACY_MAPPING[k]}" (${changedCount[k]}행)`).join(', ');
+      results.push(`✅ 옛 값 치환: ${detail}`);
+    } else {
+      results.push(`ℹ️ 치환할 옛 값 없음 (이미 새 표준값)`);
+    }
+  }
+
+  // ===== 4. 결과 출력 =====
+  const msg = '문의접수 시트 표준화 완료:\n\n' + results.join('\n') +
+    '\n\n다음 = 메뉴에서 각 광고 시트 sync 실행 → 문의수 자동 매칭 활성화.';
+  Logger.log(msg);
+  try { ui.alert(msg); } catch (e) {}
+}
+
+
 /**
  * 문의수 컬럼 옆에 CPL 컬럼 1개 삽입 (idempotent)
  */
@@ -379,6 +473,7 @@ function buildDanggnSyncMenu_(ui) {
     .addItem('🔍 미매핑 광고그룹 보기', 'showUnmappedDanggnAdgroups')
     .addSeparator()
     .addItem('🔧 광고시트 컬럼 마이그레이션 (시티마켓+CPL, 1회)', 'migrateCitymarketColumns')
+    .addItem('📋 문의접수 D열 표준화 (드롭다운+옛값치환, 1회)', 'setupInquirySheetDropdowns')
     .addSeparator()
     .addItem('⏰ 당근 Daily Trigger 설정 (02:30)', 'setupDanggnTrigger')
     .addItem('🔑 utm_source 값 확인', 'showDanggnUtmSource')
