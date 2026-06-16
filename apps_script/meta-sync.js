@@ -326,7 +326,6 @@ function syncMetaCampaignIntegrated(targetDate) {
     const ymdText = `TEXT(A${r},"yyyymmdd")`;
     // ★ 2026-06-12 B2 수정: 슬러그 미입력 시 ""가 GA4 빈 campaign 행을 오매칭 → 과대계상.
     //   미매핑이면 실제 campaign에 절대 없는 토큰으로 치환해 SUMIFS가 0 반환하도록 가드.
-    // ★ 2026-06-15: UTM 매핑 통합 시트 (A채널/B광고그룹명/C utm_campaign) → FILTER로 채널 분리
     const slugRaw = `IFERROR(VLOOKUP(E${r}, FILTER('${SHEET_UTM_MAPPING}'!B:C, '${SHEET_UTM_MAPPING}'!A:A="페북"), 2, FALSE),"")`;
     const slugLookup = `IF(${slugRaw}="","__UNMAPPED_NO_MATCH__",${slugRaw})`;
     const ga4Base = `'GA4_자동'!A:A,${ymdText},'GA4_자동'!B:B,"meta",'GA4_자동'!D:D,${slugLookup}`;
@@ -375,19 +374,17 @@ function autoDiscoverAdsets_(adsetNames) {
   const ss = SpreadsheetApp.getActive();
   let sheet = ss.getSheetByName(SHEET_UTM_MAPPING);
   if (!sheet) {
-    // 통합 시트 신설 (6컬럼, 2026-06-15)
     sheet = ss.insertSheet(SHEET_UTM_MAPPING);
-    sheet.appendRow(['채널', '광고그룹명(한글)', 'utm_campaign(영문)', '첫 발견일', '상태', '메모']);
-    sheet.getRange(1, 1, 1, 6).setBackground('#1F4E78').setFontColor('#FFFFFF').setFontWeight('bold');
+    sheet.appendRow(['메타 광고그룹명', '영문 슬러그', '첫 발견일', '상태', '메모']);
+    sheet.getRange(1, 1, 1, 5).setBackground('#1F4E78').setFontColor('#FFFFFF').setFontWeight('bold');
     sheet.setFrozenRows(1);
-    sheet.setColumnWidth(1, 80); sheet.setColumnWidth(2, 220); sheet.setColumnWidth(3, 180);
-    sheet.setColumnWidth(4, 110); sheet.setColumnWidth(5, 100); sheet.setColumnWidth(6, 200);
+    sheet.setColumnWidth(1, 220); sheet.setColumnWidth(2, 180);
+    sheet.setColumnWidth(3, 110); sheet.setColumnWidth(4, 100); sheet.setColumnWidth(5, 200);
   }
-  // ★ 통합 시트 = A채널 + B광고그룹명. 메타="페북" 행만 점검.
   const existingSet = new Set();
   if (sheet.getLastRow() >= 2) {
-    sheet.getRange(2, 1, sheet.getLastRow() - 1, 2).getValues()
-      .forEach(r => { if (r[0] === '페북' && r[1]) existingSet.add(String(r[1]).trim()); });
+    sheet.getRange(2, 1, sheet.getLastRow() - 1, 1).getValues()
+      .forEach(r => { if (r[0]) existingSet.add(String(r[0]).trim()); });
   }
   const today = Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyy-MM-dd');
   let added = 0;
@@ -396,13 +393,13 @@ function autoDiscoverAdsets_(adsetNames) {
     const n = String(name || '').trim();
     if (!n) return;
     if (existingSet.has(n)) return;
-    sheet.appendRow(['페북', n, '', today, '⚠️ 매핑 필요', '']);
+    sheet.appendRow([n, '', today, '⚠️ 매핑 필요', '']);
     existingSet.add(n);
     newNames.push(n);
     added++;
   });
   if (added > 0) {
-    Logger.log(`UTM_매핑: 신규 페북 광고그룹 ${added}개 발견 — ${newNames.join(', ')}`);
+    Logger.log(`UTM_매핑: 신규 광고그룹 ${added}개 발견 — ${newNames.join(', ')}`);
     logSync_('autoDiscoverAdsets', `신규 ${added}개: ${newNames.slice(0, 3).join(', ')}...`);
   }
   return added;
@@ -410,7 +407,6 @@ function autoDiscoverAdsets_(adsetNames) {
 
 // 메뉴 호출 — 미매핑 광고그룹 보기 (B열 비어있는 행)
 function showUnmappedAdsets() {
-  // ★ 2026-06-15: 통합 시트 A채널="페북" 행만 점검
   const ss = SpreadsheetApp.getActive();
   const sheet = ss.getSheetByName(SHEET_UTM_MAPPING);
   if (!sheet) {
@@ -421,17 +417,16 @@ function showUnmappedAdsets() {
     SpreadsheetApp.getUi().alert('UTM_매핑 시트 비어있음.');
     return;
   }
-  // 통합: A채널 / B광고그룹명 / C utm_campaign
-  const data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 3).getValues();
-  const unmapped = data.filter(r => r[0] === '페북' && r[1] && !r[2]);
+  const data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 2).getValues();
+  const unmapped = data.filter(r => r[0] && !r[1]);
   if (unmapped.length === 0) {
-    SpreadsheetApp.getUi().alert('✅ 미매핑 페북 광고그룹 없음. 모두 영문 슬러그 박혀있음.');
+    SpreadsheetApp.getUi().alert('✅ 미매핑 광고그룹 없음. 모두 영문 슬러그 박혀있음.');
     return;
   }
-  const msg = unmapped.map((r, i) => `${i + 1}. ${r[1]}`).join('\n');
+  const msg = unmapped.map((r, i) => `${i + 1}. ${r[0]}`).join('\n');
   SpreadsheetApp.getUi().alert(
-    `⚠️ 미매핑 페북 광고그룹 ${unmapped.length}개\n\n${msg}\n\n` +
-    `UTM_매핑 시트 C열(utm_campaign 영문)에 박기 (1회). 박으면 메타_통합 GA4 컬럼 자동 매칭.`
+    `⚠️ 미매핑 광고그룹 ${unmapped.length}개\n\n${msg}\n\n` +
+    `UTM_매핑 시트 B열에 영문 슬러그 박기 (1회). 박으면 메타_통합 GA4 컬럼 자동 매칭.`
   );
 }
 

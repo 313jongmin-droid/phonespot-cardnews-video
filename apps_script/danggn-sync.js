@@ -398,7 +398,36 @@ function buildDanggnSyncMenu_(ui) {
     .addItem('🆕 시트 신설 / 헤더 갱신', 'createDanggnIntegratedSheet')
     .addItem('🔍 미매핑 광고그룹 보기', 'showUnmappedDanggnAdgroups')
     .addItem('📋 문의접수 D열 표준화', 'setupInquirySheetDropdowns')
-    .addItem('🔄 UTM 
+    .addItem('🔄 UTM 매핑 통합 마이그레이션 (1회)', 'migrateUtmMappingsUnified')
+    .addSeparator()
+    .addItem('⏰ 당근 Daily Trigger 설정 (02:30)', 'setupDanggnTrigger')
+    .addItem('🔑 utm_source 값 확인', 'showDanggnUtmSource')
+    .addToUi();
+}
+
+/**
+ * 미매핑 광고그룹 보기 (통합 시트 채널="당근" 행 중 utm_campaign 빈 것)
+ */
+function showUnmappedDanggnAdgroups() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = ss.getSheetByName('UTM_매핑');
+  const ui = SpreadsheetApp.getUi();
+  if (!sheet) { ui.alert('UTM_매핑 시트 없음.'); return; }
+  if (sheet.getLastRow() < 2) { ui.alert('UTM_매핑 비어있음.'); return; }
+  const data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 3).getValues();
+  const unmapped = data.filter(r => r[0] === '당근' && r[1] && !r[2]);
+  if (unmapped.length === 0) { ui.alert('✅ 미매핑 당근 광고그룹 없음.'); return; }
+  ui.alert(`⚠️ 미매핑 당근 ${unmapped.length}개:\n\n` + unmapped.map((r, i) => `${i+1}. ${r[1]}`).join('\n'));
+}
+
+/**
+ * DANGGN_UTM_SOURCE 값 확인
+ */
+function showDanggnUtmSource() {
+  const val = PropertiesService.getScriptProperties().getProperty('DANGGN_UTM_SOURCE') || '(미설정, 기본값 "danggn" 사용)';
+  SpreadsheetApp.getUi().alert(`DANGGN_UTM_SOURCE = "${val}"\n\nGA4_자동 시트 B열(sessionSource)과 일치해야 매칭됨. (정답: "daangn")`);
+}
+
 
 // ============ UTM 매핑 통합 마이그레이션 (1회용, 2026-06-15) ============
 

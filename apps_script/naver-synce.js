@@ -409,7 +409,6 @@ function syncNaverIntegrated(targetDate) {
 
     // GA4 매칭 — 광고그룹명(E) → 네이버_UTM_매핑 VLOOKUP → 영문 슬러그
     const ymdText = `TEXT(A${row},"yyyymmdd")`;
-    // ★ 2026-06-15: UTM 매핑 통합 시트 + 채널="네이버" 필터
     const utmSlug = `IFERROR(VLOOKUP(E${row}, FILTER('UTM_매핑'!B:C, 'UTM_매핑'!A:A="네이버"), 2, FALSE),E${row})`;
     const ga4Base = `'GA4_자동'!A:A,${ymdText},'GA4_자동'!B:B,"naver",'GA4_자동'!D:D,${utmSlug}`;
     sh.getRange(row, 11).setFormula(
@@ -497,46 +496,41 @@ function ensureNaverUtmMappingSheet_() {
 }
 
 function autoDiscoverNaverAdgroups_(rows, ymd) {
-  // ★ 2026-06-15: UTM 매핑 통합 시트(6컬럼) 사용. A채널="네이버" 행만 점검.
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
-  const sh = ss.getSheetByName('UTM_매핑');
-  if (!sh) return;  // 통합 시트 없으면 = 메타 sync 한 번 돌고 생성됨
+  const sh = ensureNaverUtmMappingSheet_();
+  const dataStartRow = 3;
   const lastRow = sh.getLastRow();
 
-  // 기존 네이버 광고그룹 set
   const existing = new Set();
-  if (lastRow >= 2) {
-    sh.getRange(2, 1, lastRow - 1, 2).getValues()
+  if (lastRow >= dataStartRow) {
+    sh.getRange(dataStartRow, 1, lastRow - dataStartRow + 1, 1).getValues()
       .forEach(r => {
-        if (r[0] === '네이버' && r[1]) existing.add(String(r[1]).trim());
+        const name = String(r[0] || '').trim();
+        if (name) existing.add(name);
       });
   }
 
-  // 신규 발견 광고그룹 append
   const newRows = [];
   rows.forEach(r => {
     const name = String(r.adgroupName || '').trim();
     if (name && !existing.has(name)) {
-      newRows.push(['네이버', name, '', ymd, '⚠️ 매핑 필요', '']);
+      newRows.push([name, '', ymd, '⚠️ 매핑 필요', '']);
       existing.add(name);
     }
   });
 
   if (newRows.length > 0) {
-    sh.getRange(sh.getLastRow() + 1, 1, newRows.length, 6).setValues(newRows);
-    Logger.log('UTM_매핑: 신규 네이버 광고그룹 ' + newRows.length + '건 추가');
+    sh.getRange(sh.getLastRow() + 1, 1, newRows.length, 5).setValues(newRows);
+    Logger.log('네이버_UTM_매핑: 신규 광고그룹 ' + newRows.length + '건 추가');
   }
 
-  // 기존 네이버 행 상태 자동 갱신 (utm 채워지면 "✅ 매핑됨")
-  if (sh.getLastRow() >= 2) {
-    const data = sh.getRange(2, 1, sh.getLastRow() - 1, 5).getValues();
-    data.forEach((row, i) => {
-      if (row[0] !== '네이버') return;
-      const utm = String(row[2] || '').trim();
-      const status = String(row[4] || '').trim();
+  if (sh.getLastRow() >= dataStartRow) {
+    const range = sh.getRange(dataStartRow, 1, sh.getLastRow() - dataStartRow + 1, 4).getValues();
+    range.forEach((row, i) => {
+      const utm = String(row[1] || '').trim();
+      const status = String(row[3] || '').trim();
       const desired = utm ? '✅ 매핑됨' : '⚠️ 매핑 필요';
       if (status !== desired) {
-        sh.getRange(2 + i, 5).setValue(desired);
+        sh.getRange(dataStartRow + i, 4).setValue(desired);
       }
     });
   }

@@ -120,7 +120,7 @@ export const CoverShort: React.FC<{ script: Script }> = ({ script }) => {
           position: "absolute",
           left: 64,
           right: 64,
-          bottom: 120,
+          top: 1180,
           display: "flex",
           flexDirection: "column",
           gap: 10,
