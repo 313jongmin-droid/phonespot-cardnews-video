@@ -38,6 +38,9 @@ function onOpen() {
 
   // 🟠 당근 자동화 메뉴 (danggn-sync.gs, 2026-06-15)
   try { buildDanggnSyncMenu_(SpreadsheetApp.getUi()); } catch (e) {}
+
+  // 📊 광고그룹 추이 메뉴 (adgroup-trend.gs, 2026-06-17)
+  try { buildAdgroupTrendMenu_(SpreadsheetApp.getUi()); } catch (e) {}
 }
 
 // ──[일상]── 전체 새로고침: 모든 채널 sync + 대시보드 빌드 + 인사이트 MD 생성 (2026-06-15 강화)
