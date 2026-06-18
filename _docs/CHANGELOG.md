@@ -173,4 +173,6 @@
 
 - 2026-06-18 (광고운영): **네이버_통합 GA4 전 행 0 복구 패치 (G단원).** 옛 삭제 시트 `네이버_UTM_매핑` 참조하던 잔존 수식 → `apps_script/naver-synce.js`에 `refreshNaverGA4AllRows()` + 메뉴 `🔄 GA4 수식 전체 재작성` 추가(push 대기, 사장님 PowerShell `git add apps_script/naver-synce.js`). 별도 발견: 네이버 슬러그 불일치(UTM_매핑 C열 `region` ↔ GA4 실측 `region_keyword` 등 → C열 교정 필요). 시트 read = Drive B1 스냅샷 `download_file_content` base64→jq(read_file_content는 마크다운 이스케이프로 JSON 깨짐). 상세 = SYSTEM_MAP G단원 변경이력 2026-06-18 + `outputs/광고운영_점검_2026-06-18.md`.
 
+- 2026-06-18 (promo 자가개선 합류 — C단원): promo 타이포 트랙에 데이터기반 자가개선 루프 신설. 새 가이드 `shorts/promo/AUTOLOOP_DESIGN.md`(200~300편 로드맵, README §13에서 링크). Phase 0·2a 구현: 후킹 학습신호(12편 `- 후킹:`)·`promo_manifest.py` variant_id·성과 귀속(관리시트 유튜브/인스타 운영일지 조회수·좋아요, 업로드=사람·비고=outfile 조인키)·`promo_score.py`(축 풀링+게이트)·`promo_results_add.py`·`promo_plan.py`(생성 근거 패널)·`promo_check_sync.py`(MD↔JSON 정합). 트랙 정합 수정: 나레이션 모순 정정(promo=효과음+음악만)·음악 fallback 안전화. 상세 = SYSTEM_MAP C단원 'promo 자가개선' 블록 + 변경이력 2026-06-18. 테스트=종민 내일.
+
 이 파일이 업그레이드되면 변경 이력 1줄 추가. 가이드 추가·제거 시 STEP 1 리스트 동기화.
