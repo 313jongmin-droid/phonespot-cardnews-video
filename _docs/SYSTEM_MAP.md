@@ -164,7 +164,7 @@
 - 기타: `codex_chunk_overrides.py`(청크 수동분할), `codex_clean_latest_prompt.py`, `codex_refresh_workbench.py`, `validate_codex_korean.py`, `verify_video_quality.py`.
 
 **렌더 엔진**
-- Remotion: `shorts/` + `render_remotion_fast.mjs`(브라우저 자동탐색 `ensureBrowser`+`findLocalChrome`, Playwright chromium/시스템 Chrome 폴백).
+- Remotion: `shorts/` + `shorts/scripts/render_remotion_fast.mjs`(브라우저 자동탐색 `ensureBrowser`+`findLocalChrome`, Playwright chromium/시스템 Chrome 폴백).
 - 진입 bat: `run_codex_casual.bat`(CLI 폴백에서 `--concurrency` 제거됨 — "%" 깨짐 방지).
 - 트랙 구분: casual/newsroom(카드뉴스 영상) vs `shorts/promo/`(타이포 홍보) vs `shorts/promo_ai/`(실사 AI 광고, Higgsfield).
 - 컴포지션 정의: `shorts/src/Root.tsx`(NewsroomShort/CasualShort/Promo-*/**Cover**, 전부 1080×1920).
