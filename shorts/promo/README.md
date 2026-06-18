@@ -46,6 +46,7 @@ shorts/
 ├─ public/fonts/PretendardVariable.woff2
 ├─ scripts/  promo_list.py · promo_get.py · promo_md2json.py · promo_json2md.py
 │            promo_review.py · promo_learn.py · promo_merge_brand.py · promo_pick_music.py · promo_manifest.py
+│            promo_check_sync.py(MD↔JSON 정합) · promo_score.py(성과 축집계) · promo_results_add.py(성과 1행 수동)
 └─ src/components/promo/
    ├─ PromoShort.tsx        (디스패처: 섹션별 스타일/효과음 + 음악(music_src/music_start) + 고정 타이밍 + 비네트)
    └─ styles/

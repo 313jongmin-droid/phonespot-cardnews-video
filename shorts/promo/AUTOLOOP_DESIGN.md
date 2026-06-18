@@ -52,37 +52,35 @@
 현행 컬럼: `ts·outfile·nn·slug·preset·hook_pattern·hook_text·styles·music_src·music_start·n_facts`.
 - 추가 1개: `variant_id` = `slug+preset+styles+music`의 해시(같은 영상 변주를 안정적으로 식별하는 키).
 
-### 3.2 uploads (업로드 로그) — 신규 `promo/_uploads.csv`
-`upload_ts · outfile · variant_id · platform · video_id · url`
-- platform ∈ {youtube, instagram}. video_id = 플랫폼이 발급한 ID. 이게 **귀속 조인 키**다.
-- 기록 방법: 업로드 직후 사람이 video_id 1개 붙여넣기(반자동) → 나중에 업로드 API 붙이면 자동.
+### 3.2 업로드 로그 — **별도 파일 불필요**(관리시트 운영일지 재사용)
+관리대장에 이미 `유튜브`·`인스타` **운영 일지 탭**이 있고 각 행에 `날짜·포맷·주제·링크·조회수·좋아요·비고`가 사람 수기로 들어간다. 업로드는 어차피 사람이 하고 거기에 기록하므로, **별도 `_uploads.csv`를 만들지 않는다**.
+- 조인 규약: 업로드 시 그 탭의 **비고(운영메모) 칸에 promo `outfile`**(예 `005_bidaemyeon_showcase_1.mp4`, 없으면 `slug`)를 적는다. 이 한 칸이 영상↔변주를 잇는 유일 키다.
 
-### 3.3 results (성과) — 신규 `promo/_results.csv`
-`pull_ts · platform · video_id · impressions · views · avg_view_pct · likes · saves · shares · comments · profile_taps · link_clicks`
-- 귀속 잡이 주기적으로 갱신(스냅샷 누적). variant_id로 manifest·uploads와 조인.
+### 3.3 results (성과) — `promo/_results.csv` (구현됨, 시드 헤더만)
+`pull_date · platform · outfile · slug · preset · url · views · likes`
+- 컬럼은 **시트에 실제 있는 값만**(조회수=views, 좋아요=likes). impressions/saves/retention은 운영일지에 없으므로 안 씀(있으면 나중에 추가).
+- 채우는 주체 = Claude(또는 사람). §4 참조.
 
-조인: `manifest.variant_id → uploads.video_id → results`. 이 3단 조인이 "어떤 변주가 이겼나"의 전부다.
+조인: `_results.outfile → _manifest.outfile → (hook_pattern·preset·styles)`. outfile이 유일 조인키(slug는 표기차로 불안정 — 백업용).
 
 ---
 
-## 4. 귀속 — 채널별 (YouTube Shorts + IG/Reels)
+## 4. 귀속 — 관리시트 운영일지에서 읽기 (사장님 결정 반영)
 
-> ⚠ 아래 API 필드/권한은 플랫폼 정책에 따라 바뀐다. 구현 직전 현행 문서로 재확인(미확정 표시). ads/에 메타·유튜브 sync 인프라가 이미 있어 **인증·호출 골격은 재사용**.
+성과 출처 = **관리대장 `유튜브`·`인스타` 운영 일지 탭의 조회수·좋아요**(사람 수기). 새 API·OAuth·토큰 **불필요**. 업로드도 사람이 한다.
 
-### 4.1 YouTube Shorts
-- **공개 지표**: Data API v3 `videos.list?part=statistics` → viewCount·likeCount·commentCount. video_id만 있으면 됨.
-- **소유자 지표**(권장): YouTube **Analytics API** → impressions·CTR·평균시청지속·shares. OAuth(채널 소유자) 필요.
-- Shorts는 별도 엔드포인트 없이 일반 video로 취급. video_id는 업로드 응답 또는 URL(`/shorts/<id>`)에서 추출.
+흐름:
+1. 사람: 업로드 → 운영일지 탭에 평소대로 행 기록(링크·조회수·좋아요) + **비고에 promo `outfile`** 기재.
+2. Claude: Drive 스냅샷(`PhoneSpot Sheet Snapshots`)에서 두 탭을 읽어 비고에 promo outfile이 있는 행을 추려 `_results.csv`로 떨굼. (= ingestion 단계. PC가 시트를 직접 못 읽으므로 Drive MCP 가진 Claude가 수행. 폴백 수동입력 = `promo_results_add.py`)
+3. `promo_score.py` 가 outfile로 manifest와 조인해 축별 집계.
 
-### 4.2 Instagram / Reels
-- **Graph API** IG Media Insights: reach·plays·saved·shares·comments·`profile_activity`(프로필 탭). ads/의 메타 토큰·`INSTAGRAM_BUSINESS_ID` 재사용.
-- 미디어 ID = 업로드(또는 발행) 시 발급. 인사이트는 발행 후 일정 시간 지나야 안정.
+> 미확정/한계: 운영일지 조회수·좋아요는 **사람이 갱신하는 시점에만** 최신. 자동 일배치를 원하면 `ads/` 트랙(Apps Script)이 유튜브/메타 API로 그 탭을 채우게 확장해야 하나, 그건 **광고운영 별도 task**(여기서 안 건드림).
 
-### 4.3 1차 성과 지표(primary metric) — 목표에 맞춰 1개로 고정
-폰스팟의 실제 목표는 *카톡 상담 전환*이다. 그런데 영상 내 직접 전환은 추적이 약하다. 현실적 대안 우선순위:
-1. **saves/reach** (IG) · **avg_view_pct**(YT) = "메시지가 박혔나"의 프록시 — 가장 빨리 신호.
-2. 링크/프로필 탭 → litt.ly·카톡 채널 유입(UTM). ads/ GA4 매핑과 연결하면 진짜 전환에 가장 근접.
-1번으로 시작하고, 2번(UTM→GA4)을 붙이면 전환 귀속이 닫힌다.
+### 4.1 1차 성과 지표 = 시트에 있는 값으로 고정
+운영일지에 실재하는 값은 **조회수·좋아요**뿐이다. 그래서:
+- **1차 = 조회수(views)** — 도달/훅 강도 프록시.
+- **2차 = 참여율(좋아요/조회수)** — 메시지 적합도 프록시.
+- 진짜 목표(카톡 전환)는 운영일지엔 없음 → 나중에 litt/UTM→GA4(이미 `GA4_자동` 탭 존재)와 연결하면 전환 귀속까지 확장 가능. 지금은 1·2차로 시작(결과 보며 조정).
 
 ---
 
@@ -119,22 +117,21 @@
 | Phase | 내용 | 의존 | 상태 |
 |---|---|---|---|
 | 0 | 학습 신호 기판(후킹 타입·manifest·드리프트 체크) | — | **완료(2026-06-18)** |
-| 1 | 생성기: 조합 자동생성 + 중복회피 + 인사이트 가중 | 0 | 착수 가능 |
-| 2 | 업로드 로그(`_uploads.csv`) + 귀속 잡(`_results.csv`, YT/IG API) | 채널·API 권한 | 사장님 결정 필요(§8) |
-| 3 | 스코어링·풀링·게이트·가지치기 → 생성기 피드백 | 1·2 + 데이터 누적 | 2 이후 |
-| 4 | cadence 스케줄러(매일 X편 생성·렌더·업로드 큐) | 1·2·3 + 업로드 자동화 가능여부 | 매트릭스 확인 |
+| 2a | 귀속 골격: `variant_id`·`_results.csv`·`promo_score.py`·`promo_results_add.py` | 0 | **완료(2026-06-18)** |
+| 2b | 시트 ingestion: 운영일지 비고(outfile)→`_results.csv` (Claude/Drive) | 업로드·기록 시작 | 데이터 생기면 가동 |
+| 1 | 생성기: 조합 자동생성 + 중복회피 + 인사이트 가중 | 0 | 착수 가능(다음 후보) |
+| 3 | 풀링·게이트·가지치기 → 생성기 피드백(ε-greedy/Thompson) | 1·2 + 데이터 누적 | 2 이후 |
+| 4 | cadence 스케줄러(매일 X편 생성·렌더, 업로드는 사람) | 1·2·3 | 이후 |
 
-업로드 자동화 가능여부는 `ads/SNS_AUTOMATION_ROADMAP.md` 채널 매트릭스로 확인(YT·IG는 API 있음 / 일부 채널은 수기).
+업로드는 사람이 하므로(사장님 결정) Phase 4는 생성·렌더 자동화까지. 채널 자동화 가능여부 참고 = `ads/SNS_AUTOMATION_ROADMAP.md`.
 
 ---
 
-## 8. 착수 전 사장님 결정 필요 (미확정 항목)
+## 8. 결정 현황
 
-1. **1차 성과 지표**: saves/reach·시청지속(빠른 신호) vs 카톡/litt 전환(UTM→GA4, 진짜 목표지만 느림). → 무엇을 "이김"의 기준으로?
-2. **YouTube Analytics(소유자 지표) OAuth 연결 여부** — impressions·CTR·retention 쓰려면 필요. 공개 지표(조회·좋아요)만으로 시작도 가능.
-3. **업로드 video_id 기록 방식**: 당분간 사람이 붙여넣기(반자동) vs 업로드 API까지 자동.
-4. **가지치기 게이트값**(축당 최소 노출 합) — 보수적(예 5,000)에서 시작 권장.
-5. **세대당 생산량**(예: 주 20편) 과 변주 폭.
+- **1차 성과 지표**: 관리시트 운영일지의 **조회수(1차)·참여율(2차)**로 확정(§4.1). 전환(UTM→GA4)은 추후.
+- **업로드**: 사람이 함(확정). 운영일지 비고에 outfile 기재가 유일 의무.
+- 남은 결정(데이터 쌓이며 조정): 가지치기 게이트값(기본 5,000, `--gate`로 조정) · 세대당 생산량/변주 폭.
 
 ---
 
@@ -148,4 +145,5 @@
 ---
 
 ## 변경 이력
-- 2026-06-18: 최초 작성(설계, 미구현). Phase 0 완료 상태에서 1~4 로드맵 정의.
+- 2026-06-18: 최초 작성(설계). Phase 0 완료 상태에서 1~4 로드맵 정의.
+- 2026-06-18 (2): 사장님 결정 반영 — 성과=관리시트 운영일지(조회수·좋아요), 업로드=사람. Phase 2a 구현 완료(`variant_id` in manifest, `_results.csv`, `promo_score.py`, `promo_results_add.py`). §3·§4·§7·§8 갱신.
