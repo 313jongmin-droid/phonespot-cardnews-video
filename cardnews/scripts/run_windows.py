@@ -265,6 +265,20 @@ if _critical_issues:
     sys.exit(1)
 
 # ============================================================
+# content_guide.md 발행 인덱스 자동 갱신 (학습 루프 강제, best-effort)
+# 렌더 성공 시에만 도달. 실패해도 렌더 결과엔 영향 없음.
+# ============================================================
+try:
+    import subprocess as _sp
+    _ug = SCRIPT_DIR / 'update_content_guide.py'
+    if _ug.exists():
+        _sp.run([sys.executable, str(_ug)], timeout=30,
+                stdout=_sp.DEVNULL, stderr=_sp.DEVNULL)
+        print("[content_guide] 발행 인덱스 갱신됨")
+except Exception as _e_ug:
+    print(f"[content_guide] skip: {_e_ug}")
+
+# ============================================================
 # 백업 파일 자동 정리 (최근 5개만 유지)
 # ============================================================
 backup_files = sorted(SCRIPT_DIR.glob('cardnews_renderer_v2.py.backup_*'),
