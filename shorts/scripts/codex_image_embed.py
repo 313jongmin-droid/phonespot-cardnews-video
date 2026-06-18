@@ -48,6 +48,35 @@ CACHE_PATH = CODEX_DIR / "image_embed_cache.json"
 # 이미지/텍스트가 같은 공간에 들어가는 다국어 CLIP
 MODEL_NAME = os.getenv("PHONESPOT_CLIP_MODEL", "jinaai/jina-clip-v1")
 
+# 모델 로드(첫 다운로드 포함) 최대 대기 초. 초과하면 '사용 불가'로 보고 폴백시킨다.
+# 캐시된 PC(부사수)는 수 초 내 로드 → 영향 없음. 모델 없는 PC(로컬)는 빨리 폴백 → 패널 무한대기/Failed to fetch 방지.
+_LOAD_TIMEOUT = float(os.getenv("PHONESPOT_CLIP_LOAD_TIMEOUT", "25"))
+# HuggingFace 다운로드 자체에도 타임아웃(멈춘 연결이 try/except로 떨어지게).
+os.environ.setdefault("HF_HUB_DOWNLOAD_TIMEOUT", "15")
+os.environ.setdefault("HF_HUB_ETAG_TIMEOUT", "10")
+
+
+def _call_with_timeout(fn: "Callable[[], object]", seconds: float):
+    """fn()을 별도 스레드로 돌려 seconds 안에 끝나면 결과, 아니면 None.
+    멈춘 모델 다운로드(예외 아님)도 None으로 떨어뜨려 폴백을 강제한다.
+    초과 시 스레드는 daemon이라 프로세스 종료와 함께 정리됨."""
+    import threading
+
+    box: dict = {}
+
+    def _run():
+        try:
+            box["v"] = fn()
+        except Exception:
+            box["v"] = None
+
+    t = threading.Thread(target=_run, daemon=True)
+    t.start()
+    t.join(seconds)
+    if t.is_alive():
+        return None
+    return box.get("v")
+
 ALLOWED_EXT = {".png", ".jpg", ".jpeg", ".webp"}
 
 # 테스트 주입용 오버라이드: paths(list[str]) -> ndarray, texts(list[str]) -> ndarray
@@ -63,7 +92,7 @@ _txt_loaded = False
 # 임베더 로딩
 # --------------------------------------------------------------------------- #
 def _load_image_embedder() -> Callable[[list[str]], "np.ndarray"] | None:
-    try:
+    def _build():
         from fastembed import ImageEmbedding  # type: ignore
 
         model = ImageEmbedding(model_name=MODEL_NAME)
@@ -72,12 +101,13 @@ def _load_image_embedder() -> Callable[[list[str]], "np.ndarray"] | None:
             return np.array(list(model.embed(list(paths))), dtype=np.float32)
 
         return _fn
-    except Exception:
-        return None
+
+    # 모델 생성(첫 다운로드 포함)이 _LOAD_TIMEOUT 초 넘으면 None → 폴백.
+    return _call_with_timeout(_build, _LOAD_TIMEOUT)
 
 
 def _load_text_embedder() -> Callable[[list[str]], "np.ndarray"] | None:
-    try:
+    def _build():
         from fastembed import TextEmbedding  # type: ignore
 
         model = TextEmbedding(model_name=MODEL_NAME)
@@ -86,8 +116,8 @@ def _load_text_embedder() -> Callable[[list[str]], "np.ndarray"] | None:
             return np.array(list(model.embed(list(texts))), dtype=np.float32)
 
         return _fn
-    except Exception:
-        return None
+
+    return _call_with_timeout(_build, _LOAD_TIMEOUT)
 
 
 def set_image_embedder(fn: Callable[[list[str]], "np.ndarray"] | None) -> None:

@@ -1683,11 +1683,15 @@ class Handler(BaseHTTPRequestHandler):
             if action == "video_import_propose":
                 # 그림 내용(CLIP)으로 후보 -> 요청 자동 배정을 '제안'만 한다(파일 미이동).
                 slug_now = validate_slug(slug)
-                proc = subprocess.run(
-                    [sys.executable, str(SCRIPTS / "codex_import_propose.py"), slug_now],
-                    cwd=str(SHORTS), text=True, encoding="utf-8", errors="replace",
-                    capture_output=True,
-                )
+                try:
+                    proc = subprocess.run(
+                        [sys.executable, str(SCRIPTS / "codex_import_propose.py"), slug_now],
+                        cwd=str(SHORTS), text=True, encoding="utf-8", errors="replace",
+                        capture_output=True, timeout=120,
+                    )
+                except subprocess.TimeoutExpired:
+                    json_response(self, {"ok": False, "message": "제안 생성 시간초과(120s). CLIP 모델 로드/다운로드가 지연됐을 수 있습니다. 부사수 PC에서 실행하거나 SETUP_EMBED 후 재시도하세요."})
+                    return
                 proposal_path = DESK / "IMPORT_PROPOSAL.json"
                 proposal = {}
                 if proposal_path.exists():
@@ -1754,11 +1758,15 @@ class Handler(BaseHTTPRequestHandler):
             if action == "card_import_propose":
                 # 카드뉴스: 다운로드 그림을 슬라이드 내용(CLIP)으로 N.png 에 자동 배정 '제안'.
                 slug_now = validate_slug(slug)
-                proc = subprocess.run(
-                    [sys.executable, str(SCRIPTS / "cardnews_import_propose.py"), slug_now],
-                    cwd=str(SHORTS), text=True, encoding="utf-8", errors="replace",
-                    capture_output=True,
-                )
+                try:
+                    proc = subprocess.run(
+                        [sys.executable, str(SCRIPTS / "cardnews_import_propose.py"), slug_now],
+                        cwd=str(SHORTS), text=True, encoding="utf-8", errors="replace",
+                        capture_output=True, timeout=120,
+                    )
+                except subprocess.TimeoutExpired:
+                    json_response(self, {"ok": False, "message": "제안 생성 시간초과(120s). CLIP 모델 로드/다운로드가 지연됐을 수 있습니다. 부사수 PC에서 실행하거나 SETUP_EMBED 후 재시도하세요."})
+                    return
                 proposal_path = DESK / "CARD_IMPORT_PROPOSAL.json"
                 if proposal_path.exists():
                     try:

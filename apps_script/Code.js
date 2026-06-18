@@ -47,6 +47,12 @@ function onOpen() {
 
   // 🔔 알림/모니터링 메뉴 (alerts.js, 2026-06-18)
   try { buildAlertsMenu_(SpreadsheetApp.getUi()); } catch (e) {}
+
+  // 🎨 소재 인사이트 메뉴 (creative_insights.js, 2026-06-18)
+  try { buildCreativeInsightsMenu_(SpreadsheetApp.getUi()); } catch (e) {}
+
+  // 🤖 자연어 데이터 질문 메뉴 (nl_query.js, 2026-06-18)
+  try { buildNlQueryMenu_(SpreadsheetApp.getUi()); } catch (e) {}
 }
 
 // ──[일상]── 전체 새로고침: 모든 채널 sync + 대시보드 빌드 + 인사이트 MD 생성 (2026-06-15 강화)
