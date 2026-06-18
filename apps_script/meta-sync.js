@@ -436,6 +436,58 @@ function showUnmappedAdsets() {
   );
 }
 
+// ============ ★ UTM_매핑 정비 (2026-06-18) ============
+// 마이그레이션(insertColumnBefore) 컬럼 시프트로 생긴 중복 쓰레기 행 삭제.
+// 시프트 행 signature: B(광고그룹명) 칸에 채널값(페북/네이버/당근/구글/카카오)이 들어가 있음
+// (정상 행이면 B는 광고그룹명, 절대 채널명이 아님). 아래→위 삭제로 행번호 밀림 방지.
+function cleanupShiftedUtmRows() {
+  const ss = SpreadsheetApp.getActive();
+  const ui = SpreadsheetApp.getUi();
+  const sheet = ss.getSheetByName(SHEET_UTM_MAPPING);
+  if (!sheet || sheet.getLastRow() < 2) { ui.alert('UTM_매핑 시트 없음/비어있음.'); return; }
+  const CHANNELS = ['페북', '네이버', '당근', '구글', '카카오'];
+  const last = sheet.getLastRow();
+  const colB = sheet.getRange(2, 2, last - 1, 1).getValues();
+  const victims = [];
+  for (let i = 0; i < colB.length; i++) {
+    if (CHANNELS.indexOf(String(colB[i][0]).trim()) >= 0) victims.push(i + 2);
+  }
+  if (victims.length === 0) { ui.alert('✅ 시프트 잔재 행 없음.'); return; }
+  const rowsAsc = victims.slice().sort((a, b) => a - b).join(', ');
+  victims.sort((a, b) => b - a).forEach(r => sheet.deleteRow(r));
+  const msg = 'UTM_매핑 시프트 잔재 ' + victims.length + '행 삭제 (행 ' + rowsAsc + ')';
+  Logger.log(msg);
+  if (typeof logSync_ === 'function') logSync_('cleanupShiftedUtmRows', msg);
+  ui.alert('✅ 완료', msg, ui.ButtonSet.OK);
+}
+
+// utm_campaign이 채워졌는데 상태가 ⚠️/공백으로 남은 정상 행을 '✅ 매핑됨'으로 갱신.
+// 시프트 행(B=채널명)·안내행(※)은 제외 → cleanup 전에 돌려도 안전.
+function flipMappedUtmStatus() {
+  const ss = SpreadsheetApp.getActive();
+  const ui = SpreadsheetApp.getUi();
+  const sheet = ss.getSheetByName(SHEET_UTM_MAPPING);
+  if (!sheet || sheet.getLastRow() < 2) { ui.alert('UTM_매핑 시트 없음/비어있음.'); return; }
+  const CHANNELS = ['페북', '네이버', '당근', '구글', '카카오'];
+  const last = sheet.getLastRow();
+  const vals = sheet.getRange(2, 1, last - 1, 6).getValues();
+  let flipped = 0;
+  for (let i = 0; i < vals.length; i++) {
+    const ch = String(vals[i][0]).trim();
+    const name = String(vals[i][1]).trim();
+    const utm = String(vals[i][2]).trim();
+    const status = String(vals[i][4]).trim();
+    if (CHANNELS.indexOf(ch) < 0) continue;
+    if (CHANNELS.indexOf(name) >= 0) continue;
+    if (name.indexOf('※') >= 0 || utm.indexOf('※') >= 0) continue;
+    if (utm && status !== '✅ 매핑됨') { sheet.getRange(i + 2, 5).setValue('✅ 매핑됨'); flipped++; }
+  }
+  const msg = 'utm 채워진 행 ' + flipped + '개 상태 ✅ 매핑됨으로 갱신';
+  Logger.log(msg);
+  if (typeof logSync_ === 'function') logSync_('flipMappedUtmStatus', msg);
+  ui.alert('✅ 완료', msg, ui.ButtonSet.OK);
+}
+
 // ──[수동 1회]── 30일 백필 (초기 1회만 실행)
 function backfillMetaCampaign30Days() {
   const today = new Date();
@@ -1360,6 +1412,8 @@ function buildMetaSyncMenu_(ui) {
     .addItem('⏪ 30일 백필 (1회만)', 'backfillMetaCampaign30Days')
     .addSeparator()
     .addItem('🔍 미매핑 광고그룹 보기', 'showUnmappedAdsets')
+    .addItem('🧹 UTM 시프트 잔재 정리', 'cleanupShiftedUtmRows')
+    .addItem('✅ utm 채운 행 상태 갱신', 'flipMappedUtmStatus')
     .addItem('🧠 인사이트 MD 생성', 'generateMetaInsightsMarkdown')
     .addItem('🏷️ 라벨링 드롭다운 설정 (1회)', 'setupLabelingDropdowns')
     .addSeparator()
