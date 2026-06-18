@@ -563,42 +563,6 @@ function showUnmappedNaverAdgroups() {
 }
 
 
-// ============ 기존 행 GA4 수식 전체 재작성 (옛 네이버_UTM_매핑 참조 잔존 복구, 2026-06-18) ============
-// 배경: syncNaverIntegrated는 광고그룹 0개 반환 시 기존 행을 건드리지 않음.
-// 그래서 2026-06-16 UTM 통합 이전에 입력된 네이버_통합 행들이 옛
-// VLOOKUP('네이버_UTM_매핑') 수식을 그대로 유지 → 해당 시트 삭제로 GA4 매칭 전 행 0.
-// 이 함수는 데이터 전 행의 K~S(11~19) 수식을 현재 통합 UTM_매핑(채널="네이버") 기준으로 재작성.
-// (당근의 '🔄 GA4 매칭 새로고침 (전체 행)'과 동일 개념. 네이버 집행 재개와 무관하게 1회 실행으로 복구.)
-function refreshNaverGA4AllRows() {
-  const ss = SpreadsheetApp.getActive();
-  const sh = ss.getSheetByName(SHEET_NAVER_INTEGRATED);
-  const ui = SpreadsheetApp.getUi();
-  if (!sh) { ui.alert('네이버_통합 시트 없음.'); return; }
-  const last = sh.getLastRow();
-  if (last < 2) { ui.alert('네이버_통합 데이터 행 없음.'); return; }
-
-  for (let row = 2; row <= last; row++) {
-    const ymdText = `TEXT(A${row},"yyyymmdd")`;
-    const utmSlug = `IFERROR(VLOOKUP(E${row}, FILTER('UTM_매핑'!B:C, 'UTM_매핑'!A:A="네이버"), 2, FALSE),E${row})`;
-    const ga4Base = `'GA4_자동'!A:A,${ymdText},'GA4_자동'!B:B,"naver",'GA4_자동'!D:D,${utmSlug}`;
-    sh.getRange(row, 11).setFormula(`=IFERROR(SUMIFS('GA4_자동'!G:G,${ga4Base},'GA4_자동'!E:E,"session_start"),0)`);
-    sh.getRange(row, 12).setFormula(`=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"kakao_chat_click"),0)`);
-    sh.getRange(row, 13).setFormula(`=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"phone_click"),0)`);
-    sh.getRange(row, 14).setFormula(`=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_click"),0)`);
-    sh.getRange(row, 15).setFormula(`=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_arrival"),0)`);
-    sh.getRange(row, 16).setFormula(`=IFERROR(IF(K${row}=0,0,L${row}/K${row}),0)`);
-    sh.getRange(row, 17).setFormula(`=IFERROR(IF(L${row}=0,"-",H${row}/L${row}),"-")`);
-    sh.getRange(row, 18).setFormula(`=COUNTIFS('문의접수'!D:D,"네이버",'문의접수'!A:A,A${row})`);
-    sh.getRange(row, 19).setFormula(`=IFERROR(IF(R${row}=0,"-",H${row}/R${row}),"-")`);
-  }
-  SpreadsheetApp.flush();
-  const msg = '네이버_통합 ' + (last - 1) + '개 행 GA4 수식 재작성 (통합 UTM_매핑 기준)';
-  Logger.log(msg);
-  if (typeof logSync_ === 'function') logSync_('refreshNaverGA4AllRows', msg);
-  ui.alert('✅ 완료', msg + '\n\nGA4세션·카톡·문의 컬럼이 다시 채워졌는지 확인하세요.', ui.ButtonSet.OK);
-}
-
-
 // ============ 30일 백필 ============
 
 function backfillNaverIntegrated30Days() {
@@ -629,7 +593,6 @@ function buildNaverSyncMenu_(ui) {
     .addItem('⏪ 30일 백필', 'backfillNaverIntegrated30Days')
     .addSeparator()
     .addItem('🔍 미매핑 광고그룹 보기', 'showUnmappedNaverAdgroups')
-    .addItem('🔄 GA4 수식 전체 재작성 (매핑 복구)', 'refreshNaverGA4AllRows')
     .addItem('🔑 연결 테스트', 'testNaverConnection')
     .addItem('📋 캠페인+그룹 목록 보기', 'listAllAdgroups')
     .addSeparator()
