@@ -1,0 +1,77 @@
+#!/bin/sh
+# 폰스팟 전역 COMMIT 게이트 (honor-system 룰 → 코드 강제)
+#
+# 활성화 (PC당 1회): git config core.hooksPath .githooks
+# 긴급 우회:          git commit --no-verify
+#
+# 막는 것 (전 트랙 공통):
+#  1) .js/.mjs 문법 깨짐  → Apps Script 배포 실패 차단 (변경이력 반복 사고)
+#  2) .py 문법 깨짐       → 렌더/자동화 죽음 차단
+#  3) 한글 .bat BOM 없음  → cmd 한글 깨져 echo가 명령 실행되는 사고 (STEP7)
+#  4) 카드뉴스 기사 스키마 ERROR (slug/title/cards/captions_md)
+#  경고만(차단X): 추적 .bat/.ps1 중복 md5 (STEP7 SSOT)
+set -u
+fail=0
+staged=$(git diff --cached --name-only --diff-filter=ACM)
+[ -z "$staged" ] && exit 0
+
+# 1) JS 문법
+if command -v node >/dev/null 2>&1; then
+  for f in $staged; do
+    case "$f" in
+      *.js|*.mjs) node --check "$f" 2>/dev/null || { echo "[gate] JS 문법 실패: $f"; fail=1; } ;;
+    esac
+  done
+else
+  echo "[gate] node 없음 → JS 문법 검사 skip"
+fi
+
+# 2) Python 문법
+PY=""
+command -v python3 >/dev/null 2>&1 && PY=python3
+[ -z "$PY" ] && command -v python >/dev/null 2>&1 && PY=python
+[ -z "$PY" ] && command -v py >/dev/null 2>&1 && PY="py -3"
+if [ -n "$PY" ]; then
+  for f in $staged; do
+    case "$f" in
+      *.py) $PY -m py_compile "$f" 2>/dev/null || { echo "[gate] PY 문법 실패: $f"; fail=1; } ;;
+    esac
+  done
+else
+  echo "[gate] python 없음 → PY 문법 검사 skip"
+fi
+
+# 3) 한글 .bat/.cmd UTF-8 BOM 확인
+for f in $staged; do
+  case "$f" in
+    *.bat|*.cmd)
+      if grep -qP '[\x{AC00}-\x{D7A3}]' "$f" 2>/dev/null; then
+        if ! head -c3 "$f" | od -An -tx1 2>/dev/null | grep -qi 'ef bb bf'; then
+          echo "[gate] 한글 .bat인데 UTF-8 BOM 없음: $f (cmd 한글 깨짐, STEP7)"; fail=1
+        fi
+      fi
+      ;;
+  esac
+done
+
+# 4) 카드뉴스 기사 스키마 (staged articles/*.json 있을 때만)
+if echo "$staged" | grep -q '^cardnews/articles/.*\.json$'; then
+  if [ -n "$PY" ] && [ -f cardnews/scripts/validate_article.py ]; then
+    ( cd cardnews && $PY scripts/validate_article.py --all >/dev/null ) \
+      || { echo "[gate] 카드뉴스 기사 스키마 ERROR (cardnews && py scripts/validate_article.py --all 로 확인)"; fail=1; }
+  fi
+fi
+
+# 5) 추적 .bat/.ps1 중복 md5 (경고만)
+dups=$(git ls-files 2>/dev/null | grep -iE '\.(bat|ps1|cmd)$' | xargs md5sum 2>/dev/null | awk '{print $1}' | sort | uniq -d)
+[ -n "$dups" ] && echo "[gate] 경고: 동일 내용 .bat/.ps1 존재 (STEP7 SSOT 점검 권장, 차단 안 함)"
+
+if [ "$fail" -ne 0 ]; then
+  echo "=================================================="
+  echo " COMMIT 거부 — 게이트 실패. 위 항목 수정 후 재커밋."
+  echo " 긴급 우회: git commit --no-verify"
+  echo "=================================================="
+  exit 1
+fi
+echo "[gate] 통과"
+exit 0

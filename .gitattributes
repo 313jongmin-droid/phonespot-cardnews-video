@@ -23,3 +23,7 @@
 *.ttf binary
 *.otf binary
 *.pdf binary
+
+# Shell scripts + git hooks: 반드시 LF (CRLF면 sh가 "bad interpreter"로 hook/스크립트 죽음).
+*.sh         text eol=lf
+.githooks/** text eol=lf

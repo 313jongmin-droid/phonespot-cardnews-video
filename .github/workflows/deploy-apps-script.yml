@@ -22,6 +22,16 @@ jobs:
         with:
           node-version: '20'
 
+      # 배포 게이트: 깨진 .js가 clasp push에 도달하지 못하게 차단 (실패 시 아래 텔레그램 알림)
+      - name: Syntax gate (node --check all .js)
+        run: |
+          set -e
+          for f in apps_script/*.js apps_script_sheet_export/*.js; do
+            [ -e "$f" ] || continue
+            node --check "$f"
+          done
+          echo "syntax gate OK"
+
       - name: Install clasp
         run: npm install -g @google/clasp@3.3.0
 

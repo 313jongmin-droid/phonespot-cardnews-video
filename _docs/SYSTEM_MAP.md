@@ -112,7 +112,9 @@
 - `cardnews/templates/article_authoring_spec.md` — 기사 JSON 작성 기준(→ J 단원).
 - `cardnews/webui/app.py` (`webui/start.bat`) — Flask 컨트롤 패널.
 - `cardnews/run_pngs.bat` — 슬러그 셀렉트 + 18 JPG 렌더.
-- `cardnews/_state/content_guide.md` — 사이클 학습 메모(존재 시).
+- `cardnews/_state/content_guide.md` — 사이클 학습 메모 + **발행 토픽 인덱스(§2=중복회피 정본, 자동 생성)**. (2026-06-18 신설)
+- `cardnews/scripts/update_content_guide.py` — content_guide §2 자동 재생성. `run_windows.py:267-279` 렌더 성공 후 best-effort 호출(학습 루프 강제). §1·§3·§4·이력 보존.
+- `cardnews/scripts/validate_article.py` — 기사 스키마 2단 검증(ERROR=slug·title·cards·captions_md / WARN=content_type·source_line·narration 등) + `--next` 다음 NNN 산출.
 
 **마스터 룰 문서**
 - `_docs/INSTRUCTIONS_CARDNEWS.md` — 시스템·수집·발행 마스터.
@@ -139,7 +141,7 @@
 - 발행 신호는 H 단원(outbox)과 연동.
 - **시트 운영 메모 7일 스캔 빼먹으면 매장 핵심 캠페인 누락**(예: 삼성 페스티벌 같은 핫이슈 = WebSearch만 하면 못 잡음, 시트 채널 비고란이 진짜 단서). `store-active+30%` 강제 후보 룰은 INSIGHTS_LOOP.md §5 자가검증에 박힘.
 - 시트 sync(sync_sources) 안 들어오면 "인사이트 0건, 가중치 미적용" 1줄 명시 후 진행(다운그레이드 X).
-- 메타_인사이트 시트 = 사장님 셋업 대기 중(현재 Drive MD 저장 → 시트 이전 필요). 그 전에는 메타 가중치 0건.
+- 메타_인사이트 시트화 코드 합류(2026-06-18, 정본 G단원): `apps_script/meta-insights-sheet.js`(새 clasp 파일, 기존 85KB meta-sync.js 무수정·전역 스코프로 상수 재사용). 배포 후 1회 `setupMetaInsightsSheetTrigger()`+`writeMetaInsightsSheet()` 실행 → `메타_인사이트` 시트 생성(STEP1 #8 작동). 그 전까지는 메타 가중치 0건.
 
 ---
 
@@ -295,7 +297,7 @@
 ## F. Git & 멀티PC 역할 & 리포 위생  ★ 2026-06-15 머신 모델 갱신 (CLAUDE.md STEP 0 정본)
 
 **머신 역할 (CLAUDE.md STEP 0이 최우선, 2026-06-15 갱신)**
-- **로컬 PC**(사무실, `C:\Users\di898\Documents\phonespot_cardnews`) = **개발+편집+운영 단일 작업 머신**. 모든 task(광고운영·카드뉴스·영상·기사·.bat) 여기서 수정 → commit → push. **push only**.
+- **로컬 PC**(사무실, `C:\backup\phonespot_cardnews`) = **개발+편집+운영 단일 작업 머신**. 모든 task(광고운영·카드뉴스·영상·기사·.bat) 여기서 수정 → commit → push. **push only**.
 - **노트북** = 크롬 원격 입구만(사무실 못 갈 때 로컬 PC 조종). **직접 작업·git 수정 ❌**.
 - **부사수 PC**(`C:\PhoneSpot\phonespot_cardnews`) = 카드뉴스·영상·패널 렌더링 전용 단독 생산기. **pull only**.
 - **메인 PC**(192.168.0.7) = 카드 이미지 원본 자산.
@@ -376,6 +378,7 @@
 - `generator.html`은 큰 Edit 누적 시 끝부분 잘림(18회+). **다음 큰 변경은 통째 Write**. 백업본 `ads/code/apps_script/generator.v_*.html`.
 - 시트 라벨링(카테고리/후킹/지역 컬럼) 안 하면 매칭 0건.
 - **Apps Script는 git pull로 자동 반영 안 됨**(웹 배포 별도).
+- **★ 마이그레이션/시트삭제 후 기존 행 수식이 옛 시트 참조로 잔존 가능**(네이버_통합 GA4 전 행 0 사고, 2026-06-18). sync가 "0 광고그룹" 반환 시 기존 행 수식 미재작성 → **전 행 재작성 함수 필요**(`naver-synce.js refreshNaverGA4AllRows`, 당근 '🔄 GA4 매칭 새로고침'과 동일 개념). 또 **UTM_매핑 C열 슬러그 ≠ GA4 실측 utm_campaign**이면 수식 맞아도 매칭 0(네이버 `region`↔GA4 `region_keyword`, `mobile_carrier`↔없음, `powerlink` 미연결). 상세 = 변경이력 2026-06-18.
 
 **2026-06-12 세션2 — 생성기 핵심 (상세 = `ads/IMPLEMENTATION_GUIDE_2026-06-09.md` §0-1 + `CLAUDE.md` STEP8)**
 - 결과 = 🎲 8행 랜덤 변주(후킹×톤 1:1 조합) → ✨라이브러리 → 🎯벤치마크. `buildCopyPrompt` 4단(목적/지정값/규칙/출력), 단일조합=한 방향 강제(행별 12개).
@@ -520,3 +523,8 @@
   - **④ 데이터 검증**: (7).xlsx 분석 = UTM_매핑 6열 통합 완료(R35~R38 당근 4개 매핑 박혀있음), 옛 당근_UTM_매핑·네이버_UTM_매핑 시트 자동 삭제 완료, 당근_통합 광고그룹명 7개 중 4개 매핑됨(3개 누락 = 소식_기종가격확인 / 리틀리_가격확인_260610 / 소식_가격확인_아이폰 = 사장님 결정 후 수기 박을 것). UTM_매핑 R18~R24 = 컬럼 한 칸 어긋남(A='페북' / B='페북' / C=광고그룹명, 옛 5컬럼 시기 박힌 행에 마이그레이션이 채널 시프트로 박은 결과 = autoDiscoverAdsets_ 다시 돌면 정리됨, 또는 수기 삭제).
 
 - 2026-06-17 (세션 2): **광고그룹별 성과 추이 차트 합류 (G단원, 사장님 직접 사용자 건의 반영).** 신규 파일 `apps_script/adgroup-trend.js` + `Code.js` onOpen에 메뉴 빌더 호출 1줄 추가(`buildAdgroupTrendMenu_`). **통합대시보드 R60~R130 영역**(R60 병합헤더 / R61 토글 B채널·E광고그룹·H기간 / R62 안내 / R63 데이터헤더 8컬럼 / R64~R93 데이터 30일 / R95~ 라인차트 multi-axis / W60 동적 광고그룹 unique 리스트). **사장님 결정 4개**: ① 기간 = **7일/14일/30일** (3일은 광고그룹별 일자 데이터 1~3건 = 노이즈 너무 커 비채택) ② 차트 = **1개 multi-axis** (CTR·문의율 좌축% + CPC 우축원, 자세한 건 각 통합 시트에서 보면 됨) ③ 채널+광고그룹 = **2단 종속 드롭다운** (W60 = `IF(B61="메타", UNIQUE(FILTER(메타_통합!E2:E,...)), IF(B61="당근", UNIQUE(FILTER(당근_통합!C2:C,...)), UNIQUE(FILTER(네이버_통합!E2:E,...))))`, B61 채널 변경 시 자동 갱신) ④ 구현 = **Apps Script** (재현 가능 + git 추적 + 다음 마이그레이션 깨짐 위험 0). **문의율 정의 = 사장님 = 문의수 / 카톡클릭** (카톡 들어온 사람 중 실제 문의 비율). 채널별 컬럼 매핑 = `ADGROUP_TREND_CHANNELS` 상수 (메타: A날짜/E광고그룹명/F노출/G클릭/H지출/L카톡클릭/R문의수 / 당근: A/C/D/E/F/J/P+Q합산 / 네이버: 메타와 동일). 메뉴 = 📊 광고그룹 추이 → 🆕 차트 셋업 (1회) + 🔄 추이 갱신. **유저 워크플로**: R61 토글 3개 변경 후 메뉴 🔄 클릭 → R64~R93 데이터 + 차트 자동 갱신. **함정**: ① 차트가 R63 헤더 + 데이터 범위 4개(날짜/CTR/CPC/문의율) 비연속 addRange로 만듦 → setupAdgroupTrendChart() 재실행 시 = 기존 차트 R63~R94 영역 hit 차트 제거 후 새로. ② 광고그룹 선택 X시 = R64에 "⚠️ 채널 + 광고그룹 선택 필요" 안내. ③ 검증 = 사장님 콘솔 셋업 후 토글+갱신 실행 후 데이터+차트 확인 필요(가이드 박는 시점 = 검증 전).
+- 2026-06-18 (광고운영): **★ 네이버_통합 GA4 매칭 전 행 0 복구 패치 + 슬러그 불일치 발견 (G단원).** 증상=네이버_통합 317행 GA4세션·카톡·문의 전부 0. 원인=수식이 **삭제된 옛 `네이버_UTM_매핑` 시트** VLOOKUP 참조(메타는 통합 `FILTER('UTM_매핑',채널="페북")`로 정상). 코드(`apps_script/naver-synce.js:412`)는 06-16에 통합 수식으로 고쳤으나 `syncNaverIntegrated`가 "0 광고그룹"(네이버 집행 중단 06-16~) 반환 → 기존 05-13~06-15 행 수식 미재작성 → 옛 수식 잔존. **패치**: `naver-synce.js`에 `refreshNaverGA4AllRows()` 추가(데이터 전 행 K~S(11~19) 수식을 통합 UTM_매핑 기준 재작성) + 메뉴 `🟢 네이버 자동화 → 🔄 GA4 수식 전체 재작성 (매핑 복구)`. `node --check` PASS(격리 함수). 사장님 실행 = git push(`git add apps_script/naver-synce.js`만; 리포 미커밋 132개 있음) → Actions clasp 배포 → 시트 메뉴 1회 클릭. **★ 별도 발견 — 네이버 슬러그 불일치**: GA4_자동 실측 네이버 utm_campaign = `powerlink`(122,최다)·galaxy·phonespot·iphone·old_model·**region_keyword**(17)·holyland·kids_phone·senior_phone. UTM_매핑 C열 `region`↔GA4 `region_keyword`, `mobile_carrier`↔GA4 없음, `powerlink`↔미연결 → **수식 패치로도 이 3개는 0**, C열 값을 GA4 실측으로 교정해야 함. **시트 read 방식**: Drive B1 스냅샷(`PhoneSpot Sheet Snapshots`, 2026-06-18 03:09 KST) JSON을 **`download_file_content`(base64)→bash `base64 -d`→jq**로 read. read_file_content는 마크다운 이스케이프(`\_`·`\[`)로 JSON 깨짐 → 큰 시트는 download base64가 정답. **함정**: 65KB+ SYSTEM_MAP·CLAUDE.md = Edit 도구 truncation → bash-python으로만 편집(쓰기는 호스트 도달=git 인식). naver-synce.js(24.97KB) 호스트 Edit 후 bash 마운트가 잘린 사본(24974B) 보임=tearing(git diff는 정상) → 격리 함수 node --check + 호스트 Read로 검증. 미매핑 UTM(당근 3·메타 영상 2) GA4 실측 추천초안 = `outputs/광고운영_점검_2026-06-18.md`(소식_가격확인_아이폰→`a17`, 소식_기종가격확인→`price_check` 등, 사장님 확정 필요).
+- 2026-06-18 (광고운영 2차): **UTM_매핑 정비 함수 2개 (G단원, "고치자" 1차).** `apps_script/meta-sync.js`에 `cleanupShiftedUtmRows()`(B=채널값 시프트 잔재 행을 아래→위 삭제, signature=광고그룹명 칸에 페북/네이버/당근/구글/카카오) + `flipMappedUtmStatus()`(C utm 채워졌는데 상태 ⚠️/공백 → '✅ 매핑됨', 시프트행·안내행※·utm빈행 제외 → cleanup 전 실행�
+- 2026-06-18 (광고운영 3차): **1회성 메뉴 정리 (G단원, 종민 결정).** 적용 완료된 1회성 함수+메뉴 제거: `cleanupShiftedUtmRows`(meta-sync.js 🧹 시프트 정리) / `refreshNaverGA4AllRows`(naver-synce.js 🔄 GA4 재작성) / `migrateUtmMappingsUnified`(danggn-sync.js 🔄 UTM 통합 마이그레이션 — 재실행 시 `insertColumnBefore` 컬럼 시프트 재발 위험이라 제거가 오히려 안전). **유지**: `flipMappedUtmStatus`(meta ✅ 상태 갱신) + 차트셋업·시트신설·라벨링·백필·표준화·당근 🔄 GA4 매칭 등 재실행 안전 도구. 셋 다 node --check PASS·중괄호 균형·인접 함수 보존. **편집 함정(I단원)**: naver-synce.js는 호스트 Edit 후 마운트가 torn 사본 서빙 → bash-python read도 잘림 → Edit 도구(호스트)로 제거. meta/danggn은 마운트 정상이라 bash-python. push = apps_script 3파일.
+rdnews/scripts/update_content_guide.py`로 §2 발행인덱스 자동 재생성, `run_windows.py:267-279`에 렌더 성공 후 best-effort 호출(학습루프 강제). ② `cardnews/scripts/validate_article.py` 기사 스키마 2단 검증(ERROR/WARN)+`--next`(현재 026). 실측 23 OK / 2 WARN(001·002 content_type 누락) / 0 ERROR. 해시태그 정규식은 마크다운 `## ` 허용으로 보정. ③ 메타_인사이트 시트화 = 새 clasp 파일 `apps_script/meta-insights-sheet.js`(기존 meta-sync.js 무수정, 전역 스코프로 상수 재사용). 배포+1회 setup 후 시트 생성 → STEP1 #8 작동. ④ CLAUDE.md STEP8(174줄=파일 40%, 광고운영이 그중 47%) → `_docs/CHANGELOG.md` 분리 = 종민 PowerShell(92KB Edit 위험으로 클로드 직접 X). **점검 발견(미반영, 종민 결정 대기)**: 레거시 무번호 기사 17 + `chrome_auto_test`(테스트 잔재)·`voice_phishing_care`(빈 스텁) 제거 권고; `automation/scripts/night_daemon.py` 자동렌더 'Day4 예정' 미완. **함정 재확인(I단원)**: 이 세션 bash·`.git` 쓰기 차단 → 신규 5파일(content_guide.md·validate_article.py·update_content_guide.py·run_windows.py·meta-insights-sheet.js) commit·push는 종민(PowerShell). 65KB+ SYSTEM_MAP·92KB CLAUDE.md = Edit 호스트 실파일은 정상이나 bash 마운트 tearing → 검증은 호스트 Read.
+- 2026-06-18 (전역 가이드 강제 — 사장님 지적 "가이드 어기는 게 가능하면 소용없다", 전 트랙 적용): **honor-system → 코드 게이트 전환. 정본 = `_docs/PREFLIGHT.md`.** 원인 = 룰이 "읽기로 되어 있다"에만 의존, LLM은 확률적 준수라 누락 반복(함수 유실·Edit truncation·컬럼 시프트·이번 news D-7 누락 전부 동일 종류). 진단 = self-read 강제도 LLM 의존이라 샌다 → **결정론적 강제는 부수효과 직전 코드 게이트뿐.** 신설 4종: ① `.githooks/pre-commit`(commit 관문, 전 트랙: .js/.py 문법+한글.bat BOM+카드뉴스 기사스키마 ERROR 차단, 활성화 `git config core.hooksPath .githooks`, 우회 `--no-verify`) ② `.github/workflows/deploy-apps-script.yml` "Syntax gate" step(배포 관문, 깨진 .js가 clasp push 도달 차단, node --check 전체) ③ `cardnews/scripts/validate_article.py`(발행 관문, 기사 필수키 ERROR) ④ `cardnews/scripts/news_d7_filter.py`(수집 관문, news 보도일 D-7 계산 강제 — 눈대중 금지, 검증: A37 D-0 PASS / LGU+ D-66·루머 불명·미래 REJECT). 보조 = PREFLIGHT §1(명령 트리거 시 트랙 가이드 Read+절대룰 복창). **환경 제약**: 이 세션 .git/bash 쓰기 차단 → hook 활성화·CLAUDE.md 최상단 PREFLIGHT 포인터·commit/push는 종민 로컬(PowerShell). **한계(정직)**: 수집 D-7 필터를 "돌리는" 것 자체는 아직 self(파이프 구조화 전), commit/배포/발행 관문은 코드로 진짜 강제. 강제 끝단 = 룰 복창에 대한 사장님 검수.
