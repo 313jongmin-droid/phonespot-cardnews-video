@@ -137,3 +137,4 @@ shorts/
 - 렌더마다 `scripts/promo_manifest.py`가 `promo/_manifest.csv`에 변주 1행 자동 기록(ts·outfile·preset·hook_pattern·hook_text·styles·music·n_facts). bat이 렌더 직후 호출.
 - 이 CSV + 업로드 영상 매칭(= C단계, ads/API)으로 "어떤 후킹/스타일/프리셋이 이겼나" 집계. 상세 = `promo/HOOK_LEARNING.md`.
 - ⚠ 초기 표본 작을 땐 통계 노이즈 → 데이터 쌓고 판단(자동 최적화는 누적 후).
+- **200~300편 데이터기반 자가개선 전체 설계**(생성기→배치렌더→업로드로그→귀속→스코어링·가지치기, YT/IG 귀속, 통계 게이트) = `promo/AUTOLOOP_DESIGN.md` (설계·미구현, Phase 0 완료).
