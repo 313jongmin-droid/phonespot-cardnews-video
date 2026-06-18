@@ -352,9 +352,19 @@
         "telecom_discount_compare",
         "smartphone"
       ]
+    },
+    "027_qa_usim_replace_security": {
+      "used_at": "2026-06-18T18:37:32",
+      "source": "codex_enhance",
+      "illustrations": [
+        "smartphone",
+        "aluminum_label",
+        "appliance",
+        "basic_fold_202d754f"
+      ]
     }
   },
-  "updated_at": "2026-06-18T18:27:50",
+  "updated_at": "2026-06-18T18:37:33",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -428,6 +438,10 @@
     },
     "026_news_galaxy_a37_5g_launch": {
       "updated_at": "2026-06-18T18:27:50",
+      "variants": []
+    },
+    "027_qa_usim_replace_security": {
+      "updated_at": "2026-06-18T18:37:33",
       "variants": []
     }
   }

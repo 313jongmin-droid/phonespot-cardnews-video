@@ -2375,7 +2375,70 @@
       ],
       "note": "자동 발굴 개념: 최대 주사율",
       "available": true
+    },
+    "free_sim_3e08a1f2": {
+      "keywords": [
+        "무상",
+        "유심",
+        "교체",
+        "대상"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 무상 유심",
+      "available": false
+    },
+    "cpt_5507911c": {
+      "keywords": [
+        "문자",
+        "받고",
+        "바꿔야",
+        "하나",
+        "고민되셨다면"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 문자 받고",
+      "available": false
+    },
+    "cpt_d3ebd1ae": {
+      "keywords": [
+        "일부",
+        "반영해",
+        "사실"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 일부 반영해",
+      "available": false
+    },
+    "cpt_7ce59d26": {
+      "keywords": [
+        "특정",
+        "시점",
+        "어느",
+        "기지국",
+        "범위"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 특정 시점",
+      "available": false
+    },
+    "cpt_a30b5cf7": {
+      "keywords": [
+        "유플러스"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 유플러스",
+      "available": false
     }
   },
-  "updated_at": "2026-06-18T18:27:41"
+  "updated_at": "2026-06-18T18:37:34"
 }
