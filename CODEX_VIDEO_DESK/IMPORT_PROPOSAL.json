@@ -1,264 +1,99 @@
 {
-  "slug": "025_tip_galaxy_ai_call_screening",
-  "engine": "image-embedding",
-  "generated_at": 1781602405.6633084,
+  "slug": "026_news_galaxy_a37_5g_launch",
+  "engine": "fallback-mtime",
+  "generated_at": 1781772844.39872,
   "requests": [
     {
-      "filename": "mystery_number_63279925.png",
-      "variant": "mystery_number_63279925",
+      "filename": "samsung_korea_04b00795.png",
+      "variant": "samsung_korea_04b00795",
       "section": "hook",
       "chunk_index": 0,
-      "concept_label": "모르 번호",
+      "concept_label": "삼성 국내",
       "optional": true,
-      "concept_text": "모르 번호 mystery number 63279925 모르 번호 받기 auto concept 모르는 번호 무조건 받기"
+      "concept_text": "삼성 국내 samsung korea 04b00795 삼성 국내 auto concept 삼성이 6월 19일 갤럭시 A37 5G를 국내 출시합니다."
     },
     {
-      "filename": "new_policy_f48caded.png",
-      "variant": "new_policy_f48caded",
+      "filename": "mid_ship_7968fa24.png",
+      "variant": "mid_ship_7968fa24",
       "section": "hook",
       "chunk_index": 1,
-      "concept_label": "부담스러우셨다면 부터",
+      "concept_label": "출고 중급형이지",
       "optional": true,
-      "concept_text": "부담스러우셨다면 부터 new policy f48caded 부담스러우셨다면 부터 도입된 auto concept 부담스러우셨다면 S26부터 도입된"
+      "concept_text": "출고 중급형이지 mid ship 7968fa24 출고 중급형이지 auto concept 출고가 59만 8400원의 중급형이지만"
     },
     {
-      "filename": "cpt_e9fd442e.png",
-      "variant": "cpt_e9fd442e",
-      "section": "hook",
-      "chunk_index": 2,
-      "concept_label": "통화 스크리닝",
-      "optional": true,
-      "concept_text": "통화 스크리닝 cpt e9fd442e 통화 스크리닝 켜보세요 auto concept 통화 스크리닝을 켜보세요"
-    },
-    {
-      "filename": "cpt_915bf475.png",
-      "variant": "cpt_915bf475",
+      "filename": "lavender_color_7ffb0a8d.png",
+      "variant": "lavender_color_7ffb0a8d",
       "section": "fact_1",
+      "chunk_index": 3,
+      "concept_label": "색상 라벤더",
+      "optional": true,
+      "concept_text": "색상 라벤더 lavender color 7ffb0a8d 색상 라벤더 화이트 차콜 auto concept 색상은 라벤더·화이트·차콜 3종입니다."
+    },
+    {
+      "filename": "cpt_fd30bbcd.png",
+      "variant": "cpt_fd30bbcd",
+      "section": "fact_2",
       "chunk_index": 0,
-      "concept_label": "전화 받자마자",
+      "concept_label": "FHD 슈퍼",
       "optional": true,
-      "concept_text": "전화 받자마자 cpt 915bf475 전화 받자마자 이름 용건 알려주세요 auto concept AI가 전화 받자마자 \"이름과 용건을 먼저 알려주세요\"라고"
+      "concept_text": "FHD 슈퍼 cpt fd30bbcd FHD 슈퍼 아몰레드 auto concept 6.7형 FHD+ 슈퍼 아몰레드에"
     },
     {
-      "filename": "cpt_f2dc70a6.png",
-      "variant": "cpt_f2dc70a6",
-      "section": "fact_1",
+      "filename": "cpt_e646864a.png",
+      "variant": "cpt_e646864a",
+      "section": "fact_2",
       "chunk_index": 1,
-      "concept_label": "발신자 답한",
+      "concept_label": "최대 주사율",
       "optional": true,
-      "concept_text": "발신자 답한 cpt f2dc70a6 발신자 답한 auto concept 응대합니다 발신자가 답한 내용은"
+      "concept_text": "최대 주사율 cpt e646864a 최대 주사율 auto concept 최대 120Hz 주사율을 지원합니다."
     }
   ],
   "assignments": [
     {
-      "candidate_path": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\CODEX_VIDEO_DESK\\ILLUSTRATION_DROP\\battery_capacity.png",
-      "candidate_name": "battery_capacity.png",
-      "proposed_filename": null,
+      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 6월 18일 오후 05_53_57 (5).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 18일 오후 05_53_57 (5).png",
+      "proposed_filename": "samsung_korea_04b00795.png",
       "confidence": null,
       "exact_name": false,
-      "alternatives": [
-        {
-          "filename": "new_policy_f48caded.png",
-          "score": 0.0681
-        },
-        {
-          "filename": "mystery_number_63279925.png",
-          "score": 0.0431
-        },
-        {
-          "filename": "cpt_e9fd442e.png",
-          "score": 0.0431
-        }
-      ],
+      "alternatives": [],
       "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\CODEX_VIDEO_DESK\\ILLUSTRATION_DROP\\fast_charging.png",
-      "candidate_name": "fast_charging.png",
-      "proposed_filename": "cpt_e9fd442e.png",
-      "confidence": 0.0497,
-      "exact_name": false,
-      "alternatives": [
-        {
-          "filename": "new_policy_f48caded.png",
-          "score": 0.0652
-        },
-        {
-          "filename": "cpt_e9fd442e.png",
-          "score": 0.0497
-        },
-        {
-          "filename": "cpt_f2dc70a6.png",
-          "score": 0.0398
-        }
-      ],
-      "dedup": null
-    },
-    {
-      "candidate_path": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\CODEX_VIDEO_DESK\\ILLUSTRATION_DROP\\camera_quality.png",
-      "candidate_name": "camera_quality.png",
-      "proposed_filename": "new_policy_f48caded.png",
-      "confidence": 0.1411,
-      "exact_name": false,
-      "alternatives": [
-        {
-          "filename": "new_policy_f48caded.png",
-          "score": 0.1411
-        },
-        {
-          "filename": "cpt_f2dc70a6.png",
-          "score": 0.108
-        },
-        {
-          "filename": "cpt_e9fd442e.png",
-          "score": 0.0998
-        }
-      ],
-      "dedup": null
-    },
-    {
-      "candidate_path": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\CODEX_VIDEO_DESK\\ILLUSTRATION_DROP\\document_article.png",
-      "candidate_name": "document_article.png",
-      "proposed_filename": "cpt_f2dc70a6.png",
-      "confidence": 0.0442,
-      "exact_name": false,
-      "alternatives": [
-        {
-          "filename": "new_policy_f48caded.png",
-          "score": 0.0548
-        },
-        {
-          "filename": "cpt_f2dc70a6.png",
-          "score": 0.0442
-        },
-        {
-          "filename": "cpt_e9fd442e.png",
-          "score": 0.0396
-        }
-      ],
-      "dedup": null
-    },
-    {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 16일 오후 06_09_15 (3).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 16일 오후 06_09_15 (3).png",
-      "proposed_filename": null,
+      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 6월 18일 오후 05_53_57 (4).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 18일 오후 05_53_57 (4).png",
+      "proposed_filename": "mid_ship_7968fa24.png",
       "confidence": null,
       "exact_name": false,
-      "alternatives": [
-        {
-          "filename": "new_policy_f48caded.png",
-          "score": 0.0524
-        },
-        {
-          "filename": "mystery_number_63279925.png",
-          "score": 0.0516
-        },
-        {
-          "filename": "cpt_915bf475.png",
-          "score": 0.0338
-        }
-      ],
-      "dedup": {
-        "variant": "cpt_4729c912",
-        "score": 0.9343,
-        "skip": false
-      }
-    },
-    {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 16일 오후 06_09_14 (1).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 16일 오후 06_09_14 (1).png",
-      "proposed_filename": "mystery_number_63279925.png",
-      "confidence": 0.1144,
-      "exact_name": false,
-      "alternatives": [
-        {
-          "filename": "mystery_number_63279925.png",
-          "score": 0.1144
-        },
-        {
-          "filename": "new_policy_f48caded.png",
-          "score": 0.065
-        },
-        {
-          "filename": "cpt_915bf475.png",
-          "score": 0.0571
-        }
-      ],
+      "alternatives": [],
       "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 16일 오후 06_09_14 (2).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 16일 오후 06_09_14 (2).png",
-      "proposed_filename": null,
+      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 6월 18일 오후 05_53_57 (3).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 18일 오후 05_53_57 (3).png",
+      "proposed_filename": "lavender_color_7ffb0a8d.png",
       "confidence": null,
       "exact_name": false,
-      "alternatives": [
-        {
-          "filename": "new_policy_f48caded.png",
-          "score": 0.1019
-        },
-        {
-          "filename": "mystery_number_63279925.png",
-          "score": 0.0374
-        },
-        {
-          "filename": "cpt_915bf475.png",
-          "score": 0.0344
-        }
-      ],
+      "alternatives": [],
       "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 16일 오후 06_09_15 (4).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 16일 오후 06_09_15 (4).png",
-      "proposed_filename": null,
+      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 6월 18일 오후 05_53_57 (2).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 18일 오후 05_53_57 (2).png",
+      "proposed_filename": "cpt_fd30bbcd.png",
       "confidence": null,
       "exact_name": false,
-      "alternatives": [
-        {
-          "filename": "mystery_number_63279925.png",
-          "score": 0.0794
-        },
-        {
-          "filename": "cpt_915bf475.png",
-          "score": 0.0491
-        },
-        {
-          "filename": "new_policy_f48caded.png",
-          "score": 0.0266
-        }
-      ],
-      "dedup": {
-        "variant": "call_recording_notice",
-        "score": 0.9337,
-        "skip": false
-      }
+      "alternatives": [],
+      "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\di898\\Downloads\\ChatGPT Image 2026년 6월 16일 오후 06_09_16 (5).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 16일 오후 06_09_16 (5).png",
-      "proposed_filename": "cpt_915bf475.png",
-      "confidence": 0.0508,
+      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 6월 18일 오후 05_53_56 (1).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 18일 오후 05_53_56 (1).png",
+      "proposed_filename": "cpt_e646864a.png",
+      "confidence": null,
       "exact_name": false,
-      "alternatives": [
-        {
-          "filename": "mystery_number_63279925.png",
-          "score": 0.0678
-        },
-        {
-          "filename": "cpt_915bf475.png",
-          "score": 0.0508
-        },
-        {
-          "filename": "new_policy_f48caded.png",
-          "score": 0.0328
-        }
-      ],
-      "dedup": {
-        "variant": "call_recording_notice",
-        "score": 0.9241,
-        "skip": false
-      }
+      "alternatives": [],
+      "dedup": null
     }
   ],
   "unmatched_requests": []

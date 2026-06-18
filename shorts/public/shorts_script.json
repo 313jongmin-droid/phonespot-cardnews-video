@@ -1,63 +1,58 @@
 {
-  "slug": "025_tip_galaxy_ai_call_screening",
-  "title_short": "갤럭시 AI 통화 스크리닝",
-  "video_title": "갤럭시 AI 통화 스크리닝",
-  "publication_date": "2026.06.16",
-  "sources": "삼성전자 갤럭시 AI 공식 + 삼성SVC 빅스비 + 다음 3세대 AI폰 정옥재 + 폰스팟 광교점 자료",
+  "slug": "026_news_galaxy_a37_5g_launch",
+  "title_short": "갤럭시 A37 5G 6월 19일 출시",
+  "video_title": "갤럭시 A37 5G 6월 19일 출시",
+  "publication_date": "2026.06.18",
+  "sources": "뉴스와이어 삼성전자 + 베타뉴스 + 이투데이 + 포쓰저널 + 폰스팟 광교점 자료",
   "channel_name": "폰스팟",
   "channel_tagline": "광교 미니 IT 브리핑",
   "opening": {
     "line1": "광교 미니 IT 브리핑",
-    "line2": "갤럭시 AI 통화 스크리닝"
+    "line2": "갤럭시 A37 5G 6월 19일 출시"
   },
   "hook": {
-    "tts": "모르는 번호 무조건 받기 부담스러우셨다면 S26부터 도입된 통화 스크리닝을 켜보세요. AI가 먼저 받아 누가 무슨 용건인지 확인합니다. 스팸·보이스피싱이 자연스럽게 걸러집니다.",
+    "tts": "삼성이 6월 19일 갤럭시 A37 5G를 국내 출시합니다. 출고가 59만 8400원의 중급형이지만 갤럭시 AI 기능을 담았습니다. 통신 3사와 자급제로 동시에 풀립니다.",
     "caption_body": [
-      "갤럭시 AI",
-      "통화 스크리닝 켜기"
+      "59만원대 AI폰",
+      "갤럭시 A37 출시"
     ],
     "caption_emphasis": [
-      "통화 스크리닝"
+      "갤럭시 A37"
     ],
     "headline_lines": [
       {
-        "text": "갤럭시 AI"
+        "text": "59만원대 AI폰"
       },
       {
-        "text": "통화 스크리닝 켜기",
+        "text": "갤럭시 A37 출시",
         "accent": true
       }
     ],
-    "meta": "출처: 다음 3세대 AI폰 정옥재",
+    "meta": "출처: 뉴스와이어 삼성전자",
     "topic": "뉴스",
     "background_image": "",
     "caption_chunks": [
-      "모르는 번호 무조건 받기",
-      "부담스러우셨다면 S26부터 도입된",
-      "통화 스크리닝을 켜보세요.",
-      "AI가 먼저 받아 누가 무슨 용건인지 확인합니다.",
-      "스팸·보이스피싱이 자연스럽게 걸러집니다."
+      "삼성이 6월 19일 갤럭시 A37 5G를 국내 출시합니다.",
+      "출고가 59만 8400원의 중급형이지만",
+      "갤럭시 AI 기능을 담았습니다.",
+      "통신 3사와 자급제로 동시에 풀립니다."
     ],
     "chunk_visuals": [
       {
         "type": "illust",
-        "value": "mystery_number_63279925"
+        "value": "samsung_korea_04b00795"
       },
       {
         "type": "illust",
-        "value": "new_policy_f48caded"
+        "value": "mid_ship_7968fa24"
       },
       {
         "type": "illust",
-        "value": "cpt_e9fd442e"
+        "value": "unlocked_baa71ac6"
       },
       {
         "type": "mascot",
         "value": "surprised"
-      },
-      {
-        "type": "illust",
-        "value": "phone_setup_ready"
       }
     ],
     "stat": {
@@ -66,104 +61,97 @@
       "note": ""
     },
     "display_chunks": [
-      "모르는 번호 무조건 받기",
-      "부담스러우셨다면 S26부터 도입된",
-      "통화 스크리닝을 켜보세요",
-      "AI가 먼저 받아 누가 무슨 용건인지 확인합니다",
-      "스팸·보이스피싱이 자연스럽게 걸러집니다"
+      "삼성이 6월 19일 갤럭시 A37 5G를 국내 출시합니다",
+      "출고가 59만 8400원의 중급형이지만",
+      "갤럭시 AI 기능을 담았습니다",
+      "통신 3사와 자급제로 동시에 풀립니다"
     ],
     "_codex_caption_lockstep": {
       "version": 2,
       "compiler": "korean_caption_compiler_v2",
       "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-      "chunk_count": 5
+      "chunk_count": 4
     },
     "_codex_contextual_narrative": true,
     "_codex_sync_mode": "global999_tts_caption_lockstep",
     "tts_chunk_weights": [
-      1176.75,
-      2139.08,
-      1781.0,
-      2992.96,
-      2103.88
+      3970.08,
+      2059.84,
+      2447.2,
+      2139.05
     ],
     "_tts_timing": {
       "mode": "word_boundary_text_align",
       "windows": [
         {
           "start_ms": 0.0,
-          "end_ms": 1176.75,
-          "duration_ms": 1176.75
+          "end_ms": 3970.08,
+          "duration_ms": 3970.08
         },
         {
-          "start_ms": 1176.75,
-          "end_ms": 3315.83,
-          "duration_ms": 2139.08
+          "start_ms": 3970.08,
+          "end_ms": 6029.92,
+          "duration_ms": 2059.84
         },
         {
-          "start_ms": 3315.83,
-          "end_ms": 5096.83,
-          "duration_ms": 1781.0
+          "start_ms": 6029.92,
+          "end_ms": 8477.12,
+          "duration_ms": 2447.2
         },
         {
-          "start_ms": 5096.83,
-          "end_ms": 8089.79,
-          "duration_ms": 2992.96
-        },
-        {
-          "start_ms": 8089.79,
-          "end_ms": 10193.67,
-          "duration_ms": 2103.88
+          "start_ms": 8477.12,
+          "end_ms": 10616.17,
+          "duration_ms": 2139.05
         }
       ],
       "boundary_count": 22,
-      "caption_signature": "188544a86208e7068f015edbe5fea5c4e115040604e64614c7912e5383ca8991"
+      "caption_signature": "3f7073393ad4bd35e42fea7a2f6e6beb688ca618a513586bc90ca2bfb00226b7"
     }
   },
   "facts": [
     {
-      "tts": "AI가 전화 받자마자 \"이름과 용건을 먼저 알려주세요\"라고 응대합니다. 발신자가 답한 내용은 텍스트로 화면에 표시되어 내가 직접 받을지 차단할지 판단할 수 있습니다.",
+      "tts": "6월 12일 공개 후 19일 정식 판매를 시작합니다. 전국 삼성스토어와 삼성닷컴, 이동통신 3사 온·오프라인 매장에서 구매할 수 있습니다. 색상은 라벤더·화이트·차콜 3종입니다.",
       "caption_body": [
-        "기능",
-        "이름·용건 먼저 확인"
+        "출시",
+        "6월 19일 3사·자급제"
       ],
       "caption_emphasis": [
-        "이름·용건 먼저"
+        "6월 19일"
       ],
       "headline_lines": [
         {
-          "text": "기능"
+          "text": "출시"
         },
         {
-          "text": "이름·용건 먼저 확인",
+          "text": "6월 19일 3사·자급제",
           "accent": true
         }
       ],
-      "meta": "출처: 삼성 갤럭시 AI",
+      "meta": "출처: 베타뉴스",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "AI가 전화 받자마자 \"이름과 용건을 먼저 알려주세요\"라고",
-        "응대합니다. 발신자가 답한 내용은",
-        "텍스트로 화면에 표시되어",
-        "내가 직접 받을지 차단할지 판단할 수 있습니다."
+        "6월 12일 공개 후 19일 정식 판매를 시작합니다.",
+        "전국 삼성스토어와 삼성닷컴,",
+        "이동통신 3사 온·오프라인 매장에서 구매할 수 있습니다.",
+        "색상은 라벤더·화이트·차콜 3종입니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "cpt_915bf475"
+          "value": "official_sale_9dc82f05"
         },
         {
           "type": "illust",
-          "value": "cpt_f2dc70a6"
+          "value": "final_update"
         },
         {
           "type": "illust",
-          "value": "device_data_transfer"
+          "value": "lavender_color_7ffb0a8d"
         },
         {
           "type": "illust",
-          "value": "smartphone"
+          "value": "lavender_color_7ffb0a8d"
         }
       ],
       "stat": {
@@ -173,10 +161,10 @@
       },
       "id": "fact_1",
       "display_chunks": [
-        "AI가 전화 받자마자 \"이름과 용건을 먼저 알려주세요\"라고",
-        "응대합니다 발신자가 답한 내용은",
-        "텍스트로 화면에 표시되어",
-        "내가 직접 받을지 차단할지 판단할 수 있습니다"
+        "6월 12일 공개 후 19일 정식 판매를 시작합니다",
+        "전국 삼성스토어와 삼성닷컴,",
+        "이동통신 3사 온·오프라인 매장에서 구매할 수 있습니다",
+        "색상은 라벤더·화이트·차콜 3종입니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
@@ -187,67 +175,76 @@
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        3078.17,
-        2247.54,
-        1153.17,
-        2420.74
+        3327.46,
+        1786.96,
+        3125.0,
+        2183.12
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 3078.17,
-            "duration_ms": 3078.17
+            "end_ms": 3327.46,
+            "duration_ms": 3327.46
           },
           {
-            "start_ms": 3078.17,
-            "end_ms": 5325.71,
-            "duration_ms": 2247.54
+            "start_ms": 3327.46,
+            "end_ms": 5114.42,
+            "duration_ms": 1786.96
           },
           {
-            "start_ms": 5325.71,
-            "end_ms": 6478.88,
-            "duration_ms": 1153.17
+            "start_ms": 5114.42,
+            "end_ms": 8239.42,
+            "duration_ms": 3125.0
           },
           {
-            "start_ms": 6478.88,
-            "end_ms": 8899.62,
-            "duration_ms": 2420.74
+            "start_ms": 8239.42,
+            "end_ms": 10422.54,
+            "duration_ms": 2183.12
           }
         ],
         "boundary_count": 23,
-        "caption_signature": "badca7b6a6d2cc67bc677806e1973860d975b75e66b0f6658510c197731ef158"
+        "caption_signature": "36c2c9aa953a3a80f43d65b823f985144b40b8898debfd5ebed66aa506dfe75c"
       }
     },
     {
-      "tts": "통화 스크리닝은 S26 시리즈부터 우선 적용되는 3세대 AI폰 기능입니다. 이전 모델은 Bixby 텍스트 호출과 별도 스팸 차단 앱으로 보완하시면 됩니다.",
+      "tts": "6.7형 FHD+ 슈퍼 아몰레드에 최대 120Hz 주사율을 지원합니다. 후면은 5천만 화소 광각과 800만 초광각, 500만 접사 트리플 카메라입니다. 중급기 치고 화면과 카메라 체급이 높습니다.",
       "caption_body": [
-        "대상",
-        "S26 시리즈부터"
+        "화면·카메라",
+        "120Hz · 5천만 트리플"
       ],
       "caption_emphasis": [
-        "S26 시리즈"
+        "120Hz · 5천만"
       ],
       "headline_lines": [
         {
-          "text": "대상"
+          "text": "화면·카메라"
         },
         {
-          "text": "S26 시리즈부터",
+          "text": "120Hz · 5천만 트리플",
           "accent": true
         }
       ],
-      "meta": "출처: 갤럭시 S26 AI 기능",
+      "meta": "출처: 이투데이",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "통화 스크리닝은 S26 시리즈부터 우선",
-        "적용되는 3세대 AI폰 기능입니다.",
-        "이전 모델은 Bixby 텍스트 호출과",
-        "별도 스팸 차단 앱으로 보완하시면 됩니다."
+        "6.7형 FHD+ 슈퍼 아몰레드에",
+        "최대 120Hz 주사율을 지원합니다.",
+        "후면은 5천만 화소 광각과 800만",
+        "초광각, 500만 접사 트리플 카메라입니다.",
+        "중급기 치고 화면과 카메라 체급이 높습니다."
       ],
       "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "cpt_fd30bbcd"
+        },
+        {
+          "type": "illust",
+          "value": "cpt_e646864a"
+        },
         {
           "type": "illust",
           "value": "phone_setup_ready"
@@ -255,10 +252,6 @@
         {
           "type": "illust",
           "value": "phone_settings_toggle"
-        },
-        {
-          "type": "illust",
-          "value": "device_os_requirement"
         },
         {
           "type": "mascot",
@@ -272,96 +265,103 @@
       },
       "id": "fact_2",
       "display_chunks": [
-        "통화 스크리닝은 S26 시리즈부터 우선",
-        "적용되는 3세대 AI폰 기능입니다",
-        "이전 모델은 Bixby 텍스트 호출과",
-        "별도 스팸 차단 앱으로 보완하시면 됩니다"
+        "6.7형 FHD+ 슈퍼 아몰레드에",
+        "최대 120Hz 주사율을 지원합니다",
+        "후면은 5천만 화소 광각과 800만",
+        "초광각, 500만 접사 트리플 카메라입니다",
+        "중급기 치고 화면과 카메라 체급이 높습니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 4
+        "chunk_count": 5
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        2365.12,
-        2661.3,
-        1760.54,
-        1910.21
+        2224.29,
+        2546.83,
+        1786.96,
+        2852.13,
+        2165.5
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 2365.12,
-            "duration_ms": 2365.12
+            "end_ms": 2224.29,
+            "duration_ms": 2224.29
           },
           {
-            "start_ms": 2365.12,
-            "end_ms": 5026.42,
-            "duration_ms": 2661.3
+            "start_ms": 2224.29,
+            "end_ms": 4771.12,
+            "duration_ms": 2546.83
           },
           {
-            "start_ms": 5026.42,
-            "end_ms": 6786.96,
-            "duration_ms": 1760.54
+            "start_ms": 4771.12,
+            "end_ms": 6558.08,
+            "duration_ms": 1786.96
           },
           {
-            "start_ms": 6786.96,
-            "end_ms": 8697.17,
-            "duration_ms": 1910.21
+            "start_ms": 6558.08,
+            "end_ms": 9410.21,
+            "duration_ms": 2852.13
+          },
+          {
+            "start_ms": 9410.21,
+            "end_ms": 11575.71,
+            "duration_ms": 2165.5
           }
         ],
-        "boundary_count": 21,
-        "caption_signature": "d31391a2402a595c062702bd3eb985439cab58aacf2545b4c1481e3c283a3c07"
+        "boundary_count": 25,
+        "caption_signature": "d23b81e692e63ce064a415a11a4633e657a590de5f55f3294da15be6878e8a0d"
       }
     },
     {
-      "tts": "설정 → 전화 → 통화 스크리닝 메뉴에서 켭니다. 항상 켜기 / 모르는 번호만 / 차단 번호 자동 응대 등 모드 선택 가능합니다. 가족·즐겨찾기 번호는 바로 연결됩니다.",
+      "tts": "써클 투 서치와 사진 편집 도우미 등 갤럭시 AI 기능을 중급형에도 담았습니다. 플래그십이 부담스러우셨다면 AI 경험을 합리적인 가격에 처음 써보기 좋은 선택입니다.",
       "caption_body": [
-        "설정",
-        "5단계 켜기"
+        "중급기에도",
+        "갤럭시 AI 탑재"
       ],
       "caption_emphasis": [
-        "5단계"
+        "갤럭시 AI"
       ],
       "headline_lines": [
         {
-          "text": "설정"
+          "text": "중급기에도"
         },
         {
-          "text": "5단계 켜기",
+          "text": "갤럭시 AI 탑재",
           "accent": true
         }
       ],
-      "meta": "출처: 갤럭시 통화 설정",
+      "meta": "출처: 포쓰저널",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "설정 → 전화 → 통화 스크리닝 메뉴에서 켭니다.",
-        "항상 켜기 / 모르는 번호만 / 차단 번호",
-        "자동 응대 등 모드 선택 가능합니다.",
-        "가족·즐겨찾기 번호는 바로 연결됩니다."
+        "써클 투 서치와 사진 편집 도우미 등",
+        "갤럭시 AI 기능을 중급형에도 담았습니다.",
+        "플래그십이 부담스러우셨다면 AI",
+        "경험을 합리적인 가격에 처음 써보기 좋은 선택입니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
+          "value": "mounted_body_496029c6"
+        },
+        {
+          "type": "illust",
+          "value": "new_policy_f48caded"
+        },
+        {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        {
+          "type": "illust",
           "value": "device_data_transfer"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "phone_setup_ready"
-        },
-        {
-          "type": "illust",
-          "value": "phone_settings_toggle"
         }
       ],
       "stat": {
@@ -371,10 +371,10 @@
       },
       "id": "fact_3",
       "display_chunks": [
-        "설정 → 전화 → 통화 스크리닝 메뉴에서 켭니다",
-        "항상 켜기 / 모르는 번호만 / 차단 번호",
-        "자동 응대 등 모드 선택 가능합니다",
-        "가족·즐겨찾기 번호는 바로 연결됩니다"
+        "써클 투 서치와 사진 편집 도우미 등",
+        "갤럭시 AI 기능을 중급형에도 담았습니다",
+        "플래그십이 부담스러우셨다면 AI",
+        "경험을 합리적인 가격에 처음 써보기 좋은 선택입니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
@@ -385,78 +385,78 @@
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        2667.25,
-        1725.37,
-        2500.0,
-        2121.46
+        1731.33,
+        3083.79,
+        1971.84,
+        2640.87
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 2667.25,
-            "duration_ms": 2667.25
+            "end_ms": 1731.33,
+            "duration_ms": 1731.33
           },
           {
-            "start_ms": 2667.25,
-            "end_ms": 4392.62,
-            "duration_ms": 1725.37
+            "start_ms": 1731.33,
+            "end_ms": 4815.12,
+            "duration_ms": 3083.79
           },
           {
-            "start_ms": 4392.62,
-            "end_ms": 6892.62,
-            "duration_ms": 2500.0
+            "start_ms": 4815.12,
+            "end_ms": 6786.96,
+            "duration_ms": 1971.84
           },
           {
-            "start_ms": 6892.62,
-            "end_ms": 9014.08,
-            "duration_ms": 2121.46
+            "start_ms": 6786.96,
+            "end_ms": 9427.83,
+            "duration_ms": 2640.87
           }
         ],
-        "boundary_count": 23,
-        "caption_signature": "2afab44c99bd05f0e9a23d50300674a4d1b983b8aa8a390b8bf468c277d3886b"
+        "boundary_count": 24,
+        "caption_signature": "9899e385dfcd315915f4bd2dc9bc77cb1be620a6628e4f1f52501807bf4432b2"
       }
     },
     {
-      "tts": "갤럭시 AI는 통화 중 실시간 통역도 지원합니다. 해외에서 걸려오는 영어·일본어·중국어 전화를 한국어로 즉시 변환. 휴가철 외국 호텔·항공사 응대에 유용합니다.",
+      "tts": "같은 단말도 공통지원금과 선택약정 중 무엇이 유리한지 따져보면 실구매가가 달라집니다. 6월 출시 초기라 통신사별 지원금이 다르니 비교 후 결정하시기 바랍니다.",
       "caption_body": [
-        "보너스",
-        "실시간 통역 함께"
+        "구매 전",
+        "지원금·할인 비교"
       ],
       "caption_emphasis": [
-        "실시간 통역"
+        "지원금·할인"
       ],
       "headline_lines": [
         {
-          "text": "보너스"
+          "text": "구매 전"
         },
         {
-          "text": "실시간 통역 함께",
+          "text": "지원금·할인 비교",
           "accent": true
         }
       ],
-      "meta": "출처: 삼성SVC 갤럭시 AI 통역",
+      "meta": "출처: 폰스팟 광교점 자료",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "갤럭시 AI는 통화 중 실시간 통역도 지원합니다.",
-        "해외에서 걸려오는 영어·일본어·중국어",
-        "전화를 한국어로 즉시 변환.",
-        "휴가철 외국 호텔·항공사 응대에 유용합니다."
+        "같은 단말도 공통지원금과 선택약정 중",
+        "무엇이 유리한지 따져보면 실구매가가 달라집니다.",
+        "6월 출시 초기라 통신사별 지원금이",
+        "다르니 비교 후 결정하시기 바랍니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "device_os_requirement"
-        },
-        {
-          "type": "illust",
-          "value": "device_data_transfer"
+          "value": "telecom_discount_compare"
         },
         {
           "type": "illust",
           "value": "smartphone"
+        },
+        {
+          "type": "illust",
+          "value": "phone_setup_ready"
         },
         {
           "type": "mascot",
@@ -470,10 +470,10 @@
       },
       "id": "fact_4",
       "display_chunks": [
-        "갤럭시 AI는 통화 중 실시간 통역도 지원합니다",
-        "해외에서 걸려오는 영어·일본어·중국어",
-        "전화를 한국어로 즉시 변환",
-        "휴가철 외국 호텔·항공사 응대에 유용합니다"
+        "같은 단말도 공통지원금과 선택약정 중",
+        "무엇이 유리한지 따져보면 실구매가가 달라집니다",
+        "6월 출시 초기라 통신사별 지원금이",
+        "다르니 비교 후 결정하시기 바랍니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
@@ -484,37 +484,37 @@
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        3248.25,
-        1742.96,
-        2103.87,
-        2235.88
+        2109.88,
+        3145.41,
+        1822.17,
+        1839.79
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 3248.25,
-            "duration_ms": 3248.25
+            "end_ms": 2109.88,
+            "duration_ms": 2109.88
           },
           {
-            "start_ms": 3248.25,
-            "end_ms": 4991.21,
-            "duration_ms": 1742.96
+            "start_ms": 2109.88,
+            "end_ms": 5255.29,
+            "duration_ms": 3145.41
           },
           {
-            "start_ms": 4991.21,
-            "end_ms": 7095.08,
-            "duration_ms": 2103.87
+            "start_ms": 5255.29,
+            "end_ms": 7077.46,
+            "duration_ms": 1822.17
           },
           {
-            "start_ms": 7095.08,
-            "end_ms": 9330.96,
-            "duration_ms": 2235.88
+            "start_ms": 7077.46,
+            "end_ms": 8917.25,
+            "duration_ms": 1839.79
           }
         ],
-        "boundary_count": 23,
-        "caption_signature": "c6cd797847e13db73ddf371cff09357ee34f67f39c602489397cbfa101d39eb9"
+        "boundary_count": 20,
+        "caption_signature": "f816f585129d5e4c887e58e807f734c075b28acb8645e62437e602d14a5da118"
       }
     }
   ],
@@ -609,27 +609,27 @@
     {
       "section": "hook",
       "chunk": 1,
-      "variant": "mystery_number_63279925"
+      "variant": "samsung_korea_04b00795"
     },
     {
       "section": "hook",
       "chunk": 2,
-      "variant": "new_policy_f48caded"
-    },
-    {
-      "section": "hook",
-      "chunk": 3,
-      "variant": "cpt_e9fd442e"
+      "variant": "mid_ship_7968fa24"
     },
     {
       "section": "fact_1",
+      "chunk": 4,
+      "variant": "lavender_color_7ffb0a8d"
+    },
+    {
+      "section": "fact_2",
       "chunk": 1,
-      "variant": "cpt_915bf475"
+      "variant": "cpt_fd30bbcd"
     },
     {
-      "section": "fact_1",
+      "section": "fact_2",
       "chunk": 2,
-      "variant": "cpt_f2dc70a6"
+      "variant": "cpt_e646864a"
     }
   ],
   "_codex_semantic_visual_match": {
@@ -638,59 +638,73 @@
     "changes": [
       {
         "section": "hook",
-        "chunk": 3,
+        "chunk": 1,
         "from": {
           "type": "illust",
-          "value": "cpt_e9fd442e"
+          "value": "samsung_korea_04b00795"
         },
         "to": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "mid_ship_7968fa24"
         },
-        "context": "부담스러우셨다면 S26부터 도입된 통화 스크리닝을 켜보세요 AI가 먼저 받아 누가 무슨 용건인지 확인합니다 갤럭시 AI 통화 스크리닝 켜기 ['갤럭시 AI', '통화 스크리닝 켜기'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
+        "context": "삼성이 6월 19일 갤럭시 A37 5G를 국내 출시합니다 출고가 59만 8400원의 중급형이지만 59만원대 AI폰 갤럭시 A37 출시 ['59만원대 AI폰', '갤럭시 A37 출시'] 뉴스",
+        "reason": "illust score 24 (content n/a)"
       },
       {
         "section": "hook",
-        "chunk": 5,
+        "chunk": 2,
         "from": {
           "type": "illust",
-          "value": "basic_fold_202d754f"
+          "value": "mid_ship_7968fa24"
         },
         "to": {
           "type": "illust",
-          "value": "phone_setup_ready"
+          "value": "samsung_ai"
         },
-        "context": "AI가 먼저 받아 누가 무슨 용건인지 확인합니다 스팸·보이스피싱이 자연스럽게 걸러집니다 갤럭시 AI 통화 스크리닝 켜기 ['갤럭시 AI', '통화 스크리닝 켜기'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
+        "context": "삼성이 6월 19일 갤럭시 A37 5G를 국내 출시합니다 출고가 59만 8400원의 중급형이지만 갤럭시 AI 기능을 담았습니다 59만원대 AI폰 갤럭시 A37 출시 ['59만원대 AI폰', '갤럭시 A37 출시'] ",
+        "reason": "illust score 27 (content n/a)"
+      },
+      {
+        "section": "hook",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "unlocked_baa71ac6"
+        },
+        "context": "출고가 59만 8400원의 중급형이지만 갤럭시 AI 기능을 담았습니다 통신 3사와 자급제로 동시에 풀립니다 59만원대 AI폰 갤럭시 A37 출시 ['59만원대 AI폰', '갤럭시 A37 출시'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
       },
       {
         "section": "fact_1",
         "chunk": 1,
         "from": {
           "type": "illust",
-          "value": "cpt_915bf475"
+          "value": "smartphone"
         },
         "to": {
           "type": "illust",
-          "value": "phone_settings_toggle"
+          "value": "official_sale_9dc82f05"
         },
-        "context": "AI가 전화 받자마자 \"이름과 용건을 먼저 알려주세요\"라고 응대합니다 발신자가 답한 내용은 기능 이름·용건 먼저 확인 ['기능', '이름·용건 먼저 확인'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
+        "context": "6월 12일 공개 후 19일 정식 판매를 시작합니다 전국 삼성스토어와 삼성닷컴, 출시 6월 19일 3사·자급제 ['출시', '6월 19일 3사·자급제'] 뉴스",
+        "reason": "illust score 24 (content n/a)"
       },
       {
         "section": "fact_1",
         "chunk": 2,
         "from": {
           "type": "illust",
-          "value": "cpt_f2dc70a6"
+          "value": "aluminum_label"
         },
         "to": {
           "type": "illust",
-          "value": "device_os_requirement"
+          "value": "final_update"
         },
-        "context": "AI가 전화 받자마자 \"이름과 용건을 먼저 알려주세요\"라고 응대합니다 발신자가 답한 내용은 텍스트로 화면에 표시되어 기능 이름·용건 먼저 확인 ['기능', '이름·용건 먼저 확인'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
+        "context": "6월 12일 공개 후 19일 정식 판매를 시작합니다 전국 삼성스토어와 삼성닷컴, 이동통신 3사 온·오프라인 매장에서 구매할 수 있습니다 출시 6월 19일 3사·자급제 ['출시', '6월 19일 3사·자급제'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
       },
       {
         "section": "fact_1",
@@ -701,51 +715,51 @@
         },
         "to": {
           "type": "illust",
-          "value": "device_data_transfer"
+          "value": "lavender_color_7ffb0a8d"
         },
-        "context": "응대합니다 발신자가 답한 내용은 텍스트로 화면에 표시되어 내가 직접 받을지 차단할지 판단할 수 있습니다 기능 이름·용건 먼저 확인 ['기능', '이름·용건 먼저 확인'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
+        "context": "전국 삼성스토어와 삼성닷컴, 이동통신 3사 온·오프라인 매장에서 구매할 수 있습니다 색상은 라벤더·화이트·차콜 3종입니다 출시 6월 19일 3사·자급제 ['출시', '6월 19일 3사·자급제'] 뉴스",
+        "reason": "illust score 48 (content n/a)"
       },
       {
         "section": "fact_1",
         "chunk": 4,
         "from": {
           "type": "illust",
-          "value": "basic_fold_202d754f"
+          "value": "lavender_color_7ffb0a8d"
         },
         "to": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "gift_voucher"
         },
-        "context": "텍스트로 화면에 표시되어 내가 직접 받을지 차단할지 판단할 수 있습니다 기능 이름·용건 먼저 확인 ['기능', '이름·용건 먼저 확인'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
+        "context": "이동통신 3사 온·오프라인 매장에서 구매할 수 있습니다 색상은 라벤더·화이트·차콜 3종입니다 출시 6월 19일 3사·자급제 ['출시', '6월 19일 3사·자급제'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
       },
       {
         "section": "fact_2",
         "chunk": 1,
         "from": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "cpt_fd30bbcd"
         },
         "to": {
           "type": "illust",
-          "value": "phone_setup_ready"
+          "value": "camera_battery_ecd040c7"
         },
-        "context": "통화 스크리닝은 S26 시리즈부터 우선 적용되는 3세대 AI폰 기능입니다 대상 S26 시리즈부터 ['대상', 'S26 시리즈부터'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
+        "context": "6.7형 FHD+ 슈퍼 아몰레드에 최대 120Hz 주사율을 지원합니다 화면·카메라 120Hz · 5천만 트리플 ['화면·카메라', '120Hz · 5천만 트리플'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
       },
       {
         "section": "fact_2",
         "chunk": 2,
         "from": {
           "type": "illust",
-          "value": "aluminum_label"
+          "value": "cpt_e646864a"
         },
         "to": {
           "type": "illust",
-          "value": "phone_settings_toggle"
+          "value": "smartphone"
         },
-        "context": "통화 스크리닝은 S26 시리즈부터 우선 적용되는 3세대 AI폰 기능입니다 이전 모델은 Bixby 텍스트 호출과 대상 S26 시리즈부터 ['대상', 'S26 시리즈부터'] 뉴스",
+        "context": "6.7형 FHD+ 슈퍼 아몰레드에 최대 120Hz 주사율을 지원합니다 후면은 5천만 화소 광각과 800만 화면·카메라 120Hz · 5천만 트리플 ['화면·카메라', '120Hz · 5천만 트리플'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
@@ -757,55 +771,13 @@
         },
         "to": {
           "type": "illust",
-          "value": "device_os_requirement"
-        },
-        "context": "적용되는 3세대 AI폰 기능입니다 이전 모델은 Bixby 텍스트 호출과 별도 스팸 차단 앱으로 보완하시면 됩니다 대상 S26 시리즈부터 ['대상', 'S26 시리즈부터'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "device_data_transfer"
-        },
-        "context": "설정 → 전화 → 통화 스크리닝 메뉴에서 켭니다 항상 켜기 / 모르는 번호만 / 차단 번호 설정 5단계 켜기 ['설정', '5단계 켜기'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "aluminum_label"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "설정 → 전화 → 통화 스크리닝 메뉴에서 켭니다 항상 켜기 / 모르는 번호만 / 차단 번호 자동 응대 등 모드 선택 가능합니다 설정 5단계 켜기 ['설정', '5단계 켜기'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "appliance"
-        },
-        "to": {
-          "type": "illust",
           "value": "phone_setup_ready"
         },
-        "context": "항상 켜기 / 모르는 번호만 / 차단 번호 자동 응대 등 모드 선택 가능합니다 가족·즐겨찾기 번호는 바로 연결됩니다 설정 5단계 켜기 ['설정', '5단계 켜기'] 뉴스",
+        "context": "최대 120Hz 주사율을 지원합니다 후면은 5천만 화소 광각과 800만 초광각, 500만 접사 트리플 카메라입니다 화면·카메라 120Hz · 5천만 트리플 ['화면·카메라', '120Hz · 5천만 트리플'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
-        "section": "fact_3",
+        "section": "fact_2",
         "chunk": 4,
         "from": {
           "type": "illust",
@@ -815,7 +787,63 @@
           "type": "illust",
           "value": "phone_settings_toggle"
         },
-        "context": "자동 응대 등 모드 선택 가능합니다 가족·즐겨찾기 번호는 바로 연결됩니다 설정 5단계 켜기 ['설정', '5단계 켜기'] 뉴스",
+        "context": "후면은 5천만 화소 광각과 800만 초광각, 500만 접사 트리플 카메라입니다 중급기 치고 화면과 카메라 체급이 높습니다 화면·카메라 120Hz · 5천만 트리플 ['화면·카메라', '120Hz · 5천만 트리플']",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "mounted_body_496029c6"
+        },
+        "context": "써클 투 서치와 사진 편집 도우미 등 갤럭시 AI 기능을 중급형에도 담았습니다 중급기에도 갤럭시 AI 탑재 ['중급기에도', '갤럭시 AI 탑재'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "new_policy_f48caded"
+        },
+        "context": "써클 투 서치와 사진 편집 도우미 등 갤럭시 AI 기능을 중급형에도 담았습니다 플래그십이 부담스러우셨다면 AI 중급기에도 갤럭시 AI 탑재 ['중급기에도', '갤럭시 AI 탑재'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        "context": "갤럭시 AI 기능을 중급형에도 담았습니다 플래그십이 부담스러우셨다면 AI 경험을 합리적인 가격에 처음 써보기 좋은 선택입니다 중급기에도 갤럭시 AI 탑재 ['중급기에도', '갤럭시 AI 탑재'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "basic_fold_202d754f"
+        },
+        "to": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "플래그십이 부담스러우셨다면 AI 경험을 합리적인 가격에 처음 써보기 좋은 선택입니다 중급기에도 갤럭시 AI 탑재 ['중급기에도', '갤럭시 AI 탑재'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
@@ -827,10 +855,10 @@
         },
         "to": {
           "type": "illust",
-          "value": "device_os_requirement"
+          "value": "telecom_discount_compare"
         },
-        "context": "갤럭시 AI는 통화 중 실시간 통역도 지원합니다 해외에서 걸려오는 영어·일본어·중국어 보너스 실시간 통역 함께 ['보너스', '실시간 통역 함께'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
+        "context": "같은 단말도 공통지원금과 선택약정 중 무엇이 유리한지 따져보면 실구매가가 달라집니다 구매 전 지원금·할인 비교 ['구매 전', '지원금·할인 비교'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
       },
       {
         "section": "fact_4",
@@ -841,9 +869,9 @@
         },
         "to": {
           "type": "illust",
-          "value": "device_data_transfer"
+          "value": "smartphone"
         },
-        "context": "갤럭시 AI는 통화 중 실시간 통역도 지원합니다 해외에서 걸려오는 영어·일본어·중국어 전화를 한국어로 즉시 변환 보너스 실시간 통역 함께 ['보너스', '실시간 통역 함께'] 뉴스",
+        "context": "같은 단말도 공통지원금과 선택약정 중 무엇이 유리한지 따져보면 실구매가가 달라집니다 6월 출시 초기라 통신사별 지원금이 구매 전 지원금·할인 비교 ['구매 전', '지원금·할인 비교'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
@@ -855,111 +883,111 @@
         },
         "to": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "phone_setup_ready"
         },
-        "context": "해외에서 걸려오는 영어·일본어·중국어 전화를 한국어로 즉시 변환 휴가철 외국 호텔·항공사 응대에 유용합니다 보너스 실시간 통역 함께 ['보너스', '실시간 통역 함께'] 뉴스",
+        "context": "무엇이 유리한지 따져보면 실구매가가 달라집니다 6월 출시 초기라 통신사별 지원금이 다르니 비교 후 결정하시기 바랍니다 구매 전 지원금·할인 비교 ['구매 전', '지원금·할인 비교'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       }
     ],
     "weak": [
       {
         "section": "hook",
-        "chunk": 2,
-        "current": {
-          "type": "illust",
-          "value": "new_policy_f48caded"
-        },
-        "context": "모르는 번호 무조건 받기 부담스러우셨다면 S26부터 도입된 통화 스크리닝을 켜보세요 갤럭시 AI 통화 스크리닝 켜기 ['갤럭시 AI', '통화 스크리닝 켜기'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.431
-      },
-      {
-        "section": "fact_1",
-        "chunk": 1,
-        "current": {
-          "type": "illust",
-          "value": "phone_settings_toggle"
-        },
-        "context": "AI가 전화 받자마자 \"이름과 용건을 먼저 알려주세요\"라고 응대합니다 발신자가 답한 내용은 기능 이름·용건 먼저 확인 ['기능', '이름·용건 먼저 확인'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.467
-      },
-      {
-        "section": "fact_1",
         "chunk": 4,
+        "current": {
+          "type": "mascot",
+          "value": "surprised"
+        },
+        "context": "갤럭시 AI 기능을 담았습니다 통신 3사와 자급제로 동시에 풀립니다 59만원대 AI폰 갤럭시 A37 출시 ['59만원대 AI폰', '갤럭시 A37 출시'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 3
+      },
+      {
+        "section": "fact_2",
+        "chunk": 2,
         "current": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "텍스트로 화면에 표시되어 내가 직접 받을지 차단할지 판단할 수 있습니다 기능 이름·용건 먼저 확인 ['기능', '이름·용건 먼저 확인'] 뉴스",
+        "context": "6.7형 FHD+ 슈퍼 아몰레드에 최대 120Hz 주사율을 지원합니다 후면은 5천만 화소 광각과 800만 화면·카메라 120Hz · 5천만 트리플 ['화면·카메라', '120Hz · 5천만 트리플'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.442
+        "best_illust_score": 0
       },
       {
         "section": "fact_2",
-        "chunk": 1,
+        "chunk": 3,
         "current": {
           "type": "illust",
           "value": "phone_setup_ready"
         },
-        "context": "통화 스크리닝은 S26 시리즈부터 우선 적용되는 3세대 AI폰 기능입니다 대상 S26 시리즈부터 ['대상', 'S26 시리즈부터'] 뉴스",
+        "context": "최대 120Hz 주사율을 지원합니다 후면은 5천만 화소 광각과 800만 초광각, 500만 접사 트리플 카메라입니다 화면·카메라 120Hz · 5천만 트리플 ['화면·카메라', '120Hz · 5천만 트리플'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.471
+        "best_illust_score": 0
       },
       {
         "section": "fact_2",
-        "chunk": 2,
+        "chunk": 4,
         "current": {
           "type": "illust",
           "value": "phone_settings_toggle"
         },
-        "context": "통화 스크리닝은 S26 시리즈부터 우선 적용되는 3세대 AI폰 기능입니다 이전 모델은 Bixby 텍스트 호출과 대상 S26 시리즈부터 ['대상', 'S26 시리즈부터'] 뉴스",
+        "context": "후면은 5천만 화소 광각과 800만 초광각, 500만 접사 트리플 카메라입니다 중급기 치고 화면과 카메라 체급이 높습니다 화면·카메라 120Hz · 5천만 트리플 ['화면·카메라', '120Hz · 5천만 트리플'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.453
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_2",
+        "chunk": 5,
+        "current": {
+          "type": "mascot",
+          "value": "suspicious"
+        },
+        "context": "초광각, 500만 접사 트리플 카메라입니다 중급기 치고 화면과 카메라 체급이 높습니다 화면·카메라 120Hz · 5천만 트리플 ['화면·카메라', '120Hz · 5천만 트리플'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
       },
       {
         "section": "fact_3",
-        "chunk": 1,
-        "current": {
-          "type": "illust",
-          "value": "device_data_transfer"
-        },
-        "context": "설정 → 전화 → 통화 스크리닝 메뉴에서 켭니다 항상 켜기 / 모르는 번호만 / 차단 번호 설정 5단계 켜기 ['설정', '5단계 켜기'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0.478
-      },
-      {
-        "section": "fact_4",
-        "chunk": 1,
+        "chunk": 3,
         "current": {
           "type": "illust",
           "value": "device_os_requirement"
         },
-        "context": "갤럭시 AI는 통화 중 실시간 통역도 지원합니다 해외에서 걸려오는 영어·일본어·중국어 보너스 실시간 통역 함께 ['보너스', '실시간 통역 함께'] 뉴스",
+        "context": "갤럭시 AI 기능을 중급형에도 담았습니다 플래그십이 부담스러우셨다면 AI 경험을 합리적인 가격에 처음 써보기 좋은 선택입니다 중급기에도 갤럭시 AI 탑재 ['중급기에도', '갤럭시 AI 탑재'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.45
+        "best_illust_score": 3
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "플래그십이 부담스러우셨다면 AI 경험을 합리적인 가격에 처음 써보기 좋은 선택입니다 중급기에도 갤럭시 AI 탑재 ['중급기에도', '갤럭시 AI 탑재'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 3
       },
       {
         "section": "fact_4",
         "chunk": 2,
         "current": {
           "type": "illust",
-          "value": "device_data_transfer"
+          "value": "smartphone"
         },
-        "context": "갤럭시 AI는 통화 중 실시간 통역도 지원합니다 해외에서 걸려오는 영어·일본어·중국어 전화를 한국어로 즉시 변환 보너스 실시간 통역 함께 ['보너스', '실시간 통역 함께'] 뉴스",
+        "context": "같은 단말도 공통지원금과 선택약정 중 무엇이 유리한지 따져보면 실구매가가 달라집니다 6월 출시 초기라 통신사별 지원금이 구매 전 지원금·할인 비교 ['구매 전', '지원금·할인 비교'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.429
+        "best_illust_score": 0
       },
       {
         "section": "fact_4",
         "chunk": 3,
         "current": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "phone_setup_ready"
         },
-        "context": "해외에서 걸려오는 영어·일본어·중국어 전화를 한국어로 즉시 변환 휴가철 외국 호텔·항공사 응대에 유용합니다 보너스 실시간 통역 함께 ['보너스', '실시간 통역 함께'] 뉴스",
+        "context": "무엇이 유리한지 따져보면 실구매가가 달라집니다 6월 출시 초기라 통신사별 지원금이 다르니 비교 후 결정하시기 바랍니다 구매 전 지원금·할인 비교 ['구매 전', '지원금·할인 비교'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.218
+        "best_illust_score": 0
       },
       {
         "section": "fact_4",
@@ -968,16 +996,16 @@
           "type": "mascot",
           "value": "serious"
         },
-        "context": "전화를 한국어로 즉시 변환 휴가철 외국 호텔·항공사 응대에 유용합니다 보너스 실시간 통역 함께 ['보너스', '실시간 통역 함께'] 뉴스",
+        "context": "6월 출시 초기라 통신사별 지원금이 다르니 비교 후 결정하시기 바랍니다 구매 전 지원금·할인 비교 ['구매 전', '지원금·할인 비교'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0.324
+        "best_illust_score": 0
       }
     ]
   },
   "_codex_effective_script": {
     "version": 2,
-    "slug": "025_tip_galaxy_ai_call_screening",
-    "source": "C:\\Users\\di898\\Documents\\phonespot_cardnews\\cardnews\\output\\025_tip_galaxy_ai_call_screening\\shorts_script.json",
+    "slug": "026_news_galaxy_a37_5g_launch",
+    "source": "C:\\backup\\phonespot_cardnews\\cardnews\\output\\026_news_galaxy_a37_5g_launch\\shorts_script.json",
     "override_applied": false,
     "override_sections": []
   }

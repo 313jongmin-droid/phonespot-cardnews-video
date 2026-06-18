@@ -2319,10 +2319,11 @@
         "국내"
       ],
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "note": "자동 발굴 개념: 삼성 국내",
-      "available": false
+      "available": true
     },
     "mid_ship_7968fa24": {
       "keywords": [
@@ -2330,10 +2331,11 @@
         "중급형이지"
       ],
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "note": "자동 발굴 개념: 출고 중급형이지",
-      "available": false
+      "available": true
     },
     "lavender_color_7ffb0a8d": {
       "keywords": [
@@ -2343,10 +2345,11 @@
         "차콜"
       ],
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "note": "자동 발굴 개념: 색상 라벤더",
-      "available": false
+      "available": true
     },
     "cpt_fd30bbcd": {
       "keywords": [
@@ -2355,10 +2358,11 @@
         "아몰레드"
       ],
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "note": "자동 발굴 개념: FHD 슈퍼",
-      "available": false
+      "available": true
     },
     "cpt_e646864a": {
       "keywords": [
@@ -2366,11 +2370,12 @@
         "주사율"
       ],
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "note": "자동 발굴 개념: 최대 주사율",
-      "available": false
+      "available": true
     }
   },
-  "updated_at": "2026-06-18T16:57:02"
+  "updated_at": "2026-06-18T18:27:41"
 }

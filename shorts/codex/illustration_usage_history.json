@@ -332,17 +332,29 @@
       ]
     },
     "026_news_galaxy_a37_5g_launch": {
-      "used_at": "2026-06-18T16:57:00",
-      "source": "codex_enhance",
+      "used_at": "2026-06-18T18:27:49",
+      "source": "uploaded_illustrations",
       "illustrations": [
-        "smartphone",
-        "aluminum_label",
-        "appliance",
-        "basic_fold_202d754f"
+        "samsung_korea_04b00795",
+        "mid_ship_7968fa24",
+        "unlocked_baa71ac6",
+        "official_sale_9dc82f05",
+        "final_update",
+        "lavender_color_7ffb0a8d",
+        "cpt_fd30bbcd",
+        "cpt_e646864a",
+        "phone_setup_ready",
+        "phone_settings_toggle",
+        "mounted_body_496029c6",
+        "new_policy_f48caded",
+        "device_os_requirement",
+        "device_data_transfer",
+        "telecom_discount_compare",
+        "smartphone"
       ]
     }
   },
-  "updated_at": "2026-06-18T16:57:01",
+  "updated_at": "2026-06-18T18:27:50",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -415,7 +427,7 @@
       "variants": []
     },
     "026_news_galaxy_a37_5g_launch": {
-      "updated_at": "2026-06-18T16:57:01",
+      "updated_at": "2026-06-18T18:27:50",
       "variants": []
     }
   }
