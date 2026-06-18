@@ -17,7 +17,11 @@ else:
     mood = d.get("mood") or MOOD_BY_PRESET.get(preset, "upbeat")
     tracks = sorted(os.path.basename(f) for f in glob.glob(os.path.join(mdir, f"{mood}_*.mp3")))
     if not tracks:
-        tracks = sorted(os.path.basename(f) for f in glob.glob(os.path.join(mdir, "*.mp3")))
+        # 해당 무드 곡이 없을 때: 전체 *.mp3가 아니라 '정상 무드 파일'에서만 fallback.
+        # sting(opening_sting/cta_sting)·규칙위반 파일명이 BGM으로 잡히는 오염 방지. 그래도 없으면 음악 off.
+        MOODS = set(MOOD_BY_PRESET.values())
+        tracks = sorted(os.path.basename(f) for f in glob.glob(os.path.join(mdir, "*.mp3"))
+                        if os.path.basename(f).split("_", 1)[0] in MOODS)
     if tracks:
         m = re.match(r"(\d+)", str(arg_slug or d.get("slug", "0")))
         idx = (int(m.group(1)) if m else 0) % len(tracks)

@@ -1,6 +1,7 @@
 # 006 gwanggyo
 - preset: showcase
 - title: 광교 동네 소개
+- 후킹: 한정형
 
 ## 오프닝
 - line1: 광교에서

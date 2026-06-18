@@ -1,6 +1,7 @@
 # 011 callout
 - preset: showcase
 - title: 대상 지목
+- 후킹: FOMO형
 
 ## 오프닝
 - line1: 이번에

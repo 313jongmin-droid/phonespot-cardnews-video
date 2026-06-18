@@ -1,6 +1,7 @@
 # 003 geugadaero
 - preset: showcase
 - title: 조회가=개통가
+- 후킹: 질문형
 
 ## 오프닝
 - line1: 조회한 가격,

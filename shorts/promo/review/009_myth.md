@@ -1,6 +1,7 @@
 # 009 myth
 - preset: showcase
 - title: 오해 깨기(Myth)
+- 후킹: 단언형
 
 ## 오프닝
 - line1: 휴대폰은

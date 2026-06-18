@@ -1,6 +1,7 @@
 # 001 jeongchalje
 - preset: showcase
 - title: 휴대폰도 정찰제
+- 후킹: 비교형
 
 ## 오프닝
 - line1: 세상 모든 건

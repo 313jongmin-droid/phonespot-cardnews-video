@@ -1,6 +1,7 @@
 # 007 stopsangdam
 - preset: showcase
 - title: 상담 그만(Stop X)
+- 후킹: 단언형
 
 ## 오프닝
 - line1: 휴대폰 살 때

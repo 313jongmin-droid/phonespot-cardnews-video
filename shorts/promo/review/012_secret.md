@@ -1,6 +1,7 @@
 # 012 secret
 - preset: showcase
 - title: 안 알려주는 비밀
+- 후킹: 질문형
 
 ## 오프닝
 - line1: 휴대폰만

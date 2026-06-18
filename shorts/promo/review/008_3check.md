@@ -1,6 +1,7 @@
 # 008 3check
 - preset: showcase
 - title: 3가지 체크(N가지)
+- 후킹: 단언형
 
 ## 오프닝
 - line1: 휴대폰 살 때

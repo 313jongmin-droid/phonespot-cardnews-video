@@ -1,6 +1,7 @@
 # 004 nosangdam
 - preset: showcase
 - title: 상담 강요 없음
+- 후킹: 질문형
 
 ## 오프닝
 - line1: 가격 물어보면

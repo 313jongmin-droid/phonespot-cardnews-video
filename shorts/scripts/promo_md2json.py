@@ -58,14 +58,19 @@ def build(md, nn, label):
     for k in ("style", "sfx"):
         if k in opening: d["opening"][k] = opening[k]
     return d
-want = sys.argv[1] if len(sys.argv) > 1 else None
-n = 0
-for md in sorted(glob.glob("promo/review/*.md")):
-    m = pat.match(os.path.basename(md))
-    if not m: continue
-    nn, label = m.group(1), m.group(2)
-    if want and want.isdigit() and int(want) != int(nn): continue
-    d = build(md, nn, label)
-    json.dump(d, open(f"promo/{nn}_{label}.json", "w", encoding="utf-8"), ensure_ascii=False, indent=2)
-    n += 1
-print(f"{n}개 JSON 재구성(MD 기준)")
+def main():
+    want = sys.argv[1] if len(sys.argv) > 1 else None
+    n = 0
+    for md in sorted(glob.glob("promo/review/*.md")):
+        m = pat.match(os.path.basename(md))
+        if not m: continue
+        nn, label = m.group(1), m.group(2)
+        if want and want.isdigit() and int(want) != int(nn): continue
+        d = build(md, nn, label)
+        json.dump(d, open(f"promo/{nn}_{label}.json", "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+        n += 1
+    print(f"{n}개 JSON 재구성(MD 기준)")
+
+# import 시에는 build()만 노출하고, 직접 실행할 때만 전체 재생성(JSON 덮어쓰기)한다.
+if __name__ == "__main__":
+    main()

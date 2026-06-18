@@ -1,6 +1,7 @@
 # 005 bidaemyeon
 - preset: showcase
 - title: 비대면 견적
+- 후킹: 질문형
 
 ## 오프닝
 - line1: 휴대폰 사러

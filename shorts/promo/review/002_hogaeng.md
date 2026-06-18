@@ -1,6 +1,7 @@
 # 002 hogaeng
 - preset: showcase
 - title: 호갱 방지
+- 후킹: 질문형
 
 ## 오프닝
 - line1: 공개된 가격,

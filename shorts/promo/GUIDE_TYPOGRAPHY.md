@@ -27,6 +27,7 @@
 - 색 변주(VARIANTS)는 섹션별 자동: hook=네이비/오렌지, 문제=다크레드, 해결=블루/옐로, CTA=오렌지.
 
 ## 공통 구조
-모든 스타일은 동일 디스패처(`PromoShort.tsx`)를 통해 opening→hook→facts→cta→outro 순서로 렌더되고, 나레이션 오디오는 스타일과 무관하게 공통 재생됨. 스타일은 "한 섹션을 어떻게 그리느냐"만 담당.
+모든 스타일은 동일 디스패처(`PromoShort.tsx`)를 통해 opening→hook→facts→cta→outro 순서로 렌더되고, 스타일은 "한 섹션을 어떻게 그리느냐"만 담당.
+⚠ **promo는 나레이션 없음 — 오디오는 효과음(SFX) + 음악(BGM)만 재생됨**(`PromoShort.tsx`는 `tts`/나레이션을 재생하지 않음). MD/JSON의 `나레이션:`/`tts` 필드는 **렌더에 안 들어가는 자막 카피 작성용 메모**일 뿐이다. 화면에 나오는 건 `화면:`(caption_chunks)뿐. (정합: `README.md` §1 "나레이션 없음")
 
 → 인포그래픽 계열은 `GUIDE_INFOGRAPHIC.md` 참조.
