@@ -9,7 +9,7 @@ echo === telegram listener start %date% %time% > _state\listener_log.txt
 where py >nul 2>&1
 if errorlevel 1 goto try_direct
 
-py -3 -u scripts\telegram_listener.py >> _state\listener_log.txt 2>&1
+..\.phonespot_runtime\Scripts\python.exe -u scripts\telegram_listener.py >> _state\listener_log.txt 2>&1
 goto end
 
 :try_direct

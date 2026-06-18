@@ -67,6 +67,7 @@ function buildAdgroupTrendMenu_(ui) {
   ui.createMenu('📊 광고그룹 추이')
     .addItem('🆕 차트 셋업 (1회)', 'setupAdgroupTrendChart')
     .addItem('🔄 추이 갱신 (토글 변경 후)', 'refreshAdgroupTrendChart')
+    .addItem('⏰ 야간 자동 갱신 트리거 (02:50)', 'setupAdgroupTrendTrigger')
     .addToUi();
 }
 
@@ -153,7 +154,7 @@ function refreshAdgroupTrendChart() {
   const ss = SpreadsheetApp.getActive();
   const sh = ss.getSheetByName(ADGROUP_TREND_DASH);
   if (!sh) {
-    SpreadsheetApp.getUi().alert('"통합대시보드" 시트 없음. 먼저 셋업 메뉴 실행.');
+    try { SpreadsheetApp.getUi().alert('"통합대시보드" 시트 없음. 먼저 셋업 메뉴 실행.'); } catch (e) {}
     return;
   }
 
@@ -296,4 +297,14 @@ function ensureAdgroupTrendChart_(sh) {
     .build();
 
   sh.insertChart(chart);
+}
+
+
+// ============ ★ 야간 광고그룹 추이 자동 갱신 트리거 (2026-06-18) ============
+function setupAdgroupTrendTrigger() {
+  ScriptApp.getProjectTriggers().forEach(function (t) {
+    if (t.getHandlerFunction() === 'refreshAdgroupTrendChart') ScriptApp.deleteTrigger(t);
+  });
+  ScriptApp.newTrigger('refreshAdgroupTrendChart').timeBased().atHour(2).nearMinute(50).everyDays(1).create();
+  SpreadsheetApp.getUi().alert('✅ 광고그룹 추이 야간 트리거 등록 (매일 02:50). 현재 토글 기준 자동 갱신.');
 }

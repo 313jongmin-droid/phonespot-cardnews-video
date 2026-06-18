@@ -32,7 +32,7 @@
 ## 2. 폴더 구조
 
 ```text
-C:\Users\di898\Documents\phonespot_cardnews\
+C:\backup\phonespot_cardnews\
 ├─ cardnews\
 │  ├─ images\<slug>\             카드뉴스 GPT 원본 이미지 1.png ~ 5.png
 │  └─ output\<slug>\
@@ -57,7 +57,7 @@ C:\Users\di898\Documents\phonespot_cardnews\
 
 작업 시작 폴더:
 
-`C:\Users\di898\Documents\phonespot_cardnews\CODEX_VIDEO_DESK`
+`C:\backup\phonespot_cardnews\CODEX_VIDEO_DESK`
 
 ### 새 카드뉴스를 영상으로 만들 때
 

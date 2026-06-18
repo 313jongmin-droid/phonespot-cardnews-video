@@ -232,6 +232,7 @@ function autoAssignPSId(sheet, adId) {
 //   - 한 행 = 1일 × 1광고그룹. KT 캠페인 자동 제외.
 function syncMetaCampaignIntegrated(targetDate) {
   Logger.log('=== syncMetaCampaignIntegrated 시작 (광고그룹 단위) ===');
+  if (typeof ensureUtmNamedRanges_ === 'function') ensureUtmNamedRanges_();
   const adAccountId = getAdAccountId();
 
   const tz = 'Asia/Seoul';
@@ -326,7 +327,7 @@ function syncMetaCampaignIntegrated(targetDate) {
     const ymdText = `TEXT(A${r},"yyyymmdd")`;
     // ★ 2026-06-12 B2 수정: 슬러그 미입력 시 ""가 GA4 빈 campaign 행을 오매칭 → 과대계상.
     //   미매핑이면 실제 campaign에 절대 없는 토큰으로 치환해 SUMIFS가 0 반환하도록 가드.
-    const slugRaw = `IFERROR(VLOOKUP(E${r}, FILTER('${SHEET_UTM_MAPPING}'!B:C, '${SHEET_UTM_MAPPING}'!A:A="페북"), 2, FALSE),"")`;
+    const slugRaw = `IFERROR(VLOOKUP(E${r}, FILTER(UTM_KEYVAL, UTM_CH="페북"), 2, FALSE),"")`;
     const slugLookup = `IF(${slugRaw}="","__UNMAPPED_NO_MATCH__",${slugRaw})`;
     const ga4Base = `'GA4_자동'!A:A,${ymdText},'GA4_자동'!B:B,"meta",'GA4_자동'!D:D,${slugLookup}`;
     sh.getRange(r, 11).setFormula(

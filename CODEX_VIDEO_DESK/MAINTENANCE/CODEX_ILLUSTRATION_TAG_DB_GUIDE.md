@@ -29,7 +29,7 @@ Double-click:
 
 Inside:
 
-`C:\Users\di898\Documents\phonespot_cardnews\CODEX_VIDEO_DESK`
+`C:\backup\phonespot_cardnews\CODEX_VIDEO_DESK`
 
 - `11_OPEN_ILLUSTRATION_TAG_DB.bat`
 - `12_REFRESH_ILLUSTRATION_TAG_DB.bat`

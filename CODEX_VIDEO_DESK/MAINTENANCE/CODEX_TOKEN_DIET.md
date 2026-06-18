@@ -3,7 +3,7 @@
 PhoneSpot Shorts 작업을 다시 열 때 아래 순서만 읽습니다.
 
 1. `CODEX_CURRENT_BASELINE_GUIDE.md`
-2. `C:\Users\di898\Documents\phonespot_cardnews\shorts\harness\ACTIVE_TASK.md`
+2. `C:\backup\phonespot_cardnews\shorts\harness\ACTIVE_TASK.md`
 3. 필요한 경우에만 공용 규칙 파일 1개
    - 자막: `shorts\harness\CAPTION_RULES.md`
    - 비주얼: `shorts\harness\VISUAL_RULES.md`
@@ -46,4 +46,4 @@ PhoneSpot Shorts 작업을 다시 열 때 아래 순서만 읽습니다.
 
 일상 영상 작업:
 
-`C:\Users\di898\Documents\phonespot_cardnews\CODEX_VIDEO_DESK`
+`C:\backup\phonespot_cardnews\CODEX_VIDEO_DESK`

@@ -25,6 +25,9 @@ function onOpen() {
     .addSeparator()
     .addItem('📊 SNS 월별 합계 수식 복구', 'repairSNSMonthlySummaries')
     .addItem('📉 문의접수 입력률 갱신', 'updateKakaoInquiryCoverage')
+    .addItem('🏷️ UTM 슬러그 드롭다운 갱신', 'refreshUtmSlugDropdowns')
+    .addItem('🔗 UTM named range 셋업/복구', 'setupUtmNamedRanges')
+    .addItem('⏰ 야간 전체 새로고침 트리거 (02:45)', 'setupRefreshAllTrigger')
     .addToUi();
 
   // 📘 메타 자동화 메뉴 (meta-sync.gs)
@@ -45,8 +48,9 @@ function onOpen() {
 
 // ──[일상]── 전체 새로고침: 모든 채널 sync + 대시보드 빌드 + 인사이트 MD 생성 (2026-06-15 강화)
 function refreshAll() {
-  const ui = SpreadsheetApp.getUi();
+  let ui = null; try { ui = SpreadsheetApp.getUi(); } catch (e) {}
   const errors = [];
+  try { ensureUtmNamedRanges_(); } catch (e) {}
 
   // ===== 1단계: 외부 API 데이터 sync (모든 채널) =====
   try { syncAll(); }
@@ -84,11 +88,12 @@ function refreshAll() {
 
   const stamp = recordLastRefresh_();
 
+  if (typeof logSync_ === 'function') logSync_('refreshAll', errors.length ? ('부분완료 ' + errors.length + '건') : '완료 ' + stamp);
   if (errors.length === 0) {
-    ui.alert('✅ 전체 새로고침 완료\n🕐 ' + stamp +
+    if (ui) ui.alert('✅ 전체 새로고침 완료\n🕐 ' + stamp +
              '\n\n· GA4 + 메타 + 네이버 + 인스타 + 당근 + 유튜브 sync\n· 메타 + 유튜브 인사이트 MD\n· 대시보드 + KPI 갱신');
   } else {
-    ui.alert('⚠️ 부분 완료\n🕐 ' + stamp +
+    if (ui) ui.alert('⚠️ 부분 완료\n🕐 ' + stamp +
              '\n\n실패 ' + errors.length + '건:\n' + errors.slice(0, 5).join('\n') +
              (errors.length > 5 ? '\n... 외 ' + (errors.length - 5) + '건' : ''));
   }
@@ -936,4 +941,81 @@ function doGet(e) {
 // styles.html 등 공통 자원을 generator.html에서 <?!= include('styles') ?>로 호출
 function include(filename) {
   return HtmlService.createHtmlOutputFromFile(filename).getContent();
+}
+
+// ============ ★ 야간 전체 새로고침 트리거 (2026-06-18) ============
+// 개별 채널 sync(01:30~02:30) 다음 02:45에 refreshAll 자동 = 대시보드/인사이트/추세/스탬프 매일 최신.
+function setupRefreshAllTrigger() {
+  ScriptApp.getProjectTriggers().forEach(function (t) {
+    if (t.getHandlerFunction() === 'refreshAll') ScriptApp.deleteTrigger(t);
+  });
+  ScriptApp.newTrigger('refreshAll').timeBased().atHour(2).nearMinute(45).everyDays(1).create();
+  SpreadsheetApp.getUi().alert('✅ 전체 새로고침 야간 트리거 등록 (매일 02:45).');
+}
+
+
+// ============ ★ UTM_매핑 named range (컬럼 시프트 내성, 2026-06-18) ============
+// UTM_CH=A열(채널), UTM_KEYVAL=B:C(광고그룹명·utm_campaign). 컬럼 삽입/이동 시
+// 명명 범위가 자동 추적 → SUMIFS/FILTER가 안 깨짐(2026-06-17 마이그레이션 시프트 사고 방지).
+// idempotent — 있으면 범위 갱신, 없으면 생성. sync/refreshAll 시작 시 호출됨.
+function ensureUtmNamedRanges_() {
+  const ss = SpreadsheetApp.getActive();
+  const sh = ss.getSheetByName('UTM_매핑');
+  if (!sh) return;
+  const want = { 'UTM_CH': 'A:A', 'UTM_KEYVAL': 'B:C' };
+  const existing = {};
+  ss.getNamedRanges().forEach(function (nr) { existing[nr.getName()] = nr; });
+  Object.keys(want).forEach(function (name) {
+    const rng = sh.getRange(want[name]);
+    if (existing[name]) existing[name].setRange(rng);
+    else ss.setNamedRange(name, rng);
+  });
+}
+
+function setupUtmNamedRanges() {
+  ensureUtmNamedRanges_();
+  SpreadsheetApp.getUi().alert('✅ UTM named range 셋업 완료 (UTM_CH=A열, UTM_KEYVAL=B:C).\n컬럼 삽입/이동 시 자동 추적 → 수식 안 깨짐.');
+}
+
+
+
+// ============ ★ UTM 슬러그 드롭다운 (GA4 실측 utm_campaign 기준, 2026-06-18) ============
+// UTM_매핑 C열에 GA4_자동의 실제 utm_campaign 목록을 채널별 드롭다운으로 적용.
+// region vs region_keyword 같은 슬러그 불일치/오타를 입력 단계에서 차단.
+function refreshUtmSlugDropdowns() {
+  const ss = SpreadsheetApp.getActive();
+  const ui = SpreadsheetApp.getUi();
+  const ga4 = ss.getSheetByName(GA4_AUTO_SHEET);
+  const utm = ss.getSheetByName('UTM_매핑');
+  if (!ga4 || !utm) { ui.alert('GA4_자동 또는 UTM_매핑 시트 없음.'); return; }
+  const CH2SRC = { '페북': 'meta', '네이버': 'naver', '당근': 'daangn', '구글': 'google', '카카오': 'kakao' };
+  const SKIP = { '(organic)': 1, '(direct)': 1, '(not set)': 1, '(data not available)': 1, '': 1 };
+  const last = ga4.getLastRow();
+  const data = last > 1 ? ga4.getRange(2, 2, last - 1, 3).getValues() : []; // B(src), C, D(campaign)
+  const bySrc = {};
+  data.forEach(function (r) {
+    const src = String(r[0]).trim();
+    const camp = String(r[2]).trim();
+    if (!src || SKIP[camp]) return;
+    (bySrc[src] = bySrc[src] || {})[camp] = 1;
+  });
+  const uLast = utm.getLastRow();
+  if (uLast < 2) { ui.alert('UTM_매핑 데이터 없음.'); return; }
+  const chans = utm.getRange(2, 1, uLast - 1, 1).getValues();
+  let applied = 0;
+  for (let i = 0; i < chans.length; i++) {
+    const ch = String(chans[i][0]).trim();
+    const src = CH2SRC[ch];
+    if (!src || !bySrc[src]) continue;
+    const listv = Object.keys(bySrc[src]).sort();
+    if (!listv.length) continue;
+    const rule = SpreadsheetApp.newDataValidation()
+      .requireValueInList(listv, true).setAllowInvalid(true).build();
+    utm.getRange(i + 2, 3).setDataValidation(rule);
+    applied++;
+  }
+  const msg = 'UTM_매핑 C열 드롭다운 적용 ' + applied + '행 (GA4 실측 utm_campaign 기준)';
+  Logger.log(msg);
+  if (typeof logSync_ === 'function') logSync_('refreshUtmSlugDropdowns', msg);
+  ui.alert('✅ 완료', msg + '\n\n채널별 GA4 실제 값만 선택 가능 → region/region_keyword 같은 불일치 차단.', ui.ButtonSet.OK);
 }

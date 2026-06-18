@@ -33,7 +33,7 @@ IMAGES = CARDNEWS / "images"
 # ===== Chrome / Profile =====
 # Chrome 보안 정책상 기본 User Data 폴더는 자동화 차단됨.
 # 자동화 전용 별도 폴더를 사용. 첫 실행 시 사장님이 ChatGPT 1회 로그인 필요.
-CHROME_USER_DATA_DIR = r"C:\Users\di898\AppData\Local\phonespot_chrome_auto"
+CHROME_USER_DATA_DIR = r"C:\Users\313jo\AppData\Local\phonespot_chrome_auto"
 CHROME_PROFILE_NAME = "Default"  # 자동화 폴더 안의 Default 사용
 CHROME_EXE = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
 

@@ -281,6 +281,7 @@ const NAVER_KT_FILTER = ['KT', '다이렉트샵'];
 
 function syncNaverIntegrated(targetDate) {
   Logger.log('=== syncNaverIntegrated 시작 ===');
+  if (typeof ensureUtmNamedRanges_ === 'function') ensureUtmNamedRanges_();
   const ymd = targetDate || getYesterday();
   Logger.log('날짜: ' + ymd);
 
@@ -409,7 +410,7 @@ function syncNaverIntegrated(targetDate) {
 
     // GA4 매칭 — 광고그룹명(E) → 네이버_UTM_매핑 VLOOKUP → 영문 슬러그
     const ymdText = `TEXT(A${row},"yyyymmdd")`;
-    const utmSlug = `IFERROR(VLOOKUP(E${row}, FILTER('UTM_매핑'!B:C, 'UTM_매핑'!A:A="네이버"), 2, FALSE),E${row})`;
+    const utmSlug = `IFERROR(VLOOKUP(E${row}, FILTER(UTM_KEYVAL, UTM_CH="네이버"), 2, FALSE),E${row})`;
     const ga4Base = `'GA4_자동'!A:A,${ymdText},'GA4_자동'!B:B,"naver",'GA4_자동'!D:D,${utmSlug}`;
     sh.getRange(row, 11).setFormula(
       `=IFERROR(SUMIFS('GA4_자동'!G:G,${ga4Base},'GA4_자동'!E:E,"session_start"),0)`

@@ -20,7 +20,7 @@ One-time setup: double-click:
 
 Then use the operational desk:
 
-`C:\Users\di898\Documents\phonespot_cardnews\CODEX_VIDEO_DESK`
+`C:\backup\phonespot_cardnews\CODEX_VIDEO_DESK`
 
 Buttons:
 
@@ -34,7 +34,7 @@ The installer backs up changed shared files, installs the layer, and runs Python
 
 After installation:
 
-`C:\Users\di898\Documents\phonespot_cardnews\shorts\config\tts_pronunciation.json`
+`C:\backup\phonespot_cardnews\shorts\config\tts_pronunciation.json`
 
 Example:
 
@@ -48,7 +48,7 @@ The left side is article text. The right side is speech-only text.
 
 Render one familiar slug with:
 
-`C:\Users\di898\Documents\phonespot_cardnews\shorts\run_codex_casual.bat`
+`C:\backup\phonespot_cardnews\shorts\run_codex_casual.bat`
 
 Inspect:
 
@@ -59,7 +59,7 @@ Inspect:
 
 Runtime report:
 
-`C:\Users\di898\Documents\phonespot_cardnews\shorts\public\audio\tts_manifest.json`
+`C:\backup\phonespot_cardnews\shorts\public\audio\tts_manifest.json`
 
 ## Rollback
 

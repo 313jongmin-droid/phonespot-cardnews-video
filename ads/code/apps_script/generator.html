@@ -2557,7 +2557,7 @@ function buildImagePrompt(ctx, tone, layout, refMode) {
   // 헤드라인은 이미지에 직접 그리도록 (광고 소재 자체로 사용)
   const headlineInstruction = ctx.headline
     ? `Render the Korean headline "${ctx.headline}" as the HERO — very large, bold, high-contrast outlined Korean typography at the top. Use ${tone.palette[1]} for the text against the ${tone.palette[0]} area.`
-    : `Compose and render a short punchy Korean HERO headline (one bold phrase aligned to the USP "${ctx.usp || '지금 확인'}", in the energetic style of 공짜폰 / 무료폰 / 반값폰 / 0원부터) — very large, bold, outlined, high-contrast at the top.`;
+    : `Compose and render a short punchy Korean HERO headline derived from THIS campaign's inputs — category "${ctx.category || ''}", USP "${ctx.usp || '지금 확인'}"${ctx.newConcept ? `, angle "${ctx.newConcept}"` : ''}. One bold short phrase that captures THIS specific offer. Do NOT default to generic "무료폰/공짜폰/반값폰/0원" wording unless the USP itself is literally about free/price. Very large, bold, outlined, high-contrast at the top.`;
 
   // ★ 1:1 매핑 — refMode에 맞는 참고만 포함 (변주='none' → 둘 다 ❌ / 라이브러리·벤치마크 → 자기 것만)
   const libraryBlock = ((mode === 'library' || mode === 'both') && typeof buildLibraryDesignBlock_ === 'function') ? buildLibraryDesignBlock_() : '';
@@ -2582,8 +2582,8 @@ ${patternHint}
 [Ad copy & layout — render a COMPLETE, ready-to-run banner. Render ALL Korean text directly inside the image as part of the final design. This is NOT a clean background waiting for later text insertion.]
 ${headlineInstruction}
 - Typography: large, bold, highly legible Korean lettering (exact treatment follows the art direction below) — understandable in 1 second.
-- Supporting callout: a short Korean sub-headline for the offer based on USP "${ctx.usp || '-'}" (느낌 예: "최대 0원부터!", "지금 조건 확인").
-- Sticker-style elements: speech-bubble boxes, burst/star badges (e.g. "무료폰 가능"), small pop accents — like a real Korean telecom/shopping promo.
+- Supporting callout: a short Korean sub-headline derived from the USP "${ctx.usp || '-'}"${ctx.newConcept ? ` and angle "${ctx.newConcept}"` : ''} (예: "지금 조건 확인" / "내 조건 바로 보기"). 가격·0원 표현은 USP가 실제로 그럴 때만.
+- Sticker-style elements: speech-bubble boxes, burst/star badges (offer에 맞는 짧은 한국어 — 예: "지금 확인"), small pop accents — like a real Korean telecom/shopping promo.
 - CTA: a strong rounded CTA button near the bottom with Korean text "지금 조회" or "지금 확인" + arrow — high-contrast, obviously tappable.
 - Every Korean character correctly spelled and crisply legible. No gibberish/garbled glyphs, no empty placeholder bars.
 

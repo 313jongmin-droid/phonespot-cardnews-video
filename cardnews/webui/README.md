@@ -5,7 +5,7 @@
 ## 실행
 
 ```cmd
-cd C:\Users\di898\Documents\phonespot_cardnews\cardnews
+cd C:\backup\phonespot_cardnews\cardnews
 webui\start.bat
 ```
 

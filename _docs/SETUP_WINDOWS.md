@@ -129,8 +129,8 @@ OUT = Path('/mnt/user-data/outputs/iphone18_spec_downgrade_v2')
 를 이렇게 바꿉니다:
 
 ```python
-BASE = Path(r'C:\Users\di898\Documents\phonespot_cardnews')
-OUT = Path(r'C:\Users\di898\Documents\phonespot_cardnews\output\iphone18_spec_downgrade_v2')
+BASE = Path(r'C:\backup\phonespot_cardnews')
+OUT = Path(r'C:\backup\phonespot_cardnews\output\iphone18_spec_downgrade_v2')
 ```
 
 **주의**: `r'...'` 의 `r` 을 빼먹으면 `\U` 같은 데서 에러. 꼭 앞에 `r` 붙이기.
@@ -168,7 +168,7 @@ exec(compile(source, 'cardnews_renderer_v2.py', 'exec'),
 PowerShell 에서:
 
 ```powershell
-cd C:\Users\di898\Documents\phonespot_cardnews
+cd C:\backup\phonespot_cardnews
 python scripts\cardnews_renderer_v2.py
 ```
 
@@ -189,7 +189,7 @@ python scripts\run_windows.py
   ...
 === 9x16 (1080x1920) ===
   ...
-완료: C:\Users\di898\Documents\phonespot_cardnews\output\iphone18_spec_downgrade_v2
+완료: C:\backup\phonespot_cardnews\output\iphone18_spec_downgrade_v2
 ```
 
 ### 결과 확인
@@ -232,7 +232,7 @@ https://www.etnews.com/20260423000169
 3. Cowork 가 알려주는 명령 종민님이 PowerShell 에서 실행:
 
 ```powershell
-cd C:\Users\di898\Documents\phonespot_cardnews
+cd C:\backup\phonespot_cardnews
 python scripts\cardnews_renderer_v2.py
 ```
 

@@ -16,7 +16,7 @@
 ## 1. 입력 데이터 구조 (변경 금지)
 
 ```
-C:\Users\di898\Documents\phonespot_cardnews\
+C:\backup\phonespot_cardnews\
 ├─ articles\<slug>.json                  ← 메타+캡션 원본
 ├─ output\<slug>\
 │  ├─ 1x1\card_1.jpg ~ card_6.jpg        ← 인스타 캐러셀용
@@ -51,7 +51,7 @@ C:\Users\di898\Documents\phonespot_cardnews\
 ## 3. 폴더 구조 (신규)
 
 ```
-C:\Users\di898\Documents\phonespot_cardnews\
+C:\backup\phonespot_cardnews\
 └─ upload\                                ← 신규
    ├─ .env                                ← API 키 (절대 git에 올리지 말 것)
    ├─ .env.example                        ← 키 이름만 적힌 템플릿

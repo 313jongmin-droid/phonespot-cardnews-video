@@ -69,7 +69,7 @@ npm install
 
 새 Chrome 창에서 ChatGPT 로그인 → 창 닫기. 자동화 프로필 준비 완료.
 
-⚠ **사용자명**(`di898` 등)이 다르면 `automation/scripts/chrome_chatgpt.py`의 `CHROME_USER_DATA_DIR` 경로 수정 필요.
+⚠ **사용자명**이 다르면 `automation/scripts/chrome_chatgpt.py`의 `CHROME_USER_DATA_DIR` 경로 수정 필요. (현재 PC = `313jo`로 이미 설정됨)
 
 ---
 

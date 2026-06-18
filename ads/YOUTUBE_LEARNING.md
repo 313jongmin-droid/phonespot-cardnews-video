@@ -150,7 +150,7 @@ cardnews/shorts/뉴스 수집:
 
 선택: 로컬 동기화 위치를 phonespot_cardnews 폴더 안으로 심볼릭 링크 (Windows mklink)
 ```
-mklink "C:\Users\di898\Documents\phonespot_cardnews\_state\youtube_insights.md" "C:\Users\di898\My Drive\phonespot_cardnews_state\youtube_insights.md"
+mklink "C:\backup\phonespot_cardnews\_state\youtube_insights.md" "C:\Users\313jo\My Drive\phonespot_cardnews_state\youtube_insights.md"
 ```
 → cardnews/shorts task가 `_state/youtube_insights.md` 로 자연스럽게 접근
 

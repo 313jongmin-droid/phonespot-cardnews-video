@@ -38,7 +38,7 @@ upload/
 
 ```powershell
 # 1) 의존성 설치
-cd C:\Users\di898\Documents\phonespot_cardnews
+cd C:\backup\phonespot_cardnews
 python -m pip install -r upload\requirements.txt
 
 # 2) .env 파일 만들기 (실제 키는 아직 비워둬도 됨)

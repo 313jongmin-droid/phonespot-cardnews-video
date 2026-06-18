@@ -26,7 +26,7 @@ Claude 카드뉴스 실행 파일과 폴더는 수정하지 않습니다.
 ## 2. 폴더 경계
 
 ```text
-C:\Users\di898\Documents\phonespot_cardnews\
+C:\backup\phonespot_cardnews\
 ├─ cardnews\                 Claude 카드뉴스 원본
 │  ├─ articles\
 │  ├─ images\<slug>\         슬러그별 GPT 원본 이미지
@@ -74,7 +74,7 @@ Codex 설치 도구는 별도 폴더에 있습니다.
 
 작업 폴더:
 
-`C:\Users\di898\Documents\phonespot_cardnews\CODEX_VIDEO_DESK`
+`C:\backup\phonespot_cardnews\CODEX_VIDEO_DESK`
 
 ### 새 영상
 

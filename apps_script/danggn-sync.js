@@ -234,6 +234,7 @@ function createDanggnIntegratedSheet() {
 function syncDanggnGA4(opts) {
   opts = opts || {};
   const interactive = opts.interactive !== false;  // 기본 = 메뉴 호출, 트리거에선 opts.interactive=false 전달
+  if (typeof ensureUtmNamedRanges_ === 'function') ensureUtmNamedRanges_();
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const sheet = ss.getSheetByName(DANGGN_SHEET);
   if (!sheet) {
@@ -277,7 +278,7 @@ function syncDanggnGA4(opts) {
     // 광고그룹명 escape (따옴표 처리)
     const escapedName = String(adgroupName).replace(/"/g, '""');
     // ★ 2026-06-15: UTM 매핑 통합 시트(UTM_매핑) + A채널="당근" 필터
-    const slugLookup = `IFERROR(VLOOKUP("${escapedName}", FILTER('UTM_매핑'!B:C, 'UTM_매핑'!A:A="당근"), 2, FALSE),"")`;
+    const slugLookup = `IFERROR(VLOOKUP("${escapedName}", FILTER(UTM_KEYVAL, UTM_CH="당근"), 2, FALSE),"")`;
     const ga4Base = `'GA4_자동'!A:A,${ymdText},'GA4_자동'!B:B,"${utmSource}",'GA4_자동'!D:D,${slugLookup}`;
 
     // G CTR (수식, =E/D)

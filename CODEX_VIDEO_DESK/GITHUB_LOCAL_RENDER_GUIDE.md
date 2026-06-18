@@ -12,7 +12,7 @@
 대표 PC:
 
 ```text
-C:\Users\di898\Documents\phonespot_cardnews
+C:\backup\phonespot_cardnews
 ```
 
 부사수 PC:

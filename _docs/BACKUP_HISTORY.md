@@ -753,7 +753,7 @@ exec(compile(src, ...))
 
 ```bat
 @echo off
-cd /d C:\Users\di898\Documents\phonespot_cardnews
+cd /d C:\backup\phonespot_cardnews
 set PYTHONIOENCODING=utf-8
 
 py -3 scripts\run_windows.py >> run_log.txt 2>&1

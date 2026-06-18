@@ -330,9 +330,19 @@
         "phone_settings_toggle",
         "device_os_requirement"
       ]
+    },
+    "026_news_galaxy_a37_5g_launch": {
+      "used_at": "2026-06-18T16:57:00",
+      "source": "codex_enhance",
+      "illustrations": [
+        "smartphone",
+        "aluminum_label",
+        "appliance",
+        "basic_fold_202d754f"
+      ]
     }
   },
-  "updated_at": "2026-06-16T18:38:56",
+  "updated_at": "2026-06-18T16:57:01",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -402,6 +412,10 @@
     },
     "025_tip_galaxy_ai_call_screening": {
       "updated_at": "2026-06-16T18:38:56",
+      "variants": []
+    },
+    "026_news_galaxy_a37_5g_launch": {
+      "updated_at": "2026-06-18T16:57:01",
       "variants": []
     }
   }
