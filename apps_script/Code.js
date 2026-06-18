@@ -44,6 +44,9 @@ function onOpen() {
 
   // 📊 광고그룹 추이 메뉴 (adgroup-trend.gs, 2026-06-17)
   try { buildAdgroupTrendMenu_(SpreadsheetApp.getUi()); } catch (e) {}
+
+  // 🔔 알림/모니터링 메뉴 (alerts.js, 2026-06-18)
+  try { buildAlertsMenu_(SpreadsheetApp.getUi()); } catch (e) {}
 }
 
 // ──[일상]── 전체 새로고침: 모든 채널 sync + 대시보드 빌드 + 인사이트 MD 생성 (2026-06-15 강화)
@@ -85,6 +88,7 @@ function refreshAll() {
   try { repairSNSMonthlySummaries(false); } catch (e) { errors.push('repairSNSMonthlySummaries: ' + e.message); }
   try { updateKakaoInquiryCoverage(false); } catch (e) { errors.push('updateKakaoInquiryCoverage: ' + e.message); }
   try { addTimeSeriesChart(); } catch (e) { errors.push('addTimeSeriesChart: ' + e.message); }
+  try { if (typeof runHealthCheck_ === 'function') runHealthCheck_(); } catch (e) {}
 
   const stamp = recordLastRefresh_();
 
