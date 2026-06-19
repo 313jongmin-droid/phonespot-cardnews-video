@@ -1,30 +1,30 @@
 {
-  "slug": "028_pick_senior_phone_3way",
-  "title_short": "부모님 효도폰 3종 비교",
-  "video_title": "부모님 효도폰 3종 비교",
+  "slug": "032_meme_carrier_hidden_tips",
+  "title_short": "통신사가 굳이 안 알려주는 것 3",
+  "video_title": "통신사가 굳이 안 알려주는 것 3",
   "publication_date": "2026.06.19",
-  "sources": "삼성전자 갤럭시 A 공식 + 애플 접근성 가이드 + 폰스팟 광교점 자료",
+  "sources": "스마트초이스 + 통신3사 약관 + 폰스팟 광교점 자료",
   "channel_name": "폰스팟",
-  "channel_tagline": "휴대폰성지 IT 브리핑",
+  "channel_tagline": "광교 미니 IT 브리핑",
   "opening": {
-    "line1": "휴대폰성지 IT 브리핑",
-    "line2": "부모님 효도폰 3종 비교"
+    "line1": "광교 미니 IT 브리핑",
+    "line2": "통신사가 굳이 안 알려주는 것 3"
   },
   "hook": {
-    "tts": "부모님 효도폰, 화면 크기만 보고 고르면 후회합니다. 갤럭시 A 시리즈, 보급형 아이폰, 간편모드 세 갈래를 통화·글씨·보이스피싱 차단 기준으로 비교해 드립니다.",
+    "tts": "물어보지 않으면 먼저 챙겨주지 않는 것들이 있습니다. 알면 매달 돈이 굳고, 모르면 그대로 새어 나갑니다. 손해 보기 쉬운 세 가지를 정리했습니다.",
     "caption_body": [
-      "부모님 폰",
-      "뭐가 좋을까?"
+      "통신사가",
+      "굳이 안 알려주는 것"
     ],
     "caption_emphasis": [
-      "뭐가 좋을까"
+      "굳이 안 알려주는"
     ],
     "headline_lines": [
       {
-        "text": "부모님 폰"
+        "text": "통신사가"
       },
       {
-        "text": "뭐가 좋을까?",
+        "text": "굳이 안 알려주는 것",
         "accent": true
       }
     ],
@@ -32,73 +32,210 @@
     "topic": "뉴스",
     "background_image": "",
     "caption_chunks": [
-      "부모님 효도폰, 화면 크기만 보고 고르면 후회합니다.",
-      "갤럭시 A 시리즈,",
-      "보급형 아이폰,",
-      "간편모드 세 갈래를 통화·글씨·보이스피싱",
-      "차단 기준으로 비교해 드립니다."
+      "물어보지 않으면 먼저 챙겨주지 않는 것들이 있습니다.",
+      "알면 매달 돈이 굳고, 모르면 그대로 새어 나갑니다.",
+      "손해 보기 쉬운 세 가지를 정리했습니다."
     ],
     "chunk_visuals": [
       {
         "type": "illust",
-        "value": "smartphone"
+        "value": "mystery_number_63279925"
+      },
+      {
+        "type": "illust",
+        "value": "document_article"
       },
       {
         "type": "illust",
         "value": "smartphone"
-      },
-      {
-        "type": "illust",
-        "value": "smartphone"
-      },
-      {
-        "type": "illust",
-        "value": "smartphone"
-      },
-      {
-        "type": "mascot",
-        "value": "surprised"
       }
     ],
     "stat": {
       "label": "",
       "value": "",
       "note": ""
+    },
+    "display_chunks": [
+      "물어보지 않으면 먼저 챙겨주지 않는 것들이 있습니다",
+      "알면 매달 돈이 굳고, 모르면 그대로 새어 나갑니다",
+      "손해 보기 쉬운 세 가지를 정리했습니다"
+    ],
+    "_codex_caption_lockstep": {
+      "version": 2,
+      "compiler": "korean_caption_compiler_v2",
+      "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+      "chunk_count": 3
+    },
+    "_codex_contextual_narrative": true,
+    "_codex_sync_mode": "global999_tts_caption_lockstep",
+    "tts_chunk_weights": [
+      3160.21,
+      3327.46,
+      1795.75
+    ],
+    "_tts_timing": {
+      "mode": "word_boundary_text_align",
+      "windows": [
+        {
+          "start_ms": 0.0,
+          "end_ms": 3160.21,
+          "duration_ms": 3160.21
+        },
+        {
+          "start_ms": 3160.21,
+          "end_ms": 6487.67,
+          "duration_ms": 3327.46
+        },
+        {
+          "start_ms": 6487.67,
+          "end_ms": 8283.42,
+          "duration_ms": 1795.75
+        }
+      ],
+      "boundary_count": 21,
+      "caption_signature": "61d654ea4647569335bf839e300eb53eed90b8ce154909f23a74455675210c5b"
     }
   },
   "facts": [
     {
-      "tts": "6.7형 큰 화면에 글씨·아이콘을 키우는 쉬운 모드를 지원합니다. 통화 중 실시간 자막, 스팸·보이스피싱 차단 기능도 강점입니다. 안드로이드가 익숙한 부모님께 무난합니다.",
+      "tts": "선택약정 25% 요금할인은 약정이 끝나도 자동 연장되지 않습니다. 만료 후 재약정을 안 하면 할인 없이 그대로 냅니다. 약정 만료일을 확인하고 꼭 다시 신청하세요.",
       "caption_body": [
-        "갤럭시 A",
-        "큰 화면·간편 모드"
+        "1번",
+        "선택약정 재약정"
       ],
       "caption_emphasis": [
-        "큰 화면·간편"
+        "선택약정 재약정"
       ],
       "headline_lines": [
         {
-          "text": "갤럭시 A"
+          "text": "1번"
         },
         {
-          "text": "큰 화면·간편 모드",
+          "text": "선택약정 재약정",
           "accent": true
         }
       ],
-      "meta": "출처: 삼성 갤럭시 A",
+      "meta": "출처: 스마트초이스",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "6.7형 큰 화면에 글씨·아이콘을 키우는 쉬운 모드를",
-        "지원합니다.",
-        "통화 중 실시간 자막,",
-        "스팸·보이스피싱 차단 기능도 강점입니다.",
-        "안드로이드가 익숙한 부모님께 무난합니다."
+        "선택약정 25% 요금할인은 약정이",
+        "끝나도 자동 연장되지 않습니다.",
+        "만료 후 재약정을 안 하면 할인 없이 그대로 냅니다.",
+        "약정 만료일을 확인하고 꼭 다시 신청하세요."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "smartphone"
+          "value": "gift_voucher"
+        },
+        {
+          "type": "illust",
+          "value": "telecom_discount_compare"
+        },
+        {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_1",
+      "display_chunks": [
+        "선택약정 25% 요금할인은 약정이",
+        "끝나도 자동 연장되지 않습니다",
+        "만료 후 재약정을 안 하면 할인 없이 그대로 냅니다",
+        "약정 만료일을 확인하고 꼭 다시 신청하세요"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 4
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        2215.5,
+        2229.92,
+        3063.37,
+        2262.34
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 2215.5,
+            "duration_ms": 2215.5
+          },
+          {
+            "start_ms": 2215.5,
+            "end_ms": 4445.42,
+            "duration_ms": 2229.92
+          },
+          {
+            "start_ms": 4445.42,
+            "end_ms": 7508.79,
+            "duration_ms": 3063.37
+          },
+          {
+            "start_ms": 7508.79,
+            "end_ms": 9771.13,
+            "duration_ms": 2262.34
+          }
+        ],
+        "boundary_count": 23,
+        "caption_signature": "edeaa78277762db0be87c40bf0bf8e414c17d02f87258fd55f3f7374fd76efbb"
+      }
+    },
+    {
+      "tts": "기기변경 시 조건에 따라 위약금이 유예되거나 줄어드는 경우가 있습니다. 무조건 다 내야 하는 게 아닙니다. 잔여 약정·할부와 위약금을 함께 계산해 타이밍을 잡으면 부담이 달라집니다.",
+      "caption_body": [
+        "2번",
+        "위약금 유예·면제"
+      ],
+      "caption_emphasis": [
+        "위약금 유예·면제"
+      ],
+      "headline_lines": [
+        {
+          "text": "2번"
+        },
+        {
+          "text": "위약금 유예·면제",
+          "accent": true
+        }
+      ],
+      "meta": "출처: 통신3사 약관",
+      "topic": "뉴스",
+      "background_image": "",
+      "caption_chunks": [
+        "기기변경 시 조건에 따라 위약금이",
+        "유예되거나 줄어드는 경우가 있습니다.",
+        "무조건 다 내야 하는 게 아닙니다.",
+        "잔여 약정·할부와 위약금을 함께 계산해 타이밍을 잡으면",
+        "부담이 달라집니다."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "chart_down"
+        },
+        {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        {
+          "type": "illust",
+          "value": "device_data_transfer"
         },
         {
           "type": "illust",
@@ -106,11 +243,109 @@
         },
         {
           "type": "illust",
-          "value": "smartphone"
+          "value": "phone_setup_ready"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_2",
+      "display_chunks": [
+        "기기변경 시 조건에 따라 위약금이",
+        "유예되거나 줄어드는 경우가 있습니다",
+        "무조건 다 내야 하는 게 아닙니다",
+        "잔여 약정·할부와 위약금을 함께 계산해 타이밍을 잡으면",
+        "부담이 달라집니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 5
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        1713.75,
+        2194.71,
+        2156.66,
+        2605.67,
+        1021.13
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 1713.75,
+            "duration_ms": 1713.75
+          },
+          {
+            "start_ms": 1713.75,
+            "end_ms": 3908.46,
+            "duration_ms": 2194.71
+          },
+          {
+            "start_ms": 3908.46,
+            "end_ms": 6065.12,
+            "duration_ms": 2156.66
+          },
+          {
+            "start_ms": 6065.12,
+            "end_ms": 8670.79,
+            "duration_ms": 2605.67
+          },
+          {
+            "start_ms": 8670.79,
+            "end_ms": 9691.92,
+            "duration_ms": 1021.13
+          }
+        ],
+        "boundary_count": 25,
+        "caption_signature": "c3f8dad7417903f95e3df13202bbbb74e84a7c5ee230bb54ab1e384faa72be0a"
+      }
+    },
+    {
+      "tts": "개통할 때 공통지원금과 선택약정 중 어느 쪽이 유리한지는 단말 가격대마다 다릅니다. 한쪽만 권하면 손해일 수 있으니 두 경우의 총비용을 꼭 비교하고 결정하세요.",
+      "caption_body": [
+        "3번",
+        "지원금 vs 약정 실익"
+      ],
+      "caption_emphasis": [
+        "지원금 vs 약정"
+      ],
+      "headline_lines": [
+        {
+          "text": "3번"
+        },
+        {
+          "text": "지원금 vs 약정 실익",
+          "accent": true
+        }
+      ],
+      "meta": "출처: 스마트초이스",
+      "topic": "뉴스",
+      "background_image": "",
+      "caption_chunks": [
+        "개통할 때 공통지원금과 선택약정 중 어느",
+        "쪽이 유리한지는 단말 가격대마다 다릅니다.",
+        "한쪽만 권하면 손해일 수 있으니 두 경우의",
+        "총비용을 꼭 비교하고 결정하세요."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "phone_settings_toggle"
         },
         {
           "type": "illust",
-          "value": "smartphone"
+          "value": "device_os_requirement"
+        },
+        {
+          "type": "illust",
+          "value": "device_data_transfer"
         },
         {
           "type": "illust",
@@ -122,80 +357,70 @@
         "value": "",
         "note": ""
       },
-      "id": "fact_1"
-    },
-    {
-      "tts": "상대적으로 가볍고 조작이 단순하며 업데이트 지원 기간이 깁니다. 자녀가 아이폰을 쓰면 사진·영상통화 공유가 매끄럽습니다. 다만 화면이 작은 편이라 글씨 크기는 미리 확인하세요.",
-      "caption_body": [
-        "보급형 아이폰",
-        "가볍고 오래 쓰기"
+      "id": "fact_3",
+      "display_chunks": [
+        "개통할 때 공통지원금과 선택약정 중 어느",
+        "쪽이 유리한지는 단말 가격대마다 다릅니다",
+        "한쪽만 권하면 손해일 수 있으니 두 경우의",
+        "총비용을 꼭 비교하고 결정하세요"
       ],
-      "caption_emphasis": [
-        "가볍고 오래"
-      ],
-      "headline_lines": [
-        {
-          "text": "보급형 아이폰"
-        },
-        {
-          "text": "가볍고 오래 쓰기",
-          "accent": true
-        }
-      ],
-      "meta": "출처: 애플 접근성 가이드",
-      "topic": "뉴스",
-      "background_image": "",
-      "caption_chunks": [
-        "상대적으로 가볍고 조작이 단순하며 업데이트 지원 기간이",
-        "깁니다.",
-        "자녀가 아이폰을 쓰면 사진·영상통화 공유가",
-        "매끄럽습니다.",
-        "다만 화면이 작은 편이라 글씨 크기는 미리 확인하세요."
-      ],
-      "chunk_visuals": [
-        {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        {
-          "type": "mascot",
-          "value": "suspicious"
-        }
-      ],
-      "stat": {
-        "label": "",
-        "value": "",
-        "note": ""
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 4
       },
-      "id": "fact_2"
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        2321.12,
+        2863.76,
+        1963.0,
+        1707.74
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 2321.12,
+            "duration_ms": 2321.12
+          },
+          {
+            "start_ms": 2321.12,
+            "end_ms": 5184.88,
+            "duration_ms": 2863.76
+          },
+          {
+            "start_ms": 5184.88,
+            "end_ms": 7147.88,
+            "duration_ms": 1963.0
+          },
+          {
+            "start_ms": 7147.88,
+            "end_ms": 8855.62,
+            "duration_ms": 1707.74
+          }
+        ],
+        "boundary_count": 22,
+        "caption_signature": "55ad93a5897d4195bece9d7cf87a5263681fc23ad09b24a8265dcc836eafaf45"
+      }
     },
     {
-      "tts": "두 기종 모두 큰 글씨와 단순한 홈 화면으로 바꾸는 간편·이지 모드가 있습니다. 자주 거는 번호를 첫 화면에 두고, 불필요한 앱을 숨기면 헷갈림이 확 줄어듭니다.",
+      "tts": "약정 만료일 확인하고 재약정, 기기변경 전 위약금 타이밍 계산, 지원금과 약정 실익 비교. 이 세 가지만 챙겨도 새던 통신비가 줄어듭니다. 모르면 그대로 손해입니다.",
       "caption_body": [
-        "간편모드",
-        "큰 글씨·단순 화면"
+        "정리",
+        "3가지만 챙기기"
       ],
       "caption_emphasis": [
-        "큰 글씨·단순"
+        "3가지만"
       ],
       "headline_lines": [
         {
-          "text": "간편모드"
+          "text": "정리"
         },
         {
-          "text": "큰 글씨·단순 화면",
+          "text": "3가지만 챙기기",
           "accent": true
         }
       ],
@@ -203,80 +428,28 @@
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "두 기종 모두 큰 글씨와 단순한 홈 화면으로 바꾸는",
-        "간편·이지 모드가 있습니다.",
-        "자주 거는 번호를 첫 화면에 두고,",
-        "불필요한 앱을 숨기면 헷갈림이 확 줄어듭니다."
+        "약정 만료일 확인하고 재약정,",
+        "기기변경 전 위약금 타이밍 계산,",
+        "지원금과 약정 실익 비교.",
+        "이 세 가지만 챙겨도 새던 통신비가 줄어듭니다.",
+        "모르면 그대로 손해입니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "smartphone"
+          "value": "phone_setup_ready"
         },
         {
           "type": "illust",
-          "value": "smartphone"
+          "value": "phone_settings_toggle"
         },
         {
           "type": "illust",
-          "value": "smartphone"
+          "value": "device_os_requirement"
         },
         {
           "type": "illust",
-          "value": "smartphone"
-        }
-      ],
-      "stat": {
-        "label": "",
-        "value": "",
-        "note": ""
-      },
-      "id": "fact_3"
-    },
-    {
-      "tts": "부모님 폰은 화려한 기능보다 큰 글씨, 또렷한 통화, 보이스피싱 차단이 1순위입니다. 자녀와 같은 진영(안드로이드/아이폰)으로 맞추면 원격 도움도 쉬워집니다.",
-      "caption_body": [
-        "고르는 기준",
-        "통화·차단 우선"
-      ],
-      "caption_emphasis": [
-        "통화·차단"
-      ],
-      "headline_lines": [
-        {
-          "text": "고르는 기준"
-        },
-        {
-          "text": "통화·차단 우선",
-          "accent": true
-        }
-      ],
-      "meta": "출처: 폰스팟 광교점 자료",
-      "topic": "뉴스",
-      "background_image": "",
-      "caption_chunks": [
-        "부모님 폰은 화려한 기능보다 큰 글씨,",
-        "또렷한 통화,",
-        "보이스피싱 차단이 1순위입니다.",
-        "자녀와 같은 진영(안드로이드/아이폰)으로 맞추면",
-        "원격 도움도 쉬워집니다."
-      ],
-      "chunk_visuals": [
-        {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
+          "value": "device_data_transfer"
         },
         {
           "type": "mascot",
@@ -288,24 +461,78 @@
         "value": "",
         "note": ""
       },
-      "id": "fact_4"
+      "id": "fact_4",
+      "display_chunks": [
+        "약정 만료일 확인하고 재약정,",
+        "기기변경 전 위약금 타이밍 계산,",
+        "지원금과 약정 실익 비교",
+        "이 세 가지만 챙겨도 새던 통신비가 줄어듭니다",
+        "모르면 그대로 손해입니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 5
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        1828.17,
+        1919.0,
+        2053.87,
+        2948.96,
+        1320.41
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 1828.17,
+            "duration_ms": 1828.17
+          },
+          {
+            "start_ms": 1828.17,
+            "end_ms": 3747.17,
+            "duration_ms": 1919.0
+          },
+          {
+            "start_ms": 3747.17,
+            "end_ms": 5801.04,
+            "duration_ms": 2053.87
+          },
+          {
+            "start_ms": 5801.04,
+            "end_ms": 8750.0,
+            "duration_ms": 2948.96
+          },
+          {
+            "start_ms": 8750.0,
+            "end_ms": 10070.41,
+            "duration_ms": 1320.41
+          }
+        ],
+        "boundary_count": 23,
+        "caption_signature": "9f02aeda1b883a8d391cebcefcb80a6b52eb6ffd1d1b42918c850039ce3fa104"
+      }
     }
   ],
   "cta": {
-    "tts": "부모님 모시고 오시면 세 기종을 직접 들어보고 글씨·통화·간편모드를 비교해 드립니다. 보이스피싱 차단 설정과 자녀 폰 연동까지 1대 1로 끝내 드립니다.",
+    "tts": "휴대폰 구매할 땐? 지원금부터 무료로 조회해보세요.",
     "caption_body": [
-      "광교점 폰스팟",
-      "직접 비교 상담"
+      "휴대폰 구매할 땐?",
+      "지원금부터 무료로 조회해보세요"
     ],
     "caption_emphasis": [
-      "직접 비교"
+      "지원금부터 무료로 조회해보세요"
     ],
     "headline_lines": [
       {
-        "text": "광교점 폰스팟"
+        "text": "휴대폰 구매할 땐?"
       },
       {
-        "text": "직접 비교 상담",
+        "text": "지원금부터 무료로 조회해보세요",
         "accent": true
       }
     ],
@@ -313,10 +540,8 @@
     "topic": "뉴스",
     "background_image": "",
     "caption_chunks": [
-      "부모님 모시고 오시면 세 기종을 직접 들어보고",
-      "글씨·통화·간편모드를 비교해 드립니다.",
-      "보이스피싱 차단 설정과 자녀 폰 연동까지 1대 1로",
-      "끝내 드립니다."
+      "휴대폰 구매할 땐?",
+      "지원금부터 무료로 조회해보세요"
     ],
     "chunk_visuals": [
       {
@@ -324,16 +549,8 @@
         "value": "smartphone"
       },
       {
-        "type": "illust",
-        "value": "smartphone"
-      },
-      {
-        "type": "illust",
-        "value": "smartphone"
-      },
-      {
-        "type": "illust",
-        "value": "smartphone"
+        "type": "logo",
+        "value": null
       }
     ],
     "stat": {
@@ -341,11 +558,339 @@
       "value": "",
       "note": ""
     },
-    "kakao": "@휴대폰성지폰스팟",
-    "location": "내 손 안의 성지찾기, 폰스팟",
-    "litt": "litt.ly/phonespot"
+    "kakao": "@폰스팟광교점",
+    "location": "광교호수공원 B1-47",
+    "litt": "litt.ly/phonespot",
+    "display_chunks": [
+      "휴대폰 구매할 땐?",
+      "지원금부터 무료로 조회해보세요"
+    ],
+    "_codex_caption_lockstep": {
+      "version": 2,
+      "compiler": "korean_caption_compiler_v2",
+      "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+      "chunk_count": 1
+    },
+    "_codex_contextual_narrative": true,
+    "_codex_sync_mode": "global999_tts_caption_lockstep",
+    "_codex_fixed_cta": true,
+    "_codex_narration_source": "fixed_cta_contract",
+    "tts_chunk_weights": [
+      1707.75,
+      1804.54
+    ],
+    "_tts_timing": {
+      "mode": "word_boundary_text_align",
+      "windows": [
+        {
+          "start_ms": 0.0,
+          "end_ms": 1707.75,
+          "duration_ms": 1707.75
+        },
+        {
+          "start_ms": 1707.75,
+          "end_ms": 3512.29,
+          "duration_ms": 1804.54
+        }
+      ],
+      "boundary_count": 6,
+      "caption_signature": "db4c57a05254654841d0c63b2eea20bad43e358510298ef607bf41bcae3b9e5d"
+    }
   },
   "_auto_generated": true,
   "_chunk_logic_v2": true,
-  "_note": "build_script.py 자동 생성 (v2 로직): 시퀀스 내 이미지 순환 + 마스코트 짝수 시퀀스만."
+  "_note": "build_script.py 자동 생성 (v2 로직): 시퀀스 내 이미지 순환 + 마스코트 짝수 시퀀스만.",
+  "_codex_global_999_quality": true,
+  "_codex_common_quality_logic": true,
+  "_codex_sync_quality_logic": true,
+  "_codex_captions_narration_priority": false,
+  "_codex_common_quality_note": "Global 001-999 rule: screen chunks are rebuilt as an ordered, lossless partition of captions.md narration; curated visuals are rebalanced without discarding quality rules.",
+  "_codex_uploaded_illustrations": [
+    {
+      "section": "hook",
+      "chunk": 1,
+      "variant": "cpt_4a239341"
+    },
+    {
+      "section": "hook",
+      "chunk": 3,
+      "variant": "cpt_85648c73"
+    },
+    {
+      "section": "fact_2",
+      "chunk": 3,
+      "variant": "cpt_4b0db59d"
+    },
+    {
+      "section": "fact_2",
+      "chunk": 5,
+      "variant": "cpt_e2ed2837"
+    },
+    {
+      "section": "fact_4",
+      "chunk": 4,
+      "variant": "cpt_9cfc2c65"
+    }
+  ],
+  "_codex_semantic_visual_match": {
+    "version": 1,
+    "policy": "Match chunks to GPT source images using prompt.md descriptions, then fallback to tagged reusable illustrations.",
+    "changes": [
+      {
+        "section": "hook",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "cpt_4a239341"
+        },
+        "to": {
+          "type": "illust",
+          "value": "mystery_number_63279925"
+        },
+        "context": "물어보지 않으면 먼저 챙겨주지 않는 것들이 있습니다 알면 매달 돈이 굳고, 모르면 그대로 새어 나갑니다 통신사가 굳이 안 알려주는 것 ['통신사가', '굳이 안 알려주는 것'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "hook",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "cpt_85648c73"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "알면 매달 돈이 굳고, 모르면 그대로 새어 나갑니다 손해 보기 쉬운 세 가지를 정리했습니다 통신사가 굳이 안 알려주는 것 ['통신사가', '굳이 안 알려주는 것'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "cpt_4b0db59d"
+        },
+        "to": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "유예되거나 줄어드는 경우가 있습니다 무조건 다 내야 하는 게 아닙니다 잔여 약정·할부와 위약금을 함께 계산해 타이밍을 잡으면 2번 위약금 유예·면제 ['2번', '위약금 유예·면제'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 5,
+        "from": {
+          "type": "illust",
+          "value": "cpt_e2ed2837"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "잔여 약정·할부와 위약금을 함께 계산해 타이밍을 잡으면 부담이 달라집니다 2번 위약금 유예·면제 ['2번', '위약금 유예·면제'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "cpt_9cfc2c65"
+        },
+        "to": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "지원금과 약정 실익 비교 이 세 가지만 챙겨도 새던 통신비가 줄어듭니다 모르면 그대로 손해입니다 정리 3가지만 챙기기 ['정리', '3가지만 챙기기'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      }
+    ],
+    "weak": [
+      {
+        "section": "hook",
+        "chunk": 3,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "알면 매달 돈이 굳고, 모르면 그대로 새어 나갑니다 손해 보기 쉬운 세 가지를 정리했습니다 통신사가 굳이 안 알려주는 것 ['통신사가', '굳이 안 알려주는 것'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_1",
+        "chunk": 3,
+        "current": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "끝나도 자동 연장되지 않습니다 만료 후 재약정을 안 하면 할인 없이 그대로 냅니다 약정 만료일을 확인하고 꼭 다시 신청하세요 1번 선택약정 재약정 ['1번', '선택약정 재약정'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_1",
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "만료 후 재약정을 안 하면 할인 없이 그대로 냅니다 약정 만료일을 확인하고 꼭 다시 신청하세요 1번 선택약정 재약정 ['1번', '선택약정 재약정'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_2",
+        "chunk": 2,
+        "current": {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        "context": "기기변경 시 조건에 따라 위약금이 유예되거나 줄어드는 경우가 있습니다 무조건 다 내야 하는 게 아닙니다 2번 위약금 유예·면제 ['2번', '위약금 유예·면제'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_2",
+        "chunk": 3,
+        "current": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "유예되거나 줄어드는 경우가 있습니다 무조건 다 내야 하는 게 아닙니다 잔여 약정·할부와 위약금을 함께 계산해 타이밍을 잡으면 2번 위약금 유예·면제 ['2번', '위약금 유예·면제'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_2",
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "무조건 다 내야 하는 게 아닙니다 잔여 약정·할부와 위약금을 함께 계산해 타이밍을 잡으면 부담이 달라집니다 2번 위약금 유예·면제 ['2번', '위약금 유예·면제'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_2",
+        "chunk": 5,
+        "current": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "잔여 약정·할부와 위약금을 함께 계산해 타이밍을 잡으면 부담이 달라집니다 2번 위약금 유예·면제 ['2번', '위약금 유예·면제'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_3",
+        "chunk": 1,
+        "current": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "개통할 때 공통지원금과 선택약정 중 어느 쪽이 유리한지는 단말 가격대마다 다릅니다 3번 지원금 vs 약정 실익 ['3번', '지원금 vs 약정 실익'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_3",
+        "chunk": 2,
+        "current": {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        "context": "개통할 때 공통지원금과 선택약정 중 어느 쪽이 유리한지는 단말 가격대마다 다릅니다 한쪽만 권하면 손해일 수 있으니 두 경우의 3번 지원금 vs 약정 실익 ['3번', '지원금 vs 약정 실익'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_3",
+        "chunk": 3,
+        "current": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "쪽이 유리한지는 단말 가격대마다 다릅니다 한쪽만 권하면 손해일 수 있으니 두 경우의 총비용을 꼭 비교하고 결정하세요 3번 지원금 vs 약정 실익 ['3번', '지원금 vs 약정 실익'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "한쪽만 권하면 손해일 수 있으니 두 경우의 총비용을 꼭 비교하고 결정하세요 3번 지원금 vs 약정 실익 ['3번', '지원금 vs 약정 실익'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_4",
+        "chunk": 1,
+        "current": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "약정 만료일 확인하고 재약정, 기기변경 전 위약금 타이밍 계산, 정리 3가지만 챙기기 ['정리', '3가지만 챙기기'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_4",
+        "chunk": 2,
+        "current": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "약정 만료일 확인하고 재약정, 기기변경 전 위약금 타이밍 계산, 지원금과 약정 실익 비교 정리 3가지만 챙기기 ['정리', '3가지만 챙기기'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_4",
+        "chunk": 3,
+        "current": {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        "context": "기기변경 전 위약금 타이밍 계산, 지원금과 약정 실익 비교 이 세 가지만 챙겨도 새던 통신비가 줄어듭니다 정리 3가지만 챙기기 ['정리', '3가지만 챙기기'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_4",
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "지원금과 약정 실익 비교 이 세 가지만 챙겨도 새던 통신비가 줄어듭니다 모르면 그대로 손해입니다 정리 3가지만 챙기기 ['정리', '3가지만 챙기기'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_4",
+        "chunk": 5,
+        "current": {
+          "type": "mascot",
+          "value": "serious"
+        },
+        "context": "이 세 가지만 챙겨도 새던 통신비가 줄어듭니다 모르면 그대로 손해입니다 정리 3가지만 챙기기 ['정리', '3가지만 챙기기'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      }
+    ]
+  },
+  "_codex_effective_script": {
+    "version": 2,
+    "slug": "032_meme_carrier_hidden_tips",
+    "source": "C:\\backup\\phonespot_cardnews\\cardnews\\output\\032_meme_carrier_hidden_tips\\shorts_script.json",
+    "override_applied": false,
+    "override_sections": []
+  }
 }

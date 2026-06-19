@@ -47,8 +47,8 @@
 | `cpt_3be04d33` | auto | 0 |  |
 | `cpt_4729c912` | auto, library | 3 | 019_news_samsung_thank_you_festival |
 | `cpt_496029c6` | auto, library | 0 |  |
-| `cpt_4a239341` | auto, library | 1 | 032_meme_carrier_hidden_tips |
-| `cpt_4b0db59d` | auto, library | 1 | 032_meme_carrier_hidden_tips |
+| `cpt_4a239341` | auto, library | 0 |  |
+| `cpt_4b0db59d` | auto, library | 0 |  |
 | `cpt_4ce4cc8c` | auto, library | 1 | 031_meme_phone_buying_checklist |
 | `cpt_5507911c` | auto | 0 |  |
 | `cpt_55c40fb8` | auto | 0 |  |
@@ -69,13 +69,13 @@
 | `cpt_7ce59d26` | auto | 0 |  |
 | `cpt_7ea57558` | auto, library | 0 |  |
 | `cpt_83fa1e9f` | auto, library | 3 | 020_qa_apple_pay_korea_card |
-| `cpt_85648c73` | auto, library | 1 | 032_meme_carrier_hidden_tips |
+| `cpt_85648c73` | auto, library | 0 |  |
 | `cpt_8b587f6c` | auto | 0 |  |
 | `cpt_8bffef74` | auto, library | 1 | 015_qa_msafer_pass_identity_block |
 | `cpt_8d09d703` | auto | 0 |  |
 | `cpt_915bf475` | auto, library | 1 | 025_tip_galaxy_ai_call_screening |
 | `cpt_98cab19a` | auto, library | 0 |  |
-| `cpt_9cfc2c65` | auto, library | 1 | 032_meme_carrier_hidden_tips |
+| `cpt_9cfc2c65` | auto, library | 0 |  |
 | `cpt_9ebf277e` | auto | 0 |  |
 | `cpt_9f55187e` | auto, library | 1 | 028_pick_senior_phone_3way |
 | `cpt_a0d7df46` | auto | 0 |  |
@@ -96,7 +96,7 @@
 | `cpt_d877aced` | auto | 0 |  |
 | `cpt_de81a562` | auto, library | 1 | 031_meme_phone_buying_checklist |
 | `cpt_dff91a6d` | auto | 0 |  |
-| `cpt_e2ed2837` | auto, library | 1 | 032_meme_carrier_hidden_tips |
+| `cpt_e2ed2837` | auto, library | 0 |  |
 | `cpt_e646864a` | auto, library | 1 | 026_news_galaxy_a37_5g_launch |
 | `cpt_e9fd442e` | auto, library | 1 | 025_tip_galaxy_ai_call_screening |
 | `cpt_ea7bc1d6` | auto, library | 1 | 014_scam_voicephishing_zero_relief |
@@ -157,7 +157,7 @@
 | `module_install` | library | 0 |  |
 | `monday_d77265f0` | auto, library | 1 | 019_news_samsung_thank_you_festival |
 | `mounted_body_496029c6` | auto, library | 2 | 026_news_galaxy_a37_5g_launch |
-| `mystery_number_63279925` | auto, library | 2 | 028_pick_senior_phone_3way |
+| `mystery_number_63279925` | auto, library | 3 | 032_meme_carrier_hidden_tips |
 | `new_policy_f48caded` | auto, library | 2 | 026_news_galaxy_a37_5g_launch |
 | `new_release_98cab19a` | library | 0 |  |
 | `newspaper` | news, source, library | 8 | 020_qa_apple_pay_korea_card |
@@ -218,7 +218,7 @@
 
 ## Recent videos
 
-- `032_meme_carrier_hidden_tips`: cpt_4a239341, document_article, cpt_85648c73, gift_voucher, telecom_discount_compare, phone_setup_ready, phone_settings_toggle, chart_down, device_os_requirement, cpt_4b0db59d, smartphone, cpt_e2ed2837, device_data_transfer, cpt_9cfc2c65
+- `032_meme_carrier_hidden_tips`: mystery_number_63279925, document_article, smartphone, gift_voucher, telecom_discount_compare, phone_setup_ready, phone_settings_toggle, chart_down, device_os_requirement, device_data_transfer
 - `031_meme_phone_buying_checklist`: smartphone, phone_setup_ready, chart_down, cpt_c3ad3e73, gift_voucher, cpt_4ce4cc8c, telecom_discount_compare, phone_settings_toggle, device_os_requirement, device_data_transfer, cpt_349c9de7, cpt_bff86ff7, cpt_de81a562, official_sale_9dc82f05, clock, event_period_8cafdac4
 - `030_pick_new_vs_old_subsidy`: gift_voucher, mid_ship_7968fa24, smartphone, size_guide_afe009df, telecom_discount_compare, change_review_b93b867a, phone_settings_toggle, final_update, device_os_requirement, camera_battery_ecd040c7, chart_down, device_data_transfer, parents_vision_231bf461, cpt_f7322c3a
 - `029_pick_galaxy_vs_iphone_camera`: cpt_aff73c54, document_article, cpt_d124a858, cpt_356af649, smartphone, market_cap, phone_setup_ready, size_guide_afe009df, event_period_8cafdac4, cpt_c9dd9b89, cpt_0ecf996a, device_data_transfer, samsung_ai, store
