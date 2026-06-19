@@ -2559,10 +2559,11 @@
         "따져야"
       ],
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "note": "자동 발굴 개념: 달라지니 따져야",
-      "available": false
+      "available": true
     },
     "cpt_f7322c3a": {
       "keywords": [
@@ -2572,11 +2573,135 @@
         "확인하고"
       ],
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "note": "자동 발굴 개념: 위약금 잔여",
+      "available": true
+    },
+    "cpt_c3ad3e73": {
+      "keywords": [
+        "호구당할",
+        "일이"
+      ],
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "note": "자동 발굴 개념: 호구당할 일이",
+      "available": true
+    },
+    "cpt_4ce4cc8c": {
+      "keywords": [
+        "총액",
+        "물어보세요"
+      ],
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "note": "자동 발굴 개념: 총액 물어보세요",
+      "available": true
+    },
+    "cpt_349c9de7": {
+      "keywords": [
+        "유리한지",
+        "계산해",
+        "달라고"
+      ],
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "note": "자동 발굴 개념: 유리한지 계산해",
+      "available": true
+    },
+    "cpt_bff86ff7": {
+      "keywords": [
+        "한쪽",
+        "보여주면",
+        "비교"
+      ],
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "note": "자동 발굴 개념: 한쪽 보여주면",
+      "available": true
+    },
+    "cpt_de81a562": {
+      "keywords": [
+        "단말",
+        "가격대",
+        "따라",
+        "정답"
+      ],
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "note": "자동 발굴 개념: 단말 가격대",
+      "available": true
+    },
+    "cpt_4a239341": {
+      "keywords": [
+        "물어보지",
+        "않으면",
+        "챙겨주지",
+        "않는",
+        "것들"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 물어보지 않으면",
+      "available": false
+    },
+    "cpt_85648c73": {
+      "keywords": [
+        "손해",
+        "보기",
+        "쉬운"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 손해 보기",
+      "available": false
+    },
+    "cpt_4b0db59d": {
+      "keywords": [
+        "내야",
+        "하는"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 내야 하는",
+      "available": false
+    },
+    "cpt_e2ed2837": {
+      "keywords": [
+        "부담"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 부담",
+      "available": false
+    },
+    "cpt_9cfc2c65": {
+      "keywords": [
+        "챙겨",
+        "새던",
+        "통신비"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 챙겨 새던",
       "available": false
     }
   },
-  "updated_at": "2026-06-19T13:31:37"
+  "updated_at": "2026-06-19T15:12:45"
 }

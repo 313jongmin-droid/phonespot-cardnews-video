@@ -408,7 +408,49 @@
       ]
     },
     "030_pick_new_vs_old_subsidy": {
-      "used_at": "2026-06-19T13:31:35",
+      "used_at": "2026-06-19T13:59:57",
+      "source": "uploaded_illustrations",
+      "illustrations": [
+        "gift_voucher",
+        "mid_ship_7968fa24",
+        "smartphone",
+        "size_guide_afe009df",
+        "telecom_discount_compare",
+        "change_review_b93b867a",
+        "phone_settings_toggle",
+        "final_update",
+        "device_os_requirement",
+        "camera_battery_ecd040c7",
+        "chart_down",
+        "device_data_transfer",
+        "parents_vision_231bf461",
+        "cpt_f7322c3a"
+      ]
+    },
+    "031_meme_phone_buying_checklist": {
+      "used_at": "2026-06-19T14:47:10",
+      "source": "uploaded_illustrations",
+      "illustrations": [
+        "smartphone",
+        "phone_setup_ready",
+        "chart_down",
+        "cpt_c3ad3e73",
+        "gift_voucher",
+        "cpt_4ce4cc8c",
+        "telecom_discount_compare",
+        "phone_settings_toggle",
+        "device_os_requirement",
+        "device_data_transfer",
+        "cpt_349c9de7",
+        "cpt_bff86ff7",
+        "cpt_de81a562",
+        "official_sale_9dc82f05",
+        "clock",
+        "event_period_8cafdac4"
+      ]
+    },
+    "032_meme_carrier_hidden_tips": {
+      "used_at": "2026-06-19T15:12:43",
       "source": "codex_enhance",
       "illustrations": [
         "smartphone",
@@ -418,7 +460,7 @@
       ]
     }
   },
-  "updated_at": "2026-06-19T13:31:37",
+  "updated_at": "2026-06-19T15:12:45",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -507,7 +549,15 @@
       "variants": []
     },
     "030_pick_new_vs_old_subsidy": {
-      "updated_at": "2026-06-19T13:31:37",
+      "updated_at": "2026-06-19T13:59:58",
+      "variants": []
+    },
+    "031_meme_phone_buying_checklist": {
+      "updated_at": "2026-06-19T14:47:10",
+      "variants": []
+    },
+    "032_meme_carrier_hidden_tips": {
+      "updated_at": "2026-06-19T15:12:45",
       "variants": []
     }
   }
