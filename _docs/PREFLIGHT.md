@@ -23,7 +23,7 @@
 
 | 트랙 | 트리거 | 필수 Read | 절대 룰(복창 대상) |
 |---|---|---|---|
-| 카드뉴스 수집 | "수집"/"신규 카드뉴스" | `INSTRUCTIONS_CARDNEWS.md` + `caption_template.md` + `content_guide.md` | **news = D-7 strict**(`:382`), **D-7은 KST 기준**(`TZ=Asia/Seoul date` 확인, `news_d7_filter.py` 게이트), 회피키워드, dup 제외 |
+| 카드뉴스 수집 | "수집"/"신규 카드뉴스" | `INSTRUCTIONS_CARDNEWS.md` + `caption_template.md` + `content_guide.md` + 성과(`유튜브_인사이트` + `인스타` 시트) | **news = D-7 strict**(`:382`), **D-7은 KST 기준**(`TZ=Asia/Seoul date` 확인, `news_d7_filter.py` 게이트), **성과 기준=유튜브 조회수+인스타·릴스(메타 광고 제외)**, 회피키워드, dup 제외 |
 | 카드뉴스 발행 | "N번 발행" | `CARDNEWS_BUILD.md` + `caption_template.md` | 5채널 첫줄 후킹 상이, 사전승낙서, 카드6 source, narration URL/이모지 ❌ |
 | 영상 | "영상"/"promo"/"실사" | `INSTRUCTIONS_SHORTS.md` 또는 `shorts/promo*/README.md` | 트랙별 결(나레이션 유무) 구분 |
 | 광고 운영 | "관리대장"/"메타"/"네이버"/"당근" | `ads/README_FOR_AI.md` + 해당 채널 가이드 | **콘솔 직접 수정 ❌**(clasp가 덮어씀), 컬럼 변경 마이그레이션 후 sync 재호출 |
