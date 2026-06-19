@@ -450,17 +450,27 @@
       ]
     },
     "032_meme_carrier_hidden_tips": {
-      "used_at": "2026-06-19T15:12:43",
-      "source": "codex_enhance",
+      "used_at": "2026-06-19T15:24:08",
+      "source": "uploaded_illustrations",
       "illustrations": [
+        "cpt_4a239341",
+        "document_article",
+        "cpt_85648c73",
+        "gift_voucher",
+        "telecom_discount_compare",
+        "phone_setup_ready",
+        "phone_settings_toggle",
+        "chart_down",
+        "device_os_requirement",
+        "cpt_4b0db59d",
         "smartphone",
-        "aluminum_label",
-        "appliance",
-        "basic_fold_202d754f"
+        "cpt_e2ed2837",
+        "device_data_transfer",
+        "cpt_9cfc2c65"
       ]
     }
   },
-  "updated_at": "2026-06-19T15:12:45",
+  "updated_at": "2026-06-19T15:24:08",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -557,7 +567,7 @@
       "variants": []
     },
     "032_meme_carrier_hidden_tips": {
-      "updated_at": "2026-06-19T15:12:45",
+      "updated_at": "2026-06-19T15:24:08",
       "variants": []
     }
   }

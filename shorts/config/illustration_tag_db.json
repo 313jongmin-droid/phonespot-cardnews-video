@@ -2652,10 +2652,11 @@
         "것들"
       ],
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "note": "자동 발굴 개념: 물어보지 않으면",
-      "available": false
+      "available": true
     },
     "cpt_85648c73": {
       "keywords": [
@@ -2664,10 +2665,11 @@
         "쉬운"
       ],
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "note": "자동 발굴 개념: 손해 보기",
-      "available": false
+      "available": true
     },
     "cpt_4b0db59d": {
       "keywords": [
@@ -2675,20 +2677,22 @@
         "하는"
       ],
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "note": "자동 발굴 개념: 내야 하는",
-      "available": false
+      "available": true
     },
     "cpt_e2ed2837": {
       "keywords": [
         "부담"
       ],
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "note": "자동 발굴 개념: 부담",
-      "available": false
+      "available": true
     },
     "cpt_9cfc2c65": {
       "keywords": [
@@ -2697,11 +2701,12 @@
         "통신비"
       ],
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "note": "자동 발굴 개념: 챙겨 새던",
-      "available": false
+      "available": true
     }
   },
-  "updated_at": "2026-06-19T15:12:45"
+  "updated_at": "2026-06-19T15:24:02"
 }

@@ -1,95 +1,95 @@
 {
-  "slug": "031_meme_phone_buying_checklist",
+  "slug": "032_meme_carrier_hidden_tips",
   "engine": "fallback-mtime",
-  "generated_at": 1781847958.0769413,
+  "generated_at": 1781850213.4687057,
   "requests": [
     {
-      "filename": "cpt_c3ad3e73.png",
-      "variant": "cpt_c3ad3e73",
+      "filename": "cpt_4a239341.png",
+      "variant": "cpt_4a239341",
       "section": "hook",
-      "chunk_index": 3,
-      "concept_label": "호구당할 일이",
+      "chunk_index": 0,
+      "concept_label": "물어보지 않으면",
       "optional": true,
-      "concept_text": "호구당할 일이 cpt c3ad3e73 호구당할 일이 auto concept 호구당할 일이 확 줄어듭니다."
+      "concept_text": "물어보지 않으면 cpt 4a239341 물어보지 않으면 챙겨주지 않는 것들 auto concept 물어보지 않으면 먼저 챙겨주지 않는 것들이 있습니다."
     },
     {
-      "filename": "cpt_4ce4cc8c.png",
-      "variant": "cpt_4ce4cc8c",
-      "section": "fact_1",
-      "chunk_index": 1,
-      "concept_label": "총액 물어보세요",
+      "filename": "cpt_85648c73.png",
+      "variant": "cpt_85648c73",
+      "section": "hook",
+      "chunk_index": 2,
+      "concept_label": "손해 보기",
       "optional": true,
-      "concept_text": "총액 물어보세요 cpt 4ce4cc8c 총액 물어보세요 auto concept 총액\"을 물어보세요."
+      "concept_text": "손해 보기 cpt 85648c73 손해 보기 쉬운 auto concept 손해 보기 쉬운 세 가지를 정리했습니다."
     },
     {
-      "filename": "cpt_349c9de7.png",
-      "variant": "cpt_349c9de7",
-      "section": "fact_2",
-      "chunk_index": 1,
-      "concept_label": "유리한지 계산해",
-      "optional": true,
-      "concept_text": "유리한지 계산해 cpt 349c9de7 유리한지 계산해 달라고 auto concept 유리한지 두 경우를 모두 계산해 달라고 하세요."
-    },
-    {
-      "filename": "cpt_bff86ff7.png",
-      "variant": "cpt_bff86ff7",
+      "filename": "cpt_4b0db59d.png",
+      "variant": "cpt_4b0db59d",
       "section": "fact_2",
       "chunk_index": 2,
-      "concept_label": "한쪽 보여주면",
+      "concept_label": "내야 하는",
       "optional": true,
-      "concept_text": "한쪽 보여주면 cpt bff86ff7 한쪽 보여주면 비교 auto concept 한쪽만 보여주면 비교가 안 됩니다."
+      "concept_text": "내야 하는 cpt 4b0db59d 내야 하는 auto concept 무조건 다 내야 하는 게 아닙니다."
     },
     {
-      "filename": "cpt_de81a562.png",
-      "variant": "cpt_de81a562",
+      "filename": "cpt_e2ed2837.png",
+      "variant": "cpt_e2ed2837",
       "section": "fact_2",
-      "chunk_index": 3,
-      "concept_label": "단말 가격대",
+      "chunk_index": 4,
+      "concept_label": "부담",
       "optional": true,
-      "concept_text": "단말 가격대 cpt de81a562 단말 가격대 따라 정답 auto concept 단말 가격대에 따라 정답이 달라집니다."
+      "concept_text": "부담 cpt e2ed2837 부담 auto concept 부담이 달라집니다."
+    },
+    {
+      "filename": "cpt_9cfc2c65.png",
+      "variant": "cpt_9cfc2c65",
+      "section": "fact_4",
+      "chunk_index": 3,
+      "concept_label": "챙겨 새던",
+      "optional": true,
+      "concept_text": "챙겨 새던 cpt 9cfc2c65 챙겨 새던 통신비 auto concept 이 세 가지만 챙겨도 새던 통신비가 줄어듭니다."
     }
   ],
   "assignments": [
     {
-      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 6월 19일 오후 02_45_52 (5).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 19일 오후 02_45_52 (5).png",
-      "proposed_filename": "cpt_c3ad3e73.png",
+      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 6월 19일 오후 03_23_27 (5).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 19일 오후 03_23_27 (5).png",
+      "proposed_filename": "cpt_4a239341.png",
       "confidence": null,
       "exact_name": false,
       "alternatives": [],
       "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 6월 19일 오후 02_45_52 (4).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 19일 오후 02_45_52 (4).png",
-      "proposed_filename": "cpt_4ce4cc8c.png",
+      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 6월 19일 오후 03_23_27 (4).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 19일 오후 03_23_27 (4).png",
+      "proposed_filename": "cpt_85648c73.png",
       "confidence": null,
       "exact_name": false,
       "alternatives": [],
       "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 6월 19일 오후 02_45_51 (3).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 19일 오후 02_45_51 (3).png",
-      "proposed_filename": "cpt_349c9de7.png",
+      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 6월 19일 오후 03_23_27 (3).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 19일 오후 03_23_27 (3).png",
+      "proposed_filename": "cpt_4b0db59d.png",
       "confidence": null,
       "exact_name": false,
       "alternatives": [],
       "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 6월 19일 오후 02_45_51 (2).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 19일 오후 02_45_51 (2).png",
-      "proposed_filename": "cpt_bff86ff7.png",
+      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 6월 19일 오후 03_23_27 (2).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 19일 오후 03_23_27 (2).png",
+      "proposed_filename": "cpt_e2ed2837.png",
       "confidence": null,
       "exact_name": false,
       "alternatives": [],
       "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 6월 19일 오후 02_45_51 (1).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 19일 오후 02_45_51 (1).png",
-      "proposed_filename": "cpt_de81a562.png",
+      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 6월 19일 오후 03_23_27 (1).png",
+      "candidate_name": "ChatGPT Image 2026년 6월 19일 오후 03_23_27 (1).png",
+      "proposed_filename": "cpt_9cfc2c65.png",
       "confidence": null,
       "exact_name": false,
       "alternatives": [],
