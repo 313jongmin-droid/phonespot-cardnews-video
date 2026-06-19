@@ -1,75 +1,997 @@
 {
-  "slug": "003_geugadaero",
-  "title_short": "조회가=개통가",
-  "video_title": "조회가=개통가",
-  "preset": "showcase",
-  "hook_pattern": "질문형",
+  "slug": "028_pick_senior_phone_3way",
+  "title_short": "부모님 효도폰 3종 비교",
+  "video_title": "부모님 효도폰 3종 비교",
+  "publication_date": "2026.06.19",
+  "sources": "삼성전자 갤럭시 A 공식 + 애플 접근성 가이드 + 폰스팟 광교점 자료",
   "channel_name": "폰스팟",
-  "channel_tagline": "광교 휴대폰 정찰제",
-  "publication_date": "2026.05.29",
+  "channel_tagline": "광교 미니 IT 브리핑",
   "opening": {
-    "line1": "조회한 가격,",
-    "line2": "그대로 될까?",
-    "style": "oversize",
-    "sfx": "whoosh"
+    "line1": "광교 미니 IT 브리핑",
+    "line2": "부모님 효도폰 3종 비교"
   },
   "hook": {
-    "style": "glitch",
-    "sfx": "tick",
-    "caption_chunks": [
-      "본 가격",
-      "매장 가면",
-      "또 다르다"
+    "tts": "부모님 효도폰, 화면 크기만 보고 고르면 후회합니다. 갤럭시 A 시리즈, 보급형 아이폰, 간편모드 세 갈래를 통화·글씨·보이스피싱 차단 기준으로 비교해 드립니다.",
+    "caption_body": [
+      "부모님 폰",
+      "뭐가 좋을까?"
     ],
-    "tts": "온라인에서 본 가격, 매장 가면 또 다르고."
+    "caption_emphasis": [
+      "뭐가 좋을까"
+    ],
+    "headline_lines": [
+      {
+        "text": "부모님 폰"
+      },
+      {
+        "text": "뭐가 좋을까?",
+        "accent": true
+      }
+    ],
+    "meta": "출처: 폰스팟 광교점 자료",
+    "topic": "뉴스",
+    "background_image": "",
+    "caption_chunks": [
+      "부모님 효도폰, 화면 크기만 보고 고르면 후회합니다.",
+      "갤럭시 A 시리즈, 보급형 아이폰,",
+      "간편모드 세 갈래를 통화·글씨·보이스피싱",
+      "차단 기준으로 비교해 드립니다."
+    ],
+    "chunk_visuals": [
+      {
+        "type": "illust",
+        "value": "parents_vision_231bf461"
+      },
+      {
+        "type": "image",
+        "value": "photos/애플_아이폰17.JPG"
+      },
+      {
+        "type": "illust",
+        "value": "chatbot"
+      },
+      {
+        "type": "illust",
+        "value": "impersonation_call"
+      }
+    ],
+    "stat": {
+      "label": "",
+      "value": "",
+      "note": ""
+    },
+    "display_chunks": [
+      "부모님 효도폰, 화면 크기만 보고 고르면 후회합니다",
+      "갤럭시 A 시리즈, 보급형 아이폰,",
+      "간편모드 세 갈래를 통화·글씨·보이스피싱",
+      "차단 기준으로 비교해 드립니다"
+    ],
+    "_codex_caption_lockstep": {
+      "version": 2,
+      "compiler": "korean_caption_compiler_v2",
+      "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+      "chunk_count": 4
+    },
+    "_codex_contextual_narrative": true,
+    "_codex_sync_mode": "global999_tts_caption_lockstep",
+    "tts_chunk_weights": [
+      3371.46,
+      2103.87,
+      1954.25,
+      1496.46
+    ],
+    "_tts_timing": {
+      "mode": "word_boundary_text_align",
+      "windows": [
+        {
+          "start_ms": 0.0,
+          "end_ms": 3371.46,
+          "duration_ms": 3371.46
+        },
+        {
+          "start_ms": 3371.46,
+          "end_ms": 5475.33,
+          "duration_ms": 2103.87
+        },
+        {
+          "start_ms": 5475.33,
+          "end_ms": 7429.58,
+          "duration_ms": 1954.25
+        },
+        {
+          "start_ms": 7429.58,
+          "end_ms": 8926.04,
+          "duration_ms": 1496.46
+        }
+      ],
+      "boundary_count": 22,
+      "caption_signature": "f86a6e9b5781a4e42567f4db0e7a179b992d365e4beb5c5b0229699d2b871237"
+    }
   },
   "facts": [
     {
-      "id": "problem",
-      "style": "barcompare",
-      "sfx": "tick",
-      "caption_chunks": [
-        "조회 따로",
-        "개통 따로",
-        "움직이는 가격"
+      "tts": "6.7형 큰 화면에 글씨·아이콘을 키우는 쉬운 모드를 지원합니다. 통화 중 실시간 자막, 스팸·보이스피싱 차단 기능도 강점입니다. 안드로이드가 익숙한 부모님께 무난합니다.",
+      "caption_body": [
+        "갤럭시 A",
+        "큰 화면·간편 모드"
       ],
-      "tts": "조회 따로 개통 따로. 가격이 자꾸 움직여요."
+      "caption_emphasis": [
+        "큰 화면·간편"
+      ],
+      "headline_lines": [
+        {
+          "text": "갤럭시 A"
+        },
+        {
+          "text": "큰 화면·간편 모드",
+          "accent": true
+        }
+      ],
+      "meta": "출처: 삼성 갤럭시 A",
+      "topic": "뉴스",
+      "background_image": "",
+      "caption_chunks": [
+        "6.7형 큰 화면에 글씨·아이콘을",
+        "키우는 쉬운 모드를 지원합니다.",
+        "통화 중 실시간 자막,",
+        "스팸·보이스피싱 차단 기능도 강점입니다.",
+        "안드로이드가 익숙한 부모님께 무난합니다."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        {
+          "type": "illust",
+          "value": "clock"
+        },
+        {
+          "type": "illust",
+          "value": "prohibit"
+        },
+        {
+          "type": "illust",
+          "value": "parents_chat_c1d70b74"
+        },
+        {
+          "type": "illust",
+          "value": "shield"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_1",
+      "display_chunks": [
+        "6.7형 큰 화면에 글씨·아이콘을",
+        "키우는 쉬운 모드를 지원합니다",
+        "통화 중 실시간 자막,",
+        "스팸·보이스피싱 차단 기능도 강점입니다",
+        "안드로이드가 익숙한 부모님께 무난합니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 5
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        1907.38,
+        2018.66,
+        1276.42,
+        2649.66,
+        2068.63
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 1907.38,
+            "duration_ms": 1907.38
+          },
+          {
+            "start_ms": 1907.38,
+            "end_ms": 3926.04,
+            "duration_ms": 2018.66
+          },
+          {
+            "start_ms": 3926.04,
+            "end_ms": 5202.46,
+            "duration_ms": 1276.42
+          },
+          {
+            "start_ms": 5202.46,
+            "end_ms": 7852.12,
+            "duration_ms": 2649.66
+          },
+          {
+            "start_ms": 7852.12,
+            "end_ms": 9920.75,
+            "duration_ms": 2068.63
+          }
+        ],
+        "boundary_count": 22,
+        "caption_signature": "3d9ac380d4a3a440ac9ea604e173ed95261e0613245b56e905879c7c5474b98e"
+      }
     },
     {
-      "id": "solution",
-      "style": "kinetic-box",
-      "sfx": "ding",
-      "caption_chunks": [
-        "조회한 가격",
-        "즉. 시.",
-        "그대로 개통"
+      "tts": "상대적으로 가볍고 조작이 단순하며 업데이트 지원 기간이 깁니다. 자녀가 아이폰을 쓰면 사진·영상통화 공유가 매끄럽습니다. 다만 화면이 작은 편이라 글씨 크기는 미리 확인하세요.",
+      "caption_body": [
+        "보급형 아이폰",
+        "가볍고 오래 쓰기"
       ],
-      "tts": "폰스팟은 조회한 가격, 즉시 그대로 개통."
+      "caption_emphasis": [
+        "가볍고 오래"
+      ],
+      "headline_lines": [
+        {
+          "text": "보급형 아이폰"
+        },
+        {
+          "text": "가볍고 오래 쓰기",
+          "accent": true
+        }
+      ],
+      "meta": "출처: 애플 접근성 가이드",
+      "topic": "뉴스",
+      "background_image": "",
+      "caption_chunks": [
+        "상대적으로 가볍고 조작이 단순하며",
+        "업데이트 지원 기간이 깁니다.",
+        "자녀가 아이폰을 쓰면 사진·영상통화 공유가 매끄럽습니다.",
+        "다만 화면이 작은 편이라 글씨 크기는 미리 확인하세요."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "cpt_17d8af78"
+        },
+        {
+          "type": "illust",
+          "value": "final_update"
+        },
+        {
+          "type": "image",
+          "value": "photos/애플_아이폰_2개.JPG"
+        },
+        {
+          "type": "illust",
+          "value": "size_guide_afe009df"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_2",
+      "display_chunks": [
+        "상대적으로 가볍고 조작이 단순하며",
+        "업데이트 지원 기간이 깁니다",
+        "자녀가 아이폰을 쓰면 사진·영상통화 공유가 매끄럽습니다",
+        "다만 화면이 작은 편이라 글씨 크기는 미리 확인하세요"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 4
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        1854.58,
+        2062.67,
+        3653.17,
+        2561.62
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 1854.58,
+            "duration_ms": 1854.58
+          },
+          {
+            "start_ms": 1854.58,
+            "end_ms": 3917.25,
+            "duration_ms": 2062.67
+          },
+          {
+            "start_ms": 3917.25,
+            "end_ms": 7570.42,
+            "duration_ms": 3653.17
+          },
+          {
+            "start_ms": 7570.42,
+            "end_ms": 10132.04,
+            "duration_ms": 2561.62
+          }
+        ],
+        "boundary_count": 23,
+        "caption_signature": "e29d6421960b73d3e3cb121e3a09723f95c7f6d6b999bf29df7d5dce4a632f1a"
+      }
     },
     {
-      "id": "trust",
-      "style": "kinetic",
-      "sfx": "pop",
-      "caption_chunks": [
-        "본 가격이",
-        "내 가격",
-        "= 정찰제"
+      "tts": "두 기종 모두 큰 글씨와 단순한 홈 화면으로 바꾸는 간편·이지 모드가 있습니다. 자주 거는 번호를 첫 화면에 두고, 불필요한 앱을 숨기면 헷갈림이 확 줄어듭니다.",
+      "caption_body": [
+        "간편모드",
+        "큰 글씨·단순 화면"
       ],
-      "tts": "본 가격이 곧 내 가격. 그게 정찰제죠."
+      "caption_emphasis": [
+        "큰 글씨·단순"
+      ],
+      "headline_lines": [
+        {
+          "text": "간편모드"
+        },
+        {
+          "text": "큰 글씨·단순 화면",
+          "accent": true
+        }
+      ],
+      "meta": "출처: 폰스팟 광교점 자료",
+      "topic": "뉴스",
+      "background_image": "",
+      "caption_chunks": [
+        "두 기종 모두 큰 글씨와 단순한 홈 화면으로",
+        "바꾸는 간편·이지 모드가 있습니다.",
+        "자주 거는 번호를 첫 화면에 두고,",
+        "불필요한 앱을 숨기면 헷갈림이 확 줄어듭니다."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        {
+          "type": "illust",
+          "value": "mystery_number_63279925"
+        },
+        {
+          "type": "illust",
+          "value": "chart_down"
+        },
+        {
+          "type": "illust",
+          "value": "cpt_9f55187e"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_3",
+      "display_chunks": [
+        "두 기종 모두 큰 글씨와 단순한 홈 화면으로",
+        "바꾸는 간편·이지 모드가 있습니다",
+        "자주 거는 번호를 첫 화면에 두고,",
+        "불필요한 앱을 숨기면 헷갈림이 확 줄어듭니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 4
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        2065.83,
+        2362.0,
+        1681.34,
+        2165.49
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 2065.83,
+            "duration_ms": 2065.83
+          },
+          {
+            "start_ms": 2065.83,
+            "end_ms": 4427.83,
+            "duration_ms": 2362.0
+          },
+          {
+            "start_ms": 4427.83,
+            "end_ms": 6109.17,
+            "duration_ms": 1681.34
+          },
+          {
+            "start_ms": 6109.17,
+            "end_ms": 8274.66,
+            "duration_ms": 2165.49
+          }
+        ],
+        "boundary_count": 25,
+        "caption_signature": "c85739cdf492cd07632dc9603d7501145979d858a4e7d8739d6d88482970aa46"
+      }
+    },
+    {
+      "tts": "부모님 폰은 화려한 기능보다 큰 글씨, 또렷한 통화, 보이스피싱 차단이 1순위입니다. 자녀와 같은 진영(안드로이드/아이폰)으로 맞추면 원격 도움도 쉬워집니다.",
+      "caption_body": [
+        "고르는 기준",
+        "통화·차단 우선"
+      ],
+      "caption_emphasis": [
+        "통화·차단"
+      ],
+      "headline_lines": [
+        {
+          "text": "고르는 기준"
+        },
+        {
+          "text": "통화·차단 우선",
+          "accent": true
+        }
+      ],
+      "meta": "출처: 폰스팟 광교점 자료",
+      "topic": "뉴스",
+      "background_image": "",
+      "caption_chunks": [
+        "부모님 폰은 화려한 기능보다 큰 글씨,",
+        "또렷한 통화, 보이스피싱 차단이 1순위입니다.",
+        "자녀와 같은 진영(안드로이드/아이폰)으로 맞추면",
+        "원격 도움도 쉬워집니다."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        {
+          "type": "illust",
+          "value": "cpt_5fc91d8e"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_4",
+      "display_chunks": [
+        "부모님 폰은 화려한 기능보다 큰 글씨,",
+        "또렷한 통화, 보이스피싱 차단이 1순위입니다",
+        "자녀와 같은 진영(안드로이드/아이폰)으로 맞추면",
+        "원격 도움도 쉬워집니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 4
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        2153.88,
+        3013.37,
+        2755.29,
+        1214.79
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 2153.88,
+            "duration_ms": 2153.88
+          },
+          {
+            "start_ms": 2153.88,
+            "end_ms": 5167.25,
+            "duration_ms": 3013.37
+          },
+          {
+            "start_ms": 5167.25,
+            "end_ms": 7922.54,
+            "duration_ms": 2755.29
+          },
+          {
+            "start_ms": 7922.54,
+            "end_ms": 9137.33,
+            "duration_ms": 1214.79
+          }
+        ],
+        "boundary_count": 21,
+        "caption_signature": "e7b9495de92ade2521ebb13b338b970683d2f7dbadd37cce91b3f1423de71017"
+      }
     }
   ],
   "cta": {
-    "style": "kinetic-box",
-    "sfx": "ding",
-    "caption_chunks": [
-      "가격 그대로",
-      "폰스팟"
+    "tts": "휴대폰 구매할 땐? 지원금부터 무료로 조회해보세요.",
+    "caption_body": [
+      "휴대폰 구매할 땐?",
+      "지원금부터 무료로 조회해보세요"
     ],
-    "tts": "가격 그대로, 폰스팟.",
+    "caption_emphasis": [
+      "지원금부터 무료로 조회해보세요"
+    ],
+    "headline_lines": [
+      {
+        "text": "휴대폰 구매할 땐?"
+      },
+      {
+        "text": "지원금부터 무료로 조회해보세요",
+        "accent": true
+      }
+    ],
+    "meta": "Phonespot 광교점",
+    "topic": "뉴스",
+    "background_image": "",
+    "caption_chunks": [
+      "휴대폰 구매할 땐?",
+      "지원금부터 무료로 조회해보세요"
+    ],
+    "chunk_visuals": [
+      {
+        "type": "illust",
+        "value": "smartphone"
+      },
+      {
+        "type": "logo",
+        "value": null
+      }
+    ],
+    "stat": {
+      "label": "",
+      "value": "",
+      "note": ""
+    },
     "kakao": "@폰스팟광교점",
+    "location": "광교호수공원 B1-47",
     "litt": "litt.ly/phonespot",
-    "location": "광교호수공원 B1-47"
+    "display_chunks": [
+      "휴대폰 구매할 땐?",
+      "지원금부터 무료로 조회해보세요"
+    ],
+    "_codex_caption_lockstep": {
+      "version": 2,
+      "compiler": "korean_caption_compiler_v2",
+      "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+      "chunk_count": 1
+    },
+    "_codex_contextual_narrative": true,
+    "_codex_sync_mode": "global999_tts_caption_lockstep",
+    "_codex_fixed_cta": true,
+    "_codex_narration_source": "fixed_cta_contract",
+    "tts_chunk_weights": [
+      1707.75,
+      1804.54
+    ],
+    "_tts_timing": {
+      "mode": "word_boundary_text_align",
+      "windows": [
+        {
+          "start_ms": 0.0,
+          "end_ms": 1707.75,
+          "duration_ms": 1707.75
+        },
+        {
+          "start_ms": 1707.75,
+          "end_ms": 3512.29,
+          "duration_ms": 1804.54
+        }
+      ],
+      "boundary_count": 6,
+      "caption_signature": "db4c57a05254654841d0c63b2eea20bad43e358510298ef607bf41bcae3b9e5d"
+    }
   },
-  "music_src": "music/confident_01__00.mp3",
-  "music_start": 0
+  "_auto_generated": true,
+  "_chunk_logic_v2": true,
+  "_note": "build_script.py 자동 생성 (v2 로직): 시퀀스 내 이미지 순환 + 마스코트 짝수 시퀀스만.",
+  "_codex_global_999_quality": true,
+  "_codex_common_quality_logic": true,
+  "_codex_sync_quality_logic": true,
+  "_codex_captions_narration_priority": false,
+  "_codex_common_quality_note": "Global 001-999 rule: screen chunks are rebuilt as an ordered, lossless partition of captions.md narration; curated visuals are rebalanced without discarding quality rules.",
+  "_codex_uploaded_illustrations": [
+    {
+      "section": "fact_2",
+      "chunk": 1,
+      "variant": "cpt_17d8af78"
+    },
+    {
+      "section": "fact_3",
+      "chunk": 4,
+      "variant": "cpt_9f55187e"
+    },
+    {
+      "section": "fact_4",
+      "chunk": 4,
+      "variant": "cpt_5fc91d8e"
+    }
+  ],
+  "_codex_semantic_visual_match": {
+    "version": 1,
+    "policy": "Match chunks to GPT source images using prompt.md descriptions, then fallback to tagged reusable illustrations.",
+    "changes": [
+      {
+        "section": "hook",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "parents_vision_231bf461"
+        },
+        "context": "부모님 효도폰, 화면 크기만 보고 고르면 후회합니다 갤럭시 A 시리즈, 보급형 아이폰, 부모님 폰 뭐가 좋을까? ['부모님 폰', '뭐가 좋을까?'] 뉴스",
+        "reason": "illust score 24 (content n/a)"
+      },
+      {
+        "section": "hook",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "image",
+          "value": "photos/애플_아이폰17.JPG"
+        },
+        "context": "부모님 효도폰, 화면 크기만 보고 고르면 후회합니다 갤럭시 A 시리즈, 보급형 아이폰, 간편모드 세 갈래를 통화·글씨·보이스피싱 부모님 폰 뭐가 좋을까? ['부모님 폰', '뭐가 좋을까?'] 뉴스",
+        "reason": "photo lexical dist=1 gen=0: 애플_아이폰17.JPG"
+      },
+      {
+        "section": "hook",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "chatbot"
+        },
+        "context": "갤럭시 A 시리즈, 보급형 아이폰, 간편모드 세 갈래를 통화·글씨·보이스피싱 차단 기준으로 비교해 드립니다 부모님 폰 뭐가 좋을까? ['부모님 폰', '뭐가 좋을까?'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "hook",
+        "chunk": 4,
+        "from": {
+          "type": "mascot",
+          "value": "surprised"
+        },
+        "to": {
+          "type": "illust",
+          "value": "impersonation_call"
+        },
+        "context": "간편모드 세 갈래를 통화·글씨·보이스피싱 차단 기준으로 비교해 드립니다 부모님 폰 뭐가 좋을까? ['부모님 폰', '뭐가 좋을까?'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "clock"
+        },
+        "context": "6.7형 큰 화면에 글씨·아이콘을 키우는 쉬운 모드를 지원합니다 통화 중 실시간 자막, 갤럭시 A 큰 화면·간편 모드 ['갤럭시 A', '큰 화면·간편 모드'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "prohibit"
+        },
+        "context": "키우는 쉬운 모드를 지원합니다 통화 중 실시간 자막, 스팸·보이스피싱 차단 기능도 강점입니다 갤럭시 A 큰 화면·간편 모드 ['갤럭시 A', '큰 화면·간편 모드'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "basic_fold_202d754f"
+        },
+        "to": {
+          "type": "illust",
+          "value": "parents_chat_c1d70b74"
+        },
+        "context": "통화 중 실시간 자막, 스팸·보이스피싱 차단 기능도 강점입니다 안드로이드가 익숙한 부모님께 무난합니다 갤럭시 A 큰 화면·간편 모드 ['갤럭시 A', '큰 화면·간편 모드'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 5,
+        "from": {
+          "type": "illust",
+          "value": "battery_capacity"
+        },
+        "to": {
+          "type": "illust",
+          "value": "shield"
+        },
+        "context": "스팸·보이스피싱 차단 기능도 강점입니다 안드로이드가 익숙한 부모님께 무난합니다 갤럭시 A 큰 화면·간편 모드 ['갤럭시 A', '큰 화면·간편 모드'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "cpt_17d8af78"
+        },
+        "to": {
+          "type": "illust",
+          "value": "event_period_8cafdac4"
+        },
+        "context": "상대적으로 가볍고 조작이 단순하며 업데이트 지원 기간이 깁니다 보급형 아이폰 가볍고 오래 쓰기 ['보급형 아이폰', '가볍고 오래 쓰기'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "final_update"
+        },
+        "context": "상대적으로 가볍고 조작이 단순하며 업데이트 지원 기간이 깁니다 자녀가 아이폰을 쓰면 사진·영상통화 공유가 매끄럽습니다 보급형 아이폰 가볍고 오래 쓰기 ['보급형 아이폰', '가볍고 오래 쓰기'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "image",
+          "value": "photos/애플_아이폰_2개.JPG"
+        },
+        "context": "업데이트 지원 기간이 깁니다 자녀가 아이폰을 쓰면 사진·영상통화 공유가 매끄럽습니다 다만 화면이 작은 편이라 글씨 크기는 미리 확인하세요 보급형 아이폰 가볍고 오래 쓰기 ['보급형 아이폰', '가볍고 오래 쓰기'] ",
+        "reason": "photo lexical dist=1 gen=0: 애플_아이폰_2개.JPG"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 4,
+        "from": {
+          "type": "mascot",
+          "value": "suspicious"
+        },
+        "to": {
+          "type": "illust",
+          "value": "size_guide_afe009df"
+        },
+        "context": "자녀가 아이폰을 쓰면 사진·영상통화 공유가 매끄럽습니다 다만 화면이 작은 편이라 글씨 크기는 미리 확인하세요 보급형 아이폰 가볍고 오래 쓰기 ['보급형 아이폰', '가볍고 오래 쓰기'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "두 기종 모두 큰 글씨와 단순한 홈 화면으로 바꾸는 간편·이지 모드가 있습니다 간편모드 큰 글씨·단순 화면 ['간편모드', '큰 글씨·단순 화면'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "mystery_number_63279925"
+        },
+        "context": "두 기종 모두 큰 글씨와 단순한 홈 화면으로 바꾸는 간편·이지 모드가 있습니다 자주 거는 번호를 첫 화면에 두고, 간편모드 큰 글씨·단순 화면 ['간편모드', '큰 글씨·단순 화면'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "chart_down"
+        },
+        "context": "바꾸는 간편·이지 모드가 있습니다 자주 거는 번호를 첫 화면에 두고, 불필요한 앱을 숨기면 헷갈림이 확 줄어듭니다 간편모드 큰 글씨·단순 화면 ['간편모드', '큰 글씨·단순 화면'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "cpt_9f55187e"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "자주 거는 번호를 첫 화면에 두고, 불필요한 앱을 숨기면 헷갈림이 확 줄어듭니다 간편모드 큰 글씨·단순 화면 ['간편모드', '큰 글씨·단순 화면'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        "context": "부모님 폰은 화려한 기능보다 큰 글씨, 또렷한 통화, 보이스피싱 차단이 1순위입니다 고르는 기준 통화·차단 우선 ['고르는 기준', '통화·차단 우선'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "부모님 폰은 화려한 기능보다 큰 글씨, 또렷한 통화, 보이스피싱 차단이 1순위입니다 자녀와 같은 진영(안드로이드/아이폰)으로 맞추면 고르는 기준 통화·차단 우선 ['고르는 기준', '통화·차단 우선'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "또렷한 통화, 보이스피싱 차단이 1순위입니다 자녀와 같은 진영(안드로이드/아이폰)으로 맞추면 원격 도움도 쉬워집니다 고르는 기준 통화·차단 우선 ['고르는 기준', '통화·차단 우선'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "cpt_5fc91d8e"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "자녀와 같은 진영(안드로이드/아이폰)으로 맞추면 원격 도움도 쉬워집니다 고르는 기준 통화·차단 우선 ['고르는 기준', '통화·차단 우선'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      }
+    ],
+    "weak": [
+      {
+        "section": "fact_1",
+        "chunk": 1,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "6.7형 큰 화면에 글씨·아이콘을 키우는 쉬운 모드를 지원합니다 갤럭시 A 큰 화면·간편 모드 ['갤럭시 A', '큰 화면·간편 모드'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_3",
+        "chunk": 1,
+        "current": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "두 기종 모두 큰 글씨와 단순한 홈 화면으로 바꾸는 간편·이지 모드가 있습니다 간편모드 큰 글씨·단순 화면 ['간편모드', '큰 글씨·단순 화면'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "자주 거는 번호를 첫 화면에 두고, 불필요한 앱을 숨기면 헷갈림이 확 줄어듭니다 간편모드 큰 글씨·단순 화면 ['간편모드', '큰 글씨·단순 화면'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_4",
+        "chunk": 1,
+        "current": {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        "context": "부모님 폰은 화려한 기능보다 큰 글씨, 또렷한 통화, 보이스피싱 차단이 1순위입니다 고르는 기준 통화·차단 우선 ['고르는 기준', '통화·차단 우선'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_4",
+        "chunk": 2,
+        "current": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "부모님 폰은 화려한 기능보다 큰 글씨, 또렷한 통화, 보이스피싱 차단이 1순위입니다 자녀와 같은 진영(안드로이드/아이폰)으로 맞추면 고르는 기준 통화·차단 우선 ['고르는 기준', '통화·차단 우선'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_4",
+        "chunk": 3,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "또렷한 통화, 보이스피싱 차단이 1순위입니다 자녀와 같은 진영(안드로이드/아이폰)으로 맞추면 원격 도움도 쉬워집니다 고르는 기준 통화·차단 우선 ['고르는 기준', '통화·차단 우선'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_4",
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "자녀와 같은 진영(안드로이드/아이폰)으로 맞추면 원격 도움도 쉬워집니다 고르는 기준 통화·차단 우선 ['고르는 기준', '통화·차단 우선'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      }
+    ]
+  },
+  "_codex_effective_script": {
+    "version": 2,
+    "slug": "028_pick_senior_phone_3way",
+    "source": "C:\\backup\\phonespot_cardnews\\cardnews\\output\\028_pick_senior_phone_3way\\shorts_script.json",
+    "override_applied": false,
+    "override_sections": []
+  }
 }

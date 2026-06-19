@@ -2447,10 +2447,11 @@
         "단순하며"
       ],
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "note": "자동 발굴 개념: 상대적 가볍고",
-      "available": false
+      "available": true
     },
     "cpt_9f55187e": {
       "keywords": [
@@ -2460,10 +2461,11 @@
         "헷갈림"
       ],
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "note": "자동 발굴 개념: 불필요한 앱을",
-      "available": false
+      "available": true
     },
     "cpt_5fc91d8e": {
       "keywords": [
@@ -2471,11 +2473,86 @@
         "도움"
       ],
       "tags": [
-        "auto"
+        "auto",
+        "library"
       ],
       "note": "자동 발굴 개념: 원격 도움",
-      "available": false
+      "available": true
+    },
+    "cpt_c9dd9b89": {
+      "keywords": [
+        "야간",
+        "진영",
+        "좋아졌지",
+        "결과물",
+        "톤이"
+      ],
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "note": "자동 발굴 개념: 야간 진영",
+      "available": true
+    },
+    "cpt_0ecf996a": {
+      "keywords": [
+        "영상",
+        "흔들림",
+        "보정",
+        "일관성",
+        "강점"
+      ],
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "note": "자동 발굴 개념: 영상 흔들림",
+      "available": true
+    },
+    "cpt_aff73c54": {
+      "keywords": [
+        "스펙",
+        "숫자",
+        "말고",
+        "실제로",
+        "찍을"
+      ],
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "note": "자동 발굴 개념: 스펙 숫자",
+      "available": true
+    },
+    "cpt_d124a858": {
+      "keywords": [
+        "편집",
+        "다섯",
+        "가지로",
+        "갈리",
+        "실사용"
+      ],
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "note": "자동 발굴 개념: 편집 다섯",
+      "available": true
+    },
+    "cpt_356af649": {
+      "keywords": [
+        "채도",
+        "높아",
+        "SNS",
+        "올리기"
+      ],
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "note": "자동 발굴 개념: 채도 높아",
+      "available": true
     }
   },
-  "updated_at": "2026-06-19T11:51:44"
+  "updated_at": "2026-06-19T12:29:25"
 }

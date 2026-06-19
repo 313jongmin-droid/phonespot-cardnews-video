@@ -364,18 +364,51 @@
       ]
     },
     "028_pick_senior_phone_3way": {
-      "used_at": "2026-06-19T11:51:42",
-      "source": "codex_enhance",
+      "used_at": "2026-06-19T11:55:51",
+      "source": "uploaded_illustrations",
       "illustrations": [
+        "parents_vision_231bf461",
+        "chatbot",
+        "impersonation_call",
         "smartphone",
-        "aluminum_label",
-        "appliance",
-        "basic_fold_202d754f",
-        "battery_capacity"
+        "clock",
+        "prohibit",
+        "parents_chat_c1d70b74",
+        "shield",
+        "cpt_17d8af78",
+        "final_update",
+        "size_guide_afe009df",
+        "phone_setup_ready",
+        "mystery_number_63279925",
+        "chart_down",
+        "cpt_9f55187e",
+        "device_os_requirement",
+        "device_data_transfer",
+        "cpt_5fc91d8e"
+      ]
+    },
+    "029_pick_galaxy_vs_iphone_camera": {
+      "used_at": "2026-06-19T12:29:30",
+      "source": "uploaded_illustrations",
+      "illustrations": [
+        "cpt_aff73c54",
+        "document_article",
+        "cpt_d124a858",
+        "cpt_356af649",
+        "smartphone",
+        "market_cap",
+        "phone_setup_ready",
+        "size_guide_afe009df",
+        "event_period_8cafdac4",
+        "cpt_c9dd9b89",
+        "cpt_0ecf996a",
+        "device_data_transfer",
+        "samsung_ai",
+        "store"
       ]
     }
   },
-  "updated_at": "2026-06-19T11:51:43",
+  "updated_at": "2026-06-19T12:29:30",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -456,7 +489,11 @@
       "variants": []
     },
     "028_pick_senior_phone_3way": {
-      "updated_at": "2026-06-19T11:51:43",
+      "updated_at": "2026-06-19T11:55:52",
+      "variants": []
+    },
+    "029_pick_galaxy_vs_iphone_camera": {
+      "updated_at": "2026-06-19T12:21:43",
       "variants": []
     }
   }
