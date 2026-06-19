@@ -24,7 +24,7 @@ ARTICLES = SCRIPT_DIR.parent / 'articles'
 REQUIRED_ERROR = ['slug', 'title', 'cards', 'captions_md']
 # 스펙/품질 키 (CARDNEWS_BUILD D-2 권장 스키마)
 REQUIRED_WARN = ['content_type', 'publication_date', 'source_line', 'narration_md']
-VALID_TYPES = {'news', 'scam', 'tip', 'qa'}
+VALID_TYPES = {'news', 'scam', 'tip', 'qa', 'pick', 'meme', 'life'}
 NUM_RE = re.compile(r'^(\d{3})_')
 # 해시태그 = # 뒤에 공백/# 아닌 글자가 바로 옴 (마크다운 '## 헤더'는 제외)
 HASHTAG_RE = re.compile(r'#[^\s#]')
