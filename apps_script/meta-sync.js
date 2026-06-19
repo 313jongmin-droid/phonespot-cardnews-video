@@ -1381,7 +1381,7 @@ function saveBenchmarkSelectedFromGenerator(itemsRaw, searchTerm) {
 // ============ 메뉴 (기존 onOpen에서 호출) ============
 // 원칙 (2026-06-09): 시트 메뉴 = 자동화·백엔드 운영. 사용자 도구(벤치마크 수집, 카피·이미지 생성, JSON Export 등) 전부 generator.html(Web App) 내부에서 처리.
 function buildMetaSyncMenu_(ui) {
-  ui.createMenu('📘 메타 자동화')
+  ui.createMenu('📘 메타')
     .addItem('🔄 지금 동기화 (테스트)', 'manualSyncToday')
     .addItem('📥 어제 성과만 가져오기', 'syncMetaDaily')
     .addItem('🎨 광고소재 라이브러리 갱신', 'syncMetaCreatives')

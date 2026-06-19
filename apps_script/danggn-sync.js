@@ -393,7 +393,7 @@ function logSync_(funcName, status, message) {
  * Code.js onOpen에서 buildDanggnSyncMenu_(SpreadsheetApp.getUi()) 호출.
  */
 function buildDanggnSyncMenu_(ui) {
-  ui.createMenu('🟠 당근 자동화')
+  ui.createMenu('🟠 당근')
     .addItem('🔄 GA4 매칭 새로고침 (전체 행)', 'syncDanggnGA4')
     .addSeparator()
     .addItem('🆕 시트 신설 / 헤더 갱신', 'createDanggnIntegratedSheet')

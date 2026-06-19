@@ -149,7 +149,7 @@ function setupGoogleTrigger() {
 
 // ============ 메뉴 ============
 function buildGoogleSyncMenu_(ui) {
-  ui.createMenu('🔵 구글 자동화')
+  ui.createMenu('🔵 구글')
     .addItem('🔄 GA4 매칭 새로고침 (전체 행)', 'syncGoogleGA4')
     .addSeparator()
     .addItem('🆕 시트 신설 / 헤더 갱신', 'createGoogleIntegratedSheet')
