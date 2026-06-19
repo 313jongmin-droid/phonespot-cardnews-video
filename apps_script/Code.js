@@ -24,7 +24,6 @@ function onOpen() {
     .addItem('📥 GA4 30일 다시 가져오기 (백필)', 'fetchGA4Backfill')
     .addSeparator()
     .addItem('📊 SNS 월별 합계 수식 복구', 'repairSNSMonthlySummaries')
-    .addItem('📉 문의접수 입력률 갱신', 'updateKakaoInquiryCoverage')
     .addItem('🏷️ UTM 슬러그 드롭다운 갱신', 'refreshUtmSlugDropdowns')
     .addItem('🔗 UTM named range 셋업/복구', 'setupUtmNamedRanges')
     .addItem('⏰ 야간 전체 새로고침 트리거 (02:45)', 'setupRefreshAllTrigger')
@@ -92,7 +91,6 @@ function refreshAll() {
   try { updateChannelMatrixWithGA4(); } catch (e) { errors.push('updateChannelMatrixWithGA4: ' + e.message); }
   try { updateSNSReport({ forceRebuild: false, showAlert: false }); } catch (e) { errors.push('updateSNSReport: ' + e.message); }
   try { repairSNSMonthlySummaries(false); } catch (e) { errors.push('repairSNSMonthlySummaries: ' + e.message); }
-  try { updateKakaoInquiryCoverage(false); } catch (e) { errors.push('updateKakaoInquiryCoverage: ' + e.message); }
   try { addTimeSeriesChart(); } catch (e) { errors.push('addTimeSeriesChart: ' + e.message); }
   try { if (typeof runHealthCheck_ === 'function') runHealthCheck_(); } catch (e) {}
 
@@ -766,7 +764,6 @@ function updateKakaoInquiryCoverage(showAlert) {
   setupKakaoDailyReportHeadersOnly_(sh);
 
   const defaultYear = new Date().getFullYear();
-  const ssTz = SpreadsheetApp.getActive().getSpreadsheetTimeZone();  // ★ 시트 시간대 기준(서울이 아니어도 날짜 안 밀림)
   const sheetLastRow = Math.max(sh.getLastRow(), KAKAO_REPORT_DATA_ROW);
 
   const inqValues = sheetLastRow >= 2 ? sh.getRange(2, 1, sheetLastRow - 1, 3).getValues() : [];
@@ -819,7 +816,7 @@ function updateKakaoInquiryCoverage(showAlert) {
     else if (inputRate >= 0.7) status = '일부누락';
     else if (inputRate >= 0.5) status = '관리불안정';
     else status = '대량누락';
-    normalizedDates.push([ymd ? Utilities.parseDate(ymd, ssTz, 'yyyy-MM-dd') : row[0]]);
+    normalizedDates.push([ymd ? new Date(ymd + 'T12:00:00Z')  /* 정오 UTC = 모든 시간대에서 같은 날짜 표시 */ : row[0]]);
     out.push([input, inputRate, missing, opened, openRate, status]);
   });
 
