@@ -81,7 +81,7 @@ cta=cards[-1], 각 구간 TTS=card body). 그래서 기사 JSON 하나가 공통
     { "image": "card_3.png", "headline": "...", "body": "...", "source": "..." },
     { "image": "card_4.png", "headline": "...", "body": "...", "source": "..." },
     { "image": "card_5.png", "headline": "...", "body": "...", "source": "..." },
-    { "image": "card_6.png", "headline": "마무리/CTA", "body": "폰스팟 광교점 안내 등.", "source": "" }
+    { "image": "card_6.png", "headline": "마무리/CTA", "body": "휴대폰성지 폰스팟 안내 등.", "source": "" }
   ],
   "captions_md": "## 1. 네이버 블로그 ... (5채널, 아래 규칙)",
   "narration_md": "## 인트로\n...\n## 본문\n...",
@@ -130,7 +130,7 @@ cta=cards[-1], 각 구간 TTS=card body). 그래서 기사 JSON 하나가 공통
 ### captions_md (5채널 SNS)
 - `cardnews/templates/caption_template.md` 를 그대로 따른다(채널 1 네이버, 2 스레드, 3 인스타,
   4 유튜브, 5 틱톡).
-- **유튜브(채널4)**: 제목(특수문자 OK) + ▶영상 요약 + ▶폰스팟 광교점 + [사전승낙서] + 해시태그.
+- **유튜브(채널4)**: 제목(특수문자 OK) + ▶영상 요약 + ▶휴대폰성지 폰스팟 + [사전승낙서] + 해시태그.
   **타임스탬프·핵심 데이터·출처 줄은 넣지 않는다.**
 
 ### narration_md (영상 나레이션 = TTS 원천)

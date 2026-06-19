@@ -65,7 +65,7 @@ export const PhonespotLogo: React.FC<Props> = ({ filename }) => {
               marginTop: 20,
             }}
           >
-            광교 미니 IT 브리핑
+            휴대폰성지 IT 브리핑
           </div>
         </>
       )}

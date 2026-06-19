@@ -27,6 +27,15 @@ DESK = ROOT / "CODEX_VIDEO_DESK"
 RESULTS = DESK / "RESULTS"
 RUNTIME_SCRIPT = ROOT / "shorts" / "public" / "shorts_script.json"
 
+# 캡션 템플릿 토큰 → 실제 링크(caption_template.md의 {LITTLY}/{PRECON_URL}) — 종민 지정 2026-06-19
+LITTLY_URL = "https://litt.ly/phonespot"
+PRECON_URL = "https://ictmarket.or.kr:8443/precon/pop_CertIcon.do?PRECON_REQ_ID=PRE0000194479&YN=1"
+
+
+def apply_link_tokens(text: str) -> str:
+    """캡션의 {LITTLY}=리틀리 허브, {PRECON_URL}=사전승낙서 토큰을 실제 URL로 치환."""
+    return (text or "").replace("{LITTLY}", LITTLY_URL).replace("{PRECON_URL}", PRECON_URL)
+
 
 def read_text(path: Path) -> str:
     if not path.exists():
@@ -72,7 +81,7 @@ def compact_text(value: str, fallback: str = "") -> str:
 
 def strip_youtube_extra_sections(text: str) -> str:
     """유튜브 설명에서 ▶타임스탬프 · ▶핵심 데이터 · ▶출처 블록을 제거한다.
-    제목 + ▶영상 요약 + ▶폰스팟 광교점 + 사전승낙서 + 해시태그만 남긴다."""
+    제목 + ▶영상 요약 + ▶휴대폰성지 폰스팟 + 사전승낙서 + 해시태그만 남긴다."""
     drops = ("타임스탬프", "핵심 데이터", "핵심데이터", "출처")
     out = []
     skipping = False
@@ -133,6 +142,18 @@ def script_data(slug: str) -> dict:
         return json.loads(read_text(path))
     except json.JSONDecodeError:
         return {}
+
+
+def article_captions(slug: str) -> str:
+    """영상-only 슬러그는 output/<slug>/captions.md 가 없다(그 파일은 카드뉴스 렌더가 생성).
+    그 경우 기사 JSON(cardnews/articles/<slug>.json)의 captions_md 로 폴백한다."""
+    path = ROOT / "cardnews" / "articles" / f"{slug}.json"
+    if not path.exists():
+        return ""
+    try:
+        return str((json.loads(read_text(path)) or {}).get("captions_md") or "")
+    except json.JSONDecodeError:
+        return ""
 
 
 def matching_runtime_script(slug: str) -> Path | None:
@@ -349,6 +370,9 @@ def package_for(video: Path, slug: str, date_text: str | None = None) -> Path:
     override_path = DESK / "CHUNK_OVERRIDES" / f"{slug}.json"
     effective_script_path = matching_runtime_script(slug)
     captions = read_text(captions_path)
+    if not captions.strip():
+        captions = article_captions(slug)  # 영상-only: output/captions.md 없음 → 기사 JSON 폴백
+    captions = apply_link_tokens(captions)  # {LITTLY}/{PRECON_URL} → 실제 URL
     sections = sections_from_captions(captions)
     data = script_data(slug)
     title = preferred_title(slug, data)

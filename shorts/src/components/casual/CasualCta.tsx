@@ -25,7 +25,7 @@ interface Props {
 }
 
 // 닫기 CTA = 일러스트 대신 디자인 카드(오프닝 후킹과 같은 결: 다크+주황 글로우+키커).
-// "휴대폰 구매할 땐? → 지원금부터 무료로 조회" + 폰스팟 광교점 연락처.
+// "휴대폰 구매할 땐? → 지원금부터 무료로 조회" + 휴대폰성지 폰스팟 연락처.
 export const CasualCta: React.FC<Props> = ({ data, audioKey, durFrames }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -33,8 +33,8 @@ export const CasualCta: React.FC<Props> = ({ data, audioKey, durFrames }) => {
   const chunks = (data.caption_chunks || []).filter(Boolean);
   const hook = (chunks[0] || "휴대폰 구매할 땐?").trim();
   const punch = (chunks.slice(1).join(" ") || "지원금부터 무료로 조회").trim();
-  const kakao = data.kakao || "@폰스팟광교점";
-  const location = data.location || "광교호수공원 B1-47";
+  const kakao = data.kakao || "@휴대폰성지폰스팟";
+  const location = data.location || "내 손 안의 성지찾기, 폰스팟";
   const litt = data.litt || "litt.ly/phonespot";
 
   const kicker = interpolate(frame, [0, 5], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
@@ -87,7 +87,7 @@ export const CasualCta: React.FC<Props> = ({ data, audioKey, durFrames }) => {
             transform: `translateY(${(1 - kicker) * -16}px)`,
           }}
         >
-          {"폰스팟 광교점"}
+          {"휴대폰성지 폰스팟"}
         </div>
 
         {/* 후킹 */}

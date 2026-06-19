@@ -87,7 +87,7 @@ export const CoverShort: React.FC<{ script: Script }> = ({ script }) => {
           {"폰스팟"}
         </div>
         <div style={{ color: INK, fontWeight: 700, fontSize: 30, opacity: 0.7 }}>
-          {"광교 IT 브리핑"}
+          {"휴대폰성지 IT 브리핑"}
         </div>
       </div>
 
@@ -134,7 +134,7 @@ export const CoverShort: React.FC<{ script: Script }> = ({ script }) => {
           <div style={{ color: BRAND, fontWeight: 900, fontSize: 96, lineHeight: 1.1, letterSpacing: -2.5 }}>{l2}</div>
         ) : null}
         <div style={{ color: INK, fontWeight: 700, fontSize: 34, opacity: 0.55, marginTop: 22 }}>
-          {"@폰스팟광교점"}
+          {"@휴대폰성지폰스팟"}
         </div>
       </div>
     </AbsoluteFill>

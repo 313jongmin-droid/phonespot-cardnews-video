@@ -67,7 +67,7 @@ export const CtaCard: React.FC<Props> = ({ data, channelName, durFrames }) => {
         }}
       >
         <div style={{ fontSize: 34, fontWeight: 600, color: "#FFE6D8", opacity: line(6) }}>
-          광교점 폰스팟
+          휴대폰성지 폰스팟
         </div>
         <div
           style={{

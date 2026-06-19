@@ -294,8 +294,8 @@ def auto_polish(slug, force=False):
             "stat": {"label": "", "value": "", "note": ""},
         }
         if is_cta:
-            d["kakao"] = "@폰스팟광교점"
-            d["location"] = "광교호수공원 B1-47"
+            d["kakao"] = "@휴대폰성지폰스팟"
+            d["location"] = "내 손 안의 성지찾기, 폰스팟"
             d["litt"] = "litt.ly/phonespot"
         return d
 
@@ -315,8 +315,8 @@ def auto_polish(slug, force=False):
         "publication_date": art.get("publication_date", ""),
         "sources": src_line,
         "channel_name": "폰스팟",
-        "channel_tagline": "광교 미니 IT 브리핑",
-        "opening": {"line1": "광교 미니 IT 브리핑", "line2": title},
+        "channel_tagline": "휴대폰성지 IT 브리핑",
+        "opening": {"line1": "휴대폰성지 IT 브리핑", "line2": title},
         "hook": hook,
         "facts": facts,
         "cta": cta,
