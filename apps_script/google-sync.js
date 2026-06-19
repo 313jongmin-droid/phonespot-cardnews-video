@@ -149,12 +149,22 @@ function setupGoogleTrigger() {
 
 // ============ 메뉴 ============
 function buildGoogleSyncMenu_(ui) {
-  ui.createMenu('🔵 구글')
-    .addItem('🔄 GA4 매칭 새로고침 (전체 행)', 'syncGoogleGA4')
+  const m = ui.createMenu('🔵 구글');
+  // Ads API 운영데이터(D~F) — google-ads-sync.js 존재 시에만 노출
+  if (typeof syncGoogleAdsData === 'function') {
+    m.addItem('📥 Ads API 수집 (최근 7일)', 'syncGoogleAdsData')
+      .addItem('📥 Ads API 백필 (최근 30일)', 'syncGoogleAdsData30')
+      .addItem('🔑 Ads 연결 테스트', 'testGoogleAds')
+      .addSeparator();
+  }
+  m.addItem('🔄 GA4 매칭 새로고침 (전체 행)', 'syncGoogleGA4')
     .addSeparator()
     .addItem('🆕 시트 신설 / 헤더 갱신', 'createGoogleIntegratedSheet')
     .addItem('🔍 미매핑 광고그룹 보기', 'showUnmappedGoogleAdgroups')
     .addSeparator()
-    .addItem('⏰ 구글 Daily Trigger 설정 (02:35)', 'setupGoogleTrigger')
-    .addToUi();
+    .addItem('⏰ GA4 매칭 Trigger 설정 (02:35)', 'setupGoogleTrigger');
+  if (typeof setupGoogleAdsTrigger === 'function') {
+    m.addItem('⏰ Ads 수집 Trigger 설정 (02:25)', 'setupGoogleAdsTrigger');
+  }
+  m.addToUi();
 }
