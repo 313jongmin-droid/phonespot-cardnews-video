@@ -1,0 +1,73 @@
+{
+  "slug": "015_balpum",
+  "title_short": "발품 vs 조회",
+  "video_title": "발품 vs 조회",
+  "preset": "data",
+  "hook_pattern": "비교형",
+  "channel_name": "",
+  "channel_tagline": "",
+  "publication_date": "2026.05.29",
+  "opening": {
+    "line1": "매장 세 곳",
+    "line2": "vs 조회 한 번",
+    "style": "oversize",
+    "sfx": "whoosh"
+  },
+  "hook": {
+    "style": "barcompare",
+    "sfx": "pop",
+    "caption_chunks": [
+      "발품",
+      "한참 vs",
+      "조회 한 번"
+    ],
+    "tts": "발품 한참 vs 조회 한 번."
+  },
+  "facts": [
+    {
+      "id": "problem",
+      "style": "barcompare",
+      "sfx": "pop",
+      "caption_chunks": [
+        "매장마다",
+        "말이",
+        "다르고"
+      ],
+      "tts": "매장마다 말이 다르고."
+    },
+    {
+      "id": "solution",
+      "style": "counter",
+      "sfx": "tick",
+      "caption_chunks": [
+        "시간",
+        "버리고",
+        "헷갈림"
+      ],
+      "tts": "시간 버리고 헷갈리기만."
+    },
+    {
+      "id": "trust",
+      "style": "statgrid",
+      "sfx": "pop",
+      "caption_chunks": [
+        "폰스팟",
+        "한 번에",
+        "비교 끝"
+      ],
+      "tts": "폰스팟은 한 번에 비교 끝."
+    }
+  ],
+  "cta": {
+    "style": "kinetic-box",
+    "sfx": "ding",
+    "caption_chunks": [
+      "발품 그만",
+      "조회로"
+    ],
+    "tts": "발품 그만, 조회로 끝내세요.",
+    "kakao": "",
+    "litt": "",
+    "location": ""
+  }
+}

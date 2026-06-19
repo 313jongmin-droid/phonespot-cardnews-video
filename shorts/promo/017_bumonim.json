@@ -1,0 +1,73 @@
+{
+  "slug": "017_bumonim",
+  "title_short": "부모님 폰",
+  "video_title": "부모님 폰",
+  "preset": "calm",
+  "hook_pattern": "감성·공감",
+  "channel_name": "",
+  "channel_tagline": "",
+  "publication_date": "2026.05.29",
+  "opening": {
+    "line1": "부모님 폰,",
+    "line2": "대신 알아볼 때",
+    "style": "oversize",
+    "sfx": "whoosh"
+  },
+  "hook": {
+    "style": "reveal",
+    "sfx": "whoosh",
+    "caption_chunks": [
+      "혹시",
+      "호갱 될까",
+      "걱정"
+    ],
+    "tts": "부모님 폰, 혹시 호갱 될까 걱정되죠."
+  },
+  "facts": [
+    {
+      "id": "problem",
+      "style": "reveal",
+      "sfx": "whoosh",
+      "caption_chunks": [
+        "멀리 안 가도",
+        "집에서",
+        "확인"
+      ],
+      "tts": "멀리 안 가도 집에서 확인."
+    },
+    {
+      "id": "solution",
+      "style": "swiss",
+      "sfx": "tick",
+      "caption_chunks": [
+        "가격도",
+        "미리",
+        "투명하게"
+      ],
+      "tts": "가격도 미리 투명하게."
+    },
+    {
+      "id": "trust",
+      "style": "kinetic-box",
+      "sfx": "ding",
+      "caption_chunks": [
+        "카톡으로",
+        "대신",
+        "알아보기"
+      ],
+      "tts": "카톡으로 대신 알아보기."
+    }
+  ],
+  "cta": {
+    "style": "kinetic-box",
+    "sfx": "ding",
+    "caption_chunks": [
+      "부모님 폰도",
+      "안심"
+    ],
+    "tts": "부모님 폰도 안심하고, 폰스팟.",
+    "kakao": "",
+    "litt": "",
+    "location": ""
+  }
+}

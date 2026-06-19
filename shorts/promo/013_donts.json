@@ -1,0 +1,73 @@
+{
+  "slug": "013_donts",
+  "title_short": "절대 하지 말 것",
+  "video_title": "절대 하지 말 것",
+  "preset": "punchy",
+  "hook_pattern": "위협형",
+  "channel_name": "",
+  "channel_tagline": "",
+  "publication_date": "2026.05.29",
+  "opening": {
+    "line1": "휴대폰 살 때",
+    "line2": "이건 하지 마세요",
+    "style": "oversize",
+    "sfx": "punch"
+  },
+  "hook": {
+    "style": "glitch",
+    "sfx": "tick",
+    "caption_chunks": [
+      "모르고 사면",
+      "호갱",
+      "됩니다"
+    ],
+    "tts": "휴대폰 살 때 이거 모르면, 호갱 되기 쉽습니다."
+  },
+  "facts": [
+    {
+      "id": "problem",
+      "style": "glitch",
+      "sfx": "tick",
+      "caption_chunks": [
+        "할부 개월",
+        "길게 늘려",
+        "싸 보이게"
+      ],
+      "tts": "할부 개월 수를 길게 늘려 싸 보이게 하는 경우."
+    },
+    {
+      "id": "solution",
+      "style": "marker",
+      "sfx": "pop",
+      "caption_chunks": [
+        "'공짜'라는 말",
+        "조건부터",
+        "확인"
+      ],
+      "tts": "공짜라는 말엔 조건이 붙죠. 먼저 확인하세요."
+    },
+    {
+      "id": "trust",
+      "style": "checklist",
+      "sfx": "ding",
+      "caption_chunks": [
+        "폰스팟은",
+        "조건도",
+        "먼저 공개"
+      ],
+      "tts": "폰스팟은 조건까지 먼저 공개합니다."
+    }
+  ],
+  "cta": {
+    "style": "kinetic-box",
+    "sfx": "ding",
+    "caption_chunks": [
+      "호갱 안 되려면",
+      "폰스팟"
+    ],
+    "tts": "호갱 안 되려면, 폰스팟에서 확인하세요.",
+    "kakao": "",
+    "litt": "",
+    "location": ""
+  }
+}

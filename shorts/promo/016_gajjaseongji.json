@@ -1,0 +1,73 @@
+{
+  "slug": "016_gajjaseongji",
+  "title_short": "가짜 성지 구분",
+  "video_title": "가짜 성지 구분",
+  "preset": "showcase",
+  "hook_pattern": "질문형",
+  "channel_name": "",
+  "channel_tagline": "",
+  "publication_date": "2026.05.29",
+  "opening": {
+    "line1": "간판만 성지,",
+    "line2": "믿어도 될까?",
+    "style": "oversize",
+    "sfx": "whoosh"
+  },
+  "hook": {
+    "style": "glitch",
+    "sfx": "tick",
+    "caption_chunks": [
+      "성지라더니",
+      "가보면",
+      "글쎄"
+    ],
+    "tts": "성지라더니 가보면 글쎄요."
+  },
+  "facts": [
+    {
+      "id": "problem",
+      "style": "glitch",
+      "sfx": "tick",
+      "caption_chunks": [
+        "가격 공개",
+        "안 하면",
+        "의심"
+      ],
+      "tts": "가격을 공개 안 하면 일단 의심."
+    },
+    {
+      "id": "solution",
+      "style": "checklist",
+      "sfx": "ding",
+      "caption_chunks": [
+        "조건 먼저",
+        "말해주나",
+        "확인"
+      ],
+      "tts": "조건을 먼저 말해주는지 확인하세요."
+    },
+    {
+      "id": "trust",
+      "style": "kinetic-box",
+      "sfx": "pop",
+      "caption_chunks": [
+        "폰스팟은",
+        "다",
+        "공개"
+      ],
+      "tts": "폰스팟은 가격도 조건도 다 공개."
+    }
+  ],
+  "cta": {
+    "style": "kinetic-box",
+    "sfx": "ding",
+    "caption_chunks": [
+      "진짜 정찰제",
+      "폰스팟"
+    ],
+    "tts": "진짜 정찰제, 폰스팟.",
+    "kakao": "",
+    "litt": "",
+    "location": ""
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "slug": "014_jeongga",
+  "title_short": "가격 그대로",
+  "video_title": "가격 그대로",
+  "preset": "showcase",
+  "hook_pattern": "가격강조",
+  "channel_name": "",
+  "channel_tagline": "",
+  "publication_date": "2026.05.29",
+  "opening": {
+    "line1": "정찰제니까",
+    "line2": "더 안 붙어요",
+    "style": "oversize",
+    "sfx": "whoosh"
+  },
+  "hook": {
+    "style": "kinetic",
+    "sfx": "whoosh",
+    "caption_chunks": [
+      "본 가격에",
+      "숨은 비용",
+      "없음"
+    ],
+    "tts": "본 가격에 숨은 비용이 붙지 않습니다."
+  },
+  "facts": [
+    {
+      "id": "problem",
+      "style": "swiss",
+      "sfx": "tick",
+      "caption_chunks": [
+        "부가서비스",
+        "끼워넣기",
+        "없음"
+      ],
+      "tts": "부가서비스 끼워넣기 없이."
+    },
+    {
+      "id": "solution",
+      "style": "counter",
+      "sfx": "tick",
+      "caption_chunks": [
+        "표시된 가격",
+        "그게",
+        "최종"
+      ],
+      "tts": "표시된 가격이 그대로 최종입니다."
+    },
+    {
+      "id": "trust",
+      "style": "kinetic-box",
+      "sfx": "ding",
+      "caption_chunks": [
+        "정찰제라",
+        "흥정도",
+        "필요 없음"
+      ],
+      "tts": "정찰제라 흥정할 필요도 없어요."
+    }
+  ],
+  "cta": {
+    "style": "kinetic-box",
+    "sfx": "ding",
+    "caption_chunks": [
+      "투명한 가격",
+      "폰스팟"
+    ],
+    "tts": "투명한 가격, 폰스팟.",
+    "kakao": "",
+    "litt": "",
+    "location": ""
+  }
+}
