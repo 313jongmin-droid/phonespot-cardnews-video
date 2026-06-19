@@ -5,10 +5,10 @@
 
 | illustration | tags | use count | last slug |
 |---|---|---:|---|
-| `aluminum_label` | materials, hardware, library | 4 | 027_qa_usim_replace_security |
+| `aluminum_label` | materials, hardware, library | 5 | 030_pick_new_vs_old_subsidy |
 | `android_user_a91efa70` | auto | 0 |  |
-| `appliance` | hardware, device, library | 4 | 027_qa_usim_replace_security |
-| `basic_fold_202d754f` | auto, library | 2 | 027_qa_usim_replace_security |
+| `appliance` | hardware, device, library | 5 | 030_pick_new_vs_old_subsidy |
+| `basic_fold_202d754f` | auto, library | 3 | 030_pick_new_vs_old_subsidy |
 | `battery_capacity` | battery, hardware, library | 0 |  |
 | `battery_charge_range` | battery, charging, tips, library | 2 | 021_news_galaxy_flip8_exynos |
 | `battery_health_check` | battery, health, tips | 0 |  |
@@ -186,7 +186,7 @@
 | `size_guide_afe009df` | auto, library | 3 | 029_pick_galaxy_vs_iphone_camera |
 | `slim_body_e2dca0be` | auto, library | 0 |  |
 | `smart_482e7bdd` | auto, library | 0 |  |
-| `smartphone` | device, purchase, cta, library | 20 | 029_pick_galaxy_vs_iphone_camera |
+| `smartphone` | device, purchase, cta, library | 21 | 030_pick_new_vs_old_subsidy |
 | `smishing_fake_link` | security, smishing, warning, link | 0 |  |
 | `stock_chart` | price, data, market, library | 0 |  |
 | `store` | store, purchase, cta, library | 4 | 029_pick_galaxy_vs_iphone_camera |
@@ -206,6 +206,7 @@
 
 ## Recent videos
 
+- `030_pick_new_vs_old_subsidy`: smartphone, aluminum_label, appliance, basic_fold_202d754f
 - `029_pick_galaxy_vs_iphone_camera`: cpt_aff73c54, document_article, cpt_d124a858, cpt_356af649, smartphone, market_cap, phone_setup_ready, size_guide_afe009df, event_period_8cafdac4, cpt_c9dd9b89, cpt_0ecf996a, device_data_transfer, samsung_ai, store
 - `028_pick_senior_phone_3way`: parents_vision_231bf461, chatbot, impersonation_call, smartphone, clock, prohibit, parents_chat_c1d70b74, shield, cpt_17d8af78, final_update, size_guide_afe009df, phone_setup_ready, mystery_number_63279925, chart_down, cpt_9f55187e, device_os_requirement, device_data_transfer, cpt_5fc91d8e
 - `027_qa_usim_replace_security`: smartphone, aluminum_label, appliance, basic_fold_202d754f
@@ -217,4 +218,3 @@
 - `021_news_galaxy_flip8_exynos`: unpack_867ebe81, mounted_body_496029c6, cpt_67a38371, mid_release_98cab19a, official_sale_9dc82f05, device_data_transfer, smartphone, appliance, camera_battery_ecd040c7, ti_decrease, aluminum_label, battery_charge_range, optimized_charging
 - `020_qa_apple_pay_korea_card`: smartphone, newspaper, microphone, shield, meeting_room, forecast, cpt_f59129df, cpt_a1caaea6, biometric, cpt_83fa1e9f, cpt_6a2e9678, device_data_transfer, nfc_pay, cpt_fd9edf65, gift_voucher
 - `019_news_samsung_thank_you_festival`: monday_d77265f0, weekly_sunday_82b74c0a, festival_41b2e7cf, unlocked_baa71ac6, event_period_8cafdac4, microphone, shield, meeting_room, forecast, gift_voucher, smartphone, cpt_a1caaea6, biometric, cpt_4729c912, cpt_fd9edf65
-- `018_scam_wedding_invite_smishing`: cpt_f59129df, surge_b56b4f67, cpt_066b1a1b, phone_settings_toggle, phone_setup_ready, cpt_6f69bf84, friend_wedding_suspicion_884c4f09, meeting_room, security_feature_lock, lock, impersonation_call, gift_prohibit, shield, prohibit, warning, forecast, nfc_pay, cpt_4729c912, gift_voucher

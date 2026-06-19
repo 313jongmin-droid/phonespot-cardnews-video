@@ -2552,7 +2552,31 @@
       ],
       "note": "자동 발굴 개념: 채도 높아",
       "available": true
+    },
+    "change_review_b93b867a": {
+      "keywords": [
+        "달라지니",
+        "따져야"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 달라지니 따져야",
+      "available": false
+    },
+    "cpt_f7322c3a": {
+      "keywords": [
+        "위약금",
+        "잔여",
+        "할부",
+        "확인하고"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 위약금 잔여",
+      "available": false
     }
   },
-  "updated_at": "2026-06-19T12:29:25"
+  "updated_at": "2026-06-19T13:31:37"
 }

@@ -406,9 +406,19 @@
         "samsung_ai",
         "store"
       ]
+    },
+    "030_pick_new_vs_old_subsidy": {
+      "used_at": "2026-06-19T13:31:35",
+      "source": "codex_enhance",
+      "illustrations": [
+        "smartphone",
+        "aluminum_label",
+        "appliance",
+        "basic_fold_202d754f"
+      ]
     }
   },
-  "updated_at": "2026-06-19T12:29:31",
+  "updated_at": "2026-06-19T13:31:37",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -494,6 +504,10 @@
     },
     "029_pick_galaxy_vs_iphone_camera": {
       "updated_at": "2026-06-19T12:29:31",
+      "variants": []
+    },
+    "030_pick_new_vs_old_subsidy": {
+      "updated_at": "2026-06-19T13:31:37",
       "variants": []
     }
   }
