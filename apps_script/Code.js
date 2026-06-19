@@ -41,6 +41,9 @@ function onOpen() {
   // 🟠 당근 자동화 메뉴 (danggn-sync.gs, 2026-06-15)
   try { buildDanggnSyncMenu_(SpreadsheetApp.getUi()); } catch (e) {}
 
+  // 🔵 구글 자동화 메뉴 (google-sync.js, 2026-06-19)
+  try { buildGoogleSyncMenu_(SpreadsheetApp.getUi()); } catch (e) {}
+
   // 📊 광고그룹 추이 메뉴 (adgroup-trend.gs, 2026-06-17)
   try { buildAdgroupTrendMenu_(SpreadsheetApp.getUi()); } catch (e) {}
 
@@ -75,6 +78,9 @@ function refreshAll() {
   // ★ 2026-06-15: 당근 GA4 매칭 추가 (시트 비어있으면 silent)
   try { if (typeof syncDanggnGA4 === 'function') syncDanggnGA4({ interactive: false }); }
   catch (e) { errors.push('syncDanggnGA4: ' + e.message); Logger.log(e); }
+
+  try { if (typeof syncGoogleGA4 === 'function') syncGoogleGA4({ interactive: false }); }
+  catch (e) { errors.push('syncGoogleGA4: ' + e.message); Logger.log(e); }
 
   try { fetchYouTubeAnalyticsDaily(); }
   catch (e) { errors.push('fetchYouTubeAnalyticsDaily: ' + e.message); Logger.log(e); }
