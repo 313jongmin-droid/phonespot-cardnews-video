@@ -5,11 +5,11 @@
 
 | illustration | tags | use count | last slug |
 |---|---|---:|---|
-| `aluminum_label` | materials, hardware, library | 4 | 027_qa_usim_replace_security |
+| `aluminum_label` | materials, hardware, library | 5 | 028_pick_senior_phone_3way |
 | `android_user_a91efa70` | auto | 0 |  |
-| `appliance` | hardware, device, library | 4 | 027_qa_usim_replace_security |
-| `basic_fold_202d754f` | auto, library | 2 | 027_qa_usim_replace_security |
-| `battery_capacity` | battery, hardware, library | 0 |  |
+| `appliance` | hardware, device, library | 5 | 028_pick_senior_phone_3way |
+| `basic_fold_202d754f` | auto, library | 3 | 028_pick_senior_phone_3way |
+| `battery_capacity` | battery, hardware, library | 1 | 028_pick_senior_phone_3way |
 | `battery_charge_range` | battery, charging, tips, library | 2 | 021_news_galaxy_flip8_exynos |
 | `battery_health_check` | battery, health, tips | 0 |  |
 | `battery_overheat` | battery, heat, warning, library | 1 | 017_tip_summer_travel_phone_5min |
@@ -34,6 +34,7 @@
 | `cpt_0ddb8d80` | auto | 0 |  |
 | `cpt_0dfddb85` | auto, library | 0 |  |
 | `cpt_163f537d` | auto | 0 |  |
+| `cpt_17d8af78` | auto | 0 |  |
 | `cpt_1a196d6d` | auto | 0 |  |
 | `cpt_313e9e00` | auto | 0 |  |
 | `cpt_3317f8c6` | auto | 0 |  |
@@ -42,8 +43,10 @@
 | `cpt_3be04d33` | auto | 0 |  |
 | `cpt_4729c912` | auto, library | 3 | 019_news_samsung_thank_you_festival |
 | `cpt_496029c6` | auto, library | 0 |  |
+| `cpt_5507911c` | auto | 0 |  |
 | `cpt_55c40fb8` | auto | 0 |  |
 | `cpt_5cd81fce` | auto | 0 |  |
+| `cpt_5fc91d8e` | auto | 0 |  |
 | `cpt_6174b190` | auto | 0 |  |
 | `cpt_64b80bba` | auto | 0 |  |
 | `cpt_678358f4` | auto | 0 |  |
@@ -56,6 +59,7 @@
 | `cpt_7a87dd35` | auto | 0 |  |
 | `cpt_7b46d1e4` | auto | 0 |  |
 | `cpt_7b7a2f91` | auto, library | 1 | 015_qa_msafer_pass_identity_block |
+| `cpt_7ce59d26` | auto | 0 |  |
 | `cpt_7ea57558` | auto, library | 0 |  |
 | `cpt_83fa1e9f` | auto, library | 3 | 020_qa_apple_pay_korea_card |
 | `cpt_8b587f6c` | auto | 0 |  |
@@ -64,14 +68,17 @@
 | `cpt_915bf475` | auto, library | 1 | 025_tip_galaxy_ai_call_screening |
 | `cpt_98cab19a` | auto, library | 0 |  |
 | `cpt_9ebf277e` | auto | 0 |  |
+| `cpt_9f55187e` | auto | 0 |  |
 | `cpt_a0d7df46` | auto | 0 |  |
 | `cpt_a1caaea6` | auto, library | 3 | 020_qa_apple_pay_korea_card |
+| `cpt_a30b5cf7` | auto | 0 |  |
 | `cpt_a91efa70` | auto | 0 |  |
 | `cpt_abbc8a1e` | auto, library | 0 |  |
 | `cpt_b5a15155` | auto, library | 1 | 015_qa_msafer_pass_identity_block |
 | `cpt_b90dc475` | auto | 0 |  |
 | `cpt_bf3a83cf` | auto | 0 |  |
 | `cpt_ca558dbc` | auto | 0 |  |
+| `cpt_d3ebd1ae` | auto | 0 |  |
 | `cpt_d877aced` | auto | 0 |  |
 | `cpt_dff91a6d` | auto | 0 |  |
 | `cpt_e646864a` | auto, library | 1 | 026_news_galaxy_a37_5g_launch |
@@ -104,6 +111,7 @@
 | `final_update` | software, update, library | 4 | 026_news_galaxy_a37_5g_launch |
 | `foldable` | hardware, foldable, library | 1 | 012_news_galaxy_unpack_july |
 | `forecast` | news, forecast, library | 11 | 020_qa_apple_pay_korea_card |
+| `free_sim_3e08a1f2` | auto | 0 |  |
 | `friend_wedding_suspicion_884c4f09` | auto, library | 1 | 018_scam_wedding_invite_smishing |
 | `gemini` | ai, assistant, google, library | 2 | 010_tip_iphone_call_record |
 | `gift_prohibit` | price, security, warning, library | 1 | 018_scam_wedding_invite_smishing |
@@ -173,7 +181,7 @@
 | `size_guide_afe009df` | auto, library | 1 | 023_qa_senior_phone_recommendation |
 | `slim_body_e2dca0be` | auto, library | 0 |  |
 | `smart_482e7bdd` | auto, library | 0 |  |
-| `smartphone` | device, purchase, cta, library | 18 | 027_qa_usim_replace_security |
+| `smartphone` | device, purchase, cta, library | 19 | 028_pick_senior_phone_3way |
 | `smishing_fake_link` | security, smishing, warning, link | 0 |  |
 | `stock_chart` | price, data, market, library | 0 |  |
 | `store` | store, purchase, cta, library | 3 | 014_scam_voicephishing_zero_relief |
@@ -193,6 +201,7 @@
 
 ## Recent videos
 
+- `028_pick_senior_phone_3way`: smartphone, aluminum_label, appliance, basic_fold_202d754f, battery_capacity
 - `027_qa_usim_replace_security`: smartphone, aluminum_label, appliance, basic_fold_202d754f
 - `026_news_galaxy_a37_5g_launch`: samsung_korea_04b00795, mid_ship_7968fa24, unlocked_baa71ac6, official_sale_9dc82f05, final_update, lavender_color_7ffb0a8d, cpt_fd30bbcd, cpt_e646864a, phone_setup_ready, phone_settings_toggle, mounted_body_496029c6, new_policy_f48caded, device_os_requirement, device_data_transfer, telecom_discount_compare, smartphone
 - `025_tip_galaxy_ai_call_screening`: mystery_number_63279925, new_policy_f48caded, cpt_e9fd442e, phone_setup_ready, cpt_915bf475, cpt_f2dc70a6, device_data_transfer, smartphone, phone_settings_toggle, device_os_requirement
@@ -204,4 +213,3 @@
 - `019_news_samsung_thank_you_festival`: monday_d77265f0, weekly_sunday_82b74c0a, festival_41b2e7cf, unlocked_baa71ac6, event_period_8cafdac4, microphone, shield, meeting_room, forecast, gift_voucher, smartphone, cpt_a1caaea6, biometric, cpt_4729c912, cpt_fd9edf65
 - `018_scam_wedding_invite_smishing`: cpt_f59129df, surge_b56b4f67, cpt_066b1a1b, phone_settings_toggle, phone_setup_ready, cpt_6f69bf84, friend_wedding_suspicion_884c4f09, meeting_room, security_feature_lock, lock, impersonation_call, gift_prohibit, shield, prohibit, warning, forecast, nfc_pay, cpt_4729c912, gift_voucher
 - `017_tip_summer_travel_phone_5min`: smartphone, aluminum_label, appliance, battery_charge_range, battery_overheat, biometric
-- `016_news_ios_26_3_release`: device_data_transfer, phone_settings_toggle, samsung_ai, phone_setup_ready, smartphone, newspaper, microphone, shield, meeting_room, forecast, cpt_83fa1e9f, final_update, chatbot, gift_voucher

@@ -2438,7 +2438,44 @@
       ],
       "note": "자동 발굴 개념: 유플러스",
       "available": false
+    },
+    "cpt_17d8af78": {
+      "keywords": [
+        "상대적",
+        "가볍고",
+        "조작",
+        "단순하며"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 상대적 가볍고",
+      "available": false
+    },
+    "cpt_9f55187e": {
+      "keywords": [
+        "불필요한",
+        "앱을",
+        "숨기면",
+        "헷갈림"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 불필요한 앱을",
+      "available": false
+    },
+    "cpt_5fc91d8e": {
+      "keywords": [
+        "원격",
+        "도움"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 원격 도움",
+      "available": false
     }
   },
-  "updated_at": "2026-06-18T18:37:34"
+  "updated_at": "2026-06-19T11:51:44"
 }

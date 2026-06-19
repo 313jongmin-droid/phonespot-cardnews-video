@@ -362,9 +362,20 @@
         "appliance",
         "basic_fold_202d754f"
       ]
+    },
+    "028_pick_senior_phone_3way": {
+      "used_at": "2026-06-19T11:51:42",
+      "source": "codex_enhance",
+      "illustrations": [
+        "smartphone",
+        "aluminum_label",
+        "appliance",
+        "basic_fold_202d754f",
+        "battery_capacity"
+      ]
     }
   },
-  "updated_at": "2026-06-18T18:37:33",
+  "updated_at": "2026-06-19T11:51:43",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -442,6 +453,10 @@
     },
     "027_qa_usim_replace_security": {
       "updated_at": "2026-06-18T18:37:33",
+      "variants": []
+    },
+    "028_pick_senior_phone_3way": {
+      "updated_at": "2026-06-19T11:51:43",
       "variants": []
     }
   }

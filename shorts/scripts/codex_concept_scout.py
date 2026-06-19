@@ -411,12 +411,23 @@ def merge_into_illustration_requests(slug: str, requests: list) -> None:
     START = "<!-- CONCEPT_SCOUT_START -->"
     END = "<!-- CONCEPT_SCOUT_END -->"
     md = mpath.read_text(encoding="utf-8", errors="replace") if mpath.exists() else ""
-    if START in md and END in md:
-        md = md.split(START)[0].rstrip() + md.split(END, 1)[1]
+    # 기존 개념발굴 블록을 전부 제거(START..END 쌍이 여러 개여도 모두 — 중복 누적 방지)
+    md = re.sub(re.escape(START) + r".*?" + re.escape(END), "", md, flags=re.S).rstrip()
     engine = "embedding" if ce.available() else "lexical-fallback"
     lines = [START, "", "## 추가 범용 일러스트 요청(개념 발굴)  [engine: " + engine + "]"]
     if not requests:
         lines.append("- 신규 개념 없음 (라이브러리가 이미 충분히 커버).")
+    else:
+        # ★ GPT(생성기)가 읽고 따르는 지시문 — 한 장에 합치지 말고 개별 이미지로 N장 생성하게 유도
+        lines += [
+            "",
+            "**[이미지 생성기 지시 — 반드시 지킬 것]**",
+            "아래 개념들을 **하나씩, 각각 별도의 이미지로 생성**하세요. "
+            "총 " + str(len(requests)) + "개 개념 = **" + str(len(requests)) + "장의 개별 이미지**를 차례로 만드세요.",
+            "절대 한 장에 여러 개를 넣지 마세요 — 격자(grid)·콜라주·분할 화면·여러 칸(panel) 금지. "
+            "**한 이미지 = 한 개념.** 각 개념을 그릴 때마다 새 이미지를 따로 출력하고, "
+            "그 이미지를 해당 블록 제목의 `cpt_*.png` 파일명으로 저장합니다.",
+        ]
     for i, req in enumerate(requests, 1):
         lines += [
             "",
