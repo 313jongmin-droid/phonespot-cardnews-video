@@ -8,7 +8,7 @@ export const CasualHeader: React.FC<Props> = ({ channelName }) => {
   return (
     <div
       style={{
-        height: 116,
+        height: 88,
         backgroundColor: "#F74B0B",
         display: "flex",
         alignItems: "center",

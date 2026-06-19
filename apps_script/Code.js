@@ -766,6 +766,7 @@ function updateKakaoInquiryCoverage(showAlert) {
   setupKakaoDailyReportHeadersOnly_(sh);
 
   const defaultYear = new Date().getFullYear();
+  const ssTz = SpreadsheetApp.getActive().getSpreadsheetTimeZone();  // ★ 시트 시간대 기준(서울이 아니어도 날짜 안 밀림)
   const sheetLastRow = Math.max(sh.getLastRow(), KAKAO_REPORT_DATA_ROW);
 
   const inqValues = sheetLastRow >= 2 ? sh.getRange(2, 1, sheetLastRow - 1, 3).getValues() : [];
@@ -818,7 +819,7 @@ function updateKakaoInquiryCoverage(showAlert) {
     else if (inputRate >= 0.7) status = '일부누락';
     else if (inputRate >= 0.5) status = '관리불안정';
     else status = '대량누락';
-    normalizedDates.push([ymd ? new Date(ymd + 'T00:00:00+09:00') : row[0]]);
+    normalizedDates.push([ymd ? Utilities.parseDate(ymd, ssTz, 'yyyy-MM-dd') : row[0]]);
     out.push([input, inputRate, missing, opened, openRate, status]);
   });
 
