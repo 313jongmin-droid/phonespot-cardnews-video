@@ -150,11 +150,11 @@ function setupGoogleTrigger() {
 // ============ 메뉴 ============
 function buildGoogleSyncMenu_(ui) {
   const m = ui.createMenu('🔵 구글');
-  // Ads API 운영데이터(D~F) — google-ads-sync.js 존재 시에만 노출
   if (typeof syncGoogleAdsData === 'function') {
     m.addItem('📥 Ads API 수집 (최근 7일)', 'syncGoogleAdsData')
       .addItem('📥 Ads API 백필 (최근 30일)', 'syncGoogleAdsData30')
       .addItem('🔑 Ads 연결 테스트', 'testGoogleAds')
+      .addItem('🔎 접근가능 계정 목록(진단)', 'listAccessibleGoogleAdsCustomers')
       .addSeparator();
   }
   m.addItem('🔄 GA4 매칭 새로고침 (전체 행)', 'syncGoogleGA4')
