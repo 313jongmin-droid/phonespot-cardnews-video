@@ -1107,6 +1107,7 @@ function buildDashboardV2() {
   const ss = SpreadsheetApp.getActive();
   const dash = ss.getSheetByName('통합대시보드');
   if (!dash) return;
+  var savedMargin = dash.getRange('C3').getValue();   // 개통 1건 마진 입력값 보존(클리어 전)
 
   // ── 라이트톤 색 토큰 ──
   const C_SEC_BG   = '#EEF1F5';
@@ -1200,11 +1201,19 @@ function buildDashboardV2() {
 
   dash.setFrozenRows(2);
 
+  // 행3: 개통 1건 마진 입력(값 보존) + 선택기간 순이익(=개통×마진-광고비)
+  dash.getRange('A3:B3').merge().setValue('💰 개통 1건당 마진(원)')
+    .setFontColor(C_LABEL).setFontWeight('bold').setFontSize(10).setHorizontalAlignment('right');
+  dash.getRange('C3').setBackground('#FFF59D').setFontWeight('bold').setHorizontalAlignment('center').setNumberFormat('#,##0"원"');
+  if (savedMargin !== '' && savedMargin !== null && savedMargin !== undefined) dash.getRange('C3').setValue(savedMargin);
+  dash.getRange('E3').setValue('→ 순이익(기간)').setFontColor(C_LABEL).setFontWeight('bold').setFontSize(10).setHorizontalAlignment('right');
+  dash.getRange('F3').setFormula(`=IF($C$3="","-",${countInqFx(GS, GE, ",'문의접수'!C:C,\"개통\"")}*$C$3-(${sumPaidFx(GS, GE)}))`).setNumberFormat(F_WON).setFontWeight('bold').setHorizontalAlignment('center');
+
   // ── 좌측 열 (A~F) ──
 
   // 2L) 기간별 핵심 — 헤더 A4:F4 / 컬럼헤더 5 / 데이터 6~8
   sectionHeader(4, '기간별 핵심', LCOL);
-  colHeader(5, ['기간', '광고비', '문의', '개통', 'CPL'], LCOL);
+  colHeader(5, ['기간', '광고비', '문의', '개통', 'CPL', '순이익'], LCOL);
   const kpiPeriods = [
     ['어제',      'TODAY()-1',  'TODAY()-1'],
     ['최근 7일',  'TODAY()-6',  'TODAY()'],
@@ -1220,8 +1229,9 @@ function buildDashboardV2() {
     dash.getRange(r, 3).setFormula(`=${countInqFx(st, en)}`).setNumberFormat('#,##0"건"');
     dash.getRange(r, 4).setFormula(`=${countInqFx(st, en, ",'문의접수'!C:C,\"개통\"")}`).setNumberFormat('#,##0"건"');
     dash.getRange(r, 5).setFormula(`=IFERROR(B${r}/${trackedInq},"-")`).setNumberFormat(F_WON);
+    dash.getRange(r, 6).setFormula(`=IF($C$3="","-",D${r}*$C$3-B${r})`).setNumberFormat(F_WON);  // 순이익=개통×마진-광고비
   });
-  dataBox(kpiStart, kpiPeriods.length, 5, LCOL);   // 6~8
+  dataBox(kpiStart, kpiPeriods.length, 6, LCOL);   // 6~8
 
   // 3L) 채널별 효율 — 전역 상단 기간(L2) 따라감 / 컬럼헤더 11 / 데이터 12~16
   const chHeaderRow = 10;
@@ -1355,7 +1365,7 @@ function buildDashboardV2() {
   try {
     var keep = dash.getConditionalFormatRules().filter(function (rule) {
       var rs = rule.getRanges().map(function (rg) { return rg.getA1Notation(); }).join(',');
-      return rs.indexOf('I2') < 0 && rs.indexOf('K6') < 0;
+      return rs.indexOf('I2') < 0 && rs.indexOf('K6') < 0 && rs.indexOf('F3') < 0 && rs.indexOf('F6') < 0;
     });
     keep.push(SpreadsheetApp.newConditionalFormatRule().whenNumberGreaterThanOrEqualTo(0.7)
       .setFontColor('#9F1A1A').setBackground('#FCEBEB').setRanges([dash.getRange('I2')]).build());
@@ -1363,6 +1373,10 @@ function buildDashboardV2() {
       .setFontColor('#8A5A00').setBackground('#FAEEDA').setRanges([dash.getRange('I2')]).build());
     keep.push(SpreadsheetApp.newConditionalFormatRule().whenNumberLessThan(0)
       .setFontColor('#9F1A1A').setRanges([dash.getRange('K6:K11')]).build());
+    keep.push(SpreadsheetApp.newConditionalFormatRule().whenNumberLessThan(0)
+      .setFontColor('#9F1A1A').setRanges([dash.getRange('F3'), dash.getRange('F6:F8')]).build());
+    keep.push(SpreadsheetApp.newConditionalFormatRule().whenNumberGreaterThan(0)
+      .setFontColor('#1D7A4D').setRanges([dash.getRange('F3'), dash.getRange('F6:F8')]).build());
     dash.setConditionalFormatRules(keep);
   } catch (e) { Logger.log('조건부서식: ' + e.message); }
 
