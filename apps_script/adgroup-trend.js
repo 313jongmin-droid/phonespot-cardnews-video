@@ -222,22 +222,30 @@ function refreshAdgroupTrendChart() {
     }
   });
 
-  // 날짜순 정렬
-  const keys = Object.keys(dailyMap).sort();
-  if (keys.length === 0) {
+  // ★ 2026-06-22: 선택 기간의 모든 날짜를 연속 출력(데이터 없는 날=0). 빠진 날짜 없이 표시.
+  const nDays = Math.min(days, ADGROUP_TREND_DATA_MAX_ROWS);
+  const rows = [];
+  let anyData = false;
+  for (let i = nDays - 1; i >= 0; i--) {
+    const dd = new Date(today); dd.setDate(today.getDate() - i);
+    const k = Utilities.formatDate(dd, tz, 'yyyy-MM-dd');
+    const d = dailyMap[k];
+    if (d) {
+      anyData = true;
+      const ctr = d.imp > 0 ? d.click / d.imp : 0;
+      const cpc = d.click > 0 ? d.spend / d.click : 0;
+      const inquiryRate = d.kakaoClick > 0 ? d.inquiry / d.kakaoClick : 0;
+      const cpl = d.inquiry > 0 ? d.spend / d.inquiry : 0;
+      rows.push([d.date, d.imp, d.click, ctr, cpc, d.kakaoClick, d.inquiry, inquiryRate, cpl]);
+    } else {
+      rows.push([dd, 0, 0, 0, 0, 0, 0, 0, 0]);
+    }
+  }
+  if (!anyData) {
     sh.getRange(64, 1).setValue('해당 기간(' + days + '일) 데이터 없음').setFontStyle('italic').setFontColor('#666666');
     ensureAdgroupTrendChart_(sh);
     return;
   }
-
-  const rows = keys.slice(-ADGROUP_TREND_DATA_MAX_ROWS).map(function (k) {
-    const d = dailyMap[k];
-    const ctr = d.imp > 0 ? d.click / d.imp : 0;
-    const cpc = d.click > 0 ? d.spend / d.click : 0;
-    const inquiryRate = d.kakaoClick > 0 ? d.inquiry / d.kakaoClick : 0;
-    const cpl = d.inquiry > 0 ? d.spend / d.inquiry : 0;
-    return [d.date, d.imp, d.click, ctr, cpc, d.kakaoClick, d.inquiry, inquiryRate, cpl];
-  });
 
   // R64~ 박음
   sh.getRange(64, 1, rows.length, 9).setValues(rows);
