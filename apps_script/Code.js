@@ -1130,11 +1130,12 @@ function buildDashboardV2() {
   const F_PCT = '0.0%';
   const fmtKM = '[>=1000000]0.00,,"M";[>=1000]0.0,"K";#,##0';
 
-  // ── 0) 초기화 (1~140행 범위) — 옛 드롭다운(E16/E28/E36) 데이터확인 규칙까지 제거 ──
-  dash.getRange('A1:Z140').clearDataValidations();
-  dash.getRange('A1:Z140').breakApart();
-  dash.getRange('A1:Z140').clearContent().clearFormat();
-  try { dash.showRows(1, 140); } catch (e) {}
+  // ── 0) 초기화 (1~59행만 — 광고그룹 추이 60행~ 보존). 옛 드롭다운 규칙·행높이까지 정리 ──
+  dash.getRange('A1:Z59').clearDataValidations();
+  dash.getRange('A1:Z59').breakApart();
+  dash.getRange('A1:Z59').clearContent().clearFormat();
+  try { dash.showRows(1, 59); } catch (e) {}
+  try { dash.setRowHeights(1, 59, 22); } catch (e) {}
 
   // 섹션 헤더 (A~F 6컬럼 폭 통일)
   function sectionHeader(row, title) {
@@ -1361,6 +1362,7 @@ function buildDashboardV2() {
   // 폭/정렬 마무리
   dash.setColumnWidth(1, 110);
   for (let c = 2; c <= 6; c++) dash.setColumnWidth(c, 95);
+  try { dash.setRowHeight(1, 18); dash.setRowHeight(2, 34); } catch (e) {}
 
   try {
     SpreadsheetApp.getUi().alert('✅ 통합대시보드 V2 빌드 완료\n· 1~2행 요약 스트립(고정)\n· 기간별 핵심 / 채널별 효율 / 리틀리 / 실비용 / SNS\n· 40행 이후 = 광고그룹 추이 영역(미변경)');
