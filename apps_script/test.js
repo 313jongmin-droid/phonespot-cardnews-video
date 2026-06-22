@@ -1,4 +1,4 @@
-function listAllAdgroups() {
+function listAllAdgroups_test_() {
   const campaigns = naverFetch_('GET', '/ncc/campaigns');
   Logger.log('===== 캠페인 ' + campaigns.length + '개 =====');
 

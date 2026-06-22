@@ -373,17 +373,7 @@ function setupDanggnTrigger() {
 /**
  * 동기화_로그 시트에 1줄 박음 (Code.gs / meta-sync.js / naver-sync.js 와 동일 패턴)
  */
-function logSync_(funcName, status, message) {
-  try {
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
-    const logSheet = ss.getSheetByName('동기화_로그');
-    if (!logSheet) return;
-    const emoji = status === 'ok' ? '✅ 성공' : (status === 'fail' ? '❌ 실패' : '⚠️ 경고');
-    logSheet.appendRow([new Date(), funcName, emoji, message]);
-  } catch (err) {
-    // 로그 실패는 무시
-  }
-}
+// logSync_ 는 meta-sync.js의 통합본(2·3인자 모두 처리) 사용. 중복 정의 제거(2026-06-22).
 
 
 // ============ 당근 자동화 메뉴 (네이버 패턴 그대로) ============

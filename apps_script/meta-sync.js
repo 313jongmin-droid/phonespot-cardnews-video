@@ -546,8 +546,18 @@ function notifyError_(errors) {
 }
 
 // ============ E2: 동기화 로그 누적 ============
-function logSync_(funcName, message) {
+function logSync_(funcName, a, b) {
+  // 통합(2026-06-22): 2인자 logSync_(name,message) / 3인자 logSync_(name,status,message) 모두 처리.
   try {
+    var status, message;
+    if (b === undefined) {
+      message = String(a == null ? '' : a);
+      status = message.indexOf('FAIL') === 0 ? '❌ 실패' : '✅ 성공';
+    } else {
+      message = String(b == null ? '' : b);
+      var st = String(a || '').toLowerCase();
+      status = (st === 'fail') ? '❌ 실패' : (st === 'ok' ? '✅ 성공' : '⚠️ 경고');
+    }
     const ss = SpreadsheetApp.getActive();
     let sheet = ss.getSheetByName(SHEET_SYNC_LOG);
     if (!sheet) {
@@ -556,16 +566,8 @@ function logSync_(funcName, message) {
       sheet.getRange(1, 1, 1, 4).setBackground('#1F4E78').setFontColor('#FFFFFF').setFontWeight('bold');
       sheet.setColumnWidths(1, 4, 150);
     }
-    const status = message.startsWith('FAIL') ? '❌ 실패' : '✅ 성공';
-    sheet.appendRow([
-      Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyy-MM-dd HH:mm:ss'),
-      funcName,
-      status,
-      message
-    ]);
-    if (sheet.getLastRow() > 502) {
-      sheet.deleteRows(2, sheet.getLastRow() - 501);
-    }
+    sheet.appendRow([Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyy-MM-dd HH:mm:ss'), funcName, status, message]);
+    if (sheet.getLastRow() > 502) sheet.deleteRows(2, sheet.getLastRow() - 501);
   } catch (e) { Logger.log('로그 기록 실패: ' + e.message); }
 }
 

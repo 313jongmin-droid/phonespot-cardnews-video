@@ -66,7 +66,8 @@ const ADGROUP_TREND_CHANNELS = {
 function buildAdgroupTrendMenu_(ui) {
   ui.createMenu('📊 광고그룹 추이')
     .addItem('🆕 차트 셋업 (1회)', 'setupAdgroupTrendChart')
-    .addItem('🔄 추이 갱신 (토글 변경 후)', 'refreshAdgroupTrendChart')
+    .addItem('🔄 추이 갱신 (수동)', 'refreshAdgroupTrendChart')
+    .addItem('⚡ 토글 자동갱신 켜기 (1회)', 'setupAdgroupEditTrigger')
     .addItem('⏰ 야간 자동 갱신 트리거 (02:50)', 'setupAdgroupTrendTrigger')
     .addToUi();
 }
@@ -315,8 +316,8 @@ function setupAdgroupTrendTrigger() {
 
 // ============ ★ 2026-06-22 토글 편집 시 자동 갱신 (메뉴 클릭 불필요) ============
 // 통합대시보드 B61(채널)/E61(광고그룹)/H61(기간) 편집 시 자동으로 추이 재계산+차트 갱신.
-// 단순 onEdit 트리거(설치 불필요). SpreadsheetApp만 사용해 권한 문제 없음.
-function onEdit(e) {
+// 설치형 onEdit 트리거(권한 풀). setupAdgroupEditTrigger로 등록. 차트 작업 안정적.
+function onEditAdgroupAuto_(e) {
   try {
     if (!e || !e.range) return;
     const sh = e.range.getSheet();
@@ -328,4 +329,15 @@ function onEdit(e) {
   } catch (err) {
     Logger.log('onEdit 추이 자동갱신 실패: ' + err.message);
   }
+}
+
+
+// ============ ★ 2026-06-22 설치형 편집 트리거 (토글 바꾸면 자동 갱신, 갱신클릭 불필요) ============
+function setupAdgroupEditTrigger() {
+  const ssId = SpreadsheetApp.getActive().getId();
+  ScriptApp.getProjectTriggers().forEach(function (t) {
+    if (t.getHandlerFunction() === 'onEditAdgroupAuto_') ScriptApp.deleteTrigger(t);
+  });
+  ScriptApp.newTrigger('onEditAdgroupAuto_').forSpreadsheet(ssId).onEdit().create();
+  try { SpreadsheetApp.getUi().alert('✅ 자동갱신 켜짐.\n\nR61에서 채널/광고그룹/기간만 바꾸면 자동으로 표·차트 갱신됩니다(갱신 클릭 불필요).'); } catch (e) {}
 }
