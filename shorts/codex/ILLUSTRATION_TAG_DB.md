@@ -22,11 +22,11 @@
 | `camera_quality` | camera, hardware, library | 0 |  |
 | `card_struggle_81529308` | auto | 0 |  |
 | `change_review_b93b867a` | auto, library | 1 | 030_pick_new_vs_old_subsidy |
-| `chart_down` | price, data, decrease, library | 5 | 032_meme_carrier_hidden_tips |
+| `chart_down` | price, data, decrease, library | 5 | 028_pick_senior_phone_3way |
 | `chart_up` | price, data, increase, library | 1 | 001_apple_ondevice_ai_wwdc26 |
 | `chat_backup_restore` | messenger, backup, restore, tips, library | 1 | 010_tip_iphone_call_record |
 | `chatbot` | ai, assistant, software, library | 5 | 028_pick_senior_phone_3way |
-| `clock` | time, tips, library | 4 | 031_meme_phone_buying_checklist |
+| `clock` | time, tips, library | 4 | 028_pick_senior_phone_3way |
 | `cloud_backup` | security, privacy, cloud, library | 1 | 001_apple_ondevice_ai_wwdc26 |
 | `cover_screen_widgets` | library | 0 |  |
 | `cpt_066b1a1b` | auto, library | 1 | 018_scam_wedding_invite_smishing |
@@ -36,7 +36,7 @@
 | `cpt_0dfddb85` | auto, library | 0 |  |
 | `cpt_0ecf996a` | auto, library | 1 | 029_pick_galaxy_vs_iphone_camera |
 | `cpt_163f537d` | auto | 0 |  |
-| `cpt_17d8af78` | auto, library | 1 | 028_pick_senior_phone_3way |
+| `cpt_17d8af78` | auto, library | 0 |  |
 | `cpt_1a196d6d` | auto | 0 |  |
 | `cpt_313e9e00` | auto | 0 |  |
 | `cpt_3317f8c6` | auto | 0 |  |
@@ -53,7 +53,7 @@
 | `cpt_5507911c` | auto | 0 |  |
 | `cpt_55c40fb8` | auto | 0 |  |
 | `cpt_5cd81fce` | auto | 0 |  |
-| `cpt_5fc91d8e` | auto, library | 1 | 028_pick_senior_phone_3way |
+| `cpt_5fc91d8e` | auto, library | 0 |  |
 | `cpt_6174b190` | auto | 0 |  |
 | `cpt_64b80bba` | auto | 0 |  |
 | `cpt_678358f4` | auto | 0 |  |
@@ -77,7 +77,7 @@
 | `cpt_98cab19a` | auto, library | 0 |  |
 | `cpt_9cfc2c65` | auto, library | 0 |  |
 | `cpt_9ebf277e` | auto | 0 |  |
-| `cpt_9f55187e` | auto, library | 1 | 028_pick_senior_phone_3way |
+| `cpt_9f55187e` | auto, library | 0 |  |
 | `cpt_a0d7df46` | auto | 0 |  |
 | `cpt_a1caaea6` | auto, library | 3 | 020_qa_apple_pay_korea_card |
 | `cpt_a30b5cf7` | auto | 0 |  |
@@ -114,18 +114,18 @@
 | `cpt_fd9edf65` | auto, library | 3 | 020_qa_apple_pay_korea_card |
 | `cut_theft_43505b9f` | auto | 0 |  |
 | `deal_fd9edf65` | library | 0 |  |
-| `device_data_transfer` | device, migration, backup, tips, library | 14 | 032_meme_carrier_hidden_tips |
-| `device_os_requirement` | library | 9 | 032_meme_carrier_hidden_tips |
+| `device_data_transfer` | device, migration, backup, tips, library | 14 | 028_pick_senior_phone_3way |
+| `device_os_requirement` | library | 9 | 028_pick_senior_phone_3way |
 | `device_price_rise` | price, increase, device | 0 |  |
 | `display_maintenance_c1ff39c1` | auto, library | 0 |  |
 | `display_ratio_change` | library | 0 |  |
 | `document_article` | news, document, library | 2 | 032_meme_carrier_hidden_tips |
 | `emergency_account_freeze` | security, bank, response, golden-time, library | 2 | 015_qa_msafer_pass_identity_block |
-| `event_period_8cafdac4` | auto, library | 3 | 031_meme_phone_buying_checklist |
+| `event_period_8cafdac4` | auto, library | 4 | 028_pick_senior_phone_3way |
 | `fake_government_page` | security, smishing, government, warning | 0 |  |
 | `fast_charging` | battery, charging, library | 0 |  |
 | `festival_41b2e7cf` | auto, library | 1 | 019_news_samsung_thank_you_festival |
-| `final_update` | software, update, library | 6 | 030_pick_new_vs_old_subsidy |
+| `final_update` | software, update, library | 6 | 028_pick_senior_phone_3way |
 | `foldable` | hardware, foldable, library | 1 | 012_news_galaxy_unpack_july |
 | `forecast` | news, forecast, library | 11 | 020_qa_apple_pay_korea_card |
 | `free_sim_3e08a1f2` | auto | 0 |  |
@@ -157,7 +157,7 @@
 | `module_install` | library | 0 |  |
 | `monday_d77265f0` | auto, library | 1 | 019_news_samsung_thank_you_festival |
 | `mounted_body_496029c6` | auto, library | 2 | 026_news_galaxy_a37_5g_launch |
-| `mystery_number_63279925` | auto, library | 3 | 032_meme_carrier_hidden_tips |
+| `mystery_number_63279925` | auto, library | 3 | 028_pick_senior_phone_3way |
 | `new_policy_f48caded` | auto, library | 2 | 026_news_galaxy_a37_5g_launch |
 | `new_release_98cab19a` | library | 0 |  |
 | `newspaper` | news, source, library | 8 | 020_qa_apple_pay_korea_card |
@@ -168,12 +168,12 @@
 | `ondevice_ai_chip` | ai, hardware, privacy | 0 |  |
 | `optimized_charging` | battery, charging, tips, library | 1 | 021_news_galaxy_flip8_exynos |
 | `parents_chat_c1d70b74` | auto, library | 2 | 028_pick_senior_phone_3way |
-| `parents_vision_231bf461` | auto, library | 3 | 030_pick_new_vs_old_subsidy |
+| `parents_vision_231bf461` | auto, library | 3 | 028_pick_senior_phone_3way |
 | `password` | security, privacy, authentication, library | 0 |  |
 | `personal_data_63b96014` | auto, library | 1 | 022_tip_galaxy_battery_save_5 |
 | `personal_data_leak` | security, privacy, leak | 0 |  |
-| `phone_settings_toggle` | library | 14 | 032_meme_carrier_hidden_tips |
-| `phone_setup_ready` | library | 13 | 032_meme_carrier_hidden_tips |
+| `phone_settings_toggle` | library | 15 | 028_pick_senior_phone_3way |
+| `phone_setup_ready` | library | 13 | 028_pick_senior_phone_3way |
 | `plan_price_tier_compare` | price, plan, compare, telecom | 0 |  |
 | `post_parents_phone_5e1d6c3b` | auto, library | 1 | 023_qa_senior_phone_recommendation |
 | `price_hike` | price, increase, library | 0 |  |
@@ -195,10 +195,10 @@
 | `settings_screen_ab73a8fa` | auto | 0 |  |
 | `settings_steps` | library | 0 |  |
 | `shield` | security, privacy, protection, library | 12 | 028_pick_senior_phone_3way |
-| `size_guide_afe009df` | auto, library | 4 | 030_pick_new_vs_old_subsidy |
+| `size_guide_afe009df` | auto, library | 4 | 028_pick_senior_phone_3way |
 | `slim_body_e2dca0be` | auto, library | 0 |  |
 | `smart_482e7bdd` | auto, library | 0 |  |
-| `smartphone` | device, purchase, cta, library | 23 | 032_meme_carrier_hidden_tips |
+| `smartphone` | device, purchase, cta, library | 23 | 028_pick_senior_phone_3way |
 | `smishing_fake_link` | security, smishing, warning, link | 0 |  |
 | `stock_chart` | price, data, market, library | 0 |  |
 | `store` | store, purchase, cta, library | 4 | 029_pick_galaxy_vs_iphone_camera |
@@ -218,11 +218,11 @@
 
 ## Recent videos
 
+- `028_pick_senior_phone_3way`: parents_vision_231bf461, chatbot, impersonation_call, smartphone, clock, prohibit, parents_chat_c1d70b74, shield, event_period_8cafdac4, final_update, size_guide_afe009df, phone_setup_ready, mystery_number_63279925, chart_down, phone_settings_toggle, device_os_requirement, device_data_transfer
 - `032_meme_carrier_hidden_tips`: mystery_number_63279925, document_article, smartphone, gift_voucher, telecom_discount_compare, phone_setup_ready, phone_settings_toggle, chart_down, device_os_requirement, device_data_transfer
 - `031_meme_phone_buying_checklist`: smartphone, phone_setup_ready, chart_down, cpt_c3ad3e73, gift_voucher, cpt_4ce4cc8c, telecom_discount_compare, phone_settings_toggle, device_os_requirement, device_data_transfer, cpt_349c9de7, cpt_bff86ff7, cpt_de81a562, official_sale_9dc82f05, clock, event_period_8cafdac4
 - `030_pick_new_vs_old_subsidy`: gift_voucher, mid_ship_7968fa24, smartphone, size_guide_afe009df, telecom_discount_compare, change_review_b93b867a, phone_settings_toggle, final_update, device_os_requirement, camera_battery_ecd040c7, chart_down, device_data_transfer, parents_vision_231bf461, cpt_f7322c3a
 - `029_pick_galaxy_vs_iphone_camera`: cpt_aff73c54, document_article, cpt_d124a858, cpt_356af649, smartphone, market_cap, phone_setup_ready, size_guide_afe009df, event_period_8cafdac4, cpt_c9dd9b89, cpt_0ecf996a, device_data_transfer, samsung_ai, store
-- `028_pick_senior_phone_3way`: parents_vision_231bf461, chatbot, impersonation_call, smartphone, clock, prohibit, parents_chat_c1d70b74, shield, cpt_17d8af78, final_update, size_guide_afe009df, phone_setup_ready, mystery_number_63279925, chart_down, cpt_9f55187e, device_os_requirement, device_data_transfer, cpt_5fc91d8e
 - `027_qa_usim_replace_security`: smartphone, aluminum_label, appliance, basic_fold_202d754f
 - `026_news_galaxy_a37_5g_launch`: samsung_korea_04b00795, mid_ship_7968fa24, unlocked_baa71ac6, official_sale_9dc82f05, final_update, lavender_color_7ffb0a8d, cpt_fd30bbcd, cpt_e646864a, phone_setup_ready, phone_settings_toggle, mounted_body_496029c6, new_policy_f48caded, device_os_requirement, device_data_transfer, telecom_discount_compare, smartphone
 - `025_tip_galaxy_ai_call_screening`: mystery_number_63279925, new_policy_f48caded, cpt_e9fd442e, phone_setup_ready, cpt_915bf475, cpt_f2dc70a6, device_data_transfer, smartphone, phone_settings_toggle, device_os_requirement

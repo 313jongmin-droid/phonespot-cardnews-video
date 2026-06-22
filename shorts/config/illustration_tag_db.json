@@ -212,6 +212,18 @@
       ],
       "note": "자동 발굴 개념: 정작 카드"
     },
+    "change_review_b93b867a": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "달라지니",
+        "따져야"
+      ],
+      "note": "자동 발굴 개념: 달라지니 따져야",
+      "available": true
+    },
     "chart_down": {
       "tags": [
         "price",
@@ -376,6 +388,21 @@
       "note": "자동 발굴 개념: 런던 언팩",
       "available": true
     },
+    "cpt_0ecf996a": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "영상",
+        "흔들림",
+        "보정",
+        "일관성",
+        "강점"
+      ],
+      "note": "자동 발굴 개념: 영상 흔들림",
+      "available": true
+    },
     "cpt_163f537d": {
       "tags": [
         "auto"
@@ -385,6 +412,20 @@
         "방식"
       ],
       "note": "자동 발굴 개념: 켜는 방식"
+    },
+    "cpt_17d8af78": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "상대적",
+        "가볍고",
+        "조작",
+        "단순하며"
+      ],
+      "note": "자동 발굴 개념: 상대적 가볍고",
+      "available": true
     },
     "cpt_1a196d6d": {
       "tags": [
@@ -419,6 +460,33 @@
         "모델"
       ],
       "note": "자동 발굴 개념: 모델"
+    },
+    "cpt_349c9de7": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "유리한지",
+        "계산해",
+        "달라고"
+      ],
+      "note": "자동 발굴 개념: 유리한지 계산해",
+      "available": true
+    },
+    "cpt_356af649": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "채도",
+        "높아",
+        "SNS",
+        "올리기"
+      ],
+      "note": "자동 발굴 개념: 채도 높아",
+      "available": true
     },
     "cpt_392743cd": {
       "tags": [
@@ -485,6 +553,58 @@
       "note": "자동 발굴 개념: 탑재 본체",
       "available": true
     },
+    "cpt_4a239341": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "물어보지",
+        "않으면",
+        "챙겨주지",
+        "않는",
+        "것들"
+      ],
+      "note": "자동 발굴 개념: 물어보지 않으면",
+      "available": true
+    },
+    "cpt_4b0db59d": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "내야",
+        "하는"
+      ],
+      "note": "자동 발굴 개념: 내야 하는",
+      "available": true
+    },
+    "cpt_4ce4cc8c": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "총액",
+        "물어보세요"
+      ],
+      "note": "자동 발굴 개념: 총액 물어보세요",
+      "available": true
+    },
+    "cpt_5507911c": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "문자",
+        "받고",
+        "바꿔야",
+        "하나",
+        "고민되셨다면"
+      ],
+      "note": "자동 발굴 개념: 문자 받고"
+    },
     "cpt_55c40fb8": {
       "tags": [
         "auto"
@@ -503,6 +623,18 @@
         "시리즈"
       ],
       "note": "자동 발굴 개념: 노트 시리즈"
+    },
+    "cpt_5fc91d8e": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "원격",
+        "도움"
+      ],
+      "note": "자동 발굴 개념: 원격 도움",
+      "available": true
     },
     "cpt_6174b190": {
       "tags": [
@@ -652,6 +784,19 @@
       "note": "자동 발굴 개념: KISA",
       "available": true
     },
+    "cpt_7ce59d26": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "특정",
+        "시점",
+        "어느",
+        "기지국",
+        "범위"
+      ],
+      "note": "자동 발굴 개념: 특정 시점"
+    },
     "cpt_7ea57558": {
       "tags": [
         "auto",
@@ -677,6 +822,19 @@
         "금융사기"
       ],
       "note": "자동 발굴 개념: 굿네이버스 전기통신",
+      "available": true
+    },
+    "cpt_85648c73": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "손해",
+        "보기",
+        "쉬운"
+      ],
+      "note": "자동 발굴 개념: 손해 보기",
       "available": true
     },
     "cpt_8b587f6c": {
@@ -744,6 +902,19 @@
       "note": "자동 발굴 개념: 공개 중순",
       "available": true
     },
+    "cpt_9cfc2c65": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "챙겨",
+        "새던",
+        "통신비"
+      ],
+      "note": "자동 발굴 개념: 챙겨 새던",
+      "available": true
+    },
     "cpt_9ebf277e": {
       "tags": [
         "auto"
@@ -754,6 +925,20 @@
         "으로"
       ],
       "note": "자동 발굴 개념: 첫째 안드로이드"
+    },
+    "cpt_9f55187e": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "불필요한",
+        "앱을",
+        "숨기면",
+        "헷갈림"
+      ],
+      "note": "자동 발굴 개념: 불필요한 앱을",
+      "available": true
     },
     "cpt_a0d7df46": {
       "tags": [
@@ -778,6 +963,15 @@
       "note": "자동 발굴 개념: 추가 개통",
       "available": true
     },
+    "cpt_a30b5cf7": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "유플러스"
+      ],
+      "note": "자동 발굴 개념: 유플러스"
+    },
     "cpt_a91efa70": {
       "tags": [
         "auto"
@@ -800,6 +994,21 @@
         "영국"
       ],
       "note": "자동 발굴 개념: 공개 영국",
+      "available": true
+    },
+    "cpt_aff73c54": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "스펙",
+        "숫자",
+        "말고",
+        "실제로",
+        "찍을"
+      ],
+      "note": "자동 발굴 개념: 스펙 숫자",
       "available": true
     },
     "cpt_b5a15155": {
@@ -835,6 +1044,46 @@
       ],
       "note": "자동 발굴 개념: 현재 자체"
     },
+    "cpt_bff86ff7": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "한쪽",
+        "보여주면",
+        "비교"
+      ],
+      "note": "자동 발굴 개념: 한쪽 보여주면",
+      "available": true
+    },
+    "cpt_c3ad3e73": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "호구당할",
+        "일이"
+      ],
+      "note": "자동 발굴 개념: 호구당할 일이",
+      "available": true
+    },
+    "cpt_c9dd9b89": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "야간",
+        "진영",
+        "좋아졌지",
+        "결과물",
+        "톤이"
+      ],
+      "note": "자동 발굴 개념: 야간 진영",
+      "available": true
+    },
     "cpt_ca558dbc": {
       "tags": [
         "auto"
@@ -844,6 +1093,32 @@
         "SKT"
       ],
       "note": "자동 발굴 개념: 미지원이지 SKT"
+    },
+    "cpt_d124a858": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "편집",
+        "다섯",
+        "가지로",
+        "갈리",
+        "실사용"
+      ],
+      "note": "자동 발굴 개념: 편집 다섯",
+      "available": true
+    },
+    "cpt_d3ebd1ae": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "일부",
+        "반영해",
+        "사실"
+      ],
+      "note": "자동 발굴 개념: 일부 반영해"
     },
     "cpt_d877aced": {
       "tags": [
@@ -858,6 +1133,20 @@
       ],
       "note": "자동 발굴 개념: 녹음본 메모"
     },
+    "cpt_de81a562": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "단말",
+        "가격대",
+        "따라",
+        "정답"
+      ],
+      "note": "자동 발굴 개념: 단말 가격대",
+      "available": true
+    },
     "cpt_dff91a6d": {
       "tags": [
         "auto"
@@ -870,6 +1159,29 @@
         "활용하실"
       ],
       "note": "자동 발굴 개념: 통신사 서버"
+    },
+    "cpt_e2ed2837": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "부담"
+      ],
+      "note": "자동 발굴 개념: 부담",
+      "available": true
+    },
+    "cpt_e646864a": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "최대",
+        "주사율"
+      ],
+      "note": "자동 발굴 개념: 최대 주사율",
+      "available": true
     },
     "cpt_e9fd442e": {
       "tags": [
@@ -977,6 +1289,20 @@
       ],
       "note": "자동 발굴 개념: 워치 시리즈"
     },
+    "cpt_f7322c3a": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "위약금",
+        "잔여",
+        "할부",
+        "확인하고"
+      ],
+      "note": "자동 발굴 개념: 위약금 잔여",
+      "available": true
+    },
     "cpt_f7997fd3": {
       "tags": [
         "auto"
@@ -1001,6 +1327,19 @@
         "카메라"
       ],
       "note": "자동 발굴 개념: 핵심 굿락"
+    },
+    "cpt_fd30bbcd": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "FHD",
+        "슈퍼",
+        "아몰레드"
+      ],
+      "note": "자동 발굴 개념: FHD 슈퍼",
+      "available": true
     },
     "cpt_fd9edf65": {
       "tags": [
@@ -1232,6 +1571,18 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "free_sim_3e08a1f2": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "무상",
+        "유심",
+        "교체",
+        "대상"
+      ],
+      "note": "자동 발굴 개념: 무상 유심"
+    },
     "friend_wedding_suspicion_884c4f09": {
       "tags": [
         "auto",
@@ -1378,6 +1729,20 @@
       ],
       "keywords": [],
       "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "lavender_color_7ffb0a8d": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "색상",
+        "라벤더",
+        "화이트",
+        "차콜"
+      ],
+      "note": "자동 발굴 개념: 색상 라벤더",
       "available": true
     },
     "liquid_titanium": {
@@ -1528,6 +1893,18 @@
         "언팩"
       ],
       "note": "자동 발굴 개념: 공개 중순",
+      "available": true
+    },
+    "mid_ship_7968fa24": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "출고",
+        "중급형이지"
+      ],
+      "note": "자동 발굴 개념: 출고 중급형이지",
       "available": true
     },
     "mobile_settings_31257fb6": {
@@ -1971,6 +2348,18 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "samsung_korea_04b00795": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "삼성",
+        "국내"
+      ],
+      "note": "자동 발굴 개념: 삼성 국내",
+      "available": true
+    },
     "secure_app_reregistration": {
       "tags": [
         "security",
@@ -2312,401 +2701,7 @@
       ],
       "note": "자동 발굴 개념: 일요일 주간",
       "available": true
-    },
-    "samsung_korea_04b00795": {
-      "keywords": [
-        "삼성",
-        "국내"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 삼성 국내",
-      "available": true
-    },
-    "mid_ship_7968fa24": {
-      "keywords": [
-        "출고",
-        "중급형이지"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 출고 중급형이지",
-      "available": true
-    },
-    "lavender_color_7ffb0a8d": {
-      "keywords": [
-        "색상",
-        "라벤더",
-        "화이트",
-        "차콜"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 색상 라벤더",
-      "available": true
-    },
-    "cpt_fd30bbcd": {
-      "keywords": [
-        "FHD",
-        "슈퍼",
-        "아몰레드"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: FHD 슈퍼",
-      "available": true
-    },
-    "cpt_e646864a": {
-      "keywords": [
-        "최대",
-        "주사율"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 최대 주사율",
-      "available": true
-    },
-    "free_sim_3e08a1f2": {
-      "keywords": [
-        "무상",
-        "유심",
-        "교체",
-        "대상"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 무상 유심",
-      "available": false
-    },
-    "cpt_5507911c": {
-      "keywords": [
-        "문자",
-        "받고",
-        "바꿔야",
-        "하나",
-        "고민되셨다면"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 문자 받고",
-      "available": false
-    },
-    "cpt_d3ebd1ae": {
-      "keywords": [
-        "일부",
-        "반영해",
-        "사실"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 일부 반영해",
-      "available": false
-    },
-    "cpt_7ce59d26": {
-      "keywords": [
-        "특정",
-        "시점",
-        "어느",
-        "기지국",
-        "범위"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 특정 시점",
-      "available": false
-    },
-    "cpt_a30b5cf7": {
-      "keywords": [
-        "유플러스"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 유플러스",
-      "available": false
-    },
-    "cpt_17d8af78": {
-      "keywords": [
-        "상대적",
-        "가볍고",
-        "조작",
-        "단순하며"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 상대적 가볍고",
-      "available": true
-    },
-    "cpt_9f55187e": {
-      "keywords": [
-        "불필요한",
-        "앱을",
-        "숨기면",
-        "헷갈림"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 불필요한 앱을",
-      "available": true
-    },
-    "cpt_5fc91d8e": {
-      "keywords": [
-        "원격",
-        "도움"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 원격 도움",
-      "available": true
-    },
-    "cpt_c9dd9b89": {
-      "keywords": [
-        "야간",
-        "진영",
-        "좋아졌지",
-        "결과물",
-        "톤이"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 야간 진영",
-      "available": true
-    },
-    "cpt_0ecf996a": {
-      "keywords": [
-        "영상",
-        "흔들림",
-        "보정",
-        "일관성",
-        "강점"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 영상 흔들림",
-      "available": true
-    },
-    "cpt_aff73c54": {
-      "keywords": [
-        "스펙",
-        "숫자",
-        "말고",
-        "실제로",
-        "찍을"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 스펙 숫자",
-      "available": true
-    },
-    "cpt_d124a858": {
-      "keywords": [
-        "편집",
-        "다섯",
-        "가지로",
-        "갈리",
-        "실사용"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 편집 다섯",
-      "available": true
-    },
-    "cpt_356af649": {
-      "keywords": [
-        "채도",
-        "높아",
-        "SNS",
-        "올리기"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 채도 높아",
-      "available": true
-    },
-    "change_review_b93b867a": {
-      "keywords": [
-        "달라지니",
-        "따져야"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 달라지니 따져야",
-      "available": true
-    },
-    "cpt_f7322c3a": {
-      "keywords": [
-        "위약금",
-        "잔여",
-        "할부",
-        "확인하고"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 위약금 잔여",
-      "available": true
-    },
-    "cpt_c3ad3e73": {
-      "keywords": [
-        "호구당할",
-        "일이"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 호구당할 일이",
-      "available": true
-    },
-    "cpt_4ce4cc8c": {
-      "keywords": [
-        "총액",
-        "물어보세요"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 총액 물어보세요",
-      "available": true
-    },
-    "cpt_349c9de7": {
-      "keywords": [
-        "유리한지",
-        "계산해",
-        "달라고"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 유리한지 계산해",
-      "available": true
-    },
-    "cpt_bff86ff7": {
-      "keywords": [
-        "한쪽",
-        "보여주면",
-        "비교"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 한쪽 보여주면",
-      "available": true
-    },
-    "cpt_de81a562": {
-      "keywords": [
-        "단말",
-        "가격대",
-        "따라",
-        "정답"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 단말 가격대",
-      "available": true
-    },
-    "cpt_4a239341": {
-      "keywords": [
-        "물어보지",
-        "않으면",
-        "챙겨주지",
-        "않는",
-        "것들"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 물어보지 않으면",
-      "available": true
-    },
-    "cpt_85648c73": {
-      "keywords": [
-        "손해",
-        "보기",
-        "쉬운"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 손해 보기",
-      "available": true
-    },
-    "cpt_4b0db59d": {
-      "keywords": [
-        "내야",
-        "하는"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 내야 하는",
-      "available": true
-    },
-    "cpt_e2ed2837": {
-      "keywords": [
-        "부담"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 부담",
-      "available": true
-    },
-    "cpt_9cfc2c65": {
-      "keywords": [
-        "챙겨",
-        "새던",
-        "통신비"
-      ],
-      "tags": [
-        "auto",
-        "library"
-      ],
-      "note": "자동 발굴 개념: 챙겨 새던",
-      "available": true
     }
   },
-  "updated_at": "2026-06-19T15:24:02"
+  "updated_at": "2026-06-22T16:31:48"
 }

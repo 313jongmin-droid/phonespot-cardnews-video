@@ -364,8 +364,8 @@
       ]
     },
     "028_pick_senior_phone_3way": {
-      "used_at": "2026-06-19T11:55:51",
-      "source": "uploaded_illustrations",
+      "used_at": "2026-06-22T16:31:50",
+      "source": "semantic_visual_match",
       "illustrations": [
         "parents_vision_231bf461",
         "chatbot",
@@ -375,16 +375,15 @@
         "prohibit",
         "parents_chat_c1d70b74",
         "shield",
-        "cpt_17d8af78",
+        "event_period_8cafdac4",
         "final_update",
         "size_guide_afe009df",
         "phone_setup_ready",
         "mystery_number_63279925",
         "chart_down",
-        "cpt_9f55187e",
+        "phone_settings_toggle",
         "device_os_requirement",
-        "device_data_transfer",
-        "cpt_5fc91d8e"
+        "device_data_transfer"
       ]
     },
     "029_pick_galaxy_vs_iphone_camera": {
@@ -466,7 +465,7 @@
       ]
     }
   },
-  "updated_at": "2026-06-19T16:44:48",
+  "updated_at": "2026-06-22T16:31:53",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -547,7 +546,7 @@
       "variants": []
     },
     "028_pick_senior_phone_3way": {
-      "updated_at": "2026-06-19T11:55:52",
+      "updated_at": "2026-06-22T16:31:53",
       "variants": []
     },
     "029_pick_galaxy_vs_iphone_camera": {
