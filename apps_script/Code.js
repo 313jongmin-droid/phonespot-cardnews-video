@@ -1130,7 +1130,8 @@ function buildDashboardV2() {
   const F_PCT = '0.0%';
   const fmtKM = '[>=1000000]0.00,,"M";[>=1000]0.0,"K";#,##0';
 
-  // ── 0) 초기화 (1~140행 범위) ──
+  // ── 0) 초기화 (1~140행 범위) — 옛 드롭다운(E16/E28/E36) 데이터확인 규칙까지 제거 ──
+  dash.getRange('A1:Z140').clearDataValidations();
   dash.getRange('A1:Z140').breakApart();
   dash.getRange('A1:Z140').clearContent().clearFormat();
   try { dash.showRows(1, 140); } catch (e) {}
