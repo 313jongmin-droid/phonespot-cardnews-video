@@ -407,8 +407,8 @@
       ]
     },
     "030_pick_new_vs_old_subsidy": {
-      "used_at": "2026-06-19T13:59:57",
-      "source": "uploaded_illustrations",
+      "used_at": "2026-06-22T17:07:31",
+      "source": "semantic_visual_match",
       "illustrations": [
         "gift_voucher",
         "mid_ship_7968fa24",
@@ -416,14 +416,14 @@
         "size_guide_afe009df",
         "telecom_discount_compare",
         "change_review_b93b867a",
+        "phone_setup_ready",
         "phone_settings_toggle",
         "final_update",
         "device_os_requirement",
         "camera_battery_ecd040c7",
         "chart_down",
         "device_data_transfer",
-        "parents_vision_231bf461",
-        "cpt_f7322c3a"
+        "parents_vision_231bf461"
       ]
     },
     "031_meme_phone_buying_checklist": {
@@ -465,7 +465,7 @@
       ]
     }
   },
-  "updated_at": "2026-06-22T16:48:47",
+  "updated_at": "2026-06-22T17:07:34",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -554,7 +554,7 @@
       "variants": []
     },
     "030_pick_new_vs_old_subsidy": {
-      "updated_at": "2026-06-19T13:59:58",
+      "updated_at": "2026-06-22T17:07:34",
       "variants": []
     },
     "031_meme_phone_buying_checklist": {

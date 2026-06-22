@@ -2,3 +2,4 @@
 2026-06-16 18:20:38,004_nosangdam_showcase_1.mp4,004,nosangdam,showcase,,'일단 오세요',open:oversize;hook:glitch;fact1:marker;fact2:kinetic-box;fact3:reveal;cta:kinetic-box,music/confident_01__00.mp3,0,3,89e728c54e
 2026-06-18 18:41:32,005_bidaemyeon_showcase_1.mp4,005,bidaemyeon,showcase,,매장 꼭 가야 해?,open:oversize;hook:kinetic;fact1:glitch;fact2:kinetic-box;fact3:steps;cta:kinetic-box,music/confident_01__00.mp3,0,3,edbb32a6eb
 2026-06-19 11:53:32,003_geugadaero_showcase_1.mp4,003,geugadaero,showcase,질문형,그대로 될까?,open:oversize;hook:glitch;fact1:barcompare;fact2:kinetic-box;fact3:kinetic;cta:kinetic-box,music/confident_01__00.mp3,0,3,7de922375d
+2026-06-22 17:09:53,015_balpum_data.mp4,015,balpum,data,비교형,vs 조회 한 번,open:oversize;hook:barcompare;fact1:barcompare;fact2:counter;fact3:statgrid;cta:kinetic-box,music/calm_01__00.mp3,0,3,ba2d4770a2
