@@ -214,8 +214,8 @@ function updateKPISummary() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const sh = ss.getSheetByName('통합대시보드');
 
-  // A9:I14 클리어
-  sh.getRange('A9:I14').clearContent().clearFormat();
+  // A9:I15 클리어 (어제/3일/7일/14일/30일 = 5행)
+  sh.getRange('A9:I15').clearContent().clearFormat();
 
   // 행 9: 섹션 헤더
   sh.getRange('A9:I9').merge().setValue('★ 핵심 KPI 상세 (위 카드의 원천)')
@@ -229,6 +229,7 @@ function updateKPISummary() {
 
   const periods = [
     ['어제',       'TODAY()-1',  'TODAY()-1'],
+    ['최근 3일',   'TODAY()-2',  'TODAY()'],
     ['최근 7일',   'TODAY()-6',  'TODAY()'],
     ['최근 14일',  'TODAY()-13', 'TODAY()'],
     ['최근 30일',  'TODAY()-29', 'TODAY()'],
