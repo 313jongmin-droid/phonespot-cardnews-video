@@ -1,0 +1,35 @@
+#!/bin/sh
+# 커밋 완료 시 텔레그램 알림 (post-commit 훅).
+# tg_send.py(_secrets/telegram_token.txt + telegram_chat_id.txt) 재사용.
+# 활성화: 이미 git config core.hooksPath .githooks 되어 있으면 자동.
+# 비차단: post-commit은 커밋 이후 단계라 무엇이 실패해도 커밋엔 영향 없음. 조용히 종료.
+# ★ SSL: 사무실 네트워크 TLS 가로채기 때문에 시스템 파이썬은 CERTIFICATE_VERIFY_FAILED 가능 →
+#   truststore 주입된 .phonespot_runtime venv 파이썬을 1순위로 사용(CHANGELOG 2026-06-18).
+
+REPO="$(git rev-parse --show-toplevel 2>/dev/null)" || exit 0
+[ -f "$REPO/_secrets/telegram_token.txt" ] || exit 0   # 토큰 없으면 조용히 패스
+
+HASH="$(git log -1 --pretty=%h 2>/dev/null)"
+SUBJ="$(git log -1 --pretty=%s 2>/dev/null)"
+BRANCH="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
+STAT="$(git show --stat --format= -1 2>/dev/null | tail -1 | sed 's/^[[:space:]]*//')"
+
+MSG="✅ 폰스팟 커밋 완료 [$BRANCH $HASH]
+$SUBJ
+$STAT"
+
+# 파이썬 선택: venv(truststore, SSL 해결) → py → python → python3
+PY=""
+VENV="$REPO/.phonespot_runtime/Scripts/python.exe"
+if   [ -f "$VENV" ];                      then PY="$VENV"
+elif command -v py      >/dev/null 2>&1;  then PY="py"
+elif command -v python  >/dev/null 2>&1;  then PY="python"
+elif command -v python3 >/dev/null 2>&1;  then PY="python3"
+fi
+[ -z "$PY" ] && exit 0
+
+TMP="$(mktemp 2>/dev/null || echo "$REPO/_secrets/.tg_commit_msg.txt")"
+printf '%s\n' "$MSG" > "$TMP"
+"$PY" "$REPO/automation/scripts/tg_send.py" "$TMP" >/dev/null 2>&1
+rm -f "$TMP" 2>/dev/null
+exit 0
