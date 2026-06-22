@@ -7,7 +7,35 @@ const Scene: React.FC<SceneProps> = ({ data, durFrames, variant, isCta, ctaInfo 
   if (isCta) return <CtaBlock data={data} ctaInfo={ctaInfo} />;
   const c = chunksOf(data);
   const m = c.join(" ").match(/\d[\d,]*/);
-  const target = m ? parseInt(m[0].replace(/,/g, ""), 10) : 100;
+
+  // 숫자가 없으면 카운터는 부적합 → 가짜 숫자(구: 100까지 카운트업) 대신 청크를 타이포로 표시.
+  // (마지막 청크 오렌지 강조, 나머지 흰색, 순차 등장)
+  if (!m) {
+    return (
+      <AbsoluteFill style={{ backgroundColor: variant.bg, fontFamily: FONT, justifyContent: "center", alignItems: "center", padding: 90, gap: 12 }}>
+        {c.map((t, i) => (
+          <div
+            key={i}
+            style={{
+              fontSize: i === c.length - 1 ? 120 : 64,
+              fontWeight: 900,
+              color: i === c.length - 1 ? variant.accent : variant.fg,
+              textAlign: "center",
+              lineHeight: 1.05,
+              letterSpacing: i === c.length - 1 ? -2 : 0,
+              wordBreak: "keep-all",
+              opacity: clamp((frame - i * 4) / 10),
+              transform: `translateY(${(1 - easeOut(clamp((frame - i * 4) / 10))) * 24}px)`,
+            }}
+          >
+            {t}
+          </div>
+        ))}
+      </AbsoluteFill>
+    );
+  }
+
+  const target = parseInt(m[0].replace(/,/g, ""), 10);
   const p = clamp(frame / (durFrames * 0.7));
   const val = Math.round(target * easeOut(p));
   return (
@@ -17,4 +45,5 @@ const Scene: React.FC<SceneProps> = ({ data, durFrames, variant, isCta, ctaInfo 
     </AbsoluteFill>
   );
 };
+
 export const counter: PromoStyle = { Opening: BasicOpening, Scene, Outro: BasicOutro };
