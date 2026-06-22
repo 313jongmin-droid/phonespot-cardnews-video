@@ -588,3 +588,5 @@ rdnews/scripts/update_content_guide.py`로 §2 발행인덱스 자동 재생성,
 - 2026-06-22 (광고그룹 추이 개선): adgroup-trend.js — (1) CPL 컬럼(I열, =지출/문의수) 추가(데이터표 9컬럼). (2) 차트 우축을 CPC→CPL로 교체(CTR·문의율 좌축%, CPL 우축원, CPC는 표에만=스케일충돌 회피). (3) onEdit 단순트리거 추가 = 통합대시보드 B61(채널)/E61(광고그룹)/H61(기간) 편집 시 자동 refreshAdgroupTrendChart(메뉴 수동클릭 불필요, 불편 해소). 적용: 콘솔 반영 후 "차트 셋업(1회)" 재실행으로 헤더(CPL 라벨)·차트 재도색.
 
 - 2026-06-22 (대시보드 깨짐 수정): 통합대시보드 옛 "월별 카톡표"(45~57행)는 갱신 함수 없는 잔여물인데 recordLastRefresh_가 A46(2월 라벨 자리)에 업데이트 시각을 써서 깨져 보임. 수정 = recordLastRefresh_가 A45:H58 정리(clearContent+Format) 후 시각을 A59에 기록(어떤 표와도 비충돌). 잔여표는 사장님 결정으로 삭제. 적용 = nightlyDashboard 1회 실행(끝에서 recordLastRefresh_ 호출).
+
+- 2026-06-22 (버그 일괄 수정): (1) ★logSync_ 중복 정의(meta 2인자 vs danggn 3인자) — meta가 나중로드로 이겨서 3인자 호출 시 실패를 ✅성공으로 기록+메시지 유실. → meta-sync.js logSync_를 2·3인자 모두 처리하게 통합, danggn 중복 제거. (2) listAllAdgroups 중복(naver vs test.js) → test.js 함수명 listAllAdgroups_test_로 변경. (3) 파일간 중복 const/var 없음 확인(있으면 V8 전체 에러). (4) 광고그룹추이 자동갱신 = 설치형 onEdit 트리거(setupAdgroupEditTrigger, 메뉴 "⚡ 토글 자동갱신 켜기"). onEdit(e)→onEditAdgroupAuto_로 개명. (5) 대시보드 여백: recordLastRefresh_가 41~59행 숨김(hideRows)+옛 시각/잔재 정리, 업데이트 시각을 상단 A7로 이동. 적용=nightlyDashboard 1회.

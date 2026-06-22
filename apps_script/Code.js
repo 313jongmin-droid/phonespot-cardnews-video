@@ -120,12 +120,13 @@ function recordLastRefresh_() {
   const stamp = Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyy-MM-dd HH:mm:ss');
   const sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('통합대시보드');
   if (sh) {
-    // 2026-06-22: 옛 월별 카톡 잔여표(45~58행, 갱신 함수 없음) 정리 + 시각을 A59로 이동(표와 안 겹침)
-    try { sh.getRange('A45:H58').breakApart(); } catch (e) {}
-    sh.getRange('A45:H58').clearContent().clearFormat();
-    try { sh.getRange('A59:F59').breakApart(); } catch (e) {}
-    sh.getRange('A59').setValue('🕐 마지막 전체 업데이트: ' + stamp)
-      .setFontColor('#666666').setFontStyle('italic').setFontWeight('bold');
+    // 2026-06-22: 옛 월별표 잔재(45~58)+옛 시각(59) 정리, 41~59 빈 여백 숨김(카톡리포트~광고그룹추이 사이), 시각은 상단 A7로.
+    try { sh.getRange('A45:H59').breakApart(); } catch (e) {}
+    sh.getRange('A45:H59').clearContent().clearFormat();
+    try { sh.hideRows(41, 19); } catch (e) {}
+    try { sh.getRange('A7:F7').breakApart(); } catch (e) {}
+    sh.getRange('A7').setValue('🕐 마지막 전체 업데이트: ' + stamp)
+      .setFontColor('#888888').setFontStyle('italic');
   }
   return stamp;
 }
