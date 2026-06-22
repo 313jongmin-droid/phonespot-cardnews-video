@@ -241,7 +241,7 @@ def build_title_candidates(title: str, slug: str) -> list[str]:
     base = clean_title(title, slug.replace("_", " "))
     candidates = [
         base,
-        f"{base} | 폰스팟 IT",
+        f"{base} | 휴대폰성지 폰스팟",
         one_line(f"{base} 핵심만 1분 정리", 60),
     ]
     return list(dict.fromkeys([candidate for candidate in candidates if candidate]))
@@ -351,7 +351,7 @@ TIKTOK
 - TTS 문장 전환과 화면 전환이 크게 어긋나지 않는지 확인
 - 같은 원본 이미지가 반복 사용되어 지루해 보이지 않는지 확인
 - CTA 문구가 고정 문구와 어긋나지 않는지 확인
-- 유튜브는 세로 영상 + 60초 내외 + #Shorts 포함 확인
+- 유튜브는 세로 영상 + 30~35초 + #Shorts 포함 확인
 - 인스타/틱톡은 업로드 후 자동 자막이 원본 자막을 가리지 않는지 확인
 """
 

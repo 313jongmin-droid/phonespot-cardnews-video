@@ -1,54 +1,49 @@
 {
-  "slug": "029_pick_galaxy_vs_iphone_camera",
-  "title_short": "갤럭시 vs 아이폰 카메라 실사용 차이 5",
-  "video_title": "갤럭시 vs 아이폰 카메라 실사용 차이 5",
+  "slug": "028_pick_senior_phone_3way",
+  "title_short": "부모님 효도폰 3종 비교",
+  "video_title": "부모님 효도폰 3종 비교",
   "publication_date": "2026.06.19",
-  "sources": "삼성전자 갤럭시 카메라 + 애플 카메라 가이드 + 폰스팟 광교점 자료",
-  "channel_name": "폰스팟",
-  "channel_tagline": "광교 미니 IT 브리핑",
+  "sources": "삼성전자 갤럭시 A 공식 + 애플 접근성 가이드 + 휴대폰성지 폰스팟 자료",
+  "channel_name": "휴대폰성지 폰스팟",
+  "channel_tagline": "휴대폰성지 IT 브리핑",
   "opening": {
-    "line1": "광교 미니 IT 브리핑",
-    "line2": "갤럭시 vs 아이폰 카메라 실사용 차이 5"
+    "line1": "휴대폰성지 IT 브리핑",
+    "line2": "부모님 효도폰 3종 비교"
   },
   "hook": {
-    "tts": "스펙 숫자 말고 실제로 찍을 때 뭐가 다른지가 중요합니다. 색감, 줌, 야간, 영상, 편집 다섯 가지로 갈리는 실사용 차이를 정리했습니다. 내 사용 습관에 맞는 쪽이 정답입니다.",
+    "tts": "효도폰, 화면 크기만 보고 고르면 후회해요. 통화·글씨·보이스피싱 차단 기준으로 3종 비교합니다.",
     "caption_body": [
-      "카메라",
-      "갤럭시 vs 아이폰"
+      "부모님 폰",
+      "뭐가 좋을까?"
     ],
     "caption_emphasis": [
-      "갤럭시 vs 아이폰"
+      "뭐가 좋을까"
     ],
     "headline_lines": [
       {
-        "text": "카메라"
+        "text": "부모님 폰"
       },
       {
-        "text": "갤럭시 vs 아이폰",
+        "text": "뭐가 좋을까?",
         "accent": true
       }
     ],
-    "meta": "출처: 폰스팟 광교점 자료",
+    "meta": "출처: 휴대폰성지 폰스팟 자료",
     "topic": "뉴스",
     "background_image": "",
     "caption_chunks": [
-      "스펙 숫자 말고 실제로 찍을 때 뭐가 다른지가 중요합니다.",
-      "색감, 줌, 야간, 영상,",
-      "편집 다섯 가지로 갈리는 실사용 차이를 정리했습니다.",
-      "내 사용 습관에 맞는 쪽이 정답입니다."
+      "효도폰, 화면 크기만 보고 고르면 후회해요.",
+      "통화·글씨·보이스피싱 차단 기준으로",
+      "3종 비교합니다."
     ],
     "chunk_visuals": [
       {
         "type": "illust",
-        "value": "camera_battery_ecd040c7"
+        "value": "smartphone"
       },
       {
         "type": "illust",
-        "value": "document_article"
-      },
-      {
-        "type": "illust",
-        "value": "parents_vision_231bf461"
+        "value": "smartphone"
       },
       {
         "type": "mascot",
@@ -59,104 +54,42 @@
       "label": "",
       "value": "",
       "note": ""
-    },
-    "display_chunks": [
-      "스펙 숫자 말고 실제로 찍을 때 뭐가 다른지가 중요합니다",
-      "색감, 줌, 야간, 영상,",
-      "편집 다섯 가지로 갈리는 실사용 차이를 정리했습니다",
-      "내 사용 습관에 맞는 쪽이 정답입니다"
-    ],
-    "_codex_caption_lockstep": {
-      "version": 2,
-      "compiler": "korean_caption_compiler_v2",
-      "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-      "chunk_count": 4
-    },
-    "_codex_contextual_narrative": true,
-    "_codex_sync_mode": "global999_tts_caption_lockstep",
-    "tts_chunk_weights": [
-      3565.12,
-      2262.34,
-      3125.0,
-      1857.42
-    ],
-    "_tts_timing": {
-      "mode": "word_boundary_text_align",
-      "windows": [
-        {
-          "start_ms": 0.0,
-          "end_ms": 3565.12,
-          "duration_ms": 3565.12
-        },
-        {
-          "start_ms": 3565.12,
-          "end_ms": 5827.46,
-          "duration_ms": 2262.34
-        },
-        {
-          "start_ms": 5827.46,
-          "end_ms": 8952.46,
-          "duration_ms": 3125.0
-        },
-        {
-          "start_ms": 8952.46,
-          "end_ms": 10809.88,
-          "duration_ms": 1857.42
-        }
-      ],
-      "boundary_count": 26,
-      "caption_signature": "6fada7ce584da0ba4f0842be82cbc876452ed420c06351df4707e95ecd93d81f"
     }
   },
   "facts": [
     {
-      "tts": "갤럭시는 채도가 높아 SNS에 바로 올리기 좋은 선명한 색을 냅니다. 아이폰은 실제에 가까운 자연스러운 색을 지향합니다. 보정 없이 화사한 사진을 원하면 갤럭시, 사실적 톤이면 아이폰입니다.",
+      "tts": "갤럭시 A는 큰 화면에 글씨 키우는 쉬운 모드, 실시간 통화 자막과 보이스피싱 차단이 강점입니다.",
       "caption_body": [
-        "색감",
-        "선명 vs 자연"
+        "갤럭시 A",
+        "큰 화면·간편 모드"
       ],
       "caption_emphasis": [
-        "선명 vs 자연"
+        "큰 화면·간편"
       ],
       "headline_lines": [
         {
-          "text": "색감"
+          "text": "갤럭시 A"
         },
         {
-          "text": "선명 vs 자연",
+          "text": "큰 화면·간편 모드",
           "accent": true
         }
       ],
-      "meta": "출처: 갤럭시 카메라",
+      "meta": "출처: 삼성 갤럭시 A",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "갤럭시는 채도가 높아 SNS에 바로 올리기",
-        "좋은 선명한 색을 냅니다.",
-        "아이폰은 실제에 가까운 자연스러운 색을 지향합니다.",
-        "보정 없이 화사한 사진을 원하면 갤럭시,",
-        "사실적 톤이면 아이폰입니다."
+        "갤럭시 A는 큰 화면에 글씨 키우는 쉬운 모드,",
+        "실시간 통화 자막과 보이스피싱 차단이 강점입니다."
       ],
       "chunk_visuals": [
-        {
-          "type": "illust",
-          "value": "camera_quality"
-        },
         {
           "type": "illust",
           "value": "smartphone"
         },
         {
-          "type": "image",
-          "value": "photos/애플_아이폰17.JPG"
-        },
-        {
           "type": "illust",
-          "value": "market_cap"
-        },
-        {
-          "type": "image",
-          "value": "photos/애플_아이폰_2개.JPG"
+          "value": "smartphone"
         }
       ],
       "stat": {
@@ -164,101 +97,37 @@
         "value": "",
         "note": ""
       },
-      "id": "fact_1",
-      "display_chunks": [
-        "갤럭시는 채도가 높아 SNS에 바로 올리기",
-        "좋은 선명한 색을 냅니다",
-        "아이폰은 실제에 가까운 자연스러운 색을 지향합니다",
-        "보정 없이 화사한 사진을 원하면 갤럭시,",
-        "사실적 톤이면 아이폰입니다"
-      ],
-      "_codex_caption_lockstep": {
-        "version": 2,
-        "compiler": "korean_caption_compiler_v2",
-        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 5
-      },
-      "_codex_contextual_narrative": true,
-      "_codex_sync_mode": "global999_tts_caption_lockstep",
-      "tts_chunk_weights": [
-        2145.08,
-        1719.34,
-        3213.04,
-        2015.83,
-        1461.3
-      ],
-      "_tts_timing": {
-        "mode": "word_boundary_text_align",
-        "windows": [
-          {
-            "start_ms": 0.0,
-            "end_ms": 2145.08,
-            "duration_ms": 2145.08
-          },
-          {
-            "start_ms": 2145.08,
-            "end_ms": 3864.42,
-            "duration_ms": 1719.34
-          },
-          {
-            "start_ms": 3864.42,
-            "end_ms": 7077.46,
-            "duration_ms": 3213.04
-          },
-          {
-            "start_ms": 7077.46,
-            "end_ms": 9093.29,
-            "duration_ms": 2015.83
-          },
-          {
-            "start_ms": 9093.29,
-            "end_ms": 10554.59,
-            "duration_ms": 1461.3
-          }
-        ],
-        "boundary_count": 25,
-        "caption_signature": "25b12f3e10fc26de9216ade58126b965e7ef5fd9e4c832b8ddb75db0cfc4c229"
-      }
+      "id": "fact_1"
     },
     {
-      "tts": "멀리 있는 피사체를 크게 당기는 고배율 줌은 갤럭시 상위 모델이 강합니다. 공연·운동회·풍경에서 차이가 큽니다. 아이폰은 중간 배율까지의 자연스러움에 강점이 있습니다.",
+      "tts": "보급형 아이폰은 가볍고 단순하며 업데이트가 깁니다. 자녀가 아이폰이면 사진·영상통화 공유가 매끄럽죠.",
       "caption_body": [
-        "줌",
-        "고배율은 갤럭시"
+        "보급형 아이폰",
+        "가볍고 오래 쓰기"
       ],
       "caption_emphasis": [
-        "고배율"
+        "가볍고 오래"
       ],
       "headline_lines": [
         {
-          "text": "줌"
+          "text": "보급형 아이폰"
         },
         {
-          "text": "고배율은 갤럭시",
+          "text": "가볍고 오래 쓰기",
           "accent": true
         }
       ],
-      "meta": "출처: 폰스팟 광교점 자료",
+      "meta": "출처: 애플 접근성 가이드",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "멀리 있는 피사체를 크게 당기는 고배율",
-        "줌은 갤럭시 상위 모델이 강합니다.",
-        "공연·운동회·풍경에서 차이가 큽니다.",
-        "아이폰은 중간 배율까지의 자연스러움에 강점이 있습니다."
+        "보급형 아이폰은 가볍고 단순하며 업데이트가 깁니다.",
+        "자녀가 아이폰이면 사진·영상통화 공유가 매끄럽죠."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "phone_setup_ready"
-        },
-        {
-          "type": "illust",
-          "value": "size_guide_afe009df"
-        },
-        {
-          "type": "illust",
-          "value": "event_period_8cafdac4"
+          "value": "smartphone"
         },
         {
           "type": "mascot",
@@ -270,94 +139,37 @@
         "value": "",
         "note": ""
       },
-      "id": "fact_2",
-      "display_chunks": [
-        "멀리 있는 피사체를 크게 당기는 고배율",
-        "줌은 갤럭시 상위 모델이 강합니다",
-        "공연·운동회·풍경에서 차이가 큽니다",
-        "아이폰은 중간 배율까지의 자연스러움에 강점이 있습니다"
-      ],
-      "_codex_caption_lockstep": {
-        "version": 2,
-        "compiler": "korean_caption_compiler_v2",
-        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 4
-      },
-      "_codex_contextual_narrative": true,
-      "_codex_sync_mode": "global999_tts_caption_lockstep",
-      "tts_chunk_weights": [
-        1933.79,
-        2335.59,
-        2455.95,
-        2755.29
-      ],
-      "_tts_timing": {
-        "mode": "word_boundary_text_align",
-        "windows": [
-          {
-            "start_ms": 0.0,
-            "end_ms": 1933.79,
-            "duration_ms": 1933.79
-          },
-          {
-            "start_ms": 1933.79,
-            "end_ms": 4269.38,
-            "duration_ms": 2335.59
-          },
-          {
-            "start_ms": 4269.38,
-            "end_ms": 6725.33,
-            "duration_ms": 2455.95
-          },
-          {
-            "start_ms": 6725.33,
-            "end_ms": 9480.62,
-            "duration_ms": 2755.29
-          }
-        ],
-        "boundary_count": 22,
-        "caption_signature": "a8c26a8033d00e9585308e611ac0d915f418afaaf1d595bd8df1ba4855d81396"
-      }
+      "id": "fact_2"
     },
     {
-      "tts": "야간은 두 진영 모두 좋아졌지만 결과물 톤이 다릅니다. 영상은 아이폰의 흔들림 보정과 색 일관성이 강점, 갤럭시는 고해상도·고배율 영상에 강합니다. 영상 위주면 아이폰을 우선 보세요.",
+      "tts": "둘 다 큰 글씨·단순 홈 화면을 지원합니다. 자주 쓰는 번호를 앞에 두고 앱을 숨기면 헷갈림이 줄어요.",
       "caption_body": [
-        "야간·영상",
-        "손떨림·안정"
+        "간편모드",
+        "큰 글씨·단순 화면"
       ],
       "caption_emphasis": [
-        "손떨림·안정"
+        "큰 글씨·단순"
       ],
       "headline_lines": [
         {
-          "text": "야간·영상"
+          "text": "간편모드"
         },
         {
-          "text": "손떨림·안정",
+          "text": "큰 글씨·단순 화면",
           "accent": true
         }
       ],
-      "meta": "출처: 애플 카메라 가이드",
+      "meta": "출처: 휴대폰성지 폰스팟 자료",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "야간은 두 진영 모두 좋아졌지만 결과물 톤이 다릅니다.",
-        "영상은 아이폰의 흔들림 보정과 색 일관성이 강점,",
-        "갤럭시는 고해상도·고배율 영상에 강합니다.",
-        "영상 위주면 아이폰을 우선 보세요."
+        "둘 다 큰 글씨·단순 홈 화면을 지원합니다.",
+        "자주 쓰는 번호를 앞에 두고 앱을 숨기면 헷갈림이 줄어요."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "phone_settings_toggle"
-        },
-        {
-          "type": "illust",
-          "value": "device_os_requirement"
-        },
-        {
-          "type": "illust",
-          "value": "device_data_transfer"
+          "value": "smartphone"
         },
         {
           "type": "illust",
@@ -369,94 +181,47 @@
         "value": "",
         "note": ""
       },
-      "id": "fact_3",
-      "display_chunks": [
-        "야간은 두 진영 모두 좋아졌지만 결과물 톤이 다릅니다",
-        "영상은 아이폰의 흔들림 보정과 색 일관성이 강점,",
-        "갤럭시는 고해상도·고배율 영상에 강합니다",
-        "영상 위주면 아이폰을 우선 보세요"
-      ],
-      "_codex_caption_lockstep": {
-        "version": 2,
-        "compiler": "korean_caption_compiler_v2",
-        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 4
-      },
-      "_codex_contextual_narrative": true,
-      "_codex_sync_mode": "global999_tts_caption_lockstep",
-      "tts_chunk_weights": [
-        3415.5,
-        2799.29,
-        2878.5,
-        1742.95
-      ],
-      "_tts_timing": {
-        "mode": "word_boundary_text_align",
-        "windows": [
-          {
-            "start_ms": 0.0,
-            "end_ms": 3415.5,
-            "duration_ms": 3415.5
-          },
-          {
-            "start_ms": 3415.5,
-            "end_ms": 6214.79,
-            "duration_ms": 2799.29
-          },
-          {
-            "start_ms": 6214.79,
-            "end_ms": 9093.29,
-            "duration_ms": 2878.5
-          },
-          {
-            "start_ms": 9093.29,
-            "end_ms": 10836.24,
-            "duration_ms": 1742.95
-          }
-        ],
-        "boundary_count": 25,
-        "caption_signature": "9d173b0281eef9523752414744d5c5f9e279742b22a744c7b83eef2c0428531c"
-      }
+      "id": "fact_3"
     },
     {
-      "tts": "두 진영 모두 AI 사진 편집을 지원합니다. 불필요한 사물 지우기, 흐림 보정 등 활용도가 높습니다. 평소 보정을 많이 한다면 매장에서 두 폰의 편집 결과를 직접 비교해 보시기 바랍니다.",
+      "tts": "화려한 기능보다 큰 글씨, 또렷한 통화, 보이스피싱 차단이 1순위입니다. 자녀와 같은 진영이면 원격 도움도 쉽고요.",
       "caption_body": [
-        "편집·AI",
-        "지우개·생성 보정"
+        "고르는 기준",
+        "통화·차단 우선"
       ],
       "caption_emphasis": [
-        "지우개·생성"
+        "통화·차단"
       ],
       "headline_lines": [
         {
-          "text": "편집·AI"
+          "text": "고르는 기준"
         },
         {
-          "text": "지우개·생성 보정",
+          "text": "통화·차단 우선",
           "accent": true
         }
       ],
-      "meta": "출처: 갤럭시 카메라",
+      "meta": "출처: 휴대폰성지 폰스팟 자료",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "두 진영 모두 AI 사진 편집을 지원합니다.",
-        "불필요한 사물 지우기, 흐림 보정 등 활용도가 높습니다.",
-        "평소 보정을 많이 한다면",
-        "매장에서 두 폰의 편집 결과를 직접 비교해 보시기 바랍니다."
+        "화려한 기능보다 큰 글씨,",
+        "또렷한 통화,",
+        "보이스피싱 차단이 1순위입니다.",
+        "자녀와 같은 진영이면 원격 도움도 쉽고요."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "samsung_ai"
+          "value": "smartphone"
         },
         {
           "type": "illust",
-          "value": "phone_setup_ready"
+          "value": "smartphone"
         },
         {
           "type": "illust",
-          "value": "store"
+          "value": "smartphone"
         },
         {
           "type": "mascot",
@@ -468,71 +233,24 @@
         "value": "",
         "note": ""
       },
-      "id": "fact_4",
-      "display_chunks": [
-        "두 진영 모두 AI 사진 편집을 지원합니다",
-        "불필요한 사물 지우기, 흐림 보정 등 활용도가 높습니다",
-        "평소 보정을 많이 한다면",
-        "매장에서 두 폰의 편집 결과를 직접 비교해 보시기 바랍니다"
-      ],
-      "_codex_caption_lockstep": {
-        "version": 2,
-        "compiler": "korean_caption_compiler_v2",
-        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 4
-      },
-      "_codex_contextual_narrative": true,
-      "_codex_sync_mode": "global999_tts_caption_lockstep",
-      "tts_chunk_weights": [
-        2975.33,
-        3529.96,
-        1100.33,
-        3054.59
-      ],
-      "_tts_timing": {
-        "mode": "word_boundary_text_align",
-        "windows": [
-          {
-            "start_ms": 0.0,
-            "end_ms": 2975.33,
-            "duration_ms": 2975.33
-          },
-          {
-            "start_ms": 2975.33,
-            "end_ms": 6505.29,
-            "duration_ms": 3529.96
-          },
-          {
-            "start_ms": 6505.29,
-            "end_ms": 7605.62,
-            "duration_ms": 1100.33
-          },
-          {
-            "start_ms": 7605.62,
-            "end_ms": 10660.21,
-            "duration_ms": 3054.59
-          }
-        ],
-        "boundary_count": 29,
-        "caption_signature": "8fc28b860f2bcbcaa5a6eece0459e9bbec29da1ace25a05af7f5d1fb12a393cd"
-      }
+      "id": "fact_4"
     }
   ],
   "cta": {
-    "tts": "휴대폰 구매할 땐? 지원금부터 무료로 조회해보세요.",
+    "tts": "세 기종 비교부터 차단 설정·자녀 폰 연동까지, 전국 어디서나 휴대폰성지 폰스팟이 도와드려요.",
     "caption_body": [
-      "휴대폰 구매할 땐?",
-      "지원금부터 무료로 조회해보세요"
+      "휴대폰성지 폰스팟",
+      "직접 비교 상담"
     ],
     "caption_emphasis": [
-      "지원금부터 무료로 조회해보세요"
+      "직접 비교"
     ],
     "headline_lines": [
       {
-        "text": "휴대폰 구매할 땐?"
+        "text": "휴대폰성지 폰스팟"
       },
       {
-        "text": "지원금부터 무료로 조회해보세요",
+        "text": "직접 비교 상담",
         "accent": true
       }
     ],
@@ -540,8 +258,8 @@
     "topic": "뉴스",
     "background_image": "",
     "caption_chunks": [
-      "휴대폰 구매할 땐?",
-      "지원금부터 무료로 조회해보세요"
+      "세 기종 비교부터 차단 설정·자녀 폰 연동까지,",
+      "전국 어디서나 휴대폰성지 폰스팟이 도와드려요."
     ],
     "chunk_visuals": [
       {
@@ -549,8 +267,8 @@
         "value": "smartphone"
       },
       {
-        "type": "logo",
-        "value": null
+        "type": "illust",
+        "value": "smartphone"
       }
     ],
     "stat": {
@@ -558,295 +276,11 @@
       "value": "",
       "note": ""
     },
-    "kakao": "@폰스팟광교점",
-    "location": "광교호수공원 B1-47",
-    "litt": "litt.ly/phonespot",
-    "display_chunks": [
-      "휴대폰 구매할 땐?",
-      "지원금부터 무료로 조회해보세요"
-    ],
-    "_codex_caption_lockstep": {
-      "version": 2,
-      "compiler": "korean_caption_compiler_v2",
-      "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-      "chunk_count": 1
-    },
-    "_codex_contextual_narrative": true,
-    "_codex_sync_mode": "global999_tts_caption_lockstep",
-    "_codex_fixed_cta": true,
-    "_codex_narration_source": "fixed_cta_contract",
-    "tts_chunk_weights": [
-      1707.75,
-      1804.54
-    ],
-    "_tts_timing": {
-      "mode": "word_boundary_text_align",
-      "windows": [
-        {
-          "start_ms": 0.0,
-          "end_ms": 1707.75,
-          "duration_ms": 1707.75
-        },
-        {
-          "start_ms": 1707.75,
-          "end_ms": 3512.29,
-          "duration_ms": 1804.54
-        }
-      ],
-      "boundary_count": 6,
-      "caption_signature": "db4c57a05254654841d0c63b2eea20bad43e358510298ef607bf41bcae3b9e5d"
-    }
+    "kakao": "@휴대폰성지폰스팟",
+    "location": "내 손 안의 성지찾기, 폰스팟",
+    "litt": "litt.ly/phonespot"
   },
   "_auto_generated": true,
   "_chunk_logic_v2": true,
-  "_note": "build_script.py 자동 생성 (v2 로직): 시퀀스 내 이미지 순환 + 마스코트 짝수 시퀀스만.",
-  "_codex_global_999_quality": true,
-  "_codex_common_quality_logic": true,
-  "_codex_sync_quality_logic": true,
-  "_codex_captions_narration_priority": false,
-  "_codex_common_quality_note": "Global 001-999 rule: screen chunks are rebuilt as an ordered, lossless partition of captions.md narration; curated visuals are rebalanced without discarding quality rules.",
-  "_codex_uploaded_illustrations": [
-    {
-      "section": "fact_3",
-      "chunk": 1,
-      "variant": "cpt_c9dd9b89"
-    },
-    {
-      "section": "fact_3",
-      "chunk": 2,
-      "variant": "cpt_0ecf996a"
-    },
-    {
-      "section": "hook",
-      "chunk": 1,
-      "variant": "cpt_aff73c54"
-    },
-    {
-      "section": "hook",
-      "chunk": 3,
-      "variant": "cpt_d124a858"
-    },
-    {
-      "section": "fact_1",
-      "chunk": 1,
-      "variant": "cpt_356af649"
-    }
-  ],
-  "_codex_semantic_visual_match": {
-    "version": 1,
-    "policy": "Match chunks to GPT source images using prompt.md descriptions, then fallback to tagged reusable illustrations.",
-    "changes": [
-      {
-        "section": "hook",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "cpt_aff73c54"
-        },
-        "to": {
-          "type": "illust",
-          "value": "camera_battery_ecd040c7"
-        },
-        "context": "스펙 숫자 말고 실제로 찍을 때 뭐가 다른지가 중요합니다 색감, 줌, 야간, 영상, 카메라 갤럭시 vs 아이폰 ['카메라', '갤럭시 vs 아이폰'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
-      },
-      {
-        "section": "hook",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "cpt_d124a858"
-        },
-        "to": {
-          "type": "illust",
-          "value": "parents_vision_231bf461"
-        },
-        "context": "색감, 줌, 야간, 영상, 편집 다섯 가지로 갈리는 실사용 차이를 정리했습니다 내 사용 습관에 맞는 쪽이 정답입니다 카메라 갤럭시 vs 아이폰 ['카메라', '갤럭시 vs 아이폰'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "cpt_356af649"
-        },
-        "to": {
-          "type": "illust",
-          "value": "camera_quality"
-        },
-        "context": "갤럭시는 채도가 높아 SNS에 바로 올리기 좋은 선명한 색을 냅니다 색감 선명 vs 자연 ['색감', '선명 vs 자연'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "cpt_c9dd9b89"
-        },
-        "to": {
-          "type": "illust",
-          "value": "phone_settings_toggle"
-        },
-        "context": "야간은 두 진영 모두 좋아졌지만 결과물 톤이 다릅니다 영상은 아이폰의 흔들림 보정과 색 일관성이 강점, 야간·영상 손떨림·안정 ['야간·영상', '손떨림·안정'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "cpt_0ecf996a"
-        },
-        "to": {
-          "type": "illust",
-          "value": "device_os_requirement"
-        },
-        "context": "야간은 두 진영 모두 좋아졌지만 결과물 톤이 다릅니다 영상은 아이폰의 흔들림 보정과 색 일관성이 강점, 갤럭시는 고해상도·고배율 영상에 강합니다 야간·영상 손떨림·안정 ['야간·영상', '손떨림·안정'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      }
-    ],
-    "weak": [
-      {
-        "section": "hook",
-        "chunk": 4,
-        "current": {
-          "type": "mascot",
-          "value": "surprised"
-        },
-        "context": "편집 다섯 가지로 갈리는 실사용 차이를 정리했습니다 내 사용 습관에 맞는 쪽이 정답입니다 카메라 갤럭시 vs 아이폰 ['카메라', '갤럭시 vs 아이폰'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_1",
-        "chunk": 2,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "갤럭시는 채도가 높아 SNS에 바로 올리기 좋은 선명한 색을 냅니다 아이폰은 실제에 가까운 자연스러운 색을 지향합니다 색감 선명 vs 자연 ['색감', '선명 vs 자연'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_1",
-        "chunk": 3,
-        "current": {
-          "type": "image",
-          "value": "photos/애플_아이폰17.JPG"
-        },
-        "context": "좋은 선명한 색을 냅니다 아이폰은 실제에 가까운 자연스러운 색을 지향합니다 보정 없이 화사한 사진을 원하면 갤럭시, 색감 선명 vs 자연 ['색감', '선명 vs 자연'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_1",
-        "chunk": 5,
-        "current": {
-          "type": "image",
-          "value": "photos/애플_아이폰_2개.JPG"
-        },
-        "context": "보정 없이 화사한 사진을 원하면 갤럭시, 사실적 톤이면 아이폰입니다 색감 선명 vs 자연 ['색감', '선명 vs 자연'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_2",
-        "chunk": 1,
-        "current": {
-          "type": "illust",
-          "value": "phone_setup_ready"
-        },
-        "context": "멀리 있는 피사체를 크게 당기는 고배율 줌은 갤럭시 상위 모델이 강합니다 줌 고배율은 갤럭시 ['줌', '고배율은 갤럭시'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_2",
-        "chunk": 4,
-        "current": {
-          "type": "mascot",
-          "value": "suspicious"
-        },
-        "context": "공연·운동회·풍경에서 차이가 큽니다 아이폰은 중간 배율까지의 자연스러움에 강점이 있습니다 줌 고배율은 갤럭시 ['줌', '고배율은 갤럭시'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_3",
-        "chunk": 1,
-        "current": {
-          "type": "illust",
-          "value": "phone_settings_toggle"
-        },
-        "context": "야간은 두 진영 모두 좋아졌지만 결과물 톤이 다릅니다 영상은 아이폰의 흔들림 보정과 색 일관성이 강점, 야간·영상 손떨림·안정 ['야간·영상', '손떨림·안정'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_3",
-        "chunk": 2,
-        "current": {
-          "type": "illust",
-          "value": "device_os_requirement"
-        },
-        "context": "야간은 두 진영 모두 좋아졌지만 결과물 톤이 다릅니다 영상은 아이폰의 흔들림 보정과 색 일관성이 강점, 갤럭시는 고해상도·고배율 영상에 강합니다 야간·영상 손떨림·안정 ['야간·영상', '손떨림·안정'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_3",
-        "chunk": 3,
-        "current": {
-          "type": "illust",
-          "value": "device_data_transfer"
-        },
-        "context": "영상은 아이폰의 흔들림 보정과 색 일관성이 강점, 갤럭시는 고해상도·고배율 영상에 강합니다 영상 위주면 아이폰을 우선 보세요 야간·영상 손떨림·안정 ['야간·영상', '손떨림·안정'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_3",
-        "chunk": 4,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "갤럭시는 고해상도·고배율 영상에 강합니다 영상 위주면 아이폰을 우선 보세요 야간·영상 손떨림·안정 ['야간·영상', '손떨림·안정'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_4",
-        "chunk": 2,
-        "current": {
-          "type": "illust",
-          "value": "phone_setup_ready"
-        },
-        "context": "두 진영 모두 AI 사진 편집을 지원합니다 불필요한 사물 지우기, 흐림 보정 등 활용도가 높습니다 평소 보정을 많이 한다면 편집·AI 지우개·생성 보정 ['편집·AI', '지우개·생성 보정'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 3
-      },
-      {
-        "section": "fact_4",
-        "chunk": 4,
-        "current": {
-          "type": "mascot",
-          "value": "serious"
-        },
-        "context": "평소 보정을 많이 한다면 매장에서 두 폰의 편집 결과를 직접 비교해 보시기 바랍니다 편집·AI 지우개·생성 보정 ['편집·AI', '지우개·생성 보정'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 3
-      }
-    ]
-  },
-  "_codex_effective_script": {
-    "version": 2,
-    "slug": "029_pick_galaxy_vs_iphone_camera",
-    "source": "C:\\backup\\phonespot_cardnews\\cardnews\\output\\029_pick_galaxy_vs_iphone_camera\\shorts_script.json",
-    "override_applied": false,
-    "override_sections": []
-  }
+  "_note": "build_script.py 자동 생성 (v2 로직): 시퀀스 내 이미지 순환 + 마스코트 짝수 시퀀스만."
 }

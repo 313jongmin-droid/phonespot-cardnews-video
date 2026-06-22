@@ -72,7 +72,7 @@ export const NewsShort: React.FC<NewsShortProps> = ({
   const outroStart = cursor;
 
   const ch = script.channel_name;
-  const chCasual = "\uD3F0\uC2A4\uD31F IT";
+  const chCasual = "휴대폰성지 폰스팟";
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#000000" }}>

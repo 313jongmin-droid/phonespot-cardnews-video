@@ -267,7 +267,7 @@ script = {
     "video_title": video_title,
     "publication_date": art.get("publication_date", ""),
     "sources": src_line,
-    "channel_name": "폰스팟",
+    "channel_name": "휴대폰성지 폰스팟",
     "channel_tagline": "휴대폰성지 IT 브리핑",
     "opening": {"line1": "휴대폰성지 IT 브리핑", "line2": video_title},
     "hook": hook,
