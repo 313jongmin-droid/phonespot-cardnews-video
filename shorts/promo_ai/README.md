@@ -111,12 +111,13 @@ Higgsfield credits 기준 추정 (실제 호출 후 갱신):
 
 ## 7. 미해결 / 결정 대기
 
-- [ ] Higgsfield Plus/Ultra 결제
-- [ ] 첫 컨셉 1개 빌드 → 실제 cost 확인
+- [x] **결제 해소 (2026-06-22)**: Plus/Ultra 불필요. **STARTER $19/270cr**로 MCP Kling 3.0 됨. 상세 = WORKFLOW.md "실증 검증" §1.
+- [x] **첫 빌드 + 실측 cost (2026-06-22)**: 002 광고용 1편 완주. kling3_0 std 무음 = 1.5cr/s, 1편(3컷)=16.5cr. WORKFLOW §2.
+- [x] **자막 결론 (2026-06-22)**: 영상 in-image 한글 = 깨짐 → **ffmpeg ass 후처리 burn 확정**(Noto Sans CJK KR). WORKFLOW §3.
 - [ ] 폰스팟 매장 실사진 확보 여부 (reference 활용 위해)
 - [ ] 폰스팟 사장님 (종민님) 등장 여부 (Soul Character 학습용 사진 5-20장 필요)
-- [ ] BGM/SFX 라이브러리 (저작권 무료)
-- [ ] 자막 영상에 박을지 / SNS 자동 자막 사용할지
+- [ ] BGM/SFX 라이브러리 (저작권 무료) — 002는 무음 출고, 음원 수급 시 ffmpeg amix
+- [ ] CDN 다운로드 자동화 (현재 종민 수동 다운로드 병목, WORKFLOW §4)
 
 ## 관련 메모리
 

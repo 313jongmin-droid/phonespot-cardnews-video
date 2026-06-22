@@ -1,4 +1,4 @@
-[영상 파일] out/promo/017_bumonim_calm.mp4
+[영상 파일] promo/out/017_bumonim_calm.mp4
 
 ========== 제목 (복붙) ==========
 부모님 폰 대신 알아볼 때

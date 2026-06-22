@@ -30,8 +30,8 @@ python scripts\promo_md2json.py %NN%
 copy /Y "%FILE%" "public\shorts_script.json" >nul || ( echo [ERROR] copy failed & goto :hold )
 python scripts\promo_merge_brand.py
 python scripts\promo_pick_music.py %PRESET% %NN%
-if not exist out\promo mkdir out\promo
-set "BASE=out\promo\%NN%_%SLUG%_%PRESET%"
+if not exist promo\out mkdir promo\out
+set "BASE=promo\out\%NN%_%SLUG%_%PRESET%"
 set "OUTFILE=%BASE%.mp4"
 set /a K=1
 :nextname

@@ -1,4 +1,4 @@
-[영상 파일] out/promo/015_balpum_data.mp4
+[영상 파일] promo/out/015_balpum_data.mp4
 
 ========== 제목 (복붙) ==========
 발품 세 곳 vs 조회 한 번

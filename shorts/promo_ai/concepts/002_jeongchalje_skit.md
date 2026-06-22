@@ -128,3 +128,13 @@ Vertical 9:16, photorealistic, bright clean modern Korean phone shop (Phonespot)
 2. [INSERT] 영상 있으면 Shot 3 합치기.
 3. ffmpeg: concat → 자막(.srt) → BGM/SFX → 1080×1920 yuv420p.
 4. 결과·cost·만족도 하단 기록.
+
+---
+
+## 최종 빌드 기록
+
+- **2026-06-22 — v2 완주.** cost: **16.5 credits** (Shot1 4.5 + Shot2 6 + Shot3 6, kling3_0 std 무음). 만족도: 종민 "너무 좋다".
+- 결과물: `shorts/promo_ai/out_promo_ai/final_002_v2_15s.mp4` (15.1s, 1080x1920, 30fps, 무음).
+- 컷 순서 = 마트(s2) → 부조리(s1) → 폰스팟(s3) → 정찰제 엔딩. 자막 = ffmpeg ass 후처리(중앙 Alignment 5, Fontsize 136, Noto Sans CJK KR).
+- 자막 카피: "세상 모든 건\\N가격표가 있는데" → "휴대폰만, 왜\\N가격을 안 알려줘?" → "폰스팟은\\N그 가격 그대로" → "즉·시·조·회!".
+- 트랙 SOP/함정 = `WORKFLOW.md` "실증 검증 (2026-06-22)".

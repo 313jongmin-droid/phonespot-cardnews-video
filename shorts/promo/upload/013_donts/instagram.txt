@@ -1,4 +1,4 @@
-[영상 파일] out/promo/013_donts_punchy.mp4
+[영상 파일] promo/out/013_donts_punchy.mp4
 
 ========== 캡션 (복붙) ==========
 🚨 휴대폰 살 때 이건 하지 마세요

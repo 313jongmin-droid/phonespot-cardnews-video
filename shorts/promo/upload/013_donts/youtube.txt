@@ -1,4 +1,4 @@
-[영상 파일] out/promo/013_donts_punchy.mp4
+[영상 파일] promo/out/013_donts_punchy.mp4
 
 ========== 제목 (복붙) ==========
 휴대폰 살 때 절대 하면 안 되는 것

@@ -1,4 +1,4 @@
-[영상 파일] out/promo/016_gajjaseongji_showcase.mp4
+[영상 파일] promo/out/016_gajjaseongji_showcase.mp4
 
 ========== 캡션 (복붙) ==========
 🔍 간판만 성지, 믿어도 될까?

@@ -170,3 +170,6 @@ apps_script_sheet_export/.clasprc.json
 
 # 실사(제품/인물) 포토 라이브러리 - 대용량/저작권, git 비추적 (Drive/로컬 공유)
 shorts/public/assets/photos/
+
+# promo 렌더 출력 (shorts/promo 아래로 이동, 2026-06-22)
+shorts/promo/out/

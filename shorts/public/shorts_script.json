@@ -26,8 +26,8 @@
   "facts": [
     {
       "id": "problem",
-      "style": "barcompare",
-      "sfx": "pop",
+      "style": "glitch",
+      "sfx": "glitch",
       "caption_chunks": [
         "매장마다",
         "말이",
@@ -66,7 +66,7 @@
       "조회로"
     ],
     "tts": "발품 그만, 조회로 끝내세요.",
-    "kakao": "@폰스팟광교점",
+    "kakao": "@휴대폰성지폰스팟",
     "litt": "litt.ly/phonespot",
     "location": "광교호수공원 B1-47"
   },
