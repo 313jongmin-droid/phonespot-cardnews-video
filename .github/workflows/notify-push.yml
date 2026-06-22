@@ -1,0 +1,27 @@
+name: Notify Push (Telegram)
+
+# main 브랜치에 push 완료되면 텔레그램으로 알림 (카드뉴스·문서·apps_script 모두).
+# Secrets 재사용: TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID (2026-06-15 배포 알림용 등록분).
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Telegram push notify
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          CM: ${{ github.event.head_commit.message }}
+          REPO: ${{ github.repository }}
+          ACTOR: ${{ github.actor }}
+          SHA: ${{ github.sha }}
+          COUNT: ${{ github.event.head_commit.id }}
+        run: |
+          TEXT=$(printf '✅ Git push 완료\n리포: %s\n작성자: %s\n커밋: %s\nSHA: %s' "$REPO" "$ACTOR" "$CM" "${SHA:0:7}")
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=${TEXT}"
