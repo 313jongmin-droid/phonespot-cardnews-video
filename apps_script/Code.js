@@ -1135,7 +1135,7 @@ function buildDashboardV2() {
     const sc = startCol || LCOL;
     dash.getRange(row, sc, 1, 6).merge().setValue(title)
       .setBackground(C_SEC_BG).setFontColor(C_SEC_FG).setFontWeight('bold').setFontSize(11)
-      .setHorizontalAlignment('left')
+      .setHorizontalAlignment('center')
       .setBorder(null, null, true, null, null, null, '#D5DAE2', SpreadsheetApp.BorderStyle.SOLID);
   }
   function colHeader(row, labels, startCol) {
@@ -1150,6 +1150,9 @@ function buildDashboardV2() {
     rng.setBorder(true, true, true, true, true, true, C_ROW_BD, SpreadsheetApp.BorderStyle.SOLID);
     dash.getRange(r1, sc, nRows, 1).setHorizontalAlignment('left').setFontWeight('bold');
     if (nCols > 1) dash.getRange(r1, sc + 1, nRows, nCols - 1).setHorizontalAlignment('right');
+    for (var zi = 0; zi < nRows; zi++) {           // 제브라(홀짝 행 옅은 칠)로 가독성
+      if (zi % 2 === 1) dash.getRange(r1 + zi, sc, 1, nCols).setBackground('#FAFAFB');
+    }
   }
 
   const ADS = [
@@ -1350,10 +1353,11 @@ function buildDashboardV2() {
   } catch (e) { Logger.log('adgroup 복구 실패: ' + e.message); }
 
   // 폭/정렬 마무리
-  dash.setColumnWidth(1, 110);                              // A
-  for (let c = 2; c <= 6; c++) dash.setColumnWidth(c, 95);  // B~F
-  dash.setColumnWidth(7, 30);                               // G = 좌우 간격
-  for (let c = 8; c <= 13; c++) dash.setColumnWidth(c, 95); // H~M
+  dash.setColumnWidth(1, 128);                              // A (라벨)
+  for (let c = 2; c <= 6; c++) dash.setColumnWidth(c, 108); // B~F
+  dash.setColumnWidth(7, 28);                               // G = 좌우 간격
+  dash.setColumnWidth(8, 110);                              // H (우측 라벨)
+  for (let c = 9; c <= 13; c++) dash.setColumnWidth(c, 108);// I~M
   try { dash.setRowHeight(1, 18); dash.setRowHeight(2, 34); } catch (e) {}
 
   try {
