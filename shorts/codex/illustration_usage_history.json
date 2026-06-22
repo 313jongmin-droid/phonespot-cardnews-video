@@ -387,20 +387,20 @@
       ]
     },
     "029_pick_galaxy_vs_iphone_camera": {
-      "used_at": "2026-06-19T12:29:30",
-      "source": "uploaded_illustrations",
+      "used_at": "2026-06-22T16:48:42",
+      "source": "semantic_visual_match",
       "illustrations": [
-        "cpt_aff73c54",
+        "camera_battery_ecd040c7",
         "document_article",
-        "cpt_d124a858",
-        "cpt_356af649",
+        "parents_vision_231bf461",
+        "camera_quality",
         "smartphone",
         "market_cap",
         "phone_setup_ready",
         "size_guide_afe009df",
         "event_period_8cafdac4",
-        "cpt_c9dd9b89",
-        "cpt_0ecf996a",
+        "phone_settings_toggle",
+        "device_os_requirement",
         "device_data_transfer",
         "samsung_ai",
         "store"
@@ -465,7 +465,7 @@
       ]
     }
   },
-  "updated_at": "2026-06-22T16:31:53",
+  "updated_at": "2026-06-22T16:48:47",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -550,7 +550,7 @@
       "variants": []
     },
     "029_pick_galaxy_vs_iphone_camera": {
-      "updated_at": "2026-06-19T12:29:31",
+      "updated_at": "2026-06-22T16:48:47",
       "variants": []
     },
     "030_pick_new_vs_old_subsidy": {
