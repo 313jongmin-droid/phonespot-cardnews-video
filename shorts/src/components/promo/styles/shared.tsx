@@ -12,7 +12,7 @@ export const COL = {
   BLUE: "#8C8C92",    // (수렴) 중립 그레이
   RED: "#FF5A1F",     // (수렴) 오렌지
   YELLOW: "#FF5A1F",  // (수렴) 오렌지
-  DIM: "#8C8C92",     // 보조 텍스트용 중립 그레이(검정/흰색 사이 톤)
+  DIM: "#ABABB2",     // 보조 텍스트용 중립 그레이(가독 위해 톤 ↑, 2026-06-22)
   CREAM: "#FFFFFF",   // (수렴) 화이트
 };
 
@@ -119,8 +119,8 @@ export const BasicOpening: React.FC<{ line1: string; line2: string; durFrames: n
   const a = (d: number) => spring({ frame: frame - d, fps, config: { damping: 200 } });
   return (
     <AbsoluteFill style={{ backgroundColor: COL.INK, fontFamily: FONT, justifyContent: "center", alignItems: "center", gap: 18 }}>
-      <div style={{ fontSize: 68, fontWeight: 700, color: COL.DIM, opacity: interpolate(a(0), [0, 1], [0, 1]), transform: `translateY(${interpolate(a(0), [0, 1], [40, 0])}px)` }}>{line1}</div>
-      <div style={{ fontSize: 120, fontWeight: 900, color: COL.ORANGE, opacity: interpolate(a(8), [0, 1], [0, 1]), transform: `translateY(${interpolate(a(8), [0, 1], [40, 0])}px)` }}>{line2}</div>
+      <div style={{ fontSize: 78, fontWeight: 700, color: COL.DIM, opacity: interpolate(a(0), [0, 1], [0, 1]), transform: `translateY(${interpolate(a(0), [0, 1], [40, 0])}px)` }}>{line1}</div>
+      <div style={{ fontSize: 150, fontWeight: 900, color: COL.ORANGE, opacity: interpolate(a(8), [0, 1], [0, 1]), transform: `translateY(${interpolate(a(8), [0, 1], [40, 0])}px)`, textAlign: "center", lineHeight: 1.05, padding: "0 60px", wordBreak: "keep-all" }}>{line2}</div>
     </AbsoluteFill>
   );
 };

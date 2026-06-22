@@ -26,8 +26,8 @@
   "facts": [
     {
       "id": "problem",
-      "style": "barcompare",
-      "sfx": "pop",
+      "style": "glitch",
+      "sfx": "glitch",
       "caption_chunks": [
         "매장마다",
         "말이",
