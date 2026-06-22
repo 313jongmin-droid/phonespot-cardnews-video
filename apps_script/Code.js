@@ -282,11 +282,11 @@ function updateChannelMatrixWithGA4() {
   sh.getRange('D16').setValue('📅 기간:').setFontWeight('bold').setHorizontalAlignment('right');
   sh.getRange('E16').setBackground('#FFF59D').setFontWeight('bold').setHorizontalAlignment('center')
     .setDataValidation(SpreadsheetApp.newDataValidation()
-      .requireValueInList(['어제','최근 7일','최근 30일'], true).setAllowInvalid(false).build());
+      .requireValueInList(['어제','최근 3일','최근 7일','최근 30일'], true).setAllowInvalid(false).build());
   if (sh.getRange('E16').getValue() === '') sh.getRange('E16').setValue('최근 30일');
 
   sh.getRange('M16').setValue('기간▶').setFontColor('#BBBBBB').setFontSize(8).setHorizontalAlignment('right');
-  sh.getRange('N16').setFormula('=IF($E$16="어제",TODAY()-1,IF($E$16="최근 7일",TODAY()-6,TODAY()-29))')
+  sh.getRange('N16').setFormula('=IF($E$16="어제",TODAY()-1,IF($E$16="최근 3일",TODAY()-2,IF($E$16="최근 7일",TODAY()-6,TODAY()-29)))')
     .setNumberFormat('m/d').setFontColor('#BBBBBB');
   sh.getRange('O16').setFormula('=IF($E$16="어제",TODAY()-1,TODAY())')
     .setNumberFormat('m/d').setFontColor('#BBBBBB');
@@ -469,11 +469,11 @@ function updateSNSReport(opts) {
   sh.getRange('D28').setValue('📅 기간:').setFontWeight('bold').setHorizontalAlignment('right');
   sh.getRange('E28').setBackground('#FFF59D').setFontWeight('bold').setHorizontalAlignment('center')
     .setDataValidation(SpreadsheetApp.newDataValidation()
-      .requireValueInList(['어제','최근 7일','최근 30일'], true).setAllowInvalid(false).build());
+      .requireValueInList(['어제','최근 3일','최근 7일','최근 30일'], true).setAllowInvalid(false).build());
   if (sh.getRange('E28').getValue() === '') sh.getRange('E28').setValue('최근 30일');
 
   sh.getRange('M28').setValue('기간▶').setFontColor('#BBBBBB').setFontSize(8).setHorizontalAlignment('right');
-  sh.getRange('N28').setFormula('=IF($E$28="어제",TODAY()-1,IF($E$28="최근 7일",TODAY()-6,TODAY()-29))')
+  sh.getRange('N28').setFormula('=IF($E$28="어제",TODAY()-1,IF($E$28="최근 3일",TODAY()-2,IF($E$28="최근 7일",TODAY()-6,TODAY()-29)))')
     .setNumberFormat('m/d').setFontColor('#BBBBBB');
   sh.getRange('O28').setFormula('=IF($E$28="어제",TODAY()-1,TODAY())')
     .setNumberFormat('m/d').setFontColor('#BBBBBB');
@@ -858,11 +858,11 @@ function updateKakaoReportDashboard(showAlert) {
   dash.getRange('D36').setValue('📅 기간:').setFontWeight('bold').setHorizontalAlignment('right');
   dash.getRange('E36').setBackground('#FFF59D').setFontWeight('bold').setHorizontalAlignment('center')
     .setDataValidation(SpreadsheetApp.newDataValidation()
-      .requireValueInList(['어제','최근 7일','최근 30일'], true).setAllowInvalid(false).build());
+      .requireValueInList(['어제','최근 3일','최근 7일','최근 30일'], true).setAllowInvalid(false).build());
   if (dash.getRange('E36').getValue() === '') dash.getRange('E36').setValue('최근 30일');
 
   dash.getRange('M36').setValue('기간▶').setFontColor('#BBBBBB').setFontSize(8).setHorizontalAlignment('right');
-  dash.getRange('N36').setFormula('=IF($E$36="어제",TODAY()-1,IF($E$36="최근 7일",TODAY()-6,TODAY()-29))')
+  dash.getRange('N36').setFormula('=IF($E$36="어제",TODAY()-1,IF($E$36="최근 3일",TODAY()-2,IF($E$36="최근 7일",TODAY()-6,TODAY()-29)))')
     .setNumberFormat('m/d').setFontColor('#BBBBBB');
   dash.getRange('O36').setFormula('=IF($E$36="어제",TODAY()-1,TODAY())')
     .setNumberFormat('m/d').setFontColor('#BBBBBB');
