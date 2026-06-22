@@ -25,6 +25,7 @@ for /f "tokens=1-4 delims=|" %%a in ('python scripts\promo_get.py') do (
   call :uniq "out\promo\!NN!_!SLUG!_!PRESET!"
   call npx remotion render src/index.ts !COMPID! "!OUTFILE!" --concurrency=2 --pixel-format yuv420p --crf 18
   python scripts\promo_manifest.py "!OUTFILE!" !NN! !SLUG! !PRESET!
+  python scripts\promo_uploadkit.py !NN! "!OUTFILE!"
   set /a CNT+=1
 )
 echo.

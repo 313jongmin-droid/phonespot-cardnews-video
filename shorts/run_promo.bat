@@ -39,6 +39,7 @@ if exist "!OUTFILE!" ( set "OUTFILE=!BASE!_!K!.mp4" & set /a K+=1 & goto nextnam
 echo  rendering -^> !OUTFILE!
 call npx remotion render src/index.ts %COMPID% "!OUTFILE!" --concurrency=2 --pixel-format yuv420p --crf 18 || ( echo [ERROR] render failed & goto :hold )
 python scripts\promo_manifest.py "!OUTFILE!" %NN% %SLUG% %PRESET%
+python scripts\promo_uploadkit.py %NN% "!OUTFILE!"
 echo.
 echo  DONE: !OUTFILE!
 goto :hold
