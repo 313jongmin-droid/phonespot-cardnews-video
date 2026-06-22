@@ -96,13 +96,10 @@ function refreshAll() {
   catch (e) { errors.push('generateYouTubeInsightsMarkdown: ' + e.message); Logger.log(e); }
 
   // ===== 3단계: 대시보드 빌드 (수식/UI 재구성) =====
-  try { updateKPISummary(); } catch (e) { errors.push('updateKPISummary: ' + e.message); }
-  try { updateChannelMatrixWithGA4(); } catch (e) { errors.push('updateChannelMatrixWithGA4: ' + e.message); }
-  try { updateSNSReport({ forceRebuild: false, showAlert: false }); } catch (e) { errors.push('updateSNSReport: ' + e.message); }
+  try { buildDashboardV2(); } catch (e) { errors.push('buildDashboardV2: ' + e.message); }
   try { repairSNSMonthlySummaries(false); } catch (e) { errors.push('repairSNSMonthlySummaries: ' + e.message); }
   try { addTimeSeriesChart(); } catch (e) { errors.push('addTimeSeriesChart: ' + e.message); }
 
-  try { updateLitlyAndPaymentSections_(); } catch (e) { errors.push('LitlyPay: ' + e.message); }
 
   const stamp = recordLastRefresh_();
 
@@ -119,16 +116,8 @@ function refreshAll() {
 
 // ──[유틸]── 최근 전체 업데이트 시각 기록 (통합대시보드 A46) — refreshAll이 호출
 function recordLastRefresh_() {
-  const stamp = Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyy-MM-dd HH:mm:ss');
-  const sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('통합대시보드');
-  if (sh) {
-    // 2026-06-22: 시각은 상단 A7. 41~59 여백은 리틀리/실비용 섹션이 채움 → 숨겨졌으면 해제.
-    try { sh.showRows(41, 19); } catch (e) {}
-    try { sh.getRange('A7:F7').breakApart(); } catch (e) {}
-    sh.getRange('A7').setValue('🕐 마지막 전체 업데이트: ' + stamp)
-      .setFontColor('#888888').setFontStyle('italic');
-  }
-  return stamp;
+  // 2026-06-22: 통합대시보드 시각은 buildDashboardV2 푸터가 기록. 여기선 시각 문자열만 반환.
+  return Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyy-MM-dd HH:mm:ss');
 }
 
 // ──[일상]── 어제 GA4 데이터 수집 (매일 새벽 트리거가 호출)
@@ -1045,12 +1034,8 @@ function refreshUtmSlugDropdowns() {
 // 데이터 sync는 개별 트리거가 담당. 이건 대시보드 UI/수식 재빌드만(빠름, API 호출 없음).
 // 개별 sync(1:35~2:35) 끝난 뒤 03:00 실행 권장. UI alert는 트리거 컨텍스트에서 throw하므로 각자 try.
 function nightlyDashboard() {
-  try { updateKPISummary(); } catch (e) { Logger.log('KPI: ' + e.message); }
-  try { updateChannelMatrixWithGA4(); } catch (e) { Logger.log('Matrix: ' + e.message); }
-  try { if (typeof updateSNSReport === 'function') updateSNSReport({ forceRebuild: false, showAlert: false }); } catch (e) { Logger.log('SNS: ' + e.message); }
+  try { buildDashboardV2(); } catch (e) { Logger.log('DashV2: ' + e.message); }
   try { if (typeof addTimeSeriesChart === 'function') addTimeSeriesChart(); } catch (e) { Logger.log('Chart: ' + e.message); }
-  try { updateLitlyAndPaymentSections_(); } catch (e) { Logger.log('LitlyPay: ' + e.message); }
-  try { if (typeof recordLastRefresh_ === 'function') recordLastRefresh_(); } catch (e) {}
   if (typeof logSync_ === 'function') logSync_('nightlyDashboard', '대시보드 재빌드 완료');
 }
 
@@ -1113,5 +1098,273 @@ function updateLitlyAndPaymentSections_() {
   dash.getRange(58, 1, 1, 4).setBackground('#FFF2CC').setBorder(true, true, true, true, true, true).setHorizontalAlignment('center');
   dash.getRange('A59:I59').merge().setValue('※ 카드결제=결제내역 실청구액 / API=플랫폼 보고 광고비. 차이는 결제 타이밍·환불·미반영분.')
     .setFontStyle('italic').setFontColor('#888888').setFontSize(9);
+}
+
+// ════════════════════════════════════════════════════════════
+//  buildDashboardV2() — 통합대시보드 라이트톤·컴팩트 재설계 (단일 빌드 함수)
+//  ★ 수식(formula)은 기존 함수에서 그대로 추출·재사용 → 데이터 정확도 유지.
+//     배치·스타일·폭만 새로.
+//  추출 출처:
+//    · updateKPISummary           : sumPaid(ADS) / countInq / 개통(C="개통") / CPL=B/D
+//    · updateChannelMatrixWithGA4 : channels[] + ga4D + fmtKM + 드롭다운(N/O 기간)
+//    · updateSNSReport            : 포스트수/조회수/평균/팔로워
+//    · updateLitlyAndPaymentSections_ : 리틀리 유입 + 실비용 대조
+//  상단 카드(1~6행)는 Code.js에 빌더가 없어(수기 셀) → 동일 SUMIFS/COUNTIFS 패턴으로 신규 작성.
+//  광고그룹 추이(adgroup-trend.js 60행~)는 건드리지 않음 — 본 함수는 1~38행 안에서 끝남.
+// ════════════════════════════════════════════════════════════
+function buildDashboardV2() {
+  const ss = SpreadsheetApp.getActive();
+  const dash = ss.getSheetByName('통합대시보드');
+  if (!dash) return;
+
+  // ── 라이트톤 색 토큰 ──
+  const C_SEC_BG   = '#EEF1F5';   // 섹션 헤더 배경
+  const C_SEC_FG   = '#1F2A44';   // 섹션 헤더 폰트
+  const C_COL_BG   = '#F7F7F8';   // 컬럼 헤더 배경
+  const C_COL_FG   = '#5F5F5F';   // 컬럼 헤더 폰트
+  const C_ROW_BD   = '#ECECEC';   // 데이터 행 테두리
+  const C_TOTAL_BG = '#FBF7E8';   // 합계/강조 행
+  const C_LABEL    = '#888888';   // 작은 회색 라벨
+  const F_WON = '#,##0"원"';
+  const F_INT = '#,##0';
+  const F_PCT = '0.0%';
+  const fmtKM = '[>=1000000]0.00,,"M";[>=1000]0.0,"K";#,##0';
+
+  // ── 0) 초기화 (1~140행 범위) ──
+  dash.getRange('A1:Z140').breakApart();
+  dash.getRange('A1:Z140').clearContent().clearFormat();
+  try { dash.showRows(1, 140); } catch (e) {}
+
+  // 섹션 헤더 (A~F 6컬럼 폭 통일)
+  function sectionHeader(row, title) {
+    dash.getRange(row, 1, 1, 6).merge().setValue(title)
+      .setBackground(C_SEC_BG).setFontColor(C_SEC_FG).setFontWeight('bold').setFontSize(11)
+      .setHorizontalAlignment('left')
+      .setBorder(null, null, true, null, null, null, '#D5DAE2', SpreadsheetApp.BorderStyle.SOLID);
+  }
+  // 컬럼 헤더
+  function colHeader(row, labels) {
+    dash.getRange(row, 1, 1, labels.length).setValues([labels])
+      .setBackground(C_COL_BG).setFontColor(C_COL_FG).setFontWeight('bold')
+      .setHorizontalAlignment('center');
+  }
+  // 데이터 블록 테두리/정렬
+  function dataBox(r1, nRows, nCols) {
+    const rng = dash.getRange(r1, 1, nRows, nCols);
+    rng.setBorder(true, true, true, true, true, true, C_ROW_BD, SpreadsheetApp.BorderStyle.SOLID);
+    dash.getRange(r1, 1, nRows, 1).setHorizontalAlignment('left').setFontWeight('bold');
+    if (nCols > 1) dash.getRange(r1, 2, nRows, nCols - 1).setHorizontalAlignment('right');
+  }
+
+  // ── ADS 매핑 (updateKPISummary에서 그대로) ──
+  const ADS = [
+    {sh:'메타_통합',   spd:'H'},
+    {sh:'구글',        spd:'G'},
+    {sh:'네이버_통합', spd:'H'},
+    {sh:'카카오',      spd:'G'},
+    {sh:'당근',        spd:'G'},
+  ];
+  const sumPaidFx = (st, en) => ADS.map(a =>
+    `SUMIFS('${a.sh}'!${a.spd}:${a.spd},'${a.sh}'!A:A,">="&${st},'${a.sh}'!A:A,"<="&${en})`
+  ).join('+');
+  const countInqFx = (st, en, extra='') =>
+    `COUNTIFS('문의접수'!A:A,">="&${st},'문의접수'!A:A,"<="&${en}${extra})`;
+
+  // ════════════════════════════════════════════════════
+  // 1) 요약 스트립 (1~2행, 고정) — 5지표 2칸씩 병합
+  // ════════════════════════════════════════════════════
+  const monthStart = 'DATE(YEAR(TODAY()),MONTH(TODAY()),1)';
+  const st30 = 'TODAY()-29', en30 = 'TODAY()', y1 = 'TODAY()-1';
+
+  const paid30 = sumPaidFx(st30, en30);
+  const inq30  = countInqFx(st30, en30);
+  const trackedInq30 = `(${countInqFx(st30, en30)}-${countInqFx(st30, en30, ",'문의접수'!D:D,\"불확실\"")}-${countInqFx(st30, en30, ",'문의접수'!D:D,\"\"")})`;
+  const open30 = countInqFx(st30, en30, ",'문의접수'!C:C,\"개통\"");
+
+  const stripLabels = ['이번달 광고비', '30일 CPL', '30일 개통률', '어제 문의', '출처미상%'];
+  const stripCols = ['A', 'C', 'E', 'G', 'I'];
+  stripLabels.forEach(function (lbl, i) {
+    const c = stripCols[i];
+    const c2 = String.fromCharCode(c.charCodeAt(0) + 1);
+    dash.getRange(c + '1:' + c2 + '1').merge().setValue(lbl)
+      .setFontColor(C_LABEL).setFontSize(9).setHorizontalAlignment('center');
+    dash.getRange(c + '2:' + c2 + '2').merge()
+      .setFontWeight('bold').setFontSize(18).setHorizontalAlignment('center');
+  });
+  dash.getRange('A2').setFormula(`=IFERROR(SUMIFS('메타_통합'!H:H,'메타_통합'!A:A,">="&${monthStart},'메타_통합'!A:A,"<="&TODAY())+SUMIFS('구글'!G:G,'구글'!A:A,">="&${monthStart},'구글'!A:A,"<="&TODAY())+SUMIFS('네이버_통합'!H:H,'네이버_통합'!A:A,">="&${monthStart},'네이버_통합'!A:A,"<="&TODAY())+SUMIFS('카카오'!G:G,'카카오'!A:A,">="&${monthStart},'카카오'!A:A,"<="&TODAY())+SUMIFS('당근'!G:G,'당근'!A:A,">="&${monthStart},'당근'!A:A,"<="&TODAY()),0)`).setNumberFormat(F_WON);
+  dash.getRange('C2').setFormula(`=IFERROR((${paid30})/${trackedInq30},"-")`).setNumberFormat(F_WON);
+  dash.getRange('E2').setFormula(`=IFERROR(${open30}/${trackedInq30},"-")`).setNumberFormat(F_PCT);
+  dash.getRange('G2').setFormula(`=${countInqFx(y1, y1)}`).setNumberFormat('#,##0"건"');
+  dash.getRange('I2').setFormula(`=IFERROR((${inq30}-${trackedInq30})/${inq30},"-")`).setNumberFormat(F_PCT);
+
+  dash.setFrozenRows(2);
+
+  // ════════════════════════════════════════════════════
+  // 2) 기간별 핵심 — 기간/광고비/문의/개통/CPL
+  // ════════════════════════════════════════════════════
+  let row = 4;
+  sectionHeader(row, '기간별 핵심'); row++;
+  colHeader(row, ['기간', '광고비', '문의', '개통', 'CPL']); row++;
+  const kpiPeriods = [
+    ['어제',      'TODAY()-1',  'TODAY()-1'],
+    ['최근 7일',  'TODAY()-6',  'TODAY()'],
+    ['최근 30일', 'TODAY()-29', 'TODAY()'],
+  ];
+  const kpiStart = row;
+  kpiPeriods.forEach(function (p, i) {
+    const r = kpiStart + i;
+    const st = p[1], en = p[2];
+    const trackedInq = `(${countInqFx(st, en)}-${countInqFx(st, en, ",'문의접수'!D:D,\"불확실\"")}-${countInqFx(st, en, ",'문의접수'!D:D,\"\"")})`;
+    dash.getRange(r, 1).setValue(p[0]);
+    dash.getRange(r, 2).setFormula(`=${sumPaidFx(st, en)}`).setNumberFormat(F_WON);
+    dash.getRange(r, 3).setFormula(`=${countInqFx(st, en)}`).setNumberFormat('#,##0"건"');
+    dash.getRange(r, 4).setFormula(`=${countInqFx(st, en, ",'문의접수'!C:C,\"개통\"")}`).setNumberFormat('#,##0"건"');
+    dash.getRange(r, 5).setFormula(`=IFERROR(B${r}/${trackedInq},"-")`).setNumberFormat(F_WON);
+  });
+  dataBox(kpiStart, kpiPeriods.length, 5);
+  row = kpiStart + kpiPeriods.length;
+
+  // ════════════════════════════════════════════════════
+  // 3) 채널별 효율 (기간 드롭다운) — 채널/노출/클릭/광고비/카톡클릭/카톡당CPC
+  // ════════════════════════════════════════════════════
+  row++;
+  const chHeaderRow = row;
+  sectionHeader(chHeaderRow, '채널별 효율');
+  dash.getRange(chHeaderRow, 8).setValue('기간:')
+    .setFontColor(C_LABEL).setFontSize(9).setHorizontalAlignment('right');
+  const ddCell = dash.getRange(chHeaderRow, 9);
+  ddCell.setBackground('#FFF59D').setFontWeight('bold').setHorizontalAlignment('center')
+    .setDataValidation(SpreadsheetApp.newDataValidation()
+      .requireValueInList(['어제','최근 3일','최근 7일','최근 30일'], true).setAllowInvalid(false).build());
+  if (ddCell.getValue() === '') ddCell.setValue('최근 30일');
+  const DD = '$I$' + chHeaderRow;
+  const ABS_N = '$N$' + chHeaderRow;
+  const ABS_O = '$O$' + chHeaderRow;
+  dash.getRange('N' + chHeaderRow).setFormula(`=IF(${DD}="어제",TODAY()-1,IF(${DD}="최근 3일",TODAY()-2,IF(${DD}="최근 7일",TODAY()-6,TODAY()-29)))`)
+    .setNumberFormat('m/d').setFontColor('#BBBBBB');
+  dash.getRange('O' + chHeaderRow).setFormula(`=IF(${DD}="어제",TODAY()-1,TODAY())`)
+    .setNumberFormat('m/d').setFontColor('#BBBBBB');
+  row++;
+  colHeader(row, ['채널', '노출', '클릭', '광고비', '카톡클릭', '카톡당CPC']); row++;
+
+  const ga4D = `'GA4_자동'!A:A,">="&TEXT(${ABS_N},"yyyymmdd"),'GA4_자동'!A:A,"<="&TEXT(${ABS_O},"yyyymmdd")`;
+  const channels = [
+    {name:'메타',   adSheet:'메타_통합',   impCol:'F', clkCol:'G', spdCol:'H', sources:['meta','facebook.com','m.facebook.com','l.facebook.com']},
+    {name:'구글',   adSheet:'구글',        impCol:'E', clkCol:'F', spdCol:'G', sources:['google']},
+    {name:'네이버', adSheet:'네이버_통합', impCol:'F', clkCol:'G', spdCol:'H', sources:['naver','naver_blog','ad.search.naver.com','m.ad.search.naver.com','m.search.naver.com']},
+    {name:'카카오', adSheet:'카카오',      impCol:'E', clkCol:'F', spdCol:'G', sources:['kakao']},
+    {name:'당근',   adSheet:'당근',        impCol:'E', clkCol:'F', spdCol:'G', sources:['daangn','danggn']},
+  ];
+  const chStart = row;
+  channels.forEach(function (c, i) {
+    const r = chStart + i;
+    const ad = (col) => `SUMIFS('${c.adSheet}'!${col}:${col},'${c.adSheet}'!A:A,">="&${ABS_N},'${c.adSheet}'!A:A,"<="&${ABS_O})`;
+    const ev = (e) => c.sources.map(s =>
+      `SUMIFS('GA4_자동'!F:F,'GA4_자동'!B:B,"${s}",'GA4_자동'!E:E,"${e}",${ga4D})`).join('+');
+    dash.getRange(r, 1).setValue(c.name);
+    dash.getRange(r, 2).setFormula(`=IFERROR(${ad(c.impCol)},0)`).setNumberFormat(fmtKM);
+    dash.getRange(r, 3).setFormula(`=IFERROR(${ad(c.clkCol)},0)`).setNumberFormat(fmtKM);
+    dash.getRange(r, 4).setFormula(`=IFERROR(${ad(c.spdCol)},0)`).setNumberFormat(F_WON);
+    dash.getRange(r, 5).setFormula(`=IFERROR(${ev('kakao_chat_click')},0)`).setNumberFormat(F_INT);
+    dash.getRange(r, 6).setFormula(`=IFERROR(IF(E${r}=0,"-",D${r}/E${r}),"-")`).setNumberFormat(F_WON);
+  });
+  dataBox(chStart, channels.length, 6);
+  row = chStart + channels.length;
+
+  // ════════════════════════════════════════════════════
+  // 4) 리틀리 유입 — 기간/방문자수/클릭수/CTR + 우측 최신 유입경로비율
+  // ════════════════════════════════════════════════════
+  row++;
+  sectionHeader(row, '리틀리 유입'); row++;
+  colHeader(row, ['기간', '방문자수', '클릭수', 'CTR']);
+  dash.getRange(row, 6).setValue('최신 유입경로비율')
+    .setFontColor(C_COL_FG).setFontWeight('bold').setFontSize(9);
+  row++;
+  const liStart = row;
+  const liPeriods = [['어제', 'TODAY()-1', 'TODAY()-1'], ['최근 7일', 'TODAY()-6', 'TODAY()'], ['최근 30일', 'TODAY()-29', 'TODAY()']];
+  liPeriods.forEach(function (p, i) {
+    const r = liStart + i;
+    const base = "'리틀리'!A:A,\">=\"&" + p[1] + ",'리틀리'!A:A,\"<=\"&" + p[2];
+    dash.getRange(r, 1).setValue(p[0]);
+    dash.getRange(r, 2).setFormula("=IFERROR(SUMIFS('리틀리'!B:B," + base + "),0)").setNumberFormat('#,##0"명"');
+    dash.getRange(r, 3).setFormula("=IFERROR(SUMIFS('리틀리'!C:C," + base + "),0)").setNumberFormat(F_INT);
+    dash.getRange(r, 4).setFormula("=IFERROR(C" + r + "/B" + r + ",\"-\")").setNumberFormat(F_PCT);
+  });
+  dataBox(liStart, liPeriods.length, 4);
+  dash.getRange(liStart, 6, liPeriods.length, 1).merge()
+    .setVerticalAlignment('top').setWrap(true).setHorizontalAlignment('left')
+    .setFormula('=IFERROR(INDEX(FILTER(\'리틀리\'!G4:G1000,\'리틀리\'!G4:G1000<>""),ROWS(FILTER(\'리틀리\'!G4:G1000,\'리틀리\'!G4:G1000<>""))),"(유입경로 입력 없음)")')
+    .setBorder(true, true, true, true, true, true, C_ROW_BD, SpreadsheetApp.BorderStyle.SOLID);
+  row = liStart + liPeriods.length;
+
+  // ════════════════════════════════════════════════════
+  // 5) 실비용 대조 — 채널/카드결제/API광고비/차이 + 합계
+  // ════════════════════════════════════════════════════
+  row++;
+  sectionHeader(row, '실비용 대조 (이번달 카드결제 vs API 광고비)'); row++;
+  colHeader(row, ['채널', '카드결제', 'API광고비', '차이']); row++;
+  const payStart = row;
+  const PAY = [['메타', '메타_통합', 'H'], ['네이버', '네이버_통합', 'H'], ['구글', '구글', 'G'], ['카카오', '카카오', 'G'], ['당근', '당근', 'G']];
+  PAY.forEach(function (c, i) {
+    const r = payStart + i;
+    dash.getRange(r, 1).setValue(c[0]);
+    dash.getRange(r, 2).setFormula("=IFERROR(SUMIFS('결제내역'!D:D,'결제내역'!B:B,\"" + c[0] + "\",'결제내역'!A:A,\">=\"&" + monthStart + ",'결제내역'!A:A,\"<=\"&TODAY()),0)").setNumberFormat(F_WON);
+    dash.getRange(r, 3).setFormula("=IFERROR(SUMIFS('" + c[1] + "'!" + c[2] + ":" + c[2] + ",'" + c[1] + "'!A:A,\">=\"&" + monthStart + ",'" + c[1] + "'!A:A,\"<=\"&TODAY()),0)").setNumberFormat(F_WON);
+    dash.getRange(r, 4).setFormula("=B" + r + "-C" + r).setNumberFormat(F_WON);
+  });
+  dataBox(payStart, PAY.length, 4);
+  const payTotal = payStart + PAY.length;
+  dash.getRange(payTotal, 1).setValue('합계').setFontWeight('bold');
+  dash.getRange(payTotal, 2).setFormula(`=SUM(B${payStart}:B${payTotal - 1})`).setNumberFormat(F_WON).setFontWeight('bold');
+  dash.getRange(payTotal, 3).setFormula(`=SUM(C${payStart}:C${payTotal - 1})`).setNumberFormat(F_WON).setFontWeight('bold');
+  dash.getRange(payTotal, 4).setFormula(`=B${payTotal}-C${payTotal}`).setNumberFormat(F_WON).setFontWeight('bold');
+  dash.getRange(payTotal, 1, 1, 4).setBackground(C_TOTAL_BG)
+    .setBorder(true, true, true, true, true, true, C_ROW_BD, SpreadsheetApp.BorderStyle.SOLID)
+    .setHorizontalAlignment('right');
+  dash.getRange(payTotal, 1).setHorizontalAlignment('left');
+  row = payTotal + 1;
+
+  // ════════════════════════════════════════════════════
+  // 6) SNS 채널 운영 — 채널/포스트수/총조회수/평균/팔로워 (30일 고정)
+  // ════════════════════════════════════════════════════
+  row++;
+  sectionHeader(row, 'SNS 채널 운영'); row++;
+  colHeader(row, ['채널', '포스트수', '총조회수', '평균', '팔로워']); row++;
+  const snsStart = row;
+  const sns = [
+    {name: '유튜브', sheet: '유튜브'},
+    {name: '인스타', sheet: '인스타'},
+    {name: '스레드', sheet: '스레드'},
+    {name: '틱톡',   sheet: '틱톡'},
+  ];
+  const snsSt = 'TODAY()-29', snsEn = 'TODAY()';
+  sns.forEach(function (s, i) {
+    const r = snsStart + i;
+    dash.getRange(r, 1).setValue(s.name);
+    dash.getRange(r, 2).setFormula(`=COUNTIFS('${s.sheet}'!A:A,">="&${snsSt},'${s.sheet}'!A:A,"<="&${snsEn})`).setNumberFormat(F_INT);
+    dash.getRange(r, 3).setFormula(`=SUMIFS('${s.sheet}'!E:E,'${s.sheet}'!A:A,">="&${snsSt},'${s.sheet}'!A:A,"<="&${snsEn})`).setNumberFormat(F_INT);
+    dash.getRange(r, 4).setFormula(`=IFERROR(IF(B${r}=0,0,C${r}/B${r}),0)`).setNumberFormat(F_INT);
+    dash.getRange(r, 5).setFormula(`=IFERROR(LOOKUP(2,1/(('${s.sheet}'!G:G<>"")*('${s.sheet}'!A:A<=${snsEn})),'${s.sheet}'!G:G),"-")`).setNumberFormat(F_INT);
+  });
+  dataBox(snsStart, sns.length, 5);
+  row = snsStart + sns.length;
+
+  // ── 푸터(업데이트 시각) + 하단 여백 숨김 (광고그룹 추이는 60행) ──
+  const stamp = Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyy-MM-dd HH:mm');
+  dash.getRange(row, 1, 1, 6).merge()
+    .setValue('🕐 마지막 업데이트: ' + stamp + '  ·  기간 변경 = 채널별 효율 표의 드롭다운')
+    .setFontColor('#AAAAAA').setFontStyle('italic').setFontSize(9).setHorizontalAlignment('left');
+  const hideFrom = row + 1;
+  if (hideFrom <= 59) { try { dash.hideRows(hideFrom, 59 - hideFrom + 1); } catch (e) {} }
+
+  // 폭/정렬 마무리
+  dash.setColumnWidth(1, 110);
+  for (let c = 2; c <= 6; c++) dash.setColumnWidth(c, 95);
+
+  try {
+    SpreadsheetApp.getUi().alert('✅ 통합대시보드 V2 빌드 완료\n· 1~2행 요약 스트립(고정)\n· 기간별 핵심 / 채널별 효율 / 리틀리 / 실비용 / SNS\n· 40행 이후 = 광고그룹 추이 영역(미변경)');
+  } catch (e) {}
+
+  if (typeof logSync_ === 'function') { try { logSync_('buildDashboardV2', '대시보드 V2 빌드'); } catch (e) {} }
 }
 
