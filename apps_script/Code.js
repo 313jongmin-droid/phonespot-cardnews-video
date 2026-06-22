@@ -1359,6 +1359,13 @@ function buildDashboardV2() {
   const hideFrom = row + 1;
   if (hideFrom <= 59) { try { dash.hideRows(hideFrom, 59 - hideFrom + 1); } catch (e) {} }
 
+  // 광고그룹 추이 섹션(60행~)이 비었으면 자동 복구 (V2가 1~59만 건드림)
+  try {
+    if (typeof setupAdgroupTrendChart === 'function' && String(dash.getRange('A60').getValue() || '').trim() === '') {
+      setupAdgroupTrendChart();
+    }
+  } catch (e) { Logger.log('adgroup 복구 실패: ' + e.message); }
+
   // 폭/정렬 마무리
   dash.setColumnWidth(1, 110);
   for (let c = 2; c <= 6; c++) dash.setColumnWidth(c, 95);
