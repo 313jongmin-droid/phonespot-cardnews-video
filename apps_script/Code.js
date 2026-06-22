@@ -1148,8 +1148,8 @@ function buildDashboardV2() {
     const sc = startCol || LCOL;
     const rng = dash.getRange(r1, sc, nRows, nCols);
     rng.setBorder(true, true, true, true, true, true, C_ROW_BD, SpreadsheetApp.BorderStyle.SOLID);
-    dash.getRange(r1, sc, nRows, 1).setHorizontalAlignment('left').setFontWeight('bold');
-    if (nCols > 1) dash.getRange(r1, sc + 1, nRows, nCols - 1).setHorizontalAlignment('right');
+    rng.setHorizontalAlignment('center');                      // 데이터 전체 중앙정렬
+    dash.getRange(r1, sc, nRows, 1).setFontWeight('bold');     // 라벨열 굵게
     for (var zi = 0; zi < nRows; zi++) {           // 제브라(홀짝 행 옅은 칠)로 가독성
       if (zi % 2 === 1) dash.getRange(r1 + zi, sc, 1, nCols).setBackground('#FAFAFB');
     }
@@ -1350,6 +1350,21 @@ function buildDashboardV2() {
   dash.setColumnWidth(8, 110);                              // H (우측 라벨)
   for (let c = 9; c <= 13; c++) dash.setColumnWidth(c, 108);// I~M
   try { dash.setRowHeight(1, 18); dash.setRowHeight(2, 34); } catch (e) {}
+
+  // 조건부 색: 출처미상(I2) 위험 / 실비용 차이(K6:K11) 음수 — 매번 내 규칙만 갱신
+  try {
+    var keep = dash.getConditionalFormatRules().filter(function (rule) {
+      var rs = rule.getRanges().map(function (rg) { return rg.getA1Notation(); }).join(',');
+      return rs.indexOf('I2') < 0 && rs.indexOf('K6') < 0;
+    });
+    keep.push(SpreadsheetApp.newConditionalFormatRule().whenNumberGreaterThanOrEqualTo(0.7)
+      .setFontColor('#9F1A1A').setBackground('#FCEBEB').setRanges([dash.getRange('I2')]).build());
+    keep.push(SpreadsheetApp.newConditionalFormatRule().whenNumberBetween(0.5, 0.6999)
+      .setFontColor('#8A5A00').setBackground('#FAEEDA').setRanges([dash.getRange('I2')]).build());
+    keep.push(SpreadsheetApp.newConditionalFormatRule().whenNumberLessThan(0)
+      .setFontColor('#9F1A1A').setRanges([dash.getRange('K6:K11')]).build());
+    dash.setConditionalFormatRules(keep);
+  } catch (e) { Logger.log('조건부서식: ' + e.message); }
 
   try {
     SpreadsheetApp.getUi().alert('✅ 통합대시보드 V2 빌드 완료 (2열 가로 레이아웃)\n· 1~2행 요약 스트립(고정)\n· 좌: 기간별 핵심 / 채널별 효율 / 리틀리\n· 우: 실비용 대조 / SNS\n· 60행 이후 = 광고그룹 추이 영역(미변경)');
