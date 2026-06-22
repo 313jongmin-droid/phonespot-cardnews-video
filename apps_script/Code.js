@@ -102,6 +102,8 @@ function refreshAll() {
   try { repairSNSMonthlySummaries(false); } catch (e) { errors.push('repairSNSMonthlySummaries: ' + e.message); }
   try { addTimeSeriesChart(); } catch (e) { errors.push('addTimeSeriesChart: ' + e.message); }
 
+  try { updateLitlyAndPaymentSections_(); } catch (e) { errors.push('LitlyPay: ' + e.message); }
+
   const stamp = recordLastRefresh_();
 
   if (typeof logSync_ === 'function') logSync_('refreshAll', errors.length ? ('부분완료 ' + errors.length + '건') : '완료 ' + stamp);
@@ -120,10 +122,8 @@ function recordLastRefresh_() {
   const stamp = Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyy-MM-dd HH:mm:ss');
   const sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('통합대시보드');
   if (sh) {
-    // 2026-06-22: 옛 월별표 잔재(45~58)+옛 시각(59) 정리, 41~59 빈 여백 숨김(카톡리포트~광고그룹추이 사이), 시각은 상단 A7로.
-    try { sh.getRange('A45:H59').breakApart(); } catch (e) {}
-    sh.getRange('A45:H59').clearContent().clearFormat();
-    try { sh.hideRows(41, 19); } catch (e) {}
+    // 2026-06-22: 시각은 상단 A7. 41~59 여백은 리틀리/실비용 섹션이 채움 → 숨겨졌으면 해제.
+    try { sh.showRows(41, 19); } catch (e) {}
     try { sh.getRange('A7:F7').breakApart(); } catch (e) {}
     sh.getRange('A7').setValue('🕐 마지막 전체 업데이트: ' + stamp)
       .setFontColor('#888888').setFontStyle('italic');
@@ -1049,6 +1049,7 @@ function nightlyDashboard() {
   try { updateChannelMatrixWithGA4(); } catch (e) { Logger.log('Matrix: ' + e.message); }
   try { if (typeof updateSNSReport === 'function') updateSNSReport({ forceRebuild: false, showAlert: false }); } catch (e) { Logger.log('SNS: ' + e.message); }
   try { if (typeof addTimeSeriesChart === 'function') addTimeSeriesChart(); } catch (e) { Logger.log('Chart: ' + e.message); }
+  try { updateLitlyAndPaymentSections_(); } catch (e) { Logger.log('LitlyPay: ' + e.message); }
   try { if (typeof recordLastRefresh_ === 'function') recordLastRefresh_(); } catch (e) {}
   if (typeof logSync_ === 'function') logSync_('nightlyDashboard', '대시보드 재빌드 완료');
 }
@@ -1060,3 +1061,57 @@ function setupNightlyDashboardTrigger() {
   ScriptApp.newTrigger('nightlyDashboard').timeBased().atHour(3).nearMinute(0).everyDays(1).create();
   try { SpreadsheetApp.getUi().alert('✅ 야간 대시보드 재빌드 트리거 등록 (매일 03:00).\n\n※ 기존 refreshAll 트리거는 6분 초과로 미작동 → 삭제 권장.'); } catch (e) {}
 }
+
+// ──[2026-06-22]── 리틀리 유입 + 실비용 대조 섹션 (통합대시보드 45~59, 옛 여백 활용)
+function updateLitlyAndPaymentSections_() {
+  const ss = SpreadsheetApp.getActive();
+  const dash = ss.getSheetByName('통합대시보드');
+  if (!dash) return;
+  try { dash.showRows(45, 15); } catch (e) {}
+  try { dash.getRange('A45:I59').breakApart(); } catch (e) {}
+  dash.getRange('A45:I59').clearContent().clearFormat();
+
+  // ===== 리틀리(링크인바이오) 유입 =====
+  dash.getRange('A45:I45').merge().setValue('★ 리틀리(링크인바이오) 유입')
+    .setBackground('#1F4E78').setFontColor('#FFFFFF').setFontWeight('bold').setFontSize(13).setHorizontalAlignment('center');
+  dash.getRange(46, 1, 1, 4).setValues([['기간', '방문자수', '클릭수', 'CTR']])
+    .setBackground('#D9E1F2').setFontWeight('bold').setHorizontalAlignment('center').setBorder(true, true, true, true, true, true);
+  dash.getRange('F46').setValue('최신 유입경로비율').setFontWeight('bold').setFontColor('#1F4E78');
+  const LP = [['어제', 'TODAY()-1', 'TODAY()-1'], ['최근 7일', 'TODAY()-6', 'TODAY()'], ['최근 30일', 'TODAY()-29', 'TODAY()']];
+  LP.forEach(function (p, i) {
+    const r = 47 + i;
+    const base = "'리틀리'!A:A,\">=\"&" + p[1] + ",'리틀리'!A:A,\"<=\"&" + p[2];
+    dash.getRange(r, 1).setValue(p[0]).setFontWeight('bold');
+    dash.getRange(r, 2).setFormula("=IFERROR(SUMIFS('리틀리'!B:B," + base + "),0)").setNumberFormat('#,##0"명"');
+    dash.getRange(r, 3).setFormula("=IFERROR(SUMIFS('리틀리'!C:C," + base + "),0)").setNumberFormat('#,##0');
+    dash.getRange(r, 4).setFormula("=IFERROR(C" + r + "/B" + r + ",\"-\")").setNumberFormat('0.0%');
+    dash.getRange(r, 1, 1, 4).setBorder(true, true, true, true, true, true).setHorizontalAlignment('center');
+  });
+  dash.getRange('F47:I49').merge().setVerticalAlignment('top').setWrap(true).setHorizontalAlignment('left')
+    .setFormula('=IFERROR(INDEX(FILTER(\'리틀리\'!G4:G1000,\'리틀리\'!G4:G1000<>""),ROWS(FILTER(\'리틀리\'!G4:G1000,\'리틀리\'!G4:G1000<>""))),"(유입경로 입력 없음)")')
+    .setBorder(true, true, true, true, true, true);
+
+  // ===== 실비용 대조 (이번달 카드결제 vs API 광고비) =====
+  dash.getRange('A51:I51').merge().setValue('★ 실비용 대조 — 이번달 카드결제 vs API 광고비')
+    .setBackground('#1F4E78').setFontColor('#FFFFFF').setFontWeight('bold').setFontSize(13).setHorizontalAlignment('center');
+  dash.getRange(52, 1, 1, 4).setValues([['채널', '카드결제(실비용)', 'API 광고비', '차이']])
+    .setBackground('#D9E1F2').setFontWeight('bold').setHorizontalAlignment('center').setBorder(true, true, true, true, true, true);
+  const M = 'DATE(YEAR(TODAY()),MONTH(TODAY()),1)';
+  const PAY = [['메타', '메타_통합', 'H'], ['네이버', '네이버_통합', 'H'], ['구글', '구글', 'G'], ['카카오', '카카오', 'G'], ['당근', '당근', 'G']];
+  PAY.forEach(function (c, i) {
+    const r = 53 + i;
+    dash.getRange(r, 1).setValue(c[0]).setFontWeight('bold');
+    dash.getRange(r, 2).setFormula("=IFERROR(SUMIFS('결제내역'!D:D,'결제내역'!B:B,\"" + c[0] + "\",'결제내역'!A:A,\">=\"&" + M + ",'결제내역'!A:A,\"<=\"&TODAY()),0)").setNumberFormat('#,##0"원"');
+    dash.getRange(r, 3).setFormula("=IFERROR(SUMIFS('" + c[1] + "'!" + c[2] + ":" + c[2] + ",'" + c[1] + "'!A:A,\">=\"&" + M + ",'" + c[1] + "'!A:A,\"<=\"&TODAY()),0)").setNumberFormat('#,##0"원"');
+    dash.getRange(r, 4).setFormula("=B" + r + "-C" + r).setNumberFormat('#,##0"원"');
+    dash.getRange(r, 1, 1, 4).setBorder(true, true, true, true, true, true).setHorizontalAlignment('center');
+  });
+  dash.getRange(58, 1).setValue('합계').setFontWeight('bold');
+  dash.getRange(58, 2).setFormula('=SUM(B53:B57)').setNumberFormat('#,##0"원"').setFontWeight('bold');
+  dash.getRange(58, 3).setFormula('=SUM(C53:C57)').setNumberFormat('#,##0"원"').setFontWeight('bold');
+  dash.getRange(58, 4).setFormula('=B58-C58').setNumberFormat('#,##0"원"').setFontWeight('bold');
+  dash.getRange(58, 1, 1, 4).setBackground('#FFF2CC').setBorder(true, true, true, true, true, true).setHorizontalAlignment('center');
+  dash.getRange('A59:I59').merge().setValue('※ 카드결제=결제내역 실청구액 / API=플랫폼 보고 광고비. 차이는 결제 타이밍·환불·미반영분.')
+    .setFontStyle('italic').setFontColor('#888888').setFontSize(9);
+}
+
