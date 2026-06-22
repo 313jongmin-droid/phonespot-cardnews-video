@@ -72,6 +72,25 @@ jobs:
       #     echo "$CLASP_JSON" > .clasp.json
       #     clasp push --force
 
+      # 성공 시 텔레그램 알림 (2026-06-22 추가, 사장님 요청). 배포 완료 = 콘솔 반영 확정.
+      - name: Notify Telegram on success
+        if: success()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+          SHA: ${{ github.sha }}
+          ACTOR: ${{ github.actor }}
+        run: |
+          TEXT="✅ Apps Script 배포 완료 (콘솔 반영됨)
+          커밋: ${SHA:0:7}
+          메시지: ${COMMIT_MSG}
+          실행자: ${ACTOR}
+          시각(UTC): $(date -u '+%Y-%m-%d %H:%M')"
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=${TEXT}" >/dev/null
+
       # 실패 시 텔레그램 알림 (2026-06-15 추가). 카드뉴스용 봇 재활용.
       # GitHub Secrets 필요: TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
       - name: Notify Telegram on failure
