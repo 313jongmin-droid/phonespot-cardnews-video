@@ -106,17 +106,58 @@ function sendMorningBriefing() {
   const ss = SpreadsheetApp.getActive();
   const d = ss.getSheetByName('통합대시보드');
   if (!d) return;
-  const g = function (a1) { return d.getRange(a1).getDisplayValue(); };
-  const txt = '☀️ 폰스팟 광고 아침 브리핑 ' + Utilities.formatDate(new Date(), 'Asia/Seoul', 'MM/dd') + '\n\n'
-    + '· 이번달 광고비: ' + g('A6') + '\n'
-    + '· 어제: ' + g('B11') + '\n'
-    + '· 최근 7일: ' + g('B12') + '\n'
-    + '· 최근 30일: ' + g('B14') + '\n'
-    + '(상세 = 통합대시보드)';
+  const today = Utilities.formatDate(new Date(), 'Asia/Seoul', 'MM/dd');
+
+  // 1) 기간별 종합 — KPI 상세표(A11:I15) 라벨 기준 (어제/3일/7일/14일/30일)
+  //    컬럼: A기간 B광고비 C문의 D출처확인 E개통 F개통률 G리틀리CTR H CPL(추적) I CPL(전체)
+  let periodLines = [];
+  try {
+    const vals = d.getRange(11, 1, 5, 9).getDisplayValues();
+    vals.forEach(function (r) {
+      const label = String(r[0] || '').trim();
+      if (!label) return;
+      periodLines.push('▪ ' + label + '\n   광고비 ' + (r[1] || '-') + ' · 문의 ' + (r[2] || '-') +
+        '(확인 ' + (r[3] || '-') + ') · 개통 ' + (r[4] || '-') + ' · CPL ' + (r[7] || '-'));
+    });
+  } catch (e) {}
+
+  // 2) 어제 채널별 노출/클릭/지출 (API/매칭 수집분)
+  const y = new Date(); y.setDate(y.getDate() - 1);
+  const ymd = Utilities.formatDate(y, 'Asia/Seoul', 'yyyy-MM-dd');
+  // [표시명, 시트, 노출col, 클릭col, 지출col] (1-based)
+  const CH = [
+    ['메타', '메타_통합', 6, 7, 8],
+    ['네이버', '네이버_통합', 6, 7, 8],
+    ['당근', '당근_통합', 4, 5, 6],
+    ['구글', '구글_통합', 4, 5, 6]
+  ];
+  let chLines = [];
+  CH.forEach(function (c) {
+    const sh = ss.getSheetByName(c[1]);
+    if (!sh || sh.getLastRow() < 2) return;
+    const n = sh.getLastRow() - 1;
+    const maxc = Math.max(c[2], c[3], c[4]);
+    const data = sh.getRange(2, 1, n, maxc).getValues();
+    let imp = 0, clk = 0, spd = 0, hit = false;
+    data.forEach(function (row) {
+      const dt = row[0];
+      const dts = (dt instanceof Date) ? Utilities.formatDate(dt, 'Asia/Seoul', 'yyyy-MM-dd')
+                                       : String(dt).slice(0, 10).replace(/\./g, '-').replace(/\s/g, '');
+      if (dts !== ymd) return;
+      hit = true;
+      imp += Number(row[c[2] - 1]) || 0;
+      clk += Number(row[c[3] - 1]) || 0;
+      spd += Number(row[c[4] - 1]) || 0;
+    });
+    if (hit) chLines.push('· ' + c[0] + ': 노출 ' + imp.toLocaleString() + ' / 클릭 ' + clk.toLocaleString() +
+      ' / 지출 ' + Math.round(spd).toLocaleString() + '원');
+  });
+
+  let txt = '☀️ 폰스팟 광고 아침 브리핑 ' + today + '\n\n[기간별 종합]\n'
+    + (periodLines.join('\n') || '(KPI표 비어있음 — 전체 새로고침 필요)');
+  if (chLines.length) txt += '\n\n[어제 채널별 노출/클릭/지출]\n' + chLines.join('\n');
+  txt += '\n\n(상세 = 통합대시보드)';
   tgSend_(txt);
-  // 이상치도 함께 점검
-  try { runHealthCheck_(); } catch (e) {}
-  try { checkAdTargets_(); } catch (e) {}
 }
 
 function setupMorningBriefingTrigger() {
@@ -133,6 +174,57 @@ function testTelegram() {
   SpreadsheetApp.getUi().alert(ok ? '✅ 전송 성공 (텔레그램 확인)' : '⚠️ 미전송 — TELEGRAM_BOT_TOKEN/CHAT_ID Script Property 등록 확인');
 }
 
+// ============ 토큰 만료/유효성 점검 (D, 2026-06-22) ============
+// 메타 토큰(만료 가능)·구글Ads refresh_token(승인 후, 테스트모드면 7일 만료)·네이버키·텔레그램 점검.
+// 문제 있을 때만 텔레그램 경고. 매일 08:30 트리거 권장.
+function checkTokensDaily() {
+  const props = PropertiesService.getScriptProperties();
+  const problems = [];
+
+  // 1) 메타 access token — 가벼운 /me 호출로 검증
+  const metaTok = props.getProperty('META_TOKEN');
+  if (!metaTok) problems.push('· 메타: META_TOKEN 미등록');
+  else {
+    try { if (typeof metaFetch === 'function') metaFetch('/me', { fields: 'id' }); }
+    catch (e) { problems.push('· 메타 토큰 실패: ' + String(e.message).slice(0, 120)); }
+  }
+
+  // 2) 구글 Ads refresh_token — 등록돼 있으면 access token 교환 시도
+  if (props.getProperty('GOOGLE_ADS_REFRESH_TOKEN')) {
+    try { if (typeof _gadsAccessToken_ === 'function') _gadsAccessToken_(); }
+    catch (e) { problems.push('· 구글Ads 토큰 실패: ' + String(e.message).slice(0, 120)); }
+  }
+
+  // 3) 네이버 키 (API키=만료없음, 존재만 확인)
+  if (!props.getProperty('NAVER_SECRET_KEY') || !props.getProperty('NAVER_CUSTOMER_ID'))
+    problems.push('· 네이버: 키 누락(NAVER_SECRET_KEY/NAVER_CUSTOMER_ID)');
+
+  // 4) 텔레그램 자체
+  if (!props.getProperty('TELEGRAM_BOT_TOKEN') || !props.getProperty('TELEGRAM_CHAT_ID'))
+    problems.push('· 텔레그램: BOT_TOKEN/CHAT_ID 누락');
+
+  const stamp = Utilities.formatDate(new Date(), 'Asia/Seoul', 'MM-dd HH:mm');
+  if (problems.length) {
+    tgSend_('🔑 토큰 점검 경고 (' + stamp + ')\n\n' + problems.join('\n') +
+      '\n\n→ 갱신 필요: Apps Script 프로젝트설정 → 스크립트 속성. (인수인계 시 여기만 확인)');
+  }
+  if (typeof logSync_ === 'function') logSync_('checkTokensDaily', problems.length ? ('문제 ' + problems.length + '건') : 'OK');
+  return problems;
+}
+
+function checkTokensMenu() {
+  const p = checkTokensDaily();
+  SpreadsheetApp.getUi().alert(p.length ? ('⚠️ 토큰 문제 ' + p.length + '건\n\n' + p.join('\n')) : '✅ 토큰 모두 정상 (메타/구글Ads/네이버/텔레그램)');
+}
+
+function setupTokenCheckTrigger() {
+  ScriptApp.getProjectTriggers().forEach(function (t) {
+    if (t.getHandlerFunction() === 'checkTokensDaily') ScriptApp.deleteTrigger(t);
+  });
+  ScriptApp.newTrigger('checkTokensDaily').timeBased().atHour(8).nearMinute(30).everyDays(1).create();
+  SpreadsheetApp.getUi().alert('✅ 토큰 점검 트리거 등록 (매일 08:30). 문제 있을 때만 텔레그램 경고.');
+}
+
 // ============ 알림 메뉴 ============
 function buildAlertsMenu_(ui) {
   ui.createMenu('🔔 알림/모니터링')
@@ -142,5 +234,8 @@ function buildAlertsMenu_(ui) {
     .addSeparator()
     .addItem('⏰ 아침 브리핑 트리거 (09:00)', 'setupMorningBriefingTrigger')
     .addItem('🔑 텔레그램 연결 테스트', 'testTelegram')
+    .addSeparator()
+    .addItem('🔑 토큰 점검 지금', 'checkTokensMenu')
+    .addItem('⏰ 토큰 점검 트리거 (08:30)', 'setupTokenCheckTrigger')
     .addToUi();
 }

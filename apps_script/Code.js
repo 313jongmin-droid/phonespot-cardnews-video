@@ -63,6 +63,9 @@ function refreshAll() {
   const errors = [];
   try { ensureUtmNamedRanges_(); } catch (e) {}
 
+  // ★ 2026-06-22: GA4 원본 일일 수집 (이게 트리거에 빠져 있어 GA4_자동이 수동 실행 때만 갱신됐음)
+  try { fetchGA4Daily(); } catch (e) { errors.push('fetchGA4Daily: ' + e.message); Logger.log(e); }
+
   // ===== 1단계: 외부 API 데이터 sync (모든 채널) =====
   try { syncAll(); }
   catch (e) { errors.push('syncAll(메타+GA4): ' + e.message); Logger.log(e); }
@@ -98,7 +101,6 @@ function refreshAll() {
   try { updateSNSReport({ forceRebuild: false, showAlert: false }); } catch (e) { errors.push('updateSNSReport: ' + e.message); }
   try { repairSNSMonthlySummaries(false); } catch (e) { errors.push('repairSNSMonthlySummaries: ' + e.message); }
   try { addTimeSeriesChart(); } catch (e) { errors.push('addTimeSeriesChart: ' + e.message); }
-  try { if (typeof runHealthCheck_ === 'function') runHealthCheck_(); } catch (e) {}
 
   const stamp = recordLastRefresh_();
 
@@ -118,8 +120,11 @@ function recordLastRefresh_() {
   const stamp = Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyy-MM-dd HH:mm:ss');
   const sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('통합대시보드');
   if (sh) {
-    sh.getRange('A46:F46').breakApart();
-    sh.getRange('A46').setValue('🕐 마지막 전체 업데이트: ' + stamp)
+    // 2026-06-22: 옛 월별 카톡 잔여표(45~58행, 갱신 함수 없음) 정리 + 시각을 A59로 이동(표와 안 겹침)
+    try { sh.getRange('A45:H58').breakApart(); } catch (e) {}
+    sh.getRange('A45:H58').clearContent().clearFormat();
+    try { sh.getRange('A59:F59').breakApart(); } catch (e) {}
+    sh.getRange('A59').setValue('🕐 마지막 전체 업데이트: ' + stamp)
       .setFontColor('#666666').setFontStyle('italic').setFontWeight('bold');
   }
   return stamp;
@@ -1033,4 +1038,24 @@ function refreshUtmSlugDropdowns() {
   Logger.log(msg);
   if (typeof logSync_ === 'function') logSync_('refreshUtmSlugDropdowns', msg);
   ui.alert('✅ 완료', msg + '\n\n채널별 GA4 실제 값만 선택 가능 → region/region_keyword 같은 불일치 차단.', ui.ButtonSet.OK);
+}
+
+// ──[E, 2026-06-22]── 야간 대시보드 재빌드 (refreshAll 6분초과 미작동 대체)
+// 데이터 sync는 개별 트리거가 담당. 이건 대시보드 UI/수식 재빌드만(빠름, API 호출 없음).
+// 개별 sync(1:35~2:35) 끝난 뒤 03:00 실행 권장. UI alert는 트리거 컨텍스트에서 throw하므로 각자 try.
+function nightlyDashboard() {
+  try { updateKPISummary(); } catch (e) { Logger.log('KPI: ' + e.message); }
+  try { updateChannelMatrixWithGA4(); } catch (e) { Logger.log('Matrix: ' + e.message); }
+  try { if (typeof updateSNSReport === 'function') updateSNSReport({ forceRebuild: false, showAlert: false }); } catch (e) { Logger.log('SNS: ' + e.message); }
+  try { if (typeof addTimeSeriesChart === 'function') addTimeSeriesChart(); } catch (e) { Logger.log('Chart: ' + e.message); }
+  try { if (typeof recordLastRefresh_ === 'function') recordLastRefresh_(); } catch (e) {}
+  if (typeof logSync_ === 'function') logSync_('nightlyDashboard', '대시보드 재빌드 완료');
+}
+
+function setupNightlyDashboardTrigger() {
+  ScriptApp.getProjectTriggers().forEach(function (t) {
+    if (t.getHandlerFunction() === 'nightlyDashboard') ScriptApp.deleteTrigger(t);
+  });
+  ScriptApp.newTrigger('nightlyDashboard').timeBased().atHour(3).nearMinute(0).everyDays(1).create();
+  try { SpreadsheetApp.getUi().alert('✅ 야간 대시보드 재빌드 트리거 등록 (매일 03:00).\n\n※ 기존 refreshAll 트리거는 6분 초과로 미작동 → 삭제 권장.'); } catch (e) {}
 }

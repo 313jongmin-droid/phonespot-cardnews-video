@@ -130,13 +130,13 @@ function setupAdgroupTrendChart() {
     .setFontStyle('italic').setFontColor('#666666');
 
   // R63: 데이터 헤더
-  const dataHeaders = ['날짜', '노출', '클릭', 'CTR', 'CPC', '카톡클릭', '문의수', '문의율'];
-  sh.getRange(63, 1, 1, 8).setValues([dataHeaders])
+  const dataHeaders = ['날짜', '노출', '클릭', 'CTR', 'CPC', '카톡클릭', '문의수', '문의율', 'CPL'];
+  sh.getRange(63, 1, 1, 9).setValues([dataHeaders])
     .setBackground('#f5f5f7').setFontWeight('bold')
     .setHorizontalAlignment('center');
 
   // R64~R93: 빈 영역
-  sh.getRange(64, 1, ADGROUP_TREND_DATA_MAX_ROWS, 8).clearContent();
+  sh.getRange(64, 1, ADGROUP_TREND_DATA_MAX_ROWS, 9).clearContent();
 
   // 차트 셋업
   ensureAdgroupTrendChart_(sh);
@@ -164,7 +164,7 @@ function refreshAdgroupTrendChart() {
   const days = parseInt(periodStr.replace(/[^\d]/g, '')) || 30;
 
   // R64~R93 비움
-  sh.getRange(64, 1, ADGROUP_TREND_DATA_MAX_ROWS, 8).clearContent();
+  sh.getRange(64, 1, ADGROUP_TREND_DATA_MAX_ROWS, 9).clearContent();
 
   if (!channel || !adgroupName) {
     sh.getRange(64, 1).setValue('⚠️ 채널 + 광고그룹 선택 필요').setFontStyle('italic').setFontColor('#C0392B');
@@ -234,11 +234,12 @@ function refreshAdgroupTrendChart() {
     const ctr = d.imp > 0 ? d.click / d.imp : 0;
     const cpc = d.click > 0 ? d.spend / d.click : 0;
     const inquiryRate = d.kakaoClick > 0 ? d.inquiry / d.kakaoClick : 0;
-    return [d.date, d.imp, d.click, ctr, cpc, d.kakaoClick, d.inquiry, inquiryRate];
+    const cpl = d.inquiry > 0 ? d.spend / d.inquiry : 0;
+    return [d.date, d.imp, d.click, ctr, cpc, d.kakaoClick, d.inquiry, inquiryRate, cpl];
   });
 
   // R64~ 박음
-  sh.getRange(64, 1, rows.length, 8).setValues(rows);
+  sh.getRange(64, 1, rows.length, 9).setValues(rows);
   // 포맷
   sh.getRange(64, 1, rows.length, 1).setNumberFormat('yyyy-mm-dd');
   sh.getRange(64, 2, rows.length, 2).setNumberFormat('#,##0');
@@ -246,6 +247,7 @@ function refreshAdgroupTrendChart() {
   sh.getRange(64, 5, rows.length, 1).setNumberFormat('#,##0"원"');
   sh.getRange(64, 6, rows.length, 2).setNumberFormat('#,##0');
   sh.getRange(64, 8, rows.length, 1).setNumberFormat('0.00%');
+  sh.getRange(64, 9, rows.length, 1).setNumberFormat('#,##0"원"'); // CPL
 
   // 차트 갱신
   ensureAdgroupTrendChart_(sh);
@@ -267,29 +269,30 @@ function ensureAdgroupTrendChart_(sh) {
   // 데이터 범위 (날짜 + CTR + CPC + 문의율 3개 지표)
   const dateRange = sh.getRange(63, 1, ADGROUP_TREND_DATA_MAX_ROWS + 1, 1);  // A: 날짜
   const ctrRange = sh.getRange(63, 4, ADGROUP_TREND_DATA_MAX_ROWS + 1, 1);   // D: CTR
-  const cpcRange = sh.getRange(63, 5, ADGROUP_TREND_DATA_MAX_ROWS + 1, 1);   // E: CPC
   const inqRange = sh.getRange(63, 8, ADGROUP_TREND_DATA_MAX_ROWS + 1, 1);   // H: 문의율
+  const cplRange = sh.getRange(63, 9, ADGROUP_TREND_DATA_MAX_ROWS + 1, 1);   // I: CPL
 
+  // 차트 = CTR·문의율(좌축 %) + CPL(우축 원). CPC는 표에만(스케일 충돌 회피).
   const chart = sh.newChart()
     .setChartType(Charts.ChartType.LINE)
     .addRange(dateRange)
     .addRange(ctrRange)
-    .addRange(cpcRange)
     .addRange(inqRange)
+    .addRange(cplRange)
     .setNumHeaders(1)
     .setPosition(95, 1, 0, 0)
-    .setOption('title', '광고그룹별 성과 추이 (CTR·CPC·문의율)')
+    .setOption('title', '광고그룹별 성과 추이 (CTR·문의율·CPL)')
     .setOption('width', 900)
     .setOption('height', 400)
     .setOption('useFirstColumnAsDomain', true)
     .setOption('series', {
       0: { targetAxisIndex: 0, color: '#1976D2', lineWidth: 2 },  // CTR
-      1: { targetAxisIndex: 1, color: '#F57C00', lineWidth: 2 },  // CPC
-      2: { targetAxisIndex: 0, color: '#D32F2F', lineWidth: 2 }   // 문의율
+      1: { targetAxisIndex: 0, color: '#D32F2F', lineWidth: 2 },  // 문의율
+      2: { targetAxisIndex: 1, color: '#388E3C', lineWidth: 3 }   // CPL
     })
     .setOption('vAxes', {
       0: { title: 'CTR·문의율 (%)', format: '0.00%' },
-      1: { title: 'CPC (원)', format: '#,##0' }
+      1: { title: 'CPL (원)', format: '#,##0' }
     })
     .setOption('hAxis', { title: '날짜', format: 'M/d' })
     .setOption('legend', { position: 'right' })
@@ -307,4 +310,22 @@ function setupAdgroupTrendTrigger() {
   });
   ScriptApp.newTrigger('refreshAdgroupTrendChart').timeBased().atHour(2).nearMinute(50).everyDays(1).create();
   SpreadsheetApp.getUi().alert('✅ 광고그룹 추이 야간 트리거 등록 (매일 02:50). 현재 토글 기준 자동 갱신.');
+}
+
+
+// ============ ★ 2026-06-22 토글 편집 시 자동 갱신 (메뉴 클릭 불필요) ============
+// 통합대시보드 B61(채널)/E61(광고그룹)/H61(기간) 편집 시 자동으로 추이 재계산+차트 갱신.
+// 단순 onEdit 트리거(설치 불필요). SpreadsheetApp만 사용해 권한 문제 없음.
+function onEdit(e) {
+  try {
+    if (!e || !e.range) return;
+    const sh = e.range.getSheet();
+    if (sh.getName() !== ADGROUP_TREND_DASH) return;
+    const r = e.range.getRow(), c = e.range.getColumn();
+    if (r !== 61) return;
+    if (c !== 2 && c !== 5 && c !== 8) return; // B61 채널 / E61 광고그룹 / H61 기간
+    refreshAdgroupTrendChart();
+  } catch (err) {
+    Logger.log('onEdit 추이 자동갱신 실패: ' + err.message);
+  }
 }

@@ -572,3 +572,19 @@ rdnews/scripts/update_content_guide.py`로 §2 발행인덱스 자동 재생성,
 - 2026-06-19 (구글 Ads API): `apps_script/google-ads-sync.js` 신설. refresh_token→access_token→searchStream(GAQL v23, FROM ad_group, segments.date BETWEEN 최근N일) → 구글_통합 D/E/F(노출/클릭/지출) upsert(키=날짜|광고그룹명) → syncGoogleGA4 후속 호출(G~P 수식). Script Property 6개: GOOGLE_ADS_DEVELOPER_TOKEN/CLIENT_ID/CLIENT_SECRET/REFRESH_TOKEN/LOGIN_CUSTOMER_ID(MCC)/CUSTOMER_ID. cost_micros/1e6=원. 메뉴 🔵 구글에 📥 Ads API 수집(7일)/백필(30일)/🔑 연결테스트/⏰ Ads Trigger(02:25) 추가(google-sync.js buildGoogleSyncMenu_). 함정: CUSTOMER_ID가 MCC(LOGIN_CUSTOMER_ID) 아래 미연결이면 USER_PERMISSION_DENIED. v 종료 시 GADS_API_VERSION 상수만 갱신(v19=2026-02 종료).
 
 - 2026-06-19 (구글 Ads API 신청/대기): Basic 액세스 신청 제출(MCC 3964705146, 설계문서 ads/PhoneSpot_GoogleAdsAPI_DesignDoc.pdf). 승인대기 ~3영업일. 코드(google-ads-sync.js)·계정연동 완성, Test등급이라 운영계정 차단 = DEVELOPER_TOKEN_NOT_APPROVED. 운영가이드+재개절차+함정(MCC/CUSTOMER 반대저장 주의, login-customer-id 비우면 통과) = ads/GOOGLE_ADS_API.md. 승인 전까지 D/E/F 수기.
+
+- 2026-06-22 (대시보드 3일 + 브리핑 상세화 + 알림 정리):
+  · 통합대시보드 기간 드롭다운 3곳(E16/E28/E36)에 "최근 3일" 추가 + N16/N28/N36 시작일 수식에 TODAY()-2 분기. KPI 상세표(updateKPISummary)에 "최근 3일" 행 추가(어제 다음, 클리어범위 A9:I14->A9:I15, periods 5행=어제/3일/7일/14일/30일). ★ 코드 배포만으론 시트 안 바뀜 — updateChannelMatrixWithGA4/updateKPISummary 실행(전체새로고침)해야 드롭다운/표 재도색됨.
+  · GA4 원본 자동수집: refreshAll에 fetchGA4Daily() 추가(맨 앞). ★ 단 refreshAll 트리거는 최종실행 "-"(안 돎) — 실제 GA4 일일수집은 Apps Script UI에 fetchGA4Daily 시간트리거(오전1~2시, 매칭 2:13~2:35보다 앞) 직접 추가로 해결. GA4_자동이 20일에 멈춘 원인=fetchGA4Daily 트리거 부재(수동 실행 때만 채워졌음). 밀린 날짜는 메뉴 "GA4 30일 백필"로 보충.
+  · 텔레그램 정리(alerts.js): 목표경고(checkAdTargets_)·헬스체크(runHealthCheck_) 자동발송 전부 제거(sendMorningBriefing + refreshAll에서 호출 삭제, 메뉴 수동버튼만 잔존). 아침브리핑(09:00) 상세화 = [기간별 종합] KPI표 A11:I15 라벨기준(어제/3일/7일/14일/30일 광고비·문의·확인·개통·CPL) + [어제 채널별] 메타(F/G/H)·네이버(F/G/H)·당근(D/E/F)·구글(D/E/F) 노출/클릭/지출 합산. 라벨기준이라 3일행 유무 자동대응.
+  · 함정: 브리핑 [기간별 종합]은 KPI표를 읽으므로, KPI표가 구 레이아웃이면 3일 누락 → updateKPISummary 1회 실행 필요. 채널 노출/클릭/지출 컬럼맵=메타/네이버 6/7/8, 당근/구글 4/5/6(1-based).
+
+- 2026-06-22 (토큰알림 + 야간대시보드 트리거):
+  · D) alerts.js checkTokensDaily() — 메타(/me)·구글Ads refresh_token(교환시도)·네이버키·텔레그램 점검, 문제시만 텔레그램 경고. 메뉴 🔔에 "토큰 점검 지금/트리거(08:30)". 인수인계 핵심(토큰 죽으면 폰 경고).
+  · E) refreshAll 트리거 최종실행 "-" 원인 = 13개 순차로 6분 초과 추정. 대체 = Code.js nightlyDashboard()(대시보드 재빌드만, API 호출 없음, 빠름) + setupNightlyDashboardTrigger()(매일 03:00). 데이터 sync는 개별 트리거가 담당, KPI표는 라이브 수식이라 자동. 기존 refreshAll 트리거는 UI에서 삭제 권장. UI alert는 트리거에서 throw하므로 각 호출 try로 감쌈.
+  · B) UTM 자동매핑 = 미구현 결정(detection은 이미 autoDiscoverAdsets_/autoDiscoverNaverAdgroups_ 존재, utm_campaign 영문슬러그는 사람 판단 필수).
+
+- 2026-06-22 (광고그룹 추이 개선): adgroup-trend.js — ① CPL 컬럼(I열, =지출/문의수) 추가(데이터표 9컬럼). ② 차트 우축을 CPC→CPL로 교체(CTR·문의율 좌축
+- 2026-06-22 (광고그룹 추이 개선): adgroup-trend.js — (1) CPL 컬럼(I열, =지출/문의수) 추가(데이터표 9컬럼). (2) 차트 우축을 CPC→CPL로 교체(CTR·문의율 좌축%, CPL 우축원, CPC는 표에만=스케일충돌 회피). (3) onEdit 단순트리거 추가 = 통합대시보드 B61(채널)/E61(광고그룹)/H61(기간) 편집 시 자동 refreshAdgroupTrendChart(메뉴 수동클릭 불필요, 불편 해소). 적용: 콘솔 반영 후 "차트 셋업(1회)" 재실행으로 헤더(CPL 라벨)·차트 재도색.
+
+- 2026-06-22 (대시보드 깨짐 수정): 통합대시보드 옛 "월별 카톡표"(45~57행)는 갱신 함수 없는 잔여물인데 recordLastRefresh_가 A46(2월 라벨 자리)에 업데이트 시각을 써서 깨져 보임. 수정 = recordLastRefresh_가 A45:H58 정리(clearContent+Format) 후 시각을 A59에 기록(어떤 표와도 비충돌). 잔여표는 사장님 결정으로 삭제. 적용 = nightlyDashboard 1회 실행(끝에서 recordLastRefresh_ 호출).

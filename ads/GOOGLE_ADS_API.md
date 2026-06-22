@@ -39,3 +39,11 @@ GOOGLE_ADS_DEVELOPER_TOKEN / CLIENT_ID / CLIENT_SECRET / REFRESH_TOKEN / LOGIN_C
 
 ## 5. 메뉴 (🔵 구글)
 📥 Ads API 수집(7일) / 📥 백필(30일) / 🔑 연결테스트 / 🔎 접근가능 계정 진단 / 🔄 GA4 매칭 / 🆕 시트신설 / 🔍 미매핑 / ⏰ GA4 Trigger(02:35) / ⏰ Ads Trigger(02:25)
+
+## 0-1. 신청 반려/재제출 이력 (2026-06-22)
+- 1차 반려: "website http://phonespot.co.kr has no content related to application" — 사이트가 JS렌더라 크롤러가 빈 셸로 봄. (폼에 phonespt.co.kr=죽은 도메인 적었을 가능성도.)
+- 대응 = Google이 허용한 "상세 사업모델+용도 설명+목업" 경로. 재제출 변경점:
+  · Q5 = https://www.phonespot.co.kr (o 있음, 실사이트)
+  · Q6 = 상세 사업모델 텍스트(매장 소매+멀티채널 광고+카톡/전화 전환, 읽기전용 리포팅)
+  · Q7 = ads/PhoneSpot_GoogleAdsAPI_DesignDoc_v2.pdf (사업모델+용도+대시보드 목업 포함)
+- 주의: 같은 응답 재제출 금지(반려메일). 위처럼 응답을 바꿔야 함. 추가로 통합대시보드 실제 스크린샷 첨부하면 성공률↑.
