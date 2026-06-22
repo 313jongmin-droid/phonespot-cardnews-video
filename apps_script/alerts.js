@@ -225,14 +225,69 @@ function setupTokenCheckTrigger() {
   SpreadsheetApp.getUi().alert('✅ 토큰 점검 트리거 등록 (매일 08:30). 문제 있을 때만 텔레그램 경고.');
 }
 
+// ============ 주간 성과 리포트 (4, 2026-06-22) — 매주 월 09:10 ============
+// 지난 7일(어제까지) 채널별 광고비 + 문의 + CPL을 텔레그램으로.
+function sendWeeklyReport() {
+  const ss = SpreadsheetApp.getActive();
+  const tz = 'Asia/Seoul';
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const start = new Date(today); start.setDate(today.getDate() - 7); // 7일 전
+  const end = new Date(today); end.setDate(today.getDate() - 1);     // 어제
+  const fmt = function (d) { return Utilities.formatDate(d, tz, 'yyyy-MM-dd'); };
+  const sStr = fmt(start), eStr = fmt(end);
+  const inWin = function (dt) {
+    const k = (dt instanceof Date) ? Utilities.formatDate(dt, tz, 'yyyy-MM-dd')
+                                   : String(dt).slice(0, 10).replace(/\./g, '-').replace(/\s/g, '');
+    return k >= sStr && k <= eStr;
+  };
+  // [표시명, 시트, 지출col(1-based)]
+  const CH = [['메타', '메타_통합', 8], ['네이버', '네이버_통합', 8], ['당근', '당근_통합', 6], ['구글', '구글_통합', 6]];
+  let lines = [], totalSpend = 0;
+  CH.forEach(function (c) {
+    const sh = ss.getSheetByName(c[1]);
+    if (!sh || sh.getLastRow() < 2) return;
+    const n = sh.getLastRow() - 1;
+    const v = sh.getRange(2, 1, n, c[2]).getValues();
+    let sp = 0;
+    v.forEach(function (r) { if (inWin(r[0])) sp += Number(r[c[2] - 1]) || 0; });
+    if (sp > 0) { totalSpend += sp; lines.push('· ' + c[0] + ': ' + Math.round(sp).toLocaleString() + '원'); }
+  });
+  // 문의 (문의접수 A열 날짜 카운트)
+  let inq = 0;
+  const iq = ss.getSheetByName('문의접수');
+  if (iq && iq.getLastRow() > 1) {
+    const dv = iq.getRange(2, 1, iq.getLastRow() - 1, 1).getValues();
+    dv.forEach(function (r) { if (inWin(r[0])) inq++; });
+  }
+  const cpl = inq > 0 ? Math.round(totalSpend / inq) : 0;
+  const txt = '📅 주간 광고 리포트 (' + sStr + ' ~ ' + eStr + ')\n\n'
+    + '[채널별 광고비]\n' + (lines.join('\n') || '(데이터 없음)')
+    + '\n\n· 총 광고비: ' + Math.round(totalSpend).toLocaleString() + '원'
+    + '\n· 문의: ' + inq + '건'
+    + '\n· CPL: ' + (inq > 0 ? cpl.toLocaleString() + '원' : '-')
+    + '\n\n(상세 = 통합대시보드)';
+  tgSend_(txt);
+  if (typeof logSync_ === 'function') logSync_('sendWeeklyReport', 'ok', '주간 리포트 발송 ' + sStr + '~' + eStr);
+}
+
+function setupWeeklyReportTrigger() {
+  ScriptApp.getProjectTriggers().forEach(function (t) {
+    if (t.getHandlerFunction() === 'sendWeeklyReport') ScriptApp.deleteTrigger(t);
+  });
+  ScriptApp.newTrigger('sendWeeklyReport').timeBased().onWeekDay(ScriptApp.WeekDay.MONDAY).atHour(9).nearMinute(10).create();
+  SpreadsheetApp.getUi().alert('✅ 주간 리포트 트리거 등록 (매주 월 09:10).');
+}
+
 // ============ 알림 메뉴 ============
 function buildAlertsMenu_(ui) {
   ui.createMenu('🔔 알림/모니터링')
     .addItem('🩺 헬스체크 지금 실행', 'runHealthCheckMenu')
     .addItem('🎯 목표 경고 지금 점검', 'checkAdTargets_')
     .addItem('☀️ 아침 브리핑 지금 보내기', 'sendMorningBriefing')
+    .addItem('📅 주간 리포트 지금 보내기', 'sendWeeklyReport')
     .addSeparator()
     .addItem('⏰ 아침 브리핑 트리거 (09:00)', 'setupMorningBriefingTrigger')
+    .addItem('⏰ 주간 리포트 트리거 (월 09:10)', 'setupWeeklyReportTrigger')
     .addItem('🔑 텔레그램 연결 테스트', 'testTelegram')
     .addSeparator()
     .addItem('🔑 토큰 점검 지금', 'checkTokensMenu')

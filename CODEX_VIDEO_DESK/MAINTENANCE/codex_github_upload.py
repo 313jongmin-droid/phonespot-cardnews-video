@@ -3,6 +3,7 @@ from __future__ import annotations
 import os
 import subprocess
 import sys
+import time
 from datetime import datetime
 from pathlib import Path
 
@@ -10,6 +11,26 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 TEMP = ROOT / "CODEX_VIDEO_DESK" / "TEMP"
 LOG_PATH = TEMP / "github_upload.log"
+
+
+def clear_stale_lock() -> None:
+    """index.lock 잔재 정리 (2026-06-22). 60초 이상 묵은 락=crash 잔재로 보고 제거.
+    활성 작업(<60초)은 건드리지 않아 동시 실행과 충돌 안 함. 이게 '커밋이 락에 막힘' 근본 차단."""
+    lock = ROOT / ".git" / "index.lock"
+    if not lock.exists():
+        return
+    try:
+        age = time.time() - lock.stat().st_mtime
+    except OSError:
+        age = 9999
+    if age > 60:
+        try:
+            lock.unlink()
+            log(f"[lock] stale index.lock removed (age {int(age)}s)")
+        except OSError as e:
+            log(f"[lock] remove failed: {e}")
+    else:
+        log(f"[lock] active index.lock (age {int(age)}s) - skip")
 
 
 def log(message: str = "") -> None:
@@ -102,6 +123,8 @@ def main() -> int:
 
     run([GIT, "--version"])
     run([GIT, "status", "--short"], check=False)
+
+    clear_stale_lock()
 
     # 1) 로컬 변경 스테이징 + 커밋 (ahead 여부와 무관하게 항상 새 변경을 담는다)
     run([GIT, "add", "-A"])
