@@ -427,22 +427,19 @@
       ]
     },
     "031_meme_phone_buying_checklist": {
-      "used_at": "2026-06-19T14:47:10",
-      "source": "uploaded_illustrations",
+      "used_at": "2026-06-22T17:57:32",
+      "source": "semantic_visual_match",
       "illustrations": [
         "smartphone",
         "phone_setup_ready",
         "chart_down",
-        "cpt_c3ad3e73",
+        "store",
         "gift_voucher",
-        "cpt_4ce4cc8c",
+        "mid_ship_7968fa24",
         "telecom_discount_compare",
         "phone_settings_toggle",
         "device_os_requirement",
         "device_data_transfer",
-        "cpt_349c9de7",
-        "cpt_bff86ff7",
-        "cpt_de81a562",
         "official_sale_9dc82f05",
         "clock",
         "event_period_8cafdac4"
@@ -465,7 +462,7 @@
       ]
     }
   },
-  "updated_at": "2026-06-22T17:07:34",
+  "updated_at": "2026-06-22T17:57:34",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -558,7 +555,7 @@
       "variants": []
     },
     "031_meme_phone_buying_checklist": {
-      "updated_at": "2026-06-19T14:47:10",
+      "updated_at": "2026-06-22T17:57:34",
       "variants": []
     },
     "032_meme_carrier_hidden_tips": {
