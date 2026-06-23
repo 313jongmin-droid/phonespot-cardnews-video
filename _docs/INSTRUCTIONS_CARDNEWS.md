@@ -84,7 +84,12 @@
 - 라인 분리 트리거 (`사기 토픽` 등)는 옵션 (사장님이 한 라인만 원할 때만)
 
 ## 라인 1: `news` — IT/폰 뉴스 (운영 중)
-- **소스**: WebSearch 6 카테고리 + WebFetch (ZDNet 등)
+- **소스**: WebSearch 6 카테고리 + WebFetch
+- ★ **WebSearch는 US 기준이라 한국 IT매체 속보를 잘 못 잡음 (2026-06-23 사장님 지적).** 보완:
+  - **사장님이 URL 주면 WebFetch로 직접 수집 우선**(가장 확실). 단 일부 도메인 차단(mk.co.kr 등)·JS렌더(kbench)는 본문 못 읽음 → 사장님께 제목/요지 요청 or Chrome MCP.
+  - WebSearch 시 `allowed_domains`로 한국 매체 지정: `digitaltoday.co.kr`·`asiae.co.kr`·`zdnet.co.kr`·`etnews.com`·`news.naver.com`(네이버뉴스). + "사이트명+키워드"로 검색.
+  - 당일 속보는 인덱싱 지연 → 매체 IT섹션 직접 WebFetch도 고려.
+  - ★ **자동화(수기 불필요) = `cardnews/scripts/collect_news_rss.py`**: 로컬 PC에서 한국 IT매체 RSS를 파싱해 D-7·폰키워드 필터 → `_state/news_feed.json` 적재. 매일 스케줄 등록 가능. 수집 시 클로드가 이 json + WebSearch + carryover 합쳐 후보화. RSS URL은 디지털투데이 검증됨, 나머지(zdnet·전자신문·아시아경제)는 URL 확인 후 FEEDS 주석 해제. **venv로 실행**(SSL truststore).
 - **D-7 strict** (현재 룰 유지)
 - **후킹 1순위**: 시간압박 / 의문
 - **목표 빈도**: 주 1~3건
