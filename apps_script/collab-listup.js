@@ -122,7 +122,7 @@ function buildCollabListup() {
   // 테두리/정렬
   out.getRange(2, 1, rows.length + 1, nCol).setBorder(true, true, true, true, true, true, '#D6DAE0', SpreadsheetApp.BorderStyle.SOLID);
   out.setFrozenRows(2);
-  out.setFrozenColumns(1);
+  // 첫 열 고정은 1행 전체병합(A1:R1)과 충돌(병합 셀 가운데 고정선 불가) → 생략
   // 적합도(M=13열) 색상: 상=초록 / 중=노랑 / 하=회색
   if (rows.length) {
     var sfRange = out.getRange(3, 13, rows.length, 1);
