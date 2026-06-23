@@ -1,14 +1,16 @@
-name: Deploy Apps Script
+name: Deploy & Notify
 
-# apps_script/ 폴더 변경 시에만 트리거 — 다른 파일 (CLAUDE.md 등) 수정엔 불필요한 deploy 안 함
+# 2026-06-23 재구성 (사장님 요청): main에 push되는 "모든" 변경에 대해 완료 알림 1개.
+#  - apps_script/** 또는 apps_script_sheet_export/** 변경 → clasp 배포 후 "배포 완료"
+#  - 그 외(cardnews/shorts/docs 등) 변경 → 배포 없이 "반영 완료"
+#  - 실패 → "배포 실패"
+# 항상 정확히 1개만 전송(중복 push-알림 워크플로 notify-push.yml은 삭제됨).
+# Secrets: CLASPRC_JSON, CLASP_JSON, CLASP_JSON_EXPORT, TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
+
 on:
   push:
     branches: [main]
-    paths:
-      - 'apps_script/**'
-      - 'apps_script_sheet_export/**'
-      - '.github/workflows/deploy-apps-script.yml'
-  workflow_dispatch:   # 수동 실행 버튼 (GitHub Actions 탭에서)
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -17,13 +19,25 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # apps_script 관련 변경 여부 판정 → 배포 단계 조건부 실행
+      - name: Detect apps_script changes
+        uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            appsscript:
+              - 'apps_script/**'
+              - 'apps_script_sheet_export/**'
+
       - name: Setup Node.js
+        if: steps.changes.outputs.appsscript == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
       # 배포 게이트: 깨진 .js가 clasp push에 도달하지 못하게 차단 (실패 시 아래 텔레그램 알림)
       - name: Syntax gate (node --check all .js)
+        if: steps.changes.outputs.appsscript == 'true'
         run: |
           set -e
           for f in apps_script/*.js apps_script_sheet_export/*.js; do
@@ -33,9 +47,11 @@ jobs:
           echo "syntax gate OK"
 
       - name: Install clasp
+        if: steps.changes.outputs.appsscript == 'true'
         run: npm install -g @google/clasp@3.3.0
 
       - name: Restore clasp credentials (~/.clasprc.json)
+        if: steps.changes.outputs.appsscript == 'true'
         env:
           CLASPRC_JSON: ${{ secrets.CLASPRC_JSON }}
         run: |
@@ -43,6 +59,7 @@ jobs:
           chmod 600 ~/.clasprc.json
 
       - name: Restore project config (apps_script/.clasp.json)
+        if: steps.changes.outputs.appsscript == 'true'
         env:
           CLASP_JSON: ${{ secrets.CLASP_JSON }}
         run: |
@@ -50,12 +67,13 @@ jobs:
           chmod 600 apps_script/.clasp.json
 
       - name: Push to Apps Script (폰스팟 본점)
+        if: steps.changes.outputs.appsscript == 'true'
         working-directory: apps_script
         run: clasp push --force
 
-      # Sheet Export 별도 프로젝트 (B1 셋업, 2026-06-15)
-      # 시트 read 전용 web app. 본점 doGet과 충돌 0.
+      # Sheet Export 별도 프로젝트 (B1 셋업, 2026-06-15). 시트 read 전용 web app.
       - name: Push to Apps Script (Sheet Export)
+        if: steps.changes.outputs.appsscript == 'true'
         working-directory: apps_script_sheet_export
         env:
           CLASP_JSON_EXPORT: ${{ secrets.CLASP_JSON_EXPORT }}
@@ -63,16 +81,8 @@ jobs:
           echo "$CLASP_JSON_EXPORT" > .clasp.json
           clasp push --force
 
-      # 멀티 브랜드 신설 시 (KT/국민/진짜폰스팟) 아래 패턴으로 1개씩 추가
-      # - name: Push to Apps Script (KT)
-      #   working-directory: brands/kt
-      #   env:
-      #     CLASP_JSON: ${{ secrets.CLASP_JSON_KT }}
-      #   run: |
-      #     echo "$CLASP_JSON" > .clasp.json
-      #     clasp push --force
-
-      # 성공 시 텔레그램 알림 (2026-06-22 추가, 사장님 요청). 배포 완료 = 콘솔 반영 확정.
+      # ===== 완료 알림 (항상 1개) =====
+      # 성공: apps_script 변경이면 "배포 완료", 아니면 "반영 완료"
       - name: Notify Telegram on success
         if: success()
         env:
@@ -81,8 +91,14 @@ jobs:
           COMMIT_MSG: ${{ github.event.head_commit.message }}
           SHA: ${{ github.sha }}
           ACTOR: ${{ github.actor }}
+          DEPLOYED: ${{ steps.changes.outputs.appsscript }}
         run: |
-          TEXT="✅ Apps Script 배포 완료 (콘솔 반영됨)
+          if [ "$DEPLOYED" = "true" ]; then
+            HEAD_LINE="✅ Apps Script 배포 완료 (콘솔 반영됨)"
+          else
+            HEAD_LINE="✅ push 반영 완료 (코드 외 변경 — 배포 없음)"
+          fi
+          TEXT="${HEAD_LINE}
           커밋: ${SHA:0:7}
           메시지: ${COMMIT_MSG}
           실행자: ${ACTOR}
@@ -91,8 +107,7 @@ jobs:
             --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
             --data-urlencode "text=${TEXT}" >/dev/null
 
-      # 실패 시 텔레그램 알림 (2026-06-15 추가). 카드뉴스용 봇 재활용.
-      # GitHub Secrets 필요: TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
+      # 실패: 배포(또는 문법 게이트) 실패 시에만
       - name: Notify Telegram on failure
         if: failure()
         env:
@@ -103,5 +118,3 @@ jobs:
           curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             -d "chat_id=${TELEGRAM_CHAT_ID}" \
             -d "text=${MSG}"
-
-      # 성공 알림은 굳이 안 넣음 (매번 알림 = 노이즈). 실패만 알림.
