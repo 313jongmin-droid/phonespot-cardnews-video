@@ -27,7 +27,7 @@ function _miConst(name, fallback) {
 function writeMetaInsightsSheet() {
   var ss = SpreadsheetApp.getActive();
   var sCreatives = _miConst('SHEET_META_CREATIVES', '메타_소재');
-  var sIntegrated = _miConst('SHEET_META_INTEGRATED', '메타_통합');
+  var sIntegrated = _miConst('SHEET_META_INTEGRATED', '메타+');
   var minSpend = _miConst('EVAL_MIN_SPEND', 0);
   var ctrGood = _miConst('EVAL_CTR_GOOD', 7);
 
@@ -62,7 +62,7 @@ function writeMetaInsightsSheet() {
   var avgCPC = cpcS.length ? cpcS.reduce(function (s, a) { return s + a.cpc; }, 0) / cpcS.length : 0;
   var topByCTR = ads.slice().sort(function (a, b) { return b.ctr - a.ctr; }).slice(0, 15);
 
-  // 광고그룹 효율 (메타_통합: E광고그룹명 / H지출 / K세션 / L카톡클릭)
+  // 광고그룹 효율 (메타+: E광고그룹명 / H지출 / K세션 / L카톡클릭)
   var topCamp = [];
   var iSheet = ss.getSheetByName(sIntegrated);
   if (iSheet && iSheet.getLastRow() >= 2) {

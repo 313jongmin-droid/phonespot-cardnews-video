@@ -7,7 +7,7 @@
  *   매일 새벽 1:30 → syncAll() 자동 실행
  *     1. 어제 메타 광고 성과 가져옴 → "메타" 시트 자동 입력
  *     2. 현재 활성 광고소재 전체 → "메타_소재" 시트 갱신
- *     3. 캠페인별 일별 데이터 → "메타_통합" 시트 (GA4 매핑 포함) ★ 신규
+ *     3. 캠페인별 일별 데이터 → "메타+" 시트 (GA4 매핑 포함) ★ 신규
  *     4. GA4 출처미상 행 → 메타 클릭과 timestamp 매칭 → utm 보정
  *
  * 필요 권한:
@@ -24,8 +24,8 @@
 const META_API_VERSION = 'v22.0';
 const SHEET_META = '메타';
 const SHEET_META_CREATIVES = '메타_소재';
-const SHEET_META_INTEGRATED = '메타_통합';  // ★ 신규
-const SHEET_UTM_MAPPING = 'UTM_매핑';  // ★ 복구 2026-06-12 (선언 누락 → ReferenceError 수정)
+const SHEET_META_INTEGRATED = '메타+';  // ★ 신규
+const SHEET_UTM_MAPPING = 'UTM';  // ★ 복구 2026-06-12 (선언 누락 → ReferenceError 수정)
 const SHEET_GA4 = 'GA4_자동';
 const SHEET_SYNC_LOG = '동기화_로그';
 
@@ -226,9 +226,9 @@ function autoAssignPSId(sheet, adId) {
   return `PS-${String(max + 1).padStart(3, '0')}`;
 }
 
-// ============ ★ 신규 3. 광고그룹별 통합 (메타_통합 시트) — 2026-06-10 광고그룹 단위 전환 ============
+// ============ ★ 신규 3. 광고그룹별 통합 (메타+ 시트) — 2026-06-10 광고그룹 단위 전환 ============
 //   - 메타 API: level=adset, 광고그룹별 노출/클릭/지출
-//   - GA4 매핑: UTM_매핑 시트 (한글 광고그룹명 → 영문 슬러그) VLOOKUP → GA4 utm_campaign 매칭
+//   - GA4 매핑: UTM 시트 (한글 광고그룹명 → 영문 슬러그) VLOOKUP → GA4 utm_campaign 매칭
 //   - 한 행 = 1일 × 1광고그룹. KT 캠페인 자동 제외.
 function syncMetaCampaignIntegrated(targetDate) {
   Logger.log('=== syncMetaCampaignIntegrated 시작 (광고그룹 단위) ===');
@@ -304,7 +304,7 @@ function syncMetaCampaignIntegrated(targetDate) {
     }
   }
 
-  // 신규 광고그룹명 자동 발견 → UTM_매핑 시트에 추가
+  // 신규 광고그룹명 자동 발견 → UTM 시트에 추가
   const adsetNames = filtered.map(item => item.adset_name).filter(Boolean);
   autoDiscoverAdsets_(adsetNames);
 
@@ -323,7 +323,7 @@ function syncMetaCampaignIntegrated(targetDate) {
     sh.getRange(r, 9).setFormula(`=IFERROR(G${r}/F${r},0)`).setNumberFormat('0.00%');
     sh.getRange(r, 10).setFormula(`=IFERROR(H${r}/G${r},0)`).setNumberFormat('#,##0"원"');
 
-    // GA4 매핑 — 광고그룹명(E열) → UTM_매핑 VLOOKUP → 영문 슬러그 → GA4 D열 매칭
+    // GA4 매핑 — 광고그룹명(E열) → UTM VLOOKUP → 영문 슬러그 → GA4 D열 매칭
     const ymdText = `TEXT(A${r},"yyyymmdd")`;
     // ★ 2026-06-12 B2 수정: 슬러그 미입력 시 ""가 GA4 빈 campaign 행을 오매칭 → 과대계상.
     //   미매핑이면 실제 campaign에 절대 없는 토큰으로 치환해 SUMIFS가 0 반환하도록 가드.
@@ -365,12 +365,12 @@ function syncMetaCampaignIntegrated(targetDate) {
     ).setNumberFormat('#,##0"원"');
   });
 
-  const msg = `✅ 메타_통합 ${ymd} ${filtered.length}개 광고그룹 (KT 제외 ${data.data.length - filtered.length})`;
+  const msg = `✅ 메타+ ${ymd} ${filtered.length}개 광고그룹 (KT 제외 ${data.data.length - filtered.length})`;
   Logger.log(msg);
   logSync_('syncMetaCampaignIntegrated', msg);
 }
 
-// ============ ★ UTM_매핑 통합 시트 자동 발견 (2026-06-15 통합 갱신) ============
+// ============ ★ UTM 통합 시트 자동 발견 (2026-06-15 통합 갱신) ============
 // 통합 시트 구조: A 채널 | B 광고그룹명(한글) | C utm_campaign(영문) | D 첫발견일 | E 상태 | F 메모
 function autoDiscoverAdsets_(adsetNames) {
   const ss = SpreadsheetApp.getActive();
@@ -404,7 +404,7 @@ function autoDiscoverAdsets_(adsetNames) {
     added++;
   });
   if (added > 0) {
-    Logger.log(`UTM_매핑: 신규 페북 광고그룹 ${added}개 발견 — ${newNames.join(', ')}`);
+    Logger.log(`UTM: 신규 페북 광고그룹 ${added}개 발견 — ${newNames.join(', ')}`);
     if (typeof logSync_ === 'function') {
       logSync_('autoDiscoverAdsets', `신규 ${added}개: ${newNames.slice(0, 3).join(', ')}...`);
     }
@@ -417,11 +417,11 @@ function showUnmappedAdsets() {
   const ss = SpreadsheetApp.getActive();
   const sheet = ss.getSheetByName(SHEET_UTM_MAPPING);
   if (!sheet) {
-    SpreadsheetApp.getUi().alert('UTM_매핑 시트 아직 없음. syncMetaCampaignIntegrated 1회 실행 후 확인.');
+    SpreadsheetApp.getUi().alert('UTM 시트 아직 없음. syncMetaCampaignIntegrated 1회 실행 후 확인.');
     return;
   }
   if (sheet.getLastRow() < 2) {
-    SpreadsheetApp.getUi().alert('UTM_매핑 시트 비어있음.');
+    SpreadsheetApp.getUi().alert('UTM 시트 비어있음.');
     return;
   }
   const data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 3).getValues();
@@ -433,18 +433,18 @@ function showUnmappedAdsets() {
   const msg = unmapped.map((r, i) => `${i + 1}. ${r[1]}`).join('\n');
   SpreadsheetApp.getUi().alert(
     `⚠️ 미매핑 페북 광고그룹 ${unmapped.length}개\n\n${msg}\n\n` +
-    `UTM_매핑 시트 C열에 영문 슬러그 박기 (1회). 박으면 메타_통합 GA4 컬럼 자동 매칭.`
+    `UTM 시트 C열에 영문 슬러그 박기 (1회). 박으면 메타+ GA4 컬럼 자동 매칭.`
   );
 }
 
-// ============ ★ UTM_매핑 정비 (2026-06-18) ============
+// ============ ★ UTM 정비 (2026-06-18) ============
 // utm_campaign이 채워졌는데 상태가 ⚠️/공백으로 남은 정상 행을 '✅ 매핑됨'으로 갱신.
 // 시프트 행(B=채널명)·안내행(※)은 제외 → cleanup 전에 돌려도 안전.
 function flipMappedUtmStatus() {
   const ss = SpreadsheetApp.getActive();
   const ui = SpreadsheetApp.getUi();
   const sheet = ss.getSheetByName(SHEET_UTM_MAPPING);
-  if (!sheet || sheet.getLastRow() < 2) { ui.alert('UTM_매핑 시트 없음/비어있음.'); return; }
+  if (!sheet || sheet.getLastRow() < 2) { ui.alert('UTM 시트 없음/비어있음.'); return; }
   const CHANNELS = ['페북', '네이버', '당근', '구글', '카카오'];
   const last = sheet.getLastRow();
   const vals = sheet.getRange(2, 1, last - 1, 6).getValues();
@@ -1624,7 +1624,7 @@ function generateMetaInsightsMarkdown() {
   const underperformers = ads.filter(a => a.ctr < EVAL_CTR_AVERAGE).sort((a, b) => a.ctr - b.ctr);
   const topByCTR = ads.slice().sort((a, b) => b.ctr - a.ctr).slice(0, 10);
 
-  // 광고그룹별 카톡전환 효율 (메타_통합 19컬럼: 광고그룹명=E열, 노출=F, 클릭=G, 지출=H, GA4세션=K, 카톡클릭=L)
+  // 광고그룹별 카톡전환 효율 (메타+ 19컬럼: 광고그룹명=E열, 노출=F, 클릭=G, 지출=H, GA4세션=K, 카톡클릭=L)
   let topCampaigns = [];
   if (integratedSheet && integratedSheet.getLastRow() >= 2) {
     const iData = integratedSheet.getRange(2, 1, integratedSheet.getLastRow() - 1, 16).getValues();

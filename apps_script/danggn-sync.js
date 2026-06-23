@@ -4,7 +4,7 @@
  * 당근은 API 없음 → 운영 데이터(노출/클릭/지출)는 사장님 수기 입력.
  * GA4 데이터(세션/카톡클릭/전화클릭/시티마켓)만 SUMIFS 수식으로 자동 매칭.
  *
- * 시트 구조 (17컬럼 단순화, 메타_통합/네이버_통합 19컬럼에서 캠페인ID/광고그룹ID 제외):
+ * 시트 구조 (17컬럼 단순화, 메타+/네이버+ 19컬럼에서 캠페인ID/광고그룹ID 제외):
  *   A 날짜 (수기)
  *   B 캠페인명 (수기, 자유 입력)
  *   C 광고그룹명 (수기, 매핑 키)
@@ -24,13 +24,13 @@
  *   Q 메모 (수기)
  *
  * GA4 매칭 키:
- *   GA4_자동!A열(date) = 당근_통합!A열 (YYYYMMDD 텍스트로 변환)
+ *   GA4_자동!A열(date) = 당근+!A열 (YYYYMMDD 텍스트로 변환)
  *   GA4_자동!B열(sessionSource) = DANGGN_UTM_SOURCE (Script Properties, 기본 "danggn")
  *   GA4_자동!D열(sessionCampaignName) = 당근_UTM_매핑 VLOOKUP (광고그룹명 → 영문 utm_campaign)
  *   GA4_자동!E열(eventName) = session_start / kakao_chat_click / phone_click / citymarket_click
  *
  * 사장님 1회 셋업 (Apps Script 콘솔에서 함수 실행):
- *   1. createDanggnIntegratedSheet() — 당근_통합 + 당근_UTM_매핑 시트 신설
+ *   1. createDanggnIntegratedSheet() — 당근+ + 당근_UTM_매핑 시트 신설
  *   2. Script Properties에 DANGGN_UTM_SOURCE 등록 (기본값 "danggn", GA4 실제 값과 일치해야 함)
  *   3. setupDanggnTrigger() — 매일 02:30 자동 트리거 등록
  *   4. (시트에 데이터 입력 후) syncDanggnGA4() 수동 1회 실행 → 검증
@@ -38,7 +38,7 @@
  * 정본: ads/DANGGN_AUTOMATION.md (신설 예정)
  */
 
-const DANGGN_SHEET = '당근_통합';
+const DANGGN_SHEET = '당근+';
 const DANGGN_UTM_SHEET = '당근_UTM_매핑';
 
 const DANGGN_HEADERS = [
@@ -70,7 +70,7 @@ const INQUIRY_D_OPTIONS = [
  * - "메타" → "페북" (호칭 변경)
  * - "불확실" → "기타" (통합)
  *
- * 당근: D열은 "당근" 1개 (카톡 문의 = 자동 매칭). 앱문의는 당근_통합 Q열 수기 입력 (API 없음).
+ * 당근: D열은 "당근" 1개 (카톡 문의 = 자동 매칭). 앱문의는 당근+ Q열 수기 입력 (API 없음).
  */
 const INQUIRY_D_LEGACY_MAPPING = {
   '메타': '페북',
@@ -152,13 +152,13 @@ function setupInquirySheetDropdowns() {
 
 
 /**
- * 1회 실행: 당근_통합 + 당근_UTM_매핑 시트 신설 + 헤더 박음
+ * 1회 실행: 당근+ + 당근_UTM_매핑 시트 신설 + 헤더 박음
  * 이미 있으면 헤더만 갱신 (데이터 유지).
  */
 function createDanggnIntegratedSheet() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
 
-  // 1. 당근_통합 시트
+  // 1. 당근+ 시트
   let sheet = ss.getSheetByName(DANGGN_SHEET);
   let created1 = false;
   if (!sheet) {
@@ -223,7 +223,7 @@ function createDanggnIntegratedSheet() {
 }
 
 /**
- * 당근_통합 시트의 각 데이터 행에 GA4 매칭 수식 박음
+ * 당근+ 시트의 각 데이터 행에 GA4 매칭 수식 박음
  *
  * 매일 02:30 KST 자동 호출 (setupDanggnTrigger에서 등록).
  * 수동 호출 가능 (시트 첫 입력 후 검증용).
@@ -238,16 +238,16 @@ function syncDanggnGA4(opts) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const sheet = ss.getSheetByName(DANGGN_SHEET);
   if (!sheet) {
-    const msg = '❌ 당근_통합 시트가 없습니다.\n\n시트 메뉴 → 🥕 당근 자동화 → 🆕 시트 신설 / 헤더 갱신 먼저 실행하세요.';
+    const msg = '❌ 당근+ 시트가 없습니다.\n\n시트 메뉴 → 🥕 당근 자동화 → 🆕 시트 신설 / 헤더 갱신 먼저 실행하세요.';
     Logger.log(msg);
-    logSync_('syncDanggnGA4', 'fail', '당근_통합 시트 없음');
+    logSync_('syncDanggnGA4', 'fail', '당근+ 시트 없음');
     if (interactive) { try { SpreadsheetApp.getUi().alert(msg); } catch (e) {} }
     return { ok: false, error: 'sheet not found' };
   }
 
   const lastRow = sheet.getLastRow();
   if (lastRow < 2) {
-    const msg = '⚠️ 당근_통합 시트가 비어있습니다 (헤더만).\n\n시트에 데이터 (A 날짜, B 캠페인명, C 광고그룹명, D~F 노출/클릭/지출) 먼저 입력하세요.';
+    const msg = '⚠️ 당근+ 시트가 비어있습니다 (헤더만).\n\n시트에 데이터 (A 날짜, B 캠페인명, C 광고그룹명, D~F 노출/클릭/지출) 먼저 입력하세요.';
     Logger.log(msg);
     if (interactive) { try { SpreadsheetApp.getUi().alert(msg); } catch (e) {} }
     return { ok: true, updated: 0 };
@@ -277,7 +277,7 @@ function syncDanggnGA4(opts) {
 
     // 광고그룹명 escape (따옴표 처리)
     const escapedName = String(adgroupName).replace(/"/g, '""');
-    // ★ 2026-06-15: UTM 매핑 통합 시트(UTM_매핑) + A채널="당근" 필터
+    // ★ 2026-06-15: UTM 매핑 통합 시트(UTM) + A채널="당근" 필터
     const slugLookup = `IFERROR(VLOOKUP("${escapedName}", FILTER(UTM_KEYVAL, UTM_CH="당근"), 2, FALSE),"")`;
     const ga4Base = `'GA4_자동'!A:A,${ymdText},'GA4_자동'!B:B,"${utmSource}",'GA4_자동'!D:D,${slugLookup}`;
 
@@ -326,7 +326,7 @@ function syncDanggnGA4(opts) {
   }
 
   Logger.log('syncDanggnGA4: updated=' + updated + ' skipped=' + skipped);
-  logSync_('syncDanggnGA4', 'ok', `당근_통합 ${updated} rows GA4 매칭 (skipped: ${skipped})`);
+  logSync_('syncDanggnGA4', 'ok', `당근+ ${updated} rows GA4 매칭 (skipped: ${skipped})`);
 
   if (interactive) {
     try {
@@ -400,10 +400,10 @@ function buildDanggnSyncMenu_(ui) {
  */
 function showUnmappedDanggnAdgroups() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
-  const sheet = ss.getSheetByName('UTM_매핑');
+  const sheet = ss.getSheetByName('UTM');
   const ui = SpreadsheetApp.getUi();
-  if (!sheet) { ui.alert('UTM_매핑 시트 없음.'); return; }
-  if (sheet.getLastRow() < 2) { ui.alert('UTM_매핑 비어있음.'); return; }
+  if (!sheet) { ui.alert('UTM 시트 없음.'); return; }
+  if (sheet.getLastRow() < 2) { ui.alert('UTM 비어있음.'); return; }
   const data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 3).getValues();
   const unmapped = data.filter(r => r[0] === '당근' && r[1] && !r[2]);
   if (unmapped.length === 0) { ui.alert('✅ 미매핑 당근 광고그룹 없음.'); return; }

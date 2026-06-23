@@ -6,20 +6,20 @@
  *
  * 당근과의 차이:
  *   - GA4 source = "google" 리터럴 (당근의 DANGGN_UTM_SOURCE Script Property 불필요).
- *   - 통합 UTM_매핑(채널="구글") 사용 (별도 UTM 시트 없음).
+ *   - 통합 UTM(채널="구글") 사용 (별도 UTM 시트 없음).
  *   - 카톡문의 매칭 = 문의접수 D열="구글".
  *
- * 시트 구조 (20컬럼, 당근_통합 동일):
+ * 시트 구조 (20컬럼, 당근+ 동일):
  *   A 날짜 / B 캠페인명 / C 광고그룹명(매핑키) / D 노출 / E 클릭 / F 지출 (여기까지 수기)
  *   G CTR / H CPC (자동수식) / I GA4세션 / J 카톡클릭 / K 전화클릭 / L 시티마켓클릭 / M 시티마켓직접 (자동매칭)
  *   N 카톡전환률 / O 카톡당CPC (자동수식) / P 카톡문의(문의접수 자동) / Q 웹문의(수기) / R CPL / S 개통수 / T 메모
  *
- * GA4 매칭 키: GA4_자동!A(date)=A열 / B(source)="google" / D(campaign)=UTM_매핑(채널=구글) VLOOKUP / E(event)
+ * GA4 매칭 키: GA4_자동!A(date)=A열 / B(source)="google" / D(campaign)=UTM(채널=구글) VLOOKUP / E(event)
  *
- * 1회 셋업: createGoogleIntegratedSheet() → UTM_매핑에 채널=구글 행 입력 → syncGoogleGA4() → setupGoogleTrigger()
+ * 1회 셋업: createGoogleIntegratedSheet() → UTM에 채널=구글 행 입력 → syncGoogleGA4() → setupGoogleTrigger()
  */
 
-const GOOGLE_SHEET = '구글_통합';
+const GOOGLE_SHEET = '구글+';
 
 const GOOGLE_HEADERS = [
   '날짜', '캠페인명', '광고그룹명',
@@ -30,7 +30,7 @@ const GOOGLE_HEADERS = [
   '카톡문의', '웹문의', 'CPL', '개통수', '메모'
 ];
 
-// ============ 1회 셋업: 구글_통합 시트 신설 ============
+// ============ 1회 셋업: 구글+ 시트 신설 ============
 function createGoogleIntegratedSheet() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   let sheet = ss.getSheetByName(GOOGLE_SHEET);
@@ -46,8 +46,8 @@ function createGoogleIntegratedSheet() {
   Logger.log(GOOGLE_SHEET + ' 시트 ' + (created ? '생성' : '헤더 갱신') + ' 완료');
   SpreadsheetApp.flush();
   try {
-    SpreadsheetApp.getUi().alert('✅ 구글_통합 시트 ' + (created ? '생성' : '헤더 갱신') + ' 완료.\n\n' +
-      'A~F(날짜/캠페인명/광고그룹명/노출/클릭/지출) 수기 입력 → UTM_매핑에 채널=구글 행 추가(광고그룹명→utm_campaign) → 🔄 GA4 매칭 새로고침.');
+    SpreadsheetApp.getUi().alert('✅ 구글+ 시트 ' + (created ? '생성' : '헤더 갱신') + ' 완료.\n\n' +
+      'A~F(날짜/캠페인명/광고그룹명/노출/클릭/지출) 수기 입력 → UTM에 채널=구글 행 추가(광고그룹명→utm_campaign) → 🔄 GA4 매칭 새로고침.');
   } catch (e) {}
   return { sheetId: sheet.getSheetId(), created: created };
 }
@@ -60,15 +60,15 @@ function syncGoogleGA4(opts) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const sheet = ss.getSheetByName(GOOGLE_SHEET);
   if (!sheet) {
-    const msg = '❌ 구글_통합 시트가 없습니다. 🔵 구글 자동화 → 🆕 시트 신설 먼저 실행하세요.';
+    const msg = '❌ 구글+ 시트가 없습니다. 🔵 구글 자동화 → 🆕 시트 신설 먼저 실행하세요.';
     Logger.log(msg);
-    if (typeof logSync_ === 'function') logSync_('syncGoogleGA4', 'fail', '구글_통합 시트 없음');
+    if (typeof logSync_ === 'function') logSync_('syncGoogleGA4', 'fail', '구글+ 시트 없음');
     if (interactive) { try { SpreadsheetApp.getUi().alert(msg); } catch (e) {} }
     return { ok: false, error: 'sheet not found' };
   }
   const lastRow = sheet.getLastRow();
   if (lastRow < 2) {
-    if (interactive) { try { SpreadsheetApp.getUi().alert('⚠️ 구글_통합 비어있음(헤더만). A~F 데이터 먼저 입력하세요.'); } catch (e) {} }
+    if (interactive) { try { SpreadsheetApp.getUi().alert('⚠️ 구글+ 비어있음(헤더만). A~F 데이터 먼저 입력하세요.'); } catch (e) {} }
     return { ok: true, updated: 0 };
   }
 
@@ -102,11 +102,11 @@ function syncGoogleGA4(opts) {
   }
 
   Logger.log('syncGoogleGA4: updated=' + updated + ' skipped=' + skipped);
-  if (typeof logSync_ === 'function') logSync_('syncGoogleGA4', 'ok', `구글_통합 ${updated} rows GA4 매칭 (skipped: ${skipped})`);
+  if (typeof logSync_ === 'function') logSync_('syncGoogleGA4', 'ok', `구글+ ${updated} rows GA4 매칭 (skipped: ${skipped})`);
   if (interactive) {
     try {
       SpreadsheetApp.getUi().alert('✅ 구글 GA4 매칭 새로고침 완료\n\n· 갱신 ' + updated + '행 / 스킵 ' + skipped + '행\n· source="google" 기준\n\n' +
-        (updated > 0 ? '시트 I~P 확인. 매칭 0이면 🔍 미매핑 광고그룹 보기 → UTM_매핑 채널=구글 행 점검.' : '갱신 행 없음. 데이터 입력 필요.'));
+        (updated > 0 ? '시트 I~P 확인. 매칭 0이면 🔍 미매핑 광고그룹 보기 → UTM 채널=구글 행 점검.' : '갱신 행 없음. 데이터 입력 필요.'));
     } catch (e) {}
   }
   return { ok: true, updated: updated, skipped: skipped };
@@ -116,15 +116,15 @@ function syncGoogleGA4(opts) {
 function showUnmappedGoogleAdgroups() {
   const ss = SpreadsheetApp.getActive();
   const sheet = ss.getSheetByName(GOOGLE_SHEET);
-  const utm = ss.getSheetByName('UTM_매핑');
+  const utm = ss.getSheetByName('UTM');
   const ui = SpreadsheetApp.getUi();
-  if (!sheet || sheet.getLastRow() < 2) { ui.alert('구글_통합 비어있음/없음.'); return; }
-  if (!utm || utm.getLastRow() < 2) { ui.alert('UTM_매핑 시트 없음/비어있음.'); return; }
-  // UTM_매핑(채널=구글, utm_campaign 채워진) 광고그룹명 집합
+  if (!sheet || sheet.getLastRow() < 2) { ui.alert('구글+ 비어있음/없음.'); return; }
+  if (!utm || utm.getLastRow() < 2) { ui.alert('UTM 시트 없음/비어있음.'); return; }
+  // UTM(채널=구글, utm_campaign 채워진) 광고그룹명 집합
   const uv = utm.getRange(2, 1, utm.getLastRow() - 1, 3).getValues(); // A채널 B광고그룹명 C utm
   const mapped = {};
   uv.forEach(function (r) { if (String(r[0]).trim() === '구글' && r[1] && r[2]) mapped[String(r[1]).trim()] = 1; });
-  // 구글_통합 광고그룹명(C) unique
+  // 구글+ 광고그룹명(C) unique
   const gv = sheet.getRange(2, 3, sheet.getLastRow() - 1, 1).getValues();
   const seen = {}, unmapped = [];
   gv.forEach(function (r) {
@@ -134,7 +134,7 @@ function showUnmappedGoogleAdgroups() {
   });
   if (!unmapped.length) { ui.alert('✅ 미매핑 구글 광고그룹 없음.'); return; }
   ui.alert('⚠️ 미매핑 구글 광고그룹 ' + unmapped.length + '개\n\n' + unmapped.map(function (n, i) { return (i + 1) + '. ' + n; }).join('\n') +
-    '\n\nUTM_매핑에 [채널=구글 / 광고그룹명 / utm_campaign(GA4 실측값)] 행을 추가하세요.');
+    '\n\nUTM에 [채널=구글 / 광고그룹명 / utm_campaign(GA4 실측값)] 행을 추가하세요.');
 }
 
 // ============ 트리거 (매일 02:35, 당근 02:30 다음) ============

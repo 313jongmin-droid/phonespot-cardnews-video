@@ -1,11 +1,11 @@
 /**
  * 구글 Ads API 자동수집 (2026-06-19 신설) — 메타 패턴의 구글판
  *
- * 역할: 구글_통합 시트의 D(노출)/E(클릭)/F(지출)을 Google Ads API로 자동 채움.
+ * 역할: 구글+ 시트의 D(노출)/E(클릭)/F(지출)을 Google Ads API로 자동 채움.
  *       (기존 google-sync.js 는 GA4 매칭(G~P) 담당. 이 파일은 운영데이터(D~F) 담당.)
  *
  * 흐름: refresh_token -> access_token -> searchStream(GAQL, ad_group 단위, segments.date)
- *       -> (날짜+광고그룹명) 키로 구글_통합 A~F upsert -> syncGoogleGA4() 호출해 G~P 수식 재적용.
+ *       -> (날짜+광고그룹명) 키로 구글+ A~F upsert -> syncGoogleGA4() 호출해 G~P 수식 재적용.
  *
  * 사전 - 스크립트 속성 6개 (값 채팅 노출 금지):
  *   GOOGLE_ADS_DEVELOPER_TOKEN / CLIENT_ID / CLIENT_SECRET / REFRESH_TOKEN
@@ -16,7 +16,7 @@
  */
 
 var GADS_API_VERSION = 'v23';
-var GADS_SHEET = '구글_통합';
+var GADS_SHEET = '구글+';
 
 function _gadsAccessToken_() {
   const p = PropertiesService.getScriptProperties();
@@ -78,7 +78,7 @@ function syncGoogleAdsData(opts) {
     if (typeof createGoogleIntegratedSheet === 'function') createGoogleIntegratedSheet();
     sheet = ss.getSheetByName(GADS_SHEET);
   }
-  if (!sheet) { if (ui) ui.alert('구글_통합 시트 없음. 시트 신설 먼저.'); return { ok: false }; }
+  if (!sheet) { if (ui) ui.alert('구글+ 시트 없음. 시트 신설 먼저.'); return { ok: false }; }
   const tz = 'Asia/Seoul';
   const end = new Date();
   const start = new Date(); start.setDate(start.getDate() - (days - 1));

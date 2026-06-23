@@ -1,7 +1,7 @@
 // ════════════════════════════════════════════════════════════
 //  폰스팟 광고운영 관리대장 — Apps Script (메뉴 정리본: 2026-05-29)
 //  ★ 2026-06-11 패치: updateChannelMatrixWithGA4 + updateKPISummary
-//     메타 → 메타_통합, 네이버 → 네이버_통합 (광고그룹 단위 자동 합산)
+//     메타 → 메타+, 네이버 → 네이버+ (광고그룹 단위 자동 합산)
 //  [일상] 매일 자동/메뉴 실행  [수동] 필요시 직접 실행  [유틸] 보조
 // ════════════════════════════════════════════════════════════
 
@@ -204,7 +204,7 @@ function importGA4(startDate, endDate, clearAll) {
 }
 
 // ──[일상]── 핵심 KPI 상세 (행 9-14) 재구성 — CPL 2종 (전체/추적)
-// ★ 2026-06-11 패치: 메타 → 메타_통합(H), 네이버 → 네이버_통합(H)
+// ★ 2026-06-11 패치: 메타 → 메타+(H), 네이버 → 네이버+(H)
 function updateKPISummary() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const sh = ss.getSheetByName('통합대시보드');
@@ -232,11 +232,11 @@ function updateKPISummary() {
 
   // ★ 패치: 채널별 광고비 시트/컬럼 매핑 (자동수집 채널은 통합 시트 H열 지출)
   const ADS = [
-    {sh:'메타_통합',   spd:'H'},
+    {sh:'메타+',   spd:'H'},
     {sh:'구글',        spd:'G'},
-    {sh:'네이버_통합', spd:'H'},
+    {sh:'네이버+', spd:'H'},
     {sh:'카카오',      spd:'G'},
-    // 당근 KPI 광고비: 옛 당근 시트 G열. 전환 시 {sh:'당근_통합', spd:'F'} 로 교체
+    // 당근 KPI 광고비: 옛 당근 시트 G열. 전환 시 {sh:'당근+', spd:'F'} 로 교체
     {sh:'당근',        spd:'G'},
   ];
 
@@ -297,17 +297,17 @@ function updateChannelMatrixWithGA4() {
     .setFontWeight('bold').setHorizontalAlignment('center');
 
   // ★ 패치: 채널 정의 — adSheet/impCol/clkCol/spdCol 분리
-  //   메타_통합 / 네이버_통합 = 광고그룹 단위 19컬럼 (F=노출 G=클릭 H=지출)
+  //   메타+ / 네이버+ = 광고그룹 단위 19컬럼 (F=노출 G=클릭 H=지출)
   //   구글 / 카카오 / 당근 = 수동 입력 시트 (E=노출 F=클릭 G=지출)
   const channels = [
-    {row:18, name:'메타',   adSheet:'메타_통합',   impCol:'F', clkCol:'G', spdCol:'H', inq:'메타',   ga4:true,  sources:['meta','facebook.com','m.facebook.com','l.facebook.com']},
+    {row:18, name:'메타',   adSheet:'메타+',   impCol:'F', clkCol:'G', spdCol:'H', inq:'메타',   ga4:true,  sources:['meta','facebook.com','m.facebook.com','l.facebook.com']},
     {row:19, name:'구글',   adSheet:'구글',        impCol:'E', clkCol:'F', spdCol:'G', inq:'구글',   ga4:true,  sources:['google']},
-    {row:20, name:'네이버', adSheet:'네이버_통합', impCol:'F', clkCol:'G', spdCol:'H', inq:'네이버', ga4:true,  sources:['naver','naver_blog','ad.search.naver.com','m.ad.search.naver.com','m.search.naver.com']},
+    {row:20, name:'네이버', adSheet:'네이버+', impCol:'F', clkCol:'G', spdCol:'H', inq:'네이버', ga4:true,  sources:['naver','naver_blog','ad.search.naver.com','m.ad.search.naver.com','m.search.naver.com']},
     {row:21, name:'카카오', adSheet:'카카오',      impCol:'E', clkCol:'F', spdCol:'G', inq:'카카오', ga4:true,  sources:['kakao']},
     // 당근 (현재 = 옛 당근 시트 11컬럼 G열 지출 합산 유지. 다운그레이드 0)
-    // ★ 2026-06-15 신설된 당근_통합 시트 (17컬럼)로 전환 시 = 아래 줄로 교체:
-    //   {row:22, name:'당근', adSheet:'당근_통합', impCol:'D', clkCol:'E', spdCol:'F', inq:'당근', ga4:true, sources:['daangn','danggn']},
-    // 전환 조건: 사장님이 옛 당근 시트 입력 중단 + 당근_통합으로 일원화. 이중 합산 위험 회피.
+    // ★ 2026-06-15 신설된 당근+ 시트 (17컬럼)로 전환 시 = 아래 줄로 교체:
+    //   {row:22, name:'당근', adSheet:'당근+', impCol:'D', clkCol:'E', spdCol:'F', inq:'당근', ga4:true, sources:['daangn','danggn']},
+    // 전환 조건: 사장님이 옛 당근 시트 입력 중단 + 당근+으로 일원화. 이중 합산 위험 회피.
     {row:22, name:'당근',   adSheet:'당근',        impCol:'E', clkCol:'F', spdCol:'G', inq:'당근',   ga4:true,  sources:['daangn','danggn']},
   ];
 
@@ -368,11 +368,11 @@ function addTimeSeriesChart() {
 
   // ★ 패치: 채널별 시트/지출 컬럼 매핑
   const trendChannels = [
-    {disp:'메타',   sheet:'메타_통합',   spdCol:'H'},
+    {disp:'메타',   sheet:'메타+',   spdCol:'H'},
     {disp:'구글',   sheet:'구글',        spdCol:'G'},
-    {disp:'네이버', sheet:'네이버_통합', spdCol:'H'},
+    {disp:'네이버', sheet:'네이버+', spdCol:'H'},
     {disp:'카카오', sheet:'카카오',      spdCol:'G'},
-    // 당근 추세: 옛 당근 시트 G열. 전환 시 {disp:'당근', sheet:'당근_통합', spdCol:'F'} 로 교체
+    // 당근 추세: 옛 당근 시트 G열. 전환 시 {disp:'당근', sheet:'당근+', spdCol:'F'} 로 교체
     {disp:'당근',   sheet:'당근',        spdCol:'G'},
   ];
 
@@ -964,13 +964,13 @@ function setupRefreshAllTrigger() {
 }
 
 
-// ============ ★ UTM_매핑 named range (컬럼 시프트 내성, 2026-06-18) ============
+// ============ ★ UTM named range (컬럼 시프트 내성, 2026-06-18) ============
 // UTM_CH=A열(채널), UTM_KEYVAL=B:C(광고그룹명·utm_campaign). 컬럼 삽입/이동 시
 // 명명 범위가 자동 추적 → SUMIFS/FILTER가 안 깨짐(2026-06-17 마이그레이션 시프트 사고 방지).
 // idempotent — 있으면 범위 갱신, 없으면 생성. sync/refreshAll 시작 시 호출됨.
 function ensureUtmNamedRanges_() {
   const ss = SpreadsheetApp.getActive();
-  const sh = ss.getSheetByName('UTM_매핑');
+  const sh = ss.getSheetByName('UTM');
   if (!sh) return;
   const want = { 'UTM_CH': 'A:A', 'UTM_KEYVAL': 'B:C' };
   const existing = {};
@@ -990,14 +990,14 @@ function setupUtmNamedRanges() {
 
 
 // ============ ★ UTM 슬러그 드롭다운 (GA4 실측 utm_campaign 기준, 2026-06-18) ============
-// UTM_매핑 C열에 GA4_자동의 실제 utm_campaign 목록을 채널별 드롭다운으로 적용.
+// UTM C열에 GA4_자동의 실제 utm_campaign 목록을 채널별 드롭다운으로 적용.
 // region vs region_keyword 같은 슬러그 불일치/오타를 입력 단계에서 차단.
 function refreshUtmSlugDropdowns() {
   const ss = SpreadsheetApp.getActive();
   const ui = SpreadsheetApp.getUi();
   const ga4 = ss.getSheetByName(GA4_AUTO_SHEET);
-  const utm = ss.getSheetByName('UTM_매핑');
-  if (!ga4 || !utm) { ui.alert('GA4_자동 또는 UTM_매핑 시트 없음.'); return; }
+  const utm = ss.getSheetByName('UTM');
+  if (!ga4 || !utm) { ui.alert('GA4_자동 또는 UTM 시트 없음.'); return; }
   const CH2SRC = { '페북': 'meta', '네이버': 'naver', '당근': 'daangn', '구글': 'google', '카카오': 'kakao' };
   const SKIP = { '(organic)': 1, '(direct)': 1, '(not set)': 1, '(data not available)': 1, '': 1 };
   const last = ga4.getLastRow();
@@ -1010,7 +1010,7 @@ function refreshUtmSlugDropdowns() {
     (bySrc[src] = bySrc[src] || {})[camp] = 1;
   });
   const uLast = utm.getLastRow();
-  if (uLast < 2) { ui.alert('UTM_매핑 데이터 없음.'); return; }
+  if (uLast < 2) { ui.alert('UTM 데이터 없음.'); return; }
   const chans = utm.getRange(2, 1, uLast - 1, 1).getValues();
   let applied = 0;
   for (let i = 0; i < chans.length; i++) {
@@ -1024,7 +1024,7 @@ function refreshUtmSlugDropdowns() {
     utm.getRange(i + 2, 3).setDataValidation(rule);
     applied++;
   }
-  const msg = 'UTM_매핑 C열 드롭다운 적용 ' + applied + '행 (GA4 실측 utm_campaign 기준)';
+  const msg = 'UTM C열 드롭다운 적용 ' + applied + '행 (GA4 실측 utm_campaign 기준)';
   Logger.log(msg);
   if (typeof logSync_ === 'function') logSync_('refreshUtmSlugDropdowns', msg);
   ui.alert('✅ 완료', msg + '\n\n채널별 GA4 실제 값만 선택 가능 → region/region_keyword 같은 불일치 차단.', ui.ButtonSet.OK);
@@ -1082,7 +1082,7 @@ function updateLitlyAndPaymentSections_() {
   dash.getRange(52, 1, 1, 4).setValues([['채널', '카드결제(실비용)', 'API 광고비', '차이']])
     .setBackground('#D9E1F2').setFontWeight('bold').setHorizontalAlignment('center').setBorder(true, true, true, true, true, true);
   const M = 'DATE(YEAR(TODAY()),MONTH(TODAY()),1)';
-  const PAY = [['메타', '메타_통합', 'H'], ['네이버', '네이버_통합', 'H'], ['구글', '구글', 'G'], ['카카오', '카카오', 'G'], ['당근', '당근', 'G']];
+  const PAY = [['메타', '메타+', 'H'], ['네이버', '네이버+', 'H'], ['구글', '구글', 'G'], ['카카오', '카카오', 'G'], ['당근', '당근', 'G']];
   PAY.forEach(function (c, i) {
     const r = 53 + i;
     dash.getRange(r, 1).setValue(c[0]).setFontWeight('bold');
@@ -1157,9 +1157,9 @@ function buildDashboardV2() {
   }
 
   const ADS = [
-    {sh:'메타_통합',   spd:'H'},
+    {sh:'메타+',   spd:'H'},
     {sh:'구글',        spd:'G'},
-    {sh:'네이버_통합', spd:'H'},
+    {sh:'네이버+', spd:'H'},
     {sh:'카카오',      spd:'G'},
     {sh:'당근',        spd:'G'},
   ];
@@ -1242,9 +1242,9 @@ function buildDashboardV2() {
 
   const ga4D = `'GA4_자동'!A:A,">="&TEXT(${ABS_N},"yyyymmdd"),'GA4_자동'!A:A,"<="&TEXT(${ABS_O},"yyyymmdd")`;
   const channels = [
-    {name:'메타',   adSheet:'메타_통합',   impCol:'F', clkCol:'G', spdCol:'H', sources:['meta','facebook.com','m.facebook.com','l.facebook.com']},
+    {name:'메타',   adSheet:'메타+',   impCol:'F', clkCol:'G', spdCol:'H', sources:['meta','facebook.com','m.facebook.com','l.facebook.com']},
     {name:'구글',   adSheet:'구글',        impCol:'E', clkCol:'F', spdCol:'G', sources:['google']},
-    {name:'네이버', adSheet:'네이버_통합', impCol:'F', clkCol:'G', spdCol:'H', sources:['naver','naver_blog','ad.search.naver.com','m.ad.search.naver.com','m.search.naver.com']},
+    {name:'네이버', adSheet:'네이버+', impCol:'F', clkCol:'G', spdCol:'H', sources:['naver','naver_blog','ad.search.naver.com','m.ad.search.naver.com','m.search.naver.com']},
     {name:'카카오', adSheet:'카카오',      impCol:'E', clkCol:'F', spdCol:'G', sources:['kakao']},
     {name:'당근',   adSheet:'당근',        impCol:'E', clkCol:'F', spdCol:'G', sources:['daangn','danggn']},
   ];
@@ -1292,7 +1292,7 @@ function buildDashboardV2() {
   sectionHeader(4, '실비용 대조 (이번달 카드결제 vs API 광고비)', RCOL);
   colHeader(5, ['채널', '카드결제', 'API광고비', '차이'], RCOL);
   const payStart = 6;
-  const PAY = [['메타', '메타_통합', 'H'], ['네이버', '네이버_통합', 'H'], ['구글', '구글', 'G'], ['카카오', '카카오', 'G'], ['당근', '당근', 'G']];
+  const PAY = [['메타', '메타+', 'H'], ['네이버', '네이버+', 'H'], ['구글', '구글', 'G'], ['카카오', '카카오', 'G'], ['당근', '당근', 'G']];
   PAY.forEach(function (c, i) {
     const r = payStart + i;
     dash.getRange(r, RCOL).setValue(c[0]);                                  // H
@@ -1385,4 +1385,33 @@ function buildDashboardV2() {
   } catch (e) {}
 
   if (typeof logSync_ === 'function') { try { logSync_('buildDashboardV2', '대시보드 V2 빌드 (2열)'); } catch (e) {} }
+}
+
+// ============ 일회용: 시트 탭 이름 단축 (_통합 → +, UTM_매핑 → UTM), 2026-06-23 ============
+// 코드 문자열은 이미 새 이름으로 치환됨. 이 함수로 실제 탭을 리네임하면 정합.
+// 시트 안 수식은 탭 리네임 시 구글시트가 자동 갱신. 당근_UTM_매핑은 유지(건드리지 않음).
+function renameTabsToPlus_() {
+  const ss = SpreadsheetApp.getActive();
+  const MAP = [
+    ['메타_통합', '메타+'],
+    ['네이버_통합', '네이버+'],
+    ['당근_통합', '당근+'],
+    ['구글_통합', '구글+'],
+    ['UTM_매핑', 'UTM'],
+  ];
+  const done = [], skip = [];
+  MAP.forEach(function (m) {
+    const oldN = m[0], newN = m[1];
+    const sh = ss.getSheetByName(oldN);
+    if (!sh) { skip.push(oldN + '(없음)'); return; }
+    if (ss.getSheetByName(newN)) { skip.push(newN + '(이미존재)'); return; }
+    sh.setName(newN);
+    done.push(oldN + '→' + newN);
+  });
+  const msg = '탭 리네임 완료\n\n적용: ' + (done.join(', ') || '없음') +
+    '\n건너뜀: ' + (skip.join(', ') || '없음') +
+    '\n\n다음: 통합대시보드 새로고침(또는 buildDashboardV2) 1회 권장.';
+  Logger.log(msg);
+  try { SpreadsheetApp.getUi().alert(msg); } catch (e) {}
+  return { done: done, skip: skip };
 }

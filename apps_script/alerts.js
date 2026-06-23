@@ -36,9 +36,9 @@ function runHealthCheck_() {
   const warns = [];
   // (표시명, 시트, 날짜열idx, GA4세션열idx)  ※ idx는 0기반
   const CFG = [
-    { name: '메타', sheet: '메타_통합', dcol: 0, gcol: 10 },
-    { name: '네이버', sheet: '네이버_통합', dcol: 0, gcol: 10 },
-    { name: '당근', sheet: '당근_통합', dcol: 0, gcol: 8 }
+    { name: '메타', sheet: '메타+', dcol: 0, gcol: 10 },
+    { name: '네이버', sheet: '네이버+', dcol: 0, gcol: 10 },
+    { name: '당근', sheet: '당근+', dcol: 0, gcol: 8 }
   ];
   CFG.forEach(function (c) {
     const sh = ss.getSheetByName(c.sheet);
@@ -79,7 +79,7 @@ function checkAdTargets_() {
   const warns = [];
   const y1 = _ymd(1);
   // 메타/네이버 통합: 날짜0, 광고그룹4, 지출7, 문의수17 (0기반)
-  [['메타', '메타_통합'], ['네이버', '네이버_통합']].forEach(function (ch) {
+  [['메타', '메타+'], ['네이버', '네이버+']].forEach(function (ch) {
     const sh = ss.getSheetByName(ch[1]);
     if (!sh || sh.getLastRow() < 2) return;
     const n = sh.getLastRow() - 1;
@@ -126,10 +126,10 @@ function sendMorningBriefing() {
   const ymd = Utilities.formatDate(y, 'Asia/Seoul', 'yyyy-MM-dd');
   // [표시명, 시트, 노출col, 클릭col, 지출col] (1-based)
   const CH = [
-    ['메타', '메타_통합', 6, 7, 8],
-    ['네이버', '네이버_통합', 6, 7, 8],
-    ['당근', '당근_통합', 4, 5, 6],
-    ['구글', '구글_통합', 4, 5, 6]
+    ['메타', '메타+', 6, 7, 8],
+    ['네이버', '네이버+', 6, 7, 8],
+    ['당근', '당근+', 4, 5, 6],
+    ['구글', '구글+', 4, 5, 6]
   ];
   let chLines = [];
   CH.forEach(function (c) {
@@ -241,7 +241,7 @@ function sendWeeklyReport() {
     return k >= sStr && k <= eStr;
   };
   // [표시명, 시트, 지출col(1-based)]
-  const CH = [['메타', '메타_통합', 8], ['네이버', '네이버_통합', 8], ['당근', '당근_통합', 6], ['구글', '구글_통합', 6]];
+  const CH = [['메타', '메타+', 8], ['네이버', '네이버+', 8], ['당근', '당근+', 6], ['구글', '구글+', 6]];
   let lines = [], totalSpend = 0;
   CH.forEach(function (c) {
     const sh = ss.getSheetByName(c[1]);

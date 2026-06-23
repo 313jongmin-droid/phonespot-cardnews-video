@@ -30,7 +30,7 @@ function _buildSheetContext_(ss) {
     const v = dash.getRange(1, 1, Math.min(57, dash.getLastRow()), Math.min(12, dash.getLastColumn())).getDisplayValues();
     parts.push('[통합대시보드]\n' + v.map(function (r) { return r.filter(String).join(' | '); }).filter(String).join('\n'));
   }
-  [['메타', '메타_통합'], ['네이버', '네이버_통합'], ['당근', '당근_통합']].forEach(function (c) {
+  [['메타', '메타+'], ['네이버', '네이버+'], ['당근', '당근+']].forEach(function (c) {
     const sh = ss.getSheetByName(c[1]); if (!sh || sh.getLastRow() < 2) return;
     const last = sh.getLastRow(); const start = Math.max(2, last - 6);
     const v = sh.getRange(start, 1, last - start + 1, Math.min(18, sh.getLastColumn())).getDisplayValues();

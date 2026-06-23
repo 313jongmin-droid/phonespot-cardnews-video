@@ -27,7 +27,7 @@ const ADGROUP_TREND_DATA_MAX_ROWS = 30;
 // 채널별 컬럼 매핑 (1-based)
 const ADGROUP_TREND_CHANNELS = {
   '메타': {
-    sheet: '메타_통합',
+    sheet: '메타+',
     startRow: 2,
     colDate: 1,       // A
     colName: 5,       // E 광고그룹명
@@ -38,7 +38,7 @@ const ADGROUP_TREND_CHANNELS = {
     colInquiry: 18    // R 문의수 (페북+인스타+스레드 합산)
   },
   '당근': {
-    sheet: '당근_통합',
+    sheet: '당근+',
     startRow: 2,
     colDate: 1,       // A
     colName: 3,       // C 광고그룹명
@@ -50,7 +50,7 @@ const ADGROUP_TREND_CHANNELS = {
     colAppInq: 17     // Q 앱문의 (수기)
   },
   '네이버': {
-    sheet: '네이버_통합',
+    sheet: '네이버+',
     startRow: 2,
     colDate: 1,
     colName: 5,
@@ -117,9 +117,9 @@ function setupAdgroupTrendChart() {
 
   // W60: 채널별 광고그룹 unique 리스트 (B61 변경 시 자동 갱신)
   sh.getRange(60, 23).setFormula(
-    '=IFERROR(IF(B61="메타", UNIQUE(FILTER(메타_통합!E2:E, 메타_통합!E2:E<>"")), ' +
-    'IF(B61="당근", UNIQUE(FILTER(당근_통합!C2:C, 당근_통합!C2:C<>"")), ' +
-    'UNIQUE(FILTER(네이버_통합!E2:E, 네이버_통합!E2:E<>"")))), "")'
+    '=IFERROR(IF(B61="메타", UNIQUE(FILTER(메타+!E2:E, 메타+!E2:E<>"")), ' +
+    'IF(B61="당근", UNIQUE(FILTER(당근+!C2:C, 당근+!C2:C<>"")), ' +
+    'UNIQUE(FILTER(네이버+!E2:E, 네이버+!E2:E<>"")))), "")'
   );
   sh.getRange(60, 23).setNote('동적 광고그룹 리스트 (E61 드롭다운 데이터). 숨겨두기 가능.');
 

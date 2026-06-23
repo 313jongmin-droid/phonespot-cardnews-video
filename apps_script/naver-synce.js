@@ -249,7 +249,7 @@ function listAllAdgroups() {
 }
 
 /**
- * ★ 2026-06-11 패치 — 네이버 광고그룹별 통합 (메타_통합 패턴 그대로)
+ * ★ 2026-06-11 패치 — 네이버 광고그룹별 통합 (메타+ 패턴 그대로)
  *
  * 적용:
  *   1. naver-sync.gs 파일에 이 블록 통째 추가
@@ -257,23 +257,23 @@ function listAllAdgroups() {
  *   3. meta-sync.gs 의 setupTriggers + 메뉴에 syncNaverIntegrated 추가
  *
  * 신설 시트:
- *   - 네이버_통합 (19컬럼, 메타_통합 동일 구조)
- *   - 네이버_UTM_매핑 (별도, 메타와 분리)
+ *   - 네이버+ (19컬럼, 메타+ 동일 구조)
+ *   - 네이버_UTM (별도, 메타와 분리)
  *
  * 동작 (매일 02:15 syncNaverIntegrated):
  *   1) /ncc/campaigns → 모든 캠페인 (KT 캠페인 자동 제외)
  *   2) 각 캠페인의 /ncc/adgroups → 광고그룹 목록
  *   3) /stats statType=ADGROUP → 광고그룹별 통계
- *   4) 네이버_UTM_매핑 자동 발견 (광고그룹명 → utm_campaign 매핑)
- *   5) 네이버_통합 시트에 광고그룹×일자 행 입력
- *   6) GA4 매칭 수식: utm_source=naver + VLOOKUP(광고그룹명, 네이버_UTM_매핑)
+ *   4) 네이버_UTM 자동 발견 (광고그룹명 → utm_campaign 매핑)
+ *   5) 네이버+ 시트에 광고그룹×일자 행 입력
+ *   6) GA4 매칭 수식: utm_source=naver + VLOOKUP(광고그룹명, 네이버_UTM)
  *
  * KT 필터: 캠페인명에 'KT' 또는 '다이렉트샵' 포함 시 자동 제외
  */
 
 // ============ 상수 ============
-const SHEET_NAVER_INTEGRATED = '네이버_통합';
-const SHEET_NAVER_UTM_MAPPING = 'UTM_매핑';  // ★ 2026-06-15 통합 (메타와 공용)
+const SHEET_NAVER_INTEGRATED = '네이버+';
+const SHEET_NAVER_UTM_MAPPING = 'UTM';  // ★ 2026-06-15 통합 (메타와 공용)
 const NAVER_KT_FILTER = ['KT', '다이렉트샵'];
 
 
@@ -361,7 +361,7 @@ function syncNaverIntegrated(targetDate) {
   }
   Logger.log('데이터 ' + rows.length + '행');
 
-  // 3) 네이버_통합 시트 준비
+  // 3) 네이버+ 시트 준비
   const ss = SpreadsheetApp.getActive();
   let sh = ss.getSheetByName(SHEET_NAVER_INTEGRATED);
   if (!sh) {
@@ -408,7 +408,7 @@ function syncNaverIntegrated(targetDate) {
     sh.getRange(row, 9).setFormula(`=IFERROR(G${row}/F${row},0)`).setNumberFormat('0.00%');
     sh.getRange(row, 10).setFormula(`=IFERROR(H${row}/G${row},0)`).setNumberFormat('#,##0"원"');
 
-    // GA4 매칭 — 광고그룹명(E) → 네이버_UTM_매핑 VLOOKUP → 영문 슬러그
+    // GA4 매칭 — 광고그룹명(E) → 네이버_UTM VLOOKUP → 영문 슬러그
     const ymdText = `TEXT(A${row},"yyyymmdd")`;
     const utmSlug = `IFERROR(VLOOKUP(E${row}, FILTER(UTM_KEYVAL, UTM_CH="네이버"), 2, FALSE),E${row})`;
     const ga4Base = `'GA4_자동'!A:A,${ymdText},'GA4_자동'!B:B,"naver",'GA4_자동'!D:D,${utmSlug}`;
@@ -447,13 +447,13 @@ function syncNaverIntegrated(targetDate) {
     ).setNumberFormat('#,##0"원"');
   });
 
-  const msg = '✅ 네이버_통합 ' + ymd + ' ' + rows.length + '개 광고그룹 입력';
+  const msg = '✅ 네이버+ ' + ymd + ' ' + rows.length + '개 광고그룹 입력';
   Logger.log(msg);
   if (typeof logSync_ === 'function') logSync_('syncNaverIntegrated', msg);
 }
 
 
-// ============ UTM_매핑 통합 시트 + 자동 발견 (2026-06-15 통합 갱신) ============
+// ============ UTM 통합 시트 + 자동 발견 (2026-06-15 통합 갱신) ============
 // 통합 시트 구조: A 채널 | B 광고그룹명(한글) | C utm_campaign(영문) | D 첫발견일 | E 상태 | F 메모
 
 function ensureNaverUtmMappingSheet_() {
@@ -488,7 +488,7 @@ function ensureNaverUtmMappingSheet_() {
   ];
   sh.setConditionalFormatRules(rules);
 
-  Logger.log('UTM_매핑 통합 시트 생성 완료');
+  Logger.log('UTM 통합 시트 생성 완료');
   return sh;
 }
 
@@ -517,7 +517,7 @@ function autoDiscoverNaverAdgroups_(rows, ymd) {
 
   if (newRows.length > 0) {
     sh.getRange(sh.getLastRow() + 1, 1, newRows.length, 6).setValues(newRows);
-    Logger.log('UTM_매핑: 신규 네이버 광고그룹 ' + newRows.length + '건 추가');
+    Logger.log('UTM: 신규 네이버 광고그룹 ' + newRows.length + '건 추가');
   }
 
   // 상태 갱신 (네이버 행만)
@@ -543,11 +543,11 @@ function showUnmappedNaverAdgroups() {
   const ss = SpreadsheetApp.getActive();
   const sheet = ss.getSheetByName(SHEET_NAVER_UTM_MAPPING);
   if (!sheet) {
-    SpreadsheetApp.getUi().alert('UTM_매핑 시트 아직 없음. syncNaverIntegrated 1회 실행 후 확인.');
+    SpreadsheetApp.getUi().alert('UTM 시트 아직 없음. syncNaverIntegrated 1회 실행 후 확인.');
     return;
   }
   if (sheet.getLastRow() < 2) {
-    SpreadsheetApp.getUi().alert('UTM_매핑 시트 비어있음.');
+    SpreadsheetApp.getUi().alert('UTM 시트 비어있음.');
     return;
   }
   const data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 3).getValues();
@@ -559,7 +559,7 @@ function showUnmappedNaverAdgroups() {
   const msg = unmapped.map((r, i) => `${i + 1}. ${r[1]}`).join('\n');
   SpreadsheetApp.getUi().alert(
     `⚠️ 미매핑 네이버 광고그룹 ${unmapped.length}개\n\n${msg}\n\n` +
-    `UTM_매핑 시트 C열에 영문 슬러그 박기. 박으면 네이버_통합 GA4 컬럼 자동 매칭.`
+    `UTM 시트 C열에 영문 슬러그 박기. 박으면 네이버+ GA4 컬럼 자동 매칭.`
   );
 }
 
@@ -582,7 +582,7 @@ function backfillNaverIntegrated30Days() {
       fail++;
     }
   }
-  SpreadsheetApp.getUi().alert('✅ 네이버_통합 30일 백필 완료\n성공: ' + success + '일 / 실패: ' + fail + '일');
+  SpreadsheetApp.getUi().alert('✅ 네이버+ 30일 백필 완료\n성공: ' + success + '일 / 실패: ' + fail + '일');
 }
 
 
