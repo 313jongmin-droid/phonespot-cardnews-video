@@ -1,6 +1,6 @@
 # 002 — 정찰제 콩트 [광고용 / PAID] (~15s)
 
-> 트랙 분리: 이 파일 = **광고용(paid)**. 바이럴용은 `003_phonevillain_viral.md`.
+> 트랙 분리: 이 파일 = **광고용(paid)**. 바이럴용은 `003_viral_jeongchalje.md`.
 > 같은 메시지(타이포 영상 `001_jeongchalje_showcase`)를 실사 AI 콩트로.
 > 키 메시지: "세상 모든 건 가격표가 있는데, 왜 휴대폰만 없을까? → 폰스팟은 정찰제."
 
@@ -22,7 +22,7 @@
 
 ## 메타
 
-- **slug:** `002_jeongchalje_skit`
+- **slug:** `002_ad_jeongchalje`
 - **duration:** 15초 (4 shot)
 - **aspect:** 9:16 (1080×1920)
 - **format:** 실사형 콩트(가벼운 코미디)
@@ -134,7 +134,7 @@ Vertical 9:16, photorealistic, bright clean modern Korean phone shop (Phonespot)
 ## 최종 빌드 기록
 
 - **2026-06-22 — v2 완주.** cost: **16.5 credits** (Shot1 4.5 + Shot2 6 + Shot3 6, kling3_0 std 무음). 만족도: 종민 "너무 좋다".
-- 결과물: `shorts/promo_ai/out_promo_ai/final_002_v2_15s.mp4` (15.1s, 1080x1920, 30fps, 무음).
+- 결과물: `shorts/promo_ai/out_promo_ai/002_ad_jeongchalje_15s.mp4` (15.1s, 1080x1920, 30fps, 무음).
 - 컷 순서 = 마트(s2) → 부조리(s1) → 폰스팟(s3) → 정찰제 엔딩. 자막 = ffmpeg ass 후처리(중앙 Alignment 5, Fontsize 136, Noto Sans CJK KR).
 - 자막 카피: "세상 모든 건\\N가격표가 있는데" → "휴대폰만, 왜\\N가격을 안 알려줘?" → "폰스팟은\\N그 가격 그대로" → "즉·시·조·회!".
 - 트랙 SOP/함정 = `WORKFLOW.md` "실증 검증 (2026-06-22)".

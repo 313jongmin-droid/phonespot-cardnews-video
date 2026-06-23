@@ -30,10 +30,15 @@ function visualSrc(v: Visual | undefined): string | null {
 function pickHeroSrc(script: Script): string | null {
   const hook: any = script.hook || {};
   const sections: any[] = [hook, ...(script.facts || [])];
-  for (const sec of sections) {
-    for (const v of (sec.chunk_visuals || []) as Visual[]) {
-      const src = visualSrc(v);
-      if (src) return src;
+  // 실사 사진/카드이미지(type image, photos/ 등) 우선 → 없으면 일러스트(2026-06-19, 싸당 벤치마크)
+  for (const wantImage of [true, false]) {
+    for (const sec of sections) {
+      for (const v of (sec.chunk_visuals || []) as Visual[]) {
+        if (wantImage && v.type !== "image") continue;
+        if (!wantImage && v.type !== "illust") continue;
+        const src = visualSrc(v);
+        if (src) return src;
+      }
     }
   }
   // 폴백: background_image (카드이미지)

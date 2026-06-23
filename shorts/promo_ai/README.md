@@ -116,11 +116,4 @@ Higgsfield credits 기준 추정 (실제 호출 후 갱신):
 - [x] **자막 결론 (2026-06-22)**: 영상 in-image 한글 = 깨짐 → **ffmpeg ass 후처리 burn 확정**(Noto Sans CJK KR). WORKFLOW §3.
 - [ ] 폰스팟 매장 실사진 확보 여부 (reference 활용 위해)
 - [ ] 폰스팟 사장님 (종민님) 등장 여부 (Soul Character 학습용 사진 5-20장 필요)
-- [ ] BGM/SFX 라이브러리 (저작권 무료) — 002는 무음 출고, 음원 수급 시 ffmpeg amix
-- [ ] CDN 다운로드 자동화 (현재 종민 수동 다운로드 병목, WORKFLOW §4)
-
-## 관련 메모리
-
-- 영상 task: [[phonespot-video-project]] — 트랙 분리 (casual 숏폼 / promo 타이포 / promo_ai 실사)
-- 광고 카피 / 브랜드: `shorts/promo/_brand.json`
-- 카드뉴스 task 와 무관 (이번 트랙은 카드뉴스 source 안 씀)
+- [ ] BGM/SFX 라이브러리 (저작권 

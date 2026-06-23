@@ -78,6 +78,11 @@ def validate_one(path):
         if HASHTAG_RE.search(nar):
             warns.append("narration_md에 해시태그(#태그) (마크다운 '## '는 허용)")
 
+    title = str(d.get('title') or '')
+    HOOK_MARKERS = ('?', '라고', '손해', '존버', '이유', '왜', '실화', '딱', '단 ', '꼭', '주의', '안보면', '안 보면', '비밀', '충격', '대박', '이렇게', '레전드', 'vs')
+    if title and not any(m in title for m in HOOK_MARKERS):
+        warns.append(f"제목 설명형(후킹 마커 없음): '{title[:30]}' - 호기심갭/손해회피 패턴 권장(싸당 벤치마크)")
+
     return errors, warns
 
 
