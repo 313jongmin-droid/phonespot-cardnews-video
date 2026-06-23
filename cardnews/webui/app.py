@@ -304,6 +304,16 @@ def image_file(slug, filename):
 # ============================================================
 if __name__ == '__main__':
     print(f"[webui] BASE={BASE}")
+    # 패널 시작 시 한국매체 RSS 1회 수집 → _state/news_feed.json (best-effort, 실패해도 패널 정상)
+    # 윈도우 스케줄러 미사용 → 패널 켤 때마다 최신 한국 IT뉴스 갱신 (2026-06-23)
+    try:
+        _rss = BASE / 'scripts' / 'collect_news_rss.py'
+        if _rss.exists():
+            subprocess.run([sys.executable, str(_rss)], timeout=40,
+                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            print("[webui] news_feed RSS 갱신 완료")
+    except Exception as _e_rss:
+        print(f"[webui] RSS 갱신 skip: {_e_rss}")
     print(f"[webui] auth: {'ENABLED' if _AUTH else 'DISABLED (LAN only recommended)'}")
     print(f"[webui] articles={ARTICLES_DIR.exists()} / images={IMAGES_DIR.exists()} / output={OUTPUT_DIR.exists()}")
     print("[webui] starting on http://0.0.0.0:8080")

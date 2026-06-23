@@ -84,7 +84,7 @@
 - 라인 분리 트리거 (`사기 토픽` 등)는 옵션 (사장님이 한 라인만 원할 때만)
 
 ### ★ 수집 통합 소스 (2026-06-23, "수집" 한 번에 아래 전부 자동 합침 — 사장님 추가 입력 0)
-1. **RSS** `_state/news_feed.json` (`collect_news_rss.py` 결과, 한국 IT매체 당일 기사) → news 후보. **있으면 읽음.** `collected`가 오늘(env)이 아니면 "RSS 갱신 권장(로컬 PC `collect_news_rss.py`)" 1줄 명시 후 WebSearch로 진행.
+1. **RSS** `_state/news_feed.json` (`collect_news_rss.py` 결과, 한국 IT매체 당일 기사) → news 후보. **있으면 읽음.** ★ **패널(webui `app.py`) 켤 때마다 자동 갱신**(윈도우 스케줄러 미사용, 2026-06-23). `collected`가 오늘(env)이 아니면 "패널 한 번 켜거나 `collect_news_rss.py` 실행" 1줄 명시 후 WebSearch로 진행.
 2. **WebSearch** 4라인 (US한계 보완: `allowed_domains` 한국매체).
 3. **성과 가중** 유튜브_인사이트 + 인스타 시트 (apple+ 등, 클로드 자율 판단).
 4. **carryover** `content_guide.md §3.5` 미선택 후보 재등판.
