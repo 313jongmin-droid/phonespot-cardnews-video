@@ -83,6 +83,15 @@
 - 사장님 트리거 = `신규 수집` 한 번 → AI가 4 라인 모두 병렬 수집 → 통합 후보 표 제출 → 사장님 셀렉
 - 라인 분리 트리거 (`사기 토픽` 등)는 옵션 (사장님이 한 라인만 원할 때만)
 
+### ★ 수집 통합 소스 (2026-06-23, "수집" 한 번에 아래 전부 자동 합침 — 사장님 추가 입력 0)
+1. **RSS** `_state/news_feed.json` (`collect_news_rss.py` 결과, 한국 IT매체 당일 기사) → news 후보. **있으면 읽음.** `collected`가 오늘(env)이 아니면 "RSS 갱신 권장(로컬 PC `collect_news_rss.py`)" 1줄 명시 후 WebSearch로 진행.
+2. **WebSearch** 4라인 (US한계 보완: `allowed_domains` 한국매체).
+3. **성과 가중** 유튜브_인사이트 + 인스타 시트 (apple+ 등, 클로드 자율 판단).
+4. **carryover** `content_guide.md §3.5` 미선택 후보 재등판.
+5. **dup 회피** `articles/*.json` + `content_guide §2`.
+6. 출력 = **검증완료만 + 쇼츠포맷 앵글 + 한 줄 요약 + 가중치 라벨**, news는 D-7(env 기준).
+- **사장님이 URL 주면** WebFetch로 최우선 합침(mk 차단·kbench JS는 제목/요지 요청).
+
 ## 라인 1: `news` — IT/폰 뉴스 (운영 중)
 - **소스**: WebSearch 6 카테고리 + WebFetch
 - ★ **WebSearch는 US 기준이라 한국 IT매체 속보를 잘 못 잡음 (2026-06-23 사장님 지적).** 보완:
