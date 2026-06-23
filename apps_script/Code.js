@@ -1390,7 +1390,7 @@ function buildDashboardV2() {
 // ============ 일회용: 시트 탭 이름 단축 (_통합 → +, UTM_매핑 → UTM), 2026-06-23 ============
 // 코드 문자열은 이미 새 이름으로 치환됨. 이 함수로 실제 탭을 리네임하면 정합.
 // 시트 안 수식은 탭 리네임 시 구글시트가 자동 갱신. 당근_UTM_매핑은 유지(건드리지 않음).
-function renameTabsToPlus_() {
+function renameTabsToPlus() {
   const ss = SpreadsheetApp.getActive();
   const MAP = [
     ['메타_통합', '메타+'],
