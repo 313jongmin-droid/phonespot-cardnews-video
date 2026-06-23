@@ -175,4 +175,6 @@
 
 - 2026-06-18 (promo 자가개선 합류 — C단원): promo 타이포 트랙에 데이터기반 자가개선 루프 신설. 새 가이드 `shorts/promo/AUTOLOOP_DESIGN.md`(200~300편 로드맵, README §13에서 링크). Phase 0·2a 구현: 후킹 학습신호(12편 `- 후킹:`)·`promo_manifest.py` variant_id·성과 귀속(관리시트 유튜브/인스타 운영일지 조회수·좋아요, 업로드=사람·비고=outfile 조인키)·`promo_score.py`(축 풀링+게이트)·`promo_results_add.py`·`promo_plan.py`(생성 근거 패널)·`promo_check_sync.py`(MD↔JSON 정합). 트랙 정합 수정: 나레이션 모순 정정(promo=효과음+음악만)·음악 fallback 안전화. 상세 = SYSTEM_MAP C단원 'promo 자가개선' 블록 + 변경이력 2026-06-18. 테스트=종민 내일.
 
+- 2026-06-19: **STEP 3 — cmd 푸시 제공 규칙을 광고운영 전용 → 전체 task로 확대 (종민).** 모든 task(광고운영·카드뉴스·영상·기사 등)에서 코드/파일 변경 끝낼 때마다 **실제 git cmd 항상 제공**(stale lock 시 `del .git\index.lock` → `cd /d` → `set GIT=` → `%GIT% add -A` → `commit -m`(ASCII) → `push origin main`). '시스템 업로드 눌러라'·'bat 돌려라'로 대체 ❌. 영상/카드뉴스는 패널 시스템 업로드(commit 게이트)도 가능하나 **cmd 병행**. CLAUDE.md STEP 3 갱신.
+
 이 파일이 업그레이드되면 변경 이력 1줄 추가. 가이드 추가·제거 시 STEP 1 리스트 동기화.
