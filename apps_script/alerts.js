@@ -108,16 +108,16 @@ function sendMorningBriefing() {
   if (!d) return;
   const today = Utilities.formatDate(new Date(), 'Asia/Seoul', 'MM/dd');
 
-  // 1) 기간별 종합 — KPI 상세표(A11:I15) 라벨 기준 (어제/3일/7일/14일/30일)
-  //    컬럼: A기간 B광고비 C문의 D출처확인 E개통 F개통률 G리틀리CTR H CPL(추적) I CPL(전체)
+  // 1) 기간별 종합 — 기간별 핵심표(A6:F8) 기준 (어제/최근7일/최근30일)
+  //    컬럼: A기간 B광고비 C문의 D개통 E CPL F순이익  (buildDashboardV2 레이아웃)
   let periodLines = [];
   try {
-    const vals = d.getRange(11, 1, 5, 9).getDisplayValues();
+    const vals = d.getRange(6, 1, 3, 6).getDisplayValues();
     vals.forEach(function (r) {
       const label = String(r[0] || '').trim();
       if (!label) return;
       periodLines.push('▪ ' + label + '\n   광고비 ' + (r[1] || '-') + ' · 문의 ' + (r[2] || '-') +
-        '(확인 ' + (r[3] || '-') + ') · 개통 ' + (r[4] || '-') + ' · CPL ' + (r[7] || '-'));
+        ' · 개통 ' + (r[3] || '-') + ' · CPL ' + (r[4] || '-') + ' · 순이익 ' + (r[5] || '-'));
     });
   } catch (e) {}
 
