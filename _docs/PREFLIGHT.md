@@ -23,7 +23,7 @@
 
 | 트랙 | 트리거 | 필수 Read | 절대 룰(복창 대상) |
 |---|---|---|---|
-| 카드뉴스 수집 | "수집"/"신규 카드뉴스" | `INSTRUCTIONS_CARDNEWS.md` + `caption_template.md` + `content_guide.md` + 성과(`유튜브_인사이트` + `인스타` 시트) | **news = D-7 strict**(`:382`), **D-7은 KST 기준**(`TZ=Asia/Seoul date` 확인, `news_d7_filter.py` 게이트), **성과 기준=유튜브 조회수+인스타·릴스(메타 광고 제외)**, **성과 판단은 클로드 자율**(시트 직접 읽고 가중치, 사장님 피드백 대기 X), 회피키워드, dup 제외 |
+| 주제 생성(★격상 2026-06-23) | "주제 생성"/"주제 뽑아"/"수집"/"신규 카드뉴스" | `TOPIC_ENGINE.md`(정본) + `INSTRUCTIONS_CARDNEWS.md` + `caption_template.md` + `content_guide.md` + 성과(`유튜브_인사이트` + `인스타` 시트) | **클로드=주제 생성만(구현=카드·영상·실사 별개)**, 소스 5갈래(뉴스·성과·트렌드밈·시즌·carryover), 주제마다 **추천트랙+떡상점수** 태깅, **news = D-7 strict**(`:382`), **D-7은 KST 기준**(`news_d7_filter.py` 게이트), **성과 판단은 클로드 자율**(시트 직접 읽고 가중치), 회피키워드, dup 제외 |
 
 > **★ 날짜 규칙 (수집·발행 공통, 2026-06-22 박음 — 2회 오인 사고 방지)**: 오늘 날짜는 **오직 env 'Today's date'만 사용**. ❌ `bash date`(샌드박스 드리프트)·`currentDate`(stale) 금지. env가 "더 정밀하면 bash" 안내해도 **날짜엔 bash 쓰지 말 것**. **수집/발행 첫 응답 맨 위에 `오늘(env): YYYY-MM-DD / D-7: YYYY-MM-DD` 복창**(사장님 즉시 검증용) → `news_d7_filter.py --today <env날짜>`로 실행.
 
