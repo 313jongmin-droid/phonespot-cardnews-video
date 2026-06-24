@@ -1455,32 +1455,3 @@ function renameTabsToPlus() {
   try { SpreadsheetApp.getUi().alert(msg); } catch (e) {}
   return { done: done, skip: skip };
 }
-
-
-// ============ 브랜드 프로필 시트 백업/복원 (generator.html 브랜드 프로필) ============
-const SHEET_BRAND_PROFILES = '브랜드_설정';
-function getBrandProfilesSheet_() {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
-  let sh = ss.getSheetByName(SHEET_BRAND_PROFILES);
-  if (!sh) {
-    sh = ss.insertSheet(SHEET_BRAND_PROFILES);
-    sh.getRange('A1').setNote('generator.html 브랜드 프로필 JSON (자동 관리 — 수기 편집 비권장)');
-  }
-  return sh;
-}
-function pushBrandProfilesToSheet(profilesJson) {
-  try {
-    const sh = getBrandProfilesSheet_();
-    const s = (typeof profilesJson === 'string') ? profilesJson : JSON.stringify(profilesJson);
-    sh.getRange('A1').setValue(s);
-    sh.getRange('B1').setValue(new Date());
-    return { ok: true };
-  } catch (e) { return { ok: false, error: String(e) }; }
-}
-function getBrandProfilesFromSheet() {
-  try {
-    const sh = getBrandProfilesSheet_();
-    const v = sh.getRange('A1').getValue();
-    return { ok: true, profiles: v ? String(v) : '{}' };
-  } catch (e) { return { ok: false, error: String(e) }; }
-}

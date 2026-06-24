@@ -429,7 +429,7 @@
 </head>
 <body>
 <div class="container">
-  <h1 id="app-title">폰스팟 광고 소재 생성기 v11 <span style="font-size:12px; color:#86868b">+ 프리셋·페이지·양방향 sync</span></h1>
+  <h1>폰스팟 광고 소재 생성기 v11 <span style="font-size:12px; color:#86868b">+ 프리셋·페이지·양방향 sync</span></h1>
   <div class="subtitle">카피 생성 → 카피 카드의 🎨 클릭 → 이미지 프롬프트 자동 생성/복사 → ChatGPT 4o</div>
 
   <div class="tabs">
@@ -452,7 +452,17 @@
         <div class="grid-3">
           <div>
             <label>카테고리</label>
-            <select id="c-category"><!-- options injected by applyBP() from active brand profile --></select>
+            <select id="c-category">
+              <option>휴대폰</option>
+              <option>유심만</option>
+              <option>알뜰폰</option>
+              <option>중고폰</option>
+              <option>키즈폰</option>
+              <option>효도폰</option>
+              <option>공짜폰</option>
+              <option>인터넷</option>
+              <option>인터넷+TV</option>
+            </select>
           </div>
           <div>
             <label>타겟 연령</label>
@@ -794,54 +804,6 @@
 
   <!-- ========== TAB: 설정 ========== -->
   <div class="tab-panel" id="panel-settings">
-    <section>
-      <h2>🏷️ 브랜드 프로필 <span style="font-size:12px; font-weight:400; color:#86868b">— 도메인 전환 (폰스팟 / 화장품 / KT …)</span></h2>
-      <div class="info-box">활성 프로필이 <strong>카피 · 슬로건 · 이미지 프롬프트 + 카테고리 + 패턴풀</strong>에 적용됩니다. 폼만 바꾸면 코드 수정 없이 다른 업종으로 전환됩니다. (localStorage 저장 + 시트 백업)</div>
-      <div class="form-group">
-        <div class="grid-2">
-          <div>
-            <label>프로필 선택</label>
-            <select id="bp-select" onchange="onBpSelect()"></select>
-          </div>
-          <div>
-            <label>새 프로필 이름</label>
-            <input id="bp-newname" placeholder="예: 화장품">
-          </div>
-        </div>
-        <div class="btn-row" style="margin-top:10px; display:flex; gap:6px; flex-wrap:wrap">
-          <button class="secondary" onclick="bpNew()">➕ 신규</button>
-          <button onclick="bpSave()">💾 저장(현재 폼)</button>
-          <button class="secondary" onclick="bpDelete()">🗑 삭제</button>
-          <button class="secondary" onclick="bpPushSheet()">☁ 시트 백업</button>
-          <button class="secondary" onclick="bpPullSheet()">⬇ 시트 불러오기</button>
-        </div>
-        <div id="bp-status" style="margin-top:6px; font-size:11px; color:#86868b"></div>
-      </div>
-      <div class="form-group">
-        <div class="grid-2">
-          <div><label>브랜드명</label><input id="bp-brandName"></div>
-          <div><label>사이트 / URL</label><input id="bp-brandUrl"></div>
-        </div>
-        <label style="margin-top:10px">카테고리 (쉼표 구분)</label>
-        <input id="bp-categories" placeholder="휴대폰, 유심만, 알뜰폰 …">
-        <label style="margin-top:10px">핵심 본질 — 카피 프롬프트 # 목적 (프롬프트 골격)</label>
-        <textarea id="bp-copyEssence" rows="4"></textarea>
-        <label style="margin-top:10px">브랜드 차별점 — 슬로건 프롬프트 (프롬프트 골격)</label>
-        <textarea id="bp-sloganDiff" rows="6"></textarea>
-        <div class="grid-2" style="margin-top:10px">
-          <div><label>이미지 도메인 문구 (영문)</label><input id="bp-imageDomain" placeholder="a smartphone retail store"></div>
-          <div><label>이미지 기본 제품묘사 (영문)</label><input id="bp-imageProductDefault"></div>
-        </div>
-        <div class="grid-2" style="margin-top:10px">
-          <div><label>이미지 헤드라인 톤 예시 (영문/국문)</label><input id="bp-imageHeadlineFlavor"></div>
-          <div><label>이미지 콜아웃 예시</label><input id="bp-imageCallout"></div>
-        </div>
-        <label style="margin-top:10px">벤치마크 Apify 키워드 (쉼표 구분)</label>
-        <input id="bp-benchKeywords">
-        <label style="margin-top:10px">패턴 풀 — 한 줄에 "이름|템플릿" 또는 "이름|템플릿|카테고리1;카테고리2" (비우면 기본 풀 사용)</label>
-        <textarea id="bp-patternPool" rows="8" placeholder="질문형+손실회피|{제품} 가격 안 보면 손해?"></textarea>
-      </div>
-    </section>
     <section>
       <h2>패턴 풀 정보</h2>
       <div class="info-box">템플릿 모드는 코드에 박제된 <strong id="pattern-pool-count">60+</strong>개 패턴 풀에서 매번 20개 랜덤 픽 + 슬롯 변수(숫자/행동/혜택/타겟 등) 랜덤 채움. 더 다양한 카피가 필요하면 카피 생성 모드를 "🤖 Claude 챗 모드"로 변경.</div>
@@ -2173,8 +2135,8 @@ function buildCopyPrompt(ctx, count = 25) {
     : '';
 
   return `# 목적
-${BP.brandName}(${BP.brandUrl})의 한국어 광고 헤드라인 카피 ${count}개를 만든다.
-${BP.copyEssence}
+폰스팟(citymarket.co.kr/pb)의 한국어 광고 헤드라인 카피 ${count}개를 만든다.
+폰스팟 = "회원가입·상담·매장방문 없이" 클릭 1번으로 즉시 내 가격 확인. 카피의 1순위는 "얼마인지 보고 싶다"는 호기심으로 클릭시키는 것. 옛 방식(전화·매장·긴 상담) ↔ 폰스팟(클릭 1번·즉시·투명)의 대조가 강력. 거품 빼고 직설적이거나 옆자리 동료처럼 친근하게.
 
 # 지정값 (모든 카피가 이 값을 깔고 감)
 - 카테고리: ${ctx.category}
@@ -2309,7 +2271,7 @@ function buildSloganVariationPrompt(referenceSlogan, referencePattern, ctx) {
     ? `[🆕 신규 컨셉 — 절반(10개)에 자연스럽게 반영. 모든 변형에 박지 말 것]\n${ctx.newConcept}\n\n`
     : '';
   const refLen = (referenceSlogan || '').replace(/\s/g, '').length;
-  return `당신은 ${BP.brandName}(${BP.brandUrl})의 한국어 광고 슬로건 카피라이터입니다. 슬로건 변형 20개를 만들어주세요.
+  return `당신은 폰스팟(citymarket.co.kr/pb)의 한국어 광고 슬로건 카피라이터입니다. 슬로건 변형 20개를 만들어주세요.
 
 [참고 슬로건]
 "${referenceSlogan}" (${refLen}자)
@@ -2318,7 +2280,12 @@ function buildSloganVariationPrompt(referenceSlogan, referencePattern, ctx) {
 ${referencePattern || '미정'}
 
 ${conceptBlock}[브랜드 본질 — 변형의 핵심 메시지에 녹일 것]
-${BP.sloganDiff}
+폰스팟의 차별점:
+1. "회원가입·로그인·상담 없이" 즉시 가격 확인 — 1초 만에 내 가격 조회
+2. 호기심 갭(궁금 → 클릭) 유도가 슬로건의 1순위
+3. 가격 자체 명시 ❌. "확인하면 놀랄 만큼 싼 가격" 암시만
+4. 옛 방식(전화 문의/매장 방문/긴 상담) ↔ 폰스팟(클릭 1번/즉시 확인) 대조 효과적
+5. 거품 빼고 직설 또는 친근한 톤 (꼰대·과장·이모지 남발 ❌)
 
 [캠페인 컨텍스트]
 - 타겟: ${ctx.age || '전 연령'} ${ctx.gender || '전체'}
@@ -2590,13 +2557,13 @@ function buildImagePrompt(ctx, tone, layout, refMode) {
   // 헤드라인은 이미지에 직접 그리도록 (광고 소재 자체로 사용)
   const headlineInstruction = ctx.headline
     ? `Render the Korean headline "${ctx.headline}" as the HERO — very large, bold, high-contrast outlined Korean typography at the top. Use ${tone.palette[1]} for the text against the ${tone.palette[0]} area.`
-    : `Compose and render a short punchy Korean HERO headline (one bold phrase aligned to the USP "${ctx.usp || '지금 확인'}", in the energetic style of ${BP.imageHeadlineFlavor}) — very large, bold, outlined, high-contrast at the top.`;
+    : `Compose and render a short punchy Korean HERO headline (one bold phrase aligned to the USP "${ctx.usp || '지금 확인'}", in the energetic style of 공짜폰 / 무료폰 / 반값폰 / 0원부터) — very large, bold, outlined, high-contrast at the top.`;
 
   // ★ 1:1 매핑 — refMode에 맞는 참고만 포함 (변주='none' → 둘 다 ❌ / 라이브러리·벤치마크 → 자기 것만)
   const libraryBlock = ((mode === 'library' || mode === 'both') && typeof buildLibraryDesignBlock_ === 'function') ? buildLibraryDesignBlock_() : '';
   const benchmarkBlock = ((mode === 'benchmark' || mode === 'both') && typeof buildBenchmarkDesignBlock_ === 'function') ? buildBenchmarkDesignBlock_() : '';
 
-  return `Create a ready-to-use Korean mobile DISPLAY AD creative (a complete performance-marketing banner) for ${BP.imageDomain} (브랜드: ${BP.brandName}, ${BP.brandUrl}) — NOT a product visual or background plate. Square 1:1 for social/display placements (Meta/Instagram/Kakao/Naver/Google/YouTube). It must look like a fully finished, high-converting Korean retail/telecom promo banner usable immediately for paid ads.
+  return `Create a ready-to-use Korean mobile DISPLAY AD creative (a complete performance-marketing banner) for a smartphone retail store (브랜드: 폰스팟, citymarket.co.kr/pb) — NOT a product visual or background plate. Square 1:1 for social/display placements (Meta/Instagram/Kakao/Naver/Google/YouTube). It must look like a fully finished, high-converting Korean retail/telecom promo banner usable immediately for paid ads.
 
 [Campaign context]
 ${contextLines}
@@ -2615,7 +2582,7 @@ ${patternHint}
 [Ad copy & layout — render a COMPLETE, ready-to-run banner. Render ALL Korean text directly inside the image as part of the final design. This is NOT a clean background waiting for later text insertion.]
 ${headlineInstruction}
 - Typography: large, bold, highly legible Korean lettering (exact treatment follows the art direction below) — understandable in 1 second.
-- Supporting callout: a short Korean sub-headline for the offer based on USP "${ctx.usp || '-'}" (느낌 예: ${BP.imageCallout}).
+- Supporting callout: a short Korean sub-headline for the offer based on USP "${ctx.usp || '-'}" (느낌 예: "최대 0원부터!", "지금 조건 확인").
 - Sticker-style elements: speech-bubble boxes, burst/star badges (e.g. "무료폰 가능"), small pop accents — like a real Korean telecom/shopping promo.
 - CTA: a strong rounded CTA button near the bottom with Korean text "지금 조회" or "지금 확인" + arrow — high-contrast, obviously tappable.
 - Every Korean character correctly spelled and crisply legible. No gibberish/garbled glyphs, no empty placeholder bars.
@@ -2636,7 +2603,7 @@ function mapProductToEnglish(product, category) {
   if (category === '액세서리') return 'phone accessories arranged neatly (earphones, cases, chargers)';
   if (category === '중고폰') return 'pre-owned smartphone with clean finish, displayed with quality assurance feel';
   if (category === '통신요금제') return 'smartphone displaying signal/network indicators on screen';
-  return BP.imageProductDefault || 'modern premium smartphone with rear camera module clearly visible, slightly tilted angle';
+  return 'modern premium smartphone with rear camera module clearly visible, slightly tilted angle';
 }
 
 function updateSelectedCount(type) {
@@ -3247,170 +3214,6 @@ function switchTabByName(name) {
   document.getElementById('panel-' + name).classList.add('active');
 }
 
-
-// ============ 브랜드 프로필 (도메인 범용화 — 폼 기반) ============
-const DEFAULT_PATTERNS = CATALOG.copyPatterns.slice();
-function defaultPatternPoolText() {
-  return DEFAULT_PATTERNS.map(p =>
-    p.categories ? (p.name + '|' + p.template + '|' + p.categories.join(';')) : (p.name + '|' + p.template)
-  ).join('\n');
-}
-function parsePatternPool(text) {
-  return (text || '').split('\n').map(l => l.trim()).filter(Boolean).map(l => {
-    const parts = l.split('|');
-    const o = { name: (parts[0] || '').trim(), template: (parts[1] || '').trim() };
-    if (parts[2] && parts[2].trim()) o.categories = parts[2].split(';').map(s => s.trim()).filter(Boolean);
-    return o;
-  }).filter(p => p.template);
-}
-const DEFAULT_BP = {
-  brandName: '폰스팟',
-  brandUrl: 'citymarket.co.kr/pb',
-  categories: ['휴대폰','유심만','알뜰폰','중고폰','키즈폰','효도폰','공짜폰','인터넷','인터넷+TV'],
-  copyEssence: '폰스팟 = "회원가입·상담·매장방문 없이" 클릭 1번으로 즉시 내 가격 확인. 카피의 1순위는 "얼마인지 보고 싶다"는 호기심으로 클릭시키는 것. 옛 방식(전화·매장·긴 상담) ↔ 폰스팟(클릭 1번·즉시·투명)의 대조가 강력. 거품 빼고 직설적이거나 옆자리 동료처럼 친근하게.',
-  sloganDiff: '폰스팟의 차별점:\n1. "회원가입·로그인·상담 없이" 즉시 가격 확인 — 1초 만에 내 가격 조회\n2. 호기심 갭(궁금 → 클릭) 유도가 슬로건의 1순위\n3. 가격 자체 명시 ❌. "확인하면 놀랄 만큼 싼 가격" 암시만\n4. 옛 방식(전화 문의/매장 방문/긴 상담) ↔ 폰스팟(클릭 1번/즉시 확인) 대조 효과적\n5. 거품 빼고 직설 또는 친근한 톤 (꼰대·과장·이모지 남발 ❌)',
-  imageDomain: 'a smartphone retail store',
-  imageProductDefault: 'modern premium smartphone with rear camera module clearly visible, slightly tilted angle',
-  imageHeadlineFlavor: '공짜폰 / 무료폰 / 반값폰 / 0원부터',
-  imageCallout: '"최대 0원부터!", "지금 조건 확인"',
-  benchKeywords: '휴대폰성지',
-  patternPool: ''
-};
-let BRAND_PROFILES = {};
-let ACTIVE_PROFILE = '폰스팟';
-let BP = Object.assign({}, DEFAULT_BP);
-
-function loadBrandProfiles() {
-  try { BRAND_PROFILES = JSON.parse(localStorage.getItem('phonespot_brand_profiles') || '{}'); }
-  catch (e) { BRAND_PROFILES = {}; }
-  if (!BRAND_PROFILES['폰스팟']) BRAND_PROFILES['폰스팟'] = {};
-  ACTIVE_PROFILE = localStorage.getItem('phonespot_active_profile') || '폰스팟';
-  if (!BRAND_PROFILES[ACTIVE_PROFILE]) ACTIVE_PROFILE = '폰스팟';
-}
-function persistBrandProfiles() {
-  localStorage.setItem('phonespot_brand_profiles', JSON.stringify(BRAND_PROFILES));
-  localStorage.setItem('phonespot_active_profile', ACTIVE_PROFILE);
-}
-function getBP() { return Object.assign({}, DEFAULT_BP, BRAND_PROFILES[ACTIVE_PROFILE] || {}); }
-
-function applyBP() {
-  BP = getBP();
-  // 카테고리 옵션 재구성
-  const sel = document.getElementById('c-category');
-  if (sel) {
-    const cur = sel.value;
-    sel.innerHTML = (BP.categories || []).map(c => '<option>' + c + '</option>').join('');
-    if ((BP.categories || []).indexOf(cur) >= 0) sel.value = cur;
-  }
-  // 패턴 풀
-  CATALOG.copyPatterns = (BP.patternPool && BP.patternPool.trim())
-    ? parsePatternPool(BP.patternPool)
-    : DEFAULT_PATTERNS.slice();
-  // 타이틀
-  const t = document.getElementById('app-title');
-  if (t && t.childNodes[0]) t.childNodes[0].nodeValue = BP.brandName + ' 광고 소재 생성기 v11 ';
-  document.title = BP.brandName + ' 광고 소재 생성기';
-  const cnt = document.getElementById('pattern-pool-count');
-  if (cnt) cnt.textContent = CATALOG.copyPatterns.length;
-  // 벤치마크 키워드 기본값(비어있을 때만)
-  const bmk = document.getElementById('bm-keyword');
-  if (bmk && !bmk.value.trim() && BP.benchKeywords) bmk.value = BP.benchKeywords;
-}
-
-function bpVal(id) { const el = document.getElementById(id); return el ? el.value : ''; }
-function bpSet(id, v) { const el = document.getElementById(id); if (el) el.value = (v == null ? '' : v); }
-
-function renderBpSelect() {
-  const s = document.getElementById('bp-select');
-  if (!s) return;
-  s.innerHTML = Object.keys(BRAND_PROFILES).map(n =>
-    '<option' + (n === ACTIVE_PROFILE ? ' selected' : '') + '>' + n + '</option>').join('');
-}
-function bpFillForm() {
-  const b = getBP();
-  bpSet('bp-brandName', b.brandName); bpSet('bp-brandUrl', b.brandUrl);
-  bpSet('bp-categories', (b.categories || []).join(', '));
-  bpSet('bp-copyEssence', b.copyEssence); bpSet('bp-sloganDiff', b.sloganDiff);
-  bpSet('bp-imageDomain', b.imageDomain); bpSet('bp-imageProductDefault', b.imageProductDefault);
-  bpSet('bp-imageHeadlineFlavor', b.imageHeadlineFlavor); bpSet('bp-imageCallout', b.imageCallout);
-  bpSet('bp-benchKeywords', b.benchKeywords);
-  bpSet('bp-patternPool', (b.patternPool && b.patternPool.trim()) ? b.patternPool : defaultPatternPoolText());
-}
-function bpFieldsFromForm() {
-  const patRaw = bpVal('bp-patternPool').trim();
-  return {
-    brandName: bpVal('bp-brandName').trim() || '브랜드',
-    brandUrl: bpVal('bp-brandUrl').trim(),
-    categories: bpVal('bp-categories').split(',').map(s => s.trim()).filter(Boolean),
-    copyEssence: bpVal('bp-copyEssence'),
-    sloganDiff: bpVal('bp-sloganDiff'),
-    imageDomain: bpVal('bp-imageDomain').trim(),
-    imageProductDefault: bpVal('bp-imageProductDefault').trim(),
-    imageHeadlineFlavor: bpVal('bp-imageHeadlineFlavor').trim(),
-    imageCallout: bpVal('bp-imageCallout').trim(),
-    benchKeywords: bpVal('bp-benchKeywords').trim(),
-    // 기본 풀과 동일하면 저장 안 함(빈값=기본)
-    patternPool: (patRaw && patRaw !== defaultPatternPoolText().trim()) ? patRaw : ''
-  };
-}
-function onBpSelect() {
-  ACTIVE_PROFILE = document.getElementById('bp-select').value || '폰스팟';
-  persistBrandProfiles(); applyBP(); bpFillForm();
-  showToast('프로필 전환: ' + ACTIVE_PROFILE);
-}
-function bpNew() {
-  const name = (bpVal('bp-newname') || '').trim();
-  if (!name) { alert('새 프로필 이름을 입력하세요'); return; }
-  if (BRAND_PROFILES[name]) { alert('이미 있는 이름입니다'); return; }
-  BRAND_PROFILES[name] = Object.assign({}, DEFAULT_BP);  // 기본값 복제로 시작
-  ACTIVE_PROFILE = name; bpSet('bp-newname', '');
-  persistBrandProfiles(); renderBpSelect(); applyBP(); bpFillForm();
-  showToast('신규 프로필 "' + name + '" 생성 — 폼 수정 후 저장하세요');
-}
-function bpSave() {
-  BRAND_PROFILES[ACTIVE_PROFILE] = bpFieldsFromForm();
-  persistBrandProfiles(); applyBP();
-  document.getElementById('bp-status').textContent = '저장됨: ' + ACTIVE_PROFILE + ' (' + new Date().toLocaleTimeString() + ')';
-  showToast('프로필 "' + ACTIVE_PROFILE + '" 저장 + 적용');
-}
-function bpDelete() {
-  if (ACTIVE_PROFILE === '폰스팟') { alert('기본 프로필(폰스팟)은 삭제할 수 없습니다'); return; }
-  if (!confirm('프로필 "' + ACTIVE_PROFILE + '" 삭제?')) return;
-  delete BRAND_PROFILES[ACTIVE_PROFILE];
-  ACTIVE_PROFILE = '폰스팟';
-  persistBrandProfiles(); renderBpSelect(); applyBP(); bpFillForm();
-  showToast('삭제됨 → 폰스팟으로 전환');
-}
-function bpPushSheet() {
-  if (!isAppsScriptWebApp()) { alert('Web App 환경에서만 시트 백업 가능'); return; }
-  google.script.run
-    .withSuccessHandler(function(res) {
-      showToast(res && res.ok ? '☁ 시트 백업 완료 (브랜드_설정)' : '백업 실패: ' + ((res && res.error) || '-'));
-    })
-    .withFailureHandler(function(err) { alert('백업 실패: ' + (err.message || err)); })
-    .pushBrandProfilesToSheet(JSON.stringify(BRAND_PROFILES));
-}
-function bpPullSheet() {
-  if (!isAppsScriptWebApp()) { alert('Web App 환경에서만 시트 불러오기 가능'); return; }
-  if (!confirm('시트의 프로필로 현재 localStorage 프로필을 덮어씁니다. 계속?')) return;
-  google.script.run
-    .withSuccessHandler(function(res) {
-      if (!res || !res.ok) { alert('불러오기 실패: ' + ((res && res.error) || '-')); return; }
-      try {
-        const obj = JSON.parse(res.profiles || '{}');
-        if (obj && typeof obj === 'object') {
-          BRAND_PROFILES = obj;
-          if (!BRAND_PROFILES['폰스팟']) BRAND_PROFILES['폰스팟'] = {};
-          if (!BRAND_PROFILES[ACTIVE_PROFILE]) ACTIVE_PROFILE = '폰스팟';
-          persistBrandProfiles(); renderBpSelect(); applyBP(); bpFillForm();
-          showToast('⬇ 시트 프로필 불러옴 (' + Object.keys(obj).length + '개)');
-        }
-      } catch (e) { alert('시트 데이터 파싱 실패: ' + e); }
-    })
-    .withFailureHandler(function(err) { alert('불러오기 실패: ' + (err.message || err)); })
-    .getBrandProfilesFromSheet();
-}
-
 // ============ 초기화 ============
 // 옛 localStorage에 저장된 카탈로그가 있으면 무시 + 정리 (확장된 풀 강제)
 localStorage.removeItem('phonespot_catalog');
@@ -3421,10 +3224,6 @@ loadWebAppUrl();
 setupWebAppUI();
 renderCopyPresetSelect();
 updateLastSyncDisplay();
-loadBrandProfiles();
-applyBP();
-renderBpSelect();
-bpFillForm();
 // 패턴 풀 카운트 표시
 const poolCountEl = document.getElementById('pattern-pool-count');
 if (poolCountEl) poolCountEl.textContent = CATALOG.copyPatterns.length;
