@@ -204,6 +204,12 @@ def commands_for(job: dict) -> list[list[str]]:
         return [["cmd", "/c", str(SHORTS / "run_codex_casual.bat"), slug]]
     if job["action"] == "banner_ad_render":
         return [["cmd", "/c", str(SHORTS / "run_banner.bat"), slug]]
+    if job["action"] == "promo_render":
+        # slug = "{NN}_{label}_{preset}" -> num=int(NN), preset=마지막 토큰
+        parts = slug.split("_")
+        num = str(int(parts[0]))
+        preset = parts[-1]
+        return [["cmd", "/c", str(SHORTS / "run_promo.bat"), num, preset]]
     raise RuntimeError(f"unsupported worker action: {job['action']}")
 
 

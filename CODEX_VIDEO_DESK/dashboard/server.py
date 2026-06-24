@@ -38,7 +38,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v37"
+PANEL_VERSION = "phonespot-web-v38"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -1897,6 +1897,32 @@ class Handler(BaseHTTPRequestHandler):
                 job = REMOTE_QUEUE.enqueue("banner_ad_render", slug_now, str(data.get("target_worker") or ""))
                 json_response(self, {"ok": True, "queued": True, "job": job, "message": "배너광고 렌더를 대기열에 등록했습니다."})
                 return
+            if action == "promo_list":
+                try:
+                    out = subprocess.run([sys.executable, "scripts/promo_list.py"], cwd=str(SHORTS),
+                                         capture_output=True, text=True, timeout=20)
+                    items = []
+                    for line in (out.stdout or "").splitlines():
+                        m = re.match(r"^\s*(\d{3})\s+(\S+)\s+(.+?)\s+\[(\w+)\]\s*$", line)
+                        if m:
+                            items.append({"nn": m.group(1), "label": m.group(2),
+                                          "title": m.group(3).strip(), "preset": m.group(4)})
+                    json_response(self, {"ok": True, "items": items})
+                except Exception as exc:
+                    json_response(self, {"ok": False, "items": [], "message": str(exc)})
+                return
+            if action == "promo_render":
+                nn = str(data.get("nn") or "").strip()
+                label = str(data.get("label") or "").strip()
+                preset = (str(data.get("preset") or "").strip() or "showcase")
+                if not nn or not label:
+                    json_response(self, {"ok": False, "message": "스크립트를 선택하세요."})
+                    return
+                slug_now = nn + "_" + label + "_" + preset
+                job = REMOTE_QUEUE.enqueue("promo_render", slug_now, str(data.get("target_worker") or ""))
+                json_response(self, {"ok": True, "queued": True, "job": job,
+                                     "message": "타이포 렌더 대기열 등록: " + nn + " [" + preset + "]"})
+                return
             if action == "remote_job_cancel":
                 job = REMOTE_QUEUE.cancel(str(data.get("job_id") or ""))
                 json_response(self, {"ok": True, "job": job})
@@ -2411,8 +2437,26 @@ INDEX_HTML = r"""<!doctype html>
   </div>
   <div id="trackTypo" class="track-pane" style="display:none">
     <section>
-      <div class="head"><h2>타이포 광고</h2><span class="small">모션그래픽 · 확장 E4</span></div>
-      <div class="pad track-form"><p class="small" style="margin-top:0">타이포/모션그래픽 광고는 현재 <code>shorts/run_promo.bat</code> 로 빌드합니다. 패널 통합은 확장 E4 예정.</p></div>
+      <div class="head"><h2>타이포 광고</h2><span class="small">모션그래픽 · 나레이션 없음 · 9:16</span></div>
+      <div class="pad track-form">
+        <p class="small" style="margin-top:0">기존 promo 스크립트를 골라 렌더. 효과음+음악 기반(나레이션 없음). 결과는 promo/out/ + 결과 폴더.</p>
+        <div class="uprow">
+          <button class="mini-btn" onclick="promoLoad()">목록 새로고침</button>
+          <span id="tpCount" class="small"></span>
+        </div>
+        <div class="fld-row">
+          <label class="fld">스크립트 <select id="tpScript" style="min-width:320px"></select></label>
+          <label class="fld">프리셋 <select id="tpPreset" style="min-width:150px">
+            <option value="">기본(스크립트 지정)</option>
+            <option value="showcase">showcase</option>
+            <option value="punchy">punchy</option>
+            <option value="data">data</option>
+            <option value="calm">calm</option>
+          </select></label>
+        </div>
+        <div class="actions"><button class="mini-btn" onclick="promoRender()">렌더</button></div>
+        <div id="tpLog" class="small" style="margin-top:8px"></div>
+      </div>
     </section>
   </div>
   <div id="trackAi" class="track-pane" style="display:none">
@@ -2425,6 +2469,7 @@ INDEX_HTML = r"""<!doctype html>
   <input id="illustrationUploadInput" type="file" accept=".png,.jpg,.jpeg,.webp" multiple hidden>
   <script>
     let selected = "";
+    let promoItems = [];
     let selectedCard = "";
     let mode = "video";
     let videoItems = [];
@@ -2441,6 +2486,7 @@ INDEX_HTML = r"""<!doctype html>
       [["banner","trackBanner"],["typo","trackTypo"],["ai","trackAi"]].forEach(function(t){
         var el=document.getElementById(t[1]); if(el) el.style.display=(name===t[0])?"":"none";
       });
+      if(name==="typo" && !promoItems.length){ promoLoad(); }
       document.querySelectorAll(".track-tab").forEach(function(b){
         var on=b.getAttribute("data-track")===name;
         b.style.background=on?"var(--accent)":"transparent";
@@ -2489,6 +2535,32 @@ INDEX_HTML = r"""<!doctype html>
       if(!(await bannerSave())) return;
       try{ var r=await api("/api/action",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"banner_ad_render",slug:pl.slug})}); log.textContent=r.message||"렌더 대기열 등록"; }
       catch(e){ log.textContent="렌더 실패: "+e; }
+    }
+    async function promoLoad(){
+      var log=document.getElementById("tpLog");
+      try{
+        var r=await api("/api/action",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"promo_list"})});
+        promoItems=r.items||[];
+        var sel=document.getElementById("tpScript"); sel.innerHTML="";
+        promoItems.forEach(function(it){
+          var o=document.createElement("option");
+          o.value=it.nn; o.textContent=it.nn+"  "+it.title+"  ["+it.preset+"]";
+          sel.appendChild(o);
+        });
+        document.getElementById("tpCount").textContent=promoItems.length+"개";
+        if(log) log.textContent = promoItems.length? "" : (r.message||"목록 없음");
+      }catch(e){ if(log) log.textContent="목록 실패: "+e; }
+    }
+    async function promoRender(){
+      var log=document.getElementById("tpLog");
+      var nn=document.getElementById("tpScript").value;
+      var it=promoItems.find(function(x){ return x.nn===nn; });
+      if(!it){ log.textContent="스크립트를 선택하세요."; return; }
+      var preset=document.getElementById("tpPreset").value || it.preset;
+      try{
+        var r=await api("/api/action",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"promo_render",nn:it.nn,label:it.label,preset:preset})});
+        log.textContent=r.message||"렌더 대기열 등록";
+      }catch(e){ log.textContent="렌더 실패: "+e; }
     }
     setTimeout(function(){ try{ switchTrack(localStorage.getItem("panel.track")||"cardnews"); }catch(e){ try{switchTrack("cardnews");}catch(_){} } }, 0);
     function chooseUpload(kind) {

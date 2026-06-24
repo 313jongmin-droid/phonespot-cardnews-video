@@ -14,11 +14,13 @@ echo.
 python scripts\promo_list.py
 echo.
 set "NUM="
-set /p NUM=Render number: 
+if not "%~1"=="" ( set "NUM=%~1" & set "NONINT=1" )
+if "%NUM%"=="" set /p NUM=Render number: 
 if "%NUM%"=="" ( echo [ERROR] no number & goto :hold )
 
 set "SLUG="
 for /f "tokens=1-4 delims=|" %%a in ('python scripts\promo_get.py %NUM%') do ( set "NN=%%a" & set "SLUG=%%b" & set "PRESET=%%c" & set "FILE=%%d" )
+if not "%~2"=="" set "PRESET=%~2"
 if "%SLUG%"=="" ( echo [ERROR] invalid number: %NUM% & goto :hold )
 set "COMPID=Promo-%PRESET%"
 echo  pick: %NN% %SLUG% [%PRESET%] -^> %COMPID%
@@ -41,8 +43,13 @@ call npx remotion render src/index.ts %COMPID% "!OUTFILE!" --concurrency=2 --pix
 python scripts\promo_manifest.py "!OUTFILE!" %NN% %SLUG% %PRESET%
 python scripts\promo_uploadkit.py %NN% "!OUTFILE!"
 echo.
+if defined NONINT (
+  set "RD=..\CODEX_VIDEO_DESK\RESULTS\%NN%_%SLUG%_%PRESET%_promo"
+  if not exist "!RD!" mkdir "!RD!"
+  copy /Y "!OUTFILE!" "!RD!\" >nul
+)
 echo  DONE: !OUTFILE!
 goto :hold
 :hold
+if not defined NONINT pause
 endlocal
-pause
