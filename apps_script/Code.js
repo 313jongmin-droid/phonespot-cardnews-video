@@ -1123,7 +1123,7 @@ function buildDashboardV2() {
   const fmtKM = '[>=1000000]0.00,,"M";[>=1000]0.0,"K";#,##0';
 
   const LCOL = 1;   // A
-  const RCOL = 8;   // H
+  const RCOL = 9;   // I (좌우 1칸 띄움, H=간격칸)
 
   // ── 0) 초기화 (1~59행만) ──
   dash.getRange('A1:Z59').clearDataValidations();
@@ -1266,14 +1266,14 @@ function buildDashboardV2() {
   });
   dataBox(chStart, channels.length, 7, LCOL);   // 12~16 (앱문의 G 포함)
 
-  // 4L) 리틀리 유입 — 헤더 A18:F18 / 컬럼헤더 19(A~D) + E19 유입경로 라벨 / 데이터 20~22 + E19:F22 박스
-  sectionHeader(18, '리틀리 유입', LCOL, 7);
-  colHeader(19, ['기간', '방문자수', '클릭수', 'CTR'], LCOL);
-  dash.getRange(19, 5).setValue('최신 유입경로비율')
+  // 4L) 리틀리 유입 — 한 칸 내림(카톡 현황과 줄맞춤). 헤더 A19:G19 / 컬럼헤더 20 / 데이터 21~23 / E20:F23 박스
+  sectionHeader(19, '리틀리 유입', LCOL, 7);
+  colHeader(20, ['기간', '방문자수', '클릭수', 'CTR'], LCOL);
+  dash.getRange(20, 5).setValue('최신 유입경로비율')
     .setBackground(C_COL_BG).setFontColor(C_COL_FG).setFontWeight('bold').setFontSize(9)
     .setHorizontalAlignment('center');
-  dash.getRange(19, 6).setBackground(C_COL_BG);
-  const liStart = 20;
+  dash.getRange(20, 6).setBackground(C_COL_BG);
+  const liStart = 21;
   const liPeriods = [['어제', 'TODAY()-1', 'TODAY()-1'], ['최근 7일', 'TODAY()-6', 'TODAY()'], ['최근 30일', 'TODAY()-29', 'TODAY()']];
   liPeriods.forEach(function (p, i) {
     const r = liStart + i;
@@ -1359,8 +1359,8 @@ function buildDashboardV2() {
   });
   dataBox(kkStart, kkPeriods.length, 4, RCOL);   // 21~23
 
-  // ── 푸터 — 23행 (A23:F23 병합) ──
-  const footerRow = 23;
+  // ── 푸터 — 24행 (A24:F24 병합) ──
+  const footerRow = 24;
   const stamp = Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyy-MM-dd HH:mm');
   dash.getRange(footerRow, 1, 1, 6).merge()
     .setValue('🕐 마지막 업데이트: ' + stamp + '  ·  기간 변경 = 상단 L2 드롭다운(전체 반영)')
@@ -1379,22 +1379,23 @@ function buildDashboardV2() {
   // 폭/정렬 마무리
   dash.setColumnWidth(1, 128);                              // A (라벨)
   for (let c = 2; c <= 7; c++) dash.setColumnWidth(c, 80);  // B~G = 80 고정
-  dash.setColumnWidth(8, 110);                              // H (우측 라벨)
-  for (let c = 9; c <= 13; c++) dash.setColumnWidth(c, 108);// I~M
+  dash.setColumnWidth(8, 26);                               // H = 좌우 간격칸(빈칸)
+  dash.setColumnWidth(9, 110);                              // I (우측 라벨)
+  for (let c = 10; c <= 14; c++) dash.setColumnWidth(c, 108);// J~N
   try { dash.setRowHeight(1, 18); dash.setRowHeight(2, 34); } catch (e) {}
 
-  // 조건부 색: 출처미상(I2) 위험 / 실비용 차이(K12:K17) 음수 — 매번 내 규칙만 갱신
+  // 조건부 색: 출처미상(I2) 위험 / 실비용 차이(L12:L17) 음수 — 매번 내 규칙만 갱신
   try {
     var keep = dash.getConditionalFormatRules().filter(function (rule) {
       var rs = rule.getRanges().map(function (rg) { return rg.getA1Notation(); }).join(',');
-      return rs.indexOf('I2') < 0 && rs.indexOf('K12') < 0 && rs.indexOf('F3') < 0 && rs.indexOf('F6') < 0;
+      return rs.indexOf('I2') < 0 && rs.indexOf('L12') < 0 && rs.indexOf('F3') < 0 && rs.indexOf('F6') < 0;
     });
     keep.push(SpreadsheetApp.newConditionalFormatRule().whenNumberGreaterThanOrEqualTo(0.7)
       .setFontColor('#9F1A1A').setBackground('#FCEBEB').setRanges([dash.getRange('I2')]).build());
     keep.push(SpreadsheetApp.newConditionalFormatRule().whenNumberBetween(0.5, 0.6999)
       .setFontColor('#8A5A00').setBackground('#FAEEDA').setRanges([dash.getRange('I2')]).build());
     keep.push(SpreadsheetApp.newConditionalFormatRule().whenNumberLessThan(0)
-      .setFontColor('#9F1A1A').setRanges([dash.getRange('K12:K17')]).build());
+      .setFontColor('#9F1A1A').setRanges([dash.getRange('L12:L17')]).build());
     keep.push(SpreadsheetApp.newConditionalFormatRule().whenNumberLessThan(0)
       .setFontColor('#9F1A1A').setRanges([dash.getRange('F3'), dash.getRange('F6:F8')]).build());
     keep.push(SpreadsheetApp.newConditionalFormatRule().whenNumberGreaterThan(0)
