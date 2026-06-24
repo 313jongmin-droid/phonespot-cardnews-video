@@ -42,6 +42,16 @@
 - **dead code 제거**: buildCopyPrompt에서 옛 미사용 변수(conceptBlock/regionBlock/examplesBlock/bmBlock/patternSample/directionBlock 등) 삭제 → 함수가 dist부터 바로 시작.
 - **변경 상세 + 알려진 함정** = `CLAUDE.md` STEP 8 "2026-06-12 (세션 2)".
 
+**★ 2026-06-24 추가 (브랜드 프로필 범용화 + 캐러셀 4컷) — 이 블록이 최신:**
+- **목적**: 생성기 폰스팟 전용 하드코딩 → **⚙설정 폼 기반 도메인 범용화**. 화장품/KT 등 코드 수정·재배포 없이 폼만으로 전환.
+- **브랜드 프로필 (generator.html ~3282~3428)**: ⚙설정 탭 "🏷️ 브랜드 프로필" 폼. 활성 프로필 = 전역 `BP`(빌더가 `${BP.x}` 직접 참조), `applyBP()`가 폼/localStorage에서 갱신 + 카테고리 옵션·타이틀·패턴풀(`CATALOG.copyPatterns`) 재구성. 필드 = brandName/brandUrl/categories/copyEssence(카피 #목적)/sloganDiff(슬로건 차별점)/imageDomain/imageProductDefault/imageHeadlineFlavor/imageCallout/benchKeywords/patternPool. 기본 프로필 `폰스팟` = `DEFAULT_BP` 상속(빈 객체, 삭제 불가) → **출력 바이트 동일 = 회귀 안전(node 실행 검증함)**.
+- **파라미터화 빌더**: `buildCopyPrompt`(목적=brandName/brandUrl/copyEssence), `buildSloganVariationPrompt`(brandName/brandUrl/sloganDiff), `buildImagePrompt`(imageDomain/imageHeadlineFlavor/imageCallout), `mapProductToEnglish`(기본값 폴백=BP.imageProductDefault).
+- **신규 함수**: DEFAULT_BP, DEFAULT_PATTERNS(원본 풀 스냅샷), defaultPatternPoolText, parsePatternPool, loadBrandProfiles, persistBrandProfiles, getBP, applyBP, bpVal/bpSet, renderBpSelect, bpFillForm, bpFieldsFromForm, onBpSelect, bpNew, bpSave, bpDelete, bpPushSheet, bpPullSheet.
+- **영속화**: localStorage `phonespot_brand_profiles`(이름→프로필 map) + `phonespot_active_profile`. ☁시트 백업/⬇불러오기 = Code.js `pushBrandProfilesToSheet`/`getBrandProfilesFromSheet` (시트 `브랜드_설정` A1=JSON·B1=시각, 자동 생성. Code.js ~1461).
+- **캐러셀 4컷 (generator.html ~3431~3520)**: 📝카피 탭 "🎠 캐러셀 4컷 프롬프트 생성" 버튼 + `#carousel-section`. `CAROUSEL_BEATS`(후킹→오퍼/큰숫자→차별·조건제거→클로징+CTA) + `buildCarouselSlidePrompt_` + `generateCarousel`(톤·`AD_STYLE_POOL` 1종·제품을 **1회 고정** → 4컷 색·아트디렉션·타이포 통일) + copyCarouselSlide/copyCarouselAll. **1:1(1080²) 고정**, CTA 버튼은 4컷째만, 인디케이터 N/4. 브랜드 프로필(BP) 자동 반영.
+- **★ 함정**: ① 백업 `.v_*.js/.html`을 `apps_script/` 안에 두면 **배포 깨짐** — `.clasp.json rootDir=""` → 전체 .js/.html clasp push → 함수 중복. 백업은 `apps_script_backups/`(clasp 미푸시). GitHub Actions 게이트는 `apps_script/*.js`만 검사. ② `BP`는 applyBP() 시점 갱신 전역 → 프로필 전환 후 applyBP 미호출 시 옛 값. ③ patternPool 빈값=기본 풀(DEFAULT_PATTERNS), 폼 텍스트가 기본과 동일하면 저장 안 함. ④ 캐러셀=프롬프트 생성일 뿐 이미지 아님, 모델 컷별 독립 생성이라 제품샷 드리프트(완전 동일=레퍼런스 고정 필요).
+- **보류(이어할)**: 100% 자율(URL/한줄 → 프로필 AI 자동생성 또는 프로필 제거) + "판매까지"(전환소재 / 풀퍼널 콘텐츠 / 실제 판매 플랫폼 연동) = 범위 미정, 별도 진행. 기존 보류(컨셉_뱅크·코어 hard-lock) 유지.
+
 ---
 
 ## 1. 셋업 상태 (이미 완료, 참고만)

@@ -178,3 +178,5 @@
 - 2026-06-19: **STEP 3 — cmd 푸시 제공 규칙을 광고운영 전용 → 전체 task로 확대 (종민).** 모든 task(광고운영·카드뉴스·영상·기사 등)에서 코드/파일 변경 끝낼 때마다 **실제 git cmd 항상 제공**(stale lock 시 `del .git\index.lock` → `cd /d` → `set GIT=` → `%GIT% add -A` → `commit -m`(ASCII) → `push origin main`). '시스템 업로드 눌러라'·'bat 돌려라'로 대체 ❌. 영상/카드뉴스는 패널 시스템 업로드(commit 게이트)도 가능하나 **cmd 병행**. CLAUDE.md STEP 3 갱신.
 
 이 파일이 업그레이드되면 변경 이력 1줄 추가. 가이드 추가·제거 시 STEP 1 리스트 동기화.
+
+- 2026-06-24: **광고 생성기 도메인 범용화 + 캐러셀 4컷 (G단원).** generator.html 폰스팟 하드코딩 → ⚙설정 폼 기반 브랜드 프로필(전역 `BP`, `applyBP`). 빌더 파라미터화(buildCopyPrompt·슬로건·buildImagePrompt·mapProductToEnglish), localStorage `phonespot_brand_profiles` + 시트 `브랜드_설정`(Code.js `pushBrandProfilesToSheet`/`getBrandProfilesFromSheet`). 캐러셀 4컷(1:1, `generateCarousel`/`CAROUSEL_BEATS`). 함정=백업 .v_*는 `apps_script_backups/`(clasp 전체푸시 함수중복 방지). 상세=`ads/IMPLEMENTATION_GUIDE_2026-06-09.md` §0-1 끝(2026-06-24). 보류=100%자율·판매까지.
