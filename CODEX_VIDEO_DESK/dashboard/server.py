@@ -38,7 +38,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v35"
+PANEL_VERSION = "phonespot-web-v36"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -2243,7 +2243,7 @@ INDEX_HTML = r"""<!doctype html>
     <button class="track-tab" data-track="ai" onclick="switchTrack('ai')" style="padding:8px 16px;border:none;border-radius:10px;cursor:pointer;font-size:15px;background:transparent">실사AI</button>
   </div>
   <main>
-    <section>
+    <section class="card-work">
       <div class="tabs">
         <button id="tabVideo" class="tab active" onclick="setMode('video')">영상</button>
         <button id="tabCard" class="tab" onclick="setMode('card')">카드뉴스</button>
@@ -2253,7 +2253,7 @@ INDEX_HTML = r"""<!doctype html>
       <div id="cardList" class="list" style="display:none"></div>
     </section>
     <div style="display:grid; gap:16px;">
-      <section>
+      <section class="card-work">
         <div class="head action-head"><h2 id="actionTitle">영상 작업</h2><div class="selected-badge"><span id="selectedModeLabel">선택 항목</span><b id="selectedSlug">없음</b></div></div>
         <div id="videoActions" class="pad grid">
           <button class="btn primary" onclick="runAction('video_prepare')"><strong>1. 영상용 프롬프트 준비</strong><span>선택한 카드뉴스 결과를 숏폼 영상 스크립트와 일러스트 요청으로 변환합니다.</span></button>
@@ -2409,7 +2409,9 @@ INDEX_HTML = r"""<!doctype html>
     function switchTrack(name){
       try{ localStorage.setItem("panel.track", name); }catch(e){}
       var main=document.querySelector("main");
-      if(main) main.style.display = (name==="cardnews")?"":"none";
+      var cardnews=(name==="cardnews");
+      if(main){ main.style.display=""; main.style.gridTemplateColumns=cardnews?"":"1fr"; }
+      document.querySelectorAll(".card-work").forEach(function(el){ el.style.display=cardnews?"":"none"; });
       [["banner","trackBanner"],["typo","trackTypo"],["ai","trackAi"]].forEach(function(t){
         var el=document.getElementById(t[1]); if(el) el.style.display=(name===t[0])?"":"none";
       });
