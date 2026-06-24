@@ -51,7 +51,7 @@
 - 진입 bat: `CODEX_VIDEO_DESK/00_PHONE_SPOT_PANEL.bat`.
 
 **핵심 심볼 (server.py, 검증된 줄)**
-- `PANEL_VERSION = "phonespot-web-v32"` (L41) — **버전 단일 출처(SSOT)**. ps1이 이 값을 읽음. 화면/CSS 바꾸면 이 숫자만 올림.
+- `PANEL_VERSION = "phonespot-web-v39"` (L41) — **버전 단일 출처(SSOT)**. ps1이 이 값을 읽음. 화면/CSS 바꾸면 이 숫자만 올림.
 - `get_video_slugs()` (L336) — 영상 슬러그 목록. `list_slugs.py` 호출(articles∪output 독립 스캔).
 - `get_cardnews_rows()` (L1073) — 카드뉴스 행. `CARD_OUTPUT ∪ CARD_IMAGES ∪ CARD_ARTICLES` 합집합 스캔.
 - 액션 디스패치: `if action == "..."` 블록들 (L1589~2010). 주요:
@@ -70,6 +70,7 @@
 - **토큰(`:root`)**: 시스템 컬러(`--system-bg #F2F2F7`/`--card-bg`/`--label*` 계층/`--separator rgba(.08)`), 브랜드 주황 `--accent #F74B0B`(blue 아님), `--shadow-subtle/-card/-elevated`, 라운드 `--r-sm~xl`, `--t-fast`. **★ legacy alias**(`--line`/`--orange`/`--ink`/`--muted`/`--bg`/`--r` 등)를 신토큰에 매핑 → 본문 인라인 `var(--line)` 등 그대로 작동(깨짐 방지).
 - **폰트**: Pretendard Variable(`<head>`에 `<link>` + `@import` 둘 다, dynamic-subset CDN) + `font-variant-numeric:tabular-nums`. 오프라인이면 시스템 폰트 폴백.
 - **레이아웃**: max-width 센터링 제거 → **풀폭 + 좌우 20px 균일 거터**(header/.runtime-strip/main 동일). `main` 그리드 `400px 1fr`.
+- **트랙 골격 (v38~v39 재설계)**: 헤더 → **가운데정렬 트랙 세그먼트**(카드뉴스·영상/타이포/실사AI, 배너 삭제) → WORK(트랙별 교체) → **`#commonMonitor`**(실행로그·최근작업기록·최근영상결과; `<main>` 밖·모든 트랙 공용·항상표시, 기존 grid폭 1fr hack 제거). 카드뉴스=`<main>`(400px 1fr, 상태카드 포함), 타이포/실사AI=`.track-pane`. `switchTrack(name)`: 미지값→cardnews 폴백·main은 cardnews만 표시·commonMonitor 불변·타이포 진입 시 `promoLoad()` 자동.
   - 좌측 슬러그 섹션 = `main > section`만 **`position:sticky; top:80px; align-self:start`**(우측 높이에 안 늘어남), `.list { max-height:calc(100vh-188px) }`.
   - 우측 페어: `.pair`(1fr 1fr) = 상태|로그, `.pair.lopsided`(1.8fr 1fr) = 기록|결과. `align-items:stretch`(박스 높이 맞춤). 마크업에서 두 섹션씩 `<div class="pair">`로 감쌈.
 - **슬러그 행 = 2줄 iOS 리스트**: `.row`(grid `38px 1fr auto`) → 번호배지 + `.row-main`(`.slug-name` 줄바꿈 + `.row-sub`) + `.stage-pill`. **번호배지 = `idx+1`**(영상은 `videoItems.forEach((item,idx)=>`; 이전 `item.number`는 undefined로 "defin" 깨짐).
@@ -172,18 +173,13 @@
 **렌더 엔진**
 - Remotion: `shorts/` + `shorts/scripts/render_remotion_fast.mjs`(브라우저 자동탐색 `ensureBrowser`+`findLocalChrome`, Playwright chromium/시스템 Chrome 폴백).
 - 진입 bat: `run_codex_casual.bat`(CLI 폴백에서 `--concurrency` 제거됨 — "%" 깨짐 방지).
-- 트랙 구분: casual/newsroom(카드뉴스 영상) vs `shorts/promo/`(타이포 홍보) vs `shorts/promo_ai/`(실사 AI 광고, Higgsfield) vs **배너광고**(`BannerAdShort`, 신규 2026-06-19).
+- 트랙 구분: casual/newsroom(카드뉴스 영상) vs `shorts/promo/`(타이포 홍보) vs `shorts/promo_ai/`(실사 AI 광고, Higgsfield). (배너광고 트랙=2026-06-24 삭제, v39)
 - **promo_ai 실증 (2026-06-22, 002 1편 완주)**: 정본 = `shorts/promo_ai/WORKFLOW.md` "실증 검증". 핵심: free·크레딧 topup으론 MCP 영상 ❌ → **STARTER $19 구독 필수**(이걸로 Kling 3.0 됨) / kling3_0 std 무음 ≈1.5cr·s, 1편 16.5cr / **한글자막 = ffmpeg .ass 후처리**(영상 in-image 한글 깨짐, Noto Sans CJK KR) / **함정**: sandbox는 Higgsfield CDN 403(종민 수동 다운로드 경유) + bash 45s 타임아웃(ffmpeg 단계분리·veryfast). 결과 `out_promo_ai/002_ad_jeongchalje_15s.mp4`.
-- 컴포지션 정의: `shorts/src/Root.tsx`(NewsroomShort/CasualShort/Promo-*/**Cover**/**BannerAd**, 전부 1080×1920; BannerAd는 `format`으로 규격 가변).
+- 컴포지션 정의: `shorts/src/Root.tsx`(NewsroomShort/CasualShort/Promo-*/**Cover**, 전부 1080×1920).
 
-**★ 배너광고 트랙 (신규, 2026-06-19, STEP1~5 구현·푸시 / STEP6 렌더PC 검증대기)**
-- 완성 배너 이미지 N장 + TTS + (옵션)자막 + CTA → 광고 영상. **A형 = casual 엔진 부품 재사용, casual/promo/promo_ai 무수정.**
-- 파일: `src/components/banner/BannerAdShort.tsx`(풀블리드+켄번스+TTS+옵션자막+CasualCta 재사용) · `Root.tsx` `BannerAd` 컴포지션(duration=배너 TTS길이, `calculateMetadata`가 `format`으로 9:16/1:1/4:5 분기) · `scripts/build_banner.py`(banner_input.json→banner_script.json+edge-tts) · `scripts/build_ad_copy.py`(광고 `AD_COPY.txt`, publish의 LITTLY/PRECON 링크상수 재사용) · `run_banner.bat`(build→render BannerAd→adcopy).
-- 패널: `server.py` `banner_ad_save`/`banner_ad_render` 액션 + `worker.py` `banner_ad_render`→`run_banner.bat` + INDEX_HTML **타입탭**(카드뉴스/타이포/배너/실사AI, `switchTrack`, v33).
-- **비파괴 가드**: `Root.tsx`에서 `script.facts || []`·`script.cta?.dur`로 바꿔 배너 스크립트(facts 없음)가 로드돼도 casual 번들 안 깨짐. casual 동작 무영향.
-- 데이터 shape: `{banners:[{image,audioKey,caption}], cta:{kakao,location,litt,caption_chunks,audioKey}, captionsOn, format}`. 배너 이미지=`public/assets/banners/`. 입력=`output/<slug>/banner_input.json`(패널 폼이 작성).
-- 기획 정본=`_docs/PROPOSAL_배너영상_업그레이드.md`. 미구현 확장: E1 규격(1:1/4:5)·E2 생성기 자동연동·E3 배너↔TTS 자동매칭·E4 promo/promo_ai 탭통합·E5 타입변환.
-- **함정**: TSX(BannerAdShort) 샌드박스 렌더 불가 → 실행PC 재렌더 검증. 배너 이미지 없으면 빈 화면. server.py 편집은 bash-python(I단원)+태그균형+버전업.
+**★ 배너광고 트랙 = 삭제됨 (2026-06-24, v39).** 2026-06-19 STEP1~6로 구현(스텝스크롤·블러배경·CTA자동)했으나, 단일 정지배너는 메타가 9:16 자동확장으로 대체 가능 + 영상화 가치 낮음 → 종민 결정으로 제거. `server.py`(banner_ad_*)·`worker.py`(banner_ad_render)·`Root.tsx`(BannerAd 컴포지션/calcBanner/bannerDims) 삭제. 잔여 파일(`src/components/banner/BannerAdShort.tsx`·`scripts/build_banner.py`·`build_ad_copy.py`·`run_banner.bat`)=git rm 대상(인터트). 기획문서 `_docs/PROPOSAL_배너영상_업그레이드.md`는 비활성 보존.
+
+**★ 타이포(promo) 패널 통합 (2026-06-24, v38).** 기존 promo 시스템 무수정, 패널은 "골라서 렌더"만 연결. 흐름: 타이포 탭 → `promo_list`(server.py, `scripts/promo_list.py` 출력 파싱) → 선택 → `promo_render`(슬러그 인코딩 `{NN}_{label}_{preset}`) → worker `promo_render`(디코딩 num=int(NN)·preset=parts[-1]) → `run_promo.bat <num> <preset>`. **run_promo.bat 인자모드**: 인자 있으면 비대화식(프롬프트·pause 생략)+프리셋 오버라이드+결과 `RESULTS/{NN}_{label}_{preset}_promo/` 복사(worker `result_after` 탐지). 인자 없으면 대화식 유지(비파괴). **계약/인수인계 정본=`shorts/promo/PANEL_INTEGRATION_HANDOFF.md`**(promo_list.py 출력포맷·label에 `_` 금지·run_promo 2인자 유지). 함정: promo 콘텐츠·스타일=promo task 소유, 패널은 호출만.
 
 **SNS 품질 — 후킹·레이아웃·오디오·닫기 (2026-06-13, 021 품질점검발, 재렌더 검증)**
 - **오프닝 후킹**: `shorts/src/components/OpeningHook.tsx` — 검정 → **다크 그라데이션 + 움직이는 주황 글로우 + 주황 키커 pill(채널 태그라인) + 빠른 큰 헤드라인**. `Root.tsx` `OPENING_SEC` 1.5→1.1→**2.0**(후킹 읽을 시간 확보).
@@ -265,6 +261,11 @@
 **함정**
 - 허브 경로파일은 git 비추적 → 새 PC마다 설정 필요.
 - 동기화는 비파괴 병합(삭제 X). 중복정리는 `--apply` 줘야 실삭제.
+
+**새 PC/다른 사용자 통째 이전 + 컴맹 한계 (2026-06-24 정리)**
+- 가장 단순 = `CODEX_VIDEO_DESK/부사수PC_원클릭_셋업.bat` 1파일(빈PC 복사→더블클릭): git/node/python(winget)→clone(`C:\PhoneSpot\phonespot_cardnews`)→`SETUP_FULL_PRODUCER.bat`(deps+chromium+임베딩~1GB)→`00_PHONE_SPOT_PANEL.bat`. 모델=각 PC 완전 독립 생산기(원격워커 폐기, MULTI_PC 가이드 정본).
+- git 비전파라 따로: `_secrets/`(키·토큰, 수동복사·GitHub금지)·`cardnews/images`·`output`(LAN/Drive)·라이브러리(Drive 허브).
+- **★ 컴맹 한계(검증)**: 진짜 컴맹엔 2벽 — ① private repo면 clone에 GitHub 로그인 ② `_secrets` 수동복사(+winget UAC·PATH 재실행). 현실안 3: ⓐ 기술자 1회 원격셋업 후 패널 바로가기(`작업표시줄에_패널_고정.bat`) ⓑ 사전셋업 폴더/USB 통째전달(clone·다운·키 생략) ⓒ 토큰내장/공개+_secrets동봉(보안 트레이드오프). **미구현=종민 결정 대기.**
 
 ---
 
@@ -632,3 +633,4 @@ rdnews/scripts/update_content_guide.py`로 §2 발행인덱스 자동 재생성,
 - 2026-06-24 (세션, 수정): **★ RCOL 이동 시 수식 내 하드코딩 컬럼문자 함정 (G단원, buildDashboardV2).** 우측열 시작을 RCOL 8(H)→9(I)로 밀어 좌우 간격칸을 만들 때, `getRange(r, RCOL+n)` 배치는 자동 이동했으나 **수식 문자열 안의 하드코딩 컬럼문자(`=I-J`, `=SUM(I..)`, `IF(J=0,..,I/J)`)는 안 따라가** 실비용 차이=#VALUE!(I열=채널명 텍스트를 뺌), 카톡당비용="-"(광고비/기간텍스트) 발생. **정적 xlsx 미리보기는 값만 있어 이 수식버그를 못 잡음 → 라이브 배포 후에야 노출**(UI 워크플로의 "라이브 수식은 실시트 1회 확인" 단계가 정확히 이걸 잡는 지점). 수정: `const colL = n => String.fromCharCode(64+n)` 헬퍼로 모든 우측 수식을 RCOL 상대문자로 전환(실비용 차이/합계, 카톡 카톡당비용) + 조건부서식 L12:L17. **교훈: 컬럼 앵커(RCOL 등) 이동 시 배치뿐 아니라 수식 문자열 내부 컬럼문자도 전수 점검. 가능하면 하드코딩 대신 colL(RCOL+n) 사용.**
 - 2026-06-24 (세션, 채널별효율 재설계): **채널별 효율 = 실비용과 동일 채널순 + 소진금액/문의/문의당비용 (G단원, buildDashboardV2).** 사장님 결정: 양쪽(채널별효율·실비용대조) 채널 종류·순서 통일(**메타/네이버/구글/카카오/당근**). 채널별효율 컬럼을 `채널/노출/클릭/광고비/카톡클릭/카톡당CPC/앱문의`(7) → **`채널/노출/클릭/소진금액/문의/문의당비용`(6)** 으로 교체. ① **소진금액** = `결제내역`(카드결제) per channel, 전역기간 N2/O2 (실비용은 monthStart~TODAY 고정인 반면 채널효율은 L2 기간 따라감). API광고비·카톡클릭·카톡당CPC·앱문의 컬럼 제거. ② **문의**: 비당근 = GA4 `kakao_chat_click`(기존 카톡클릭 신호 재활용), **당근만 별도식** = `당근+`!P열(카톡문의)+`당근+`!Q열(앱문의) 합(channels 항목에 `danggn:true` 플래그). ③ **문의당비용** = 소진금액÷문의. **부수효과**: 앱문의 컬럼이 당근 문의로 흡수돼 좌측이 6컬럼(A~F) 복귀 → **RCOL 9→8 되돌림**(우측 H~M, G=좌우 간격칸 단일화, 직전 세션의 빈G+좁H 이중간격 해소), 좌측 소제목 폭 7→기본6, 폭 B~F=80/G=26(간격)/H=110/I~M=108, 조건부서식 실비용차이 L12:L17→K12:K17. colL(RCOL+n) 헬퍼 덕에 우측 수식은 RCOL 변경에 자동 대응. **★ 미검증(라이브 확인 필요)**: 소진금액이 `결제내역` 기준이라 결제내역이 **월 단위 결제**면 짧은 기간(어제/7일)에 0으로 뜰 수 있음 → 그 경우 소진금액만 monthStart 고정 옵션 검토. 정적 xlsx 미리보기로는 라이브 SUMIFS(소진/문의/카톡클릭) 검증 불가 → 배포 후 실시트 확인 단계에서 점검.
 - 2026-06-24 (세션, 유튜브/SNS 월별 수정): **유튜브 팔로워 일자별 보존 + SNS 월별 표 연도참조 깨짐 수정 (G·H단원).** ① **팔로워 덮어쓰기 버그** (`apps_script/youtube_sync.js` `fetchYouTubeAnalyticsDaily`): 유튜브는 매 동기화 시 전 영상을 재처리하며 기존 행을 `getRange(r,1,1,7)`로 A~G 통째 setValues → **G(팔로워)가 매번 현재 구독자수로 전 행 덮임** → 일자별 증감 추적 불가. 수정 = 갱신을 `getRange(r,1,1,6)`(A~F: 날짜/포맷/주제/링크/조회수/좋아요)로 축소, **G는 보존**(신규 append 행만 당시 구독자수 기록 → 그 시점 스냅샷 고정). 인스타(`meta-sync.js` `syncInstagram_`)는 recent 모드(최근7일만 fetch)라 옛 행 G를 안 건드려 우연히 보존됐던 것 = 동일 정책으로 명시화. **★ 한계**: 기존 유튜브 행은 이미 동일값으로 균질화돼 과거 이력 복구 불가(미저장), 수정 이후부터 증감 추적. ② **월별 분석(K:P 합계표) 작동 안 함** (`Code.js` `repairSNSMonthlySummaries`, 4개 SNS 시트 스레드/인스타/유튜브/틱톡): 월/연 수식이 `YEAR('통합대시보드'!$B$2)` 참조했는데 buildDashboardV2 재설계로 **B2가 날짜→광고비 값(병합 A2:B2)** 으로 바뀌어 YEAR(숫자)=엉뚱한 연도 → COUNTIFS/SUMIFS 매칭 0. 수정 = `YEAR('통합대시보드'!$B$2)` 3곳 → **`YEAR(TODAY())`**. 월말 팔로워(P열)는 G(팔로워) per-date 보존과 맞물려 정상 집계. 반영 = 배포 후 메뉴 `📊 SNS 월별 합계 수식 복구` 1회. **교훈**: 대시보드 셀 재배치 시 그 셀을 참조하는 외부 시트 수식(여기선 SNS 월별 표의 B2)도 깨질 수 있음 — 좌표 의존 참조 전수 점검(아침브리핑 A6:F8, 월별 B2 사례 반복).
+- 2026-06-24: **배너 삭제 + 패널 v39 3존 재설계 + 타이포 패널통합 v38 (A·C·D단원).** 배너=메타 자동확장 중복·단일정지 가치낮음으로 제거(server/worker/Root, 잔여파일 git rm). 패널=가운데 트랙세그먼트 + 모니터 `#commonMonitor` 분리(grid폭 hack 제거). 타이포=promo 무수정 패널연결(promo_list/promo_render·run_promo.bat 인자모드·slug 인코딩), 인수인계=`shorts/promo/PANEL_INTEGRATION_HANDOFF.md`. 멀티PC 이전/컴맹 한계 D단원 정리. ※ server.py 편집 bash-python(I단원), 검증 호스트 Read.
