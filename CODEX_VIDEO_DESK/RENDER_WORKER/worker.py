@@ -202,6 +202,8 @@ def commands_for(job: dict) -> list[list[str]]:
         ]
     if job["action"] == "video_render_selected":
         return [["cmd", "/c", str(SHORTS / "run_codex_casual.bat"), slug]]
+    if job["action"] == "banner_ad_render":
+        return [["cmd", "/c", str(SHORTS / "run_banner.bat"), slug]]
     raise RuntimeError(f"unsupported worker action: {job['action']}")
 
 

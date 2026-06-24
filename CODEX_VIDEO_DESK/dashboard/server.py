@@ -1853,6 +1853,26 @@ class Handler(BaseHTTPRequestHandler):
                     "message": "선택 영상 렌더를 대기열에 등록했습니다.",
                 })
                 return
+            if action == "banner_ad_save":
+                slug_now = validate_slug(slug)
+                payload = {
+                    "slug": slug_now,
+                    "format": str(data.get("format") or "9x16"),
+                    "captionsOn": bool(data.get("captionsOn")),
+                    "banners": data.get("banners") or [],
+                    "cta": data.get("cta") or {},
+                    "ad": data.get("ad") or {},
+                }
+                out = CARD_OUTPUT / slug_now / "banner_input.json"
+                out.parent.mkdir(parents=True, exist_ok=True)
+                out.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+                json_response(self, {"ok": True, "message": f"배너 입력 저장: {len(payload['banners'])}장"})
+                return
+            if action == "banner_ad_render":
+                slug_now = validate_slug(slug)
+                job = REMOTE_QUEUE.enqueue("banner_ad_render", slug_now, str(data.get("target_worker") or ""))
+                json_response(self, {"ok": True, "queued": True, "job": job, "message": "배너광고 렌더를 대기열에 등록했습니다."})
+                return
             if action == "remote_job_cancel":
                 job = REMOTE_QUEUE.cancel(str(data.get("job_id") or ""))
                 json_response(self, {"ok": True, "job": job})
