@@ -18,6 +18,7 @@
 - 3s=4.5cr / 4s=6cr / 5s=7.5cr (≈1.5cr/s). 무음(`sound:"off"`)이 더 쌈 → 콩트는 무음+자막이라 항상 off.
 - 002 1편(3컷 11초)=**16.5cr**. STARTER 270cr/월 ≈ 영상 18편. cr당 ~$0.07 → 1편 ~$1.2.
 - ffmpeg 합치기·자막·엔딩 = **크레딧 0**(로컬 처리).
+- **★ 크레딧 보고 룰 (종민, 2026-06-24)**: 모든 Higgsfield `generate_video`/`generate_image`/`generate_audio` 호출 **직후 `balance` 조회 → 잔액(credits)을 종민에게 매번 보고**. preflight(`get_cost`)와 별개로, 실제 차감된 뒤 남은 잔액을 명시할 것.
 
 **3. 한글 자막 = 무조건 ffmpeg 후처리 (영상 in-image 한글 ❌).**
 - Kling 생성 영상은 한글 글자가 깨짐 → 프롬프트에 한글 텍스트 넣지 말 것. 영상은 비주얼만, **한글은 .ass 자막으로 후처리 burn**.
@@ -126,6 +127,6 @@ job2 = mcp__83aadcc7-...__generate_video(
 - **슬러그**: `NNN_<ad|viral>_<theme>` (예 `002_ad_jeongchalje` / `003_viral_jeongchalje`). 카드뉴스 `NNN_type_topic` 철학 계승.
   - track = ad(광고·전환) / viral(바이럴·조회). theme = 정찰제·효도폰·가족·첫폰·갤vs아이폰·비대면·단통법·매장방문(README §6).
   - **타겟·시즌·채널은 폴더 ❌** → `concepts/INDEX.md` 표 컬럼으로만(다축이라 폴더 쪼개면 중복·이동 지옥).
-- **결과물**: `out_promo_ai/<slug>_<len>s.mp4` (예 `002_ad_jeongchalje_15s.mp4`). 중간본은 `out_promo_ai/_archive_versions/`.
+- **결과물**: `out_promo_ai/<slug>_<len>s_<YYYYMMDD_HHMM>.mp4` — **덮어쓰기 ❌, 매 생성 타임스탬프 suffix로 버전 누적**(예 `002_ad_jeongchalje_15s_20260623_0936.mp4`). 최신본은 INDEX에 기록. 폐기 중간본만 `out_promo_ai/_archive_versions/`.
 - **자산(재사용)**: `assets/references/store`(매장)·`/products`(제품) · `assets/audio/{bgm,sfx,narration}` · `shots/<slug>/`(생성 원본컷) · `assets/voices.md`(보이스ID).
 - **인덱스**: `concepts/INDEX.md` = 전체 영상 1표(중복 회피·성과 학습). 신규 빌드 시 1줄 추가. 20편↑이면 시트 승격.

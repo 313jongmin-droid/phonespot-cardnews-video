@@ -1,75 +1,1031 @@
 {
-  "slug": "015_balpum",
-  "title_short": "발품 vs 조회",
-  "video_title": "발품 vs 조회",
-  "preset": "data",
-  "hook_pattern": "비교형",
-  "channel_name": "폰스팟",
-  "channel_tagline": "광교 휴대폰 정찰제",
-  "publication_date": "2026.05.29",
+  "slug": "035_news_iphone18_price_hike",
+  "title_short": "아이폰 오르기 전에 사야 하나?",
+  "video_title": "아이폰 오르기 전에 사야 하나?",
+  "publication_date": "2026.06.23",
+  "sources": "디지털투데이 2026.06.18 + ZDNet코리아 + 휴대폰성지 폰스팟 자료",
+  "channel_name": "휴대폰성지 폰스팟",
+  "channel_tagline": "휴대폰성지 IT 브리핑",
   "opening": {
-    "line1": "매장 세 곳",
-    "line2": "vs 조회 한 번",
-    "style": "oversize",
-    "sfx": "whoosh"
+    "line1": "휴대폰성지 IT 브리핑",
+    "line2": "아이폰 오르기 전에 사야 하나?"
   },
   "hook": {
-    "style": "barcompare",
-    "sfx": "pop",
-    "caption_chunks": [
-      "발품",
-      "한참 vs",
-      "조회 한 번"
+    "tts": "팀 쿡 애플 CEO가 가격 인상이 불가피하다고 직접 밝혔습니다. 곧 나올 아이폰18부터 값이 오를 가능성이 커졌습니다. 사려고 마음먹었다면 타이밍을 따져볼 때입니다.",
+    "caption_body": [
+      "아이폰18",
+      "가격 인상 수순"
     ],
-    "tts": "발품 한참 vs 조회 한 번."
+    "caption_emphasis": [
+      "가격 인상"
+    ],
+    "headline_lines": [
+      {
+        "text": "아이폰18"
+      },
+      {
+        "text": "가격 인상 수순",
+        "accent": true
+      }
+    ],
+    "meta": "출처: 휴대폰성지 폰스팟 자료",
+    "topic": "뉴스",
+    "background_image": "",
+    "caption_chunks": [
+      "팀 쿡 애플 CEO가 가격 인상이 불가피하다고",
+      "직접 밝혔습니다. 곧 나올 아이폰18부터",
+      "값이 오를 가능성이 커졌습니다.",
+      "사려고 마음먹었다면 타이밍을 따져볼 때입니다."
+    ],
+    "chunk_visuals": [
+      {
+        "type": "illust",
+        "value": "event_period_8cafdac4"
+      },
+      {
+        "type": "image",
+        "value": "photos/애플_아이폰17.JPG"
+      },
+      {
+        "type": "illust",
+        "value": "forecast"
+      },
+      {
+        "type": "illust",
+        "value": "cpt_925e60e4"
+      }
+    ],
+    "stat": {
+      "label": "",
+      "value": "",
+      "note": ""
+    },
+    "display_chunks": [
+      "팀 쿡 애플 CEO가 가격 인상이 불가피하다고",
+      "직접 밝혔습니다 곧 나올 아이폰18부터",
+      "값이 오를 가능성이 커졌습니다",
+      "사려고 마음먹었다면 타이밍을 따져볼 때입니다"
+    ],
+    "_codex_caption_lockstep": {
+      "version": 2,
+      "compiler": "korean_caption_compiler_v2",
+      "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+      "chunk_count": 4
+    },
+    "_codex_contextual_narrative": true,
+    "_codex_sync_mode": "global999_tts_caption_lockstep",
+    "tts_chunk_weights": [
+      2338.75,
+      2661.25,
+      2227.12,
+      2323.96
+    ],
+    "_tts_timing": {
+      "mode": "word_boundary_text_align",
+      "windows": [
+        {
+          "start_ms": 0.0,
+          "end_ms": 2338.75,
+          "duration_ms": 2338.75
+        },
+        {
+          "start_ms": 2338.75,
+          "end_ms": 5000.0,
+          "duration_ms": 2661.25
+        },
+        {
+          "start_ms": 5000.0,
+          "end_ms": 7227.12,
+          "duration_ms": 2227.12
+        },
+        {
+          "start_ms": 7227.12,
+          "end_ms": 9551.08,
+          "duration_ms": 2323.96
+        }
+      ],
+      "boundary_count": 22,
+      "caption_signature": "a8942f2ed99dd9ba5bf02871b622f713c602e14e74a042331a125bec361a079d"
+    }
   },
   "facts": [
     {
-      "id": "problem",
-      "style": "glitch",
-      "sfx": "glitch",
-      "caption_chunks": [
-        "매장마다",
-        "말이",
-        "다르고"
+      "tts": "AI 확산으로 메모리·램 수요가 폭증하면서 부품값이 크게 올랐습니다. 그동안 애플이 떠안던 원가 부담이 한계에 달했다는 설명입니다. 팀 쿡은 \"40년 넘게 이런 상황은 본 적 없다\"고 했습니다.",
+      "caption_body": [
+        "이유",
+        "메모리·램 값 급등"
       ],
-      "tts": "매장마다 말이 다르고."
+      "caption_emphasis": [
+        "메모리·램"
+      ],
+      "headline_lines": [
+        {
+          "text": "이유"
+        },
+        {
+          "text": "메모리·램 값 급등",
+          "accent": true
+        }
+      ],
+      "meta": "출처: 디지털투데이",
+      "topic": "뉴스",
+      "background_image": "",
+      "caption_chunks": [
+        "AI 확산으로 메모리·램 수요가 폭증하면서",
+        "부품값이 크게 올랐습니다.",
+        "그동안 애플이 떠안던 원가 부담이 한계에",
+        "달했다는 설명입니다.",
+        "팀 쿡은 \"40년 넘게 이런 상황은 본 적 없다\"고 했습니다."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "memory_chip"
+        },
+        {
+          "type": "illust",
+          "value": "part_cost_a4d4e5f0"
+        },
+        {
+          "type": "illust",
+          "value": "chart_up"
+        },
+        {
+          "type": "illust",
+          "value": "cpt_28acbe43"
+        },
+        {
+          "type": "illust",
+          "value": "cpt_f5d0e5e2"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_1",
+      "display_chunks": [
+        "AI 확산으로 메모리·램 수요가 폭증하면서",
+        "부품값이 크게 올랐습니다",
+        "그동안 애플이 떠안던 원가 부담이 한계에",
+        "달했다는 설명입니다",
+        "팀 쿡은 \"40년 넘게 이런 상황은 본 적 없다\"고 했습니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 5
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        2338.75,
+        2053.87,
+        1892.59,
+        1637.33,
+        2904.91
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 2338.75,
+            "duration_ms": 2338.75
+          },
+          {
+            "start_ms": 2338.75,
+            "end_ms": 4392.62,
+            "duration_ms": 2053.87
+          },
+          {
+            "start_ms": 4392.62,
+            "end_ms": 6285.21,
+            "duration_ms": 1892.59
+          },
+          {
+            "start_ms": 6285.21,
+            "end_ms": 7922.54,
+            "duration_ms": 1637.33
+          },
+          {
+            "start_ms": 7922.54,
+            "end_ms": 10827.45,
+            "duration_ms": 2904.91
+          }
+        ],
+        "boundary_count": 29,
+        "caption_signature": "f327fc2551f382f0488152d997fe6391ddd8c090073c28c3476d895ec626bd65"
+      }
     },
     {
-      "id": "solution",
-      "style": "counter",
-      "sfx": "tick",
-      "caption_chunks": [
-        "시간",
-        "버리고",
-        "헷갈림"
+      "tts": "외신·업계는 아이폰18 프로 시작가가 200만원을 넘어 215~220만원대까지 갈 수 있다고 봅니다. 다만 애플은 인상 폭과 적용 시점은 아직 공개하지 않았습니다. 확정이 아니라 전망입니다.",
+      "caption_body": [
+        "얼마나",
+        "프로 200만원 넘본다"
       ],
-      "tts": "시간 버리고 헷갈리기만."
+      "caption_emphasis": [
+        "프로 200만원"
+      ],
+      "headline_lines": [
+        {
+          "text": "얼마나"
+        },
+        {
+          "text": "프로 200만원 넘본다",
+          "accent": true
+        }
+      ],
+      "meta": "출처: ZDNet코리아",
+      "topic": "뉴스",
+      "background_image": "",
+      "caption_chunks": [
+        "외신·업계는 아이폰18 프로",
+        "시작가가 200만원을",
+        "넘어 215~220만원대까지 갈 수 있다고 봅니다.",
+        "다만 애플은 인상 폭과 적용 시점은 아직 공개하지 않았습니다.",
+        "확정이 아니라 전망입니다."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "image",
+          "value": "photos/애플_아이폰_2개.JPG"
+        },
+        {
+          "type": "illust",
+          "value": "start_price_df144b85"
+        },
+        {
+          "type": "illust",
+          "value": "final_update"
+        },
+        {
+          "type": "illust",
+          "value": "mid_release_98cab19a"
+        },
+        {
+          "type": "mascot",
+          "value": "suspicious"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_2",
+      "display_chunks": [
+        "외신·업계는 아이폰18 프로",
+        "시작가가 200만원을",
+        "넘어 215~220만원대까지 갈 수 있다고 봅니다",
+        "다만 애플은 인상 폭과 적용 시점은 아직 공개하지 않았습니다",
+        "확정이 아니라 전망입니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 5
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        1467.25,
+        985.92,
+        3576.75,
+        3838.04,
+        1241.16
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 1467.25,
+            "duration_ms": 1467.25
+          },
+          {
+            "start_ms": 1467.25,
+            "end_ms": 2453.17,
+            "duration_ms": 985.92
+          },
+          {
+            "start_ms": 2453.17,
+            "end_ms": 6029.92,
+            "duration_ms": 3576.75
+          },
+          {
+            "start_ms": 6029.92,
+            "end_ms": 9867.96,
+            "duration_ms": 3838.04
+          },
+          {
+            "start_ms": 9867.96,
+            "end_ms": 11109.12,
+            "duration_ms": 1241.16
+          }
+        ],
+        "boundary_count": 25,
+        "caption_signature": "c9124886d550485c3846577609d9edc7ba4f59044a46acc9cfc9acc631d9eed4"
+      }
     },
     {
-      "id": "trust",
-      "style": "statgrid",
-      "sfx": "pop",
-      "caption_chunks": [
-        "폰스팟",
-        "한 번에",
-        "비교 끝"
+      "tts": "맥과 아이패드 등 다른 애플 제품도 같은 인상 흐름에 놓였습니다. 삼성전자, MS, 닌텐도 등도 램값 급등 영향을 언급했습니다. 메모리 수급이 안 풀리면 IT 기기 전반으로 번질 수 있습니다.",
+      "caption_body": [
+        "아이폰만",
+        "아니다"
       ],
-      "tts": "폰스팟은 한 번에 비교 끝."
+      "caption_emphasis": [
+        "아니다"
+      ],
+      "headline_lines": [
+        {
+          "text": "아이폰만"
+        },
+        {
+          "text": "아니다",
+          "accent": true
+        }
+      ],
+      "meta": "출처: 디지털투데이",
+      "topic": "뉴스",
+      "background_image": "",
+      "caption_chunks": [
+        "맥과 아이패드 등 다른 애플 제품도 같은",
+        "인상 흐름에 놓였습니다.",
+        "삼성전자, MS, 닌텐도 등도 램값 급등",
+        "영향을 언급했습니다.",
+        "메모리 수급이 안 풀리면 IT 기기 전반으로 번질 수 있습니다."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        {
+          "type": "illust",
+          "value": "samsung_korea_04b00795"
+        },
+        {
+          "type": "illust",
+          "value": "weekly_sunday_82b74c0a"
+        },
+        {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        {
+          "type": "illust",
+          "value": "device_data_transfer"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_3",
+      "display_chunks": [
+        "맥과 아이패드 등 다른 애플 제품도 같은",
+        "인상 흐름에 놓였습니다",
+        "삼성전자, MS, 닌텐도 등도 램값 급등",
+        "영향을 언급했습니다",
+        "메모리 수급이 안 풀리면 IT 기기 전반으로 번질 수 있습니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 5
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        2074.67,
+        1719.33,
+        2702.46,
+        1672.54,
+        3309.88
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 2074.67,
+            "duration_ms": 2074.67
+          },
+          {
+            "start_ms": 2074.67,
+            "end_ms": 3794.0,
+            "duration_ms": 1719.33
+          },
+          {
+            "start_ms": 3794.0,
+            "end_ms": 6496.46,
+            "duration_ms": 2702.46
+          },
+          {
+            "start_ms": 6496.46,
+            "end_ms": 8169.0,
+            "duration_ms": 1672.54
+          },
+          {
+            "start_ms": 8169.0,
+            "end_ms": 11478.88,
+            "duration_ms": 3309.88
+          }
+        ],
+        "boundary_count": 28,
+        "caption_signature": "a109ecd6a5e6d04e043707140a681b04f8918b52142ede0e810b8e736af34b3e"
+      }
+    },
+    {
+      "tts": "오르기 전에 사는 게 이득일 수 있지만, 월 납부금이 아니라 실구매가와 지원금을 함께 봐야 합니다. 현재 모델 재고가와 공통지원금·선택약정을 비교해 진짜 부담을 계산하는 게 먼저입니다.",
+      "caption_body": [
+        "그래서",
+        "지금 따질 것"
+      ],
+      "caption_emphasis": [
+        "지금 따질 것"
+      ],
+      "headline_lines": [
+        {
+          "text": "그래서"
+        },
+        {
+          "text": "지금 따질 것",
+          "accent": true
+        }
+      ],
+      "meta": "출처: 휴대폰성지 폰스팟 자료",
+      "topic": "뉴스",
+      "background_image": "",
+      "caption_chunks": [
+        "오르기 전에 사는 게 이득일 수 있지만, 월",
+        "납부금이 아니라 실구매가와 지원금을 함께 봐야 합니다.",
+        "현재 모델 재고가와 공통지원금·선택약정을",
+        "비교해 진짜 부담을 계산하는 게 먼저입니다."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "gift_voucher"
+        },
+        {
+          "type": "illust",
+          "value": "payment_fall_8fb48590"
+        },
+        {
+          "type": "illust",
+          "value": "telecom_discount_compare"
+        },
+        {
+          "type": "mascot",
+          "value": "serious"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_4",
+      "display_chunks": [
+        "오르기 전에 사는 게 이득일 수 있지만, 월",
+        "납부금이 아니라 실구매가와 지원금을 함께 봐야 합니다",
+        "현재 모델 재고가와 공통지원금·선택약정을",
+        "비교해 진짜 부담을 계산하는 게 먼저입니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 4
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        2065.83,
+        3207.05,
+        2130.29,
+        2139.09
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 2065.83,
+            "duration_ms": 2065.83
+          },
+          {
+            "start_ms": 2065.83,
+            "end_ms": 5272.88,
+            "duration_ms": 3207.05
+          },
+          {
+            "start_ms": 5272.88,
+            "end_ms": 7403.17,
+            "duration_ms": 2130.29
+          },
+          {
+            "start_ms": 7403.17,
+            "end_ms": 9542.26,
+            "duration_ms": 2139.09
+          }
+        ],
+        "boundary_count": 26,
+        "caption_signature": "e700f90752cb63cca4aa17e71b558bf39e699953aec09fa81939d583ac9110f2"
+      }
     }
   ],
   "cta": {
-    "style": "kinetic-box",
-    "sfx": "ding",
-    "caption_chunks": [
-      "발품 그만",
-      "조회로"
+    "tts": "휴대폰 구매할 땐? 지원금부터 무료로 조회해보세요.",
+    "caption_body": [
+      "휴대폰 구매할 땐?",
+      "지원금부터 무료로 조회해보세요"
     ],
-    "tts": "발품 그만, 조회로 끝내세요.",
+    "caption_emphasis": [
+      "지원금부터 무료로 조회해보세요"
+    ],
+    "headline_lines": [
+      {
+        "text": "휴대폰 구매할 땐?"
+      },
+      {
+        "text": "지원금부터 무료로 조회해보세요",
+        "accent": true
+      }
+    ],
+    "meta": "휴대폰성지 폰스팟",
+    "topic": "뉴스",
+    "background_image": "",
+    "caption_chunks": [
+      "휴대폰 구매할 땐?",
+      "지원금부터 무료로 조회해보세요"
+    ],
+    "chunk_visuals": [
+      {
+        "type": "illust",
+        "value": "smartphone"
+      },
+      {
+        "type": "logo",
+        "value": null
+      }
+    ],
+    "stat": {
+      "label": "",
+      "value": "",
+      "note": ""
+    },
     "kakao": "@휴대폰성지폰스팟",
+    "location": "내 손 안의 성지찾기, 폰스팟",
     "litt": "litt.ly/phonespot",
-    "location": "광교호수공원 B1-47"
+    "display_chunks": [
+      "휴대폰 구매할 땐?",
+      "지원금부터 무료로 조회해보세요"
+    ],
+    "_codex_caption_lockstep": {
+      "version": 2,
+      "compiler": "korean_caption_compiler_v2",
+      "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+      "chunk_count": 1
+    },
+    "_codex_contextual_narrative": true,
+    "_codex_sync_mode": "global999_tts_caption_lockstep",
+    "_codex_fixed_cta": true,
+    "_codex_narration_source": "fixed_cta_contract",
+    "tts_chunk_weights": [
+      1707.75,
+      1804.54
+    ],
+    "_tts_timing": {
+      "mode": "word_boundary_text_align",
+      "windows": [
+        {
+          "start_ms": 0.0,
+          "end_ms": 1707.75,
+          "duration_ms": 1707.75
+        },
+        {
+          "start_ms": 1707.75,
+          "end_ms": 3512.29,
+          "duration_ms": 1804.54
+        }
+      ],
+      "boundary_count": 6,
+      "caption_signature": "db4c57a05254654841d0c63b2eea20bad43e358510298ef607bf41bcae3b9e5d"
+    }
   },
-  "music_src": "music/calm_01__00.mp3",
-  "music_start": 0
+  "_auto_generated": true,
+  "_chunk_logic_v2": true,
+  "_note": "build_script.py 자동 생성 (v2 로직): 시퀀스 내 이미지 순환 + 마스코트 짝수 시퀀스만.",
+  "_codex_global_999_quality": true,
+  "_codex_common_quality_logic": true,
+  "_codex_sync_quality_logic": true,
+  "_codex_captions_narration_priority": false,
+  "_codex_common_quality_note": "Global 001-999 rule: screen chunks are rebuilt as an ordered, lossless partition of captions.md narration; curated visuals are rebalanced without discarding quality rules.",
+  "_codex_uploaded_illustrations": [
+    {
+      "section": "hook",
+      "chunk": 4,
+      "variant": "cpt_925e60e4"
+    },
+    {
+      "section": "fact_1",
+      "chunk": 2,
+      "variant": "part_cost_a4d4e5f0"
+    },
+    {
+      "section": "fact_1",
+      "chunk": 4,
+      "variant": "cpt_28acbe43"
+    },
+    {
+      "section": "fact_1",
+      "chunk": 5,
+      "variant": "cpt_f5d0e5e2"
+    },
+    {
+      "section": "fact_2",
+      "chunk": 2,
+      "variant": "start_price_df144b85"
+    }
+  ],
+  "_codex_semantic_visual_match": {
+    "version": 1,
+    "policy": "Match chunks to GPT source images using prompt.md descriptions, then fallback to tagged reusable illustrations.",
+    "changes": [
+      {
+        "section": "hook",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "event_period_8cafdac4"
+        },
+        "context": "팀 쿡 애플 CEO가 가격 인상이 불가피하다고 직접 밝혔습니다 곧 나올 아이폰18부터 아이폰18 가격 인상 수순 ['아이폰18', '가격 인상 수순'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "hook",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "image",
+          "value": "photos/애플_아이폰17.JPG"
+        },
+        "context": "팀 쿡 애플 CEO가 가격 인상이 불가피하다고 직접 밝혔습니다 곧 나올 아이폰18부터 값이 오를 가능성이 커졌습니다 아이폰18 가격 인상 수순 ['아이폰18', '가격 인상 수순'] 뉴스",
+        "reason": "photo lexical dist=1 gen=0: 애플_아이폰17.JPG"
+      },
+      {
+        "section": "hook",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "forecast"
+        },
+        "context": "직접 밝혔습니다 곧 나올 아이폰18부터 값이 오를 가능성이 커졌습니다 사려고 마음먹었다면 타이밍을 따져볼 때입니다 아이폰18 가격 인상 수순 ['아이폰18', '가격 인상 수순'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "hook",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "cpt_925e60e4"
+        },
+        "to": {
+          "type": "illust",
+          "value": "price_hike"
+        },
+        "context": "값이 오를 가능성이 커졌습니다 사려고 마음먹었다면 타이밍을 따져볼 때입니다 아이폰18 가격 인상 수순 ['아이폰18', '가격 인상 수순'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "memory_chip"
+        },
+        "context": "AI 확산으로 메모리·램 수요가 폭증하면서 부품값이 크게 올랐습니다 이유 메모리·램 값 급등 ['이유', '메모리·램 값 급등'] 뉴스",
+        "reason": "illust score 27 (content n/a)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "chart_up"
+        },
+        "context": "부품값이 크게 올랐습니다 그동안 애플이 떠안던 원가 부담이 한계에 달했다는 설명입니다 이유 메모리·램 값 급등 ['이유', '메모리·램 값 급등'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "cpt_28acbe43"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "그동안 애플이 떠안던 원가 부담이 한계에 달했다는 설명입니다 팀 쿡은 \"40년 넘게 이런 상황은 본 적 없다\"고 했습니다 이유 메모리·램 값 급등 ['이유', '메모리·램 값 급등'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 5,
+        "from": {
+          "type": "illust",
+          "value": "cpt_f5d0e5e2"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "달했다는 설명입니다 팀 쿡은 \"40년 넘게 이런 상황은 본 적 없다\"고 했습니다 이유 메모리·램 값 급등 ['이유', '메모리·램 값 급등'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "image",
+          "value": "photos/애플_아이폰_2개.JPG"
+        },
+        "context": "외신·업계는 아이폰18 프로 시작가가 200만원을 얼마나 프로 200만원 넘본다 ['얼마나', '프로 200만원 넘본다'] 뉴스",
+        "reason": "photo lexical dist=1 gen=0: 애플_아이폰_2개.JPG"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "start_price_df144b85"
+        },
+        "to": {
+          "type": "illust",
+          "value": "newspaper"
+        },
+        "context": "외신·업계는 아이폰18 프로 시작가가 200만원을 넘어 215~220만원대까지 갈 수 있다고 봅니다 얼마나 프로 200만원 넘본다 ['얼마나', '프로 200만원 넘본다'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "final_update"
+        },
+        "context": "시작가가 200만원을 넘어 215~220만원대까지 갈 수 있다고 봅니다 다만 애플은 인상 폭과 적용 시점은 아직 공개하지 않았습니다 얼마나 프로 200만원 넘본다 ['얼마나', '프로 200만원 넘본다'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "basic_fold_202d754f"
+        },
+        "to": {
+          "type": "illust",
+          "value": "mid_release_98cab19a"
+        },
+        "context": "넘어 215~220만원대까지 갈 수 있다고 봅니다 다만 애플은 인상 폭과 적용 시점은 아직 공개하지 않았습니다 확정이 아니라 전망입니다 얼마나 프로 200만원 넘본다 ['얼마나', '프로 200만원 넘본다'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "맥과 아이패드 등 다른 애플 제품도 같은 인상 흐름에 놓였습니다 아이폰만 아니다 ['아이폰만', '아니다'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "samsung_korea_04b00795"
+        },
+        "context": "맥과 아이패드 등 다른 애플 제품도 같은 인상 흐름에 놓였습니다 삼성전자, MS, 닌텐도 등도 램값 급등 아이폰만 아니다 ['아이폰만', '아니다'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "weekly_sunday_82b74c0a"
+        },
+        "context": "인상 흐름에 놓였습니다 삼성전자, MS, 닌텐도 등도 램값 급등 영향을 언급했습니다 아이폰만 아니다 ['아이폰만', '아니다'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "basic_fold_202d754f"
+        },
+        "to": {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        "context": "삼성전자, MS, 닌텐도 등도 램값 급등 영향을 언급했습니다 메모리 수급이 안 풀리면 IT 기기 전반으로 번질 수 있습니다 아이폰만 아니다 ['아이폰만', '아니다'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 5,
+        "from": {
+          "type": "illust",
+          "value": "battery_capacity"
+        },
+        "to": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "영향을 언급했습니다 메모리 수급이 안 풀리면 IT 기기 전반으로 번질 수 있습니다 아이폰만 아니다 ['아이폰만', '아니다'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "gift_voucher"
+        },
+        "context": "오르기 전에 사는 게 이득일 수 있지만, 월 납부금이 아니라 실구매가와 지원금을 함께 봐야 합니다 그래서 지금 따질 것 ['그래서', '지금 따질 것'] 뉴스",
+        "reason": "illust score 24 (content n/a)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "payment_fall_8fb48590"
+        },
+        "context": "오르기 전에 사는 게 이득일 수 있지만, 월 납부금이 아니라 실구매가와 지원금을 함께 봐야 합니다 현재 모델 재고가와 공통지원금·선택약정을 그래서 지금 따질 것 ['그래서', '지금 따질 것'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "telecom_discount_compare"
+        },
+        "context": "납부금이 아니라 실구매가와 지원금을 함께 봐야 합니다 현재 모델 재고가와 공통지원금·선택약정을 비교해 진짜 부담을 계산하는 게 먼저입니다 그래서 지금 따질 것 ['그래서', '지금 따질 것'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      }
+    ],
+    "weak": [
+      {
+        "section": "fact_1",
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "그동안 애플이 떠안던 원가 부담이 한계에 달했다는 설명입니다 팀 쿡은 \"40년 넘게 이런 상황은 본 적 없다\"고 했습니다 이유 메모리·램 값 급등 ['이유', '메모리·램 값 급등'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_1",
+        "chunk": 5,
+        "current": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "달했다는 설명입니다 팀 쿡은 \"40년 넘게 이런 상황은 본 적 없다\"고 했습니다 이유 메모리·램 값 급등 ['이유', '메모리·램 값 급등'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_2",
+        "chunk": 5,
+        "current": {
+          "type": "mascot",
+          "value": "suspicious"
+        },
+        "context": "다만 애플은 인상 폭과 적용 시점은 아직 공개하지 않았습니다 확정이 아니라 전망입니다 얼마나 프로 200만원 넘본다 ['얼마나', '프로 200만원 넘본다'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_3",
+        "chunk": 1,
+        "current": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "맥과 아이패드 등 다른 애플 제품도 같은 인상 흐름에 놓였습니다 아이폰만 아니다 ['아이폰만', '아니다'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        "context": "삼성전자, MS, 닌텐도 등도 램값 급등 영향을 언급했습니다 메모리 수급이 안 풀리면 IT 기기 전반으로 번질 수 있습니다 아이폰만 아니다 ['아이폰만', '아니다'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_3",
+        "chunk": 5,
+        "current": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "영향을 언급했습니다 메모리 수급이 안 풀리면 IT 기기 전반으로 번질 수 있습니다 아이폰만 아니다 ['아이폰만', '아니다'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_4",
+        "chunk": 4,
+        "current": {
+          "type": "mascot",
+          "value": "serious"
+        },
+        "context": "현재 모델 재고가와 공통지원금·선택약정을 비교해 진짜 부담을 계산하는 게 먼저입니다 그래서 지금 따질 것 ['그래서', '지금 따질 것'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      }
+    ]
+  },
+  "_codex_effective_script": {
+    "version": 2,
+    "slug": "035_news_iphone18_price_hike",
+    "source": "C:\\backup\\phonespot_cardnews\\cardnews\\output\\035_news_iphone18_price_hike\\shorts_script.json",
+    "override_applied": false,
+    "override_sections": []
+  }
 }

@@ -439,6 +439,26 @@
       ],
       "note": "자동 발굴 개념: 가입자 통화"
     },
+    "cpt_1fd182b8": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "전환"
+      ],
+      "note": "자동 발굴 개념: 전환"
+    },
+    "cpt_28acbe43": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "달했다"
+      ],
+      "note": "자동 발굴 개념: 달했다",
+      "available": true
+    },
     "cpt_313e9e00": {
       "tags": [
         "auto"
@@ -487,6 +507,17 @@
       ],
       "note": "자동 발굴 개념: 채도 높아",
       "available": true
+    },
+    "cpt_37859eff": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "개인용",
+        "업무용",
+        "분리"
+      ],
+      "note": "자동 발굴 개념: 개인용 업무용"
     },
     "cpt_392743cd": {
       "tags": [
@@ -710,6 +741,17 @@
       "note": "자동 발굴 개념: 사업 신한은행",
       "available": true
     },
+    "cpt_6c0f5fea": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "번도",
+        "켜본",
+        "분명"
+      ],
+      "note": "자동 발굴 개념: 번도 켜본"
+    },
     "cpt_6ec7317d": {
       "tags": [
         "auto"
@@ -888,6 +930,35 @@
       "note": "자동 발굴 개념: 전화 받자마자",
       "available": true
     },
+    "cpt_925e60e4": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "사려고",
+        "마음먹었다면",
+        "타이밍",
+        "따져볼"
+      ],
+      "note": "자동 발굴 개념: 사려고 마음먹었다면",
+      "available": true
+    },
+    "cpt_96aed996": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "개월",
+        "수를",
+        "늘려",
+        "매달",
+        "금액"
+      ],
+      "note": "자동 발굴 개념: 개월 수를",
+      "available": true
+    },
     "cpt_98cab19a": {
       "tags": [
         "auto",
@@ -1057,6 +1128,18 @@
       "note": "자동 발굴 개념: 한쪽 보여주면",
       "available": true
     },
+    "cpt_c2ac4124": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "그런데",
+        "그게"
+      ],
+      "note": "자동 발굴 개념: 그런데 그게",
+      "available": true
+    },
     "cpt_c3ad3e73": {
       "tags": [
         "auto",
@@ -1067,6 +1150,21 @@
         "일이"
       ],
       "note": "자동 발굴 개념: 호구당할 일이",
+      "available": true
+    },
+    "cpt_c6445a75": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "월납부",
+        "보면",
+        "이자",
+        "얼마나",
+        "쌓이는지"
+      ],
+      "note": "자동 발굴 개념: 월납부 보면",
       "available": true
     },
     "cpt_c9dd9b89": {
@@ -1288,6 +1386,21 @@
         "시리즈"
       ],
       "note": "자동 발굴 개념: 워치 시리즈"
+    },
+    "cpt_f5d0e5e2": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "쿡은",
+        "넘게",
+        "이런",
+        "상황",
+        "없다"
+      ],
+      "note": "자동 발굴 개념: 쿡은 넘게",
+      "available": true
     },
     "cpt_f7322c3a": {
       "tags": [
@@ -2133,6 +2246,18 @@
       "note": "자동 발굴 개념: 부모님 시력",
       "available": true
     },
+    "part_cost_a4d4e5f0": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "부품값",
+        "크게"
+      ],
+      "note": "자동 발굴 개념: 부품값 크게",
+      "available": true
+    },
     "password": {
       "tags": [
         "security",
@@ -2146,6 +2271,18 @@
         "계정"
       ],
       "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "payment_fall_8fb48590": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "납부금",
+        "떨어져"
+      ],
+      "note": "자동 발굴 개념: 납부금 떨어져",
       "available": true
     },
     "personal_data_63b96014": {
@@ -2525,6 +2662,17 @@
       "note": "Reusable editorial illustration.",
       "available": false
     },
+    "start_price_df144b85": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "시작가"
+      ],
+      "note": "자동 발굴 개념: 시작가",
+      "available": true
+    },
     "stock_chart": {
       "tags": [
         "price",
@@ -2555,6 +2703,20 @@
         "점검"
       ],
       "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "stretch_month_da92f81f": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "폰도",
+        "월을",
+        "월로",
+        "늘리면"
+      ],
+      "note": "자동 발굴 개념: 폰도 월을",
       "available": true
     },
     "surge_b56b4f67": {
@@ -2703,5 +2865,5 @@
       "available": true
     }
   },
-  "updated_at": "2026-06-22T17:57:32"
+  "updated_at": "2026-06-24T10:09:58"
 }

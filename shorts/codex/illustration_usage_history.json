@@ -460,9 +460,66 @@
         "device_os_requirement",
         "device_data_transfer"
       ]
+    },
+    "033_meme_installment_trap": {
+      "used_at": "2026-06-23T18:59:22",
+      "source": "uploaded_illustrations",
+      "illustrations": [
+        "payment_fall_8fb48590",
+        "cpt_c2ac4124",
+        "cpt_96aed996",
+        "stretch_month_da92f81f",
+        "store",
+        "phone_settings_toggle",
+        "device_os_requirement",
+        "clock",
+        "event_period_8cafdac4",
+        "cpt_c6445a75",
+        "smartphone",
+        "gift_voucher",
+        "telecom_discount_compare",
+        "phone_setup_ready",
+        "device_data_transfer"
+      ]
+    },
+    "034_tip_galaxy_hidden_top5": {
+      "used_at": "2026-06-23T19:07:37",
+      "source": "codex_enhance",
+      "illustrations": [
+        "smartphone",
+        "aluminum_label",
+        "appliance",
+        "basic_fold_202d754f"
+      ]
+    },
+    "035_news_iphone18_price_hike": {
+      "used_at": "2026-06-24T10:10:00",
+      "source": "uploaded_illustrations",
+      "illustrations": [
+        "event_period_8cafdac4",
+        "forecast",
+        "cpt_925e60e4",
+        "memory_chip",
+        "part_cost_a4d4e5f0",
+        "chart_up",
+        "cpt_28acbe43",
+        "cpt_f5d0e5e2",
+        "start_price_df144b85",
+        "final_update",
+        "mid_release_98cab19a",
+        "phone_settings_toggle",
+        "samsung_korea_04b00795",
+        "weekly_sunday_82b74c0a",
+        "device_os_requirement",
+        "device_data_transfer",
+        "gift_voucher",
+        "payment_fall_8fb48590",
+        "telecom_discount_compare",
+        "smartphone"
+      ]
     }
   },
-  "updated_at": "2026-06-22T17:57:34",
+  "updated_at": "2026-06-24T10:10:01",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -560,6 +617,18 @@
     },
     "032_meme_carrier_hidden_tips": {
       "updated_at": "2026-06-19T16:44:48",
+      "variants": []
+    },
+    "033_meme_installment_trap": {
+      "updated_at": "2026-06-23T18:59:23",
+      "variants": []
+    },
+    "034_tip_galaxy_hidden_top5": {
+      "updated_at": "2026-06-23T19:07:39",
+      "variants": []
+    },
+    "035_news_iphone18_price_hike": {
+      "updated_at": "2026-06-24T10:10:01",
       "variants": []
     }
   }
