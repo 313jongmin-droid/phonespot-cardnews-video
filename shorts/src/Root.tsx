@@ -5,7 +5,6 @@ import { NewsShort } from "./Composition";
 import { CoverShort } from "./Cover";
 import { PromoShort } from "./components/promo/PromoShort";
 import { PROMO_STYLES, PROMO_PRESETS } from "./components/promo/styles/registry";
-import { BannerAdShort } from "./components/banner/BannerAdShort";
 import script from "../public/shorts_script.json";
 import "./fonts";
 
@@ -55,21 +54,6 @@ const calcPromo = async () => {
   return { durationInFrames: Math.ceil(total * FPS), seconds };
 };
 
-// 배너광고: 나레이션 없음 -> 장당 고정 노출초(secPerBanner) x 배너수. CTA 는 banners 끝에 포함.
-const calcBanner = async () => {
-  const banners = ((script as any).banners || []) as any[];
-  const sec = (script as any).secPerBanner ? Number((script as any).secPerBanner) : 2.8;
-  const seconds = banners.map(() => sec);
-  const total = seconds.reduce((a, b) => a + b, 0) || sec;
-  return { durationInFrames: Math.max(1, Math.ceil(total * FPS)), seconds };
-};
-// 규격(비율) — 지금 9:16만, format 필드로 미래 1:1/4:5 확장(E1)
-const bannerDims = () => {
-  const fmt = (script as any).format;
-  if (fmt === "1x1") return { width: 1080, height: 1080 };
-  if (fmt === "4x5") return { width: 1080, height: 1350 };
-  return { width: 1080, height: 1920 };
-};
 
 export const RemotionRoot: React.FC = () => {
   const fallbackFrames = Math.ceil(
@@ -157,24 +141,6 @@ export const RemotionRoot: React.FC = () => {
         calculateMetadata={async ({ defaultProps }) => {
           const { durationInFrames, seconds } = await calc();
           return { durationInFrames, props: { ...defaultProps, sequenceSeconds: seconds } };
-        }}
-      />
-      <Composition
-        id="BannerAd"
-        component={BannerAdShort as any}
-        durationInFrames={Math.ceil(20 * FPS)}
-        fps={FPS}
-        width={1080}
-        height={1920}
-        defaultProps={{
-          script: script as any,
-          sequenceSeconds: [4, 4, 4, 3],
-          captionsOn: false,
-        }}
-        calculateMetadata={async ({ defaultProps }) => {
-          const { durationInFrames, seconds } = await calcBanner();
-          const dims = bannerDims();
-          return { durationInFrames, ...dims, props: { ...defaultProps, sequenceSeconds: seconds } };
         }}
       />
       {PROMO_STYLES.map((s) => promoComp(`Promo-${s.id}`, { promoStyle: s.id }))}

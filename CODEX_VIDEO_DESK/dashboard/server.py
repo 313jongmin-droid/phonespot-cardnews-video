@@ -38,7 +38,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v38"
+PANEL_VERSION = "phonespot-web-v39"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -1853,50 +1853,6 @@ class Handler(BaseHTTPRequestHandler):
                     "message": "선택 영상 렌더를 대기열에 등록했습니다.",
                 })
                 return
-            if action == "banner_ad_upload":
-                import base64 as _b64
-                dest = SHORTS / "public" / "assets" / "banners"
-                dest.mkdir(parents=True, exist_ok=True)
-                saved = []
-                allowed = {".png", ".jpg", ".jpeg", ".webp", ".mp3", ".m4a", ".wav", ".ogg"}
-                for f in (data.get("files") or []):
-                    name = str((f or {}).get("name") or "").strip()
-                    b64 = str((f or {}).get("b64") or "")
-                    if not name or not b64:
-                        continue
-                    safe = Path(name).name
-                    if Path(safe).suffix.lower() not in allowed:
-                        continue
-                    try:
-                        raw = _b64.b64decode(b64.split(",")[-1])
-                    except Exception:
-                        continue
-                    (dest / safe).write_bytes(raw)
-                    saved.append(safe)
-                json_response(self, {"ok": True, "saved": saved, "message": f"{len(saved)}장 업로드"})
-                return
-            if action == "banner_ad_save":
-                slug_now = validate_slug(slug)
-                payload = {
-                    "slug": slug_now,
-                    "format": str(data.get("format") or "9x16"),
-                    "secPerBanner": float(data.get("secPerBanner") or 2.8),
-                    "bgm": str(data.get("bgm") or "").strip(),
-                    "bgmVol": float(data.get("bgmVol") or 0.6),
-                    "banners": data.get("banners") or [],
-                    "cta": data.get("cta") or {},
-                    "ad": data.get("ad") or {},
-                }
-                out = CARD_OUTPUT / slug_now / "banner_input.json"
-                out.parent.mkdir(parents=True, exist_ok=True)
-                out.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
-                json_response(self, {"ok": True, "message": f"배너 입력 저장: {len(payload['banners'])}장"})
-                return
-            if action == "banner_ad_render":
-                slug_now = validate_slug(slug)
-                job = REMOTE_QUEUE.enqueue("banner_ad_render", slug_now, str(data.get("target_worker") or ""))
-                json_response(self, {"ok": True, "queued": True, "job": job, "message": "배너광고 렌더를 대기열에 등록했습니다."})
-                return
             if action == "promo_list":
                 try:
                     out = subprocess.run([sys.executable, "scripts/promo_list.py"], cwd=str(SHORTS),
@@ -2274,14 +2230,13 @@ INDEX_HTML = r"""<!doctype html>
     <div class="runtime-card" id="runtimeJob"><span>실행 상태</span><b id="runtimeJobText">대기 중</b><div class="runtime-actions"><button class="runtime-action" id="cancelJobButton" onclick="cancelRemoteJob()" style="display:none">취소</button><button class="runtime-action" id="retryJobButton" onclick="retryRemoteJob()" style="display:none">재시도</button></div></div>
     <div class="runtime-card" id="runtimeGithub"><span>GitHub</span><b id="runtimeGithubText">확인 중</b><div class="runtime-actions"><button class="runtime-action" id="runtimeGithubDownloadButton" onclick="runGithubDownload(event)">다운로드</button><button class="runtime-action" id="runtimeGithubUploadButton" onclick="runGithubUpload(event)">업로드</button></div></div>
   </div>
-  <div class="track-tabs" style="display:flex;gap:6px;padding:8px 20px;border-bottom:1px solid var(--separator)">
-    <button class="track-tab" data-track="cardnews" onclick="switchTrack('cardnews')" style="padding:8px 16px;border:none;border-radius:10px;cursor:pointer;font-size:15px;background:transparent">카드뉴스</button>
-    <button class="track-tab" data-track="typo" onclick="switchTrack('typo')" style="padding:8px 16px;border:none;border-radius:10px;cursor:pointer;font-size:15px;background:transparent">타이포</button>
-    <button class="track-tab" data-track="banner" onclick="switchTrack('banner')" style="padding:8px 16px;border:none;border-radius:10px;cursor:pointer;font-size:15px;background:transparent">배너</button>
-    <button class="track-tab" data-track="ai" onclick="switchTrack('ai')" style="padding:8px 16px;border:none;border-radius:10px;cursor:pointer;font-size:15px;background:transparent">실사AI</button>
+  <div class="track-tabs" style="display:flex;justify-content:center;gap:6px;padding:10px 20px;border-bottom:.5px solid var(--separator)">
+    <button class="track-tab" data-track="cardnews" onclick="switchTrack('cardnews')" style="padding:8px 18px;border:none;border-radius:10px;cursor:pointer;font-size:15px;background:transparent">카드뉴스·영상</button>
+    <button class="track-tab" data-track="typo" onclick="switchTrack('typo')" style="padding:8px 18px;border:none;border-radius:10px;cursor:pointer;font-size:15px;background:transparent">타이포</button>
+    <button class="track-tab" data-track="ai" onclick="switchTrack('ai')" style="padding:8px 18px;border:none;border-radius:10px;cursor:pointer;font-size:15px;background:transparent">실사AI</button>
   </div>
   <main>
-    <section class="card-work">
+    <section>
       <div class="tabs">
         <button id="tabVideo" class="tab active" onclick="setMode('video')">영상</button>
         <button id="tabCard" class="tab" onclick="setMode('card')">카드뉴스</button>
@@ -2291,7 +2246,7 @@ INDEX_HTML = r"""<!doctype html>
       <div id="cardList" class="list" style="display:none"></div>
     </section>
     <div style="display:grid; gap:16px;">
-      <section class="card-work">
+      <section>
         <div class="head action-head"><h2 id="actionTitle">영상 작업</h2><div class="selected-badge"><span id="selectedModeLabel">선택 항목</span><b id="selectedSlug">없음</b></div></div>
         <div id="videoActions" class="pad grid">
           <button class="btn primary" onclick="runAction('video_prepare')"><strong>1. 영상용 프롬프트 준비</strong><span>선택한 카드뉴스 결과를 숏폼 영상 스크립트와 일러스트 요청으로 변환합니다.</span></button>
@@ -2332,7 +2287,6 @@ INDEX_HTML = r"""<!doctype html>
           <button class="btn" style="border-color:#dc2626;color:#dc2626" onclick="deleteSlug()"><strong>선택 슬러그 삭제</strong><span>선택한 슬러그의 기사·이미지·렌더 결과를 로컬에서 제거(되돌릴 수 없음).</span></button>
         </div>
       </section>
-      <div class="pair">
       <section>
         <div class="head"><h2>상태</h2><div style="display:flex;gap:8px;align-items:center"><span class="small" id="jobText">대기 중</span><button class="mini-btn" id="statusCancelButton" onclick="cancelRemoteJob()" style="display:none">중도 취소</button></div></div>
         <div class="pad status">
@@ -2387,54 +2341,8 @@ INDEX_HTML = r"""<!doctype html>
           </div>
         </div>
       </section>
-      <section><div class="head"><h2>실행 로그</h2><div style="display:flex;gap:8px;align-items:center"><span class="small">실패하면 이 로그를 복사해서 보내면 됩니다.</span><button class="mini-btn" onclick="copyLog()">로그 복사</button></div></div><div id="log" class="log"></div></section>
-      </div>
-      <div class="pair lopsided">
-      <section>
-        <div class="head"><h2>최근 작업 기록</h2><button onclick="loadJobHistory()">새로고침</button></div>
-        <div class="history-scroll">
-          <table class="history-table">
-            <thead><tr><th>상태</th><th>작업</th><th>실행 PC</th><th>시작</th><th>소요 시간</th><th>결과</th></tr></thead>
-            <tbody id="jobHistoryRows"><tr><td colspan="6">기록을 불러오는 중입니다.</td></tr></tbody>
-          </table>
-        </div>
-      </section>
-      <section><div class="head"><h2>최근 영상 결과</h2><button onclick="runAction('open_results')">결과 폴더 열기</button></div><div class="pad results" id="results"></div></section>
-      </div>
     </div>
   </main>
-  <div id="trackBanner" class="track-pane" style="display:none">
-    <section>
-      <div class="head"><h2>배너 광고 영상</h2><span class="small">이미지 N장 스크롤 + 선택 BGM · 9:16</span></div>
-      <div class="pad track-form">
-        <p class="small">이미지 N장이 위로 넘어가는 영상. 나레이션 없음, BGM만 선택. 업로드 → 순서 확인 → 렌더.</p>
-        <label class="fld">슬러그 <input id="bnSlug" placeholder="ad_iphone18_preorder" style="min-width:300px"></label>
-        <p class="small">이미지/BGM 업로드 (이미지 여러장 · 파일명 _cta.png=CTA · mp3=BGM 자동 인식)</p>
-        <div class="uprow">
-          <input type="file" id="bnFiles" multiple accept="image/png,image/jpeg,image/webp,audio/*" style="box-shadow:none;background:transparent;padding:0">
-          <button class="mini-btn" onclick="bannerUpload()">업로드</button>
-        </div>
-        <div id="bnUpLog" class="small" style="margin:6px 0"></div>
-        <p class="small">배너 순서 (한 줄 = 파일명.png) — 업로드하면 자동 추가. 줄 순서 = 영상 순서</p>
-        <textarea id="bnBanners" rows="5" placeholder="b1.png&#10;b2.png&#10;b3.png"></textarea>
-        <div class="fld-row">
-          <label class="fld">장당 노출(초) <input id="bnSec" type="number" step="0.1" value="2.8" style="min-width:0;width:100px"></label>
-          <label class="fld">BGM 파일 <input id="bnBgm" placeholder="(선택) bgm.mp3" style="min-width:0;width:220px"></label>
-          <label class="fld">BGM 볼륨 <input id="bnBgmVol" type="number" step="0.05" value="0.6" style="min-width:0;width:100px"></label>
-        </div>
-        <p class="small">광고 문구(선택, AD_COPY.txt 용 — 영상엔 안 들어감)</p>
-        <div class="fld-row">
-          <input id="bnCtaHook" placeholder="후킹 (휴대폰 살 땐?)">
-          <input id="bnCtaPunch" placeholder="펀치 (지원금부터 무료 조회)">
-        </div>
-        <div class="actions">
-          <button class="mini-btn" onclick="bannerSave()">저장</button>
-          <button class="mini-btn" onclick="bannerRender()">렌더</button>
-        </div>
-        <div id="bnLog" class="small" style="margin-top:8px"></div>
-      </div>
-    </section>
-  </div>
   <div id="trackTypo" class="track-pane" style="display:none">
     <section>
       <div class="head"><h2>타이포 광고</h2><span class="small">모션그래픽 · 나레이션 없음 · 9:16</span></div>
@@ -2465,6 +2373,21 @@ INDEX_HTML = r"""<!doctype html>
       <div class="pad track-form"><p class="small" style="margin-top:0">Higgsfield 실사 광고는 <code>shorts/promo_ai/</code> 워크플로로 진행합니다. 패널 통합은 확장 E4 예정.</p></div>
     </section>
   </div>
+  <div id="commonMonitor" style="display:grid;gap:16px;padding:16px 20px">
+      <section><div class="head"><h2>실행 로그</h2><div style="display:flex;gap:8px;align-items:center"><span class="small">실패하면 이 로그를 복사해서 보내면 됩니다.</span><button class="mini-btn" onclick="copyLog()">로그 복사</button></div></div><div id="log" class="log"></div></section>
+      <div class="pair lopsided">
+      <section>
+        <div class="head"><h2>최근 작업 기록</h2><button onclick="loadJobHistory()">새로고침</button></div>
+        <div class="history-scroll">
+          <table class="history-table">
+            <thead><tr><th>상태</th><th>작업</th><th>실행 PC</th><th>시작</th><th>소요 시간</th><th>결과</th></tr></thead>
+            <tbody id="jobHistoryRows"><tr><td colspan="6">기록을 불러오는 중입니다.</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+      <section><div class="head"><h2>최근 영상 결과</h2><button onclick="runAction('open_results')">결과 폴더 열기</button></div><div class="pad results" id="results"></div></section>
+      </div>
+  </div>
   <input id="cardUploadInput" type="file" accept=".png,.jpg,.jpeg,.webp" multiple hidden>
   <input id="illustrationUploadInput" type="file" accept=".png,.jpg,.jpeg,.webp" multiple hidden>
   <script>
@@ -2478,12 +2401,11 @@ INDEX_HTML = r"""<!doctype html>
     let currentRemoteJob = null;
     async function api(path, options) { const res = await fetch(path, options); if (!res.ok) throw new Error(await res.text()); return await res.json(); }
     function switchTrack(name){
+      if(["cardnews","typo","ai"].indexOf(name)<0){ name="cardnews"; }
       try{ localStorage.setItem("panel.track", name); }catch(e){}
       var main=document.querySelector("main");
-      var cardnews=(name==="cardnews");
-      if(main){ main.style.display=""; main.style.gridTemplateColumns=cardnews?"":"1fr"; }
-      document.querySelectorAll(".card-work").forEach(function(el){ el.style.display=cardnews?"":"none"; });
-      [["banner","trackBanner"],["typo","trackTypo"],["ai","trackAi"]].forEach(function(t){
+      if(main) main.style.display = (name==="cardnews") ? "" : "none";
+      [["typo","trackTypo"],["ai","trackAi"]].forEach(function(t){
         var el=document.getElementById(t[1]); if(el) el.style.display=(name===t[0])?"":"none";
       });
       if(name==="typo" && !promoItems.length){ promoLoad(); }
@@ -2493,48 +2415,6 @@ INDEX_HTML = r"""<!doctype html>
         b.style.color=on?"#fff":"var(--label)";
         b.style.fontWeight=on?"800":"600";
       });
-    }
-    function readFileB64(file){ return new Promise(function(res,rej){ var r=new FileReader(); r.onload=function(){ res(String(r.result)); }; r.onerror=rej; r.readAsDataURL(file); }); }
-    async function bannerUpload(){
-      var inp=document.getElementById("bnFiles"); var log=document.getElementById("bnUpLog");
-      var fl=inp&&inp.files?Array.prototype.slice.call(inp.files):[];
-      if(!fl.length){ log.textContent="이미지를 선택하세요."; return; }
-      log.textContent="업로드 중...";
-      var files=[]; for(var i=0;i<fl.length;i++){ files.push({name:fl[i].name, b64:await readFileB64(fl[i])}); }
-      try{
-        var r=await api("/api/action",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"banner_ad_upload",files:files})});
-        var saved=(r.saved||[]); log.textContent=(r.message||"업로드")+" : "+saved.join(", ");
-        function isImg(s){ s=s.toLowerCase(); return s.slice(-4)===".png"||s.slice(-4)===".jpg"||s.slice(-5)===".jpeg"||s.slice(-5)===".webp"; }
-        function isAud(s){ s=s.toLowerCase(); return s.slice(-4)===".mp3"||s.slice(-4)===".m4a"||s.slice(-4)===".wav"||s.slice(-4)===".ogg"; }
-        var ta=document.getElementById("bnBanners");
-        var add=saved.filter(function(s){ return isImg(s) && s!=="_cta.png"; });
-        if(add.length){ ta.value=(ta.value.trim()?ta.value.trim()+"\n":"")+add.join("\n"); }
-        var aud=saved.filter(isAud);
-        if(aud.length){ document.getElementById("bnBgm").value=aud[0]; }
-      }catch(e){ log.textContent="업로드 실패: "+e; }
-    }
-    function bannerPayload(){
-      var raw=(document.getElementById("bnBanners").value||"").split("\n").map(function(l){return l.trim();}).filter(Boolean);
-      var banners=raw.map(function(l){ return {image:(l.split("|")[0]||"").trim()}; });
-      return { slug:(document.getElementById("bnSlug").value||"").trim(), format:"9x16",
-        secPerBanner:parseFloat(document.getElementById("bnSec").value)||2.8,
-        bgm:(document.getElementById("bnBgm").value||"").trim(),
-        bgmVol:parseFloat(document.getElementById("bnBgmVol").value)||0.6,
-        banners:banners,
-        cta:{hook:document.getElementById("bnCtaHook").value, punch:document.getElementById("bnCtaPunch").value} };
-    }
-    async function bannerSave(){
-      var pl=bannerPayload(); var log=document.getElementById("bnLog");
-      if(!pl.slug){ log.textContent="슬러그를 입력하세요."; return false; }
-      try{ var r=await api("/api/action",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({action:"banner_ad_save"},pl))}); log.textContent=r.message||"저장됨"; return true; }
-      catch(e){ log.textContent="저장 실패: "+e; return false; }
-    }
-    async function bannerRender(){
-      var pl=bannerPayload(); var log=document.getElementById("bnLog");
-      if(!pl.slug){ log.textContent="슬러그를 입력하세요."; return; }
-      if(!(await bannerSave())) return;
-      try{ var r=await api("/api/action",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"banner_ad_render",slug:pl.slug})}); log.textContent=r.message||"렌더 대기열 등록"; }
-      catch(e){ log.textContent="렌더 실패: "+e; }
     }
     async function promoLoad(){
       var log=document.getElementById("tpLog");
