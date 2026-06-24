@@ -34,7 +34,8 @@
 **5. 빌드 명령 (실증, sandbox).**
 - 정규화: `ffmpeg -i sN.mp4 -vf "scale=1080:1920,fps=30,setsar=1" -an -c:v libx264 -crf 18 -pix_fmt yuv420p nN.mp4`
 - concat(copy): `ffmpeg -f concat -safe 0 -i list.txt -c copy body.mp4`
-- 자막: `.ass`(PlayRes 1080x1920, Style Fontsize·Alignment·Outline) → `ffmpeg -i body.mp4 -vf "ass=subs.ass" -preset veryfast -crf 20 ...`. 중앙배치=Alignment 5, 크게=Fontsize 136.
+- 자막: `.ass`(PlayRes 1080x1920, Style Fontsize·Alignment·Outline) → `ffmpeg -i body.mp4 -vf "ass=subs.ass" -preset veryfast -crf 20 ...`.
+- ★★ **viral 자막 강제 규칙 (2026-06-24, 종민 — 어기지 말 것)**: **Alignment 5(정중앙)** + **Fontsize 130~150 대형** + 화면 한가운데 박기. Outline 5~6 두껍게(검정), 무음시청자가 1초에 읽히게. **하단 소형 자막(Alignment 2 / MarginV 큰 값 / Fontsize 60~70) 금지.** 핵심 단어만 오렌지 `{\c&H0B4BF7&}`(BGR) 강조. (004 1차에서 하단 66pt로 깔았다가 "쓰레기" 반려 — 반복 금지.)
 - CTA 엔딩: `ffmpeg -f lavfi -i color=c=0x0A0A0A:s=1080x1920:d=4:r=30 -vf "drawtext=fontfile=$FONT:text='정찰제':fontcolor=0xF74B0B:fontsize=200:x=(w-tw)/2:y=640, ..."` (브랜드 오렌지 `#F74B0B`).
 - **함정: bash 45초 타임아웃** → ffmpeg 단계를 쪼개 실행(정규화 / 자막 burn / 엔딩 / 최종 따로), `-preset veryfast`로 속도.
 
