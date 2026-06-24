@@ -5,6 +5,7 @@ import { NewsShort } from "./Composition";
 import { CoverShort } from "./Cover";
 import { PromoShort } from "./components/promo/PromoShort";
 import { PROMO_STYLES, PROMO_PRESETS } from "./components/promo/styles/registry";
+import { BannerAdShort } from "./components/banner/BannerAdShort";
 import script from "../public/shorts_script.json";
 import "./fonts";
 
@@ -28,7 +29,7 @@ const tryDuration = async (key: string): Promise<number> => {
 
 const sequenceKeys = [
   "hook",
-  ...script.facts.map((_: any, i: number) => `fact_${i + 1}`),
+  ...(script.facts || []).map((_: any, i: number) => `fact_${i + 1}`),
   "cta",
 ];
 
@@ -44,14 +45,36 @@ const calc = async () => {
 // promo: 나레이션 없음 → 섹션별 고정 길이(script.<section>.dur 로 개별 조정 가능)
 const promoSeconds = (): number[] => {
   const arr: number[] = [script.hook && (script.hook as any).dur ? (script.hook as any).dur : PROMO_SEC];
-  script.facts.forEach((f: any) => arr.push(f.dur ? f.dur : PROMO_SEC));
-  arr.push((script.cta as any).dur ? (script.cta as any).dur : PROMO_CTA);
+  (script.facts || []).forEach((f: any) => arr.push(f.dur ? f.dur : PROMO_SEC));
+  arr.push((script.cta as any)?.dur ? (script.cta as any).dur : PROMO_CTA);
   return arr.map((s) => s + GAP_SEC);
 };
 const calcPromo = async () => {
   const seconds = promoSeconds();
   const total = OPENING_SEC + INTRO_SEC + seconds.reduce((a, b) => a + b, 0) + OUTRO_SEC;
   return { durationInFrames: Math.ceil(total * FPS), seconds };
+};
+
+// 배너광고: 배너별 TTS mp3 길이 + cta mp3 (나레이션 기반, casual과 동일 방식)
+const bannerKeys = (): string[] => {
+  const banners = ((script as any).banners || []) as any[];
+  const keys = banners.map((b) => b.audioKey);
+  keys.push(((script as any).cta && (script as any).cta.audioKey) || "cta");
+  return keys;
+};
+const calcBanner = async () => {
+  const seconds = await Promise.all(
+    bannerKeys().map(async (k) => (await tryDuration(k)) + GAP_SEC)
+  );
+  const total = seconds.reduce((a, b) => a + b, 0);
+  return { durationInFrames: Math.ceil(total * FPS), seconds };
+};
+// 규격(비율) — 지금 9:16만, format 필드로 미래 1:1/4:5 확장(E1)
+const bannerDims = () => {
+  const fmt = (script as any).format;
+  if (fmt === "1x1") return { width: 1080, height: 1080 };
+  if (fmt === "4x5") return { width: 1080, height: 1350 };
+  return { width: 1080, height: 1920 };
 };
 
 export const RemotionRoot: React.FC = () => {
@@ -140,6 +163,24 @@ export const RemotionRoot: React.FC = () => {
         calculateMetadata={async ({ defaultProps }) => {
           const { durationInFrames, seconds } = await calc();
           return { durationInFrames, props: { ...defaultProps, sequenceSeconds: seconds } };
+        }}
+      />
+      <Composition
+        id="BannerAd"
+        component={BannerAdShort as any}
+        durationInFrames={Math.ceil(20 * FPS)}
+        fps={FPS}
+        width={1080}
+        height={1920}
+        defaultProps={{
+          script: script as any,
+          sequenceSeconds: [4, 4, 4, 3],
+          captionsOn: false,
+        }}
+        calculateMetadata={async ({ defaultProps }) => {
+          const { durationInFrames, seconds } = await calcBanner();
+          const dims = bannerDims();
+          return { durationInFrames, ...dims, props: { ...defaultProps, sequenceSeconds: seconds } };
         }}
       />
       {PROMO_STYLES.map((s) => promoComp(`Promo-${s.id}`, { promoStyle: s.id }))}
