@@ -172,9 +172,18 @@
 **렌더 엔진**
 - Remotion: `shorts/` + `shorts/scripts/render_remotion_fast.mjs`(브라우저 자동탐색 `ensureBrowser`+`findLocalChrome`, Playwright chromium/시스템 Chrome 폴백).
 - 진입 bat: `run_codex_casual.bat`(CLI 폴백에서 `--concurrency` 제거됨 — "%" 깨짐 방지).
-- 트랙 구분: casual/newsroom(카드뉴스 영상) vs `shorts/promo/`(타이포 홍보) vs `shorts/promo_ai/`(실사 AI 광고, Higgsfield).
+- 트랙 구분: casual/newsroom(카드뉴스 영상) vs `shorts/promo/`(타이포 홍보) vs `shorts/promo_ai/`(실사 AI 광고, Higgsfield) vs **배너광고**(`BannerAdShort`, 신규 2026-06-19).
 - **promo_ai 실증 (2026-06-22, 002 1편 완주)**: 정본 = `shorts/promo_ai/WORKFLOW.md` "실증 검증". 핵심: free·크레딧 topup으론 MCP 영상 ❌ → **STARTER $19 구독 필수**(이걸로 Kling 3.0 됨) / kling3_0 std 무음 ≈1.5cr·s, 1편 16.5cr / **한글자막 = ffmpeg .ass 후처리**(영상 in-image 한글 깨짐, Noto Sans CJK KR) / **함정**: sandbox는 Higgsfield CDN 403(종민 수동 다운로드 경유) + bash 45s 타임아웃(ffmpeg 단계분리·veryfast). 결과 `out_promo_ai/002_ad_jeongchalje_15s.mp4`.
-- 컴포지션 정의: `shorts/src/Root.tsx`(NewsroomShort/CasualShort/Promo-*/**Cover**, 전부 1080×1920).
+- 컴포지션 정의: `shorts/src/Root.tsx`(NewsroomShort/CasualShort/Promo-*/**Cover**/**BannerAd**, 전부 1080×1920; BannerAd는 `format`으로 규격 가변).
+
+**★ 배너광고 트랙 (신규, 2026-06-19, STEP1~5 구현·푸시 / STEP6 렌더PC 검증대기)**
+- 완성 배너 이미지 N장 + TTS + (옵션)자막 + CTA → 광고 영상. **A형 = casual 엔진 부품 재사용, casual/promo/promo_ai 무수정.**
+- 파일: `src/components/banner/BannerAdShort.tsx`(풀블리드+켄번스+TTS+옵션자막+CasualCta 재사용) · `Root.tsx` `BannerAd` 컴포지션(duration=배너 TTS길이, `calculateMetadata`가 `format`으로 9:16/1:1/4:5 분기) · `scripts/build_banner.py`(banner_input.json→banner_script.json+edge-tts) · `scripts/build_ad_copy.py`(광고 `AD_COPY.txt`, publish의 LITTLY/PRECON 링크상수 재사용) · `run_banner.bat`(build→render BannerAd→adcopy).
+- 패널: `server.py` `banner_ad_save`/`banner_ad_render` 액션 + `worker.py` `banner_ad_render`→`run_banner.bat` + INDEX_HTML **타입탭**(카드뉴스/타이포/배너/실사AI, `switchTrack`, v33).
+- **비파괴 가드**: `Root.tsx`에서 `script.facts || []`·`script.cta?.dur`로 바꿔 배너 스크립트(facts 없음)가 로드돼도 casual 번들 안 깨짐. casual 동작 무영향.
+- 데이터 shape: `{banners:[{image,audioKey,caption}], cta:{kakao,location,litt,caption_chunks,audioKey}, captionsOn, format}`. 배너 이미지=`public/assets/banners/`. 입력=`output/<slug>/banner_input.json`(패널 폼이 작성).
+- 기획 정본=`_docs/PROPOSAL_배너영상_업그레이드.md`. 미구현 확장: E1 규격(1:1/4:5)·E2 생성기 자동연동·E3 배너↔TTS 자동매칭·E4 promo/promo_ai 탭통합·E5 타입변환.
+- **함정**: TSX(BannerAdShort) 샌드박스 렌더 불가 → 실행PC 재렌더 검증. 배너 이미지 없으면 빈 화면. server.py 편집은 bash-python(I단원)+태그균형+버전업.
 
 **SNS 품질 — 후킹·레이아웃·오디오·닫기 (2026-06-13, 021 품질점검발, 재렌더 검증)**
 - **오프닝 후킹**: `shorts/src/components/OpeningHook.tsx` — 검정 → **다크 그라데이션 + 움직이는 주황 글로우 + 주황 키커 pill(채널 태그라인) + 빠른 큰 헤드라인**. `Root.tsx` `OPENING_SEC` 1.5→1.1→**2.0**(후킹 읽을 시간 확보).
@@ -618,3 +627,4 @@ rdnews/scripts/update_content_guide.py`로 §2 발행인덱스 자동 재생성,
 - 2026-06-23 (promo_ai 카테고리 체계 — C단원): 명명규칙 `NNN_<ad|viral>_<theme>` 도입(002_ad_jeongchalje·003_viral_jeongchalje). `concepts/INDEX.md` 영상 인덱스표(트랙×주제, 중복회피·성과학습) + `assets/{references/store,references/products,audio/{bgm,sfx,narration},voices.md}` 재사용 라이브러리 + `out_promo_ai/_archive_versions/`(중간본). 타겟·시즌·채널은 폴더 ❌ INDEX 컬럼으로만. 정본=`shorts/promo_ai/WORKFLOW.md` "명명·분류 규칙". 002 최종본 = `out_promo_ai/002_ad_jeongchalje_15s.mp4`(자막+나레이션, BGM 대기).
 - 2026-06-23 (세션): **★ 시트 탭 이름 단축 — `_통합`→`+`, `UTM_매핑`→`UTM` (G단원 전반, 사장님 결정).** 매핑: **메타_통합→메타+ / 네이버_통합→네이버+ / 당근_통합→당근+ / 구글_통합→구글+ / UTM_매핑→UTM**. **당근_UTM_매핑은 유지**(별도 매핑 시트, 건드리지 않음). 라이브 코드 `apps_script/` + `apps_script_sheet_export/` 문자열 일괄 치환(메타29·네이버26·당근24·구글15·UTM 42 = 약 136곳). **치환 안전장치**: ① `당근_UTM_매핑` 먼저 placeholder 보호 후 `UTM_매핑`→`UTM` 치환 → 복원(정규식상 `당근_UTM_매핑`이 `UTM_매핑`으로 접혀 들어가 오염 위험) ② `통합대시보드`(27곳)는 풀토큰만 치환해 무영향. 실제 탭 리네임 = 일회용 `renameTabsToPlus_()`(`Code
 - 2026-06-19: **싸당 IG 벤치마크 → 컨트롤 가능 3개 규칙화 (B·J·E단원, 종민).** 격차=팔로워 아닌 ①주제 ②후킹 ③썸네일(싸당 히트 45만·8만 전부 애플/삼성 루머·존버·손해회피, 우린 실용/설명형). 적용: ①**`rumor+40%`** 가중치(INSIGHTS_LOOP §3) + spec 1단계 '루머·유출 최우선' ②**후킹 하드룰**(spec: 설명형 제목 금지) + **`validate_article.py` 게이트**(제목에 후킹마커[?·라고·손해·존버·이유·딱·vs 등] 없으면 WARN — 전수 22개 잡힘) ③**커버=후킹+실사**(spec + `Cover.tsx` pickHeroSrc를 image(실사 photos/) 우선 2-pass로). 근거=싸당 IG 스크린샷 실측 + 구글시트 채널성과(인스타 평균 111 vs 틱톡 814·유튜브 1462=인스타만 죽음=콜드스타트). OSMU 자체는 페널티 아님(워터마크·재탕만, PetaPixel 2026-04-30 확인).
+- 2026-06-19: **배너광고 트랙 STEP1~5 구현 (C단원, A형·비파괴).** 카드뉴스 엔진 부품 재사용해 BannerAdShort 신규(풀블리드 배너+TTS+옵션자막+CTA). build_banner.py·build_ad_copy.py·run_banner.bat·패널 banner_ad_* 액션·worker 매핑·타입탭(v33). casual/promo 무수정(Root.tsx facts 가드만). 데이터=banner_input.json→banner_script.json. 광고캡션 AD_COPY.txt(메타·당근). 영상타입 분류=카드뉴스/타이포/배너/실사AI × 용도(콘텐츠/광고). 기획·확장(E1~E5)=PROPOSAL_배너영상_업그레이드.md. STEP6 렌더PC 검증 대기.
