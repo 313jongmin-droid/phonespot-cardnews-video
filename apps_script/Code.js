@@ -1211,6 +1211,19 @@ function buildDashboardV2() {
   dash.getRange('E3').setValue('→ 순이익(기간)').setFontColor(C_LABEL).setFontWeight('bold').setFontSize(10).setHorizontalAlignment('right');
   dash.getRange('F3').setFormula(`=IF($C$3="","-",${countInqFx(GS, GE, ",'문의접수'!C:C,\"개통\"")}*$C$3-(${sumPaidFx(GS, GE)}))`).setNumberFormat(F_WON).setFontWeight('bold').setHorizontalAlignment('center');
 
+  // 행3 우측: 광고 생성기(generator.html 웹앱) 바로가기 버튼 — 웹앱 배포 URL을 동적 취득(하드코딩 X)
+  var genUrl = '';
+  try { genUrl = ScriptApp.getService().getUrl() || ''; } catch (e) {}
+  dash.getRange('H3:K3').breakApart();
+  dash.getRange('H3:K3').merge();
+  if (genUrl) {
+    dash.getRange('H3').setFormula('=HYPERLINK("' + genUrl + '","🎨 광고 생성기 열기")')
+      .setBackground('#1A73E8').setFontColor('#FFFFFF').setFontWeight('bold').setFontSize(11).setHorizontalAlignment('center');
+  } else {
+    dash.getRange('H3').setValue('🎨 광고 생성기 (웹앱 미배포 — 배포 후 재빌드)')
+      .setFontColor('#AAAAAA').setFontStyle('italic').setHorizontalAlignment('center');
+  }
+
   // ── 좌측 열 (A~F) ──
 
   // 2L) 기간별 핵심 — 헤더 A4:F4 / 컬럼헤더 5 / 데이터 6~8
@@ -1381,10 +1394,10 @@ function buildDashboardV2() {
   } catch (e) { Logger.log('adgroup 복구 실패: ' + e.message); }
 
   // 폭/정렬 마무리
-  dash.setColumnWidth(1, 128);                              // A (라벨)
+  dash.setColumnWidth(1, 100);                              // A (라벨) 고정
   for (let c = 2; c <= 6; c++) dash.setColumnWidth(c, 80);  // B~F = 80 고정
-  dash.setColumnWidth(7, 26);                               // G = 좌우 간격칸(빈칸)
-  dash.setColumnWidth(8, 110);                              // H (우측 라벨)
+  dash.setColumnWidth(7, 60);                               // G = 좌우 간격칸 고정
+  dash.setColumnWidth(8, 100);                              // H (우측 라벨) 고정
   for (let c = 9; c <= 13; c++) dash.setColumnWidth(c, 108);// I~M
   try { dash.setRowHeight(1, 18); dash.setRowHeight(2, 34); } catch (e) {}
 
