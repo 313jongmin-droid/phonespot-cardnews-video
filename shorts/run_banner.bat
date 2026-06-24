@@ -25,5 +25,6 @@ set "OUT=%RESULTDIR%\%SLUG%_banner.mp4"
 
 echo [banner] render BannerAd ...
 call node scripts\render_remotion_fast.mjs BannerAd "%OUT%"
+"%PY%" scripts\build_ad_copy.py %SLUG%
 echo [banner] done: %OUT%
 endlocal
