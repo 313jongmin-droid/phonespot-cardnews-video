@@ -58,9 +58,7 @@ const calcPromo = async () => {
 // 배너광고: 배너별 TTS mp3 길이 + cta mp3 (나레이션 기반, casual과 동일 방식)
 const bannerKeys = (): string[] => {
   const banners = ((script as any).banners || []) as any[];
-  const keys = banners.map((b) => b.audioKey);
-  keys.push(((script as any).cta && (script as any).cta.audioKey) || "cta");
-  return keys;
+  return banners.map((b) => b.audioKey); // CTA 는 banners 끝에 포함됨(build_banner 자동첨부)
 };
 const calcBanner = async () => {
   const seconds = await Promise.all(

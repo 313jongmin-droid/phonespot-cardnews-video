@@ -103,14 +103,15 @@ def main() -> int:
         banners.append({"image": b.get("image", ""), "audioKey": key, "caption": text})
         jobs.append((key, text))
 
-    cta_key = f"{slug}_cta"
-    jobs.append((cta_key, str(cta_in.get("tts", "")).strip()))
-    cta = dict(DEFAULT_CTA)
-    cta["caption_chunks"] = [
-        str(cta_in.get("hook", "휴대폰 구매할 땐?")),
-        str(cta_in.get("punch", "지원금부터 무료 조회")),
-    ]
-    cta["audioKey"] = cta_key
+    # CTA = 재사용 _cta.png 자동첨부. 캠페인마다 CTA 안 만들어도 됨(없으면 생략).
+    cta_img = PUBLIC / "assets" / "banners" / "_cta.png"
+    if cta_img.exists():
+        cta_key = f"{slug}_cta"
+        cta_text = str(cta_in.get("tts", "")).strip()
+        banners.append({"image": "_cta.png", "audioKey": cta_key, "caption": cta_text})
+        jobs.append((cta_key, cta_text))
+    else:
+        print("[banner] _cta.png 없음 -> CTA 섹션 생략 (public/assets/banners/_cta.png 두면 자동첨부)")
 
     if have_tts:
         for key, text in jobs:
@@ -130,7 +131,6 @@ def main() -> int:
         "format": fmt,
         "captionsOn": cap_on,
         "banners": banners,
-        "cta": cta,
     }
     out_json = CARD_OUTPUT / slug / "banner_script.json"
     out_json.parent.mkdir(parents=True, exist_ok=True)
