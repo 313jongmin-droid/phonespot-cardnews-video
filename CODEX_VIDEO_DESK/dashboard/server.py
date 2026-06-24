@@ -38,7 +38,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v33"
+PANEL_VERSION = "phonespot-web-v34"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -1853,6 +1853,28 @@ class Handler(BaseHTTPRequestHandler):
                     "message": "선택 영상 렌더를 대기열에 등록했습니다.",
                 })
                 return
+            if action == "banner_ad_upload":
+                import base64 as _b64
+                dest = SHORTS / "public" / "assets" / "banners"
+                dest.mkdir(parents=True, exist_ok=True)
+                saved = []
+                allowed = {".png", ".jpg", ".jpeg", ".webp"}
+                for f in (data.get("files") or []):
+                    name = str((f or {}).get("name") or "").strip()
+                    b64 = str((f or {}).get("b64") or "")
+                    if not name or not b64:
+                        continue
+                    safe = Path(name).name
+                    if Path(safe).suffix.lower() not in allowed:
+                        continue
+                    try:
+                        raw = _b64.b64decode(b64.split(",")[-1])
+                    except Exception:
+                        continue
+                    (dest / safe).write_bytes(raw)
+                    saved.append(safe)
+                json_response(self, {"ok": True, "saved": saved, "message": f"{len(saved)}장 업로드"})
+                return
             if action == "banner_ad_save":
                 slug_now = validate_slug(slug)
                 payload = {
@@ -2345,7 +2367,11 @@ INDEX_HTML = r"""<!doctype html>
     <h3>배너 광고 영상</h3>
     <p class="small">배너 이미지를 <code>shorts/public/assets/banners/</code> 에 넣고, 아래에 파일명+나레이션 입력 → 저장 → 렌더. (9:16)</p>
     <p><label>슬러그 <input id="bnSlug" placeholder="ad_iphone18_preorder" style="width:60%"></label> &nbsp; <label><input type="checkbox" id="bnCaptions"> 자막 넣기(기본 끔)</label></p>
-    <p class="small">배너 (한 줄 = 파일명.png | 나레이션)</p>
+    <p class="small">배너 이미지 업로드 (여러 장 가능 / 파일명이 _cta.png 면 CTA로 사용)</p>
+    <input type="file" id="bnFiles" multiple accept="image/png,image/jpeg,image/webp">
+    <button class="btn" onclick="bannerUpload()" style="margin-left:6px">업로드</button>
+    <div id="bnUpLog" class="small" style="margin:4px 0"></div>
+    <p class="small">배너 순서·나레이션 (한 줄 = 파일명.png | 나레이션) — 업로드하면 자동 추가됨</p>
     <textarea id="bnBanners" rows="5" style="width:100%" placeholder="b1.png | 아이폰18 사전예약 시작&#10;b2.png | 지원금 비교 무료"></textarea>
     <p class="small">CTA</p>
     <input id="bnCtaHook" placeholder="후킹 (휴대폰 살 땐?)" style="width:100%;margin-bottom:4px">
@@ -2389,6 +2415,21 @@ INDEX_HTML = r"""<!doctype html>
         b.style.color=on?"#fff":"var(--label)";
         b.style.fontWeight=on?"800":"600";
       });
+    }
+    function readFileB64(file){ return new Promise(function(res,rej){ var r=new FileReader(); r.onload=function(){ res(String(r.result)); }; r.onerror=rej; r.readAsDataURL(file); }); }
+    async function bannerUpload(){
+      var inp=document.getElementById("bnFiles"); var log=document.getElementById("bnUpLog");
+      var fl=inp&&inp.files?Array.prototype.slice.call(inp.files):[];
+      if(!fl.length){ log.textContent="이미지를 선택하세요."; return; }
+      log.textContent="업로드 중...";
+      var files=[]; for(var i=0;i<fl.length;i++){ files.push({name:fl[i].name, b64:await readFileB64(fl[i])}); }
+      try{
+        var r=await api("/api/action",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"banner_ad_upload",files:files})});
+        var saved=(r.saved||[]); log.textContent=(r.message||"업로드")+" : "+saved.join(", ");
+        var ta=document.getElementById("bnBanners");
+        var add=saved.filter(function(s){ return s!=="_cta.png"; }).map(function(s){ return s+" | "; });
+        if(add.length){ ta.value=(ta.value.trim()?ta.value.trim()+"\n":"")+add.join("\n"); }
+      }catch(e){ log.textContent="업로드 실패: "+e; }
     }
     function bannerPayload(){
       var raw=(document.getElementById("bnBanners").value||"").split("\n").map(function(l){return l.trim();}).filter(Boolean);

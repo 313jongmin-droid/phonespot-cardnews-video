@@ -19,10 +19,13 @@
 - 002 1편(3컷 11초)=**16.5cr**. STARTER 270cr/월 ≈ 영상 18편. cr당 ~$0.07 → 1편 ~$1.2.
 - ffmpeg 합치기·자막·엔딩 = **크레딧 0**(로컬 처리).
 - **★ 크레딧 보고 룰 (종민, 2026-06-24)**: 모든 Higgsfield `generate_video`/`generate_image`/`generate_audio` 호출 **직후 `balance` 조회 → 잔액(credits)을 종민에게 매번 보고**. preflight(`get_cost`)와 별개로, 실제 차감된 뒤 남은 잔액을 명시할 것.
+- **★ 컨셉은 이미지로 먼저 확정 (2026-06-24, 종민) — 크레딧 절약 핵심**: 인물·의상·톤·구도 등 비주얼 컨셉은 `generate_image`(nano_banana_pro = **2cr**, 영상 4초 6cr의 1/3)로 **먼저 이미지로 확정**한다. 마음에 들 때까지 이미지만 재생성(2cr씩) → 확정되면 그 이미지를 `start_image`(medias role)로 **영상화**. **컨셉 확인용으로 영상(6cr)을 재생성하지 말 것.** 보너스: 확정 이미지를 start_image로 쓰면 컷 간 **인물 일관성**도 확보된다. (004 호구썰에서 여성 인물·의상을 영상으로 4번 재생성 = 24cr 낭비 → 이미지로 했으면 8cr이면 됐던 교훈.)
 
 **3. 한글 자막 = 무조건 ffmpeg 후처리 (영상 in-image 한글 ❌).**
 - Kling 생성 영상은 한글 글자가 깨짐 → 프롬프트에 한글 텍스트 넣지 말 것. 영상은 비주얼만, **한글은 .ass 자막으로 후처리 burn**.
 - 폰트: `/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc` (Noto Sans CJK KR, sandbox 기본 존재).
+- **배경 텍스트도 흐리게 (2026-06-24, 종민)**: 매장 간판·견적서 등 깨져도 되는 텍스트는 프롬프트에 `NO readable Korean text, background signage blurred and out of focus` 명시 → **또렷한 한글이 애초에 안 생겨 깨짐이 안 보임**. 모든 컷 기본 적용.
+- **정확해야 하는 한글**(가격·UI·슬로건·자막)은 영상에 맡기지 말고 ① ffmpeg `.ass` 자막/오버레이 후처리 또는 ② **GPT Image 2 합성**(Higgsfield 웹 Inpaint, 점원+0원카드 방식 = 002 검증). 텍스트 렌더는 GPT Image 2가 가장 정확.
 
 **4. CDN 다운로드 함정 (현재 유일 병목).**
 - sandbox(bash)는 Higgsfield cloudfront(`*.cloudfront.net`) 직접 다운로드 **403 차단**(프록시 allowlist). curl/wget 불가.
