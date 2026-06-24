@@ -38,7 +38,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v32"
+PANEL_VERSION = "phonespot-web-v33"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -2212,6 +2212,12 @@ INDEX_HTML = r"""<!doctype html>
     <div class="runtime-card" id="runtimeJob"><span>실행 상태</span><b id="runtimeJobText">대기 중</b><div class="runtime-actions"><button class="runtime-action" id="cancelJobButton" onclick="cancelRemoteJob()" style="display:none">취소</button><button class="runtime-action" id="retryJobButton" onclick="retryRemoteJob()" style="display:none">재시도</button></div></div>
     <div class="runtime-card" id="runtimeGithub"><span>GitHub</span><b id="runtimeGithubText">확인 중</b><div class="runtime-actions"><button class="runtime-action" id="runtimeGithubDownloadButton" onclick="runGithubDownload(event)">다운로드</button><button class="runtime-action" id="runtimeGithubUploadButton" onclick="runGithubUpload(event)">업로드</button></div></div>
   </div>
+  <div class="track-tabs" style="display:flex;gap:6px;padding:8px 20px;border-bottom:1px solid var(--separator)">
+    <button class="track-tab" data-track="cardnews" onclick="switchTrack('cardnews')" style="padding:8px 16px;border:none;border-radius:10px;cursor:pointer;font-size:15px;background:transparent">카드뉴스</button>
+    <button class="track-tab" data-track="typo" onclick="switchTrack('typo')" style="padding:8px 16px;border:none;border-radius:10px;cursor:pointer;font-size:15px;background:transparent">타이포</button>
+    <button class="track-tab" data-track="banner" onclick="switchTrack('banner')" style="padding:8px 16px;border:none;border-radius:10px;cursor:pointer;font-size:15px;background:transparent">배너</button>
+    <button class="track-tab" data-track="ai" onclick="switchTrack('ai')" style="padding:8px 16px;border:none;border-radius:10px;cursor:pointer;font-size:15px;background:transparent">실사AI</button>
+  </div>
   <main>
     <section>
       <div class="tabs">
@@ -2335,6 +2341,30 @@ INDEX_HTML = r"""<!doctype html>
       </div>
     </div>
   </main>
+  <section id="trackBanner" style="display:none;padding:16px 20px">
+    <h3>배너 광고 영상</h3>
+    <p class="small">배너 이미지를 <code>shorts/public/assets/banners/</code> 에 넣고, 아래에 파일명+나레이션 입력 → 저장 → 렌더. (9:16)</p>
+    <p><label>슬러그 <input id="bnSlug" placeholder="ad_iphone18_preorder" style="width:60%"></label> &nbsp; <label><input type="checkbox" id="bnCaptions"> 자막 넣기(기본 끔)</label></p>
+    <p class="small">배너 (한 줄 = 파일명.png | 나레이션)</p>
+    <textarea id="bnBanners" rows="5" style="width:100%" placeholder="b1.png | 아이폰18 사전예약 시작&#10;b2.png | 지원금 비교 무료"></textarea>
+    <p class="small">CTA</p>
+    <input id="bnCtaHook" placeholder="후킹 (휴대폰 살 땐?)" style="width:100%;margin-bottom:4px">
+    <input id="bnCtaPunch" placeholder="펀치 (지원금부터 무료 조회)" style="width:100%;margin-bottom:4px">
+    <input id="bnCtaTts" placeholder="CTA 나레이션 (휴대폰성지 폰스팟에서 확인하세요)" style="width:100%">
+    <div style="margin-top:10px;display:flex;gap:8px">
+      <button class="btn primary" onclick="bannerSave()">저장</button>
+      <button class="btn" onclick="bannerRender()">렌더</button>
+    </div>
+    <div id="bnLog" class="small" style="margin-top:8px"></div>
+  </section>
+  <section id="trackTypo" style="display:none;padding:16px 20px">
+    <h3>타이포 광고</h3>
+    <p class="small">타이포/모션그래픽 광고는 현재 <code>shorts/run_promo.bat</code>. 패널 통합 = 확장 E4.</p>
+  </section>
+  <section id="trackAi" style="display:none;padding:16px 20px">
+    <h3>실사 AI 광고</h3>
+    <p class="small">Higgsfield 실사 광고는 <code>shorts/promo_ai/</code> 워크플로. 패널 통합 = 확장 E4.</p>
+  </section>
   <input id="cardUploadInput" type="file" accept=".png,.jpg,.jpeg,.webp" multiple hidden>
   <input id="illustrationUploadInput" type="file" accept=".png,.jpg,.jpeg,.webp" multiple hidden>
   <script>
@@ -2346,6 +2376,41 @@ INDEX_HTML = r"""<!doctype html>
     let lastState = null;
     let currentRemoteJob = null;
     async function api(path, options) { const res = await fetch(path, options); if (!res.ok) throw new Error(await res.text()); return await res.json(); }
+    function switchTrack(name){
+      try{ localStorage.setItem("panel.track", name); }catch(e){}
+      var main=document.querySelector("main");
+      if(main) main.style.display = (name==="cardnews")?"":"none";
+      [["banner","trackBanner"],["typo","trackTypo"],["ai","trackAi"]].forEach(function(t){
+        var el=document.getElementById(t[1]); if(el) el.style.display=(name===t[0])?"":"none";
+      });
+      document.querySelectorAll(".track-tab").forEach(function(b){
+        var on=b.getAttribute("data-track")===name;
+        b.style.background=on?"var(--accent)":"transparent";
+        b.style.color=on?"#fff":"var(--label)";
+        b.style.fontWeight=on?"800":"600";
+      });
+    }
+    function bannerPayload(){
+      var raw=(document.getElementById("bnBanners").value||"").split("\n").map(function(l){return l.trim();}).filter(Boolean);
+      var banners=raw.map(function(l){var p=l.split("|"); return {image:(p[0]||"").trim(), tts:(p.slice(1).join("|")||"").trim()};});
+      return { slug:(document.getElementById("bnSlug").value||"").trim(), format:"9x16",
+        captionsOn:document.getElementById("bnCaptions").checked, banners:banners,
+        cta:{hook:document.getElementById("bnCtaHook").value, punch:document.getElementById("bnCtaPunch").value, tts:document.getElementById("bnCtaTts").value} };
+    }
+    async function bannerSave(){
+      var pl=bannerPayload(); var log=document.getElementById("bnLog");
+      if(!pl.slug){ log.textContent="슬러그를 입력하세요."; return false; }
+      try{ var r=await api("/api/action",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({action:"banner_ad_save"},pl))}); log.textContent=r.message||"저장됨"; return true; }
+      catch(e){ log.textContent="저장 실패: "+e; return false; }
+    }
+    async function bannerRender(){
+      var pl=bannerPayload(); var log=document.getElementById("bnLog");
+      if(!pl.slug){ log.textContent="슬러그를 입력하세요."; return; }
+      if(!(await bannerSave())) return;
+      try{ var r=await api("/api/action",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"banner_ad_render",slug:pl.slug})}); log.textContent=r.message||"렌더 대기열 등록"; }
+      catch(e){ log.textContent="렌더 실패: "+e; }
+    }
+    setTimeout(function(){ try{ switchTrack(localStorage.getItem("panel.track")||"cardnews"); }catch(e){ try{switchTrack("cardnews");}catch(_){} } }, 0);
     function chooseUpload(kind) {
       if (kind === "card" && !selectedCard) {
         alert("카드뉴스 항목을 먼저 선택하세요.");
