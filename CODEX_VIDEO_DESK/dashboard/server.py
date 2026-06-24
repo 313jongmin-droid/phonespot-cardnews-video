@@ -38,7 +38,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v36"
+PANEL_VERSION = "phonespot-web-v37"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -2166,9 +2166,10 @@ INDEX_HTML = r"""<!doctype html>
     .runtime-actions { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
     .runtime-actions .runtime-action { margin-top:8px; }
     .runtime-select { width:100%; margin-top:7px; border:none; background:var(--secondary-bg); border-radius:8px; padding:6px 8px; font-size:11px; font-family:inherit; color:var(--label); }
-    .status { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; }
+    .status { display:grid; grid-template-columns:repeat(auto-fit,minmax(96px,1fr)); gap:10px; }
     .metric { border:none; border-radius:var(--r-md); padding:12px; background:var(--secondary-bg); min-height:72px; } .metric b { display:block; font-size:23px; font-weight:600; letter-spacing:-.4px; margin-top:5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
     .metric.slug b { font-size:13px; white-space:normal; word-break:break-all; line-height:1.3; }
+    .metric .small { word-break:keep-all; }
     .warn { color:var(--danger); } .ok { color:#1B7A3D; }
     .log { height:360px; overflow:auto; background:#1C1C1E; color:#E5E5EA; padding:16px; font-family:'SF Mono',Consolas,monospace; font-size:12px; white-space:pre-wrap; border-radius:0 0 var(--r-lg) var(--r-lg); }
     .results { max-height:340px; overflow:auto; font-size:13px; } .result-row { display:flex; flex-direction:column; gap:3px; padding:9px 0; border-bottom:.5px solid var(--separator); }
@@ -2200,6 +2201,17 @@ INDEX_HTML = r"""<!doctype html>
     .mini-btn { border:none; color:var(--accent); background:var(--accent-soft); border-radius:8px; padding:6px 10px; cursor:pointer; font-size:12px; font-weight:600; margin:2px; transition:var(--t-fast); }
     .mini-btn:hover { background:var(--accent); color:#fff; }
     .mini-btn:disabled { color:var(--label-quaternary); background:var(--secondary-bg); cursor:not-allowed; }
+    .track-pane { padding:18px 20px; max-width:1120px; }
+    .track-form p.small { margin:10px 0 4px; }
+    .track-form .fld { display:inline-flex; flex-direction:column; gap:4px; font-size:12px; color:var(--label-tertiary); margin:4px 0; }
+    .track-form .fld-row { display:flex; gap:14px; flex-wrap:wrap; align-items:flex-end; margin:4px 0; }
+    .track-form input, .track-form textarea { border:none; background:var(--secondary-bg); border-radius:8px; padding:9px 11px; font-size:13px; font-family:inherit; color:var(--label); box-shadow:inset 0 0 0 1px var(--separator); }
+    .track-form .fld-row > input { flex:1; min-width:200px; }
+    .track-form textarea { width:100%; line-height:1.6; resize:vertical; }
+    .track-form input:focus, .track-form textarea:focus { outline:none; box-shadow:inset 0 0 0 1.5px var(--accent); }
+    .track-form .uprow { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+    .track-form .actions { margin-top:14px; display:flex; gap:8px; }
+    .track-form .actions .mini-btn { padding:9px 18px; font-size:13px; }
     .chunk-panel { display:none; border-top:.5px solid var(--separator); background:#F0F6FF; }
     .chunk-table { width:100%; border-collapse:collapse; font-size:12px; }
     .chunk-table th,.chunk-table td { border-bottom:.5px solid var(--separator); padding:8px; vertical-align:top; text-align:left; }
@@ -2215,13 +2227,13 @@ INDEX_HTML = r"""<!doctype html>
     @keyframes fadeIn { from{opacity:0;transform:translateY(8px);} to{opacity:1;transform:translateY(0);} }
     section { animation:fadeIn 220ms cubic-bezier(.4,0,.2,1); }
     @media (prefers-reduced-motion:reduce){ *,*::before,*::after{ animation-duration:.01ms!important; transition-duration:.01ms!important; } }
-    @media (max-width:1080px) { main { grid-template-columns:1fr; } .grid,.status { grid-template-columns:1fr 1fr; } .pair,.pair.lopsided { grid-template-columns:1fr; } main > section { position:static; } }
+    @media (max-width:1080px) { main { grid-template-columns:1fr; } .grid { grid-template-columns:1fr 1fr; } .pair,.pair.lopsided { grid-template-columns:1fr; } main > section { position:static; } }
     @media (max-width:700px) {
       header { padding:12px 14px; flex-wrap:wrap; }
       header > span { width:100%; }
       main { padding:10px; }
       .runtime-strip { grid-template-columns:minmax(0,1fr) minmax(0,1fr); padding:0 10px; }
-      .grid,.status { grid-template-columns:1fr; }
+      .grid { grid-template-columns:1fr; }
       .action-head { align-items:stretch; flex-direction:column; }
       .selected-badge { min-width:0; width:100%; }
       .result-row { flex-direction:column; }
@@ -2365,36 +2377,50 @@ INDEX_HTML = r"""<!doctype html>
       </div>
     </div>
   </main>
-  <section id="trackBanner" style="display:none;padding:16px 20px">
-    <h3>배너 광고 영상</h3>
-    <p class="small">이미지 N장이 위로 넘어가는 영상. 나레이션 없음, BGM만 선택. 업로드 → 순서 확인 → 렌더. (9:16)</p>
-    <p><label>슬러그 <input id="bnSlug" placeholder="ad_iphone18_preorder" style="width:60%"></label></p>
-    <p class="small">이미지/BGM 업로드 (이미지 여러장 · 파일명 _cta.png=CTA · mp3=BGM 자동 인식)</p>
-    <input type="file" id="bnFiles" multiple accept="image/png,image/jpeg,image/webp,audio/*">
-    <button class="btn" onclick="bannerUpload()" style="margin-left:6px">업로드</button>
-    <div id="bnUpLog" class="small" style="margin:4px 0"></div>
-    <p class="small">배너 순서 (한 줄 = 파일명.png) — 업로드하면 자동 추가. 줄 순서 = 영상 순서</p>
-    <textarea id="bnBanners" rows="5" style="width:100%" placeholder="b1.png&#10;b2.png&#10;b3.png"></textarea>
-    <p><label>장당 노출(초) <input id="bnSec" type="number" step="0.1" value="2.8" style="width:80px"></label>
-       &nbsp; <label>BGM 파일 <input id="bnBgm" placeholder="(선택) bgm.mp3" style="width:200px"></label>
-       &nbsp; <label>BGM 볼륨 <input id="bnBgmVol" type="number" step="0.05" value="0.6" style="width:80px"></label></p>
-    <p class="small">광고 문구(선택, AD_COPY.txt 용 — 영상엔 안 들어감)</p>
-    <input id="bnCtaHook" placeholder="후킹 (휴대폰 살 땐?)" style="width:48%;margin-bottom:4px">
-    <input id="bnCtaPunch" placeholder="펀치 (지원금부터 무료 조회)" style="width:48%;margin-bottom:4px">
-    <div style="margin-top:10px;display:flex;gap:8px">
-      <button class="btn primary" onclick="bannerSave()">저장</button>
-      <button class="btn" onclick="bannerRender()">렌더</button>
-    </div>
-    <div id="bnLog" class="small" style="margin-top:8px"></div>
-  </section>
-  <section id="trackTypo" style="display:none;padding:16px 20px">
-    <h3>타이포 광고</h3>
-    <p class="small">타이포/모션그래픽 광고는 현재 <code>shorts/run_promo.bat</code>. 패널 통합 = 확장 E4.</p>
-  </section>
-  <section id="trackAi" style="display:none;padding:16px 20px">
-    <h3>실사 AI 광고</h3>
-    <p class="small">Higgsfield 실사 광고는 <code>shorts/promo_ai/</code> 워크플로. 패널 통합 = 확장 E4.</p>
-  </section>
+  <div id="trackBanner" class="track-pane" style="display:none">
+    <section>
+      <div class="head"><h2>배너 광고 영상</h2><span class="small">이미지 N장 스크롤 + 선택 BGM · 9:16</span></div>
+      <div class="pad track-form">
+        <p class="small">이미지 N장이 위로 넘어가는 영상. 나레이션 없음, BGM만 선택. 업로드 → 순서 확인 → 렌더.</p>
+        <label class="fld">슬러그 <input id="bnSlug" placeholder="ad_iphone18_preorder" style="min-width:300px"></label>
+        <p class="small">이미지/BGM 업로드 (이미지 여러장 · 파일명 _cta.png=CTA · mp3=BGM 자동 인식)</p>
+        <div class="uprow">
+          <input type="file" id="bnFiles" multiple accept="image/png,image/jpeg,image/webp,audio/*" style="box-shadow:none;background:transparent;padding:0">
+          <button class="mini-btn" onclick="bannerUpload()">업로드</button>
+        </div>
+        <div id="bnUpLog" class="small" style="margin:6px 0"></div>
+        <p class="small">배너 순서 (한 줄 = 파일명.png) — 업로드하면 자동 추가. 줄 순서 = 영상 순서</p>
+        <textarea id="bnBanners" rows="5" placeholder="b1.png&#10;b2.png&#10;b3.png"></textarea>
+        <div class="fld-row">
+          <label class="fld">장당 노출(초) <input id="bnSec" type="number" step="0.1" value="2.8" style="min-width:0;width:100px"></label>
+          <label class="fld">BGM 파일 <input id="bnBgm" placeholder="(선택) bgm.mp3" style="min-width:0;width:220px"></label>
+          <label class="fld">BGM 볼륨 <input id="bnBgmVol" type="number" step="0.05" value="0.6" style="min-width:0;width:100px"></label>
+        </div>
+        <p class="small">광고 문구(선택, AD_COPY.txt 용 — 영상엔 안 들어감)</p>
+        <div class="fld-row">
+          <input id="bnCtaHook" placeholder="후킹 (휴대폰 살 땐?)">
+          <input id="bnCtaPunch" placeholder="펀치 (지원금부터 무료 조회)">
+        </div>
+        <div class="actions">
+          <button class="mini-btn" onclick="bannerSave()">저장</button>
+          <button class="mini-btn" onclick="bannerRender()">렌더</button>
+        </div>
+        <div id="bnLog" class="small" style="margin-top:8px"></div>
+      </div>
+    </section>
+  </div>
+  <div id="trackTypo" class="track-pane" style="display:none">
+    <section>
+      <div class="head"><h2>타이포 광고</h2><span class="small">모션그래픽 · 확장 E4</span></div>
+      <div class="pad track-form"><p class="small" style="margin-top:0">타이포/모션그래픽 광고는 현재 <code>shorts/run_promo.bat</code> 로 빌드합니다. 패널 통합은 확장 E4 예정.</p></div>
+    </section>
+  </div>
+  <div id="trackAi" class="track-pane" style="display:none">
+    <section>
+      <div class="head"><h2>실사 AI 광고</h2><span class="small">Higgsfield · 확장 E4</span></div>
+      <div class="pad track-form"><p class="small" style="margin-top:0">Higgsfield 실사 광고는 <code>shorts/promo_ai/</code> 워크플로로 진행합니다. 패널 통합은 확장 E4 예정.</p></div>
+    </section>
+  </div>
   <input id="cardUploadInput" type="file" accept=".png,.jpg,.jpeg,.webp" multiple hidden>
   <input id="illustrationUploadInput" type="file" accept=".png,.jpg,.jpeg,.webp" multiple hidden>
   <script>
