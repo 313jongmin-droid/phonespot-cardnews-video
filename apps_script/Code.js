@@ -1123,7 +1123,7 @@ function buildDashboardV2() {
   const fmtKM = '[>=1000000]0.00,,"M";[>=1000]0.0,"K";#,##0';
 
   const LCOL = 1;   // A
-  const RCOL = 9;   // I (좌우 1칸 띄움, H=간격칸)
+  const RCOL = 8;   // H (우측 시작; G=좌우 간격칸)
   const colL = function (n) { return String.fromCharCode(64 + n); };  // 열번호→문자 (RCOL 이동 시 수식 안전)
 
   // ── 0) 초기화 (1~59행만) ──
@@ -1214,7 +1214,7 @@ function buildDashboardV2() {
   // ── 좌측 열 (A~F) ──
 
   // 2L) 기간별 핵심 — 헤더 A4:F4 / 컬럼헤더 5 / 데이터 6~8
-  sectionHeader(4, '기간별 핵심', LCOL, 7);
+  sectionHeader(4, '기간별 핵심', LCOL);
   colHeader(5, ['기간', '광고비', '문의', '개통', 'CPL', '순이익'], LCOL);
   const kpiPeriods = [
     ['어제',      'TODAY()-1',  'TODAY()-1'],
@@ -1237,18 +1237,19 @@ function buildDashboardV2() {
 
   // 3L) 채널별 효율 — 전역 상단 기간(L2) 따라감 / 컬럼헤더 11 / 데이터 12~16
   const chHeaderRow = 10;
-  sectionHeader(chHeaderRow, '채널별 효율', LCOL, 7);   // 전역 상단 기간(L2) 따라감
+  sectionHeader(chHeaderRow, '채널별 효율', LCOL);   // 전역 상단 기간(L2) 따라감
   const ABS_N = '$N$2';
   const ABS_O = '$O$2';
-  colHeader(11, ['채널', '노출', '클릭', '광고비', '카톡클릭', '카톡당CPC', '앱문의'], LCOL);
+  colHeader(11, ['채널', '노출', '클릭', '소진금액', '문의', '문의당비용'], LCOL);
 
   const ga4D = `'GA4_자동'!A:A,">="&TEXT(${ABS_N},"yyyymmdd"),'GA4_자동'!A:A,"<="&TEXT(${ABS_O},"yyyymmdd")`;
+  // 채널 순서 = 실비용 대조와 동일. 소진금액=결제내역(카드결제) / 문의=GA4 카톡클릭(당근만 카톡문의+앱문의 별도식)
   const channels = [
-    {name:'메타',   adSheet:'메타+',   impCol:'F', clkCol:'G', spdCol:'H', sources:['meta','facebook.com','m.facebook.com','l.facebook.com']},
-    {name:'구글',   adSheet:'구글',        impCol:'E', clkCol:'F', spdCol:'G', sources:['google']},
-    {name:'네이버', adSheet:'네이버+', impCol:'F', clkCol:'G', spdCol:'H', sources:['naver','naver_blog','ad.search.naver.com','m.ad.search.naver.com','m.search.naver.com']},
-    {name:'카카오', adSheet:'카카오',      impCol:'E', clkCol:'F', spdCol:'G', sources:['kakao']},
-    {name:'당근',   adSheet:'당근',        impCol:'E', clkCol:'F', spdCol:'G', sources:['daangn','danggn'], appSheet:'당근+', appCol:'Q'},
+    {name:'메타',   adSheet:'메타+',   impCol:'F', clkCol:'G', sources:['meta','facebook.com','m.facebook.com','l.facebook.com']},
+    {name:'네이버', adSheet:'네이버+', impCol:'F', clkCol:'G', sources:['naver','naver_blog','ad.search.naver.com','m.ad.search.naver.com','m.search.naver.com']},
+    {name:'구글',   adSheet:'구글',    impCol:'E', clkCol:'F', sources:['google']},
+    {name:'카카오', adSheet:'카카오',  impCol:'E', clkCol:'F', sources:['kakao']},
+    {name:'당근',   adSheet:'당근',    impCol:'E', clkCol:'F', sources:['daangn','danggn'], danggn:true},
   ];
   const chStart = 12;
   channels.forEach(function (c, i) {
@@ -1256,19 +1257,21 @@ function buildDashboardV2() {
     const ad = (col) => `SUMIFS('${c.adSheet}'!${col}:${col},'${c.adSheet}'!A:A,">="&${ABS_N},'${c.adSheet}'!A:A,"<="&${ABS_O})`;
     const ev = (e) => c.sources.map(s =>
       `SUMIFS('GA4_자동'!F:F,'GA4_자동'!B:B,"${s}",'GA4_자동'!E:E,"${e}",${ga4D})`).join('+');
+    const spend = `SUMIFS('결제내역'!D:D,'결제내역'!B:B,"${c.name}",'결제내역'!A:A,">="&${ABS_N},'결제내역'!A:A,"<="&${ABS_O})`;
+    const inq = c.danggn
+      ? `SUMIFS('당근+'!P:P,'당근+'!A:A,">="&${ABS_N},'당근+'!A:A,"<="&${ABS_O})+SUMIFS('당근+'!Q:Q,'당근+'!A:A,">="&${ABS_N},'당근+'!A:A,"<="&${ABS_O})`
+      : ev('kakao_chat_click');
     dash.getRange(r, 1).setValue(c.name);
     dash.getRange(r, 2).setFormula(`=IFERROR(${ad(c.impCol)},0)`).setNumberFormat(fmtKM);
     dash.getRange(r, 3).setFormula(`=IFERROR(${ad(c.clkCol)},0)`).setNumberFormat(fmtKM);
-    dash.getRange(r, 4).setFormula(`=IFERROR(${ad(c.spdCol)},0)`).setNumberFormat(F_WON);
-    dash.getRange(r, 5).setFormula(`=IFERROR(${ev('kakao_chat_click')},0)`).setNumberFormat(F_INT);
-    dash.getRange(r, 6).setFormula(`=IFERROR(IF(E${r}=0,"-",D${r}/E${r}),"-")`).setNumberFormat(F_WON);
-    if (c.appCol) dash.getRange(r, 7).setFormula(`=IFERROR(SUMIFS('${c.appSheet}'!${c.appCol}:${c.appCol},'${c.appSheet}'!A:A,">="&${ABS_N},'${c.appSheet}'!A:A,"<="&${ABS_O}),0)`).setNumberFormat(F_INT);
-    else dash.getRange(r, 7).setValue("-").setHorizontalAlignment("center");
+    dash.getRange(r, 4).setFormula(`=IFERROR(${spend},0)`).setNumberFormat(F_WON);          // 소진금액=결제내역
+    dash.getRange(r, 5).setFormula(`=IFERROR(${inq},0)`).setNumberFormat(F_INT);            // 문의
+    dash.getRange(r, 6).setFormula(`=IFERROR(IF(E${r}=0,"-",D${r}/E${r}),"-")`).setNumberFormat(F_WON);  // 문의당비용=소진/문의
   });
-  dataBox(chStart, channels.length, 7, LCOL);   // 12~16 (앱문의 G 포함)
+  dataBox(chStart, channels.length, 6, LCOL);   // 12~16
 
   // 4L) 리틀리 유입 — 한 칸 내림(카톡 현황과 줄맞춤). 헤더 A19:G19 / 컬럼헤더 20 / 데이터 21~23 / E20:F23 박스
-  sectionHeader(19, '리틀리 유입', LCOL, 7);
+  sectionHeader(19, '리틀리 유입', LCOL);
   colHeader(20, ['기간', '방문자수', '클릭수', 'CTR'], LCOL);
   dash.getRange(20, 5).setValue('최신 유입경로비율')
     .setBackground(C_COL_BG).setFontColor(C_COL_FG).setFontWeight('bold').setFontSize(9)
@@ -1379,24 +1382,24 @@ function buildDashboardV2() {
 
   // 폭/정렬 마무리
   dash.setColumnWidth(1, 128);                              // A (라벨)
-  for (let c = 2; c <= 7; c++) dash.setColumnWidth(c, 80);  // B~G = 80 고정
-  dash.setColumnWidth(8, 26);                               // H = 좌우 간격칸(빈칸)
-  dash.setColumnWidth(9, 110);                              // I (우측 라벨)
-  for (let c = 10; c <= 14; c++) dash.setColumnWidth(c, 108);// J~N
+  for (let c = 2; c <= 6; c++) dash.setColumnWidth(c, 80);  // B~F = 80 고정
+  dash.setColumnWidth(7, 26);                               // G = 좌우 간격칸(빈칸)
+  dash.setColumnWidth(8, 110);                              // H (우측 라벨)
+  for (let c = 9; c <= 13; c++) dash.setColumnWidth(c, 108);// I~M
   try { dash.setRowHeight(1, 18); dash.setRowHeight(2, 34); } catch (e) {}
 
-  // 조건부 색: 출처미상(I2) 위험 / 실비용 차이(L12:L17) 음수 — 매번 내 규칙만 갱신
+  // 조건부 색: 출처미상(I2) 위험 / 실비용 차이(K12:K17) 음수 — 매번 내 규칙만 갱신
   try {
     var keep = dash.getConditionalFormatRules().filter(function (rule) {
       var rs = rule.getRanges().map(function (rg) { return rg.getA1Notation(); }).join(',');
-      return rs.indexOf('I2') < 0 && rs.indexOf('L12') < 0 && rs.indexOf('F3') < 0 && rs.indexOf('F6') < 0;
+      return rs.indexOf('I2') < 0 && rs.indexOf('K12') < 0 && rs.indexOf('F3') < 0 && rs.indexOf('F6') < 0;
     });
     keep.push(SpreadsheetApp.newConditionalFormatRule().whenNumberGreaterThanOrEqualTo(0.7)
       .setFontColor('#9F1A1A').setBackground('#FCEBEB').setRanges([dash.getRange('I2')]).build());
     keep.push(SpreadsheetApp.newConditionalFormatRule().whenNumberBetween(0.5, 0.6999)
       .setFontColor('#8A5A00').setBackground('#FAEEDA').setRanges([dash.getRange('I2')]).build());
     keep.push(SpreadsheetApp.newConditionalFormatRule().whenNumberLessThan(0)
-      .setFontColor('#9F1A1A').setRanges([dash.getRange('L12:L17')]).build());
+      .setFontColor('#9F1A1A').setRanges([dash.getRange('K12:K17')]).build());
     keep.push(SpreadsheetApp.newConditionalFormatRule().whenNumberLessThan(0)
       .setFontColor('#9F1A1A').setRanges([dash.getRange('F3'), dash.getRange('F6:F8')]).build());
     keep.push(SpreadsheetApp.newConditionalFormatRule().whenNumberGreaterThan(0)
