@@ -551,7 +551,7 @@ function repairSNSMonthlySummaries(showAlert) {
     for (let m = 1; m <= 12; m++) {
       const r = 3 + m;
       sh.getRange(r, 11)
-        .setFormula(`=DATE(YEAR('통합대시보드'!$B$2),${m},1)`)
+        .setFormula(`=DATE(YEAR(TODAY()),${m},1)`)
         .setNumberFormat('yyyy.m');
       sh.getRange(r, 12)
         .setFormula(`=COUNTIFS($A$4:$A$1000,">="&$K${r},$A$4:$A$1000,"<="&EOMONTH($K${r},0))`)
@@ -572,7 +572,7 @@ function repairSNSMonthlySummaries(showAlert) {
 
     const totalRow = 16;
     sh.getRange(totalRow, 11)
-      .setFormula(`=YEAR('통합대시보드'!$B$2)&" 합계"`)
+      .setFormula(`=YEAR(TODAY())&" 합계"`)
       .setFontWeight('bold');
     sh.getRange(totalRow, 12)
       .setFormula('=SUM(L4:L15)')
@@ -591,7 +591,7 @@ function repairSNSMonthlySummaries(showAlert) {
       .setNumberFormat('#,##0')
       .setFontWeight('bold');
     sh.getRange(totalRow, 16)
-      .setFormula(`=IFERROR(INDEX(SORT(FILTER({$A$4:$A$1000,$G$4:$G$1000},YEAR($A$4:$A$1000)=YEAR('통합대시보드'!$B$2),$G$4:$G$1000<>""),1,FALSE),1,2),"-")`)
+      .setFormula(`=IFERROR(INDEX(SORT(FILTER({$A$4:$A$1000,$G$4:$G$1000},YEAR($A$4:$A$1000)=YEAR(TODAY()),$G$4:$G$1000<>""),1,FALSE),1,2),"-")`)
       .setNumberFormat('#,##0')
       .setFontWeight('bold');
 

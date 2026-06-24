@@ -141,7 +141,9 @@ function fetchYouTubeAnalyticsDaily() {
   var appends = appendsBuffer.map(function(item) { return item.cells; });
 
   updates.forEach(function(pair) {
-    sheet.getRange(pair[0], 1, 1, 7).setValues([pair[1].slice(0, 7)]);
+    // ★ 2026-06-24: 기존 행은 A~F(날짜/포맷/주제/링크/조회수/좋아요)만 갱신, G(팔로워)는 보존
+    //    = 해당 날짜의 구독자수 스냅샷 유지(팔로워 증감 추적 가능). 인스타와 동일 정책.
+    sheet.getRange(pair[0], 1, 1, 6).setValues([pair[1].slice(0, 6)]);
     sheet.getRange(pair[0], 9, 1, 1).setValues([[pair[1][7]]]);
   });
   if (appends.length > 0) {
