@@ -1,26 +1,25 @@
 # -*- coding: utf-8 -*-
 """
-배너광고 트랙 빌더 (STEP2, 2026-06-19) — casual build_script/generate_tts 무수정 독립 스크립트.
+배너광고 트랙 빌더 (2026-06-19, 나레이션 제거판) — 이미지 N장이 위로 넘어가는 영상 + 선택 BGM.
+casual build_script/generate_tts 무수정 독립 스크립트.
 
 입력:  cardnews/output/<slug>/banner_input.json
-       { "slug", "format"(9x16|1x1|4x5), "captionsOn"(bool),
-         "banners": [ {"image": "b1.png", "tts": "배너1 나레이션"}, ... ],
-         "cta": {"hook": "...", "punch": "...", "tts": "CTA 나레이션"} }
+       { "slug", "format"(9x16|1x1|4x5), "secPerBanner"(float),
+         "bgm"(파일명, 선택), "bgmVol"(float),
+         "banners": [ {"image": "b1.png"}, ... ] }
 출력:  cardnews/output/<slug>/banner_script.json  (+ shorts/public/shorts_script.json 복사)
-       shorts/public/audio/<slug>_b{N}.mp3 / <slug>_cta.mp3  (edge-tts, 있을 때만)
 
 BannerAdShort.tsx 가 읽는 shape:
-  { banners:[{image,audioKey,caption}], cta:{kakao,location,litt,caption_chunks,audioKey}, captionsOn, format }
+  { slug, _track, format, secPerBanner, bgm, bgmVol, banners:[{image,audioKey:"",caption:""}] }
+  - 나레이션 없음(audioKey 비움). BGM 은 public/assets/banners/<bgm> 에서 staticFile 로 로드.
+  - CTA = public/assets/banners/_cta.png 있으면 banners 끝에 자동첨부.
 
 사용:  python scripts/build_banner.py <slug>
 """
 from __future__ import annotations
 
-import asyncio
 import json
-import os
 import shutil
-import subprocess
 import sys
 from pathlib import Path
 
@@ -28,47 +27,7 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 SHORTS = ROOT / "shorts"
 CARD_OUTPUT = ROOT / "cardnews" / "output"
 PUBLIC = SHORTS / "public"
-AUDIO = PUBLIC / "audio"
-VOICE = os.getenv("PHONESPOT_TTS_VOICE", "ko-KR-SunHiNeural")
-
-# 브랜드 CTA 기본값 (build_script.py 와 동일 — 휴대폰성지 폰스팟)
-DEFAULT_CTA = {
-    "kakao": "@휴대폰성지폰스팟",
-    "location": "내 손 안의 성지찾기, 폰스팟",
-    "litt": "litt.ly/phonespot",
-}
-
-
-def find_ffmpeg() -> str | None:
-    if shutil.which("ffmpeg"):
-        return "ffmpeg"
-    try:
-        import imageio_ffmpeg  # type: ignore
-        return imageio_ffmpeg.get_ffmpeg_exe()
-    except Exception:
-        return None
-
-
-async def _synth(text: str, out: Path) -> None:
-    import edge_tts  # type: ignore
-    com = edge_tts.Communicate(text, VOICE)
-    await com.save(str(out))
-
-
-def normalize(path: Path) -> None:
-    """라우드니스 -14 LUFS (카드뉴스 finalize 와 동일 타깃)."""
-    ff = find_ffmpeg()
-    if not ff or not path.exists():
-        return
-    tmp = path.with_suffix(".raw.mp3")
-    try:
-        path.replace(tmp)
-        subprocess.run(
-            [ff, "-y", "-i", str(tmp), "-af", "loudnorm=I=-14:TP=-1.5:LRA=11", "-ar", "48000", str(path)],
-            capture_output=True,
-        )
-    finally:
-        tmp.unlink(missing_ok=True)
+BANNERS_DIR = PUBLIC / "assets" / "banners"
 
 
 def main() -> int:
@@ -78,58 +37,44 @@ def main() -> int:
     slug = sys.argv[1]
     inp = CARD_OUTPUT / slug / "banner_input.json"
     if not inp.exists():
-        print(f"[banner] 입력 없음: {inp}\n  (패널 배너탭이 banner_input.json 을 먼저 써야 함 — STEP4)")
+        print(f"[banner] 입력 없음: {inp}\n  (패널 배너탭이 banner_input.json 을 먼저 써야 함)")
         return 1
 
     data = json.loads(inp.read_text(encoding="utf-8"))
     fmt = data.get("format", "9x16")
-    cap_on = bool(data.get("captionsOn", False))
+    sec = float(data.get("secPerBanner") or 2.8)
+    bgm_vol = float(data.get("bgmVol") or 0.6)
     banners_in = data.get("banners", []) or []
-    cta_in = data.get("cta", {}) or {}
-    AUDIO.mkdir(parents=True, exist_ok=True)
-
-    try:
-        import edge_tts  # noqa: F401
-        have_tts = True
-    except Exception:
-        have_tts = False
-        print("[banner] edge-tts 미설치 → 오디오 생략(스크립트 JSON만 작성). 렌더PC에서 재실행 필요.")
 
     banners = []
-    jobs: list[tuple[str, str]] = []
-    for i, b in enumerate(banners_in, 1):
-        key = f"{slug}_b{i}"
-        text = str(b.get("tts", "")).strip()
-        banners.append({"image": b.get("image", ""), "audioKey": key, "caption": text})
-        jobs.append((key, text))
+    for b in banners_in:
+        img = str(b.get("image", "")).strip()
+        if not img:
+            continue
+        banners.append({"image": img, "audioKey": "", "caption": ""})
 
-    # CTA = 재사용 _cta.png 자동첨부. 캠페인마다 CTA 안 만들어도 됨(없으면 생략).
-    cta_img = PUBLIC / "assets" / "banners" / "_cta.png"
-    if cta_img.exists():
-        cta_key = f"{slug}_cta"
-        cta_text = str(cta_in.get("tts", "")).strip()
-        banners.append({"image": "_cta.png", "audioKey": cta_key, "caption": cta_text})
-        jobs.append((cta_key, cta_text))
+    # CTA = 재사용 _cta.png 자동첨부 (없으면 생략)
+    if (BANNERS_DIR / "_cta.png").exists():
+        banners.append({"image": "_cta.png", "audioKey": "", "caption": ""})
     else:
-        print("[banner] _cta.png 없음 -> CTA 섹션 생략 (public/assets/banners/_cta.png 두면 자동첨부)")
+        print("[banner] _cta.png 없음 -> CTA 생략 (public/assets/banners/_cta.png 두면 자동첨부)")
 
-    if have_tts:
-        for key, text in jobs:
-            if not text:
-                continue
-            out = AUDIO / f"{key}.mp3"
-            try:
-                asyncio.run(_synth(text, out))
-                normalize(out)
-                print(f"[tts] {key} <- {text[:24]}")
-            except Exception as exc:
-                print(f"[tts] 실패 {key}: {exc}")
+    # BGM 검증: 파일명만 받음. 실제로 assets/banners/ 에 있어야 적용
+    bgm_name = str(data.get("bgm") or "").strip()
+    bgm_rel = ""
+    if bgm_name:
+        if (BANNERS_DIR / bgm_name).exists():
+            bgm_rel = "assets/banners/" + bgm_name
+        else:
+            print(f"[banner] BGM 파일 없음: {BANNERS_DIR / bgm_name} -> BGM 생략")
 
     script = {
         "slug": slug,
         "_track": "banner_ad",
         "format": fmt,
-        "captionsOn": cap_on,
+        "secPerBanner": sec,
+        "bgm": bgm_rel,
+        "bgmVol": bgm_vol,
         "banners": banners,
     }
     out_json = CARD_OUTPUT / slug / "banner_script.json"
@@ -137,8 +82,8 @@ def main() -> int:
     out_json.write_text(json.dumps(script, ensure_ascii=False, indent=2), encoding="utf-8")
     shutil.copy2(out_json, PUBLIC / "shorts_script.json")
     print(f"[banner] script: {out_json}")
-    print(f"[banner] 배너 {len(banners)}장 + cta / format={fmt} / captions={cap_on}")
-    print("[banner] public/shorts_script.json 갱신 → 컴포지션 'BannerAd' 렌더 가능")
+    print(f"[banner] 배너 {len(banners)}장 / {sec}s each / format={fmt} / bgm={bgm_rel or '(없음)'}")
+    print("[banner] public/shorts_script.json 갱신 -> 컴포지션 'BannerAd' 렌더 가능")
     return 0
 
 

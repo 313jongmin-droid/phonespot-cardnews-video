@@ -3,7 +3,6 @@ import {
   AbsoluteFill,
   Audio,
   Img,
-  Sequence,
   interpolate,
   staticFile,
   useCurrentFrame,
@@ -27,6 +26,8 @@ interface Banner {
 interface BannerScript {
   banners?: Banner[];
   captionsOn?: boolean;
+  bgm?: string;
+  bgmVol?: number;
 }
 interface Props {
   script: BannerScript;
@@ -99,11 +100,9 @@ export const BannerAdShort: React.FC<Props> = ({ script, sequenceSeconds, captio
         ))}
       </div>
 
-      {banners.map((b, i) => (
-        <Sequence key={"a" + i} from={starts[i]} durationInFrames={frames[i]}>
-          <Audio src={staticFile("audio/" + b.audioKey + ".mp3")} volume={1} />
-        </Sequence>
-      ))}
+      {script.bgm ? (
+        <Audio src={staticFile(script.bgm)} volume={script.bgmVol != null ? script.bgmVol : 0.6} loop />
+      ) : null}
 
       {capOn && activeCaption ? (
         <div

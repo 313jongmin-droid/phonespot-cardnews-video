@@ -38,7 +38,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v34"
+PANEL_VERSION = "phonespot-web-v35"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -1858,7 +1858,7 @@ class Handler(BaseHTTPRequestHandler):
                 dest = SHORTS / "public" / "assets" / "banners"
                 dest.mkdir(parents=True, exist_ok=True)
                 saved = []
-                allowed = {".png", ".jpg", ".jpeg", ".webp"}
+                allowed = {".png", ".jpg", ".jpeg", ".webp", ".mp3", ".m4a", ".wav", ".ogg"}
                 for f in (data.get("files") or []):
                     name = str((f or {}).get("name") or "").strip()
                     b64 = str((f or {}).get("b64") or "")
@@ -1880,7 +1880,9 @@ class Handler(BaseHTTPRequestHandler):
                 payload = {
                     "slug": slug_now,
                     "format": str(data.get("format") or "9x16"),
-                    "captionsOn": bool(data.get("captionsOn")),
+                    "secPerBanner": float(data.get("secPerBanner") or 2.8),
+                    "bgm": str(data.get("bgm") or "").strip(),
+                    "bgmVol": float(data.get("bgmVol") or 0.6),
                     "banners": data.get("banners") or [],
                     "cta": data.get("cta") or {},
                     "ad": data.get("ad") or {},
@@ -2365,18 +2367,20 @@ INDEX_HTML = r"""<!doctype html>
   </main>
   <section id="trackBanner" style="display:none;padding:16px 20px">
     <h3>배너 광고 영상</h3>
-    <p class="small">배너 이미지를 <code>shorts/public/assets/banners/</code> 에 넣고, 아래에 파일명+나레이션 입력 → 저장 → 렌더. (9:16)</p>
-    <p><label>슬러그 <input id="bnSlug" placeholder="ad_iphone18_preorder" style="width:60%"></label> &nbsp; <label><input type="checkbox" id="bnCaptions"> 자막 넣기(기본 끔)</label></p>
-    <p class="small">배너 이미지 업로드 (여러 장 가능 / 파일명이 _cta.png 면 CTA로 사용)</p>
-    <input type="file" id="bnFiles" multiple accept="image/png,image/jpeg,image/webp">
+    <p class="small">이미지 N장이 위로 넘어가는 영상. 나레이션 없음, BGM만 선택. 업로드 → 순서 확인 → 렌더. (9:16)</p>
+    <p><label>슬러그 <input id="bnSlug" placeholder="ad_iphone18_preorder" style="width:60%"></label></p>
+    <p class="small">이미지/BGM 업로드 (이미지 여러장 · 파일명 _cta.png=CTA · mp3=BGM 자동 인식)</p>
+    <input type="file" id="bnFiles" multiple accept="image/png,image/jpeg,image/webp,audio/*">
     <button class="btn" onclick="bannerUpload()" style="margin-left:6px">업로드</button>
     <div id="bnUpLog" class="small" style="margin:4px 0"></div>
-    <p class="small">배너 순서·나레이션 (한 줄 = 파일명.png | 나레이션) — 업로드하면 자동 추가됨</p>
-    <textarea id="bnBanners" rows="5" style="width:100%" placeholder="b1.png | 아이폰18 사전예약 시작&#10;b2.png | 지원금 비교 무료"></textarea>
-    <p class="small">CTA</p>
-    <input id="bnCtaHook" placeholder="후킹 (휴대폰 살 땐?)" style="width:100%;margin-bottom:4px">
-    <input id="bnCtaPunch" placeholder="펀치 (지원금부터 무료 조회)" style="width:100%;margin-bottom:4px">
-    <input id="bnCtaTts" placeholder="CTA 나레이션 (휴대폰성지 폰스팟에서 확인하세요)" style="width:100%">
+    <p class="small">배너 순서 (한 줄 = 파일명.png) — 업로드하면 자동 추가. 줄 순서 = 영상 순서</p>
+    <textarea id="bnBanners" rows="5" style="width:100%" placeholder="b1.png&#10;b2.png&#10;b3.png"></textarea>
+    <p><label>장당 노출(초) <input id="bnSec" type="number" step="0.1" value="2.8" style="width:80px"></label>
+       &nbsp; <label>BGM 파일 <input id="bnBgm" placeholder="(선택) bgm.mp3" style="width:200px"></label>
+       &nbsp; <label>BGM 볼륨 <input id="bnBgmVol" type="number" step="0.05" value="0.6" style="width:80px"></label></p>
+    <p class="small">광고 문구(선택, AD_COPY.txt 용 — 영상엔 안 들어감)</p>
+    <input id="bnCtaHook" placeholder="후킹 (휴대폰 살 땐?)" style="width:48%;margin-bottom:4px">
+    <input id="bnCtaPunch" placeholder="펀치 (지원금부터 무료 조회)" style="width:48%;margin-bottom:4px">
     <div style="margin-top:10px;display:flex;gap:8px">
       <button class="btn primary" onclick="bannerSave()">저장</button>
       <button class="btn" onclick="bannerRender()">렌더</button>
@@ -2426,17 +2430,24 @@ INDEX_HTML = r"""<!doctype html>
       try{
         var r=await api("/api/action",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"banner_ad_upload",files:files})});
         var saved=(r.saved||[]); log.textContent=(r.message||"업로드")+" : "+saved.join(", ");
+        function isImg(s){ s=s.toLowerCase(); return s.slice(-4)===".png"||s.slice(-4)===".jpg"||s.slice(-5)===".jpeg"||s.slice(-5)===".webp"; }
+        function isAud(s){ s=s.toLowerCase(); return s.slice(-4)===".mp3"||s.slice(-4)===".m4a"||s.slice(-4)===".wav"||s.slice(-4)===".ogg"; }
         var ta=document.getElementById("bnBanners");
-        var add=saved.filter(function(s){ return s!=="_cta.png"; }).map(function(s){ return s+" | "; });
+        var add=saved.filter(function(s){ return isImg(s) && s!=="_cta.png"; });
         if(add.length){ ta.value=(ta.value.trim()?ta.value.trim()+"\n":"")+add.join("\n"); }
+        var aud=saved.filter(isAud);
+        if(aud.length){ document.getElementById("bnBgm").value=aud[0]; }
       }catch(e){ log.textContent="업로드 실패: "+e; }
     }
     function bannerPayload(){
       var raw=(document.getElementById("bnBanners").value||"").split("\n").map(function(l){return l.trim();}).filter(Boolean);
-      var banners=raw.map(function(l){var p=l.split("|"); return {image:(p[0]||"").trim(), tts:(p.slice(1).join("|")||"").trim()};});
+      var banners=raw.map(function(l){ return {image:(l.split("|")[0]||"").trim()}; });
       return { slug:(document.getElementById("bnSlug").value||"").trim(), format:"9x16",
-        captionsOn:document.getElementById("bnCaptions").checked, banners:banners,
-        cta:{hook:document.getElementById("bnCtaHook").value, punch:document.getElementById("bnCtaPunch").value, tts:document.getElementById("bnCtaTts").value} };
+        secPerBanner:parseFloat(document.getElementById("bnSec").value)||2.8,
+        bgm:(document.getElementById("bnBgm").value||"").trim(),
+        bgmVol:parseFloat(document.getElementById("bnBgmVol").value)||0.6,
+        banners:banners,
+        cta:{hook:document.getElementById("bnCtaHook").value, punch:document.getElementById("bnCtaPunch").value} };
     }
     async function bannerSave(){
       var pl=bannerPayload(); var log=document.getElementById("bnLog");

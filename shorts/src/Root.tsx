@@ -55,17 +55,13 @@ const calcPromo = async () => {
   return { durationInFrames: Math.ceil(total * FPS), seconds };
 };
 
-// 배너광고: 배너별 TTS mp3 길이 + cta mp3 (나레이션 기반, casual과 동일 방식)
-const bannerKeys = (): string[] => {
-  const banners = ((script as any).banners || []) as any[];
-  return banners.map((b) => b.audioKey); // CTA 는 banners 끝에 포함됨(build_banner 자동첨부)
-};
+// 배너광고: 나레이션 없음 -> 장당 고정 노출초(secPerBanner) x 배너수. CTA 는 banners 끝에 포함.
 const calcBanner = async () => {
-  const seconds = await Promise.all(
-    bannerKeys().map(async (k) => (await tryDuration(k)) + GAP_SEC)
-  );
-  const total = seconds.reduce((a, b) => a + b, 0);
-  return { durationInFrames: Math.ceil(total * FPS), seconds };
+  const banners = ((script as any).banners || []) as any[];
+  const sec = (script as any).secPerBanner ? Number((script as any).secPerBanner) : 2.8;
+  const seconds = banners.map(() => sec);
+  const total = seconds.reduce((a, b) => a + b, 0) || sec;
+  return { durationInFrames: Math.max(1, Math.ceil(total * FPS)), seconds };
 };
 // 규격(비율) — 지금 9:16만, format 필드로 미래 1:1/4:5 확장(E1)
 const bannerDims = () => {
