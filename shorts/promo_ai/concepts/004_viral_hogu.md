@@ -1,92 +1,43 @@
-# 004 — "100만 원 더 주고 살 뻔한 썰" [바이럴용 / VIRAL] (~16s)
+# 004_viral_hogu — 폰 견적 호구썰 (viral)
 
-> 트랙: 바이럴(organic). 목적 = 조회·공유. A안(호구 썰) 1번 변주.
-> 키 감정: "나도 호구당할 뻔" 1인칭 공감 → 폰스팟 반전. 정찰제 메시지 자연 노출.
-> 002에서 검증된 노하우 전부 계승(실사 인물·점원+0원카드 자산·자막=나레이션 싱크·후킹 먼저·스피드).
-
----
+> viral 트랙. 1순위 = 조회·공유·저장·댓글. 브랜드는 끝 자막 0.5초만.
+> 톤 룰(종민 2026-06-24): 전문용어 X, 일반인 수준, 썰 풀듯 1인칭, 공감+유머, 캐릭터 글래머 현행.
+> (구버전 = 남성 4비트, git 히스토리에 보존. 본 버전 = 여성 7비트 확정본.)
 
 ## 메타
-- **slug:** `004_viral_hogu`
-- **track:** viral / **theme:** 정찰제(호구썰)
-- **duration:** ~16초 (4 beat)
-- **aspect:** 9:16 (1080×1920)
-- **인물:** 익명 배우(1인칭 주인공). 점원 컷은 002 자산 재활용
-- **model:** Kling 3.0 std 무음
-- **음성:** 무음 + 자막 + 나레이션(1인칭 구어체) — 002와 동일(립싱크 X, 인물은 무음·나레이션 오버)
+- slug: 004_viral_hogu / track: viral / theme: 호구썰(견적)
+- 길이: ~20s / 9:16 / model: kling3_0 (std, sound off)
+- 인물: Higgsfield media_id `82abdf0f-ac89-4b3f-b614-1cb2ff650996` (글래머 현행, 깊은 U넥·머리~힙, 클로즈업으로 몸매 잘리지 않게)
+- 학습 슬롯(INDEX 표B): 후킹타입 B(손실/썰도입), 제품 갤럭시(비특정 가능), 수법 할부+카드+부가
 
-## 바이럴 문법 (002 광고와 다른 점)
-- 첫 1~2초 **강한 1인칭 고백** = 스크롤 정지 (브랜드 0)
-- 스토리(회상) → 반전(폰스팟) → 약한 CTA(후반)
-- 측정: 시청완료율·공유·저장. 광고 티 최소.
-- ★ 정직: 바이럴은 알고리즘·운. 기획은 확률만 ↑. **여러 변주 던지기 전제**(1편 올인 ❌).
+## 7비트 스토리보드
 
-## 비트 구조
+| 비트 | 나레이션(여성 TTS, 반말 썰톤) | 자막(.ass, 프레임1부터) | 화면 | 비용 |
+|---|---|---|---|---|
+| B1 후킹 | 나 어제 폰 바꾸다가 호구될 뻔한 썰 푼다 | 전문(천천히) | s1 글래머 폰가게 | 0 |
+| B2 상황 | 폰 보러 갔는데 직원이 "이게 지금 제일 싼 거예요" 하면서 종이를 쫙 내미는 거야 | 요약 | s2 종이 보는 표정 | 0 |
+| B3 빌드업 | 근데 무슨 숫자가 할부에 뭐에 막 외계어처럼 줄줄… 머리 핑 돌아서 그냥 "아 네…" 하고 사인할 뻔했잖아 | 요약(빠르게) | s2 뒷부분 | 0 |
+| B4 전환 | 마침 친구가 "야 딴 데도 좀 보고 사" 하는 거야 | 요약 | s1/s2 재배치 | 0 |
+| B5 반전 | 다른 데 가봤더니 똑같은 폰이 공짜. 깎아달라 할 것도 없어, 가격이 그냥 딱 정해져 있더라고 | "똑같은 폰이 공짜?!" (0.5s 정적) | clerk_card 켄번스 | 0 |
+| B6 현타+댓글 | 와 그 자리에서 등에 식은땀… 나만 호구였나? 너넨 폰 얼마 주고 샀어? | "너넨 폰 얼마 주고 샀어?" | 신규 글래머 컷(현타) | +6cr |
+| B7 CTA | (무음) | "가격 정해놓고 파는 곳, 폰스팟" | drawtext 엔딩 | 0 |
 
-```
-[Beat 1 HOOK 0~3s]   셀카각 "나 폰 백만 원 더 주고 살 뻔함"  → 충격 고백, 브랜드 0
-[Beat 2 빌드업 3~8s]  회상: 딴 매장서 비싼 견적에 망설임        → 공감(나도 저럼)
-[Beat 3 반전 8~13s]   폰스팟 발견 → 점원 태블릿 0원 카드        → 사이다 (002 자산 재활용)
-[Beat 4 CTA 13~16s]  "휴대폰도 정찰제로 사세요" + 폰스팟        → 약한 CTA
-```
+## 나레이션 TTS 입력 (Hana voice `c25f78a0-714e-42af-8da3-a399cef94968`, 6문장 ≈ 0.9cr)
+1. 나 어제 폰 바꾸다가 호구될 뻔한 썰 푼다.
+2. 폰 보러 갔는데 직원이 "이게 지금 제일 싼 거예요" 하면서 종이를 쫙 내미는 거야.
+3. 근데 무슨 숫자가 할부에 뭐에 막 외계어처럼 줄줄. 머리 핑 돌아서 그냥 "아 네" 하고 사인할 뻔했잖아.
+4. 마침 친구가 "야 딴 데도 좀 보고 사" 하는 거야.
+5. 다른 데 가봤더니 똑같은 폰이 공짜. 깎아달라 할 것도 없어, 가격이 그냥 딱 정해져 있더라고.
+6. 와 그 자리에서 등에 식은땀. 나만 호구였나? 너넨 폰 얼마 주고 샀어?
+> B7은 자막만, 나레이션 없음.
 
-## Beat 1 (HOOK, 0~3s) — 1인칭 고백
-**비주얼:** 20·30대 남자, 셀카각(약간 위 카메라), 살짝 허탈+웃긴 표정으로 카메라 보며 말하는 브이로그 느낌. 밝은 실내/길거리.
-**자막(=나레이션):** "나 폰 백만 원 더 주고\N살 뻔했잖아 ㅋㅋ"
-**나레이션:** "나 폰 백만 원 더 주고 살 뻔했잖아"
-**Kling prompt (EN):**
-```
-Vertical 9:16, photorealistic, selfie-vlog angle (camera slightly above). A Korean man in his late 20s looks at the camera with a half-exasperated, half-amused expression, as if confessing a funny story. Casual bright indoor background, natural handheld feel. 3 seconds.
-```
+## B6 신규컷 Kling 프롬프트 (영문)
+The same Korean woman in the phone store, realizing she almost got ripped off — a dazed "oh no" expression with a slightly embarrassed awkward smile, lightly touching the back of her neck. Keep the same framing showing her full upper body and figure (head to hip), camera does NOT zoom in or crop her figure. Deep U-neck fitted white top as before. Subtle realistic motion. Slightly dim warm store light, NO readable Korean text, background signage blurred and out of focus.
 
-## Beat 2 (빌드업, 3~8s) — 회상: 비싼 견적
-**비주얼:** 일반 휴대폰 매장. 점원이 종이/계산기로 높은 견적을 내밀고, 주인공이 "음… 비싸네" 갈등하는 표정. 약간 어두운 톤.
-**자막:** "딴 데선 견적 받고\N그냥 살 뻔했는데"
-**나레이션:** "딴 데선 견적 받고 그냥 살 뻔했는데"
-**Kling prompt (EN):**
-```
-Vertical 9:16, photorealistic. Inside a typical phone shop, a salesperson hands over a high price quote on paper/calculator. A Korean man looks hesitant and troubled, thinking it's too expensive. Slightly dim mood, medium shot. 4 seconds.
-```
-
-## Beat 3 (반전, 8~13s) — 폰스팟 0원
-**비주얼:** 밝은 폰스팟. 점원이 태블릿으로 0원 카드를 보여줌. **002 `clerk_card_composite` 자산 재활용**(또는 신규 생성). 주인공 "헐 0원?" 놀람.
-**[자산]** `shots/002_ad_jeongchalje/clerk_card_composite.jpeg`(점원+0원카드 GPT합성) 켄번스 재활용 → **추가 크레딧 0**.
-**자막:** "폰스팟 보니까\N같은 폰이 0원이더라"
-**나레이션:** "폰스팟 보니까 같은 폰이 0원이더라고"
-
-## Beat 4 (CTA, 13~16s) — 약한 마무리
-**비주얼:** 타이포 엔딩(002 엔딩 재활용 — "휴대폰도 이제 정찰제 / 폰스팟 / litt.ly/phonespot"). 또는 주인공 마지막 한마디.
-**자막:** "휴대폰도 정찰제로 사세요"
-**나레이션:** "휴대폰도 정찰제로 사세요, 폰스팟"
-
-## 자막 = 나레이션 (1인칭 구어체, 동일)
-| Beat | 문구 |
-|---|---|
-| 1 | 나 폰 백만 원 더 주고 살 뻔했잖아 |
-| 2 | 딴 데선 견적 받고 그냥 살 뻔했는데 |
-| 3 | 폰스팟 보니까 같은 폰이 0원이더라 |
-| 4 | 휴대폰도 정찰제로 사세요 |
-
-## 비용 추정 (Kling std 무음)
-| Beat | 생성 | cr |
-|---|---|---|
-| 1 후킹 | 신규 4s | ~6 |
-| 2 빌드업 | 신규 4s | ~6 |
-| 3 반전 | **002 자산 재활용** | 0 |
-| 4 CTA | 타이포 엔딩 재활용 | 0 |
-| 나레이션 | 4문장 TTS | ~0.6 |
-| **합계** | | **~12.6cr** |
-
-→ 점원+엔딩 재활용으로 신규 생성은 2컷(후킹·빌드업)만. 저비용.
-
-## 리스크
-1. **1인칭 무음+나레이션** = 인물이 말 안 하는데 나레이션 깔림 → 약간 어색. 자막 강하게 덮어 보완. (립싱크는 Kling 불안정이라 회피)
-2. **인물 일관성**: Beat 1·2 같은 주인공이어야. 다르면 몰입↓ → 멀티샷 또는 start_image.
-3. **바이럴 불확실성**: 떡상은 운. 1편 결과로 판단 ❌.
-
-## 다음 행동
-1. 종민 확정 → Beat 1(후킹) 1컷 생성 → 톤 검증(생성 후 balance 보고).
-2. OK면 Beat 2 생성. Beat 3·4 자산 재활용.
-3. 나레이션 4문장 TTS → 종민 다운로드.
-4. ffmpeg: 후킹 천천히 / 나머지 빠르게 + 자막=나레이션 싱크 + 스피드.
-5. `out_promo_ai/004_viral_hogu/` 폴더에 영상+캡션 저장.
+## 빌드 메모
+- 정규화 `scale=1080:1920,fps=30,setsar=1`. 순서 B1→B7.
+- 페이싱: 후킹 천천히 / 빌드업 빠르게 / B5 반전에서 0.5s 정적(공짜 자막 멈칫) / B6 여운.
+- 자막 프레임1부터(무음시청 대비). Noto Sans CJK Bold.
+- 댓글유발 엔딩(B6 "너넨 얼마") = 알고리즘 부스트 장치. 브랜드는 B7 자막만(viral 룰).
+- 재활용: s1(job 6f875e9d) / s2(job 5299aae2) / clerk_card(`shots/002_ad_jeongchalje/clerk_card_composite.jpeg`).
+- 업로드 후 INDEX 표B에 채널별 성과(조회·완료율·공유·저장·댓글) 기입 → 학습 환류.
