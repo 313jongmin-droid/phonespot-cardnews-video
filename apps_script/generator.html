@@ -559,6 +559,10 @@
       <div class="btn-caption">
         결과 3종: 🤖 일반 LLM 프롬프트 + ✨ 라이브러리 매칭 + 🎯 벤치마크 매칭. 카테고리 매칭이 없으면 일반만 표시.
       </div>
+      <div class="btn-row" style="margin-top:8px">
+        <button class="btn-large" style="background:#5856D6" onclick="generateCarousel()">🎠 캐러셀 4컷 프롬프트 생성</button>
+      </div>
+      <div class="btn-caption">후킹 → 오퍼 → 차별/조건제거 → 클로징+CTA, 1:1 정사각 4컷. 아트디렉션·색·타이포 4컷 통일.</div>
       <div class="btn-row" style="margin-top:10px">
         <button class="secondary small" onclick="randomFillCopy(false)">🎲 랜덤 채우기</button>
         <button class="btn-text small" onclick="resetAllForm()">전체 초기화</button>
@@ -602,6 +606,18 @@
       <div style="margin-top:8px; padding:8px; background:#fff3e0; border-left:3px solid #ff9800; border-radius:4px; font-size:11px; color:#5d4e00">
         ⚠️ <strong>한계</strong>: GPT 이미지 모델은 텍스트 재생성하므로 한글 철자 깨질 수 있음. 생성 후 원본과 대조 확인. <strong>픽셀 단위 보존</strong>이 필요하면 Figma/Canva에서 원본 요소 재배치 권장.
       </div>
+    </section>
+
+    <section id="carousel-section" class="hidden">
+      <h2>
+        <span>🎠 캐러셀 4컷 이미지 프롬프트 (1:1)</span>
+        <span class="toggle" onclick="generateCarousel()">↻ 다시 생성</span>
+      </h2>
+      <div class="info-box">4컷이 한 세트로 보이도록 색·아트디렉션·타이포를 통일합니다. 각 컷 프롬프트를 이미지 모델(ChatGPT 4o / 나노바나나 등)에 차례로 넣으세요. <strong>한계</strong>: 모델이 컷마다 독립 생성이라 제품샷이 미세하게 다를 수 있음(완전 동일은 레퍼런스 고정 필요).</div>
+      <div class="btn-row" style="margin-bottom:10px">
+        <button class="secondary small" onclick="copyCarouselAll()">📋 4컷 전체 복사</button>
+      </div>
+      <div id="carousel-output" style="display:flex; flex-direction:column; gap:12px"></div>
     </section>
 
     <section id="copy-results-section" class="hidden">
@@ -3409,6 +3425,96 @@ function bpPullSheet() {
     })
     .withFailureHandler(function(err) { alert('불러오기 실패: ' + (err.message || err)); })
     .getBrandProfilesFromSheet();
+}
+
+// ============ 캐러셀 4컷 모드 ============
+const CAROUSEL_BEATS = [
+  { n: 1, role: 'HOOK', ko: '후킹',
+    compose: 'Big curiosity HOOK headline at the top + the product/brand hero shown large and central. Optional small festival ribbon/badge near the top. Goal: stop the scroll.',
+    headlineHint: '관심·호기심을 끄는 강한 한 문장 (혜택 암시)' },
+  { n: 2, role: 'OFFER', ko: '핵심 오퍼',
+    compose: 'ONE single biggest benefit as the hero — a GIANT number or offer (e.g. 최대 OOO원 / 0원) in huge typography. Supporting gift / voucher / coupon imagery. Short sub copy like "지금 받으세요". Minimal or no product.',
+    headlineHint: '가장 큰 혜택·숫자를 거대하게 (예: 최대 OO원 / 0원)' },
+  { n: 3, role: 'PROOF', ko: '차별·조건제거',
+    compose: 'Differentiators / objection removal as a CLEAN checklist or icon row (3-4 simple flat icons each with a short Korean label, e.g. 조건 없음 / 간편 / 누구나). No large product shot. Lots of whitespace.',
+    headlineHint: '조건 없음·차별점 (예: 조건 NO / 간편 / 누구나)' },
+  { n: 4, role: 'CLOSE', ko: '클로징+CTA',
+    compose: 'Summary that combines the product + the main offer side by side, with a STRONG rounded CTA button at the bottom. Closing / festival feel.',
+    headlineHint: '요약 + 행동 유도 (예: 똑똑하게 바꾸고 최대 혜택 받자)' }
+];
+
+function carouselContextLines_(ctx) {
+  const target = ((ctx.age || '') + ' ' + (ctx.gender || '')).trim();
+  return [
+    ctx.newConcept ? ('NEW CONCEPT (primary axis): ' + ctx.newConcept) : '',
+    'Category: ' + (ctx.category || ''),
+    target ? ('Target audience: ' + target) : '',
+    (ctx.season && ctx.season !== '시즌리스') ? ('Season/event: ' + ctx.season) : '',
+    ctx.usp ? ('Core USP / message: ' + ctx.usp) : '',
+    (ctx.tones && ctx.tones.length) ? ('Tone & emotion: ' + ctx.tones.join(', ')) : ''
+  ].filter(Boolean).join('\n');
+}
+
+function buildCarouselSlidePrompt_(ctx, beat, fixed) {
+  const palette = fixed.tone.palette.slice(0, 4).join(', ');
+  const ctxLines = carouselContextLines_(ctx);
+  const productLine = (beat.n === 1 || beat.n === 4) ? ('Product: ' + fixed.productEn + '.') : '';
+  return 'Create slide ' + beat.n + ' of 4 for a Korean Instagram/Meta CAROUSEL ad — square 1:1 (1080x1080) — for ' + BP.imageDomain + ' (브랜드: ' + BP.brandName + ', ' + BP.brandUrl + '). A complete, ready-to-run finished banner; render ALL Korean text directly inside the image.\n\n'
+    + '[CAROUSEL CONSISTENCY — CRITICAL: all 4 slides are ONE set]\n'
+    + '- Color palette (FIXED across all 4): ' + palette + '.\n'
+    + '- Art direction (FIXED across all 4): ' + fixed.adStyle + '.\n'
+    + '- Same typography family/weight, same background treatment (' + fixed.tone.bgDesc + '), same brand lockup placement at the top, same margins/grid as the other slides.\n'
+    + '- Only the message and composition change per slide. THIS slide = role ' + beat.role + ' (' + beat.ko + ').\n\n'
+    + '[Campaign context]\n' + ctxLines + '\n\n'
+    + '[This slide — ' + beat.ko + ']\n' + beat.compose + '\n'
+    + 'Headline guidance: ' + beat.headlineHint + ' — write a crisp Korean headline aligned to USP "' + (ctx.usp || '-') + '"' + (ctx.newConcept ? (' and concept "' + ctx.newConcept + '"') : '') + '.\n'
+    + (productLine ? (productLine + '\n') : '')
+    + '\n[Render rules]\n'
+    + '- Korean text large, bold, high-contrast, correctly spelled. No gibberish, no empty placeholder bars.\n'
+    + '- Strong rounded CTA button ONLY on slide 4 ("더 알아보기" / "지금 확인").\n'
+    + '- Small page indicator "' + beat.n + '/4" in the bottom-right corner.\n\n'
+    + '[Avoid]\n'
+    + 'A palette or art direction that differs from the other slides, realistic store photography, tiny unreadable copy, generic corporate design.';
+}
+
+let carouselPrompts = [];
+function generateCarousel() {
+  const ctx = getCopyContext();
+  // 4컷 통일용으로 톤·아트디렉션·제품 1회 고정
+  const toneKey = deriveVisualTone(ctx, null);
+  const tone = CATALOG.tones[toneKey];
+  const fixed = {
+    tone: tone,
+    adStyle: pick(AD_STYLE_POOL),
+    productEn: mapProductToEnglish(ctx.product, ctx.category)
+  };
+  carouselPrompts = CAROUSEL_BEATS.map(b => buildCarouselSlidePrompt_(ctx, b, fixed));
+  const sec = document.getElementById('carousel-section');
+  if (sec) sec.classList.remove('hidden');
+  const out = document.getElementById('carousel-output');
+  if (out) {
+    out.innerHTML = CAROUSEL_BEATS.map((b, i) =>
+      '<div class="result-box" style="border-left:3px solid #5856D6">'
+      + '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px">'
+      + '<strong>' + b.n + '/4 · ' + b.ko + '</strong>'
+      + '<button class="secondary small" onclick="copyCarouselSlide(' + i + ')">📋 복사</button>'
+      + '</div>'
+      + '<pre style="white-space:pre-wrap; font-size:11px; color:var(--label-secondary); margin:0; max-height:160px; overflow:auto">' + escapeHtml(carouselPrompts[i]) + '</pre>'
+      + '</div>'
+    ).join('');
+  }
+  showToast('🎠 캐러셀 4컷 프롬프트 생성 (' + (tone.label || toneKey) + ' · 아트디렉션 통일)');
+}
+function copyCarouselSlide(i) {
+  if (!carouselPrompts[i]) return;
+  copyText(carouselPrompts[i]);
+  showToast('📋 ' + (i + 1) + '/4 프롬프트 복사');
+}
+function copyCarouselAll() {
+  if (!carouselPrompts.length) { alert('먼저 캐러셀을 생성하세요'); return; }
+  const all = carouselPrompts.map((p, i) => '===== SLIDE ' + (i + 1) + '/4 (' + CAROUSEL_BEATS[i].ko + ') =====\n' + p).join('\n\n\n');
+  copyText(all);
+  showToast('📋 4컷 전체 복사');
 }
 
 // ============ 초기화 ============
