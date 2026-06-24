@@ -62,6 +62,29 @@ Actor curious_coder/facebook-ads-library-scraper ($0.00075/광고), 토큰 = Pro
 이번 요청: [키워드 = ____ 로 KR 광고 N건 수집 / 코드 수정 / 라벨링].
 ```
 
+## ⑦ 광고 카피·이미지 생성기 (generator.html) — 이어작업
+
+```
+광고 생성기 이어작업 task. 정본 = ads/IMPLEMENTATION_GUIDE_2026-06-09.md.
+★ 읽는 순서: §0-1 "최신 아키텍처(2026-06-12 세션2)" 먼저 (이게 현재 상태, §2~6은 일부 구버전) →
+§5 함수 인덱스 → §6 프롬프트. 변경 상세 + 알려진 함정 = CLAUDE.md STEP 8 "2026-06-12 (세션 2)".
+대상 파일: apps_script/generator.html(대형 ~2,863줄) + apps_script/meta-sync.js + Code.js + style.html.
+
+[현재 구조] generator 4탭: 📝카피 / 📚라이브러리 / 🎯벤치마크 / ⚙설정.
+결과 3종 = 🎲8행 랜덤변주(1순위) → ✨라이브러리 추천 → 🎯벤치마크 추천. 1:1 매핑(변주=참고없음 / 라이브러리=라이브러리만 / 벤치마크=벤치마크만).
+라이브러리 탭 함수: saveToLibrary → library[] 자동채번 → pushLibraryToSheet → (Apps Script) pushLibraryFromGenerator → 시트 '광고_라이브러리'.
+exportLibrary/importLibrary(JSON 백업), clearLibrary, library-filter 검색.
+의미매칭: getSemanticAdMatches(meta-sync.js, Gemini) — 컨셉/지역 앵글 주제유사도, 임계 55, GEMINI_API_KEY + 배포 웹앱 필요(외부 URL 모드면 스킵).
+
+[명시된 보류(=이어할 후보)] ① 컨셉_뱅크: 신규컨셉 시트 저장 ② 코어 완전 hard-lock ③ 범용화 L2(Task 44, 지역 차원 = 카테고리·지역 설정 시트) → L3 브랜드 본질 시트 분리 → L4 멀티테넌트.
+
+[주의] generator.html 수정은 통째 Write 권장(대형 = Edit truncation 위험). 수정 후 Web App 재배포 + 종민 콘솔 검증.
+배포 = apps_script/ git push → GitHub Actions clasp --force 자동. 콘솔 직접 수정 ❌(다음 push에 덮어씀).
+APIFY_TOKEN·GEMINI_API_KEY = PropertiesService(클라우드, PC 이식 무관).
+
+이번 요청: [보류 ①컨셉_뱅크 구현 / ②코어 hard-lock / ③L2 지역설정 시트 / 라이브러리 탭 ____ 기능 추가 / 버그 ____].
+```
+
 ---
 
 ## 추가 트랙 (목록 외, 필요 시)
@@ -70,7 +93,6 @@ Actor curious_coder/facebook-ads-library-scraper ($0.00075/광고), 토큰 = Pro
 |---|---|
 | KT다이렉트샵 광고운영 | `KT 광고운영 task. ads_kt/README_FOR_AI.md 진입. 폰스팟과 별도 시트.` |
 | 멀티 브랜드 셋업 | `멀티 브랜드 task. ads/MULTI_BRAND_ARCHITECTURE.md 읽고 Phase [N] 진행. 광고운영 task와 분리(별도 task 결정).` |
-| 광고 카피·이미지 생성기 수정 | `생성기 task. ads/IMPLEMENTATION_GUIDE_2026-06-09.md(§0 최신 아키텍처 → §5 함수인덱스) 진입. generator.html은 대형 = 통째 Write 권장.` |
 | 시트 read / 스냅샷 | `시트 read task. apps_script_sheet_export + Drive 폴더 "PhoneSpot Sheet Snapshots"(매일 03:00 JSON). 큰 탭은 __headers.json 사용.` |
 | 재해 복구 / 키 재발급 | `복구 task. _docs/DISASTER_RECOVERY.md 진입. 키 손실 = 재발급 절차(PropertiesService 키는 Google 클라우드라 무영향).` |
 

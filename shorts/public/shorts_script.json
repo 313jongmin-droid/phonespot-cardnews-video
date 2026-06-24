@@ -1,18 +1,75 @@
 {
-  "slug": "11",
-  "_track": "banner_ad",
-  "format": "9x16",
-  "captionsOn": false,
-  "banners": [
+  "slug": "017_bumonim",
+  "title_short": "부모님 폰",
+  "video_title": "부모님 폰",
+  "preset": "calm",
+  "hook_pattern": "감성·공감",
+  "channel_name": "폰스팟",
+  "channel_tagline": "광교 휴대폰 정찰제",
+  "publication_date": "2026.05.29",
+  "opening": {
+    "line1": "부모님 폰,",
+    "line2": "대신 알아볼 때",
+    "style": "oversize",
+    "sfx": "whoosh"
+  },
+  "hook": {
+    "style": "reveal",
+    "sfx": "whoosh",
+    "caption_chunks": [
+      "혹시",
+      "호갱 될까",
+      "걱정"
+    ],
+    "tts": "부모님 폰, 혹시 호갱 될까 걱정되죠."
+  },
+  "facts": [
     {
-      "image": "KakaoTalk_20260623_181930214_03.png",
-      "audioKey": "11_b1",
-      "caption": ""
+      "id": "problem",
+      "style": "reveal",
+      "sfx": "whoosh",
+      "caption_chunks": [
+        "멀리 안 가도",
+        "집에서",
+        "확인"
+      ],
+      "tts": "멀리 안 가도 집에서 확인."
     },
     {
-      "image": "_cta.png",
-      "audioKey": "11_cta",
-      "caption": ""
+      "id": "solution",
+      "style": "swiss",
+      "sfx": "tick",
+      "caption_chunks": [
+        "가격도",
+        "미리",
+        "투명하게"
+      ],
+      "tts": "가격도 미리 투명하게."
+    },
+    {
+      "id": "trust",
+      "style": "kinetic-box",
+      "sfx": "ding",
+      "caption_chunks": [
+        "카톡으로",
+        "대신",
+        "알아보기"
+      ],
+      "tts": "카톡으로 대신 알아보기."
     }
-  ]
+  ],
+  "cta": {
+    "style": "kinetic-box",
+    "sfx": "ding",
+    "caption_chunks": [
+      "부모님 폰도",
+      "안심"
+    ],
+    "tts": "부모님 폰도 안심하고, 폰스팟.",
+    "kakao": "@휴대폰성지폰스팟",
+    "litt": "litt.ly/phonespot",
+    "location": "광교호수공원 B1-47"
+  },
+  "music_src": "music/calm_01__00.mp3",
+  "music_start": 0
 }
