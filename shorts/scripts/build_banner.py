@@ -46,18 +46,43 @@ def main() -> int:
     bgm_vol = float(data.get("bgmVol") or 0.6)
     banners_in = data.get("banners", []) or []
 
+    def _valid_image(rel: str) -> bool:
+        # imgSrc 규칙과 동일: 경로 포함이면 assets/<rel>, 아니면 assets/banners/<rel>
+        fp = (PUBLIC / "assets" / rel) if "/" in rel else (BANNERS_DIR / rel)
+        try:
+            head = fp.read_bytes()[:16]
+        except Exception:
+            return False
+        if head[:8] == b"\x89PNG\r\n\x1a\n":
+            return True
+        if head[:3] == b"\xff\xd8\xff":
+            return True
+        if head[:4] == b"RIFF" and head[8:12] == b"WEBP":
+            return True
+        return False
+
     banners = []
     for b in banners_in:
         img = str(b.get("image", "")).strip()
         if not img:
             continue
+        if not _valid_image(img):
+            print(f"[banner] 이미지 없음/손상 -> 건너뜀: {img}")
+            continue
         banners.append({"image": img, "audioKey": "", "caption": ""})
 
-    # CTA = 재사용 _cta.png 자동첨부 (없으면 생략)
-    if (BANNERS_DIR / "_cta.png").exists():
+    # CTA = 재사용 _cta.png 자동첨부 (유효한 이미지일 때만)
+    cta = BANNERS_DIR / "_cta.png"
+    if cta.exists() and _valid_image("_cta.png"):
         banners.append({"image": "_cta.png", "audioKey": "", "caption": ""})
+    elif cta.exists():
+        print(f"[banner] _cta.png 손상/비이미지({cta.stat().st_size}B) -> CTA 생략. 실제 PNG로 교체하세요.")
     else:
         print("[banner] _cta.png 없음 -> CTA 생략 (public/assets/banners/_cta.png 두면 자동첨부)")
+
+    if not banners:
+        print("[banner] 유효한 배너 이미지가 없습니다. 업로드/파일명을 확인하세요.")
+        return 1
 
     # BGM 검증: 파일명만 받음. 실제로 assets/banners/ 에 있어야 적용
     bgm_name = str(data.get("bgm") or "").strip()
