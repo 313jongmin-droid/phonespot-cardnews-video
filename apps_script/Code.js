@@ -1124,6 +1124,7 @@ function buildDashboardV2() {
 
   const LCOL = 1;   // A
   const RCOL = 9;   // I (좌우 1칸 띄움, H=간격칸)
+  const colL = function (n) { return String.fromCharCode(64 + n); };  // 열번호→문자 (RCOL 이동 시 수식 안전)
 
   // ── 0) 초기화 (1~59행만) ──
   dash.getRange('A1:Z59').clearDataValidations();
@@ -1301,14 +1302,14 @@ function buildDashboardV2() {
     dash.getRange(r, RCOL).setValue(c[0]);                                  // H
     dash.getRange(r, RCOL + 1).setFormula("=IFERROR(SUMIFS('결제내역'!D:D,'결제내역'!B:B,\"" + c[0] + "\",'결제내역'!A:A,\">=\"&" + monthStart + ",'결제내역'!A:A,\"<=\"&TODAY()),0)").setNumberFormat(F_WON);  // I
     dash.getRange(r, RCOL + 2).setFormula("=IFERROR(SUMIFS('" + c[1] + "'!" + c[2] + ":" + c[2] + ",'" + c[1] + "'!A:A,\">=\"&" + monthStart + ",'" + c[1] + "'!A:A,\"<=\"&TODAY()),0)").setNumberFormat(F_WON);  // J
-    dash.getRange(r, RCOL + 3).setFormula("=I" + r + "-J" + r).setNumberFormat(F_WON);  // K = I-J
+    dash.getRange(r, RCOL + 3).setFormula("=" + colL(RCOL+1) + r + "-" + colL(RCOL+2) + r).setNumberFormat(F_WON);  // 차이=카드결제-API (RCOL상대)
   });
   dataBox(payStart, PAY.length, 4, RCOL);   // 6~10
   const payTotal = payStart + PAY.length;   // 11
   dash.getRange(payTotal, RCOL).setValue('합계').setFontWeight('bold');                                      // H11
-  dash.getRange(payTotal, RCOL + 1).setFormula(`=SUM(I${payStart}:I${payTotal - 1})`).setNumberFormat(F_WON).setFontWeight('bold');  // I11
-  dash.getRange(payTotal, RCOL + 2).setFormula(`=SUM(J${payStart}:J${payTotal - 1})`).setNumberFormat(F_WON).setFontWeight('bold');  // J11
-  dash.getRange(payTotal, RCOL + 3).setFormula(`=I${payTotal}-J${payTotal}`).setNumberFormat(F_WON).setFontWeight('bold');           // K11
+  dash.getRange(payTotal, RCOL + 1).setFormula(`=SUM(${colL(RCOL+1)}${payStart}:${colL(RCOL+1)}${payTotal - 1})`).setNumberFormat(F_WON).setFontWeight('bold');  // I11
+  dash.getRange(payTotal, RCOL + 2).setFormula(`=SUM(${colL(RCOL+2)}${payStart}:${colL(RCOL+2)}${payTotal - 1})`).setNumberFormat(F_WON).setFontWeight('bold');  // J11
+  dash.getRange(payTotal, RCOL + 3).setFormula(`=${colL(RCOL+1)}${payTotal}-${colL(RCOL+2)}${payTotal}`).setNumberFormat(F_WON).setFontWeight('bold');           // K11
   dash.getRange(payTotal, RCOL, 1, 4).setBackground(C_TOTAL_BG)
     .setBorder(true, true, true, true, true, true, C_ROW_BD, SpreadsheetApp.BorderStyle.SOLID)
     .setHorizontalAlignment('right');
@@ -1355,7 +1356,7 @@ function buildDashboardV2() {
     dash.getRange(r, RCOL).setValue(p[0]);                                                     // H 기간
     dash.getRange(r, RCOL + 1).setFormula(`=${sumPaidFx(st, en)}`).setNumberFormat(F_WON);     // I 광고비
     dash.getRange(r, RCOL + 2).setFormula(`=IFERROR(${kClick},0)`).setNumberFormat(F_INT);     // J 카톡클릭
-    dash.getRange(r, RCOL + 3).setFormula(`=IFERROR(IF(J${r}=0,"-",I${r}/J${r}),"-")`).setNumberFormat(F_WON);  // K 카톡당비용
+    dash.getRange(r, RCOL + 3).setFormula(`=IFERROR(IF(${colL(RCOL+2)}${r}=0,"-",${colL(RCOL+1)}${r}/${colL(RCOL+2)}${r}),"-")`).setNumberFormat(F_WON);  // K 카톡당비용
   });
   dataBox(kkStart, kkPeriods.length, 4, RCOL);   // 21~23
 
