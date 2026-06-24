@@ -127,6 +127,7 @@ job2 = mcp__83aadcc7-...__generate_video(
 - **슬러그**: `NNN_<ad|viral>_<theme>` (예 `002_ad_jeongchalje` / `003_viral_jeongchalje`). 카드뉴스 `NNN_type_topic` 철학 계승.
   - track = ad(광고·전환) / viral(바이럴·조회). theme = 정찰제·효도폰·가족·첫폰·갤vs아이폰·비대면·단통법·매장방문(README §6).
   - **타겟·시즌·채널은 폴더 ❌** → `concepts/INDEX.md` 표 컬럼으로만(다축이라 폴더 쪼개면 중복·이동 지옥).
-- **결과물**: `out_promo_ai/<slug>_<len>s_<YYYYMMDD_HHMM>.mp4` — **덮어쓰기 ❌, 매 생성 타임스탬프 suffix로 버전 누적**(예 `002_ad_jeongchalje_15s_20260623_0936.mp4`). 최신본은 INDEX에 기록. 폐기 중간본만 `out_promo_ai/_archive_versions/`.
+- **결과물 (슬러그별 폴더 = 영상+캡션 한 묶음)**: `out_promo_ai/<slug>/` 폴더 안에 ① 영상 `<slug>_<len>s_<YYYYMMDD_HHMM>.mp4`(덮어쓰기 ❌, 타임스탬프 누적) ② SNS 캡션 `<slug>_captions.md`(틱톡·유튜브·인스타, caption_template 룰). 이전 버전은 `out_promo_ai/<slug>/_archive/`. 최신본은 INDEX에 기록. **★ 렌더 마무리 시 이 슬러그 폴더를 만들어 영상+캡션을 함께 둔다.**
 - **자산(재사용)**: `assets/references/store`(매장)·`/products`(제품) · `assets/audio/{bgm,sfx,narration}` · `shots/<slug>/`(생성 원본컷) · `assets/voices.md`(보이스ID).
 - **인덱스**: `concepts/INDEX.md` = 전체 영상 1표(중복 회피·성과 학습). 신규 빌드 시 1줄 추가. 20편↑이면 시트 승격.
+- **캡션·사전승낙서 (SNS 발행)**: 각 영상 `<slug>_captions.md`(틱톡·유튜브·인스타) = caption_template 룰 적용. **사전승낙서 URL 정본 = `shorts/promo_ai/_brand.json` `precon_url`** (한국 통신판매법상 SNS 광고성 게시물 마지막 줄 `[사전승낙서] <url>` 필수). 현재값 `https://ictmarket.or.kr:8443/precon/pop_CertIcon.do?PRECON_REQ_ID=PRE0000194479&YN=1` (2026-06-24, 종민). 캡션 작성 시 자동 삽입.

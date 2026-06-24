@@ -131,8 +131,8 @@ function setupAdgroupTrendChart() {
     .setFontStyle('italic').setFontColor('#666666');
 
   // R63: 데이터 헤더
-  const dataHeaders = ['날짜', '노출', '클릭', 'CTR', 'CPC', '카톡클릭', '문의수', '문의율', 'CPL'];
-  sh.getRange(63, 1, 1, 9).setValues([dataHeaders])
+  const dataHeaders = ['날짜', '노출', '클릭', '지출', 'CTR', 'CPC', '카톡클릭', '문의수', '문의율', 'CPL'];
+  sh.getRange(63, 1, 1, 10).setValues([dataHeaders])
     .setBackground('#f5f5f7').setFontWeight('bold')
     .setHorizontalAlignment('center');
 
@@ -236,9 +236,9 @@ function refreshAdgroupTrendChart() {
       const cpc = d.click > 0 ? d.spend / d.click : 0;
       const inquiryRate = d.kakaoClick > 0 ? d.inquiry / d.kakaoClick : 0;
       const cpl = d.inquiry > 0 ? d.spend / d.inquiry : 0;
-      rows.push([d.date, d.imp, d.click, ctr, cpc, d.kakaoClick, d.inquiry, inquiryRate, cpl]);
+      rows.push([d.date, d.imp, d.click, d.spend, ctr, cpc, d.kakaoClick, d.inquiry, inquiryRate, cpl]);
     } else {
-      rows.push([dd, 0, 0, 0, 0, 0, 0, 0, 0]);
+      rows.push([dd, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
     }
   }
   if (!anyData) {
@@ -248,15 +248,16 @@ function refreshAdgroupTrendChart() {
   }
 
   // R64~ 박음
-  sh.getRange(64, 1, rows.length, 9).setValues(rows);
+  sh.getRange(64, 1, rows.length, 10).setValues(rows);
   // 포맷
   sh.getRange(64, 1, rows.length, 1).setNumberFormat('yyyy-mm-dd');
-  sh.getRange(64, 2, rows.length, 2).setNumberFormat('#,##0');
-  sh.getRange(64, 4, rows.length, 1).setNumberFormat('0.00%');
-  sh.getRange(64, 5, rows.length, 1).setNumberFormat('#,##0"원"');
-  sh.getRange(64, 6, rows.length, 2).setNumberFormat('#,##0');
-  sh.getRange(64, 8, rows.length, 1).setNumberFormat('0.00%');
-  sh.getRange(64, 9, rows.length, 1).setNumberFormat('#,##0"원"'); // CPL
+  sh.getRange(64, 2, rows.length, 2).setNumberFormat('#,##0');       // 노출/클릭
+  sh.getRange(64, 4, rows.length, 1).setNumberFormat('#,##0"원"');   // 지출
+  sh.getRange(64, 5, rows.length, 1).setNumberFormat('0.00%');       // CTR
+  sh.getRange(64, 6, rows.length, 1).setNumberFormat('#,##0"원"');   // CPC
+  sh.getRange(64, 7, rows.length, 2).setNumberFormat('#,##0');       // 카톡클릭/문의수
+  sh.getRange(64, 9, rows.length, 1).setNumberFormat('0.00%');       // 문의율
+  sh.getRange(64, 10, rows.length, 1).setNumberFormat('#,##0"원"');  // CPL
 
   // 차트 갱신
   ensureAdgroupTrendChart_(sh);
@@ -277,9 +278,9 @@ function ensureAdgroupTrendChart_(sh) {
 
   // 데이터 범위 (날짜 + CTR + CPC + 문의율 3개 지표)
   const dateRange = sh.getRange(63, 1, ADGROUP_TREND_DATA_MAX_ROWS + 1, 1);  // A: 날짜
-  const ctrRange = sh.getRange(63, 4, ADGROUP_TREND_DATA_MAX_ROWS + 1, 1);   // D: CTR
-  const inqRange = sh.getRange(63, 8, ADGROUP_TREND_DATA_MAX_ROWS + 1, 1);   // H: 문의율
-  const cplRange = sh.getRange(63, 9, ADGROUP_TREND_DATA_MAX_ROWS + 1, 1);   // I: CPL
+  const ctrRange = sh.getRange(63, 5, ADGROUP_TREND_DATA_MAX_ROWS + 1, 1);   // E: CTR
+  const inqRange = sh.getRange(63, 9, ADGROUP_TREND_DATA_MAX_ROWS + 1, 1);   // I: 문의율
+  const cplRange = sh.getRange(63, 10, ADGROUP_TREND_DATA_MAX_ROWS + 1, 1);  // J: CPL
 
   // 차트 = CTR·문의율(좌축 %) + CPL(우축 원). CPC는 표에만(스케일 충돌 회피).
   const chart = sh.newChart()

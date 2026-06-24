@@ -1110,8 +1110,8 @@ function buildDashboardV2() {
   var savedMargin = dash.getRange('C3').getValue();   // 개통 1건 마진 입력값 보존(클리어 전)
 
   // ── 라이트톤 색 토큰 ──
-  const C_SEC_BG   = '#EEF1F5';
-  const C_SEC_FG   = '#1F2A44';
+  const C_SEC_BG   = '#1F4E78';  // 네이비 (광고그룹 추이 헤더와 통일)
+  const C_SEC_FG   = '#FFFFFF';  // 흰 폰트
   const C_COL_BG   = '#F7F7F8';
   const C_COL_FG   = '#5F5F5F';
   const C_ROW_BD   = '#ECECEC';
@@ -1132,9 +1132,10 @@ function buildDashboardV2() {
   try { dash.showRows(1, 59); } catch (e) {}
   try { dash.setRowHeights(1, 59, 22); } catch (e) {}
 
-  function sectionHeader(row, title, startCol) {
+  function sectionHeader(row, title, startCol, width) {
     const sc = startCol || LCOL;
-    dash.getRange(row, sc, 1, 6).merge().setValue(title)
+    const w = width || 6;
+    dash.getRange(row, sc, 1, w).merge().setValue(title)
       .setBackground(C_SEC_BG).setFontColor(C_SEC_FG).setFontWeight('bold').setFontSize(11)
       .setHorizontalAlignment('center')
       .setBorder(null, null, true, null, null, null, '#D5DAE2', SpreadsheetApp.BorderStyle.SOLID);
@@ -1212,7 +1213,7 @@ function buildDashboardV2() {
   // ── 좌측 열 (A~F) ──
 
   // 2L) 기간별 핵심 — 헤더 A4:F4 / 컬럼헤더 5 / 데이터 6~8
-  sectionHeader(4, '기간별 핵심', LCOL);
+  sectionHeader(4, '기간별 핵심', LCOL, 7);
   colHeader(5, ['기간', '광고비', '문의', '개통', 'CPL', '순이익'], LCOL);
   const kpiPeriods = [
     ['어제',      'TODAY()-1',  'TODAY()-1'],
@@ -1235,10 +1236,10 @@ function buildDashboardV2() {
 
   // 3L) 채널별 효율 — 전역 상단 기간(L2) 따라감 / 컬럼헤더 11 / 데이터 12~16
   const chHeaderRow = 10;
-  sectionHeader(chHeaderRow, '채널별 효율', LCOL);   // 전역 상단 기간(L2) 따라감
+  sectionHeader(chHeaderRow, '채널별 효율', LCOL, 7);   // 전역 상단 기간(L2) 따라감
   const ABS_N = '$N$2';
   const ABS_O = '$O$2';
-  colHeader(11, ['채널', '노출', '클릭', '광고비', '카톡클릭', '카톡당CPC'], LCOL);
+  colHeader(11, ['채널', '노출', '클릭', '광고비', '카톡클릭', '카톡당CPC', '앱문의'], LCOL);
 
   const ga4D = `'GA4_자동'!A:A,">="&TEXT(${ABS_N},"yyyymmdd"),'GA4_자동'!A:A,"<="&TEXT(${ABS_O},"yyyymmdd")`;
   const channels = [
@@ -1246,7 +1247,7 @@ function buildDashboardV2() {
     {name:'구글',   adSheet:'구글',        impCol:'E', clkCol:'F', spdCol:'G', sources:['google']},
     {name:'네이버', adSheet:'네이버+', impCol:'F', clkCol:'G', spdCol:'H', sources:['naver','naver_blog','ad.search.naver.com','m.ad.search.naver.com','m.search.naver.com']},
     {name:'카카오', adSheet:'카카오',      impCol:'E', clkCol:'F', spdCol:'G', sources:['kakao']},
-    {name:'당근',   adSheet:'당근',        impCol:'E', clkCol:'F', spdCol:'G', sources:['daangn','danggn']},
+    {name:'당근',   adSheet:'당근',        impCol:'E', clkCol:'F', spdCol:'G', sources:['daangn','danggn'], appSheet:'당근+', appCol:'Q'},
   ];
   const chStart = 12;
   channels.forEach(function (c, i) {
@@ -1260,11 +1261,13 @@ function buildDashboardV2() {
     dash.getRange(r, 4).setFormula(`=IFERROR(${ad(c.spdCol)},0)`).setNumberFormat(F_WON);
     dash.getRange(r, 5).setFormula(`=IFERROR(${ev('kakao_chat_click')},0)`).setNumberFormat(F_INT);
     dash.getRange(r, 6).setFormula(`=IFERROR(IF(E${r}=0,"-",D${r}/E${r}),"-")`).setNumberFormat(F_WON);
+    if (c.appCol) dash.getRange(r, 7).setFormula(`=IFERROR(SUMIFS('${c.appSheet}'!${c.appCol}:${c.appCol},'${c.appSheet}'!A:A,">="&${ABS_N},'${c.appSheet}'!A:A,"<="&${ABS_O}),0)`).setNumberFormat(F_INT);
+    else dash.getRange(r, 7).setValue("-").setHorizontalAlignment("center");
   });
-  dataBox(chStart, channels.length, 6, LCOL);   // 12~16
+  dataBox(chStart, channels.length, 7, LCOL);   // 12~16 (앱문의 G 포함)
 
   // 4L) 리틀리 유입 — 헤더 A18:F18 / 컬럼헤더 19(A~D) + E19 유입경로 라벨 / 데이터 20~22 + E19:F22 박스
-  sectionHeader(18, '리틀리 유입', LCOL);
+  sectionHeader(18, '리틀리 유입', LCOL, 7);
   colHeader(19, ['기간', '방문자수', '클릭수', 'CTR'], LCOL);
   dash.getRange(19, 5).setValue('최신 유입경로비율')
     .setBackground(C_COL_BG).setFontColor(C_COL_FG).setFontWeight('bold').setFontSize(9)
@@ -1289,9 +1292,9 @@ function buildDashboardV2() {
   // ── 우측 열 (H~M) ──
 
   // 5R) 실비용 대조 — 헤더 H4:M4 / 컬럼헤더 5(H·I·J·K) / 데이터 6~10 / 합계 11 / 주석 12
-  sectionHeader(4, '실비용 대조 (이번달 카드결제 vs API 광고비)', RCOL);
-  colHeader(5, ['채널', '카드결제', 'API광고비', '차이'], RCOL);
-  const payStart = 6;
+  sectionHeader(10, '실비용 대조 (이번달 카드결제 vs API 광고비)', RCOL);
+  colHeader(11, ['채널', '카드결제', 'API광고비', '차이'], RCOL);
+  const payStart = 12;
   const PAY = [['메타', '메타+', 'H'], ['네이버', '네이버+', 'H'], ['구글', '구글', 'G'], ['카카오', '카카오', 'G'], ['당근', '당근', 'G']];
   PAY.forEach(function (c, i) {
     const r = payStart + i;
@@ -1310,14 +1313,14 @@ function buildDashboardV2() {
     .setBorder(true, true, true, true, true, true, C_ROW_BD, SpreadsheetApp.BorderStyle.SOLID)
     .setHorizontalAlignment('right');
   dash.getRange(payTotal, RCOL).setHorizontalAlignment('left');
-  dash.getRange(12, RCOL, 1, 6).merge()
+  dash.getRange(18, RCOL, 1, 6).merge()
     .setValue('· 차이(+) = 카드결제가 API 집계보다 큼 (수수료·부가세·미집계분 등)')
     .setFontColor('#AAAAAA').setFontStyle('italic').setFontSize(9).setHorizontalAlignment('left');
 
   // 6R) SNS 채널 운영 — 헤더 H14:M14 / 컬럼헤더 15(H·I·J·K·L) / 데이터 16~19
-  sectionHeader(14, 'SNS 채널 운영', RCOL);
-  colHeader(15, ['채널', '포스트수', '총조회수', '평균', '팔로워'], RCOL);
-  const snsStart = 16;
+  sectionHeader(4, 'SNS 채널 운영', RCOL);
+  colHeader(5, ['채널', '포스트수', '총조회수', '평균', '팔로워'], RCOL);
+  const snsStart = 6;
   const sns = [
     {name: '유튜브', sheet: '유튜브'},
     {name: '인스타', sheet: '인스타'},
@@ -1334,7 +1337,27 @@ function buildDashboardV2() {
     var folF = "FILTER('" + s.sheet + "'!G4:G1000,'" + s.sheet + "'!G4:G1000<>\"\",'" + s.sheet + "'!A4:A1000<=" + snsEn + ")";
     dash.getRange(r, RCOL + 4).setFormula("=IFERROR(INDEX(" + folF + ",ROWS(" + folF + ")),\"-\")").setNumberFormat(F_INT);  // L 팔로워=기간내 최신 비공백
   });
-  dataBox(snsStart, sns.length, 5, RCOL);   // 16~19
+  dataBox(snsStart, sns.length, 5, RCOL);   // 6~9
+
+  // 7R) 카톡 현황 — 헤더 H19:M19 / 컬럼헤더 20 / 데이터 21~23 (어제/7일/30일, 리틀리 우측)
+  sectionHeader(19, '카톡 현황', RCOL);
+  colHeader(20, ['기간', '광고비', '카톡클릭', '카톡당비용'], RCOL);
+  const kkPeriods = [
+    ['어제',      'TODAY()-1',  'TODAY()-1'],
+    ['최근 7일',  'TODAY()-6',  'TODAY()'],
+    ['최근 30일', 'TODAY()-29', 'TODAY()'],
+  ];
+  const kkStart = 21;
+  kkPeriods.forEach(function (p, i) {
+    const r = kkStart + i;
+    const st = p[1], en = p[2];
+    const kClick = `SUMIFS('GA4_자동'!F:F,'GA4_자동'!E:E,"kakao_chat_click",'GA4_자동'!A:A,">="&TEXT(${st},"yyyymmdd"),'GA4_자동'!A:A,"<="&TEXT(${en},"yyyymmdd"))`;
+    dash.getRange(r, RCOL).setValue(p[0]);                                                     // H 기간
+    dash.getRange(r, RCOL + 1).setFormula(`=${sumPaidFx(st, en)}`).setNumberFormat(F_WON);     // I 광고비
+    dash.getRange(r, RCOL + 2).setFormula(`=IFERROR(${kClick},0)`).setNumberFormat(F_INT);     // J 카톡클릭
+    dash.getRange(r, RCOL + 3).setFormula(`=IFERROR(IF(J${r}=0,"-",I${r}/J${r}),"-")`).setNumberFormat(F_WON);  // K 카톡당비용
+  });
+  dataBox(kkStart, kkPeriods.length, 4, RCOL);   // 21~23
 
   // ── 푸터 — 23행 (A23:F23 병합) ──
   const footerRow = 23;
@@ -1355,24 +1378,23 @@ function buildDashboardV2() {
 
   // 폭/정렬 마무리
   dash.setColumnWidth(1, 128);                              // A (라벨)
-  for (let c = 2; c <= 6; c++) dash.setColumnWidth(c, 108); // B~F
-  dash.setColumnWidth(7, 28);                               // G = 좌우 간격
+  for (let c = 2; c <= 7; c++) dash.setColumnWidth(c, 80);  // B~G = 80 고정
   dash.setColumnWidth(8, 110);                              // H (우측 라벨)
   for (let c = 9; c <= 13; c++) dash.setColumnWidth(c, 108);// I~M
   try { dash.setRowHeight(1, 18); dash.setRowHeight(2, 34); } catch (e) {}
 
-  // 조건부 색: 출처미상(I2) 위험 / 실비용 차이(K6:K11) 음수 — 매번 내 규칙만 갱신
+  // 조건부 색: 출처미상(I2) 위험 / 실비용 차이(K12:K17) 음수 — 매번 내 규칙만 갱신
   try {
     var keep = dash.getConditionalFormatRules().filter(function (rule) {
       var rs = rule.getRanges().map(function (rg) { return rg.getA1Notation(); }).join(',');
-      return rs.indexOf('I2') < 0 && rs.indexOf('K6') < 0 && rs.indexOf('F3') < 0 && rs.indexOf('F6') < 0;
+      return rs.indexOf('I2') < 0 && rs.indexOf('K12') < 0 && rs.indexOf('F3') < 0 && rs.indexOf('F6') < 0;
     });
     keep.push(SpreadsheetApp.newConditionalFormatRule().whenNumberGreaterThanOrEqualTo(0.7)
       .setFontColor('#9F1A1A').setBackground('#FCEBEB').setRanges([dash.getRange('I2')]).build());
     keep.push(SpreadsheetApp.newConditionalFormatRule().whenNumberBetween(0.5, 0.6999)
       .setFontColor('#8A5A00').setBackground('#FAEEDA').setRanges([dash.getRange('I2')]).build());
     keep.push(SpreadsheetApp.newConditionalFormatRule().whenNumberLessThan(0)
-      .setFontColor('#9F1A1A').setRanges([dash.getRange('K6:K11')]).build());
+      .setFontColor('#9F1A1A').setRanges([dash.getRange('K12:K17')]).build());
     keep.push(SpreadsheetApp.newConditionalFormatRule().whenNumberLessThan(0)
       .setFontColor('#9F1A1A').setRanges([dash.getRange('F3'), dash.getRange('F6:F8')]).build());
     keep.push(SpreadsheetApp.newConditionalFormatRule().whenNumberGreaterThan(0)
@@ -1381,7 +1403,7 @@ function buildDashboardV2() {
   } catch (e) { Logger.log('조건부서식: ' + e.message); }
 
   try {
-    SpreadsheetApp.getUi().alert('✅ 통합대시보드 V2 빌드 완료 (2열 가로 레이아웃)\n· 1~2행 요약 스트립(고정)\n· 좌: 기간별 핵심 / 채널별 효율 / 리틀리\n· 우: 실비용 대조 / SNS\n· 60행 이후 = 광고그룹 추이 영역(미변경)');
+    SpreadsheetApp.getUi().alert('✅ 통합대시보드 V2 빌드 완료 (2열 가로 레이아웃)\n· 1~2행 요약 스트립(고정)\n· 좌: 기간별 핵심 / 채널별 효율 / 리틀리\n· 우: SNS / 실비용 대조 / 카톡 현황\n· 60행 이후 = 광고그룹 추이 영역(미변경)');
   } catch (e) {}
 
   if (typeof logSync_ === 'function') { try { logSync_('buildDashboardV2', '대시보드 V2 빌드 (2열)'); } catch (e) {} }

@@ -446,8 +446,8 @@
       ]
     },
     "032_meme_carrier_hidden_tips": {
-      "used_at": "2026-06-19T16:44:46",
-      "source": "semantic_visual_match",
+      "used_at": "2026-06-24T10:16:57",
+      "source": "codex_enhance",
       "illustrations": [
         "mystery_number_63279925",
         "document_article",
@@ -519,7 +519,7 @@
       ]
     }
   },
-  "updated_at": "2026-06-24T10:10:01",
+  "updated_at": "2026-06-24T10:17:00",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -616,7 +616,7 @@
       "variants": []
     },
     "032_meme_carrier_hidden_tips": {
-      "updated_at": "2026-06-19T16:44:48",
+      "updated_at": "2026-06-24T10:17:00",
       "variants": []
     },
     "033_meme_installment_trap": {

@@ -12,5 +12,6 @@
     "main": "휴대폰 구매할 땐?",
     "sub": "지원금부터 무료로 조회해보세요",
     "url": "litt.ly/phonespot"
-  }
+  },
+  "precon_url": "https://ictmarket.or.kr:8443/precon/pop_CertIcon.do?PRECON_REQ_ID=PRE0000194479&YN=1"
 }
