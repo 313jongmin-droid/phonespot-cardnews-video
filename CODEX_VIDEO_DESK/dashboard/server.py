@@ -38,7 +38,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v41"
+PANEL_VERSION = "phonespot-web-v42"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -1825,20 +1825,6 @@ class Handler(BaseHTTPRequestHandler):
                     dst.write_bytes(src.read_bytes())
                 json_response(self, {"ok": True, "message": f"{len(plan)}장 배정 완료. 이제 '4. 카드뉴스 생성'을 누르세요."})
                 return
-            if action == "video_import_render":
-                slug_now = validate_slug(slug)
-                job = REMOTE_QUEUE.enqueue(
-                    "video_import_render",
-                    slug_now,
-                    str(data.get("target_worker") or ""),
-                )
-                json_response(self, {
-                    "ok": True,
-                    "queued": True,
-                    "job": job,
-                    "message": "렌더 작업을 대기열에 등록했습니다.",
-                })
-                return
             if action == "video_render_selected":
                 slug = validate_slug(slug)
                 job = REMOTE_QUEUE.enqueue(
@@ -1919,10 +1905,6 @@ class Handler(BaseHTTPRequestHandler):
                 else:
                     json_response(self, {"ok": True})
                 return
-            if action == "open_prompt":
-                safe_open(DESK / "LATEST_PROMPT.md")
-                json_response(self, {"ok": True})
-                return
             if action == "open_results":
                 safe_open(DESK / "RESULTS")
                 json_response(self, {"ok": True})
@@ -1931,35 +1913,12 @@ class Handler(BaseHTTPRequestHandler):
                 safe_open(DESK / "ILLUSTRATION_DROP")
                 json_response(self, {"ok": True})
                 return
-            if action == "open_desk":
-                safe_open(DESK)
-                json_response(self, {"ok": True})
-                return
             if action == "work_queue_refresh":
                 ok = run_job("작업대장 새로고침", [[sys.executable, str(SCRIPTS / "codex_work_queue.py")]], ROOT)
                 if not ok:
                     json_response(self, {"ok": False, "busy": True, "message": "이미 다른 작업이 실행 중입니다. 현재 작업이 끝난 뒤 다시 눌러주세요."})
                 else:
                     json_response(self, {"ok": True})
-                return
-            if action == "open_work_queue":
-                WORK_QUEUE.mkdir(parents=True, exist_ok=True)
-                safe_open(WORK_QUEUE)
-                json_response(self, {"ok": True})
-                return
-            if action == "open_work_queue_tsv":
-                path = WORK_QUEUE / "phonespot_work_queue.tsv"
-                if not path.exists():
-                    subprocess.run([sys.executable, str(SCRIPTS / "codex_work_queue.py")], cwd=str(ROOT), check=False)
-                safe_open_existing(path)
-                json_response(self, {"ok": True})
-                return
-            if action == "open_work_queue_md":
-                path = WORK_QUEUE / "phonespot_work_queue.md"
-                if not path.exists():
-                    subprocess.run([sys.executable, str(SCRIPTS / "codex_work_queue.py")], cwd=str(ROOT), check=False)
-                safe_open_existing(path)
-                json_response(self, {"ok": True})
                 return
             if action == "system_upload":
                 ok = run_job("시스템 업로드: GitHub commit/push", [[sys.executable, str(DESK / "MAINTENANCE" / "codex_github_upload.py")]], ROOT)
@@ -1975,34 +1934,15 @@ class Handler(BaseHTTPRequestHandler):
                 else:
                     json_response(self, {"ok": True})
                 return
-            if action == "open_card_output":
-                slug = validate_slug(slug)
-                safe_open_existing(CARD_OUTPUT / slug)
-                json_response(self, {"ok": True})
-                return
             if action == "open_card_images":
                 slug = validate_slug(slug)
                 (CARD_IMAGES / slug).mkdir(parents=True, exist_ok=True)
                 safe_open(CARD_IMAGES / slug)
                 json_response(self, {"ok": True})
                 return
-            if action == "open_card_prompt":
-                slug = validate_slug(slug)
-                safe_open_existing(CARD_IMAGES / slug / "prompt.md")
-                json_response(self, {"ok": True})
-                return
             if action == "open_card_result":
                 slug = validate_slug(slug)
                 safe_open_existing(CARD_OUTPUT / slug)
-                json_response(self, {"ok": True})
-                return
-            if action == "open_card_webui":
-                slug = validate_slug(slug) if slug else ""
-                start_card_webui(slug)
-                json_response(self, {"ok": True})
-                return
-            if action == "open_card_root":
-                safe_open_existing(CARDNEWS)
                 json_response(self, {"ok": True})
                 return
             if action == "update_visual":
@@ -2181,7 +2121,8 @@ INDEX_HTML = r"""<!doctype html>
     .mini-btn { border:none; color:var(--accent); background:var(--accent-soft); border-radius:8px; padding:6px 10px; cursor:pointer; font-size:12px; font-weight:600; margin:2px; transition:var(--t-fast); }
     .mini-btn:hover { background:var(--accent); color:#fff; }
     .mini-btn:disabled { color:var(--label-quaternary); background:var(--secondary-bg); cursor:not-allowed; }
-    .track-pane { padding:18px 20px; max-width:1120px; }
+    .track-pane { display:grid; grid-template-columns:400px 1fr; gap:18px; padding:18px 20px; }
+    .track-pane > section:first-child { position:sticky; top:80px; align-self:start; }
     .track-form p.small { margin:10px 0 4px; }
     .track-form .fld { display:inline-flex; flex-direction:column; gap:4px; font-size:12px; color:var(--label-tertiary); margin:4px 0; }
     .track-form .fld-row { display:flex; gap:14px; flex-wrap:wrap; align-items:flex-end; margin:4px 0; }
@@ -2256,7 +2197,6 @@ INDEX_HTML = r"""<!doctype html>
             <button class="btn compact" onclick="window.open('/prompt','_blank')"><strong>영상 프롬프트 보기</strong><span>최신 영상용 GPT 프롬프트를 브라우저에서 엽니다.</span></button>
             <button class="btn compact" onclick="openIllustrationRequests()"><strong>신규 일러스트 요청서</strong><span>이 영상의 범용 일러스트 추천과 GPT 프롬프트.</span></button>
             <button class="btn compact" onclick="runAction('open_results')"><strong>영상 결과 폴더</strong><span>완성 MP4와 발행 패키지 폴더를 엽니다.</span></button>
-            <button class="btn compact" onclick="deleteSlug()"><strong>선택 슬러그 삭제</strong><span>선택 슬러그의 articles·images·output 삭제(되돌릴 수 없음).</span></button>
             <button class="btn compact" onclick="runAction('open_illustrations')"><strong>일러스트 폴더</strong><span>재사용 일러스트 라이브러리와 드롭 폴더.</span></button>
             <button class="btn compact" onclick="showChunks()"><strong>청크 경계 편집</strong><span>내용·TTS는 유지하고 줄바꿈·합치기·분할만 조정합니다.</span></button>
           </div>
@@ -2342,52 +2282,56 @@ INDEX_HTML = r"""<!doctype html>
     </div>
   </main>
   <div id="trackTypo" class="track-pane" style="display:none">
-    <section style="margin-bottom:16px">
-      <div class="head"><h2>주제에서 타이포 만들기</h2><span class="small">Claude 작성 요청 (큐)</span></div>
-      <div class="pad track-form">
-        <p class="small" style="margin-top:0">영상 후보(주제)에서 골라 요청 → Claude가 <code>TOPIC_TO_PROMO</code> 스펙대로 promo MD 작성 후 렌더. 자동 즉시 아님(요청 등록).</p>
-        <div class="fld-row">
-          <label class="fld">주제 슬러그 <select id="tpTopic" style="min-width:320px"></select></label>
-          <button class="mini-btn" onclick="styleRequest('typo')">타이포로 만들기 요청</button>
-        </div>
-        <div id="tpReqLog" class="small" style="margin-top:6px"></div>
-      </div>
-    </section>
     <section>
-      <div class="head"><h2>타이포 광고</h2><span class="small">모션그래픽 · 나레이션 없음 · 9:16</span></div>
-      <div class="pad track-form">
-        <p class="small" style="margin-top:0">기존 promo 스크립트를 골라 렌더. 효과음+음악 기반(나레이션 없음). 결과는 promo/out/ + 결과 폴더.</p>
-        <div class="uprow">
-          <button class="mini-btn" onclick="promoLoad()">목록 새로고침</button>
-          <span id="tpCount" class="small"></span>
-        </div>
-        <div class="fld-row">
-          <label class="fld">스크립트 <select id="tpScript" style="min-width:320px"></select></label>
-          <label class="fld">프리셋 <select id="tpPreset" style="min-width:150px">
-            <option value="">기본(스크립트 지정)</option>
-            <option value="showcase">showcase</option>
-            <option value="punchy">punchy</option>
-            <option value="data">data</option>
-            <option value="calm">calm</option>
-          </select></label>
-        </div>
-        <div class="actions"><button class="mini-btn" onclick="promoRender()">렌더</button></div>
-        <div id="tpLog" class="small" style="margin-top:8px"></div>
-      </div>
+      <div class="head"><h2>타이포 주제</h2><button onclick="loadTopicSelects()">동기화 새로고침</button></div>
+      <div id="tpList" class="list"></div>
     </section>
+    <div style="display:grid;gap:16px">
+      <section>
+        <div class="head action-head"><h2>타이포 작업</h2><div class="selected-badge"><span>선택 주제</span><b id="tpSelectedSlug">없음</b></div></div>
+        <div class="pad grid">
+          <button class="btn primary" onclick="styleRequest('typo')"><strong>타이포로 만들기 요청</strong><span>선택 주제를 Claude가 TOPIC_TO_PROMO 스펙대로 promo MD로 작성 후 렌더(요청 등록, 자동 즉시 아님).</span></button>
+        </div>
+        <div id="tpReqLog" class="pad small"></div>
+      </section>
+      <section>
+        <div class="head"><h2>타이포 광고 렌더</h2><span class="small">모션그래픽 · 나레이션 없음 · 9:16</span></div>
+        <div class="pad track-form">
+          <p class="small" style="margin-top:0">기존 promo 스크립트를 골라 바로 렌더(효과음+음악, 나레이션 없음).</p>
+          <div class="uprow">
+            <button class="mini-btn" onclick="promoLoad()">목록 새로고침</button>
+            <span id="tpCount" class="small"></span>
+          </div>
+          <div class="fld-row">
+            <label class="fld">스크립트 <select id="tpScript" style="min-width:320px"></select></label>
+            <label class="fld">프리셋 <select id="tpPreset" style="min-width:150px">
+              <option value="">기본(스크립트 지정)</option>
+              <option value="showcase">showcase</option>
+              <option value="punchy">punchy</option>
+              <option value="data">data</option>
+              <option value="calm">calm</option>
+            </select></label>
+          </div>
+          <div class="actions"><button class="mini-btn" onclick="promoRender()">렌더</button></div>
+          <div id="tpLog" class="small" style="margin-top:8px"></div>
+        </div>
+      </section>
+    </div>
   </div>
   <div id="trackAi" class="track-pane" style="display:none">
     <section>
-      <div class="head"><h2>실사 AI 광고</h2><span class="small">Higgsfield · 요청 큐</span></div>
-      <div class="pad track-form">
-        <p class="small" style="margin-top:0">영상 후보(주제)에서 골라 요청 → Claude가 MEME_TO_VIRAL/실사 스펙대로 작성, <code>shorts/promo_ai/</code> Higgsfield 워크플로로 제작. 자동 즉시 아님(요청 등록).</p>
-        <div class="fld-row">
-          <label class="fld">주제 슬러그 <select id="aiTopic" style="min-width:320px"></select></label>
-          <button class="mini-btn" onclick="styleRequest('ai')">실사로 만들기 요청</button>
-        </div>
-        <div id="aiReqLog" class="small" style="margin-top:6px"></div>
-      </div>
+      <div class="head"><h2>실사 AI 주제</h2><button onclick="loadTopicSelects()">동기화 새로고침</button></div>
+      <div id="aiList" class="list"></div>
     </section>
+    <div style="display:grid;gap:16px">
+      <section>
+        <div class="head action-head"><h2>실사 AI 작업</h2><div class="selected-badge"><span>선택 주제</span><b id="aiSelectedSlug">없음</b></div></div>
+        <div class="pad grid">
+          <button class="btn primary" onclick="styleRequest('ai')"><strong>실사로 만들기 요청</strong><span>선택 주제를 Claude가 MEME_TO_VIRAL/실사 스펙대로 작성, shorts/promo_ai Higgsfield 워크플로로 제작(요청 등록).</span></button>
+        </div>
+        <div id="aiReqLog" class="pad small"></div>
+      </section>
+    </div>
   </div>
   <div id="commonMonitor" style="display:grid;gap:16px;padding:16px 20px">
       <section><div class="head"><h2>실행 로그</h2><div style="display:flex;gap:8px;align-items:center"><span class="small">실패하면 이 로그를 복사해서 보내면 됩니다.</span><button class="mini-btn" onclick="copyLog()">로그 복사</button></div></div><div id="log" class="log"></div></section>
@@ -2408,6 +2352,8 @@ INDEX_HTML = r"""<!doctype html>
   <input id="illustrationUploadInput" type="file" accept=".png,.jpg,.jpeg,.webp" multiple hidden>
   <script>
     let selected = "";
+    let tpSelected = "";
+    let aiSelected = "";
     let promoItems = [];
     let selectedCard = "";
     let mode = "video";
@@ -2435,18 +2381,31 @@ INDEX_HTML = r"""<!doctype html>
     }
     async function loadTopicSelects(){
       try{
-        var d=await api("/api/slugs"); var items=d.slugs||[];
-        ["tpTopic","aiTopic"].forEach(function(id){
-          var sel=document.getElementById(id); if(!sel) return;
-          var cur=sel.value; sel.innerHTML="";
-          items.forEach(function(it){ var o=document.createElement("option"); o.value=it.slug; o.textContent=it.slug+(it.flag&&it.flag!=="undefined"?"  ["+it.flag+"]":""); sel.appendChild(o); });
-          if(cur) sel.value=cur;
-        });
+        var d=await api("/api/slugs"); window.__topicItems=d.slugs||[];
+        renderTopicList("tpList","typo"); renderTopicList("aiList","ai");
       }catch(e){}
     }
+    function renderTopicList(boxId, track){
+      var box=document.getElementById(boxId); if(!box) return;
+      var items=window.__topicItems||[];
+      var cur=(track==="typo")?tpSelected:aiSelected;
+      box.innerHTML="";
+      items.forEach(function(item, idx){
+        var btn=document.createElement("button");
+        btn.className="row"+(item.slug===cur?" active":"");
+        btn.innerHTML='<span class="row-number">'+(idx+1)+'</span><span class="row-main"><span class="slug-name">'+item.slug+'</span><span class="row-sub">'+item.date+(item.flag&&item.flag!=="undefined"?" \u00b7 "+item.flag:"")+'</span></span>';
+        btn.onclick=function(){ selectTopic(track, item.slug); };
+        box.appendChild(btn);
+      });
+      if(!cur && items.length){ selectTopic(track, items[0].slug); }
+    }
+    function selectTopic(track, slug){
+      if(track==="typo"){ tpSelected=slug; var b=document.getElementById("tpSelectedSlug"); if(b) b.textContent=slug; renderTopicList("tpList","typo"); }
+      else { aiSelected=slug; var b2=document.getElementById("aiSelectedSlug"); if(b2) b2.textContent=slug; renderTopicList("aiList","ai"); }
+    }
     async function styleRequest(track){
-      var selId=track==="typo"?"tpTopic":"aiTopic"; var logId=track==="typo"?"tpReqLog":"aiReqLog";
-      var slug=document.getElementById(selId).value; var log=document.getElementById(logId);
+      var slug=(track==="typo")?tpSelected:aiSelected; var logId=track==="typo"?"tpReqLog":"aiReqLog";
+      var log=document.getElementById(logId);
       if(!slug){ log.textContent="주제를 선택하세요."; return; }
       try{
         var r=await api("/api/action",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"style_request",slug:slug,track:track})});
