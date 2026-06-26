@@ -107,6 +107,7 @@
 | "N번 실사" / "N번 viral" | 실사 viral(`shorts/promo_ai`) |
 | "N번 타이포" | 타이포(promo) — 주제→promo MD 변환(`shorts/promo/TOPIC_TO_PROMO.md`) → `promo/review/NNN.md`(기존 최대번호+1) → 패널 타이포 탭 또는 `run_promo.bat <num>` 렌더 |
 | "N번 실사AI광고" / "N번 ad" | 실사 ad(`shorts/promo_ai`, 광고 컷) |
+| "스타일 요청 처리" / "타이포 요청 처리" | 패널 "만들기 요청" 큐(`_state/style_requests.jsonl`)의 pending 각각 작성(typo=`TOPIC_TO_PROMO.md`, ai=`MEME_TO_VIRAL.md`) → 렌더, 처리분 `status="done"` 기록 |
 
 주제 풀 = 트랙 무관 단일 산출. 사장님이 번호 + 트랙(카드/카드영상/타이포/실사viral/실사ad)을 지정하면 해당 구현으로 분배. **같은 주제를 여러 스타일로 선택/AB 가능.**
 
@@ -115,3 +116,4 @@
 ## 이력
 - 2026-06-23: 신설. "뉴스 RSS 수집기"→"SNS 떡상 주제 생성기" 격상. 소스 5갈래·떡상점수·트랙매핑·주제↔구현 분리 정본화. 정합: PREFLIGHT 수집 트랙, INSTRUCTIONS 통합소스, SYSTEM_MAP.
 - 2026-06-24: **타이포·실사ad를 1급 선택 트랙으로 라우팅**(§4 격상·§6 "N번 타이포"/"N번 실사AI광고" 명령). 주제 풀(단일) → 5트랙 분배. **주제→타이포 변환 정본 = `shorts/promo/TOPIC_TO_PROMO.md`**(seed→6비트 promo MD). 같은 주제를 원하는 스타일로 선택/AB.
+- 2026-06-24: **패널 주제목록 공유 + 스타일 요청 큐(v40).** 타이포·실사AI 탭에 영상후보(주제) 목록 공유(`/api/slugs`) + "만들기 요청" 버튼 → `_state/style_requests.jsonl`(pending). Claude가 "스타일 요청 처리"로 큐 읽어 typo/ai 각 스펙대로 작성·렌더(content authoring=Claude, 패널은 트리거만). 패널 정본=SYSTEM_MAP A단원.

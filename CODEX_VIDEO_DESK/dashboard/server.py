@@ -38,7 +38,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v39"
+PANEL_VERSION = "phonespot-web-v40"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -1879,6 +1879,30 @@ class Handler(BaseHTTPRequestHandler):
                 json_response(self, {"ok": True, "queued": True, "job": job,
                                      "message": "타이포 렌더 대기열 등록: " + nn + " [" + preset + "]"})
                 return
+            if action == "style_request":
+                slug_req = str(data.get("slug") or "").strip()
+                track = str(data.get("track") or "").strip()
+                if not slug_req or track not in ("typo", "ai"):
+                    json_response(self, {"ok": False, "message": "주제와 트랙을 선택하세요."})
+                    return
+                reqdir = ROOT / "_state"
+                reqdir.mkdir(parents=True, exist_ok=True)
+                rec = {"ts": int(time.time()), "slug": slug_req, "track": track, "status": "pending"}
+                with open(reqdir / "style_requests.jsonl", "a", encoding="utf-8") as f:
+                    f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+                json_response(self, {"ok": True, "message": "요청 등록: " + slug_req + " -> " + track})
+                return
+            if action == "style_pending":
+                fp = ROOT / "_state" / "style_requests.jsonl"
+                items = []
+                if fp.exists():
+                    for line in fp.read_text(encoding="utf-8").splitlines()[-40:]:
+                        try:
+                            items.append(json.loads(line))
+                        except Exception:
+                            pass
+                json_response(self, {"ok": True, "items": items})
+                return
             if action == "remote_job_cancel":
                 job = REMOTE_QUEUE.cancel(str(data.get("job_id") or ""))
                 json_response(self, {"ok": True, "job": job})
@@ -2344,6 +2368,17 @@ INDEX_HTML = r"""<!doctype html>
     </div>
   </main>
   <div id="trackTypo" class="track-pane" style="display:none">
+    <section style="margin-bottom:16px">
+      <div class="head"><h2>주제에서 타이포 만들기</h2><span class="small">Claude 작성 요청 (큐)</span></div>
+      <div class="pad track-form">
+        <p class="small" style="margin-top:0">영상 후보(주제)에서 골라 요청 → Claude가 <code>TOPIC_TO_PROMO</code> 스펙대로 promo MD 작성 후 렌더. 자동 즉시 아님(요청 등록).</p>
+        <div class="fld-row">
+          <label class="fld">주제 슬러그 <select id="tpTopic" style="min-width:320px"></select></label>
+          <button class="mini-btn" onclick="styleRequest('typo')">타이포로 만들기 요청</button>
+        </div>
+        <div id="tpReqLog" class="small" style="margin-top:6px"></div>
+      </div>
+    </section>
     <section>
       <div class="head"><h2>타이포 광고</h2><span class="small">모션그래픽 · 나레이션 없음 · 9:16</span></div>
       <div class="pad track-form">
@@ -2369,8 +2404,15 @@ INDEX_HTML = r"""<!doctype html>
   </div>
   <div id="trackAi" class="track-pane" style="display:none">
     <section>
-      <div class="head"><h2>실사 AI 광고</h2><span class="small">Higgsfield · 확장 E4</span></div>
-      <div class="pad track-form"><p class="small" style="margin-top:0">Higgsfield 실사 광고는 <code>shorts/promo_ai/</code> 워크플로로 진행합니다. 패널 통합은 확장 E4 예정.</p></div>
+      <div class="head"><h2>실사 AI 광고</h2><span class="small">Higgsfield · 요청 큐</span></div>
+      <div class="pad track-form">
+        <p class="small" style="margin-top:0">영상 후보(주제)에서 골라 요청 → Claude가 MEME_TO_VIRAL/실사 스펙대로 작성, <code>shorts/promo_ai/</code> Higgsfield 워크플로로 제작. 자동 즉시 아님(요청 등록).</p>
+        <div class="fld-row">
+          <label class="fld">주제 슬러그 <select id="aiTopic" style="min-width:320px"></select></label>
+          <button class="mini-btn" onclick="styleRequest('ai')">실사로 만들기 요청</button>
+        </div>
+        <div id="aiReqLog" class="small" style="margin-top:6px"></div>
+      </div>
     </section>
   </div>
   <div id="commonMonitor" style="display:grid;gap:16px;padding:16px 20px">
@@ -2409,12 +2451,35 @@ INDEX_HTML = r"""<!doctype html>
         var el=document.getElementById(t[1]); if(el) el.style.display=(name===t[0])?"":"none";
       });
       if(name==="typo" && !promoItems.length){ promoLoad(); }
+      if(name==="typo" || name==="ai"){ loadTopicSelects(); }
       document.querySelectorAll(".track-tab").forEach(function(b){
         var on=b.getAttribute("data-track")===name;
         b.style.background=on?"var(--accent)":"transparent";
         b.style.color=on?"#fff":"var(--label)";
         b.style.fontWeight=on?"800":"600";
       });
+    }
+    async function loadTopicSelects(){
+      try{
+        var d=await api("/api/slugs"); var items=d.slugs||[];
+        ["tpTopic","aiTopic"].forEach(function(id){
+          var sel=document.getElementById(id); if(!sel) return;
+          var cur=sel.value; sel.innerHTML="";
+          items.forEach(function(it){ var o=document.createElement("option"); o.value=it.slug; o.textContent=it.slug+(it.flag&&it.flag!=="undefined"?"  ["+it.flag+"]":""); sel.appendChild(o); });
+          if(cur) sel.value=cur;
+        });
+      }catch(e){}
+    }
+    async function styleRequest(track){
+      var selId=track==="typo"?"tpTopic":"aiTopic"; var logId=track==="typo"?"tpReqLog":"aiReqLog";
+      var slug=document.getElementById(selId).value; var log=document.getElementById(logId);
+      if(!slug){ log.textContent="주제를 선택하세요."; return; }
+      try{
+        var r=await api("/api/action",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"style_request",slug:slug,track:track})});
+        var pr=await api("/api/action",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"style_pending"})});
+        var pend=(pr.items||[]).filter(function(x){return x.status!=="done";}).length;
+        log.textContent=(r.message||"등록됨")+" · 대기 "+pend+"건 (코웍에서 '스타일 요청 처리'로 작성)";
+      }catch(e){ log.textContent="요청 실패: "+e; }
     }
     async function promoLoad(){
       var log=document.getElementById("tpLog");
