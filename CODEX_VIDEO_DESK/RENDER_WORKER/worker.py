@@ -30,7 +30,7 @@ SERVER = (os.environ.get("PHONESPOT_PANEL_URL") or SAVED_URL or "http://127.0.0.
 # 로컬 패널이면 결과가 이미 RESULTS/<키>/ 에 있으므로 업로드/패키지 다운로드(=remote_ 폴더) 불필요
 LOCAL_PANEL = ("127.0.0.1" in SERVER) or ("localhost" in SERVER)
 WORKER_ID = os.environ.get("PHONESPOT_WORKER_ID") or socket.gethostname()
-VERSION = "render-worker-v3"
+VERSION = "render-worker-v4"
 INSTANCE_ID = uuid4().hex
 PID_FILE = Path(os.environ["PHONESPOT_WORKER_PID_FILE"]) if os.environ.get("PHONESPOT_WORKER_PID_FILE") else None
 
@@ -148,17 +148,58 @@ def download_package(job: dict) -> None:
         safe_extract(target)
 
 
-def result_after(slug: str, started: float) -> Path | None:
+def _slug_in_folder(slug: str, folder_name: str) -> bool:
+    # 경계 안전 매칭: slug 양옆을 "_"로 감싸 비교 -> "031"이 "0310_..."에 오매칭되지 않음.
+    # 실제 폴더명(예: 20260622_031_..._codex_remotion, NN_label_preset_promo)에서
+    # slug는 항상 "_"로 구분되는 세그먼트라 안전하다.
+    return ("_" + slug + "_") in ("_" + folder_name + "_")
+
+
+def snapshot_mp4s() -> dict:
+    # 렌더 시작 직전 RESULTS의 모든 mp4 경로->mtime 스냅샷(결정적 결과 탐지용).
+    snap: dict = {}
     if not RESULTS.exists():
-        return None
-    candidates = []
+        return snap
     for folder in RESULTS.iterdir():
         try:
-            if folder.is_dir() and slug in folder.name and folder.stat().st_mtime >= started - 5:
-                candidates.extend(folder.glob("*.mp4"))
+            if folder.is_dir():
+                for mp4 in folder.glob("*.mp4"):
+                    try:
+                        snap[str(mp4)] = mp4.stat().st_mtime
+                    except OSError:
+                        pass
         except OSError:
             pass
-    return max(candidates, key=lambda path: path.stat().st_mtime) if candidates else None
+    return snap
+
+
+def result_after(slug: str, started: float, before: dict | None = None) -> Path | None:
+    # 우선순위: 스냅샷(before) 대비 '신규/갱신'된 mp4 -> 없으면 시간창 폴백.
+    # slug 매칭은 경계 안전(_slug_in_folder). 동일 워커는 잡을 순차 실행하므로
+    # 신규 diff가 곧 이번 렌더 산출물이다.
+    if not RESULTS.exists():
+        return None
+    before = before or {}
+    fresh: list[Path] = []
+    fallback: list[Path] = []
+    for folder in RESULTS.iterdir():
+        try:
+            if not (folder.is_dir() and _slug_in_folder(slug, folder.name)):
+                continue
+            for mp4 in folder.glob("*.mp4"):
+                try:
+                    mtime = mp4.stat().st_mtime
+                except OSError:
+                    continue
+                if mtime >= started - 5:
+                    fallback.append(mp4)
+                prev = before.get(str(mp4))
+                if prev is None or mtime > prev + 0.001:
+                    fresh.append(mp4)
+        except OSError:
+            pass
+    pool = fresh or fallback
+    return max(pool, key=lambda path: path.stat().st_mtime) if pool else None
 
 
 def upload_result(job_id: str, path: Path) -> None:
@@ -236,6 +277,7 @@ def run_job(job: dict) -> tuple[bool, int, str]:
     try:
         if not LOCAL_PANEL:
             download_package(job)
+        before_mp4s = snapshot_mp4s()
         started = time.time()
         env = os.environ.copy()
         env["PYTHONIOENCODING"] = "utf-8"
@@ -294,7 +336,7 @@ def run_job(job: dict) -> tuple[bool, int, str]:
                 return False, 96, "cancelled by user"
             if exit_code:
                 return False, exit_code, f"command {index} failed"
-        result = result_after(slug, started)
+        result = result_after(slug, started, before_mp4s)
         if not result:
             return False, 1, "render completed but result mp4 was not found"
         if LOCAL_PANEL:
