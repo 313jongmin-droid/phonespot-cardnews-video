@@ -21,6 +21,8 @@
 
 ## 0. 대단원 인덱스 (어디를 고치려면 어디로)
 
+> **★ task 소유권 (2026-06-24 분할).** A(패널)=**패널 엔진 task**(`CODEX_VIDEO_DESK/PANEL_TASK.md`). B·C(카드뉴스·영상)=**영상 제작 task**(`shorts/RENDER_TASK.md`). 주제엔진(TOPIC_ENGINE·TOPIC_TO_PROMO)=**별도 주제 task**(패널·제작 편집 ❌). D~J·G(광고)는 기존 소유. 계약 P↔R = `run_<track>.bat`+`RESULTS/<slug>_<track>/`.
+
 | 고치려는 것 | 대단원 |
 |---|---|
 | 웹 패널 버튼·액션·버전·화면 | **A. 패널** |
@@ -70,7 +72,8 @@
 - **토큰(`:root`)**: 시스템 컬러(`--system-bg #F2F2F7`/`--card-bg`/`--label*` 계층/`--separator rgba(.08)`), 브랜드 주황 `--accent #F74B0B`(blue 아님), `--shadow-subtle/-card/-elevated`, 라운드 `--r-sm~xl`, `--t-fast`. **★ legacy alias**(`--line`/`--orange`/`--ink`/`--muted`/`--bg`/`--r` 등)를 신토큰에 매핑 → 본문 인라인 `var(--line)` 등 그대로 작동(깨짐 방지).
 - **폰트**: Pretendard Variable(`<head>`에 `<link>` + `@import` 둘 다, dynamic-subset CDN) + `font-variant-numeric:tabular-nums`. 오프라인이면 시스템 폰트 폴백.
 - **레이아웃**: max-width 센터링 제거 → **풀폭 + 좌우 20px 균일 거터**(header/.runtime-strip/main 동일). `main` 그리드 `400px 1fr`.
-- **트랙 골격 (v38~v39 재설계)**: 헤더 → **가운데정렬 트랙 세그먼트**(카드뉴스·영상/타이포/실사AI, 배너 삭제) → WORK(트랙별 교체) → **`#commonMonitor`**(실행로그·최근작업기록·최근영상결과; `<main>` 밖·모든 트랙 공용·항상표시, 기존 grid폭 1fr hack 제거). 카드뉴스=`<main>`(400px 1fr, 상태카드 포함), 타이포/실사AI=`.track-pane`. `switchTrack(name)`: 미지값→cardnews 폴백·main은 cardnews만 표시·commonMonitor 불변·타이포 진입 시 `promoLoad()` 자동.
+- **트랙 골격 (v38~v39 재설계)**: 헤더 → **가운데정렬 트랙 세그먼트**(카드뉴스·영상/타이포/실사AI, 배너 삭제) → WORK(트랙별 교체) → **`#commonMonitor`**(실행로그·최근작업기록·최근영상결과; `<main>` 밖·모든 트랙 공용·항상표시, 기존 grid폭 1fr hack 제거). 카드뉴스=`<main>`(400px 1fr, 상태카드 포함), 타이포/실사AI=`.track-pane`. `switchTrack(name)`: 미지값→cardnews 폴백·main은 cardnews만 표시·commonMonitor 불변·타이포 진입 시 `promoLoad()`·타이포/실사 진입 시 `loadTopicSelects()` 자동.
+- **주제목록 공유 + 스타일 요청 큐 (v40, 2026-06-24)**: 타이포·실사AI 탭에 영상후보(주제) 목록을 `/api/slugs` 재사용해 공유(`tpTopic`·`aiTopic` select) + "만들기 요청" 버튼 → 액션 `style_request`(`{slug,track}` → `_state/style_requests.jsonl` append, status=pending) / `style_pending`(목록 표시). **콘텐츠 작성=Claude**(패널은 글 못 씀) — "스타일 요청 처리" 명령으로 큐 읽어 typo=`TOPIC_TO_PROMO.md`·ai=`MEME_TO_VIRAL.md` 작성·렌더, 처리분 status=done. 함정: 자동 즉시 렌더 아님(요청→Claude 작성 게이트).
   - 좌측 슬러그 섹션 = `main > section`만 **`position:sticky; top:80px; align-self:start`**(우측 높이에 안 늘어남), `.list { max-height:calc(100vh-188px) }`.
   - 우측 페어: `.pair`(1fr 1fr) = 상태|로그, `.pair.lopsided`(1.8fr 1fr) = 기록|결과. `align-items:stretch`(박스 높이 맞춤). 마크업에서 두 섹션씩 `<div class="pair">`로 감쌈.
 - **슬러그 행 = 2줄 iOS 리스트**: `.row`(grid `38px 1fr auto`) → 번호배지 + `.row-main`(`.slug-name` 줄바꿈 + `.row-sub`) + `.stage-pill`. **번호배지 = `idx+1`**(영상은 `videoItems.forEach((item,idx)=>`; 이전 `item.number`는 undefined로 "defin" 깨짐).
@@ -640,3 +643,5 @@ rdnews/scripts/update_content_guide.py`로 §2 발행인덱스 자동 재생성,
 
 - 2026-06-24 (세션, 생성기 범용화 — G단원, 사장님): **광고 생성기 폰스팟 하드코딩 → 폼 기반 브랜드 프로필 범용화 + 캐러셀 4컷.** ⚙설정 "🏷️ 브랜드 프로필" 폼(brandName/categories/copyEssence/sl
 - 2026-06-24: **주제→타이포/실사 라우팅 (C단원·주제엔진).** TOPIC_ENGINE §4/§6에 타이포·실사ad 1급 트랙 추가(주제 풀 단일→5트랙 분배, N번 타이포/실사AI광고 명령). 주제 seed→promo MD 변환 정본 `shorts/promo/TOPIC_TO_PROMO.md` 신설.
+- 2026-06-24: **패널 주제목록 공유 + 스타일 요청 큐 (A단원, v40).** 타이포·실사AI 탭에 `/api/slugs` 주제목록 공유 + "만들기 요청" 버튼 → `style_request`/`style_pending` 액션 → `_state/style_requests.jsonl`. 콘텐츠 작성=Claude("스타일 요청 처리"), 패널은 트리거만. 라우팅·변환스펙 = TOPIC_ENGINE §6 + `TOPIC_TO_PROMO.md`.
+- 2026-06-24: **카드뉴스 repo 3-task 분할 (소유권·계약).** 패널 엔진(`CODEX_VIDEO_DESK/PANEL_TASK.md`) / 영상 제작(`shorts/RENDER_TASK.md`) / 주제 엔진(별도 task). monorepo 유지·폴더 이동 ❌·소유권+계약(run_<track>.bat+RESULTS/<slug>_<track>/)만 분리. CLAUDE.md STEP0 #6.

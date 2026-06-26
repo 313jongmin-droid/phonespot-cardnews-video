@@ -43,6 +43,7 @@
 3. **git 전파 vs 비전파**(STEP 7 위생 연동): 전파=코드·`.bat/.ps1/.mjs`·`cardnews/articles/*.json`·가이드·`.gitattributes` / 비전파(셋업·LAN sync·Drive로 따로)=`cardnews/images`·`output`·`_secrets`·`node_modules`·`.playwright`·임베딩 1GB·`library_share_path.txt`.
 4. 렌더링 진단은 부사수 PC 로그 기준(로컬 PC에서 못 봄). 광고운영 동기화 진단은 Apps Script 콘솔 로그.
 5. **다른 task 충돌**: 같은 로컬 PC 안에서 광고운영 클로드 + 카드뉴스 클로드 동시 작업 가능. 영역 별개라 git 충돌 거의 0. 단 같은 파일 동시 수정은 회피 (책임 분담 표 = `ads/MULTI_BRAND_ARCHITECTURE.md`).
+6. **★ 카드뉴스 repo 내부 3-task 분할 (2026-06-24 종민 결정)**: ① **패널 엔진** = `CODEX_VIDEO_DESK/PANEL_TASK.md`(dashboard·worker·큐) ② **영상 제작** = `shorts/RENDER_TASK.md`(cardnews·shorts 콘텐츠·렌더) ③ **주제 엔진** = `_docs/TOPIC_ENGINE.md`(**별도 task가 관리** — 패널·제작 task는 TOPIC_ENGINE/TOPIC_TO_PROMO 편집 ❌). 같은 monorepo·폴더 이동 ❌, **소유권+계약만 분리**(멀티PC 원클릭/pull 모델 보존). 계약 P↔R = `run_<track>.bat <인자>` + 결과 `RESULTS/<slug>_<track>/`. 시작: "패널 task 시작 = PANEL_TASK.md 읽고 dashboard만" / "제작 task 시작 = RENDER_TASK.md 읽고 shorts·cardnews만".
 
 ### 로컬 PC 업데이트를 부사수 PC에 적용 (브랜치 `main`, 원격 origin)
 - **자동(권장,1회)**: 부사수 PC `CODEX_VIDEO_DESK\수신PC_자동업데이트_켜기.bat` → 이후 패널 켤 때마다 `git pull --ff-only` 자동.
