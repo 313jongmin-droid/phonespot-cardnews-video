@@ -10,7 +10,10 @@
 - `CODEX_VIDEO_DESK/RENDER_WORKER/worker.py` — 잡 클레임 → `commands_for`(액션→bat) → `result_after`(결과 탐지) → 업로드.
 - 큐/상태: `remote_queue`(렌더 잡), `_state/style_requests.jsonl`(스타일 요청 큐: `style_request`/`style_pending`).
 - 패널 bats: `00_PHONE_SPOT_PANEL.bat`, `01_START_RENDER_WORKER.bat`, `작업표시줄에_패널_고정.bat`, `수신PC_자동업데이트_*.bat`.
-- 화면 골격(v40): 헤더 → 가운데 트랙세그먼트(카드뉴스·영상/타이포/실사AI) → WORK(트랙별) → `#commonMonitor`(공용). `switchTrack`.
+- 화면 골격(v43): 헤더 → 가운데 트랙세그먼트(카드뉴스·영상/타이포/실사AI) → WORK(트랙별) → `#commonMonitor`(공용). `switchTrack`.
+  - (v42 통일) 세 트랙 동일 골격 = **좌측 주제목록(`.row` 리스트, `/api/slugs`) + 우측 트랙별 작업(`.btn` 그리드) + 하단 공용 모니터**. 타이포/실사AI는 `<select>` 폐기→클릭리스트(`tpSelected`/`aiSelected`, JS `renderTopicList`/`selectTopic`/`styleRequest`). 우측 내용만 트랙별로 다름.
+  - (v43) 시맨틱 색은 `:root` 토큰만 사용(`var(--green/--warning-text/--blue/--danger)`), 인라인 hex 금지. `--warning-text` 신설.
+  - 고아 dispatch 제거됨(open_card_output/prompt/root/webui·open_desk·open_prompt·open_work_queue±tsv/md·독립 video_import_render). `video_import_render` 액션명은 큐/worker 계약용 보존.
 
 ## 2. 안 만지는 것 (제작 task 영역)
 - `shorts/src/*`(Remotion 컴포넌트), `shorts/scripts/build_*.py`, `run_*.bat` **내부 로직**, `promo/`·`promo_ai/` 콘텐츠, `cardnews/` 기사·이미지·렌더.

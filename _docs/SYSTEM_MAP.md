@@ -40,7 +40,7 @@
 
 ## A. 패널 (웹 대시보드)
 
-**디자인 토큰 정본** = `server.py INDEX_HTML <style> :root` (색·radius·shadow·transition·Pretendard). 추출 참조 = **`_docs/DESIGN_SYSTEM.md`**(패널·광고 생성기·브랜드 페이지 공용). 값 변경은 server.py에서 → 문서 동기화. server.py 165KB 대형 = CSS 수정 bash-python only(I단원).
+**디자인 토큰 정본** = `server.py INDEX_HTML <style> :root` (색·radius·shadow·transition·Pretendard). 추출 참조 = **`_docs/DESIGN_SYSTEM.md`**(패널·광고 생성기·브랜드 페이지 공용). 값 변경은 server.py에서 → 문서 동기화. server.py 165KB 대형 = CSS 수정 bash-python only(I단원). 시맨틱 색 토큰(`:root`)=`--accent/--success/--warning/--danger/--blue/--green` + **`--warning-text:#B25A00`(v43 신설, 진한 앰버 상태텍스트)**. 상태/위험 색은 인라인 hex 금지 → `var(--green)`/`var(--warning-text)`/`var(--blue)`/`var(--danger)` 사용(v43 정리). 비시맨틱(로그 터미널 `#1C1C1E`/chunk 패널 블루틴트/메모 배경)은 토큰 예외.
 
 **목적**: 카드뉴스+영상 생산을 한 화면에서 제어. 단일 파이썬 HTTP 서버 + 인라인 HTML.
 
@@ -53,7 +53,7 @@
 - 진입 bat: `CODEX_VIDEO_DESK/00_PHONE_SPOT_PANEL.bat`.
 
 **핵심 심볼 (server.py, 검증된 줄)**
-- `PANEL_VERSION = "phonespot-web-v41"` (L41) — **버전 단일 출처(SSOT)**. ps1이 이 값을 읽음. 화면/CSS 바꾸면 이 숫자만 올림.
+- `PANEL_VERSION = "phonespot-web-v43"` (L41) — **버전 단일 출처(SSOT)**. ps1이 이 값을 읽음. 화면/CSS 바꾸면 이 숫자만 올림.
 - `get_video_slugs()` (L336) — 영상 슬러그 목록. `list_slugs.py` 호출(articles∪output 독립 스캔).
 - `get_cardnews_rows()` (L1073) — 카드뉴스 행. `CARD_OUTPUT ∪ CARD_IMAGES ∪ CARD_ARTICLES` 합집합 스캔.
 - 액션 디스패치: `if action == "..."` 블록들 (L1589~2010). 주요:
@@ -73,6 +73,7 @@
 - **폰트**: Pretendard Variable(`<head>`에 `<link>` + `@import` 둘 다, dynamic-subset CDN) + `font-variant-numeric:tabular-nums`. 오프라인이면 시스템 폰트 폴백.
 - **레이아웃**: max-width 센터링 제거 → **풀폭 + 좌우 20px 균일 거터**(header/.runtime-strip/main 동일). `main` 그리드 `400px 1fr`.
 - **트랙 골격 (v38~v39 재설계)**: 헤더 → **가운데정렬 트랙 세그먼트**(카드뉴스·영상/타이포/실사AI, 배너 삭제) → WORK(트랙별 교체) → **`#commonMonitor`**(실행로그·최근작업기록·최근영상결과; `<main>` 밖·모든 트랙 공용·항상표시, 기존 grid폭 1fr hack 제거). 카드뉴스=`<main>`(400px 1fr, 상태카드 포함), 타이포/실사AI=`.track-pane`. `switchTrack(name)`: 미지값→cardnews 폴백·main은 cardnews만 표시·commonMonitor 불변·타이포 진입 시 `promoLoad()`·타이포/실사 진입 시 `loadTopicSelects()` 자동.
+- **3트랙 골격 통일 (v42, 2026-06-26)**: 타이포·실사AI도 카드뉴스와 동일 골격 — `.track-pane`를 `grid 400px 1fr`(좌측 `section:first-child` sticky)로, **좌측=주제 목록**(`tpList`/`aiList`, 카드뉴스와 같은 `.row` 리스트, `/api/slugs` 공유) + **우측=트랙별 작업**(`action-head`+선택배지 `tpSelectedSlug`/`aiSelectedSlug`+`.btn` 그리드). 타이포 우측=요청+promo렌더 2섹션, 실사AI=요청 1섹션. `<select>`(tpTopic/aiTopic) 폐기 → 클릭리스트+상태변수 `tpSelected`/`aiSelected`. JS `renderTopicList`/`selectTopic`(refetch 없이 `window.__topicItems` 캐시 재렌더)·`styleRequest`는 상태변수 읽음. 세 트랙 뼈대 동일·우측 내용만 다름.
 - **주제목록 공유 + 스타일 요청 큐 (v40, 2026-06-24)**: 타이포·실사AI 탭에 영상후보(주제) 목록을 `/api/slugs` 재사용해 공유(`tpTopic`·`aiTopic` select) + "만들기 요청" 버튼 → 액션 `style_request`(`{slug,track}` → `_state/style_requests.jsonl` append, status=pending) / `style_pending`(목록 표시). **콘텐츠 작성=Claude**(패널은 글 못 씀) — "스타일 요청 처리" 명령으로 큐 읽어 typo=`TOPIC_TO_PROMO.md`·ai=`MEME_TO_VIRAL.md` 작성·렌더, 처리분 status=done. 함정: 자동 즉시 렌더 아님(요청→Claude 작성 게이트).
   - 좌측 슬러그 섹션 = `main > section`만 **`position:sticky; top:80px; align-self:start`**(우측 높이에 안 늘어남), `.list { max-height:calc(100vh-188px) }`.
   - 우측 페어: `.pair`(1fr 1fr) = 상태|로그, `.pair.lopsided`(1.8fr 1fr) = 기록|결과. `align-items:stretch`(박스 높이 맞춤). 마크업에서 두 섹션씩 `<div class="pair">`로 감쌈.
@@ -648,3 +649,4 @@ rdnews/scripts/update_content_guide.py`로 §2 발행인덱스 자동 재생성,
 - 2026-06-24: **패널 주제목록 공유 + 스타일 요청 큐 (A단원, v40).** 타이포·실사AI 탭에 `/api/slugs` 주제목록 공유 + "만들기 요청" 버튼 → `style_request`/`style_pending` 액션 → `_state/style_requests.jsonl`. 콘텐츠 작성=Claude("스타일 요청 처리"), 패널은 트리거만. 라우팅·변환스펙 = TOPIC_ENGINE §6 + `TOPIC_TO_PROMO.md`.
 - 2026-06-24: **카드뉴스 repo 3-task 분할 (소유권·계약).** 패널 엔진(`CODEX_VIDEO_DESK/PANEL_TASK.md`) / 영상 제작(`shorts/RENDER_TASK.md`) / 주제 엔진(별도 task). monorepo 유지·폴더 이동 ❌·소유권+계약(run_<track>.bat+RESULTS/<slug>_<track>/)만 분리. CLAUDE.md STEP0 #6.
 - 2026-06-26: **패널 v41 + 워커 v4 정리 (A단원, 패널 task).** ① 죽은 중복 `delete_slug` 핸들러 제거(if-return 구조라 후행본 미실행) ② `card_to_video`를 `video_prepare` 핸들러로 통합(`if action in (...)`, 버튼 1·6 둘 다 유지) ③ 결과 탐지 강건화: `result_after` 스냅샷 diff + 경계안전 slug 매칭(`_slug_in_folder`·`snapshot_mp4s`, "031"vs"0310" 오매칭 차단) ④ 잔여물 `server.py.bak_pre_ios_20260613` 삭제(gitignore=로컬만). PANEL_VERSION v40→v41, worker VERSION v3→v4. 라우팅 불변(CLAUDE.md 갱신 불요). 검증=AST OK·경계매칭 7케이스 통과.
+- 2026-06-26 (세션2, UI 통일·정리·토큰 — A단원, 패널 task): **패널 v42 3트랙 골격 통일 + v43 색 토큰화 + UI 정적점검.** ① UI 배선 무결 확인(JS액션↔디스패치·onclick↔함수·getElementById↔id·중복id 0·태그균형 section11·div107). ② 죽은 고아 엔드포인트 10개 제거(`open_card_output/prompt/root/webui`·`open_desk`·`open_prompt`·`open_work_queue(+tsv/md)`+독립 `video_import_render` 핸들러) — `video_import_render` 액션명은 큐/worker용 보존, `telegram_test`·`work_queue_refresh` 보존. video 트랙 중복 삭제버튼 1개 제거(3→2). ③ **3트랙 골격 통일(v42)**: 타이포·실사AI를 카드뉴스식 [좌측 주제목록+우측 작업+하단 commonMonitor]로, `<select>`→클릭리스트(`tpSelected`/`aiSelected`). ④ **색 토큰화(v43)**: 시맨틱 상태/위험 색 → `var(--green/--warning-text/--blue/--danger)`, `--warning-text` 신설. PANEL_VERSION v41→v43. 검증=AST OK·배선 무결. 샌드박스 렌더 불가→브라우저 확인 권장.
