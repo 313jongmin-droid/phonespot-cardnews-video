@@ -18,7 +18,8 @@
 
 ## 3. 인터페이스 계약 (P → R)
 - 렌더 트리거: 액션 → `REMOTE_QUEUE.enqueue(action, slug, ...)` → worker `commands_for`가 **`run_<track>.bat <인자>`** 실행.
-- 결과 탐지: worker `result_after`가 **`CODEX_VIDEO_DESK/RESULTS/<폴더명에 slug 포함>/*.mp4`** 를 찾음. → 제작 bat은 결과를 이 규칙으로 떨궈야 함(예 `run_promo.bat`이 `RESULTS/{NN}_{label}_{preset}_promo/`).
+- 결과 탐지: worker `result_after(slug, started, before)`가 **`CODEX_VIDEO_DESK/RESULTS/<slug 포함 세그먼트>/*.mp4`** 를 찾음. → 제작 bat은 결과를 이 규칙으로 떨궈야 함(예 `run_promo.bat`이 `RESULTS/{NN}_{label}_{preset}_promo/`).
+  - (worker v4, 2026-06-26) 탐지 강건화: 렌더 직전 `snapshot_mp4s()` 스냅샷 → **신규/갱신 mp4 우선**(없으면 mtime 시간창 폴백) + slug 매칭은 `_slug_in_folder`(양옆 `_` 래핑, 부분문자열 X → "031"이 "0310_…"에 오매칭 안 됨). slug는 폴더명에서 `_` 구분 세그먼트로 나와야 함.
 - 스타일 요청: 패널이 `_state/style_requests.jsonl`에 `{slug,track,status:pending}` append. **작성은 Claude(주제/제작), 패널은 트리거만.**
 - 기존 계약 사례: `shorts/promo/PANEL_INTEGRATION_HANDOFF.md`(promo). 새 트랙도 이 패턴.
 

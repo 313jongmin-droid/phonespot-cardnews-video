@@ -53,14 +53,14 @@
 - 진입 bat: `CODEX_VIDEO_DESK/00_PHONE_SPOT_PANEL.bat`.
 
 **핵심 심볼 (server.py, 검증된 줄)**
-- `PANEL_VERSION = "phonespot-web-v39"` (L41) — **버전 단일 출처(SSOT)**. ps1이 이 값을 읽음. 화면/CSS 바꾸면 이 숫자만 올림.
+- `PANEL_VERSION = "phonespot-web-v41"` (L41) — **버전 단일 출처(SSOT)**. ps1이 이 값을 읽음. 화면/CSS 바꾸면 이 숫자만 올림.
 - `get_video_slugs()` (L336) — 영상 슬러그 목록. `list_slugs.py` 호출(articles∪output 독립 스캔).
 - `get_cardnews_rows()` (L1073) — 카드뉴스 행. `CARD_OUTPUT ∪ CARD_IMAGES ∪ CARD_ARTICLES` 합집합 스캔.
 - 액션 디스패치: `if action == "..."` 블록들 (L1589~2010). 주요:
-  - `producer_check`(L1627)=환경 점검 / `delete_slug`(L1636·1876)=슬러그 삭제
+  - `producer_check`(L1627)=환경 점검 / `delete_slug`(L1636, 단일)=슬러그 삭제 (구 중복 핸들러 v41서 제거)
   - `system_upload`(L1932)=GitHub 커밋·push / `system_update`(L1939)=의존성 업데이트
   - `library_sync`(L1600)·`library_dedup`(L1609)·`library_backup`(L1618)
-  - `video_prepare`·`video_import_propose/confirm`·`video_render_selected`·`card_*`·`update_visual`·`adjust_chunk`·`set_section_chunks`·`telegram_*`
+  - `video_prepare`(=`card_to_video` 통합, v41: 버튼 1·6 둘 다 이 핸들러)·`video_import_propose/confirm`·`video_render_selected`·`card_*`·`update_visual`·`adjust_chunk`·`set_section_chunks`·`telegram_*`
 - 환경점검 버튼 UI: L2172 근처. deleteSlug() JS: L2633·2655 근처.
 
 **버전 게이트 동작 (start_hidden.ps1)**
@@ -86,7 +86,7 @@
   - JS: `toggleViewEdit()`/`toggleManage()` — display none↔grid + 캐럿 flip. 보기·편집은 **localStorage `panel.viewEdit`** 로 펼침 상태 기억(부팅 L3046 직후 복원). 관리는 매번 접힘.
   - 접이식 그룹은 `grid-column:1/-1` + 자체 `repeat(3,minmax(160px,1fr))` 서브그리드(7개/관리 버튼).
   - 상단 4박스(runtime-card)는 패딩·폰트·`min-height:0`로 슬림화.
-- **롤백**: `CODEX_VIDEO_DESK/dashboard/server.py.bak_pre_ios_20260613`(iOS 이전 = 기존 주황 디자인). `copy /Y ...bak... server.py` 또는 `git checkout -- ...server.py`.
+- **롤백**: iOS 이전(주황) 디자인은 git 이력에서 복원 — `git log --oneline -- CODEX_VIDEO_DESK/dashboard/server.py`로 커밋 찾아 `git checkout <commit> -- CODEX_VIDEO_DESK/dashboard/server.py`. (옛 `server.py.bak_pre_ios_20260613`은 v41 정리 때 삭제됨.)
 
 **수정 시 읽을 것**
 - 버튼/액션 추가·변경: `server.py`의 `INDEX_HTML`(버튼 HTML+JS) + 액션 디스패치 블록.
@@ -94,13 +94,15 @@
 - 기동/버전: `start_hidden.ps1` + `PANEL_VERSION`.
 
 **함정**
-- **★ Edit 누적이 `INDEX_HTML`/파일 꼬리를 truncate(2026-06-13 실제 발생)** — 큰 raw string을 Edit 툴로 여러 번 고치면 끝부분(main() 등)이 잘려 `'(' was never closed` 컴파일 에러. **권장 작업법**: server.py 대규모 CSS/마크업 변경은 **bash-python read→replace(assert count==1)→write**로(Edit 누적 X), 매번 `python -m py_compile` + `<div>/<section>` 개폐 카운트 + 파일 tail(`main guard`) 확인. 잘렸으면 백업 꼬리(`server.py.bak_pre_ios_20260613`)에서 `rindex(anchor)`로 이어붙여 복구.
+- **★ Edit 누적이 `INDEX_HTML`/파일 꼬리를 truncate(2026-06-13 실제 발생)** — 큰 raw string을 Edit 툴로 여러 번 고치면 끝부분(main() 등)이 잘려 `'(' was never closed` 컴파일 에러. **권장 작업법**: server.py 대규모 CSS/마크업 변경은 **bash-python read→replace(assert count==1)→write**로(Edit 누적 X), 매번 `python -m py_compile` + `<div>/<section>` 개폐 카운트 + 파일 tail(`main guard`) 확인. 잘렸으면 git 직전 정상본(`git show HEAD:CODEX_VIDEO_DESK/dashboard/server.py`)의 꼬리에서 `rindex(anchor)`로 이어붙여 복구.
 - 마운트 tearing: bash가 큰/방금 쓴 server.py를 **잘린 사본으로 읽을 수 있음**(읽은 바이트<stat이면 의심). 진위 판단은 `python3 -c "len(open().read())"` vs stat, 또는 호스트 Read. 단 호스트 Read도 **stale 캐시**일 수 있으니 최종 판정은 bash 풀read 바이트수 일치 + py_compile.
 - `start_hidden.ps1`은 **ASCII 주석만**(BOM 없는 PS는 CP949 오독으로 깨짐).
 - 액션 추가 시 GET(`json_response`)와 POST(`/api/action`) 양쪽 정합 확인.
 - 머지 충돌 마커(`<<<<<<< HEAD`)가 `INDEX_HTML` 안에 남으면 Python은 통과(raw string)하지만 화면에 충돌 텍스트·중복 버튼 노출 → 발견 시 정리(이번에 카드 삭제버튼 1개로 통합).
 
 - **렌더 잡 '배정 대기' 고착 = 로컬 워커 readiness 실패(2026-06-18 실증).** 패널 기동 시 `start_local_worker()`가 로컬 워커(`RENDER_WORKER/worker.py`)를 띄우고, 워커는 `readiness()` 의존성 체크를 통과해야만 잡 claim. 하나라도 미설치면 워커는 죽지 않고 **5초마다 재확인만**(claim 안 함) → UI는 `worker_id` 없는 잡을 '배정 대기'로 표시(`server.py` L2568). 진단 = `CODEX_VIDEO_DESK/TEMP/worker/logs/worker_*.out.log`의 `[setup required] …`. 필요 모듈(`worker.py readiness()` L74)=edge-tts·Pillow·**mutagen**·requests·playwright + remotion·ffmpeg·chromium. 해결=빠진 것만 런타임 venv에 설치 → 워커가 5초 내 자동 claim(패널 재시작 불필요).
+
+- **결과 mp4 탐지 = 스냅샷 diff + 경계안전 slug 매칭 (worker.py v4, 2026-06-26).** `result_after(slug, started, before)`(`RENDER_WORKER/worker.py`): 렌더 직전 `snapshot_mp4s()`로 RESULTS의 mp4→mtime 스냅샷 → 실행 후 **신규/갱신 mp4 우선** 선택(없으면 mtime≥started−5 시간창 폴백). slug 매칭은 `_slug_in_folder`=양옆 `_` 래핑 비교(부분문자열 X) → "031"이 "0310_…" 폴더에 오매칭 안 됨. 워커는 잡 1개씩 순차 claim이라 신규 diff=이번 산출물. **제작 bat은 결과를 `RESULTS/<slug 포함 세그먼트>_<track>/*.mp4`로 떨궈야 탐지됨**(계약 불변).
 
 **교차 영향**: 렌더/라이브러리/슬러그 액션은 C·D 단원 스크립트를 subprocess로 부름.
 
@@ -645,3 +647,4 @@ rdnews/scripts/update_content_guide.py`로 §2 발행인덱스 자동 재생성,
 - 2026-06-24: **주제→타이포/실사 라우팅 (C단원·주제엔진).** TOPIC_ENGINE §4/§6에 타이포·실사ad 1급 트랙 추가(주제 풀 단일→5트랙 분배, N번 타이포/실사AI광고 명령). 주제 seed→promo MD 변환 정본 `shorts/promo/TOPIC_TO_PROMO.md` 신설.
 - 2026-06-24: **패널 주제목록 공유 + 스타일 요청 큐 (A단원, v40).** 타이포·실사AI 탭에 `/api/slugs` 주제목록 공유 + "만들기 요청" 버튼 → `style_request`/`style_pending` 액션 → `_state/style_requests.jsonl`. 콘텐츠 작성=Claude("스타일 요청 처리"), 패널은 트리거만. 라우팅·변환스펙 = TOPIC_ENGINE §6 + `TOPIC_TO_PROMO.md`.
 - 2026-06-24: **카드뉴스 repo 3-task 분할 (소유권·계약).** 패널 엔진(`CODEX_VIDEO_DESK/PANEL_TASK.md`) / 영상 제작(`shorts/RENDER_TASK.md`) / 주제 엔진(별도 task). monorepo 유지·폴더 이동 ❌·소유권+계약(run_<track>.bat+RESULTS/<slug>_<track>/)만 분리. CLAUDE.md STEP0 #6.
+- 2026-06-26: **패널 v41 + 워커 v4 정리 (A단원, 패널 task).** ① 죽은 중복 `delete_slug` 핸들러 제거(if-return 구조라 후행본 미실행) ② `card_to_video`를 `video_prepare` 핸들러로 통합(`if action in (...)`, 버튼 1·6 둘 다 유지) ③ 결과 탐지 강건화: `result_after` 스냅샷 diff + 경계안전 slug 매칭(`_slug_in_folder`·`snapshot_mp4s`, "031"vs"0310" 오매칭 차단) ④ 잔여물 `server.py.bak_pre_ios_20260613` 삭제(gitignore=로컬만). PANEL_VERSION v40→v41, worker VERSION v3→v4. 라우팅 불변(CLAUDE.md 갱신 불요). 검증=AST OK·경계매칭 7케이스 통과.
