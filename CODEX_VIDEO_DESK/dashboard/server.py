@@ -38,7 +38,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v43"
+PANEL_VERSION = "phonespot-web-v44"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -1078,7 +1078,7 @@ def get_cardnews_rows() -> list[dict]:
     if CARD_ARTICLES.exists():
         names.update(p.stem for p in CARD_ARTICLES.glob("*.json"))
     rows = [card_row(name) for name in names if SAFE_SLUG.match(name)]
-    rows.sort(key=slug_sort_key)
+    rows.sort(key=slug_sort_key, reverse=True)  # 최신(높은 번호) 위로 + [:80] 캡이 최신 80 보존
     return rows[:80]
 
 
