@@ -38,7 +38,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v40"
+PANEL_VERSION = "phonespot-web-v41"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -1668,7 +1668,7 @@ class Handler(BaseHTTPRequestHandler):
                     "message": f"'{slug_now}' 삭제: 항목 {deleted}개 제거. (git 추적 기사라면 push해야 다른 PC에도 반영)",
                 })
                 return
-            if action == "video_prepare":
+            if action in ("video_prepare", "card_to_video"):
                 slug = validate_slug(slug)
                 commands = [
                     [sys.executable, str(SCRIPTS / "codex_prepare_illustrations.py"), slug],
@@ -1918,32 +1918,6 @@ class Handler(BaseHTTPRequestHandler):
                     json_response(self, {"ok": False, "busy": True, "message": "이미 다른 작업이 실행 중입니다. 현재 작업이 끝난 뒤 다시 눌러주세요."})
                 else:
                     json_response(self, {"ok": True})
-                return
-            if action == "card_to_video":
-                slug = validate_slug(slug)
-                commands = [
-                    [sys.executable, str(SCRIPTS / "codex_prepare_illustrations.py"), slug],
-                    [sys.executable, str(SCRIPTS / "codex_clean_latest_prompt.py"), slug],
-                ]
-                ok = run_job("카드뉴스를 영상 준비로 넘기기", commands, SHORTS)
-                if not ok:
-                    json_response(self, {"ok": False, "busy": True, "message": "이미 다른 작업이 실행 중입니다. 현재 작업이 끝난 뒤 다시 눌러주세요."})
-                else:
-                    json_response(self, {"ok": True})
-                return
-            if action == "delete_slug":
-                slug = validate_slug(slug)
-                removed = []
-                for t in (CARD_ARTICLES / f"{slug}.json", CARD_IMAGES / slug, CARD_OUTPUT / slug):
-                    try:
-                        if t.is_dir():
-                            shutil.rmtree(t); removed.append(t.name)
-                        elif t.exists():
-                            t.unlink(); removed.append(t.name)
-                    except OSError as exc:
-                        json_response(self, {"ok": False, "message": f"삭제 실패: {t} ({exc})"})
-                        return
-                json_response(self, {"ok": True, "message": f"삭제됨: {slug} (" + (", ".join(removed) or "대상 없음") + ")"})
                 return
             if action == "open_prompt":
                 safe_open(DESK / "LATEST_PROMPT.md")
