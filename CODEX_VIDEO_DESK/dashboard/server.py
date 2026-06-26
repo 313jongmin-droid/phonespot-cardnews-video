@@ -38,7 +38,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v44"
+PANEL_VERSION = "phonespot-web-v46"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -2123,6 +2123,11 @@ INDEX_HTML = r"""<!doctype html>
     .mini-btn:disabled { color:var(--label-quaternary); background:var(--secondary-bg); cursor:not-allowed; }
     .track-pane { display:grid; grid-template-columns:400px 1fr; gap:18px; padding:18px 20px; }
     .track-pane > section:first-child { position:sticky; top:80px; align-self:start; }
+    .track-tabs { display:flex; justify-content:center; padding:12px 20px; border-bottom:.5px solid var(--separator); }
+    .track-seg { display:inline-flex; gap:4px; background:var(--secondary-bg); border-radius:14px; padding:5px; box-shadow:inset 0 0 0 1px var(--separator); }
+    .track-tab { border:none; background:transparent; color:var(--label-secondary); border-radius:10px; padding:10px 24px; font-size:16px; font-weight:600; cursor:pointer; white-space:nowrap; transition:background var(--t-fast), color var(--t-fast), box-shadow var(--t-fast); }
+    .track-tab:hover { color:var(--label); }
+    .track-tab.on { background:var(--accent); color:#fff; font-weight:800; box-shadow:var(--shadow-card); }
     .track-form p.small { margin:10px 0 4px; }
     .track-form .fld { display:inline-flex; flex-direction:column; gap:4px; font-size:12px; color:var(--label-tertiary); margin:4px 0; }
     .track-form .fld-row { display:flex; gap:14px; flex-wrap:wrap; align-items:flex-end; margin:4px 0; }
@@ -2148,16 +2153,17 @@ INDEX_HTML = r"""<!doctype html>
     @keyframes fadeIn { from{opacity:0;transform:translateY(8px);} to{opacity:1;transform:translateY(0);} }
     section { animation:fadeIn 220ms cubic-bezier(.4,0,.2,1); }
     @media (prefers-reduced-motion:reduce){ *,*::before,*::after{ animation-duration:.01ms!important; transition-duration:.01ms!important; } }
-    @media (max-width:1080px) { main { grid-template-columns:1fr; } .grid { grid-template-columns:1fr 1fr; } .pair,.pair.lopsided { grid-template-columns:1fr; } main > section { position:static; } }
+    @media (max-width:1080px) { main, .track-pane { grid-template-columns:1fr; } .grid { grid-template-columns:1fr 1fr; } .pair,.pair.lopsided { grid-template-columns:1fr; } main > section, .track-pane > section:first-child { position:static; } }
     @media (max-width:700px) {
       header { padding:12px 14px; flex-wrap:wrap; }
       header > span { width:100%; }
-      main { padding:10px; }
+      main, .track-pane { padding:10px; }
       .runtime-strip { grid-template-columns:minmax(0,1fr) minmax(0,1fr); padding:0 10px; }
       .grid { grid-template-columns:1fr; }
       .action-head { align-items:stretch; flex-direction:column; }
       .selected-badge { min-width:0; width:100%; }
       .result-row { flex-direction:column; }
+      .track-seg { width:100%; } .track-tab { flex:1; padding:10px 8px; font-size:14px; }
     }
   </style>
 </head>
@@ -2169,10 +2175,12 @@ INDEX_HTML = r"""<!doctype html>
     <div class="runtime-card" id="runtimeJob"><span>실행 상태</span><b id="runtimeJobText">대기 중</b><div class="runtime-actions"><button class="runtime-action" id="cancelJobButton" onclick="cancelRemoteJob()" style="display:none">취소</button><button class="runtime-action" id="retryJobButton" onclick="retryRemoteJob()" style="display:none">재시도</button></div></div>
     <div class="runtime-card" id="runtimeGithub"><span>GitHub</span><b id="runtimeGithubText">확인 중</b><div class="runtime-actions"><button class="runtime-action" id="runtimeGithubDownloadButton" onclick="runGithubDownload(event)">다운로드</button><button class="runtime-action" id="runtimeGithubUploadButton" onclick="runGithubUpload(event)">업로드</button></div></div>
   </div>
-  <div class="track-tabs" style="display:flex;justify-content:center;gap:6px;padding:10px 20px;border-bottom:.5px solid var(--separator)">
-    <button class="track-tab" data-track="cardnews" onclick="switchTrack('cardnews')" style="padding:8px 18px;border:none;border-radius:10px;cursor:pointer;font-size:15px;background:transparent">카드뉴스·영상</button>
-    <button class="track-tab" data-track="typo" onclick="switchTrack('typo')" style="padding:8px 18px;border:none;border-radius:10px;cursor:pointer;font-size:15px;background:transparent">타이포</button>
-    <button class="track-tab" data-track="ai" onclick="switchTrack('ai')" style="padding:8px 18px;border:none;border-radius:10px;cursor:pointer;font-size:15px;background:transparent">실사AI</button>
+  <div class="track-tabs">
+    <div class="track-seg">
+      <button class="track-tab" data-track="cardnews" onclick="switchTrack('cardnews')">카드뉴스·영상</button>
+      <button class="track-tab" data-track="typo" onclick="switchTrack('typo')">타이포</button>
+      <button class="track-tab" data-track="ai" onclick="switchTrack('ai')">실사AI</button>
+    </div>
   </div>
   <main>
     <section>
@@ -2373,10 +2381,7 @@ INDEX_HTML = r"""<!doctype html>
       if(name==="typo" && !promoItems.length){ promoLoad(); }
       if(name==="typo" || name==="ai"){ loadTopicSelects(); }
       document.querySelectorAll(".track-tab").forEach(function(b){
-        var on=b.getAttribute("data-track")===name;
-        b.style.background=on?"var(--accent)":"transparent";
-        b.style.color=on?"#fff":"var(--label)";
-        b.style.fontWeight=on?"800":"600";
+        b.classList.toggle("on", b.getAttribute("data-track")===name);
       });
     }
     async function loadTopicSelects(){
