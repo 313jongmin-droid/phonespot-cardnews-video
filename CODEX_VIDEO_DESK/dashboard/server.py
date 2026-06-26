@@ -38,7 +38,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v42"
+PANEL_VERSION = "phonespot-web-v43"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -2004,7 +2004,7 @@ INDEX_HTML = r"""<!doctype html>
       --label:#1D1D1F; --label-secondary:#3C3C43; --label-tertiary:#86868B; --label-quaternary:#C7C7CC;
       --separator:rgba(60,60,67,.08); --separator-opaque:#ECECEE;
       --accent:#F74B0B; --accent-hover:#D63E06; --accent-soft:rgba(247,75,11,.10); --accent-tint:rgba(247,75,11,.05);
-      --success:#34C759; --warning:#FF9500; --danger:#FF3B30;
+      --success:#34C759; --warning:#FF9500; --danger:#FF3B30; --warning-text:#B25A00;
       --r-sm:6px; --r-md:10px; --r-lg:14px; --r-xl:18px;
       --shadow-subtle:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04),0 0 0 .5px rgba(0,0,0,.04);
       --shadow-card:0 4px 16px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.05),0 0 0 .5px rgba(0,0,0,.03);
@@ -2051,8 +2051,8 @@ INDEX_HTML = r"""<!doctype html>
     .title-sub { display:block; color:var(--label-tertiary); font-size:12px; margin-top:2px; font-weight:400; line-height:1.35; }
     .flag { font-weight:600; color:var(--label-tertiary); }
     .stage-pill { display:inline-flex; align-items:center; justify-content:center; min-width:82px; padding:4px 8px; border-radius:100px; font-size:11px; font-weight:700; border:none; background:rgba(118,118,128,.12); color:var(--label-secondary); }
-    .stage-pill.ok { background:rgba(52,199,89,.15); color:#1B7A3D; }
-    .stage-pill.warn { background:rgba(255,149,0,.15); color:#B25A00; }
+    .stage-pill.ok { background:rgba(52,199,89,.15); color:var(--green); }
+    .stage-pill.warn { background:rgba(255,149,0,.15); color:var(--warning-text); }
     .stage-pill.muted { background:rgba(118,118,128,.12); color:var(--label-tertiary); }
     .grid { display:grid; grid-template-columns:repeat(3,minmax(160px,1fr)); gap:12px; }
     .pair { display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:stretch; }
@@ -2090,7 +2090,7 @@ INDEX_HTML = r"""<!doctype html>
     .metric { border:none; border-radius:var(--r-md); padding:12px; background:var(--secondary-bg); min-height:72px; } .metric b { display:block; font-size:23px; font-weight:600; letter-spacing:-.4px; margin-top:5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
     .metric.slug b { font-size:13px; white-space:normal; word-break:break-all; line-height:1.3; }
     .metric .small { word-break:keep-all; }
-    .warn { color:var(--danger); } .ok { color:#1B7A3D; }
+    .warn { color:var(--danger); } .ok { color:var(--green); }
     .log { height:360px; overflow:auto; background:#1C1C1E; color:#E5E5EA; padding:16px; font-family:'SF Mono',Consolas,monospace; font-size:12px; white-space:pre-wrap; border-radius:0 0 var(--r-lg) var(--r-lg); }
     .results { max-height:340px; overflow:auto; font-size:13px; } .result-row { display:flex; flex-direction:column; gap:3px; padding:9px 0; border-bottom:.5px solid var(--separator); }
     .result-row > * { min-width:0; }
@@ -2101,9 +2101,9 @@ INDEX_HTML = r"""<!doctype html>
     .history-table th { position:sticky; top:0; z-index:1; background:var(--card-bg); color:var(--label-tertiary); font-weight:600; text-transform:uppercase; letter-spacing:.4px; font-size:11px; }
     .history-table td:nth-child(2) { max-width:340px; overflow-wrap:anywhere; }
     .history-status { font-weight:700; white-space:nowrap; }
-    .history-status.done { color:#1B7A3D; }
+    .history-status.done { color:var(--green); }
     .history-status.failed,.history-status.cancelled { color:var(--danger); }
-    .history-status.running,.history-status.pending { color:#B25A00; }
+    .history-status.running,.history-status.pending { color:var(--warning-text); }
     .history-result a { display:block; max-width:190px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--accent); }
     .preflight-panel { display:none; border-top:.5px solid var(--separator); background:var(--tertiary-bg); }
     .preflight-list { display:grid; gap:8px; }
@@ -2136,7 +2136,7 @@ INDEX_HTML = r"""<!doctype html>
     .chunk-panel { display:none; border-top:.5px solid var(--separator); background:#F0F6FF; }
     .chunk-table { width:100%; border-collapse:collapse; font-size:12px; }
     .chunk-table th,.chunk-table td { border-bottom:.5px solid var(--separator); padding:8px; vertical-align:top; text-align:left; }
-    .chunk-table th { background:#E5F0FF; color:#0A84FF; position:sticky; top:0; font-weight:600; }
+    .chunk-table th { background:#E5F0FF; color:var(--blue); position:sticky; top:0; font-weight:600; }
     .chunk-text { white-space:pre-wrap; line-height:1.45; }
     .head > button { background:var(--accent); color:#fff; border:none; padding:8px 14px; border-radius:var(--r-md); font-size:13px; font-weight:600; cursor:pointer; transition:var(--t-fast); }
     .head > button:hover { background:var(--accent-hover); }
@@ -2208,7 +2208,7 @@ INDEX_HTML = r"""<!doctype html>
             <button class="btn" onclick="chooseUpload('illustration')"><strong>일러스트 웹 업로드</strong><span>다른 PC에서 만든 일러스트를 드롭 폴더에 올립니다.</span></button>
             <button class="btn" onclick="runAction('producer_check')"><strong>환경 점검</strong><span>이 PC가 카드뉴스+영상 렌더를 독립으로 할 수 있는지(노드·렌더러·폰트·임베딩) 확인. 결과는 실행 로그.</span></button>
             <button class="btn" onclick="runAction('system_update')"><strong>시스템 업데이트</strong><span>GitHub에서 최신 코드만 받아옵니다(결과물 안 건드림).</span></button>
-            <button class="btn" style="border-color:#dc2626;color:#dc2626" onclick="deleteSlug()"><strong>선택 슬러그 삭제</strong><span>선택한 슬러그의 기사·이미지·렌더 결과를 로컬에서 제거(되돌릴 수 없음).</span></button>
+            <button class="btn" style="border-color:var(--danger);color:var(--danger)" onclick="deleteSlug()"><strong>선택 슬러그 삭제</strong><span>선택한 슬러그의 기사·이미지·렌더 결과를 로컬에서 제거(되돌릴 수 없음).</span></button>
           </div>
         </div>
         <div id="cardActions" class="pad grid" style="display:none">
@@ -2220,9 +2220,9 @@ INDEX_HTML = r"""<!doctype html>
           <button class="btn primary" onclick="runAction('card_render')"><strong>4. 카드뉴스 생성</strong><span>1x1·4x5·9x16 카드와 captions.md를 생성합니다.</span></button>
           <button class="btn" onclick="runAction('open_card_result')"><strong>5. 결과 확인</strong><span>완성된 카드뉴스 output 폴더를 엽니다.</span></button>
           <button class="btn primary" onclick="runAction('card_to_video')"><strong>6. 영상으로 넘기기</strong><span>완성 카드뉴스를 영상 준비 단계로 넘깁니다.</span></button>
-          <div style="grid-column:1/-1;font-size:12px;color:#64748b;margin-top:2px">기타</div>
+          <div style="grid-column:1/-1;font-size:12px;color:var(--label-tertiary);margin-top:2px">기타</div>
           <button class="btn" onclick="runAction('telegram_card_summary')"><strong>후보 현황 텔레그램</strong><span>현재 카드뉴스 후보·상태를 텔레그램으로 보냅니다.</span></button>
-          <button class="btn" style="border-color:#dc2626;color:#dc2626" onclick="deleteSlug()"><strong>선택 슬러그 삭제</strong><span>선택한 슬러그의 기사·이미지·렌더 결과를 로컬에서 제거(되돌릴 수 없음).</span></button>
+          <button class="btn" style="border-color:var(--danger);color:var(--danger)" onclick="deleteSlug()"><strong>선택 슬러그 삭제</strong><span>선택한 슬러그의 기사·이미지·렌더 결과를 로컬에서 제거(되돌릴 수 없음).</span></button>
         </div>
       </section>
       <section>
