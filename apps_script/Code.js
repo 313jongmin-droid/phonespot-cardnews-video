@@ -1262,7 +1262,7 @@ function buildDashboardV2() {
     {name:'네이버', adSheet:'네이버+', impCol:'F', clkCol:'G', sources:['naver','naver_blog','ad.search.naver.com','m.ad.search.naver.com','m.search.naver.com']},
     {name:'구글',   adSheet:'구글',    impCol:'E', clkCol:'F', sources:['google']},
     {name:'카카오', adSheet:'카카오',  impCol:'E', clkCol:'F', sources:['kakao']},
-    {name:'당근',   adSheet:'당근',    impCol:'E', clkCol:'F', sources:['daangn','danggn'], danggn:true},
+    {name:'당근',   adSheet:'당근+',  impCol:'D', clkCol:'E', sources:['daangn','danggn'], danggn:true},  // 노출/클릭 = 당근+ 일별(옛 당근 시트는 운영일지라 누락)
   ];
   const chStart = 12;
   channels.forEach(function (c, i) {
