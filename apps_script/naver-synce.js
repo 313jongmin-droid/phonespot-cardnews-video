@@ -183,6 +183,10 @@ function backfillNaverIntegrated(fromDaysAgo, toDaysAgo) {
   return { ok: ok, fail: fail };
 }
 
+// 편집기 드롭다운 클릭용 무인자 래퍼 (인자 못 넘기는 편집기 실행 대응). 둘 다 순서대로 1번씩.
+function backfillNaver_step1_recent14() { return backfillNaverIntegrated(14, 1); }   // 1단계: 최근 14일
+function backfillNaver_step2_past15to29() { return backfillNaverIntegrated(29, 15); } // 2단계: 15~29일 전
+
 function backfillNaver30Days() {
   const today = new Date();
   let success = 0, fail = 0;
