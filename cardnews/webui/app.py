@@ -240,6 +240,50 @@ def render_stream(slug):
     })
 
 # ============================================================
+# Routes -- 주제 풀 (topic_pool 배정/렌더 트리거, 2026-06-23)
+# ============================================================
+TOPIC_POOL = BASE / 'topics' / 'topic_pool.json'
+
+def _load_topics():
+    if TOPIC_POOL.exists():
+        try:
+            return json.loads(TOPIC_POOL.read_text(encoding='utf-8'))
+        except Exception:
+            return {'topics': []}
+    return {'topics': []}
+
+def _save_topics(d):
+    TOPIC_POOL.parent.mkdir(parents=True, exist_ok=True)
+    TOPIC_POOL.write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding='utf-8')
+
+@app.route('/topics')
+@require_auth
+def topics_page():
+    d = _load_topics()
+    return render_template('topics.html', topics=d.get('topics', []), updated=d.get('updated', ''))
+
+@app.route('/topics/assign', methods=['POST'])
+@require_auth
+def topics_assign():
+    body = request.get_json(force=True) or {}
+    tid = body.get('id'); track = body.get('track')
+    if not tid or not track:
+        return jsonify({'ok': False, 'error': 'id/track required'}), 400
+    d = _load_topics()
+    hit = None
+    for t in d.get('topics', []):
+        if t.get('id') == tid:
+            t['assigned_track'] = track
+            if t.get('status') in (None, 'candidate'):
+                t['status'] = 'assigned'
+            hit = t
+            break
+    if not hit:
+        return jsonify({'ok': False, 'error': 'id not found'}), 404
+    _save_topics(d)
+    return jsonify({'ok': True, 'id': tid, 'track': track, 'status': hit['status']})
+
+# ============================================================
 # Routes -- 결과 페이지
 # ============================================================
 @app.route('/result/<slug>')

@@ -19,6 +19,8 @@
 
 **★ 산출 영속화 = `cardnews/topics/topic_pool.json`** (git 추적). 발굴 주제를 여기 적재 → 카드·카드뉴스영상·실사 task가 **pull해서 `status:"candidate"` 중 골라 제작**(채팅 안 봐도 됨). 발행되면 `status:"published"` + `slug` 기록. 미발행 후보는 carryover(`content_guide §3.5`, _state·gitignore=로컬용)와 달리 **git으로 멀티PC 전파**된다. 매 "주제 생성" 끝에 신규/변경분을 이 파일에 반영.
 
+**★ 패널 연동 (webui `/topics`, 2026-06-23)**: 패널에서 주제 풀을 표로 보고 행마다 `[카드][카드영상][실사]` 배정 → `status:"assigned"` + `assigned_track` 기록(app.py `topics_assign`). slug 있는 항목은 "렌더 →"로 기존 render-stream 트리거. **배정·렌더는 로컬 PC 패널에서만(push 권한), 부사수 PC는 git pull로 받아 제작**(STEP 0 멀티PC 규칙). 각 항목 `brief`(=summary 약식 골격, 배정 시 클로드가 track별 상세 확장)로 task가 뼈대까지 받음.
+
 ---
 
 ## 1. 입력 소스 5갈래 (기존 ①만 → ①~⑤로 확장)

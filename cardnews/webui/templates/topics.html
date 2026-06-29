@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>주제 풀 — 폰스팟</title>
+<style>
+  :root { --orange:#F74B0B; --bg:#fafafa; --line:#e5e5e5; --muted:#888; }
+  body { font-family: -apple-system, "Segoe UI", "Malgun Gothic", sans-serif; margin:0; background:var(--bg); color:#1a1a1a; }
+  header { background:#fff; border-bottom:2px solid var(--orange); padding:14px 20px; display:flex; align-items:center; gap:16px; }
+  header h1 { font-size:18px; margin:0; }
+  header a { color:var(--orange); text-decoration:none; font-size:14px; }
+  .wrap { padding:16px 20px; }
+  .meta { color:var(--muted); font-size:13px; margin-bottom:12px; }
+  table { width:100%; border-collapse:collapse; background:#fff; font-size:13px; }
+  th, td { border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top; }
+  th { background:#f3f3f3; position:sticky; top:0; }
+  .hook { font-weight:700; }
+  .score { color:var(--muted); font-size:12px; }
+  .badge { display:inline-block; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700; }
+  .b-candidate { background:#eee; color:#555; }
+  .b-assigned { background:#fff0e8; color:var(--orange); }
+  .b-in_progress { background:#e8f0ff; color:#2563eb; }
+  .b-published { background:#e6f9ec; color:#15803d; }
+  .btns button { font-size:11px; padding:4px 8px; margin:1px; border:1px solid var(--line); border-radius:6px; background:#fff; cursor:pointer; }
+  .btns button:hover { border-color:var(--orange); color:var(--orange); }
+  .btns button.on { background:var(--orange); color:#fff; border-color:var(--orange); }
+  .rlink { font-size:11px; color:#2563eb; text-decoration:none; }
+  tr.published { opacity:.65; }
+</style>
+</head>
+<body>
+<header>
+  <h1>🎯 주제 풀 (topic_pool)</h1>
+  <a href="/">← 카드 목록</a>
+  <span class="meta">클로드가 발굴한 주제. 배정하면 각 제작 task가 pull해서 만듭니다.</span>
+</header>
+<div class="wrap">
+  <div class="meta">갱신: {{ updated }} · 총 {{ topics|length }}건</div>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th><th>라인</th><th>주제 / 후킹</th><th>한 줄 요약</th>
+        <th>떡상점수</th><th>추천</th><th>상태</th><th>배정</th><th>제작</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for t in topics %}
+      <tr class="{{ t.status }}" data-id="{{ t.id }}">
+        <td>{{ t.id }}</td>
+        <td>{{ t.line }}</td>
+        <td><div class="hook">{{ t.hook }}</div><div class="score">{{ t.topic }}</div></td>
+        <td>{{ t.summary }}</td>
+        <td class="score">{{ t.ttsan }}</td>
+        <td>{{ t.track_suggest }}</td>
+        <td><span class="badge b-{{ t.status }}" data-badge>{{ t.status }}</span>
+            {% if t.assigned_track %}<div class="score" data-at>→ {{ t.assigned_track }}</div>{% endif %}</td>
+        <td class="btns" data-id="{{ t.id }}">
+          <button data-track="card">카드</button>
+          <button data-track="cardvideo">카드영상</button>
+          <button data-track="viral">실사</button>
+        </td>
+        <td>{% if t.slug %}<a class="rlink" href="/slug/{{ t.slug }}">렌더 →</a>{% else %}<span class="score">미발행</span>{% endif %}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+<script>
+document.querySelectorAll('.btns').forEach(function(cell){
+  var id = cell.getAttribute('data-id');
+  cell.querySelectorAll('button').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var track = btn.getAttribute('data-track');
+      fetch('/topics/assign', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({id:id, track:track})
+      }).then(function(r){ return r.json(); }).then(function(j){
+        if(!j.ok){ alert('배정 실패: '+(j.error||'')); return; }
+        var row = cell.closest('tr');
+        cell.querySelectorAll('button').forEach(function(b){ b.classList.toggle('on', b===btn); });
+        var badge = row.querySelector('[data-badge]');
+        if(badge){ badge.textContent = j.status; badge.className = 'badge b-'+j.status; }
+        var at = row.querySelector('[data-at]');
+        if(at){ at.textContent = '→ '+track; }
+        else {
+          var td = badge.parentElement;
+          var d = document.createElement('div'); d.className='score'; d.setAttribute('data-at',''); d.textContent='→ '+track; td.appendChild(d);
+        }
+      }).catch(function(e){ alert('오류: '+e); });
+    });
+  });
+});
+</script>
+</body>
+</html>
