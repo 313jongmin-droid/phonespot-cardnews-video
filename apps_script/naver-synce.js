@@ -422,12 +422,17 @@ function syncNaverIntegrated(targetDate) {
   // 4) UTM 자동 발견
   autoDiscoverNaverAdgroups_(rows, ymd);
 
-  // 5) 같은 날짜 행 중복 제거
+  // 5) 같은 날짜 행 중복 제거 — 단, 수기 개통수(20)/메모(21)는 광고그룹키로 보존
   const lastRow = sh.getLastRow();
+  var preservedManual = {};
   if (lastRow >= 2) {
-    const dates = sh.getRange(2, 1, lastRow - 1, 1).getDisplayValues();
-    for (let i = dates.length - 1; i >= 0; i--) {
-      if (dates[i][0] === ymd) sh.deleteRow(i + 2);
+    const block = sh.getRange(2, 1, lastRow - 1, 21).getDisplayValues();
+    for (let i = block.length - 1; i >= 0; i--) {
+      if (block[i][0] === ymd) {
+        var _k = String(block[i][3] || block[i][4] || '').trim();
+        if (_k) preservedManual[_k] = { gae: block[i][19], memo: block[i][20] };
+        sh.deleteRow(i + 2);
+      }
     }
   }
 
@@ -483,6 +488,12 @@ function syncNaverIntegrated(targetDate) {
     sh.getRange(row, 19).setFormula(
       `=IFERROR(IF(R${row}=0,"-",H${row}/R${row}),"-")`
     ).setNumberFormat('#,##0"원"');
+    // ★ 수기 개통수(20)/메모(21) 복원 (삭제-재삽입에도 유지)
+    var _mk = String(r.adgroupId || r.adgroupName || '').trim();
+    if (_mk && preservedManual[_mk]) {
+      if (preservedManual[_mk].gae !== '' && preservedManual[_mk].gae != null) sh.getRange(row, 20).setValue(preservedManual[_mk].gae);
+      if (preservedManual[_mk].memo !== '' && preservedManual[_mk].memo != null) sh.getRange(row, 21).setValue(preservedManual[_mk].memo);
+    }
   });
 
   const msg = '✅ 네이버+ ' + ymd + ' ' + rows.length + '개 광고그룹 입력';
