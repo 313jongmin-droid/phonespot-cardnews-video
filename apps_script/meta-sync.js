@@ -466,6 +466,21 @@ function flipMappedUtmStatus() {
 }
 
 // ──[수동 1회]── 30일 백필 (초기 1회만 실행)
+var SELF_HEAL_DAYS = 7;  // 일일 sync 시 최근 N일 재수집(upsert) → 하루 실패해도 다음날 자동 보강(self-heal)
+
+// ★ self-heal: 최근 days일 메타 통합 재수집 (per-day upsert, 누락일 자동 보강)
+function syncMetaCampaignRecent_(days) {
+  days = days || SELF_HEAL_DAYS;
+  var today = new Date(); var ok = 0, fail = 0;
+  for (var i = days; i >= 1; i--) {
+    var d = new Date(today); d.setDate(today.getDate() - i);
+    var ymd = Utilities.formatDate(d, 'Asia/Seoul', 'yyyy-MM-dd');
+    try { syncMetaCampaignIntegrated(ymd); ok++; Utilities.sleep(400); }
+    catch (e) { fail++; Logger.log(ymd + ' 메타 실패: ' + e.message); }
+  }
+  Logger.log('syncMetaCampaignRecent ' + days + '일 (ok ' + ok + ' / fail ' + fail + ')');
+}
+
 function backfillMetaCampaign30Days() {
   const today = new Date();
   let success = 0, fail = 0;
@@ -517,8 +532,8 @@ function syncAll() {
   catch (e) { errors.push(`syncMetaDaily: ${e.message}`); logSync_('syncMetaDaily', 'FAIL: ' + e.message); }
   try { syncMetaCreatives(); }
   catch (e) { errors.push(`syncMetaCreatives: ${e.message}`); logSync_('syncMetaCreatives', 'FAIL: ' + e.message); }
-  try { syncMetaCampaignIntegrated(); }   // ★ 신규
-  catch (e) { errors.push(`syncMetaCampaignIntegrated: ${e.message}`); logSync_('syncMetaCampaignIntegrated', 'FAIL: ' + e.message); }
+  try { syncMetaCampaignRecent_(SELF_HEAL_DAYS); }   // ★ self-heal: 최근 N일 재수집(누락 보강)
+  catch (e) { errors.push(`syncMetaCampaignRecent: ${e.message}`); logSync_('syncMetaCampaignRecent', 'FAIL: ' + e.message); }
   try { correctUnknownSource(); logSync_('correctUnknownSource', 'OK'); }
   catch (e) { errors.push(`correctUnknownSource: ${e.message}`); logSync_('correctUnknownSource', 'FAIL: ' + e.message); }
   if (errors.length > 0) {

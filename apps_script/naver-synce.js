@@ -281,6 +281,17 @@ const NAVER_KT_FILTER = ['KT', '다이렉트샵'];
 
 function syncNaverIntegrated(targetDate) {
   Logger.log('=== syncNaverIntegrated 시작 ===');
+  if (!targetDate) {
+    // ★ self-heal: 무인자 진입(트리거/refreshAll) = 최근 N일 재수집. 하루 실패해도 다음날 자동 보강.
+    var _today = new Date();
+    for (var _i = SELF_HEAL_DAYS; _i >= 1; _i--) {
+      var _d = new Date(_today); _d.setDate(_today.getDate() - _i);
+      var _ymd = Utilities.formatDate(_d, 'Asia/Seoul', 'yyyy-MM-dd');
+      try { syncNaverIntegrated(_ymd); Utilities.sleep(300); }
+      catch (e) { Logger.log(_ymd + ' 네이버 실패: ' + e.message); }
+    }
+    return;
+  }
   if (typeof ensureUtmNamedRanges_ === 'function') ensureUtmNamedRanges_();
   const ymd = targetDate || getYesterday();
   Logger.log('날짜: ' + ymd);
