@@ -1,0 +1,30 @@
+{
+  "updated": "2026-06-23",
+  "note": "클로드가 발굴한 떡상 주제 공유 풀. 카드/카드뉴스영상/실사 viral task가 이 파일을 pull해서 status=candidate 중 골라 제작. 채팅 안 봐도 됨. 발행되면 status=published + slug 기록. 정본 규칙 = _docs/TOPIC_ENGINE.md.",
+  "performance_ref": {
+    "youtube_insights": "Top: 유심교체·애플페이·수수료전쟁·폴드8유출·통화스크리닝·애플귀엽다·에어팟맥스2 (애플·유심 강세)",
+    "instagram_reels_top": "릴스가 피드 대비 10~20배 조회. 가짜성지구분 208 / 확인만해도 안속는 126 / 자급제+알뜰폰 역설 128 / 사전예약손해 139·119 (호구탈출·가짜성지 meme 계열 최고)",
+    "weighting": "apple+ / 호구·가짜성지 meme+ / 영상(릴스)>피드"
+  },
+  "topics": [
+    {"id": "035", "line": "news", "topic": "아이폰 가격 인상 수순", "hook": "아이폰 오르기 전에 사야 하나?", "summary": "팀쿡 가격인상 불가피→프로 200만↑ 전망(폭·시점 미정)→매장", "track_suggest": "카드/카드영상", "ttsan": "apple+·검증·D-7", "status": "published", "slug": "035_news_iphone18_price_hike"},
+    {"id": "036", "line": "news", "topic": "애플 OS 16종 지원종료", "hook": "내 애플 기기 업데이트 끊겼나?", "summary": "구형 16종 종료, 아이폰 유지→내 기기 확인→매장", "track_suggest": "카드/카드영상", "ttsan": "apple+·검증·D-7", "status": "published", "slug": "036_news_apple_os_support_end"},
+    {"id": "037", "line": "tip", "topic": "차량 멀미 방지 아이폰 기능", "hook": "차에서 폰 보면 속 울렁? 이거 켜면 끝", "summary": "차량 모션 큐 설정법→매장 셋업", "track_suggest": "카드/카드영상", "ttsan": "apple+·바이럴·검증", "status": "published", "slug": "037_tip_iphone_carsick_feature"},
+    {"id": "038", "line": "qa", "topic": "액정 수리 vs 교체", "hook": "액정 30만원 수리? 차라리 바꿀까?", "summary": "수리비 현실→판단 기준 4→매장 총비용 계산", "track_suggest": "카드/카드영상", "ttsan": "실용·검증·가격후킹", "status": "published", "slug": "038_qa_screen_repair_vs_replace"},
+    {"id": "039", "line": "pick", "topic": "애플워치 울트라4 전망", "hook": "센서 2배에 터치ID까지?", "summary": "센서2배·터치ID·풀체인지 루머→대기 가치→매장", "track_suggest": "카드/카드영상", "ttsan": "apple+·루머·시점가을", "status": "published", "slug": "039_pick_apple_watch_ultra4"},
+
+    {"id": "C01", "line": "meme", "topic": "가짜 성지 구분법", "hook": "이런 매장은 100% 호구됩니다", "summary": "가격 공개 거부·방문 유도 등 가짜성지 신호→정찰제 매장", "track_suggest": "실사 viral", "ttsan": "★인스타릴스 208 실증·호구meme최고", "status": "candidate", "slug": null},
+    {"id": "C02", "line": "meme", "topic": "0원폰 진짜 0원?", "hook": "0원폰이라며? 근데 왜 매달 돈이 빠져?", "summary": "미끼→숨은 월납부·요금제·부가세→확인법→매장", "track_suggest": "실사 viral", "ttsan": "경쟁실증·반전후킹·호구meme", "status": "candidate", "slug": null},
+    {"id": "C03", "line": "meme", "topic": "대리점 이 말 들으면 도망", "hook": "상담 중 이 말 나오면 100% 호구됨", "summary": "호구 멘트 3 폭로→대응→매장", "track_suggest": "실사 viral", "ttsan": "공감·경쟁결·호구meme", "status": "candidate", "slug": null},
+    {"id": "C04", "line": "meme", "topic": "페이백 권하는 매장의 진실", "hook": "페이백 해준대요? 이래서 나중에 토해냅니다", "summary": "페이백=불법보조금 함정→리스크→정찰제 매장", "track_suggest": "실사 viral", "ttsan": "단통법·경쟁실증·호구meme", "status": "candidate", "slug": null},
+    {"id": "C05", "line": "qa", "topic": "자급제+알뜰폰이 더 비쌀 수도", "hook": "자급제+알뜰폰이 무조건 싸다? 아닐 수도", "summary": "조합 역설→총비용 비교→매장 (※알뜰폰 회피키워드지만 역설=매장정합)", "track_suggest": "카드/카드영상", "ttsan": "★인스타릴스 128 실증·역설후킹", "status": "candidate", "slug": null},
+    {"id": "C06", "line": "pick", "topic": "갤Z 폴드8·플립8·와이드 7/22 언팩", "hook": "7월 22일, 삼성이 3개 한꺼번에 던진다", "summary": "폴드8 배터리5000·45W/플립8 더 얇게/와이드→예약", "track_suggest": "카드/카드영상", "ttsan": "검증·시점D-29·폴드8 yt5위", "status": "candidate", "slug": null},
+    {"id": "C07", "line": "qa", "topic": "e심 vs 유심 뭐가 나아", "hook": "유심 아직도 끼우세요? e심은 왜 안 써?", "summary": "e심 보급 5%→장단점→추천→매장", "track_suggest": "카드/카드영상", "ttsan": "검증·통신도메인", "status": "candidate", "slug": null},
+    {"id": "C08", "line": "tip", "topic": "중고폰 팔기 전 꼭 지울 것", "hook": "공장초기화만 하면 끝? 그래도 정보 털립니다", "summary": "초기화 함정→유심·계정·인증서→매장 보상판매", "track_suggest": "카드/카드영상", "ttsan": "검증·공감·실용", "status": "candidate", "slug": null},
+    {"id": "C09", "line": "scam", "topic": "휴가철 택배 스미싱", "hook": "이 문자 오면 누르지 말고 바로 삭제", "summary": "수법→1초 구별→대응→매장", "track_suggest": "카드/카드영상", "ttsan": "검증·season", "status": "candidate", "slug": null},
+    {"id": "C10", "line": "qa", "topic": "폰 보험 보상 못 받는 경우", "hook": "보험 들었는데 왜 보상이 안 돼?", "summary": "함정 조건→체크→매장", "track_suggest": "카드/카드영상", "ttsan": "검증·손해후킹", "status": "candidate", "slug": null},
+    {"id": "C11", "line": "pick", "topic": "휴가에 강한 폰 3", "hook": "물놀이·캠핑 가는데 이 폰이면 든든", "summary": "배터리·방수·카메라 3종→매장", "track_suggest": "카드/카드영상", "ttsan": "검증·season", "status": "candidate", "slug": null},
+    {"id": "C12", "line": "life", "topic": "비행기 타기 전 폰 5초 세팅", "hook": "이거 안 하면 내리자마자 요금 폭탄", "summary": "로밍 차단 5초→매장", "track_suggest": "카드/카드영상", "ttsan": "season·손해후킹", "status": "candidate", "slug": null},
+    {"id": "C13", "line": "news", "topic": "애플 가격 인상 비껴간 제품", "hook": "애플 다 오르는데 이건 안 올랐다", "summary": "인상 비껴간 제품(아이폰·에어팟 일부)→지금 사도 되는 것→매장", "track_suggest": "카드/카드영상", "ttsan": "apple+·검증·035연계", "status": "candidate", "slug": null}
+  ]
+}
