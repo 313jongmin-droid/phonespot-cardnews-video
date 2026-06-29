@@ -1067,7 +1067,7 @@ def slug_sort_key(item: dict) -> tuple[int, str]:
     head = slug.split("_", 1)[0]
     if head.isdigit():
         return (int(head), slug)
-    return (999999, slug)
+    return (-1, slug)  # 무번호(레거시·테스트)는 맨 아래로 — reverse=True에서 최신 번호 슬러그가 위 (2026-06-23)
 
 
 def get_cardnews_rows() -> list[dict]:
