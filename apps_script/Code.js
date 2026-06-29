@@ -25,6 +25,7 @@ function onOpen() {
     .addSeparator()
     .addItem('📊 SNS 월별 합계 수식 복구', 'repairSNSMonthlySummaries')
     .addItem('🏷️ UTM 슬러그 드롭다운 갱신', 'refreshUtmSlugDropdowns')
+    .addItem('🔍 GA4 미매핑 슬러그 → UTM 추가', 'appendUnmappedUtmFromGA4')
     .addItem('🔗 UTM named range 셋업/복구', 'setupUtmNamedRanges')
     .addItem('⏰ 야간 전체 새로고침 트리거 (02:45)', 'setupRefreshAllTrigger')
     .addToUi();

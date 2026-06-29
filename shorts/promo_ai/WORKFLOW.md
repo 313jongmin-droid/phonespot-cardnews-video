@@ -199,3 +199,10 @@ job2 = mcp__83aadcc7-...__generate_video(
 - 이미지 먼저(nano 2cr)로 글래머 확정 → 영상화(컷당 4s 6cr / 3s 4.5cr).
 - sandbox = CDN·HF·Higgsfield업로드 전부 403 차단 → 영상·오디오는 종민이 다운로드/위젯 업로드. **ffmpeg 합성은 sandbox에서 가능**.
 - 빌드 파이프라인: 나레이션 atempo+concat → 세그먼트(정규화+trim/slow+zoom+fade) → concat body → `.ass` 청크자막 burn + 나레이션 mix → 최종.
+
+### 7. 산출물·git 위생 (2026-06-29, 자체점검 확립)
+- **영상(.mp4)·오디오(.mp3/.wav) = `.gitignore` 전역 비추적**(재생성 가능·용량). git 추적·전파 대상 = 캡션·concept·WORKFLOW·INDEX **md만**.
+- **검증 프레임 = `out_promo_ai/<slug>/_chk*`·`_insp*` 폴더**(png) → `.gitignore` 차단. **발행 전 삭제**(sandbox 권한 밖이라 종민이 탐색기에서).
+- 구버전 영상 = `out_promo_ai/<slug>/_archive/`로, 최신본만 INDEX 기록(타임스탬프 누적, 덮어쓰기 ❌).
+- **캡션(`<slug>_captions.md`)은 최종 영상 버전과 톤·내용 일치 유지** — 영상 갱신 시 캡션도 같이 갱신(004는 v9 7비트 썰톤+댓글유발로 정합).
+- ★ **푸시는 영역 지정**: `git add shorts/promo_ai .gitignore`. **`git add -A` 금지** — repo에 줄끝(CRLF/LF) 미커밋 변경(.bat/.ps1 다수)이 상존해 의도 안 한 것까지 딸려감(STEP7 리포위생 연동).

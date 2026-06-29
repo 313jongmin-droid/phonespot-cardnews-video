@@ -381,6 +381,62 @@ function syncMetaCampaignIntegrated(targetDate) {
   logSync_('syncMetaCampaignIntegrated', msg);
 }
 
+// ============ ★ GA4 미매핑 슬러그 → UTM 자동 추가 (2026-06-28, 종민 요청) ============
+// GA4_자동에 실제 들어온 utm_campaign 중 UTM 시트 C열에 없는 것을, A(채널)+C(슬러그) 채운 행으로 추가.
+// 사용자는 B(메타 광고그룹명 한글)만 채우면 매칭(B→C VLOOKUP) 완성. 메타(→페북)·네이버(→네이버) 대상.
+function appendUnmappedUtmFromGA4() {
+  const ss = SpreadsheetApp.getActive();
+  const ga4 = ss.getSheetByName(SHEET_GA4);
+  const utm = ss.getSheetByName(SHEET_UTM_MAPPING);
+  const ui = (function(){ try { return SpreadsheetApp.getUi(); } catch(e){ return null; } })();
+  if (!ga4 || !utm) { if (ui) ui.alert('GA4_자동 또는 UTM 시트 없음'); return; }
+
+  // 1) 이미 매핑된 슬러그 (UTM C열, 비어있지 않은 값) = 재실행 중복 방지
+  const uLast = utm.getLastRow();
+  const mapped = {};
+  if (uLast >= 2) {
+    utm.getRange(2, 3, uLast - 1, 1).getValues().forEach(function(r){
+      const v = String(r[0]||'').trim(); if (v) mapped[v] = true;
+    });
+  }
+
+  // 2) GA4 최근 30일 (채널,슬러그) 수집  (A=날짜 yyyymmdd, B=source, D=utm_campaign)
+  const tz = 'Asia/Seoul';
+  const cut = Utilities.formatDate(new Date(Date.now() - 30*86400*1000), tz, 'yyyyMMdd');
+  const gLast = ga4.getLastRow();
+  const found = {};
+  if (gLast >= 5) {
+    ga4.getRange(5, 1, gLast - 4, 4).getValues().forEach(function(row){
+      const dt = String(row[0]||'').replace(/-/g,'').slice(0,8);
+      if (!dt || dt < cut) return;
+      const src = String(row[1]||'').toLowerCase().trim();
+      const slug = String(row[3]||'').trim();
+      if (!slug || slug.charAt(0) === '(') return;   // (not set)/(direct) 등 제외
+      let ch = '';
+      if (src === 'meta' || src.indexOf('facebook') >= 0) ch = '페북';
+      else if (src.indexOf('naver') >= 0) ch = '네이버';
+      else return;                                    // 당근/구글 등은 자체 흐름
+      if (mapped[slug]) return;
+      found[ch + '|' + slug] = { ch: ch, slug: slug };
+    });
+  }
+  const list = Object.keys(found).map(function(k){ return found[k]; });
+  if (list.length === 0) { if (ui) ui.alert('✅ 미매핑 GA4 슬러그 없음 (메타·네이버, 최근 30일).'); return; }
+
+  // 3) UTM 시트에 A채널 + C슬러그 채운 행 추가 (B는 사용자 입력)
+  const today = new Date();
+  const rows = list.map(function(o){ return [o.ch, '', o.slug, today, '⚠️ 광고그룹명(B) 입력 필요', '']; });
+  const startRow = utm.getLastRow() + 1;
+  utm.getRange(startRow, 1, rows.length, 6).setValues(rows);
+  utm.getRange(startRow, 4, rows.length, 1).setNumberFormat('yyyy-mm-dd');
+
+  const msg = '✅ GA4 미매핑 슬러그 ' + list.length + '개를 UTM 시트에 추가\n' +
+    '채널(A)·utm_campaign(C)는 채워둠 → B(메타 광고그룹명 한글)만 채우면 매칭됩니다.\n\n' +
+    list.slice(0,20).map(function(o,i){ return (i+1)+'. ['+o.ch+'] '+o.slug; }).join('\n') + (list.length>20?'\n…':'');
+  if (ui) ui.alert(msg);
+  if (typeof logSync_ === 'function') { try { logSync_('appendUnmappedUtmFromGA4', list.length + '개 추가'); } catch(e){} }
+}
+
 // ============ ★ UTM 통합 시트 자동 발견 (2026-06-15 통합 갱신) ============
 // 통합 시트 구조: A 채널 | B 광고그룹명(한글) | C utm_campaign(영문) | D 첫발견일 | E 상태 | F 메모
 function autoDiscoverAdsets_(adsetNames) {
