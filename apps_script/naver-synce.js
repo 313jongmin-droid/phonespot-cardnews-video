@@ -160,6 +160,29 @@ function findNaverDateRow_(sheet, dateStr) {
 
 // ============ 30일 백필 (수동 1회) ============
 
+// ★ 네이버+ 청크 백필 (2026-06-XX) — 대시보드가 읽는 '네이버+'(syncNaverIntegrated)를 지정 구간만 재수집.
+//   Apps Script 6분 한도 회피용으로 10~15일씩 끊어 실행. 예: backfillNaverIntegrated(29,15) → backfillNaverIntegrated(14,1)
+//   (기존 backfillNaver30Days는 syncNaverDaily=옛 '네이버' 시트를 채워 대시보드엔 무효 → 이 함수 사용)
+function backfillNaverIntegrated(fromDaysAgo, toDaysAgo) {
+  var from = fromDaysAgo || 14;          // 시작(오래된 쪽, n일 전)
+  var to = (toDaysAgo == null) ? 1 : toDaysAgo;  // 끝(어제=1)
+  if (from < to) { var t = from; from = to; to = t; }
+  var today = new Date();
+  var ok = 0, fail = 0, last = '';
+  for (var i = from; i >= to; i--) {
+    var d = new Date(today); d.setDate(today.getDate() - i);
+    var ymd = Utilities.formatDate(d, 'Asia/Seoul', 'yyyy-MM-dd');
+    try { syncNaverIntegrated(ymd); ok++; last = ymd; Utilities.sleep(400); }
+    catch (e) { fail++; Logger.log(ymd + ' 네이버+ 백필 실패: ' + e.message); }
+  }
+  var msg = '✅ 네이버+ 백필 ' + from + '~' + to + '일 전 (성공 ' + ok + ' / 실패 ' + fail + ', 마지막 ' + last + ')\n' +
+            '6분 한도로 끊겼으면 from을 줄여 재실행. 예: backfillNaverIntegrated(14,1)';
+  Logger.log(msg);
+  try { SpreadsheetApp.getUi().alert(msg); } catch (e) {}
+  if (typeof logSync_ === 'function') { try { logSync_('backfillNaverIntegrated', 'ok ' + ok + ' / fail ' + fail + ' (' + from + '~' + to + ')'); } catch (e) {} }
+  return { ok: ok, fail: fail };
+}
+
 function backfillNaver30Days() {
   const today = new Date();
   let success = 0, fail = 0;
