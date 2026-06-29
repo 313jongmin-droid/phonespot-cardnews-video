@@ -143,11 +143,11 @@
 
 ---
 
-## STEP E — 텔레그램 알림 (작성 완료)
+## STEP E — 텔레그램 알림 (작성 완료) ★무조건 자동
 
-- `_state/outbox/<NNN>_ready.txt` 떨굼
+- `_state/outbox/<NNN>_ready.txt` 떨굼 — **발행 끝나면 묻지 말고 항상 생성**(종민 standing 허락 2026-06-23). "쏠까요?" 확인 ❌
 - 내용: 작성 완료 통지 + 다음 단계 안내
-- listener 자동 송신
+- listener 자동 송신 (listener 꺼져 있으면 큐에 적재 → 켜질 때 전송. 미전송 누적이면 listener 점검 안내)
 
 ---
 

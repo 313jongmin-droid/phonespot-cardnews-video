@@ -30,7 +30,7 @@
 > **★ 후보 리스트업 규칙 (2026-06-22)**: ① **모든 후보는 사실검색·검증 완료 후에만 표에 올린다** — "사실확인 필요"·제목만 본 미검증 항목 등재 금지(특정 사건/뉴스는 WebSearch로 실체·시점·매장정합 확인, 부적합이면 제외 근거 1줄). ② **각 후보에 한 줄 요약 병기** — 토픽 옆에 "무슨 청크/스크립트가 될지"(핵심 메시지 + 카드 흐름) 1줄 미리보기. ③ **보류 후보(carryover) 합치기** — `content_guide.md §3.5` 풀을 신규와 합쳐 제시(미선택 좋은 후보 재등판), 발행 시 삭제·시점만료 제거, 수집 끝에 이번 미선택분 적재.
 
 > **★ "수집" = 통합 소스 자동 합침(2026-06-23)**: ① RSS `_state/news_feed.json`(있으면) ② WebSearch(한국매체 allowed_domains) ③ 유튜브·인스타 성과 가중 ④ carryover ⑤ dup회피 → 검증완료·쇼츠포맷·한줄요약. 사장님 URL 주면 WebFetch 최우선. 정본 = INSTRUCTIONS "수집 통합 소스".
-| 카드뉴스 발행 | "N번 발행" | `CARDNEWS_BUILD.md` + `caption_template.md` | 5채널 첫줄 후킹 상이, 사전승낙서, 카드6 source, narration URL/이모지 ❌ |
+| 카드뉴스 발행 | "N번 발행" | `CARDNEWS_BUILD.md` + `caption_template.md` | 5채널 첫줄 후킹 상이, 사전승낙서, 카드6 source, narration URL/이모지 ❌, **★발행 완료 시 `_state/outbox/<slug>_ready.txt` 자동 생성=텔레그램 발행 신호(묻지 않고 무조건, 종민 standing 허락 2026-06-23)** |
 | 영상 | "영상"/"promo"/"실사" | `INSTRUCTIONS_SHORTS.md` 또는 `shorts/promo*/README.md` | 트랙별 결(나레이션 유무) 구분 |
 | 광고 운영 | "관리대장"/"메타"/"네이버"/"당근" | `ads/README_FOR_AI.md` + 해당 채널 가이드 | **콘솔 직접 수정 ❌**(clasp가 덮어씀), 컬럼 변경 마이그레이션 후 sync 재호출 |
 | 코드 수정(전 트랙) | "수정"/"디버깅"/"기능추가" | `_docs/SYSTEM_MAP.md` 해당 대단원 | **26KB+ 파일 Edit 금지**(truncation) → bash-python/전체 Write, 검증=호스트 Read |
