@@ -1865,6 +1865,37 @@ class Handler(BaseHTTPRequestHandler):
                 json_response(self, {"ok": True, "queued": True, "job": job,
                                      "message": "타이포 렌더 대기열 등록: " + nn + " [" + preset + "]"})
                 return
+            if action == "promo_generate":
+                # 주제 -> promo_generate.py 로 신규 MD 자동 작성 + md2json -> 바로 promo_render 큐.
+                # (promo task 소유 generator 호출. 패널은 호출+렌더 연결만 — HANDOFF §4 알림 대상.)
+                slug_req = str(data.get("slug") or "").strip()
+                title = str(data.get("title") or slug_req).strip()
+                preset = str(data.get("preset") or "").strip()
+                if not slug_req:
+                    json_response(self, {"ok": False, "message": "주제를 선택하세요."})
+                    return
+                try:
+                    cmd = [sys.executable, "scripts/promo_generate.py", title, "--slug", slug_req]
+                    if preset:
+                        cmd += ["--preset", preset]
+                    gen = subprocess.run(cmd, cwd=str(SHORTS), capture_output=True, text=True, timeout=90)
+                    okline = ""
+                    for ln in (gen.stdout or "").splitlines():
+                        if ln.startswith("OK "):
+                            okline = ln.strip()
+                    if not okline:
+                        tail = ((gen.stderr or "") + (gen.stdout or ""))[-200:]
+                        json_response(self, {"ok": False, "message": "생성 실패: " + tail})
+                        return
+                    _, g_nn, g_label, g_preset = okline.split()
+                    slug_now = g_nn + "_" + g_label + "_" + g_preset
+                    job = REMOTE_QUEUE.enqueue("promo_render", slug_now, str(data.get("target_worker") or ""))
+                    json_response(self, {"ok": True, "queued": True, "job": job,
+                                         "nnn": g_nn, "label": g_label, "preset": g_preset,
+                                         "message": "자동 생성+렌더 등록: " + g_nn + "_" + g_label + " [" + g_preset + "]"})
+                except Exception as exc:
+                    json_response(self, {"ok": False, "message": "생성 오류: " + str(exc)})
+                return
             if action == "style_request":
                 slug_req = str(data.get("slug") or "").strip()
                 track = str(data.get("track") or "").strip()
@@ -2298,7 +2329,8 @@ INDEX_HTML = r"""<!doctype html>
       <section>
         <div class="head action-head"><h2>타이포 작업</h2><div class="selected-badge"><span>선택 주제</span><b id="tpSelectedSlug">없음</b></div></div>
         <div class="pad grid">
-          <button class="btn primary" onclick="styleRequest('typo')"><strong>타이포로 만들기 요청</strong><span>선택 주제를 Claude가 TOPIC_TO_PROMO 스펙대로 promo MD로 작성 후 렌더(요청 등록, 자동 즉시 아님).</span></button>
+          <button class="btn primary" onclick="typoAutoMake()"><strong>주제로 바로 생성+렌더</strong><span>선택 주제를 자동으로 promo MD 작성(Gemini/템플릿) 후 즉시 렌더 큐 — 원클릭.</span></button>
+          <button class="mini-btn" onclick="styleRequest('typo')">요청만 등록(Claude가 직접 작성)</button>
         </div>
         <div id="tpReqLog" class="pad small"></div>
       </section>
@@ -2418,6 +2450,18 @@ INDEX_HTML = r"""<!doctype html>
         var pend=(pr.items||[]).filter(function(x){return x.status!=="done";}).length;
         log.textContent=(r.message||"등록됨")+" · 대기 "+pend+"건 (코웍에서 '스타일 요청 처리'로 작성)";
       }catch(e){ log.textContent="요청 실패: "+e; }
+    }
+    async function typoAutoMake(){
+      var slug=tpSelected; var log=document.getElementById("tpReqLog");
+      if(!slug){ log.textContent="주제를 선택하세요."; return; }
+      var title=""; var it=(window.__topicItems||[]).find(function(x){return (x.slug||x.nn||x)===slug;});
+      if(it){ title=it.title||it.slug||slug; }
+      log.textContent="자동 생성+렌더 중…";
+      try{
+        var r=await api("/api/action",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"promo_generate",slug:slug,title:title})});
+        log.textContent=r.message||(r.ok?"등록됨":"실패");
+        if(r.ok){ promoLoad(); }
+      }catch(e){ log.textContent="자동 생성 실패: "+e; }
     }
     async function promoLoad(){
       var log=document.getElementById("tpLog");
