@@ -481,6 +481,30 @@ function syncMetaCampaignRecent_(days) {
   Logger.log('syncMetaCampaignRecent ' + days + '일 (ok ' + ok + ' / fail ' + fail + ')');
 }
 
+// ★ 메타+ 청크 백필 — 메타_통합(syncMetaCampaignIntegrated)을 지정 구간만 재수집. 6분 한도 회피.
+function backfillMetaIntegrated(fromDaysAgo, toDaysAgo) {
+  var from = fromDaysAgo || 14;
+  var to = (toDaysAgo == null) ? 1 : toDaysAgo;
+  if (from < to) { var t = from; from = to; to = t; }
+  var today = new Date();
+  var ok = 0, fail = 0, last = '';
+  for (var i = from; i >= to; i--) {
+    var d = new Date(today); d.setDate(today.getDate() - i);
+    var ymd = Utilities.formatDate(d, 'Asia/Seoul', 'yyyy-MM-dd');
+    try { syncMetaCampaignIntegrated(ymd); ok++; last = ymd; Utilities.sleep(400); }
+    catch (e) { fail++; Logger.log(ymd + ' 메타+ 백필 실패: ' + e.message); }
+  }
+  var msg = '✅ 메타+ 백필 ' + from + '~' + to + '일 전 (성공 ' + ok + ' / 실패 ' + fail + ', 마지막 ' + last + ')\n' +
+            '6분 한도로 끊겼으면 from을 줄여 재실행. 예: backfillMetaIntegrated(14,1)';
+  Logger.log(msg);
+  try { SpreadsheetApp.getUi().alert(msg); } catch (e) {}
+  if (typeof logSync_ === 'function') { try { logSync_('backfillMetaIntegrated', 'ok ' + ok + ' / fail ' + fail + ' (' + from + '~' + to + ')'); } catch (e) {} }
+  return { ok: ok, fail: fail };
+}
+// 편집기 드롭다운 클릭용 무인자 래퍼 (순서대로 1번씩)
+function backfillMeta_step1_recent14() { return backfillMetaIntegrated(14, 1); }   // 1단계: 최근 14일
+function backfillMeta_step2_past15to29() { return backfillMetaIntegrated(29, 15); } // 2단계: 15~29일 전
+
 function backfillMetaCampaign30Days() {
   const today = new Date();
   let success = 0, fail = 0;
