@@ -49,6 +49,43 @@ function passesCarrierFilter_(name) {
   return (mode === 'include') ? hit : !hit;
 }
 
+// ★ 새 브랜드 빈 템플릿화 — 데이터만 비우고 구조(헤더·우측 월별블록·대시보드 수식) 보존.
+//   ⚠️ 새 브랜드 사본에서만 실행. [name, 데이터시작행, 데이터끝열(우측블록 보호)].
+function clearBrandDataForTemplate() {
+  const ss = SpreadsheetApp.getActive();
+  const ui = SpreadsheetApp.getUi();
+  const resp = ui.alert('⚠️ 빈 브랜드 템플릿화',
+    '이 시트의 모든 데이터 행을 비웁니다(헤더·수식·월별블록은 보존).\n폰스팟 원본이 아니라 "새 브랜드 사본"에서만 실행하세요.\n진행할까요?',
+    ui.ButtonSet.YES_NO);
+  if (resp !== ui.Button.YES) { ui.alert('취소됨'); return; }
+
+  // [시트명, 시작행, 끝열]  — 끝열로 우측 월별합계/요약 블록 보호
+  const LIST = [
+    ['메타+', 2, 21], ['네이버+', 2, 21], ['당근+', 2, 20], ['구글+', 2, 20],
+    ['GA4_자동', 5, 8], ['벤치마크_경쟁사_광고', 3, 21], ['메타_소재', 3, 16], ['동기화_로그', 2, 4],
+    ['문의접수', 2, 5], ['결제내역', 3, 6], ['추세', 4, 7], ['리틀리', 4, 9], ['UTM', 3, 6],
+    ['광고소재', 3, 9],
+    ['당근', 2, 14], ['메타', 2, 11], ['네이버', 2, 11], ['구글', 2, 11], ['카카오', 2, 11],
+    ['스레드', 4, 9], ['유튜브', 4, 9], ['인스타', 4, 9], ['틱톡', 4, 9],
+    ['협업 리스트업', 3, 18], ['N블로그', 3, 6], ['N플레이스', 3, 4], ['계정정보', 4, 5]
+  ];
+  const cleared = [], skipped = [];
+  LIST.forEach(function (t) {
+    const sh = ss.getSheetByName(t[0]);
+    if (!sh) { skipped.push(t[0] + '(없음)'); return; }
+    const last = sh.getLastRow();
+    if (last >= t[1]) { sh.getRange(t[1], 1, last - t[1] + 1, t[2]).clearContent(); cleared.push(t[0]); }
+  });
+  // (구) 잔재 탭 삭제
+  ['채널 리스트업 (구)', '협업메일 현황 (구)'].forEach(function (n) {
+    const sh = ss.getSheetByName(n); if (sh) { ss.deleteSheet(sh); cleared.push(n + '(삭제)'); }
+  });
+
+  ui.alert('✅ 빈 템플릿화 완료\n\n비운/삭제: ' + cleared.length + '개\n' + cleared.join(', ') +
+    '\n\n미처리(없음): ' + (skipped.join(', ') || '-') +
+    '\n\n보존: 통합대시보드·_설정·UTM_생성기·참조·자동화_가이드.\n다음: 🏢 _설정 탭에서 브랜드 값 입력 + 토큰 등록.');
+}
+
 // ★ _설정 탭 생성/갱신 (멀티브랜드 셋업) — 각 브랜드 시트에서 1회 실행 후 B열(값)만 수정.
 function setupBrandConfigSheet() {
   const ss = SpreadsheetApp.getActive();
@@ -100,6 +137,7 @@ function onOpen() {
     .addItem('🔍 GA4 미매핑 슬러그 → UTM 추가', 'appendUnmappedUtmFromGA4')
     .addItem('🔗 UTM named range 셋업/복구', 'setupUtmNamedRanges')
     .addItem('🏢 _설정 탭 생성/갱신 (멀티브랜드)', 'setupBrandConfigSheet')
+    .addItem('🧹 새 브랜드 빈 템플릿화 (사본에서만!)', 'clearBrandDataForTemplate')
     .addItem('⏰ 야간 전체 새로고침 트리거 (02:45)', 'setupRefreshAllTrigger')
     .addToUi();
 
