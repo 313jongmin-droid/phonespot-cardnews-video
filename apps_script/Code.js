@@ -123,11 +123,16 @@ function recordLastRefresh_() {
 
 // ──[일상]── 어제 GA4 데이터 수집 (매일 새벽 트리거가 호출)
 function fetchGA4Daily() {
+  // ★ self-heal: 어제 1일 → 최근 N일 각각 importGA4(ymd,ymd) (날짜별 upsert라 중복 없음).
+  //   GA4 일일 수집이 하루 실패/미실행해도 다음날 자동 보강(메타·네이버 self-heal과 동일 정책).
   const TZ = 'Asia/Seoul';
-  const y = new Date();
-  y.setDate(y.getDate() - 1);
-  const ymd = Utilities.formatDate(y, TZ, 'yyyy-MM-dd');
-  importGA4(ymd, ymd, false);
+  var days = (typeof SELF_HEAL_DAYS !== 'undefined') ? SELF_HEAL_DAYS : 7;
+  for (var i = days; i >= 1; i--) {
+    var d = new Date(); d.setDate(d.getDate() - i);
+    var ymd = Utilities.formatDate(d, TZ, 'yyyy-MM-dd');
+    try { importGA4(ymd, ymd, false); Utilities.sleep(300); }
+    catch (e) { Logger.log('GA4 ' + ymd + ' 실패: ' + e.message); }
+  }
 }
 
 // ──[수동]── 최근 30일 GA4 데이터 전체 다시 수집
