@@ -71,6 +71,17 @@ jobs:
         working-directory: apps_script
         run: clasp push --force
 
+      # KT폰샵 (2026-06-30) — 같은 계정(313jongmin)·동일 코드 → KT scriptId로 한 번 더 push.
+      # CLASPRC_JSON(인증) 공유, CLASP_JSON_KT(=KT .clasp.json 한 줄)만 별도 secret.
+      - name: Push to Apps Script (KT폰샵)
+        if: steps.changes.outputs.appsscript == 'true'
+        working-directory: apps_script
+        env:
+          CLASP_JSON_KT: ${{ secrets.CLASP_JSON_KT }}
+        run: |
+          echo "$CLASP_JSON_KT" > .clasp.json
+          clasp push --force
+
       # Sheet Export 별도 프로젝트 (B1 셋업, 2026-06-15). 시트 read 전용 web app.
       - name: Push to Apps Script (Sheet Export)
         if: steps.changes.outputs.appsscript == 'true'
