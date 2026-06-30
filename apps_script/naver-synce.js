@@ -331,9 +331,9 @@ function syncNaverIntegrated(targetDate) {
   }
   const campaigns = allCampaigns.filter(c => {
     const name = String(c.name || '');
-    const isKt = NAVER_KT_FILTER.some(k => name.indexOf(k) >= 0);
-    if (isKt) Logger.log('  제외 (KT): ' + name);
-    return !isKt;
+    const pass = passesCarrierFilter_(name);
+    if (!pass) Logger.log('  제외(통신사 필터): ' + name);
+    return pass;
   });
   Logger.log('필터 후 폰스팟 캠페인 ' + campaigns.length + '개');
 

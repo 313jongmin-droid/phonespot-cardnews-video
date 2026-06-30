@@ -15,9 +15,43 @@ const KAKAO_REPORT_HEADER_ROW = 4;
 const KAKAO_REPORT_DATA_ROW = 5;
 
 // ──[일상]── 시트 열 때 커스텀 메뉴 생성
+// ★ 브랜드 설정 접근자 (멀티브랜드, 2026-06-28) — 우선순위: _설정 시트 → Script Property → 폴백.
+//   비밀값(토큰/키)은 여기 거치지 말 것(시트 노출 금지). 비밀 아닌 브랜드설정만.
+var _brandCfgCache = null;
+function getBrandConfig_(key, fallback) {
+  if (_brandCfgCache === null) {
+    _brandCfgCache = {};
+    try {
+      var sh = SpreadsheetApp.getActive().getSheetByName('_설정');
+      if (sh && sh.getLastRow() >= 1) {
+        sh.getRange(1, 1, sh.getLastRow(), 2).getValues().forEach(function (r) {
+          var k = String(r[0] || '').trim();
+          if (k) _brandCfgCache[k] = r[1];
+        });
+      }
+    } catch (e) {}
+  }
+  var v = _brandCfgCache[key];
+  if (v !== undefined && v !== null && String(v).trim() !== '') return v;
+  try {
+    var pv = PropertiesService.getScriptProperties().getProperty(key);
+    if (pv !== null && String(pv).trim() !== '') return pv;
+  } catch (e) {}
+  return fallback;
+}
+// 캠페인 통신사 필터 — mode: exclude(키워드 제외=폰스팟)/include(키워드만=KT폰샵)/none(전부)
+function passesCarrierFilter_(name) {
+  var mode = String(getBrandConfig_('CARRIER_FILTER_MODE', 'exclude')).trim();
+  if (mode === 'none') return true;
+  var kws = String(getBrandConfig_('CARRIER_FILTER_KEYWORDS', 'KT,다이렉트샵'))
+    .split(',').map(function (x) { return x.trim(); }).filter(Boolean);
+  var hit = kws.some(function (k) { return String(name || '').indexOf(k) >= 0; });
+  return (mode === 'include') ? hit : !hit;
+}
+
 function onOpen() {
   SpreadsheetApp.getUi()
-    .createMenu('🚀 폰스팟 통합')
+    .createMenu('🚀 ' + getBrandConfig_('BRAND_NAME', '폰스팟') + ' 통합')
     .addItem('⚡ 전체 새로고침 (모든 채널)', 'refreshAll')
     .addSeparator()
     .addItem('🔄 GA4 최신 데이터 가져오기 (어제)', 'fetchGA4Daily')
@@ -170,7 +204,7 @@ function importGA4(startDate, endDate, clearAll) {
     limit: 100000
   };
 
-  const response = AnalyticsData.Properties.runReport(request, 'properties/' + GA4_PROP_ID);
+  const response = AnalyticsData.Properties.runReport(request, 'properties/' + getBrandConfig_('GA4_PROP_ID', GA4_PROP_ID));
   if (!response.rows || response.rows.length === 0) {
     Logger.log('No data ' + startDate + '~' + endDate);
     return;

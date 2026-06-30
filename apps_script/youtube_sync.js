@@ -101,7 +101,7 @@ function fetchYouTubeAnalyticsDaily() {
     } catch (e) { Logger.log('[WARN] Analytics batch ' + (j / 50) + ': ' + e); }
   }
 
-  var ss = SpreadsheetApp.openById(SHEET_ID);
+  var ss = SpreadsheetApp.getActive();  // 멀티브랜드: 자기 시트 사용(옛 openById(SHEET_ID) 폐기)
   var sheet = ss.getSheetByName(YT_SHEET_TAB);
   if (!sheet) throw new Error('탭 "' + YT_SHEET_TAB + '" 없음');
   var lastRow = sheet.getLastRow();
@@ -167,7 +167,7 @@ function fetchYouTubeAnalyticsDaily() {
 
 function generateYouTubeInsightsMarkdown() {
   Logger.log('=== generateYouTubeInsightsMarkdown 시작 ===');
-  var ss = SpreadsheetApp.openById(SHEET_ID);
+  var ss = SpreadsheetApp.getActive();  // 멀티브랜드: 자기 시트 사용(옛 openById(SHEET_ID) 폐기)
   var sheet = ss.getSheetByName(YT_SHEET_TAB);
   if (!sheet) throw new Error('유튜브 시트 없음');
 
@@ -361,8 +361,9 @@ function buildMarkdown_(insights, stats) {
 }
 
 function saveToDrive_(content) {
-  var folders = DriveApp.getFoldersByName(INSIGHTS_DRIVE_FOLDER);
-  var folder = folders.hasNext() ? folders.next() : DriveApp.createFolder(INSIGHTS_DRIVE_FOLDER);
+  var FOLDER = getBrandConfig_('INSIGHTS_DRIVE_FOLDER', INSIGHTS_DRIVE_FOLDER);
+  var folders = DriveApp.getFoldersByName(FOLDER);
+  var folder = folders.hasNext() ? folders.next() : DriveApp.createFolder(FOLDER);
   var files = folder.getFilesByName(INSIGHTS_FILE);
   if (files.hasNext()) {
     files.next().setContent(content);

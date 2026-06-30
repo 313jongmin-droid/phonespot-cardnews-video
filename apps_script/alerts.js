@@ -74,7 +74,7 @@ function runHealthCheckMenu() {
 // 목표는 Script Property TARGET_CPL(문의당 광고비 상한, 기본 50000원). 어제분만 점검.
 function checkAdTargets_() {
   const props = PropertiesService.getScriptProperties();
-  const targetCPL = Number(props.getProperty('TARGET_CPL') || 50000);
+  const targetCPL = Number(getBrandConfig_('TARGET_CPL', 50000));
   const ss = SpreadsheetApp.getActive();
   const warns = [];
   const y1 = _ymd(1);

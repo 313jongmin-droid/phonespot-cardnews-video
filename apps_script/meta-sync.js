@@ -256,7 +256,7 @@ function syncMetaCampaignIntegrated(targetDate) {
   // KT 캠페인 자동 제외
   const filtered = data.data.filter(item => {
     const camp = String(item.campaign_name || '');
-    return !['KT', '다이렉트샵'].some(kw => camp.includes(kw));
+    return passesCarrierFilter_(camp);
   });
   if (filtered.length === 0) {
     Logger.log('KT 제외 후 데이터 없음');
@@ -1907,8 +1907,9 @@ function buildMetaMarkdown_(insights, stats) {
 }
 
 function saveMetaInsightsToDrive_(content) {
-  const folders = DriveApp.getFoldersByName(META_INSIGHTS_DRIVE_FOLDER);
-  const folder = folders.hasNext() ? folders.next() : DriveApp.createFolder(META_INSIGHTS_DRIVE_FOLDER);
+  const FOLDER = getBrandConfig_('INSIGHTS_DRIVE_FOLDER', META_INSIGHTS_DRIVE_FOLDER);
+  const folders = DriveApp.getFoldersByName(FOLDER);
+  const folder = folders.hasNext() ? folders.next() : DriveApp.createFolder(FOLDER);
   const files = folder.getFilesByName(META_INSIGHTS_FILE);
   if (files.hasNext()) {
     files.next().setContent(content);

@@ -253,7 +253,7 @@ function syncDanggnGA4(opts) {
     return { ok: true, updated: 0 };
   }
 
-  const utmSource = PropertiesService.getScriptProperties().getProperty('DANGGN_UTM_SOURCE') || 'danggn';
+  const utmSource = getBrandConfig_('DANGGN_UTM_SOURCE', 'danggn');
 
   let updated = 0;
   let skipped = 0;
