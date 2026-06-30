@@ -157,16 +157,12 @@ function recordLastRefresh_() {
 
 // ──[일상]── 어제 GA4 데이터 수집 (매일 새벽 트리거가 호출)
 function fetchGA4Daily() {
-  // ★ self-heal: 어제 1일 → 최근 N일 각각 importGA4(ymd,ymd) (날짜별 upsert라 중복 없음).
-  //   GA4 일일 수집이 하루 실패/미실행해도 다음날 자동 보강(메타·네이버 self-heal과 동일 정책).
+  // ★ self-heal: 최근 N일을 "API 1회 호출 + 1회 재작성"으로 수집 (7일 루프·deleteRow 제거 → 빠름).
   const TZ = 'Asia/Seoul';
   var days = (typeof SELF_HEAL_DAYS !== 'undefined') ? SELF_HEAL_DAYS : 7;
-  for (var i = days; i >= 1; i--) {
-    var d = new Date(); d.setDate(d.getDate() - i);
-    var ymd = Utilities.formatDate(d, TZ, 'yyyy-MM-dd');
-    try { importGA4(ymd, ymd, false); Utilities.sleep(300); }
-    catch (e) { Logger.log('GA4 ' + ymd + ' 실패: ' + e.message); }
-  }
+  var end = new Date(); end.setDate(end.getDate() - 1);
+  var start = new Date(); start.setDate(start.getDate() - days);
+  importGA4(Utilities.formatDate(start, TZ, 'yyyy-MM-dd'), Utilities.formatDate(end, TZ, 'yyyy-MM-dd'), false);
 }
 
 // ──[수동]── 최근 30일 GA4 데이터 전체 다시 수집
@@ -210,20 +206,7 @@ function importGA4(startDate, endDate, clearAll) {
     return;
   }
 
-  if (clearAll) {
-    const lastRow = sh.getLastRow();
-    if (lastRow >= 5) sh.getRange(5, 1, lastRow - 4, 8).clearContent();
-  } else {
-    const ymdAPI = startDate.replace(/-/g, '');
-    const dateCol = sh.getRange('A:A').getValues();
-    const rowsToDelete = [];
-    for (let i = 4; i < dateCol.length; i++) {
-      if (dateCol[i][0] && String(dateCol[i][0]) === ymdAPI) rowsToDelete.push(i + 1);
-    }
-    for (let i = rowsToDelete.length - 1; i >= 0; i--) sh.deleteRow(rowsToDelete[i]);
-  }
-
-  const rows = response.rows.map(row => [
+  const newRows = response.rows.map(row => [
     row.dimensionValues[0].value,
     row.dimensionValues[1].value,
     row.dimensionValues[2].value,
@@ -234,13 +217,26 @@ function importGA4(startDate, endDate, clearAll) {
     parseInt(row.metricValues[2].value)
   ]);
 
-  let lastRow = 4;
-  const dateCol2 = sh.getRange('A:A').getValues();
-  for (let i = dateCol2.length - 1; i >= 0; i--) {
-    if (dateCol2[i][0]) { lastRow = i + 1; break; }
+  const lastRow = sh.getLastRow();
+  if (clearAll) {
+    if (lastRow >= 5) sh.getRange(5, 1, lastRow - 4, 8).clearContent();
+    if (newRows.length) sh.getRange(5, 1, newRows.length, 8).setValues(newRows);
+  } else {
+    // ★ 기간[start~end] 행만 효율적 교체: 기간 밖 유지행 + 신규 = 1회 재작성 (deleteRow 루프 제거)
+    const sStart = String(startDate).replace(/-/g, '');
+    const sEnd = String(endDate).replace(/-/g, '');
+    const keep = [];
+    if (lastRow >= 5) {
+      sh.getRange(5, 1, lastRow - 4, 8).getValues().forEach(function (r) {
+        const d = String(r[0] || '');
+        if (d && (d < sStart || d > sEnd)) keep.push(r);
+      });
+    }
+    const out = keep.concat(newRows);
+    if (lastRow >= 5) sh.getRange(5, 1, lastRow - 4, 8).clearContent();
+    if (out.length) sh.getRange(5, 1, out.length, 8).setValues(out);
   }
-  sh.getRange(lastRow + 1, 1, rows.length, 8).setValues(rows);
-  Logger.log('OK ' + startDate + '~' + endDate + ': ' + rows.length + ' rows');
+  Logger.log('OK ' + startDate + '~' + endDate + ': ' + newRows.length + ' rows');
 }
 
 // ──[일상]── 핵심 KPI 상세 (행 9-14) 재구성 — CPL 2종 (전체/추적)
