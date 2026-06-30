@@ -314,3 +314,66 @@ git push
 ---
 
 작성: 2026-06-11
+
+---
+
+## 멀티 브랜드 — 하드코딩 감사 + 설계 결정 (2026-06-28)
+
+### 사장님 결정
+- **브랜드마다 별도 구글계정 전부** (폰스팟 / KT폰샵 / 향후 국민·진짜폰스팟 각자 계정+시트+Apps Script).
+- **확장 구조 = config 참조 + 편집가능** (하드코딩 X). 비밀값만 Script Property, 나머지 브랜드설정은 편집가능한 `_설정` 시트로.
+
+### 하드코딩 브랜드 의존값 감사 (apps_script/)
+**A. 코드 수정 필요 (config로 분리)**
+1. ★ `Code.js:8 GA4_PROP_ID='534396517'` (폰스팟 GA4 속성) → 브랜드별. **미수정 시 KT가 폰스팟 GA4 읽음.**
+2. ★ `youtube_sync.js:26 SHEET_ID='1tCG…'`(3곳 openById) → `SpreadsheetApp.getActive()`. **미수정 시 KT가 폰스팟 유튜브 시트에 씀.**
+3. ★ KT필터 `meta-sync.js:259 ['KT','다이렉트샵'] 제외` + `naver-synce.js:304 NAVER_KT_FILTER` → 폰스팟=KT제외 / KT폰샵=KT만(반전). 브랜드별 필터 모드.
+4. Drive 인사이트 폴더 `'phonespot_cardnews_state'` (meta-sync:1694, youtube_sync:28) → 브랜드 접두사.
+5. 표시 "폰스팟" 리터럴 (Code.js 메뉴/타이틀) → 브랜드명(선택).
+
+**B. Script Property = KT 프로젝트에 값만 등록(코드 수정 X, 자동 분리)**
+META_TOKEN·META_AD_ACCOUNT_ID / NAVER_API_LICENSE·NAVER_SECRET_KEY·NAVER_CUSTOMER_ID / GOOGLE_ADS_*(6) / INSTAGRAM_BUSINESS_ID / DANGGN_UTM_SOURCE / TELEGRAM_BOT_TOKEN·TELEGRAM_CHAT_ID / TARGET_CPL·BENCHMARK_TERMS / GEMINI_API_KEY·APIFY_TOKEN.
+
+**C. 계정 묶임**: `youtube_sync.js mine:true` = 실행 계정의 채널 → 별도 구글계정이면 자연 분리(결정과 일치).
+
+### 설계: config 하이브리드 (참조+편집)
+- **비밀값(토큰·API키)** = Script Property 유지(시트 노출 금지, 보안).
+- **비밀 아닌 브랜드설정**(BRAND명, GA4_PROP_ID, KT필터모드, 인사이트폴더, TARGET_CPL 등) = 각 브랜드 시트의 **`_설정` 탭**(편집가능)에 두고 코드가 참조. 폴백=현 폰스팟 기본값(무회귀).
+- 효과: 브랜드 추가/변경 = **시트 값만 수정**(코드·Apps Script 설정 안 건드림) → 확장 용이.
+
+### ★ 별도 계정의 배포 함의 (중요)
+- 계정마다 clasp 인증이 달라 GitHub Actions에 **계정별 clasprc 필요**: `CLASPRC_JSON`(폰스팟) + `CLASPRC_JSON_KT`(KT) + 각 `CLASP_JSON_*`(scriptId). workflow에 브랜드 step 추가.
+- 또는 배포계정을 각 시트 편집자로 공유(바운드 스크립트라 까다로움) — 계정별 clasprc 권장.
+
+### 다음 단계 (미착수, 컨펌 후)
+1. `_설정` 탭 스키마 확정 → 2. 코드 A 5개를 config 참조+폴백으로 리팩터(폰스팟 무회귀 검증) → 3. KT 계정/시트/scriptId/secret 셋업 → 4. workflow KT step.
+
+---
+
+## KT폰샵 셋업 진행분 (2026-06-30, 중단 지점)
+
+### 결정·현황
+- **모델 = 완전 별도(A)**: KT폰샵은 별도 사업자로 메타·네이버 광고계정 **신규 가입**, **별도 GA4 속성 신규 생성**, **별도 웹사이트 랜딩**. 폰스팟과 데이터·계정 완전 분리.
+- **사본 생성됨**: `KT폰샵 광고운영 관리대장` (시트ID `1M0wgjlihpAYMS8KmR-ho3HIJL0skybP0OJYbnvm79nM`). ★ 소유자 = **313jongmin@gmail.com (폰스팟과 동일 계정)** — 별도 구글계정 아님(메인 계정 내 사본). 광고/GA4 계정만 별도, 구글 소유계정은 공유.
+  - **함의**: 같은 계정이라 **clasp 인증(CLASPRC_JSON) 공유** → KT 배포에 CLASPRC_JSON_KT 불필요, `CLASP_JSON_KT`(=KT .clasp.json 한 줄)만 추가.
+- **KT scriptId** = `19mLDjT-A2jk5oE3mTAZioYuKT2gGj_yEQT8ZuyGddA-hvA5uhqhS7Itj`.
+
+### 코드 도구 (멀티브랜드, Code.js 신설 — 2026-06-30)
+- `setupBrandConfigSheet()` (메뉴 🏢 _설정 탭 생성/갱신): `_설정` 키-값 탭 생성, **기존 값 보존**(재실행 안전), 값칸 노랑.
+- `clearBrandDataForTemplate()` (메뉴 🧹 새 브랜드 빈 템플릿화): 사본에서 데이터행만 비움(헤더·우측 월별/요약 블록·대시보드 수식 보존), (구) 잔재 탭 삭제. **확인 다이얼로그 필수, 폰스팟 원본에서 금지.** 비우는 탭별 [시작행,끝열]은 함수 내 LIST 참조(우측블록 보호).
+- 배포: `.github/workflows/deploy-apps-script.yml`에 **"Push to Apps Script (KT폰샵)" step 추가** — 폰스팟 본점 push 뒤, apps_script 코드를 KT scriptId(.clasp.json=CLASP_JSON_KT)로 한 번 더 clasp push. → git push 1번 = 폰스팟+KT 동시 배포.
+
+### KT `_설정` 값 (확정 + 미완)
+BRAND_NAME=KT폰샵 / CARRIER_FILTER_MODE=exclude+키워드空(=전부통과, none과 동일동작) / INSIGHTS_DRIVE_FOLDER=kt_cardnews_state / DANGGN_UTM_SOURCE=daangn / TARGET_CPL=30000.
+**미완 = GA4_PROP_ID 비어있음.**
+
+### ★ 함정 / 중단 이유 (다음 세션 필독)
+- **GA4_PROP_ID 비우면 폴백이 폰스팟 GA4(534396517)** → KT가 폰스팟 GA4를 읽음. **KT GA4 속성 생성 전까지 KT에서 fetchGA4Daily 실행·GA4/전체새로고침 트리거 설정 금지**(폰스팟 GA4 오염). KT GA4 만들고 속성ID 입력 후에 GA4 sync·트리거 ON.
+- 다른 채널(메타·네이버)은 토큰 없으면 0이라 위험 없음 — GA4만 폴백 때문에 주의.
+
+### 남은 일 (재개 시)
+1. ○ `CLASP_JSON_KT` GitHub Secret 등록(한 줄) + workflow push → KT step 초록 확인(= KT에 현재 코드 배포).
+2. ○ KT 사본에서 🧹 빈 템플릿화 실행.
+3. ○ KT 사업자 메타·네이버 계정 가입 → 토큰 KT Script Property 등록(채널별로 생기는 대로).
+4. ○ **KT GA4 속성 생성** → _설정 GA4_PROP_ID 입력 + KT 웹사이트 GA4/GTM 심기 → 그 후 GA4 sync·트리거 ON.
+정본 = 이 파일 + `_docs/SYSTEM_MAP.md` 멀티브랜드 항목.
