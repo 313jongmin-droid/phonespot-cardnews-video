@@ -68,14 +68,18 @@ function clearBrandDataForTemplate() {
     ['광고소재', 3, 9],
     ['당근', 2, 14], ['메타', 2, 11], ['네이버', 2, 11], ['구글', 2, 11], ['카카오', 2, 11],
     ['스레드', 4, 9], ['유튜브', 4, 9], ['인스타', 4, 9], ['틱톡', 4, 9],
-    ['협업 리스트업', 3, 18], ['N블로그', 3, 6], ['N플레이스', 3, 4], ['계정정보', 4, 5]
+    ['협업 리스트업', 3, 18], ['N블로그', 3, 6], ['N플레이스', 3, 4], ['계정정보', 4, 5],
+    // 잔재 보강 (2026-06-30): 광고그룹 추이 데이터·문의접수 친구수(H~K)·유튜브 인사이트
+    ['통합대시보드', 64, 10], ['문의접수', 2, 8, 11], ['유튜브_인사이트', 2, 6]
   ];
   const cleared = [], skipped = [];
   LIST.forEach(function (t) {
     const sh = ss.getSheetByName(t[0]);
     if (!sh) { skipped.push(t[0] + '(없음)'); return; }
     const last = sh.getLastRow();
-    if (last >= t[1]) { sh.getRange(t[1], 1, last - t[1] + 1, t[2]).clearContent(); cleared.push(t[0]); }
+    const sc = (t.length === 4) ? t[2] : 1;          // 시작열
+    const ec = (t.length === 4) ? t[3] : t[2];       // 끝열
+    if (last >= t[1]) { sh.getRange(t[1], sc, last - t[1] + 1, ec - sc + 1).clearContent(); cleared.push(t[0]); }
   });
   // (구) 잔재 탭 삭제
   ['채널 리스트업 (구)', '협업메일 현황 (구)'].forEach(function (n) {
