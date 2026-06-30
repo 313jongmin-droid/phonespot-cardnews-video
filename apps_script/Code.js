@@ -49,6 +49,44 @@ function passesCarrierFilter_(name) {
   return (mode === 'include') ? hit : !hit;
 }
 
+// ★ _설정 탭 생성/갱신 (멀티브랜드 셋업) — 각 브랜드 시트에서 1회 실행 후 B열(값)만 수정.
+function setupBrandConfigSheet() {
+  const ss = SpreadsheetApp.getActive();
+  let sh = ss.getSheetByName('_설정');
+  const created = !sh;
+  if (!sh) sh = ss.insertSheet('_설정');
+  const rows = [
+    ['키', '값', '설명 (브랜드별로 값만 수정 — ⚠️ 다른 브랜드는 반드시 변경)'],
+    ['BRAND_NAME', '폰스팟', '표시명(메뉴/타이틀). 예: KT폰샵'],
+    ['GA4_PROP_ID', '534396517', '이 브랜드 GA4 속성 ID (다른 브랜드면 반드시 변경)'],
+    ['CARRIER_FILTER_MODE', 'exclude', 'exclude(키워드 제외=폰스팟) / include(키워드만=KT폰샵) / none(전부)'],
+    ['CARRIER_FILTER_KEYWORDS', 'KT,다이렉트샵', '필터 키워드(콤마 구분)'],
+    ['INSIGHTS_DRIVE_FOLDER', 'phonespot_cardnews_state', '인사이트 MD 저장 Drive 폴더명(브랜드별로 분리 권장)'],
+    ['DANGGN_UTM_SOURCE', 'daangn', 'GA4 당근 sessionSource 값'],
+    ['TARGET_CPL', '30000', '목표 CPL(경고 기준)']
+  ];
+  // 기존 값 보존: 이미 _설정에 값이 있으면 덮어쓰지 않음(키 추가/설명 갱신만)
+  const existing = {};
+  if (!created && sh.getLastRow() >= 2) {
+    sh.getRange(2, 1, sh.getLastRow() - 1, 2).getValues().forEach(function (r) {
+      const k = String(r[0] || '').trim();
+      if (k) existing[k] = r[1];
+    });
+  }
+  rows.forEach(function (r, i) {
+    if (i > 0 && existing[r[0]] !== undefined && String(existing[r[0]]).trim() !== '') r[1] = existing[r[0]];
+  });
+  sh.getRange(1, 1, rows.length, 3).setValues(rows);
+  sh.getRange(1, 1, 1, 3).setBackground('#1F4E78').setFontColor('#FFFFFF').setFontWeight('bold').setHorizontalAlignment('center');
+  sh.getRange(2, 1, rows.length - 1, 1).setFontWeight('bold');
+  sh.getRange(2, 2, rows.length - 1, 1).setBackground('#FFF59D');  // 값 칸 = 노랑(편집칸)
+  sh.setColumnWidth(1, 210); sh.setColumnWidth(2, 260); sh.setColumnWidth(3, 460);
+  sh.setFrozenRows(1);
+  try {
+    SpreadsheetApp.getUi().alert('✅ _설정 탭 ' + (created ? '생성' : '갱신') + ' 완료.\n노란 B열(값)을 이 브랜드에 맞게 수정하세요.\n폰스팟은 그대로 두면 현 동작 유지(무회귀).');
+  } catch (e) {}
+}
+
 function onOpen() {
   SpreadsheetApp.getUi()
     .createMenu('🚀 ' + getBrandConfig_('BRAND_NAME', '폰스팟') + ' 통합')
@@ -61,6 +99,7 @@ function onOpen() {
     .addItem('🏷️ UTM 슬러그 드롭다운 갱신', 'refreshUtmSlugDropdowns')
     .addItem('🔍 GA4 미매핑 슬러그 → UTM 추가', 'appendUnmappedUtmFromGA4')
     .addItem('🔗 UTM named range 셋업/복구', 'setupUtmNamedRanges')
+    .addItem('🏢 _설정 탭 생성/갱신 (멀티브랜드)', 'setupBrandConfigSheet')
     .addItem('⏰ 야간 전체 새로고침 트리거 (02:45)', 'setupRefreshAllTrigger')
     .addToUi();
 
