@@ -1374,13 +1374,13 @@ function buildDashboardV2() {
   colHeader(11, ['채널', '노출', '클릭', '소진금액', '문의', '문의당비용'], LCOL);
 
   const ga4D = `'GA4_자동'!A:A,">="&TEXT(${ABS_N},"yyyymmdd"),'GA4_자동'!A:A,"<="&TEXT(${ABS_O},"yyyymmdd")`;
-  // 채널 순서 = 실비용 대조와 동일. 소진금액=결제내역(카드결제) / 문의=GA4 카톡클릭(당근만 카톡문의+앱문의 별도식)
+  // 채널 순서 = 실비용 대조와 동일. 소진금액=각 채널 광고시트 지출(실제 집행 소진) / 문의=GA4 카톡클릭(당근만 카톡문의+앱문의 별도식)
   const channels = [
-    {name:'메타',   adSheet:'메타+',   impCol:'F', clkCol:'G', sources:['meta','facebook.com','m.facebook.com','l.facebook.com']},
-    {name:'네이버', adSheet:'네이버+', impCol:'F', clkCol:'G', sources:['naver','naver_blog','ad.search.naver.com','m.ad.search.naver.com','m.search.naver.com']},
-    {name:'구글',   adSheet:'구글',    impCol:'E', clkCol:'F', sources:['google']},
-    {name:'카카오', adSheet:'카카오',  impCol:'E', clkCol:'F', sources:['kakao']},
-    {name:'당근',   adSheet:'당근+',  impCol:'D', clkCol:'E', sources:['daangn','danggn'], danggn:true},  // 노출/클릭 = 당근+ 일별(옛 당근 시트는 운영일지라 누락)
+    {name:'메타',   adSheet:'메타+',   impCol:'F', clkCol:'G', spdCol:'H', sources:['meta','facebook.com','m.facebook.com','l.facebook.com']},
+    {name:'네이버', adSheet:'네이버+', impCol:'F', clkCol:'G', spdCol:'H', sources:['naver','naver_blog','ad.search.naver.com','m.ad.search.naver.com','m.search.naver.com']},
+    {name:'구글',   adSheet:'구글',    impCol:'E', clkCol:'F', spdCol:'G', sources:['google']},
+    {name:'카카오', adSheet:'카카오',  impCol:'E', clkCol:'F', spdCol:'G', sources:['kakao']},
+    {name:'당근',   adSheet:'당근+',  impCol:'D', clkCol:'E', spdCol:'F', sources:['daangn','danggn'], danggn:true},  // 노출/클릭 = 당근+ 일별(옛 당근 시트는 운영일지라 누락)
   ];
   const chStart = 12;
   channels.forEach(function (c, i) {
@@ -1388,14 +1388,13 @@ function buildDashboardV2() {
     const ad = (col) => `SUMIFS('${c.adSheet}'!${col}:${col},'${c.adSheet}'!A:A,">="&${ABS_N},'${c.adSheet}'!A:A,"<="&${ABS_O})`;
     const ev = (e) => c.sources.map(s =>
       `SUMIFS('GA4_자동'!F:F,'GA4_자동'!B:B,"${s}",'GA4_자동'!E:E,"${e}",${ga4D})`).join('+');
-    const spend = `SUMIFS('결제내역'!D:D,'결제내역'!B:B,"${c.name}",'결제내역'!A:A,">="&${ABS_N},'결제내역'!A:A,"<="&${ABS_O})`;
     const inq = c.danggn
       ? `SUMIFS('당근+'!P:P,'당근+'!A:A,">="&${ABS_N},'당근+'!A:A,"<="&${ABS_O})+SUMIFS('당근+'!Q:Q,'당근+'!A:A,">="&${ABS_N},'당근+'!A:A,"<="&${ABS_O})`
       : ev('kakao_chat_click');
     dash.getRange(r, 1).setValue(c.name);
     dash.getRange(r, 2).setFormula(`=IFERROR(${ad(c.impCol)},0)`).setNumberFormat(fmtKM);
     dash.getRange(r, 3).setFormula(`=IFERROR(${ad(c.clkCol)},0)`).setNumberFormat(fmtKM);
-    dash.getRange(r, 4).setFormula(`=IFERROR(${spend},0)`).setNumberFormat(F_WON);          // 소진금액=결제내역
+    dash.getRange(r, 4).setFormula(`=IFERROR(${ad(c.spdCol)},0)`).setNumberFormat(F_WON);   // 소진금액=실제 광고집행 지출(각 채널 광고시트)
     dash.getRange(r, 5).setFormula(`=IFERROR(${inq},0)`).setNumberFormat(F_INT);            // 문의
     dash.getRange(r, 6).setFormula(`=IFERROR(IF(E${r}=0,"-",D${r}/E${r}),"-")`).setNumberFormat(F_WON);  // 문의당비용=소진/문의
   });
