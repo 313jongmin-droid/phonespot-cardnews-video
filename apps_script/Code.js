@@ -1314,8 +1314,8 @@ function buildDashboardV2() {
       .setFontWeight('bold').setFontSize(18).setHorizontalAlignment('center');
   });
   dash.getRange('A2').setFormula(`=${sumPaidFx(GS, GE)}`).setNumberFormat(F_WON);
-  dash.getRange('C2').setFormula(`=IFERROR((${sumPaidFx(GS, GE)})/${trackedInqG},"-")`).setNumberFormat(F_WON);
-  dash.getRange('E2').setFormula(`=IFERROR(${countInqFx(GS, GE, ",'문의접수'!C:C,\"개통\"")}/${trackedInqG},"-")`).setNumberFormat(F_PCT);
+  dash.getRange('C2').setFormula(`=IFERROR((${sumPaidFx(GS, GE)})/${inqG},"-")`).setNumberFormat(F_WON);
+  dash.getRange('E2').setFormula(`=IFERROR(${countInqFx(GS, GE, ",'문의접수'!C:C,\"개통\"")}/${inqG},"-")`).setNumberFormat(F_PCT);
   dash.getRange('G2').setFormula(`=${inqG}`).setNumberFormat('#,##0"건"');
   dash.getRange('I2').setFormula(`=IFERROR((${inqG}-${trackedInqG})/${inqG},"-")`).setNumberFormat(F_PCT);
 
@@ -1361,7 +1361,7 @@ function buildDashboardV2() {
     dash.getRange(r, 2).setFormula(`=${sumPaidFx(st, en)}`).setNumberFormat(F_WON);
     dash.getRange(r, 3).setFormula(`=${countInqFx(st, en)}`).setNumberFormat('#,##0"건"');
     dash.getRange(r, 4).setFormula(`=${countInqFx(st, en, ",'문의접수'!C:C,\"개통\"")}`).setNumberFormat('#,##0"건"');
-    dash.getRange(r, 5).setFormula(`=IFERROR(B${r}/${trackedInq},"-")`).setNumberFormat(F_WON);
+    dash.getRange(r, 5).setFormula(`=IFERROR(B${r}/C${r},"-")`).setNumberFormat(F_WON);
     dash.getRange(r, 6).setFormula(`=IF($C$3="","-",D${r}*$C$3-B${r})`).setNumberFormat(F_WON);  // 순이익=개통×마진-광고비
   });
   dataBox(kpiStart, kpiPeriods.length, 6, LCOL);   // 6~8
