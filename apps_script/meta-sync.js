@@ -403,10 +403,11 @@ function appendUnmappedUtmFromGA4() {
   // 2) GA4 최근 30일 (채널,슬러그) 수집  (A=날짜 yyyymmdd, B=source, D=utm_campaign)
   const tz = 'Asia/Seoul';
   const cut = Utilities.formatDate(new Date(Date.now() - 30*86400*1000), tz, 'yyyyMMdd');
+  const MIN_SESS = 3;   // 노이즈 차단(2026-07-01): session_start 세션 이 값 미만 슬러그는 자동추가 안 함(1~2세션 오귀속 = news 등 유령 방지)
   const gLast = ga4.getLastRow();
-  const found = {};
+  const found = {};     // key -> {ch, slug, sess}
   if (gLast >= 5) {
-    ga4.getRange(5, 1, gLast - 4, 4).getValues().forEach(function(row){
+    ga4.getRange(5, 1, gLast - 4, 7).getValues().forEach(function(row){   // A:G — E(4)=event, G(6)=sessions
       const dt = String(row[0]||'').replace(/-/g,'').slice(0,8);
       if (!dt || dt < cut) return;
       const src = String(row[1]||'').toLowerCase().trim();
@@ -417,11 +418,15 @@ function appendUnmappedUtmFromGA4() {
       else if (src.indexOf('naver') >= 0) ch = '네이버';
       else return;                                    // 당근/구글 등은 자체 흐름
       if (mapped[slug]) return;
-      found[ch + '|' + slug] = { ch: ch, slug: slug };
+      const key = ch + '|' + slug;
+      if (!found[key]) found[key] = { ch: ch, slug: slug, sess: 0 };
+      if (String(row[4]||'') === 'session_start') found[key].sess += Number(row[6]) || 0;
     });
   }
-  const list = Object.keys(found).map(function(k){ return found[k]; });
-  if (list.length === 0) { if (ui) ui.alert('✅ 미매핑 GA4 슬러그 없음 (메타·네이버, 최근 30일).'); return; }
+  const all = Object.keys(found).map(function(k){ return found[k]; });
+  const list = all.filter(function(o){ return o.sess >= MIN_SESS; });   // 임계 이상만 추가
+  const skipped = all.length - list.length;                             // 노이즈 의심 제외 수
+  if (list.length === 0) { if (ui) ui.alert('✅ 미매핑 GA4 슬러그 없음 (메타·네이버, 최근 30일, ' + MIN_SESS + '세션 이상).' + (skipped ? '\n(노이즈 의심 ' + skipped + '개 제외)' : '')); return; }
 
   // 3) UTM 시트에 A채널 + C슬러그 채운 행 추가 (B는 사용자 입력)
   const today = new Date();
@@ -430,9 +435,10 @@ function appendUnmappedUtmFromGA4() {
   utm.getRange(startRow, 1, rows.length, 6).setValues(rows);
   utm.getRange(startRow, 4, rows.length, 1).setNumberFormat('yyyy-mm-dd');
 
-  const msg = '✅ GA4 미매핑 슬러그 ' + list.length + '개를 UTM 시트에 추가\n' +
-    '채널(A)·utm_campaign(C)는 채워둠 → B(메타 광고그룹명 한글)만 채우면 매칭됩니다.\n\n' +
-    list.slice(0,20).map(function(o,i){ return (i+1)+'. ['+o.ch+'] '+o.slug; }).join('\n') + (list.length>20?'\n…':'');
+  const msg = '✅ GA4 미매핑 슬러그 ' + list.length + '개를 UTM 시트에 추가 (' + MIN_SESS + '세션 이상만)\n' +
+    (skipped ? '· 노이즈 의심 ' + skipped + '개 제외(' + MIN_SESS + '세션 미만)\n' : '') +
+    '채널(A)·utm_campaign(C)는 채워둠 → B(광고그룹명 한글)만 채우면 매칭됩니다.\n\n' +
+    list.slice(0,20).map(function(o,i){ return (i+1)+'. ['+o.ch+'] '+o.slug+' ('+o.sess+'s)'; }).join('\n') + (list.length>20?'\n…':'');
   if (ui) ui.alert(msg);
   if (typeof logSync_ === 'function') { try { logSync_('appendUnmappedUtmFromGA4', list.length + '개 추가'); } catch(e){} }
 }
