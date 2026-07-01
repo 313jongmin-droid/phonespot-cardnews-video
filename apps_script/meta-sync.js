@@ -524,7 +524,9 @@ function flipMappedUtmStatus() {
     if (CHANNELS.indexOf(ch) < 0) continue;
     if (CHANNELS.indexOf(name) >= 0) continue;
     if (name.indexOf('※') >= 0 || utm.indexOf('※') >= 0) continue;
-    if (utm && status !== '✅ 매핑됨') { sheet.getRange(i + 2, 5).setValue('✅ 매핑됨'); flipped++; }
+    if (!utm) continue;                                   // 슬러그 없으면 ⚠️ 매핑 필요 그대로
+    if (name && status !== '✅ 매핑됨') { sheet.getRange(i + 2, 5).setValue('✅ 매핑됨'); flipped++; }
+    else if (!name && status === '✅ 매핑됨') { sheet.getRange(i + 2, 5).setValue('⚠️ 광고그룹명(B) 입력 필요'); flipped++; }  // 거짓 ✅ 되돌림(B 없음)
   }
   const msg = 'utm 채워진 행 ' + flipped + '개 상태 ✅ 매핑됨으로 갱신';
   Logger.log(msg);

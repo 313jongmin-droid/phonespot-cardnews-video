@@ -575,9 +575,10 @@ function autoDiscoverNaverAdgroups_(rows, ymd) {
     const range = sh.getRange(dataStartRow, 1, newLastRow - dataStartRow + 1, 5).getValues();
     range.forEach((row, i) => {
       if (row[0] !== '네이버') return;
+      const name = String(row[1] || '').trim();
       const utm = String(row[2] || '').trim();
       const status = String(row[4] || '').trim();
-      const desired = utm ? '✅ 매핑됨' : '⚠️ 매핑 필요';
+      const desired = (utm && name) ? '✅ 매핑됨' : (utm ? '⚠️ 광고그룹명(B) 입력 필요' : '⚠️ 매핑 필요');
       if (status !== desired) {
         sh.getRange(dataStartRow + i, 5).setValue(desired);
       }
