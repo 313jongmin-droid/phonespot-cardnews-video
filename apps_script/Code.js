@@ -1035,31 +1035,6 @@ function updateKakaoReportDashboard(showAlert) {
   if (showAlert !== false) SpreadsheetApp.getUi().alert('✅ 카톡 문의 입력률 대시보드 갱신 완료');
 }
 
-function inspectAdCreativeLayout() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var sh = ss.getSheetByName('광고소재');
-  if (!sh) {
-    var names = ss.getSheets().map(function(s){return s.getName();});
-    SpreadsheetApp.getUi().alert("'광고소재' 시트 없음.\n전체 시트 목록:\n" + names.join('\n'));
-    return;
-  }
-  var lastRow = sh.getLastRow(), lastCol = sh.getLastColumn();
-  var out = '시트=광고소재  마지막행=' + lastRow + '  마지막열=' + lastCol + '\n\n';
-  var top = sh.getRange(1, 1, Math.min(3,lastRow), Math.min(11,lastCol)).getDisplayValues();
-  for (var r=0;r<top.length;r++){
-    out += '행' + (r+1) + ': ' + top[r].map(function(v){return v===''?'·':v;}).join(' | ') + '\n';
-  }
-  out += '\n[K열 내용 있는 행]\n';
-  var kvals = sh.getRange(1, 11, lastRow, 1).getValues();
-  for (var i=0;i<kvals.length;i++){
-    var v = String(kvals[i][0]||'').trim();
-    if (v) out += 'K' + (i+1) + ': ' + v.substring(0,40) + '\n';
-  }
-  SpreadsheetApp.getUi().alert(out);
-  Logger.log(out);
-}
-
-// ──[Web App]── generator.html 호스팅 + API 라우팅 (2026-06-09 C-4: createTemplateFromFile)
 function doGet(e) {
   // 권한 체크: Owner Execute일 때 빈 문자열 통과
   const allowed = ['313jongmin@gmail.com', 'mazision@gmail.com'];
@@ -1621,38 +1596,6 @@ function buildDashboardV2() {
   if (typeof logSync_ === 'function') { try { logSync_('buildDashboardV2', '대시보드 V2 빌드 (2열)'); } catch (e) {} }
 }
 
-// ============ 일회용: 시트 탭 이름 단축 (_통합 → +, UTM_매핑 → UTM), 2026-06-23 ============
-// 코드 문자열은 이미 새 이름으로 치환됨. 이 함수로 실제 탭을 리네임하면 정합.
-// 시트 안 수식은 탭 리네임 시 구글시트가 자동 갱신. 당근_UTM_매핑은 유지(건드리지 않음).
-function renameTabsToPlus() {
-  const ss = SpreadsheetApp.getActive();
-  const MAP = [
-    ['메타_통합', '메타+'],
-    ['네이버_통합', '네이버+'],
-    ['당근_통합', '당근+'],
-    ['구글_통합', '구글+'],
-    ['UTM_매핑', 'UTM'],
-  ];
-  const done = [], skip = [];
-  MAP.forEach(function (m) {
-    const oldN = m[0], newN = m[1];
-    const sh = ss.getSheetByName(oldN);
-    if (!sh) { skip.push(oldN + '(없음)'); return; }
-    if (ss.getSheetByName(newN)) { skip.push(newN + '(이미존재)'); return; }
-    sh.setName(newN);
-    done.push(oldN + '→' + newN);
-  });
-  const msg = '탭 리네임 완료\n\n적용: ' + (done.join(', ') || '없음') +
-    '\n건너뜀: ' + (skip.join(', ') || '없음') +
-    '\n\n다음: 통합대시보드 새로고침(또는 buildDashboardV2) 1회 권장.';
-  Logger.log(msg);
-  try { SpreadsheetApp.getUi().alert(msg); } catch (e) {}
-  return { done: done, skip: skip };
-}
-
-
-// ============ 브랜드 프로필 시트 백업/복원 (generator.html 브랜드 프로필) ============
-const SHEET_BRAND_PROFILES = '브랜드_설정';
 function getBrandProfilesSheet_() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   let sh = ss.getSheetByName(SHEET_BRAND_PROFILES);
