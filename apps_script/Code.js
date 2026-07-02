@@ -360,7 +360,7 @@ function addTimeSeriesChart() {
     {disp:'네이버', sheet:'네이버+', spdCol:'H'},
     {disp:'카카오', sheet:'카카오',      spdCol:'G'},
     // 당근 추세: 옛 당근 시트 G열. 전환 시 {disp:'당근', sheet:'당근+', spdCol:'F'} 로 교체
-    {disp:'당근',   sheet:'당근',        spdCol:'G'},
+    {disp:'당근',   sheet:'당근+',       spdCol:'F'},
   ];
 
   sh.getRange('A3').setValue('날짜');
@@ -715,7 +715,7 @@ function buildDashboardV2() {
     {sh:'구글',        spd:'G'},
     {sh:'네이버+', spd:'H'},
     {sh:'카카오',      spd:'G'},
-    {sh:'당근',        spd:'G'},
+    {sh:'당근+',       spd:'F'},
   ];
   const sumPaidFx = (st, en) => ADS.map(a =>
     `SUMIFS('${a.sh}'!${a.spd}:${a.spd},'${a.sh}'!A:A,">="&${st},'${a.sh}'!A:A,"<="&${en})`
@@ -863,7 +863,7 @@ function buildDashboardV2() {
   sectionHeader(10, '실비용 대조 (이번달 카드결제 vs API 광고비)', RCOL);
   colHeader(11, ['채널', '카드결제', 'API광고비', '차이'], RCOL);
   const payStart = 12;
-  const PAY = [['메타', '메타+', 'H'], ['네이버', '네이버+', 'H'], ['구글', '구글', 'G'], ['카카오', '카카오', 'G'], ['당근', '당근', 'G']];
+  const PAY = [['메타', '메타+', 'H'], ['네이버', '네이버+', 'H'], ['구글', '구글', 'G'], ['카카오', '카카오', 'G'], ['당근', '당근+', 'F']];
   PAY.forEach(function (c, i) {
     const r = payStart + i;
     dash.getRange(r, RCOL).setValue(c[0]);                                  // H
