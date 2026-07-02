@@ -1493,8 +1493,57 @@ function buildDashboardV2() {
   });
   dataBox(kkStart, kkPeriods.length, 4, RCOL);   // 21~23
 
-  // ── 푸터 — 24행 (A24:F24 병합) ──
-  const footerRow = 24;
+  // 8L) 실적 매칭 — 문의접수 유입채널 기준 실제 문의·개통 per 채널 (전역 기간 L2). A26:F35
+  //   유료(메타/네이버/당근/구글/카카오)=광고소진 매칭 / 무료·기타·미상=소진 없음.
+  //   개통은 문의접수가 유일 소스. 유입채널 공백=미상(고객 미응답)이라 표본 참고치.
+  sectionHeader(26, '실적 매칭 (문의접수 유입채널)', LCOL);
+  colHeader(27, ['유입채널', '광고소진', '실문의', '개통', '개통당비용', '실CPL'], LCOL);
+  const mRows = [
+    {name:'메타',      src:['페북','인스타'],                     adSheet:'메타+',   spd:'H'},
+    {name:'네이버',    src:['네이버'],                             adSheet:'네이버+', spd:'H'},
+    {name:'당근',      src:['당근'],                               adSheet:'당근+',   spd:'F'},
+    {name:'구글',      src:['구글'],                               adSheet:'구글',    spd:'G'},
+    {name:'카카오',    src:['카카오'],                             adSheet:'카카오',  spd:'G'},
+    {name:'무료·기타', src:['내방','지인','뽐뿌','스레드','기타'], adSheet:null},
+  ];
+  const cntInq = function(srcs){ return srcs.map(function(x){ return `COUNTIFS('문의접수'!A:A,">="&${GS},'문의접수'!A:A,"<="&${GE},'문의접수'!D:D,"${x}")`; }).join('+'); };
+  const cntOp  = function(srcs){ return srcs.map(function(x){ return `COUNTIFS('문의접수'!A:A,">="&${GS},'문의접수'!A:A,"<="&${GE},'문의접수'!D:D,"${x}",'문의접수'!C:C,"개통")`; }).join('+'); };
+  const mStart = 28;
+  mRows.forEach(function(m, i){
+    const r = mStart + i;
+    dash.getRange(r, 1).setValue(m.name);
+    if (m.adSheet) {
+      dash.getRange(r, 2).setFormula(`=IFERROR(SUMIFS('${m.adSheet}'!${m.spd}:${m.spd},'${m.adSheet}'!A:A,">="&${GS},'${m.adSheet}'!A:A,"<="&${GE}),0)`).setNumberFormat(F_WON);
+    } else {
+      dash.getRange(r, 2).setValue('-');
+    }
+    dash.getRange(r, 3).setFormula(`=${cntInq(m.src)}`).setNumberFormat(F_INT);
+    dash.getRange(r, 4).setFormula(`=${cntOp(m.src)}`).setNumberFormat(F_INT);
+    dash.getRange(r, 5).setFormula(`=IF(OR(NOT(ISNUMBER(B${r})),B${r}=0,D${r}=0),"-",B${r}/D${r})`).setNumberFormat(F_WON);   // 개통당비용
+    dash.getRange(r, 6).setFormula(`=IF(OR(NOT(ISNUMBER(B${r})),B${r}=0,C${r}=0),"-",B${r}/C${r})`).setNumberFormat(F_WON);   // 실CPL
+  });
+  const misR = mStart + mRows.length;   // 34 = 미상(전체−위6행: 공백·미매핑값 흡수)
+  dash.getRange(misR, 1).setValue('미상(유입 미입력)');
+  dash.getRange(misR, 2).setValue('-');
+  dash.getRange(misR, 3).setFormula(`=C${misR+1}-SUM(C${mStart}:C${misR-1})`).setNumberFormat(F_INT);
+  dash.getRange(misR, 4).setFormula(`=D${misR+1}-SUM(D${mStart}:D${misR-1})`).setNumberFormat(F_INT);
+  dash.getRange(misR, 5).setValue('-');
+  dash.getRange(misR, 6).setValue('-');
+  dataBox(mStart, mRows.length + 1, 6, LCOL);   // 28~34
+  const mTot = misR + 1;   // 35 합계
+  dash.getRange(mTot, 1).setValue('합계').setFontWeight('bold');
+  dash.getRange(mTot, 2).setFormula(`=SUM(B${mStart}:B${misR})`).setNumberFormat(F_WON).setFontWeight('bold');
+  dash.getRange(mTot, 3).setFormula(`=COUNTIFS('문의접수'!A:A,">="&${GS},'문의접수'!A:A,"<="&${GE})`).setNumberFormat(F_INT).setFontWeight('bold');
+  dash.getRange(mTot, 4).setFormula(`=COUNTIFS('문의접수'!A:A,">="&${GS},'문의접수'!A:A,"<="&${GE},'문의접수'!C:C,"개통")`).setNumberFormat(F_INT).setFontWeight('bold');
+  dash.getRange(mTot, 5).setFormula(`=IF(D${mTot}=0,"-",B${mTot}/D${mTot})`).setNumberFormat(F_WON).setFontWeight('bold');
+  dash.getRange(mTot, 6).setFormula(`=IF(C${mTot}=0,"-",B${mTot}/C${mTot})`).setNumberFormat(F_WON).setFontWeight('bold');
+  dash.getRange(mTot, 1, 1, 6).setBackground(C_TOTAL_BG).setBorder(true,true,true,true,true,true,C_ROW_BD,SpreadsheetApp.BorderStyle.SOLID).setHorizontalAlignment('center');
+  dash.getRange(mTot, 1).setHorizontalAlignment('left');
+  dash.getRange(36, 1, 1, 6).merge().setValue('※ 유입채널은 고객 응답 시에만 기록 → 미상 다수 정상. 표본 참고치(개통은 문의접수 유일 소스).')
+    .setFontColor('#AAAAAA').setFontStyle('italic').setFontSize(9).setHorizontalAlignment('left');
+
+  // ── 푸터 — 38행 (실적매칭 섹션 추가로 아래 이동) ──
+  const footerRow = 38;
   const stamp = Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyy-MM-dd HH:mm');
   dash.getRange(footerRow, 1, 1, 6).merge()
     .setValue('🕐 마지막 업데이트: ' + stamp + '  ·  기간 변경 = 상단 L2 드롭다운(전체 반영)')
