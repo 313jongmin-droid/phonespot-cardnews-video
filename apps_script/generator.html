@@ -563,6 +563,19 @@
         <button class="btn-large" style="background:#5856D6" onclick="generateCarousel()">🎠 캐러셀 4컷 프롬프트 생성</button>
       </div>
       <div class="btn-caption">후킹 → 오퍼 → 차별/조건제거 → 클로징+CTA, 1:1 정사각 4컷. 아트디렉션·색·타이포 4컷 통일.</div>
+      <div class="btn-row" style="margin-top:8px; gap:6px; flex-wrap:wrap; align-items:center">
+        <select id="realistic-scene" style="flex:0 1 150px; font-size:12px">
+          <option value="product">씬: 제품 자연정물</option>
+          <option value="human">씬: 사람 요소(손/인물)</option>
+          <option value="mascot">씬: 캐릭터·마스코트</option>
+        </select>
+        <select id="realistic-text" style="flex:0 1 150px; font-size:12px">
+          <option value="none">텍스트: 없음(순수 사진)</option>
+          <option value="minimal">텍스트: 최소 자연 텍스트</option>
+        </select>
+        <button class="btn-large" style="background:#FF2D55; flex:1; min-width:180px" onclick="generateRealistic()">🎞 실사/인스타 감성 프롬프트</button>
+      </div>
+      <div class="btn-caption">디자인 배너 대신 자연광 실사 UGC 사진 프롬프트. 헤드라인·CTA·스티커 없음(또는 최소). 1:1.</div>
       <div class="btn-row" style="margin-top:10px">
         <button class="secondary small" onclick="randomFillCopy(false)">🎲 랜덤 채우기</button>
         <button class="btn-text small" onclick="resetAllForm()">전체 초기화</button>
@@ -618,6 +631,15 @@
         <button class="secondary small" onclick="copyCarouselAll()">📋 4컷 전체 복사</button>
       </div>
       <div id="carousel-output" style="display:flex; flex-direction:column; gap:12px"></div>
+    </section>
+
+    <section id="realistic-section" class="hidden">
+      <h2>
+        <span>🎞 실사 / 인스타 감성 이미지 프롬프트 (1:1)</span>
+        <span class="toggle" onclick="generateRealistic()">↻ 다시 생성</span>
+      </h2>
+      <div class="info-box">디자인 배너가 아닌 <strong>자연광 실사 UGC 사진</strong> 프롬프트입니다. 이미지 모델(ChatGPT 4o / 나노바나나 등)에 넣으세요. <strong>한계</strong>: text→image 실사는 AI티가 날 수 있고 특정 단말기 모델 재현이 부정확할 수 있음.</div>
+      <div id="realistic-output"></div>
     </section>
 
     <section id="copy-results-section" class="hidden">
@@ -3515,6 +3537,61 @@ function copyCarouselAll() {
   const all = carouselPrompts.map((p, i) => '===== SLIDE ' + (i + 1) + '/4 (' + CAROUSEL_BEATS[i].ko + ') =====\n' + p).join('\n\n\n');
   copyText(all);
   showToast('📋 4컷 전체 복사');
+}
+
+// ============ 실사 / 인스타 감성 이미지 모드 ============
+const REALISTIC_SCENES = {
+  product: 'Products placed naturally on a real wooden desk/table in a lived-in room with soft ambient window light — like a candid phone snapshot of gadgets left on a desk. No people, no mascot. Documentary, everyday feel.',
+  human: "A person's hand (or torso; face cropped out or optional) naturally holding or using the product in a real everyday setting. Casual and relatable, not a posed studio model shot.",
+  mascot: 'A cute small animal / friendly mascot (e.g., a hamster) posed naturally beside the product on a desk — an endearing candid pet-photo moment, warm and a little funny.'
+};
+const REALISTIC_TEXT = {
+  none: 'NO text, NO logo, NO graphic overlay whatsoever — a pure photograph. The selling message lives in the post caption, not inside the image.',
+  minimal: 'Only minimal, naturally-occurring in-scene text is allowed (e.g. a small handwritten sticky note or a real price tag on the desk). NO designed headline typography, NO CTA button, NO promotional stickers/badges.'
+};
+function buildRealisticPrompt(ctx, textMode, sceneMode) {
+  const productEn = mapProductToEnglish(ctx.product, ctx.category);
+  const target = ((ctx.age || '') + ' ' + (ctx.gender || '')).trim();
+  const scene = REALISTIC_SCENES[sceneMode] || REALISTIC_SCENES.product;
+  const txt = REALISTIC_TEXT[textMode] || REALISTIC_TEXT.none;
+  const ctxLines = [
+    'Category: ' + (ctx.category || ''),
+    target ? ('Audience vibe: ' + target) : '',
+    (ctx.season && ctx.season !== '시즌리스') ? ('Season/mood: ' + ctx.season) : '',
+    ctx.usp ? ('Underlying message (mood only — do NOT print it): ' + ctx.usp) : '',
+    ctx.newConcept ? ('Concept angle: ' + ctx.newConcept) : ''
+  ].filter(Boolean).join('\n');
+  return 'Create a photorealistic, natural Instagram-feed photo — an authentic organic/UGC post, NOT an ad banner and NOT graphic design — for ' + BP.imageDomain + ' (' + BP.brandName + '). Square 1:1 (1080x1080).\n\n'
+    + '[Aesthetic]\n'
+    + 'Amateur smartphone-camera look: natural available/window light, a real lived-in indoor setting, candid framing, gentle imperfection (slight grain or soft focus is fine), believable everyday atmosphere. It must look like a real photo a normal person actually posted — not a polished studio catalog shot.\n\n'
+    + '[Scene]\n' + scene + '\n'
+    + 'Product present: ' + productEn + ' — shown realistically as a real object sitting in the scene, NOT a floating cutout.\n\n'
+    + '[Text policy]\n' + txt + '\n\n'
+    + '[Context — for mood only]\n' + ctxLines + '\n\n'
+    + '[Avoid]\n'
+    + 'Graphic-design banner look, big bold headline typography, CTA buttons, promo stickers/badges, studio product-catalog lighting, oversaturated HDR colors, text placeholder bars — anything that screams "advertisement".';
+}
+let realisticPrompt = '';
+function generateRealistic() {
+  const ctx = getCopyContext();
+  const sm = (document.getElementById('realistic-scene') || {}).value || 'product';
+  const tm = (document.getElementById('realistic-text') || {}).value || 'none';
+  realisticPrompt = buildRealisticPrompt(ctx, tm, sm);
+  const sec = document.getElementById('realistic-section');
+  if (sec) sec.classList.remove('hidden');
+  const sceneLabel = { product: '제품 자연정물', human: '사람 요소', mascot: '캐릭터·마스코트' }[sm] || sm;
+  const out = document.getElementById('realistic-output');
+  if (out) out.innerHTML = '<div class="result-box" style="border-left:3px solid #FF2D55">'
+    + '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px">'
+    + '<strong>실사 · ' + sceneLabel + ' · ' + (tm === 'none' ? '텍스트 없음' : '최소 텍스트') + '</strong>'
+    + '<button class="secondary small" onclick="copyRealistic()">📋 복사</button></div>'
+    + '<pre style="white-space:pre-wrap; font-size:11px; color:var(--label-secondary); margin:0; max-height:240px; overflow:auto">' + escapeHtml(realisticPrompt) + '</pre></div>';
+  showToast('🎞 실사 프롬프트 생성 (' + sceneLabel + ')');
+}
+function copyRealistic() {
+  if (!realisticPrompt) { alert('먼저 실사 프롬프트를 생성하세요'); return; }
+  copyText(realisticPrompt);
+  showToast('📋 실사 프롬프트 복사');
 }
 
 // ============ 초기화 ============
