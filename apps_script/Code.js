@@ -129,6 +129,33 @@ function setupBrandConfigSheet() {
   } catch (e) {}
 }
 
+// ──[유틸]── A열에 날짜가 들어가는 모든 탭 → A열 폭 80 고정 (2026-07-01 종민 요청)
+// 판별: 상단 12행 중 A열에 Date / yyyymmdd 정수(GA4) / yyyy-mm-dd 문자열이 하나라도 있으면 날짜탭.
+// 통합대시보드(A=라벨·큰숫자)는 매칭 안 됨. 새 탭 추가 시 재실행.
+function fixDateColumnWidths() {
+  const ss = SpreadsheetApp.getActive();
+  const changed = [], skipped = [];
+  ss.getSheets().forEach(function (sh) {
+    const last = Math.min(sh.getLastRow(), 12);
+    if (last < 1) { skipped.push(sh.getName()); return; }
+    const vals = sh.getRange(1, 1, last, 1).getValues();
+    const isDate = vals.some(function (row) {
+      const v = row[0];
+      if (v instanceof Date) return true;
+      if (typeof v === 'number' && v >= 20200101 && v <= 20991231) return true;      // GA4 yyyymmdd 정수
+      if (typeof v === 'string' && /^\d{4}[-.\/]\d{1,2}[-.\/]\d{1,2}/.test(v)) return true;
+      return false;
+    });
+    if (isDate) { sh.setColumnWidth(1, 80); changed.push(sh.getName()); }
+    else skipped.push(sh.getName());
+  });
+  try {
+    SpreadsheetApp.getUi().alert('\u2705 A열 날짜 탭 폭 80 고정: ' + changed.length + '개\n' + changed.join(', ') +
+      '\n\n(비대상 ' + skipped.length + '개)');
+  } catch (e) {}
+  if (typeof logSync_ === 'function') { try { logSync_('fixDateColumnWidths', changed.length + '개 탭 A열 80'); } catch (e) {} }
+}
+
 function onOpen() {
   SpreadsheetApp.getUi()
     .createMenu('🚀 ' + getBrandConfig_('BRAND_NAME', '폰스팟') + ' 통합')
@@ -144,6 +171,7 @@ function onOpen() {
     .addItem('🏢 _설정 탭 생성/갱신 (멀티브랜드)', 'setupBrandConfigSheet')
     .addItem('🧹 새 브랜드 빈 템플릿화 (사본에서만!)', 'clearBrandDataForTemplate')
     .addItem('⏰ 야간 전체 새로고침 트리거 (02:45)', 'setupRefreshAllTrigger')
+    .addItem('📏 날짜(A열) 탭 폭 80 고정', 'fixDateColumnWidths')
     .addToUi();
 
   // 📘 메타 자동화 메뉴 (meta-sync.gs)
