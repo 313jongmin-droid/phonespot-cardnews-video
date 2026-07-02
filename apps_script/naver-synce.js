@@ -187,28 +187,6 @@ function backfillNaverIntegrated(fromDaysAgo, toDaysAgo) {
 function backfillNaver_step1_recent14() { return backfillNaverIntegrated(14, 1); }   // 1단계: 최근 14일
 function backfillNaver_step2_past15to29() { return backfillNaverIntegrated(29, 15); } // 2단계: 15~29일 전
 
-function backfillNaver30Days() {
-  const today = new Date();
-  let success = 0, fail = 0;
-  for (let i = 29; i >= 1; i--) {
-    const d = new Date(today);
-    d.setDate(today.getDate() - i);
-    const ymd = Utilities.formatDate(d, 'Asia/Seoul', 'yyyy-MM-dd');
-    try {
-      syncNaverDaily(ymd);
-      success++;
-      Utilities.sleep(500);
-    } catch (e) {
-      Logger.log(ymd + ' 실패: ' + e.message);
-      fail++;
-    }
-  }
-  SpreadsheetApp.getUi().alert('✅ 네이버 30일 백필 완료\n성공: ' + success + '일 / 실패: ' + fail + '일');
-}
-
-
-// ============ 연결 테스트 ============
-
 function testNaverConnection() {
   try {
     const campaigns = naverFetch_('GET', '/ncc/campaigns');
@@ -230,7 +208,6 @@ function testNaverConnection() {
 // 1. buildMetaSyncMenu_(ui) 안에 추가 (적당한 위치):
 //      .addItem('🔍 네이버 동기화', 'syncNaverDaily')
 //      .addItem('🔑 토큰 연결 테스트 (네이버)', 'testNaverConnection')
-//      .addItem('⏪ 네이버 30일 백필', 'backfillNaver30Days')
 //
 // 2. setupTriggers() 함수 안 deleteTrigger 조건에 추가:
 //      if (fn === 'syncAll' || ... || fn === 'syncNaverDaily') { ... }
@@ -614,34 +591,9 @@ function showUnmappedNaverAdgroups() {
 }
 
 
-// ============ 30일 백필 ============
-
-function backfillNaverIntegrated30Days() {
-  const today = new Date();
-  let success = 0, fail = 0;
-  for (let i = 29; i >= 1; i--) {
-    const d = new Date(today);
-    d.setDate(today.getDate() - i);
-    const ymd = Utilities.formatDate(d, 'Asia/Seoul', 'yyyy-MM-dd');
-    try {
-      syncNaverIntegrated(ymd);
-      success++;
-      Utilities.sleep(500);
-    } catch (e) {
-      Logger.log(ymd + ' 실패: ' + e.message);
-      fail++;
-    }
-  }
-  SpreadsheetApp.getUi().alert('✅ 네이버+ 30일 백필 완료\n성공: ' + success + '일 / 실패: ' + fail + '일');
-}
-
-
-// ============ 네이버 자동화 메뉴 (별도) ============
-
 function buildNaverSyncMenu_(ui) {
   ui.createMenu('🟢 네이버')
     .addItem('📊 광고그룹별 통합 (어제)', 'syncNaverIntegrated')
-    .addItem('⏪ 30일 백필', 'backfillNaverIntegrated30Days')
     .addSeparator()
     .addItem('🔍 미매핑 광고그룹 보기', 'showUnmappedNaverAdgroups')
     .addItem('🔑 연결 테스트', 'testNaverConnection')

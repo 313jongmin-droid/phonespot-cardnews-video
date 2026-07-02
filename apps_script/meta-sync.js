@@ -594,25 +594,6 @@ function backfillMetaIntegrated(fromDaysAgo, toDaysAgo) {
 function backfillMeta_step1_recent14() { return backfillMetaIntegrated(14, 1); }   // 1단계: 최근 14일
 function backfillMeta_step2_past15to29() { return backfillMetaIntegrated(29, 15); } // 2단계: 15~29일 전
 
-function backfillMetaCampaign30Days() {
-  const today = new Date();
-  let success = 0, fail = 0;
-  for (let i = 29; i >= 1; i--) {
-    const d = new Date(today); d.setDate(today.getDate() - i);
-    const ymd = Utilities.formatDate(d, 'Asia/Seoul', 'yyyy-MM-dd');
-    try {
-      syncMetaCampaignIntegrated(ymd);
-      success++;
-      Utilities.sleep(500); // API rate limit 보호
-    } catch (e) {
-      Logger.log(`${ymd} 실패: ${e.message}`);
-      fail++;
-    }
-  }
-  SpreadsheetApp.getUi().alert(`✅ 30일 백필 완료\n성공: ${success}일 / 실패: ${fail}일`);
-}
-
-// ============ 4. 출처미상 자동 보정 ============
 function correctUnknownSource() {
   Logger.log('=== correctUnknownSource 시작 ===');
   const ss = SpreadsheetApp.getActive();
@@ -1516,7 +1497,6 @@ function buildMetaSyncMenu_(ui) {
     .addItem('📥 어제 성과만 가져오기', 'syncMetaDaily')
     .addItem('🎨 광고소재 라이브러리 갱신', 'syncMetaCreatives')
     .addItem('📊 광고그룹별 통합 (어제)', 'syncMetaCampaignIntegrated')
-    .addItem('⏪ 30일 백필 (1회만)', 'backfillMetaCampaign30Days')
     .addSeparator()
     .addItem('🔍 미매핑 광고그룹 보기', 'showUnmappedAdsets')
     .addItem('✅ utm 채운 행 상태 갱신', 'flipMappedUtmStatus')
