@@ -556,6 +556,20 @@ function syncMetaCampaignRecent_(days) {
   Logger.log('syncMetaCampaignRecent ' + days + '일 (ok ' + ok + ' / fail ' + fail + ')');
 }
 
+// ★ 오후 재sync (2026-07-01): 새벽 01:40엔 메타가 어제치 미확정 → 낮에 확정 후 최근 3일 재수집.
+//   새벽 self-heal(7일)과 별개로, 어제/그제를 "당일 오후"에 채워 표시 지연 하루 단축.
+function afternoonMetaResync() {
+  syncMetaCampaignRecent_(3);
+  if (typeof logSync_ === 'function') { try { logSync_('afternoonMetaResync', '오후 최근 3일 재수집'); } catch (e) {} }
+}
+function setupAfternoonMetaResyncTrigger() {
+  ScriptApp.getProjectTriggers().forEach(function (t) {
+    if (t.getHandlerFunction() === 'afternoonMetaResync') ScriptApp.deleteTrigger(t);
+  });
+  ScriptApp.newTrigger('afternoonMetaResync').timeBased().atHour(14).nearMinute(0).everyDays(1).create();
+  try { SpreadsheetApp.getUi().alert('✅ 오후 메타 재sync 트리거 등록 (매일 14:00, 최근 3일 재수집).'); } catch (e) {}
+}
+
 // ★ 메타+ 청크 백필 — 메타_통합(syncMetaCampaignIntegrated)을 지정 구간만 재수집. 6분 한도 회피.
 function backfillMetaIntegrated(fromDaysAgo, toDaysAgo) {
   var from = fromDaysAgo || 14;
@@ -1515,6 +1529,7 @@ function buildMetaSyncMenu_(ui) {
     .addItem('📊 마지막 동기화 정보', 'showLastSyncInfo')
     .addItem('🔑 토큰 연결 테스트 (메타)', 'testTokenAndAccount')
     .addItem('⏰ Daily Trigger 설정', 'setupTriggers')
+    .addItem('⏰ 오후 재sync 트리거 (14:00, 최근3일)', 'setupAfternoonMetaResyncTrigger')
     .addToUi();
   // 폐기된 사용자 도구 메뉴 (generator.html로 이동, 2026-06-09):
   //  - 🤖 Apify 벤치마크 수집 → generator 벤치마크 탭 🔍 검색바
