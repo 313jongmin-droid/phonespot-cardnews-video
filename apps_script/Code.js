@@ -166,6 +166,7 @@ function onOpen() {
     .addItem('🧹 새 브랜드 빈 템플릿화 (사본에서만!)', 'clearBrandDataForTemplate')
     .addItem('⏰ 야간 전체 새로고침 트리거 (02:45)', 'setupRefreshAllTrigger')
     .addItem('📏 날짜(A열) 탭 폭 80 고정', 'fixDateColumnWidths')
+    .addItem('📅 채널시트 날짜 정렬 (메타+/네이버+/당근+)', 'sortAllChannelSheetsByDate')
     .addToUi();
 
   // 📘 메타 자동화 메뉴 (meta-sync.gs)
@@ -641,7 +642,28 @@ function refreshUtmSlugDropdowns() {
 // ──[E, 2026-06-22]── 야간 대시보드 재빌드 (refreshAll 6분초과 미작동 대체)
 // 데이터 sync는 개별 트리거가 담당. 이건 대시보드 UI/수식 재빌드만(빠름, API 호출 없음).
 // 개별 sync(1:35~2:35) 끝난 뒤 03:00 실행 권장. UI alert는 트리거 컨텍스트에서 throw하므로 각자 try.
+// ──[유틸]── 채널 시트 날짜(A열) 오름차순 정렬 (2026-07-03)
+//   upsert가 '해당날짜 삭제→맨아래 append'라 재수집 날짜가 밑으로 튀어 순서가 흐트러짐.
+//   집계는 SUMIFS라 순서 무관(=미관 목적). 행 통째 이동이라 수기 개통수/메모 안전.
+function sortSheetByDate_(name) {
+  const sh = SpreadsheetApp.getActive().getSheetByName(name);
+  if (!sh) return false;
+  const last = sh.getLastRow(), lastCol = sh.getLastColumn();
+  if (last < 3 || lastCol < 1) return false;   // 헤더+1행 이하면 정렬 불필요
+  sh.getRange(2, 1, last - 1, lastCol).sort({ column: 1, ascending: true });
+  return true;
+}
+function sortChannelSheetsCore_() {   // 트리거용(무 UI)
+  ['메타+', '네이버+', '당근+'].forEach(function (n) { try { sortSheetByDate_(n); } catch (e) {} });
+}
+function sortAllChannelSheetsByDate() {   // 메뉴용(알림)
+  sortChannelSheetsCore_();
+  try { SpreadsheetApp.getUi().alert('✅ 채널 시트 날짜 정렬 완료 (메타+ / 네이버+ / 당근+)'); } catch (e) {}
+  if (typeof logSync_ === 'function') { try { logSync_('sortChannelSheets', '메타+/네이버+/당근+'); } catch (e) {} }
+}
+
 function nightlyDashboard() {
+  try { sortChannelSheetsCore_(); } catch (e) { Logger.log('Sort: ' + e.message); }   // 채널시트 날짜 정렬(순서 복구)
   try { buildDashboardV2(); } catch (e) { Logger.log('DashV2: ' + e.message); }
   try { if (typeof addTimeSeriesChart === 'function') addTimeSeriesChart(); } catch (e) { Logger.log('Chart: ' + e.message); }
   if (typeof logSync_ === 'function') logSync_('nightlyDashboard', '대시보드 재빌드 완료');
