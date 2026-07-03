@@ -46,11 +46,12 @@
 
 **핵심 파일**
 - `CODEX_VIDEO_DESK/dashboard/server.py` — 서버 본체. `INDEX_HTML`(r"""…""" 원시문자열)에 화면+JS가 통째로 들어있음.
-- `CODEX_VIDEO_DESK/dashboard/start_hidden.ps1` — 패널 기동 런처(숨김 실행). **버전 게이트**가 여기.
+- `CODEX_VIDEO_DESK/dashboard/start_hidden.ps1` — 패널 기동 런처(숨김 실행). **버전 게이트**가 여기. **서버는 `pythonw.exe`(콘솔 없는 파이썬)로 기동 → 지속 cmd 창 없음**(2026-06-26 실행모델). pythonw 없으면 python.exe 폴백.
 - `CODEX_VIDEO_DESK/dashboard/auto_update.cmd` — (수신PC 옵트인) 기동 시 `git pull --ff-only`.
 - `CODEX_VIDEO_DESK/dashboard/remote_queue.py` — 원격 렌더 잡 큐.
+- `CODEX_VIDEO_DESK/dashboard/panel_hidden.vbs` — **무창 진입**(wscript가 bat을 window=0 히든 실행). 작업표시줄 고정 바로가기가 이걸 타깃(`MAINTENANCE/pin_panel.ps1`).
 - `CODEX_VIDEO_DESK/dashboard/stop_panel.ps1` / `run_library_backup.cmd` — 보조.
-- 진입 bat: `CODEX_VIDEO_DESK/00_PHONE_SPOT_PANEL.bat`.
+- 진입: `CODEX_VIDEO_DESK/00_PHONE_SPOT_PANEL.bat`(직접 실행=콘솔 보임, 디버그용) / **무창 = `dashboard/panel_hidden.vbs`**(고정 바로가기 타깃).
 
 **핵심 심볼 (server.py, 검증된 줄)**
 - `PANEL_VERSION = "phonespot-web-v46"` (L41) — **버전 단일 출처(SSOT)**. ps1이 이 값을 읽음. 화면/CSS 바꾸면 이 숫자만 올림.
@@ -104,6 +105,8 @@
 - **렌더 잡 '배정 대기' 고착 = 로컬 워커 readiness 실패(2026-06-18 실증).** 패널 기동 시 `start_local_worker()`가 로컬 워커(`RENDER_WORKER/worker.py`)를 띄우고, 워커는 `readiness()` 의존성 체크를 통과해야만 잡 claim. 하나라도 미설치면 워커는 죽지 않고 **5초마다 재확인만**(claim 안 함) → UI는 `worker_id` 없는 잡을 '배정 대기'로 표시(`server.py` L2568). 진단 = `CODEX_VIDEO_DESK/TEMP/worker/logs/worker_*.out.log`의 `[setup required] …`. 필요 모듈(`worker.py readiness()` L74)=edge-tts·Pillow·**mutagen**·requests·playwright + remotion·ffmpeg·chromium. 해결=빠진 것만 런타임 venv에 설치 → 워커가 5초 내 자동 claim(패널 재시작 불필요).
 
 - **결과 mp4 탐지 = 스냅샷 diff + 경계안전 slug 매칭 (worker.py v4, 2026-06-26).** `result_after(slug, started, before)`(`RENDER_WORKER/worker.py`): 렌더 직전 `snapshot_mp4s()`로 RESULTS의 mp4→mtime 스냅샷 → 실행 후 **신규/갱신 mp4 우선** 선택(없으면 mtime≥started−5 시간창 폴백). slug 매칭은 `_slug_in_folder`=양옆 `_` 래핑 비교(부분문자열 X) → "031"이 "0310_…" 폴더에 오매칭 안 됨. 워커는 잡 1개씩 순차 claim이라 신규 diff=이번 산출물. **제작 bat은 결과를 `RESULTS/<slug 포함 세그먼트>_<track>/*.mp4`로 떨궈야 탐지됨**(계약 불변).
+
+- **패널 콘솔 창이 작업표시줄에 상주 = 서버를 콘솔 파이썬으로 띄운 것(2026-06-26 수정).** `start /b python.exe server`는 서버가 그 .bat 콘솔을 생존 내내 붙잡아 창이 안 닫힘 → `start_hidden.ps1`에서 `pythonw.exe`로 기동해야 무창. 진입도 `panel_hidden.vbs`(wscript→bat 히든)로. **`pin_panel.ps1` 바꾸면 `작업표시줄에_패널_고정.bat` 1회 재실행해 바로가기 재생성 필요**(기존 고정은 unpin 후 재고정). Windows 전용=샌드박스 검증 불가.
 
 **교차 영향**: 렌더/라이브러리/슬러그 액션은 C·D 단원 스크립트를 subprocess로 부름.
 
@@ -664,3 +667,4 @@ rdnews/scripts/update_content_guide.py`로 §2 발행인덱스 자동 재생성,
 - 2026-07-02 (세션6): **당근 지출 소스 통일 → 당근+ (G단원, 광고비 정합성 버그 수정).** 증상: 라이브 대시보드에서 당근 광고비가 섹션마다 달랐음 — 상단 광고비·기간별핵심·순이익·CPL·실비용대조·추세는 옛 `당근` 시트(G열, 운영일지라 누락↑)를, 채널별효율·실적매칭은 `당근+`(F열)를 사용. 최근30일 당근 407,616(옛) vs 912,474(당근+) → 상단 광고비/순이익/CPL이 당근 과소반영. 수정: buildDashboardV2 `sumPaidFx`의 ADS 배열 `{sh:'당근',spd:'G'}`→`{sh:'당근+',spd:'F'}`, 실비용대조 PAY `['당근','당근','G']`→`['당근','당근+','F']`, addTimeSeriesChart trendChannels 당근 `sheet:'당근'/G`→`'당근+'/F`. adgroup-trend은 이미 당근+ 사용(변경 불필요). 결과: 전 섹션 광고비 일치(예 최근30일 2,811,749), CPL 26,779로 실적매칭과 정합. ★원칙: 당근 지출/노출/클릭은 **당근+가 정본**, 옛 '당근' 시트는 지출 소스로 쓰지 말 것.
 - 2026-07-03 (세션): **Meta 멀티브랜드 허브 모델 확정·문서화 (G단원 + ads/MULTI_BRAND_ARCHITECTURE.md).** 폰스팟 BM=허브(앱1+phonespot-sync 시스템유저1+장수명토큰1). 브랜드 광고계정을 허브 BM에 파트너공유+phonespot-sync에 자산할당 → 각 브랜드 시트는 자기 META_AD_ACCOUNT_ID + 같은 META_TOKEN(복사). 코드 수정 0(getToken/getAdAccountId가 시트별 Script Property 읽음). 신규 시스템유저 토큰발급은 "권한 없음"(앱 scope 미노출)으로 막히므로 **허브 토큰 재사용이 표준**(시스템유저 토큰은 발급 후 자산추가해도 접근됨). KT폰샵 이 모델로 메타 연결 검증 완료(네이버·GA4도 가동). 브랜드 추가 표준 체크리스트 = MULTI_BRAND_ARCHITECTURE.md "허브 BM" 섹션.
 - 2026-07-03 (세션): **[보류/가능성 기록] 메타 충전(카드결제) 자동수집 가능함 — 미구현.** Meta Graph API `GET /act_{id}/activities?event_type=ad_account_billing_charge` = 카드 청구 이벤트(시각+금액, extra_data)를 반환 → 결제내역 메타 행 자동 upsert 가능(소진=지출과 별개 데이터). 지금 결제내역=수기. **보류 사유(종민)**: 메타만 되고 네이버 비즈머니·당근·구글 충전은 각 플랫폼 별개라 못 긁음 → 실효성 낮음(실비용대조 5채널 중 1개만 자동). 구현 시: syncMetaBillingCharges 함수 + 1차 프로브(extra_data 금액필드·통화단위 확인) → 파서확정 → upsert(구분=메타) + 트리거. 권한 ads_read 되는지 실호출 확인 필요. 참고: developers.facebook.com/docs/marketing-api/reference/ad-account/activities.
+- 2026-06-26 (세션2, 무창 백그라운드 실행 — A단원, 패널 task): **패널 상주 콘솔(cmd) 창 제거.** 원인=서버를 `start /b python.exe`로 진입 .bat 콘솔에 붙여 실행→서버 생존 동안 그 cmd 창이 작업표시줄에 남음. 수정 ① `start_hidden.ps1` 서버 기동 `python.exe`→**`pythonw.exe`**(콘솔 없는 파이썬, 런타임 존재; 폴백 python.exe) ② **`dashboard/panel_hidden.vbs` 신설**=wscript가 bat을 window=0 히든 실행(무창 진입) ③ `MAINTENANCE/pin_panel.ps1` 고정 바로가기 타깃 `cmd.exe /c bat`→**`wscript.exe panel_hidden.vbs`**(한글 주석 바이트 보존). 자동 워커는 이미 `CREATE_NO_WINDOW`. **적용=`작업표시줄에_패널_고정.bat` 1회 재실행(바로가기 재생성).** Windows 전용→샌드박스 검증 불가, 로컬 확인. PANEL_VERSION 불변(서버코드 무변경, 실행 인프라만).

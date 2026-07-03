@@ -38,7 +38,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v46"
+PANEL_VERSION = "phonespot-web-v47"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -1951,6 +1951,26 @@ class Handler(BaseHTTPRequestHandler):
                 else:
                     json_response(self, {"ok": True})
                 return
+            if action == "panel_update_restart":
+                ps1 = Path(__file__).resolve().parent / "start_hidden.ps1"
+                if not ps1.exists():
+                    json_response(self, {"ok": False, "message": "start_hidden.ps1을 찾을 수 없습니다."})
+                    return
+                # DETACHED_PROCESS(0x8) | CREATE_NEW_PROCESS_GROUP(0x200): 재기동 런처가
+                # 서버(자기 자신) 종료 후에도 살아남아야 하므로 완전 분리 실행.
+                flags = 0x00000008 | 0x00000200
+                try:
+                    subprocess.Popen(
+                        ["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass",
+                         "-File", str(ps1), "-UpdateRestart"],
+                        cwd=str(DESK),
+                        stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                        creationflags=flags, close_fds=True,
+                    )
+                    json_response(self, {"ok": True, "message": "최신 코드를 받고 패널을 재시작합니다. 잠시 후 자동 새로고침됩니다."})
+                except Exception as exc:  # noqa: BLE001
+                    json_response(self, {"ok": False, "message": f"재시작 실행 실패: {exc}"})
+                return
             if action == "system_upload":
                 ok = run_job("시스템 업로드: GitHub commit/push", [[sys.executable, str(DESK / "MAINTENANCE" / "codex_github_upload.py")]], ROOT)
                 if not ok:
@@ -2204,7 +2224,7 @@ INDEX_HTML = r"""<!doctype html>
     <div class="runtime-card" id="runtimeMode"><span>실행 위치</span><b id="runtimeModeText">확인 중</b><select class="runtime-select" id="targetWorker"><option value="">자동 배정</option></select></div>
     <div class="runtime-card" id="runtimeSync"><span>카드뉴스 동기화</span><b id="runtimeSyncText">확인 중</b></div>
     <div class="runtime-card" id="runtimeJob"><span>실행 상태</span><b id="runtimeJobText">대기 중</b><div class="runtime-actions"><button class="runtime-action" id="cancelJobButton" onclick="cancelRemoteJob()" style="display:none">취소</button><button class="runtime-action" id="retryJobButton" onclick="retryRemoteJob()" style="display:none">재시도</button></div></div>
-    <div class="runtime-card" id="runtimeGithub"><span>GitHub</span><b id="runtimeGithubText">확인 중</b><div class="runtime-actions"><button class="runtime-action" id="runtimeGithubDownloadButton" onclick="runGithubDownload(event)">다운로드</button><button class="runtime-action" id="runtimeGithubUploadButton" onclick="runGithubUpload(event)">업로드</button></div></div>
+    <div class="runtime-card" id="runtimeGithub"><span>GitHub</span><b id="runtimeGithubText">확인 중</b><div class="runtime-actions"><button class="runtime-action" id="runtimeGithubDownloadButton" onclick="runGithubDownload(event)">다운로드</button><button class="runtime-action" id="runtimeGithubUploadButton" onclick="runGithubUpload(event)">업로드</button><button class="runtime-action" id="runtimeRestartButton" onclick="panelUpdateRestart(event)" title="최신 코드 받고 패널 재시작">갱신·재시작</button></div></div>
   </div>
   <div class="track-tabs">
     <div class="track-seg">
@@ -2810,6 +2830,26 @@ INDEX_HTML = r"""<!doctype html>
       });
     }
 
+    async function panelUpdateRestart(event){
+      if(event){ event.preventDefault(); event.stopPropagation(); }
+      if(!confirm("최신 코드를 받고(git pull) 패널을 재시작할까요?\n커밋 안 한 변경은 자동 보관(stash)됩니다. 진행 중 렌더가 있으면 끝난 뒤 실행하세요.")) return;
+      var btn=document.getElementById("runtimeRestartButton"); if(btn) btn.disabled=true;
+      var el=document.getElementById("runtimeGithubText");
+      try{
+        await api("/api/action",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"panel_update_restart",slug:""})});
+      }catch(e){ /* 재시작 중 연결이 끊길 수 있음 - 무시 */ }
+      if(el) el.textContent="재시작 중...";
+      var sawDown=false, tries=0;
+      var timer=setInterval(async function(){
+        tries++;
+        try{
+          var h=await fetch("/api/health",{cache:"no-store"});
+          if(h.ok){ if(sawDown){ clearInterval(timer); location.reload(); } }
+          else { sawDown=true; }
+        }catch(_){ sawDown=true; }
+        if(tries>60){ clearInterval(timer); location.reload(); }
+      }, 1500);
+    }
     async function runGithubAction(event, action, label) {
       if (event) {
         event.preventDefault();

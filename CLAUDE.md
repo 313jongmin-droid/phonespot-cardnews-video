@@ -150,6 +150,7 @@
 
 | 항목 | 경로 | 용도 |
 |---|---|---|
+| **패널 기동(무창)** | `CODEX_VIDEO_DESK/dashboard/panel_hidden.vbs` (고정=`작업표시줄에_패널_고정.bat`) | wscript→bat 히든→`pythonw` 서버. 작업표시줄 콘솔 없이 백그라운드 상주. 직접실행/디버그=`00_PHONE_SPOT_PANEL.bat`. pin_panel.ps1 변경 시 고정 bat 1회 재실행 |
 | webui | `cardnews/webui/app.py` (`webui/start.bat`) | Flask 컨트롤 패널 |
 | 셀렉트 렌더 | `cardnews/run_pngs.bat` | 슬러그 셀렉트 + 18 JPG 생성 |
 | 텔레그램 listener | `automation/scripts/telegram_listener.py` | 폰 → PC 명령 + outbox 푸시 |

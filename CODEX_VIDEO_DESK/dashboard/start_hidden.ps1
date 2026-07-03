@@ -1,6 +1,7 @@
 param(
   [switch]$NoBrowser,
   [switch]$NoWorker,
+  [switch]$UpdateRestart,
   [int]$Port = 4901
 )
 
@@ -9,6 +10,7 @@ $desk = Split-Path -Parent $PSScriptRoot
 $root = Split-Path -Parent $desk
 $port = $Port
 $url = "http://127.0.0.1:$port"
+if ($UpdateRestart) { $NoBrowser = $true }
 
 # (2026-06-07) Opt-in auto update: receiver (assistant) PCs only.
 # If the marker file exists, run git pull via a separate cmd first
@@ -17,7 +19,7 @@ $url = "http://127.0.0.1:$port"
 # Main PC: does nothing unless the marker is turned on.
 $autoUpdateMarker = Join-Path $desk "TEMP\panel\auto_update.on"
 $autoUpdateCmd = Join-Path $PSScriptRoot "auto_update.cmd"
-if ((Test-Path $autoUpdateMarker) -and (Test-Path $autoUpdateCmd)) {
+if ((((Test-Path $autoUpdateMarker)) -or $UpdateRestart) -and (Test-Path $autoUpdateCmd)) {
   try { cmd.exe /c call "$autoUpdateCmd" | Out-Null } catch {}
 }
 
@@ -43,7 +45,7 @@ function Test-PanelHealth {
   }
 }
 
-if (-not (Test-PanelHealth)) {
+if ($UpdateRestart -or -not (Test-PanelHealth)) {
   try {
     Invoke-RestMethod -Method Post -Uri "$url/api/shutdown" -ContentType "application/json" -Body "{}" -TimeoutSec 2 | Out-Null
     Start-Sleep -Milliseconds 700
