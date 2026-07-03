@@ -180,3 +180,4 @@
 이 파일이 업그레이드되면 변경 이력 1줄 추가. 가이드 추가·제거 시 STEP 1 리스트 동기화.
 
 - 2026-06-24: **광고 생성기 도메인 범용화 + 캐러셀 4컷 (G단원).** generator.html 폰스팟 하드코딩 → ⚙설정 폼 기반 브랜드 프로필(전역 `BP`, `applyBP`). 빌더 파라미터화(buildCopyPrompt·슬로건·buildImagePrompt·mapProductToEnglish), localStorage `phonespot_brand_profiles` + 시트 `브랜드_설정`(Code.js `pushBrandProfilesToSheet`/`getBrandProfilesFromSheet`). 캐러셀 4컷(1:1, `generateCarousel`/`CAROUSEL_BEATS`) + 실사/인스타 UGC 모드(`buildRealisticPrompt`, 씬3×텍스트2, 배너와 별개). 함정=백업 .v_*는 `apps_script_backups/`(clasp 전체푸시 함수중복 방지). 상세=`ads/IMPLEMENTATION_GUIDE_2026-06-09.md` §0-1 끝(2026-06-24). 보류=100%자율·판매까지.
+- 2026-07-03: **아침 브리핑 자동화 (STEP 2 라우팅 추가).** Claude 스케줄 task 매일 08:00 → outbox → 텔레그램(사장님+건우). 정본=SYSTEM_MAP H단원 2026-07-03 항목. "브리핑" 명령 패턴 STEP 2 등록.

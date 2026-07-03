@@ -115,6 +115,7 @@
 | "홍보영상" / "promo" / "타이포 영상" / "광고소재" | `shorts/promo/README.md` Read 후 promo 트랙 빌드 (`run_promo.bat`). 카드뉴스 영상과 다른 결(타이포/모션그래픽, 나레이션 없음·효과음+음악) |
 | "실사 광고" / "AI 광고" / "Higgsfield" / "promo_ai" / "광교점 실사" | `shorts/promo_ai/README.md` + `WORKFLOW.md` Read → Higgsfield MCP (Kling 3.0 우선) 호출 → ffmpeg 합치기. **결제 상태 + balance 점검 필수**. 15초 9:16 광고 |
 | "매커니즘 알려줘" / "이게 어떻게 돌아가" | `AUTOMATION_OVERVIEW.md` 직참조 |
+| "브리핑" / "아침 브리핑" / 브리핑 포맷·시간·수신자 변경 | Claude 스케줄 task `phonespot-morning-briefing`(매일 08:00) 수정. 매커니즘·수신자 추가·진단 함정 = `_docs/SYSTEM_MAP.md` H단원 2026-07-03 항목. 수동 1회 발송 = outbox 떨굼(전원 수신) 또는 venv `tg_send.send_text(text, chat_id=...)`(개인) |
 | "관리대장" / "광고운영" / "광고 시트" / "KPI" | `ads/README_FOR_AI.md` → `ads/MANUAL.md` |
 | "메타 자동화" / "캠페인별 통합" / "UTM 매핑" / "GA4 매핑" | `ads/META_AUTOMATION.md` |
 | "유튜브 학습" / "인사이트" / **스크립트·카피 작성 시** | `ads/YOUTUBE_LEARNING.md` + Drive `phonespot_cardnews_state/youtube_insights.md` Read → 키워드/후킹 자동 반영 |
