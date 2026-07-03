@@ -66,21 +66,33 @@ jobs:
           echo "$CLASP_JSON" > apps_script/.clasp.json
           chmod 600 apps_script/.clasp.json
 
-      - name: Push to Apps Script (폰스팟 본점)
+      # push(코드) + deploy(웹앱 배포 갱신). clasp push만으론 /exec가 옛 버전을 서빙 →
+      # 고정 배포ID(-i)로 재배포해야 generator.html 등 웹앱이 최신 코드로 자동 반영(URL은 고정).
+      - name: Push + Deploy Apps Script (폰스팟 본점)
         if: steps.changes.outputs.appsscript == 'true'
         working-directory: apps_script
-        run: clasp push --force
+        env:
+          WEBAPP_DEPLOY_ID: ${{ secrets.WEBAPP_DEPLOY_ID }}
+        run: |
+          clasp push --force
+          if [ -n "$WEBAPP_DEPLOY_ID" ]; then
+            clasp deploy -i "$WEBAPP_DEPLOY_ID" -d "auto $(date -u '+%Y-%m-%d %H:%M')"
+          fi
 
       # KT폰샵 (2026-06-30) — 같은 계정(313jongmin)·동일 코드 → KT scriptId로 한 번 더 push.
       # CLASPRC_JSON(인증) 공유, CLASP_JSON_KT(=KT .clasp.json 한 줄)만 별도 secret.
-      - name: Push to Apps Script (KT폰샵)
+      - name: Push + Deploy Apps Script (KT폰샵)
         if: steps.changes.outputs.appsscript == 'true'
         working-directory: apps_script
         env:
           CLASP_JSON_KT: ${{ secrets.CLASP_JSON_KT }}
+          WEBAPP_DEPLOY_ID_KT: ${{ secrets.WEBAPP_DEPLOY_ID_KT }}
         run: |
           echo "$CLASP_JSON_KT" > .clasp.json
           clasp push --force
+          if [ -n "$WEBAPP_DEPLOY_ID_KT" ]; then
+            clasp deploy -i "$WEBAPP_DEPLOY_ID_KT" -d "auto $(date -u '+%Y-%m-%d %H:%M')"
+          fi
 
       # Sheet Export 별도 프로젝트 (B1 셋업, 2026-06-15). 시트 read 전용 web app.
       - name: Push to Apps Script (Sheet Export)
