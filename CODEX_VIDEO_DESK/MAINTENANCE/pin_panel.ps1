@@ -4,6 +4,7 @@ $ErrorActionPreference = "Stop"
 
 $desk = Split-Path -Parent $PSScriptRoot          # MAINTENANCE -> CODEX_VIDEO_DESK
 $bat  = Join-Path $desk "00_PHONE_SPOT_PANEL.bat"
+$vbs  = Join-Path $desk "dashboard\panel_hidden.vbs"
 if (-not (Test-Path $bat)) {
   Write-Host "[ERROR] 00_PHONE_SPOT_PANEL.bat 를 찾을 수 없습니다: $bat"
   exit 1
@@ -17,8 +18,8 @@ $lnkStart   = Join-Path $programs   "폰스팟 패널.lnk"
 
 function New-PanelShortcut([string]$path) {
   $s = $ws.CreateShortcut($path)
-  $s.TargetPath       = $env:ComSpec                 # cmd.exe (exe 타깃이라 작업표시줄 고정 가능)
-  $s.Arguments        = '/c "' + $bat + '"'
+  $s.TargetPath       = "wscript.exe"                 # cmd.exe (exe 타깃이라 작업표시줄 고정 가능)
+  $s.Arguments        = '"' + $vbs + '"'
   $s.WorkingDirectory = $desk
   $s.IconLocation     = "$env:SystemRoot\System32\imageres.dll,109"
   $s.WindowStyle      = 7                              # 최소화로 실행(콘솔 깜빡임 최소)

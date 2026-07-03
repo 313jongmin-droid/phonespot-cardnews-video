@@ -78,8 +78,11 @@ if (-not (Test-PanelHealth)) {
   $stdoutLog = Join-Path $logDir "panel_${stamp}.out.log"
   $stderrLog = Join-Path $logDir "panel_${stamp}.err.log"
   $server = Join-Path $PSScriptRoot "server.py"
-  $runtimePython = Join-Path $root ".phonespot_runtime\Scripts\python.exe"
-  $python = if (Test-Path $runtimePython) { $runtimePython } else { "python" }
+  $runtimePythonw = Join-Path $root ".phonespot_runtime\Scripts\pythonw.exe"
+  $runtimePython  = Join-Path $root ".phonespot_runtime\Scripts\python.exe"
+  # pythonw = console-less Python. Using it means the server does not hold a console window,
+  # so the launching cmd window can close (no persistent taskbar window). Fallback to python.exe.
+  $python = if (Test-Path $runtimePythonw) { $runtimePythonw } elseif (Test-Path $runtimePython) { $runtimePython } else { "pythonw" }
   $launcher = Join-Path $tempRoot "launch_panel.cmd"
   @"
 @echo off
