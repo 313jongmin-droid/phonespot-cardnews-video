@@ -100,9 +100,13 @@ function checkAdTargets_() {
   return warns;
 }
 
-// ============ 아침 브리핑 (P3-11, 매일 09:00) ============
-// 통합대시보드 KPI 셀 기준. 셀 위치가 바뀌면 아래 A6/B11/B12/B13/B14 조정.
+// ============ 아침 브리핑 (P3-11) — ★ 2026-07-03 폐기 ============
+// 종민 결정: 시트발 텔레그램 브리핑 제거 → Cowork 스케줄 작업 "phonespot-morning-briefing"(06:30, AI 분석)이
+// outbox → telegram_listener 경로로 대체. 트리거 제거 = removeMorningBriefingTrigger() 메뉴 1회 실행.
+// 함수 본문은 남겨둠(수동 버튼용). 자동발송 재개하려면 DISABLED 플래그 삭제 + setupMorningBriefingTrigger.
+var MORNING_BRIEFING_DISABLED = true;
 function sendMorningBriefing() {
+  if (MORNING_BRIEFING_DISABLED) return; // 자동 트리거가 남아있어도 발송 안 함
   const ss = SpreadsheetApp.getActive();
   const d = ss.getSheetByName('통합대시보드');
   if (!d) return;
@@ -166,6 +170,15 @@ function setupMorningBriefingTrigger() {
   });
   ScriptApp.newTrigger('sendMorningBriefing').timeBased().atHour(9).nearMinute(0).everyDays(1).create();
   SpreadsheetApp.getUi().alert('✅ 아침 브리핑 트리거 등록 (매일 09:00).\n\n사전 필수: Script Property TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID 등록 (GitHub Secret과 동일 값).');
+}
+
+// ★ 2026-07-03: 시트발 아침 브리핑 트리거 삭제 (AI 브리핑으로 교체됨)
+function removeMorningBriefingTrigger() {
+  let n = 0;
+  ScriptApp.getProjectTriggers().forEach(function (t) {
+    if (t.getHandlerFunction() === 'sendMorningBriefing') { ScriptApp.deleteTrigger(t); n++; }
+  });
+  SpreadsheetApp.getUi().alert(n ? '✅ 아침 브리핑 트리거 ' + n + '개 삭제 완료. 이후 아침 브리핑은 AI(Cowork 06:30)가 발송.' : 'ℹ️ 등록된 아침 브리핑 트리거 없음 (이미 삭제됨).');
 }
 
 // 텔레그램 연결 테스트
@@ -286,7 +299,8 @@ function buildAlertsMenu_(ui) {
     .addItem('☀️ 아침 브리핑 지금 보내기', 'sendMorningBriefing')
     .addItem('📅 주간 리포트 지금 보내기', 'sendWeeklyReport')
     .addSeparator()
-    .addItem('⏰ 아침 브리핑 트리거 (09:00)', 'setupMorningBriefingTrigger')
+    .addItem('🗑️ 아침 브리핑 트리거 삭제 (AI 교체됨)', 'removeMorningBriefingTrigger')
+    .addItem('⏰ 아침 브리핑 트리거 (09:00·폐기)', 'setupMorningBriefingTrigger')
     .addItem('⏰ 주간 리포트 트리거 (월 09:10)', 'setupWeeklyReportTrigger')
     .addItem('🔑 텔레그램 연결 테스트', 'testTelegram')
     .addSeparator()
