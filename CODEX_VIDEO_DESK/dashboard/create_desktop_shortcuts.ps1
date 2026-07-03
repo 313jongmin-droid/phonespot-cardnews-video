@@ -1,4 +1,4 @@
-$ErrorActionPreference = "Stop"
+﻿$ErrorActionPreference = "Stop"
 $desk = Split-Path -Parent $PSScriptRoot
 $desktop = [Environment]::GetFolderPath("Desktop")
 $shell = New-Object -ComObject WScript.Shell
