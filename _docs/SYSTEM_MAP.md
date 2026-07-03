@@ -50,11 +50,12 @@
 - `CODEX_VIDEO_DESK/dashboard/auto_update.cmd` — (수신PC 옵트인) 기동 시 `git pull --ff-only`.
 - `CODEX_VIDEO_DESK/dashboard/remote_queue.py` — 원격 렌더 잡 큐.
 - `CODEX_VIDEO_DESK/dashboard/panel_hidden.vbs` — **무창 진입**(wscript가 bat을 window=0 히든 실행). 작업표시줄 고정 바로가기가 이걸 타깃(`MAINTENANCE/pin_panel.ps1`).
+- **브라우저 내 "갱신·재시작" 버튼 (v47)**: 헤더 GitHub 카드 → 액션 `panel_update_restart`(server.py) → `start_hidden.ps1 -UpdateRestart`를 **`DETACHED_PROCESS(0x8)|CREATE_NEW_PROCESS_GROUP(0x200)`로 완전 분리 실행**(서버 자기 자신이 죽어도 런처 생존). `-UpdateRestart`=강제 `git pull`(auto_update.cmd)+강제 재기동(버전 게이트 무시)+새 브라우저창 억제. JS `panelUpdateRestart`=`/api/health` **down→up 감지 후 `location.reload()`**(버전 변경 여부 무관, ~90s 안전 리로드). 무창 백그라운드라 콘솔 없이 업데이트 반영하는 수단.
 - `CODEX_VIDEO_DESK/dashboard/stop_panel.ps1` / `run_library_backup.cmd` — 보조.
 - 진입: `CODEX_VIDEO_DESK/00_PHONE_SPOT_PANEL.bat`(직접 실행=콘솔 보임, 디버그용) / **무창 = `dashboard/panel_hidden.vbs`**(고정 바로가기 타깃).
 
 **핵심 심볼 (server.py, 검증된 줄)**
-- `PANEL_VERSION = "phonespot-web-v46"` (L41) — **버전 단일 출처(SSOT)**. ps1이 이 값을 읽음. 화면/CSS 바꾸면 이 숫자만 올림.
+- `PANEL_VERSION = "phonespot-web-v47"` (L41) — **버전 단일 출처(SSOT)**. ps1이 이 값을 읽음. 화면/CSS 바꾸면 이 숫자만 올림.
 - `get_video_slugs()` (L336) — 영상 슬러그 목록. `list_slugs.py` 호출(articles∪output 독립 스캔).
 - `get_cardnews_rows()` (L1073) — 카드뉴스 행. `CARD_OUTPUT ∪ CARD_IMAGES ∪ CARD_ARTICLES` 합집합 스캔. **정렬 = `slug_sort_key` 내림차순(번호 desc)→ `[:80]` 캡 = 최신 80 보존, 최신 위로(v44).** 4개 리스트(영상·카드·tpList·aiList)+`cardnews_summary`(최신 12) 공용 소스라 한 곳에서 정렬 결정.
 - 액션 디스패치: `if action == "..."` 블록들 (L1589~2010). 주요:
@@ -668,3 +669,4 @@ rdnews/scripts/update_content_guide.py`로 §2 발행인덱스 자동 재생성,
 - 2026-07-03 (세션): **Meta 멀티브랜드 허브 모델 확정·문서화 (G단원 + ads/MULTI_BRAND_ARCHITECTURE.md).** 폰스팟 BM=허브(앱1+phonespot-sync 시스템유저1+장수명토큰1). 브랜드 광고계정을 허브 BM에 파트너공유+phonespot-sync에 자산할당 → 각 브랜드 시트는 자기 META_AD_ACCOUNT_ID + 같은 META_TOKEN(복사). 코드 수정 0(getToken/getAdAccountId가 시트별 Script Property 읽음). 신규 시스템유저 토큰발급은 "권한 없음"(앱 scope 미노출)으로 막히므로 **허브 토큰 재사용이 표준**(시스템유저 토큰은 발급 후 자산추가해도 접근됨). KT폰샵 이 모델로 메타 연결 검증 완료(네이버·GA4도 가동). 브랜드 추가 표준 체크리스트 = MULTI_BRAND_ARCHITECTURE.md "허브 BM" 섹션.
 - 2026-07-03 (세션): **[보류/가능성 기록] 메타 충전(카드결제) 자동수집 가능함 — 미구현.** Meta Graph API `GET /act_{id}/activities?event_type=ad_account_billing_charge` = 카드 청구 이벤트(시각+금액, extra_data)를 반환 → 결제내역 메타 행 자동 upsert 가능(소진=지출과 별개 데이터). 지금 결제내역=수기. **보류 사유(종민)**: 메타만 되고 네이버 비즈머니·당근·구글 충전은 각 플랫폼 별개라 못 긁음 → 실효성 낮음(실비용대조 5채널 중 1개만 자동). 구현 시: syncMetaBillingCharges 함수 + 1차 프로브(extra_data 금액필드·통화단위 확인) → 파서확정 → upsert(구분=메타) + 트리거. 권한 ads_read 되는지 실호출 확인 필요. 참고: developers.facebook.com/docs/marketing-api/reference/ad-account/activities.
 - 2026-06-26 (세션2, 무창 백그라운드 실행 — A단원, 패널 task): **패널 상주 콘솔(cmd) 창 제거.** 원인=서버를 `start /b python.exe`로 진입 .bat 콘솔에 붙여 실행→서버 생존 동안 그 cmd 창이 작업표시줄에 남음. 수정 ① `start_hidden.ps1` 서버 기동 `python.exe`→**`pythonw.exe`**(콘솔 없는 파이썬, 런타임 존재; 폴백 python.exe) ② **`dashboard/panel_hidden.vbs` 신설**=wscript가 bat을 window=0 히든 실행(무창 진입) ③ `MAINTENANCE/pin_panel.ps1` 고정 바로가기 타깃 `cmd.exe /c bat`→**`wscript.exe panel_hidden.vbs`**(한글 주석 바이트 보존). 자동 워커는 이미 `CREATE_NO_WINDOW`. **적용=`작업표시줄에_패널_고정.bat` 1회 재실행(바로가기 재생성).** Windows 전용→샌드박스 검증 불가, 로컬 확인. PANEL_VERSION 불변(서버코드 무변경, 실행 인프라만).
+- 2026-06-26 (세션2, 브라우저 갱신·재시작 버튼 — A단원, 패널 task): **무창 백그라운드라 콘솔이 없어 업데이트 반영이 불편 → 헤더에 "갱신·재시작" 버튼(v47).** 흐름: 버튼 → `panel_update_restart`(server.py) → `start_hidden.ps1 -UpdateRestart`를 `DETACHED_PROCESS|CREATE_NEW_PROCESS_GROUP`로 분리 실행(서버 죽어도 런처 생존) → 런처가 `git pull`(auto_update.cmd)+옛 서버 shutdown+새 코드 기동 → 브라우저 JS가 health down→up 감지해 자동 새로고침. `-UpdateRestart` 스위치=강제 pull+강제 재기동(버전 게이트 무시)+새창 억제. 커밋 안 한 변경은 stash로 보관(확인창 명시). PANEL_VERSION v46→v47. **Windows 전용 DETACHED 재기동=샌드박스 검증 불가, 로컬 실측 필요.**

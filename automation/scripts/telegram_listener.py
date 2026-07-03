@@ -76,6 +76,7 @@ def load_config() -> dict:
         "claude_path": "",
         "allowed_commands": DEFAULT_COMMANDS,
         "trusted_chat_ids": [],  # 비어있으면 chat_id 1개만 (load_chat_id) 사용
+        "broadcast_chat_ids": [],  # ★ outbox 수신 전용 추가 수신자 (명령 권한 없음, 2026-07-03)
     }
     if CFG_FILE.exists():
         try:
@@ -300,36 +301,38 @@ def handle_command(chat_id: str, text: str, cfg: dict) -> None:
 OUTBOX_DIR = PROJECT_ROOT / "_state" / "outbox"
 OUTBOX_SENT_DIR = PROJECT_ROOT / "_state" / "outbox_sent"
 
-def check_outbox(trusted: set) -> None:
+def check_outbox(recipients: list) -> None:
+    # recipients = trusted 대표 1명 + broadcast_chat_ids (★ 2026-07-03 다중 수신)
     if not OUTBOX_DIR.exists():
         return
     targets = sorted(OUTBOX_DIR.glob("*.txt"))
     if not targets:
         return
     OUTBOX_SENT_DIR.mkdir(parents=True, exist_ok=True)
-    # 트러스티드 첫 번째에게 송신 (보통 사장님 1명)
-    if not trusted:
+    if not recipients:
         return
-    cid = next(iter(trusted))
     for f in targets:
         try:
             text = f.read_text(encoding="utf-8")
             # 텔레그램 4096자 제한 — 초과 시 분할
             chunks = [text[i:i+3800] for i in range(0, len(text), 3800)] or [""]
             ok_all = True
-            for i, ch in enumerate(chunks):
-                prefix = f"[{i+1}/{len(chunks)}]\n" if len(chunks) > 1 else ""
-                r = call_api("sendMessage", {
-                    "chat_id": cid,
-                    "text": prefix + ch,
-                    "disable_web_page_preview": "true",
-                })
-                # 응답 body 전체 로깅 (진단용)
-                print(f"[outbox] chat_id={cid} resp_ok={r.get('ok')} message_id={r.get('result',{}).get('message_id')} desc={r.get('description','')[:200]}")
-                if not r.get("ok"):
-                    ok_all = False
-                    print(f"[outbox] send failed full: {r}", file=sys.stderr)
-                    break
+            for cid in recipients:
+                for i, ch in enumerate(chunks):
+                    prefix = f"[{i+1}/{len(chunks)}]\n" if len(chunks) > 1 else ""
+                    r = call_api("sendMessage", {
+                        "chat_id": cid,
+                        "text": prefix + ch,
+                        "disable_web_page_preview": "true",
+                    })
+                    # 응답 body 전체 로깅 (진단용)
+                    print(f"[outbox] chat_id={cid} resp_ok={r.get('ok')} message_id={r.get('result',{}).get('message_id')} desc={r.get('description','')[:200]}")
+                    if not r.get("ok"):
+                        ok_all = False
+                        print(f"[outbox] send failed full: {r}", file=sys.stderr)
+                        break
+                if not ok_all:
+                    break  # 일부 실패 시 파일 잔존 → 다음 사이클 재시도 (성공 수신자는 중복 수신 가능)
             if ok_all:
                 dst = OUTBOX_SENT_DIR / f.name
                 if dst.exists():
@@ -348,6 +351,8 @@ def poll_loop() -> None:
     trusted = set(cfg.get("trusted_chat_ids", []))
     if not trusted:
         sys.exit("[error] no trusted chat_id. run telegram_notify.py --setup first")
+    # outbox 수신자 = trusted 첫 번째(사장님) + broadcast 추가 수신자 (명령 권한은 trusted만)
+    outbox_recipients = list(cfg.get("trusted_chat_ids", []))[:1] + [str(c) for c in cfg.get("broadcast_chat_ids", []) if c]
     offset = load_offset()
     print(f"[listener] start. trusted_chat_ids={trusted} mode={cfg.get('mode')}")
     print(f"[listener] commands: {list(cfg.get('allowed_commands', DEFAULT_COMMANDS).keys())}")
@@ -381,7 +386,7 @@ def poll_loop() -> None:
         save_offset(offset)
         # outbox 자동 푸시 (클로드가 _state/outbox/*.txt 떨구면 자동 전송)
         try:
-            check_outbox(trusted)
+            check_outbox(outbox_recipients)
         except Exception as e:
             print(f"[warn] outbox check failed: {e}", file=sys.stderr)
 
