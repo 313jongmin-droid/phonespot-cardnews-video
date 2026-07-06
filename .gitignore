@@ -177,3 +177,4 @@ shorts/promo/out/
 # promo_ai 검증용 임시 프레임 폴더 (영상은 *.mp4로 이미 비추적, png 임시폴더만 차단)
 shorts/promo_ai/out_promo_ai/**/_chk*/
 shorts/promo_ai/out_promo_ai/**/_insp*/
+shorts/promo_ai/out_promo_ai/**/_ref*/
