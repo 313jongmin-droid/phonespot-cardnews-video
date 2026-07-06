@@ -672,19 +672,25 @@ function syncLitlyActions_() {
   const li = ss.getSheetByName('리틀리');
   const ga = ss.getSheetByName('GA4_자동');
   if (!li || !ga) return;
-  const HROW = 3, DATA = 4, START = 5;   // 헤더3행 / 데이터4행 / 삽입 시작 E(5)
-  const COLS = ['신규방문', '스크롤', '가격확인도착', '카톡클릭', '전화클릭', '링크클릭'];
+  const HROW = 3, DATA = 4, START = 5;
+  const EVENTS_COL = ['신규방문', '스크롤', '가격확인도착', '카톡클릭', '전화클릭', '링크클릭'];
   const EVENTS = ['first_visit', 'scroll', 'citymarket_arrival', 'kakao_chat_click', 'phone_click', 'click'];
-  if (String(li.getRange(HROW, START).getValue()).trim() !== COLS[0]) {   // 없으면 D(4) 다음 삽입
-    li.insertColumnsAfter(4, COLS.length);
-    li.getRange(HROW, START, 1, COLS.length).setValues([COLS])
+  const RATE_COL = ['가격확인율', '카톡전환율', '스크롤율'];   // K/L/M = 가격확인·카톡·스크롤 ÷ 방문자(B)
+  // 컬럼 보장(idempotent): 이벤트6 없으면 D뒤 9삽입 / 이벤트만 있으면 전환율3 추가
+  if (String(li.getRange(HROW, START).getValue()).trim() !== EVENTS_COL[0]) {
+    li.insertColumnsAfter(4, EVENTS_COL.length + RATE_COL.length);
+    li.getRange(HROW, START, 1, 9).setValues([EVENTS_COL.concat(RATE_COL)])
+      .setFontWeight('bold').setBackground('#EAF1FB').setHorizontalAlignment('center');
+  } else if (String(li.getRange(HROW, START + 6).getValue()).trim() !== RATE_COL[0]) {
+    li.insertColumnsAfter(START + 5, RATE_COL.length);
+    li.getRange(HROW, START + 6, 1, 3).setValues([RATE_COL])
       .setFontWeight('bold').setBackground('#EAF1FB').setHorizontalAlignment('center');
   }
   const last = li.getLastRow();
   if (last < DATA) return;
   const gLast = ga.getLastRow();
   if (gLast < 5) return;
-  const gv = ga.getRange(5, 1, gLast - 4, 6).getValues();   // A날짜 / E이벤트(idx4) / F카운트(idx5)
+  const gv = ga.getRange(5, 1, gLast - 4, 6).getValues();
   const map = {};
   gv.forEach(function (r) {
     const d = String(r[0]).replace(/-/g, '').slice(0, 8);
@@ -692,16 +698,24 @@ function syncLitlyActions_() {
     (map[d] = map[d] || {});
     const ev = String(r[4]); map[d][ev] = (map[d][ev] || 0) + (Number(r[5]) || 0);
   });
-  const dates = li.getRange(DATA, 1, last - DATA + 1, 1).getValues();
-  const out = dates.map(function (row) {
+  const n = last - DATA + 1;
+  const dates = li.getRange(DATA, 1, n, 1).getValues();
+  const evOut = dates.map(function (row) {
     const dt = row[0];
-    if (!(dt instanceof Date)) return COLS.map(function () { return ''; });
+    if (!(dt instanceof Date)) return EVENTS_COL.map(function () { return ''; });
     const key = Utilities.formatDate(dt, 'Asia/Seoul', 'yyyyMMdd');
     const m = map[key] || {};
     return EVENTS.map(function (e) { return m[e] || 0; });
   });
-  li.getRange(DATA, START, out.length, COLS.length).setValues(out).setNumberFormat('#,##0');
+  li.getRange(DATA, START, n, 6).setValues(evOut).setNumberFormat('#,##0');           // E~J 이벤트값
+  const rateOut = [];
+  for (let i = 0; i < n; i++) {
+    const r = DATA + i;
+    rateOut.push(['=IFERROR(G' + r + '/B' + r + ',"")', '=IFERROR(H' + r + '/B' + r + ',"")', '=IFERROR(F' + r + '/B' + r + ',"")']);
+  }
+  li.getRange(DATA, START + 6, n, 3).setFormulas(rateOut).setNumberFormat('0.0%');     // K~M 전환율(가격확인·카톡·스크롤 ÷방문자)
 }
+
 function syncLitlyActionsMenu() {
   syncLitlyActions_();
   try { SpreadsheetApp.getUi().alert('✅ 리틀리 방문자 행동(GA4) 갱신 완료'); } catch (e) {}
@@ -1050,6 +1064,27 @@ function buildDashboardV2() {
   dash.getRange(mTot, 1, 1, 6).setBackground(C_TOTAL_BG).setBorder(true,true,true,true,true,true,C_ROW_BD,SpreadsheetApp.BorderStyle.SOLID).setHorizontalAlignment('center');
   dash.getRange(mTot, 1).setHorizontalAlignment('left');
   dash.getRange(36, 1, 1, 6).merge().setValue('※ 유입채널은 고객 응답 시에만 기록 → 미상 다수 정상. 표본 참고치(개통은 문의접수 유일 소스).')
+    .setFontColor('#AAAAAA').setFontStyle('italic').setFontSize(9).setHorizontalAlignment('left');
+
+  // 8R) 리틀리 퍼널 (GA4) — 실적매칭 우측(H~M, 26~31). 방문→가격확인→카톡 + 전환율.
+  sectionHeader(26, '리틀리 퍼널 (GA4)', RCOL);
+  colHeader(27, ['기간', '방문', '가격확인', '가격확인율', '카톡', '카톡전환율'], RCOL);
+  const lfPeriods = [['어제', 'TODAY()-1', 'TODAY()-1'], ['최근 7일', 'TODAY()-6', 'TODAY()'], ['최근 30일', 'TODAY()-29', 'TODAY()']];
+  const lfStart = 28;
+  lfPeriods.forEach(function (p, i) {
+    const r = lfStart + i;
+    const st = p[1], en = p[2];
+    const gd = `'GA4_자동'!A:A,">="&TEXT(${st},"yyyymmdd"),'GA4_자동'!A:A,"<="&TEXT(${en},"yyyymmdd")`;
+    const evc = function (e, col) { return `SUMIFS('GA4_자동'!${col}:${col},'GA4_자동'!E:E,"${e}",${gd})`; };
+    dash.getRange(r, RCOL).setValue(p[0]);
+    dash.getRange(r, RCOL + 1).setFormula(`=IFERROR(${evc('session_start', 'G')},0)`).setNumberFormat(fmtKM);
+    dash.getRange(r, RCOL + 2).setFormula(`=IFERROR(${evc('citymarket_arrival', 'F')},0)`).setNumberFormat(fmtKM);
+    dash.getRange(r, RCOL + 3).setFormula(`=IFERROR(IF(${colL(RCOL+1)}${r}=0,"-",${colL(RCOL+2)}${r}/${colL(RCOL+1)}${r}),"-")`).setNumberFormat(F_PCT);
+    dash.getRange(r, RCOL + 4).setFormula(`=IFERROR(${evc('kakao_chat_click', 'F')},0)`).setNumberFormat(fmtKM);
+    dash.getRange(r, RCOL + 5).setFormula(`=IFERROR(IF(${colL(RCOL+1)}${r}=0,"-",${colL(RCOL+4)}${r}/${colL(RCOL+1)}${r}),"-")`).setNumberFormat(F_PCT);
+  });
+  dataBox(lfStart, lfPeriods.length, 6, RCOL);   // 28~30
+  dash.getRange(31, RCOL, 1, 6).merge().setValue('※ GA4 랜딩 행동(사이트 전체, 대부분 리틀리). 방문=세션 / 가격확인=시티마켓도착 / 카톡=카톡클릭.')
     .setFontColor('#AAAAAA').setFontStyle('italic').setFontSize(9).setHorizontalAlignment('left');
 
   // ── 푸터 — 38행 (실적매칭 섹션 추가로 아래 이동) ──
