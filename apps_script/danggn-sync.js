@@ -384,13 +384,13 @@ function setupDanggnTrigger() {
  */
 function buildDanggnSyncMenu_(ui) {
   ui.createMenu('🟠 당근')
-    .addItem('🔄 GA4 매칭 새로고침 (전체 행)', 'syncDanggnGA4')
+    .addItem('🔄 동기화 (GA4 매칭·전체)', 'syncDanggnGA4')
     .addSeparator()
     .addItem('🆕 시트 신설 / 헤더 갱신', 'createDanggnIntegratedSheet')
     .addItem('🔍 미매핑 광고그룹 보기', 'showUnmappedDanggnAdgroups')
     .addItem('📋 문의접수 D열 표준화', 'setupInquirySheetDropdowns')
     .addSeparator()
-    .addItem('⏰ 당근 Daily Trigger 설정 (02:30)', 'setupDanggnTrigger')
+    .addItem('⏰ 자동 트리거 (02:30)', 'setupDanggnTrigger')
     .addItem('🔑 utm_source 값 확인', 'showDanggnUtmSource')
     .addToUi();
 }

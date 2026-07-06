@@ -593,13 +593,13 @@ function showUnmappedNaverAdgroups() {
 
 function buildNaverSyncMenu_(ui) {
   ui.createMenu('🟢 네이버')
-    .addItem('📊 광고그룹별 통합 (어제)', 'syncNaverIntegrated')
+    .addItem('🔄 동기화 (최근 7일)', 'syncNaverIntegrated')
     .addSeparator()
     .addItem('🔍 미매핑 광고그룹 보기', 'showUnmappedNaverAdgroups')
-    .addItem('🔑 연결 테스트', 'testNaverConnection')
+    .addItem('🔑 연결 테스트', 'testNaverConnection')  // (통일: 연결 테스트)
     .addItem('📋 캠페인+그룹 목록 보기', 'listAllAdgroups')
     .addSeparator()
-    .addItem('⏰ 네이버 Daily Trigger 설정', 'setupNaverTriggers')
+    .addItem('⏰ 자동 트리거 (02:15)', 'setupNaverTriggers')
     .addToUi();
 }
 

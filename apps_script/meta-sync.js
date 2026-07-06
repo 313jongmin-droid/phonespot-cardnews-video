@@ -1496,7 +1496,7 @@ function buildMetaSyncMenu_(ui) {
     .addItem('🔄 지금 동기화 (테스트)', 'manualSyncToday')
     .addItem('📥 어제 성과만 가져오기', 'syncMetaDaily')
     .addItem('🎨 광고소재 라이브러리 갱신', 'syncMetaCreatives')
-    .addItem('📊 광고그룹별 통합 (어제)', 'syncMetaCampaignIntegrated')
+    .addItem('🔄 동기화 (어제)', 'syncMetaCampaignIntegrated')
     .addSeparator()
     .addItem('🔍 미매핑 광고그룹 보기', 'showUnmappedAdsets')
     .addItem('✅ utm 채운 행 상태 갱신', 'flipMappedUtmStatus')
@@ -1507,9 +1507,9 @@ function buildMetaSyncMenu_(ui) {
     .addItem('⏪ 인스타 전체 백필 (1회만)', 'backfillInstagramAll')
     .addSeparator()
     .addItem('📊 마지막 동기화 정보', 'showLastSyncInfo')
-    .addItem('🔑 토큰 연결 테스트 (메타)', 'testTokenAndAccount')
-    .addItem('⏰ Daily Trigger 설정', 'setupTriggers')
-    .addItem('⏰ 오후 재sync 트리거 (14:00, 최근3일)', 'setupAfternoonMetaResyncTrigger')
+    .addItem('🔑 연결 테스트', 'testTokenAndAccount')
+    .addItem('⏰ 자동 트리거 (01:30)', 'setupTriggers')
+    .addItem('⏰ 오후 재sync 트리거 (14:00)', 'setupAfternoonMetaResyncTrigger')
     .addToUi();
   // 폐기된 사용자 도구 메뉴 (generator.html로 이동, 2026-06-09):
   //  - 🤖 Apify 벤치마크 수집 → generator 벤치마크 탭 🔍 검색바

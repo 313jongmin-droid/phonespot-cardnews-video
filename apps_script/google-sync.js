@@ -151,20 +151,20 @@ function setupGoogleTrigger() {
 function buildGoogleSyncMenu_(ui) {
   const m = ui.createMenu('🔵 구글');
   if (typeof syncGoogleAdsData === 'function') {
-    m.addItem('📥 Ads API 수집 (최근 7일)', 'syncGoogleAdsData')
-      .addItem('📥 Ads API 백필 (최근 30일)', 'syncGoogleAdsData30')
-      .addItem('🔑 Ads 연결 테스트', 'testGoogleAds')
+    m.addItem('🔄 동기화 (Ads·최근 7일)', 'syncGoogleAdsData')
+      .addItem('⏪ 전체 백필 (Ads·최근 30일)', 'syncGoogleAdsData30')
+      .addItem('🔑 연결 테스트 (Ads)', 'testGoogleAds')
       .addItem('🔎 접근가능 계정 목록(진단)', 'listAccessibleGoogleAdsCustomers')
       .addSeparator();
   }
-  m.addItem('🔄 GA4 매칭 새로고침 (전체 행)', 'syncGoogleGA4')
+  m.addItem('🔄 동기화 (GA4 매칭·전체)', 'syncGoogleGA4')
     .addSeparator()
     .addItem('🆕 시트 신설 / 헤더 갱신', 'createGoogleIntegratedSheet')
     .addItem('🔍 미매핑 광고그룹 보기', 'showUnmappedGoogleAdgroups')
     .addSeparator()
-    .addItem('⏰ GA4 매칭 Trigger 설정 (02:35)', 'setupGoogleTrigger');
+    .addItem('⏰ 자동 트리거 GA4 (02:35)', 'setupGoogleTrigger');
   if (typeof setupGoogleAdsTrigger === 'function') {
-    m.addItem('⏰ Ads 수집 Trigger 설정 (02:25)', 'setupGoogleAdsTrigger');
+    m.addItem('⏰ 자동 트리거 Ads (02:25)', 'setupGoogleAdsTrigger');
   }
   m.addToUi();
 }
