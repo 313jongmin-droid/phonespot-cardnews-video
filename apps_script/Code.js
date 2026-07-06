@@ -820,9 +820,9 @@ function buildDashboardV2() {
   dash.getRange('K2').setValue('📅 기간:').setFontColor(C_LABEL).setFontSize(9).setFontWeight('bold').setHorizontalAlignment('right');
   const gdd = dash.getRange('L2');
   gdd.setBackground('#FFF59D').setFontWeight('bold').setHorizontalAlignment('center')
-    .setDataValidation(SpreadsheetApp.newDataValidation().requireValueInList(['어제', '최근 3일', '최근 7일', '최근 30일'], true).setAllowInvalid(false).build());
+    .setDataValidation(SpreadsheetApp.newDataValidation().requireValueInList(['어제', '최근 3일', '최근 7일', '최근 14일', '최근 30일'], true).setAllowInvalid(false).build());
   if (gdd.getValue() === '') gdd.setValue('최근 30일');
-  dash.getRange('N2').setFormula('=IF($L$2="어제",TODAY()-1,IF($L$2="최근 3일",TODAY()-2,IF($L$2="최근 7일",TODAY()-6,TODAY()-29)))').setNumberFormat('m/d').setFontColor('#BBBBBB');
+  dash.getRange('N2').setFormula('=IF($L$2="어제",TODAY()-1,IF($L$2="최근 3일",TODAY()-2,IF($L$2="최근 7일",TODAY()-6,IF($L$2="최근 14일",TODAY()-13,TODAY()-29))))').setNumberFormat('m/d').setFontColor('#BBBBBB');
   dash.getRange('O2').setFormula('=IF($L$2="어제",TODAY()-1,TODAY())').setNumberFormat('m/d').setFontColor('#BBBBBB');
 
   const trackedInqG = `(${countInqFx(GS, GE)}-${countInqFx(GS, GE, ",'문의접수'!D:D,\"불확실\"")}-${countInqFx(GS, GE, ",'문의접수'!D:D,\"\"")})`;
@@ -896,7 +896,7 @@ function buildDashboardV2() {
   sectionHeader(chHeaderRow, '채널별 효율', LCOL);   // 전역 상단 기간(L2) 따라감
   const ABS_N = '$N$2';
   const ABS_O = '$O$2';
-  colHeader(11, ['채널', '노출', '클릭', '소진금액', '문의', '문의당비용'], LCOL);
+  colHeader(11, ['채널', '소진금액', '문의', '문의당비용', '가격확인율', '카톡전환율'], LCOL);
 
   const ga4D = `'GA4_자동'!A:A,">="&TEXT(${ABS_N},"yyyymmdd"),'GA4_자동'!A:A,"<="&TEXT(${ABS_O},"yyyymmdd")`;
   // 채널 순서 = 실비용 대조와 동일. 소진금액=각 채널 광고시트 지출(실제 집행 소진) / 문의=GA4 카톡클릭(당근만 카톡문의+앱문의 별도식)
@@ -913,15 +913,17 @@ function buildDashboardV2() {
     const ad = (col) => `SUMIFS('${c.adSheet}'!${col}:${col},'${c.adSheet}'!A:A,">="&${ABS_N},'${c.adSheet}'!A:A,"<="&${ABS_O})`;
     const ev = (e) => c.sources.map(s =>
       `SUMIFS('GA4_자동'!F:F,'GA4_자동'!B:B,"${s}",'GA4_자동'!E:E,"${e}",${ga4D})`).join('+');
+    const sess = c.sources.map(s =>
+      `SUMIFS('GA4_자동'!G:G,'GA4_자동'!B:B,"${s}",'GA4_자동'!E:E,"session_start",${ga4D})`).join('+');
     const inq = c.danggn
       ? `SUMIFS('당근+'!P:P,'당근+'!A:A,">="&${ABS_N},'당근+'!A:A,"<="&${ABS_O})+SUMIFS('당근+'!Q:Q,'당근+'!A:A,">="&${ABS_N},'당근+'!A:A,"<="&${ABS_O})`
       : ev('kakao_chat_click');
     dash.getRange(r, 1).setValue(c.name);
-    dash.getRange(r, 2).setFormula(`=IFERROR(${ad(c.impCol)},0)`).setNumberFormat(fmtKM);
-    dash.getRange(r, 3).setFormula(`=IFERROR(${ad(c.clkCol)},0)`).setNumberFormat(fmtKM);
-    dash.getRange(r, 4).setFormula(`=IFERROR(${ad(c.spdCol)},0)`).setNumberFormat(F_WON);   // 소진금액=실제 광고집행 지출(각 채널 광고시트)
-    dash.getRange(r, 5).setFormula(`=IFERROR(${inq},0)`).setNumberFormat(F_INT);            // 문의
-    dash.getRange(r, 6).setFormula(`=IFERROR(IF(E${r}=0,"-",D${r}/E${r}),"-")`).setNumberFormat(F_WON);  // 문의당비용=소진/문의
+    dash.getRange(r, 2).setFormula(`=IFERROR(${ad(c.spdCol)},0)`).setNumberFormat(F_WON);   // 소진금액=실제 광고집행 지출
+    dash.getRange(r, 3).setFormula(`=IFERROR(${inq},0)`).setNumberFormat(F_INT);            // 문의(GA4 카톡클릭 / 당근=카톡+앱)
+    dash.getRange(r, 4).setFormula(`=IFERROR(IF(C${r}=0,"-",B${r}/C${r}),"-")`).setNumberFormat(F_WON);  // 문의당비용=소진/문의
+    dash.getRange(r, 5).setFormula(`=IFERROR(IF((${sess})=0,"-",(${ev('citymarket_arrival')})/(${sess})),"-")`).setNumberFormat(F_PCT);  // 가격확인율=가격확인/방문(채널 GA4)
+    dash.getRange(r, 6).setFormula(`=IFERROR(IF((${sess})=0,"-",(${ev('kakao_chat_click')})/(${sess})),"-")`).setNumberFormat(F_PCT);   // 카톡전환율=카톡/방문(채널 GA4)
   });
   dataBox(chStart, channels.length, 6, LCOL);   // 12~16
 
