@@ -759,7 +759,7 @@ function buildDashboardV2() {
   const trackedInqG = `(${countInqFx(GS, GE)}-${countInqFx(GS, GE, ",'문의접수'!D:D,\"불확실\"")}-${countInqFx(GS, GE, ",'문의접수'!D:D,\"\"")})`;
   const inqG = countInqFx(GS, GE);
 
-  const stripLabels = ['광고비', 'CPL', '개통률', '문의', '출처미상%'];
+  const stripLabels = ['광고비', 'CPL', '개통률', '문의', '개통'];
   const stripCols = ['A', 'C', 'E', 'G', 'I'];
   stripLabels.forEach(function (lbl, i) {
     const c = stripCols[i];
@@ -773,7 +773,7 @@ function buildDashboardV2() {
   dash.getRange('C2').setFormula(`=IFERROR((${sumPaidFx(GS, GE)})/${inqG},"-")`).setNumberFormat(F_WON);
   dash.getRange('E2').setFormula(`=IFERROR(${countInqFx(GS, GE, ",'문의접수'!C:C,\"개통\"")}/${inqG},"-")`).setNumberFormat(F_PCT);
   dash.getRange('G2').setFormula(`=${inqG}`).setNumberFormat('#,##0"건"');
-  dash.getRange('I2').setFormula(`=IFERROR((${inqG}-${trackedInqG})/${inqG},"-")`).setNumberFormat(F_PCT);
+  dash.getRange('I2').setFormula(`=${countInqFx(GS, GE, ",'문의접수'!C:C,\"개통\"")}`).setNumberFormat('#,##0"건"');  // 개통건수(기간)
 
   dash.setFrozenRows(2);
 
@@ -1029,10 +1029,6 @@ function buildDashboardV2() {
       var rs = rule.getRanges().map(function (rg) { return rg.getA1Notation(); }).join(',');
       return rs.indexOf('I2') < 0 && rs.indexOf('K12') < 0 && rs.indexOf('F3') < 0 && rs.indexOf('F6') < 0;
     });
-    keep.push(SpreadsheetApp.newConditionalFormatRule().whenNumberGreaterThanOrEqualTo(0.7)
-      .setFontColor('#9F1A1A').setBackground('#FCEBEB').setRanges([dash.getRange('I2')]).build());
-    keep.push(SpreadsheetApp.newConditionalFormatRule().whenNumberBetween(0.5, 0.6999)
-      .setFontColor('#8A5A00').setBackground('#FAEEDA').setRanges([dash.getRange('I2')]).build());
     keep.push(SpreadsheetApp.newConditionalFormatRule().whenNumberLessThan(0)
       .setFontColor('#9F1A1A').setRanges([dash.getRange('K12:K17')]).build());
     keep.push(SpreadsheetApp.newConditionalFormatRule().whenNumberLessThan(0)
