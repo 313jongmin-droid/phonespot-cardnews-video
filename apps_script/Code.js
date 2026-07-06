@@ -167,6 +167,7 @@ function onOpen() {
     .addItem('⏰ 야간 전체 새로고침 트리거 (02:45)', 'setupRefreshAllTrigger')
     .addItem('📏 날짜(A열) 탭 폭 80 고정', 'fixDateColumnWidths')
     .addItem('📅 채널시트 날짜 정렬 (메타+/네이버+/당근+)', 'sortAllChannelSheetsByDate')
+    .addItem('📊 리틀리 방문자 행동 갱신', 'syncLitlyActionsMenu')
     .addToUi();
 
   // 📘 메타 자동화 메뉴 (meta-sync.gs)
@@ -236,6 +237,7 @@ function refreshAll() {
   catch (e) { errors.push('generateYouTubeInsightsMarkdown: ' + e.message); Logger.log(e); }
 
   // ===== 3단계: 대시보드 빌드 (수식/UI 재구성) =====
+  try { syncLitlyActions_(); } catch (e) { errors.push('syncLitlyActions: ' + e.message); }
   try { buildDashboardV2(); } catch (e) { errors.push('buildDashboardV2: ' + e.message); }
   try { repairSNSMonthlySummaries(false); } catch (e) { errors.push('repairSNSMonthlySummaries: ' + e.message); }
   try { addTimeSeriesChart(); } catch (e) { errors.push('addTimeSeriesChart: ' + e.message); }
@@ -662,8 +664,52 @@ function sortAllChannelSheetsByDate() {   // 메뉴용(알림)
   if (typeof logSync_ === 'function') { try { logSync_('sortChannelSheets', '메타+/네이버+/당근+'); } catch (e) {} }
 }
 
+// ──[리틀리]── 방문자 행동(GA4 이벤트) 자동 채움 — 리틀리 탭 D열 다음 6컬럼 (2026-07-06)
+//   신규방문/스크롤/가격확인도착/카톡클릭/전화클릭/링크클릭 = 각 행 날짜(A) 기준 GA4_자동 이벤트 합.
+//   ★ GA4_자동엔 페이지 구분 없어 사이트 전체(대부분 리틀리 랜딩) 합산. 컬럼 삽입은 idempotent.
+function syncLitlyActions_() {
+  const ss = SpreadsheetApp.getActive();
+  const li = ss.getSheetByName('리틀리');
+  const ga = ss.getSheetByName('GA4_자동');
+  if (!li || !ga) return;
+  const HROW = 3, DATA = 4, START = 5;   // 헤더3행 / 데이터4행 / 삽입 시작 E(5)
+  const COLS = ['신규방문', '스크롤', '가격확인도착', '카톡클릭', '전화클릭', '링크클릭'];
+  const EVENTS = ['first_visit', 'scroll', 'citymarket_arrival', 'kakao_chat_click', 'phone_click', 'click'];
+  if (String(li.getRange(HROW, START).getValue()).trim() !== COLS[0]) {   // 없으면 D(4) 다음 삽입
+    li.insertColumnsAfter(4, COLS.length);
+    li.getRange(HROW, START, 1, COLS.length).setValues([COLS])
+      .setFontWeight('bold').setBackground('#EAF1FB').setHorizontalAlignment('center');
+  }
+  const last = li.getLastRow();
+  if (last < DATA) return;
+  const gLast = ga.getLastRow();
+  if (gLast < 5) return;
+  const gv = ga.getRange(5, 1, gLast - 4, 6).getValues();   // A날짜 / E이벤트(idx4) / F카운트(idx5)
+  const map = {};
+  gv.forEach(function (r) {
+    const d = String(r[0]).replace(/-/g, '').slice(0, 8);
+    if (d.length !== 8) return;
+    (map[d] = map[d] || {});
+    const ev = String(r[4]); map[d][ev] = (map[d][ev] || 0) + (Number(r[5]) || 0);
+  });
+  const dates = li.getRange(DATA, 1, last - DATA + 1, 1).getValues();
+  const out = dates.map(function (row) {
+    const dt = row[0];
+    if (!(dt instanceof Date)) return COLS.map(function () { return ''; });
+    const key = Utilities.formatDate(dt, 'Asia/Seoul', 'yyyyMMdd');
+    const m = map[key] || {};
+    return EVENTS.map(function (e) { return m[e] || 0; });
+  });
+  li.getRange(DATA, START, out.length, COLS.length).setValues(out).setNumberFormat('#,##0');
+}
+function syncLitlyActionsMenu() {
+  syncLitlyActions_();
+  try { SpreadsheetApp.getUi().alert('✅ 리틀리 방문자 행동(GA4) 갱신 완료'); } catch (e) {}
+}
+
 function nightlyDashboard() {
   try { sortChannelSheetsCore_(); } catch (e) { Logger.log('Sort: ' + e.message); }   // 채널시트 날짜 정렬(순서 복구)
+  try { syncLitlyActions_(); } catch (e) { Logger.log('LitlyAct: ' + e.message); }   // 리틀리 방문자 행동 GA4 채움
   try { buildDashboardV2(); } catch (e) { Logger.log('DashV2: ' + e.message); }
   try { if (typeof addTimeSeriesChart === 'function') addTimeSeriesChart(); } catch (e) { Logger.log('Chart: ' + e.message); }
   if (typeof logSync_ === 'function') logSync_('nightlyDashboard', '대시보드 재빌드 완료');
@@ -874,9 +920,17 @@ function buildDashboardV2() {
     dash.getRange(r, 4).setFormula("=IFERROR(C" + r + "/B" + r + ",\"-\")").setNumberFormat(F_PCT);
   });
   dataBox(liStart, liPeriods.length, 4, LCOL);   // 20~22
+  // 유입경로비율 컬럼을 헤더명으로 동적 탐색 (리틀리 D열 뒤 행동컬럼 삽입 시 위치 이동 대비)
+  var liInflowCol = 'G';
+  try {
+    var _liSh = ss.getSheetByName('리틀리');
+    var _hdr = _liSh.getRange(3, 1, 1, _liSh.getLastColumn()).getValues()[0];
+    var _idx = _hdr.indexOf('유입경로비율');
+    if (_idx >= 0) liInflowCol = String.fromCharCode(64 + _idx + 1);
+  } catch (e) {}
   dash.getRange(liStart, 5, liPeriods.length, 2).merge()   // E20:F22
     .setVerticalAlignment('top').setWrap(true).setHorizontalAlignment('left')
-    .setFormula('=IFERROR(INDEX(FILTER(\'리틀리\'!G4:G1000,\'리틀리\'!G4:G1000<>""),ROWS(FILTER(\'리틀리\'!G4:G1000,\'리틀리\'!G4:G1000<>""))),"(유입경로 입력 없음)")')
+    .setFormula('=IFERROR(INDEX(FILTER(\'리틀리\'!' + liInflowCol + '4:' + liInflowCol + '1000,\'리틀리\'!' + liInflowCol + '4:' + liInflowCol + '1000<>""),ROWS(FILTER(\'리틀리\'!' + liInflowCol + '4:' + liInflowCol + '1000,\'리틀리\'!' + liInflowCol + '4:' + liInflowCol + '1000<>""))),"(유입경로 입력 없음)")')
     .setBorder(true, true, true, true, true, true, C_ROW_BD, SpreadsheetApp.BorderStyle.SOLID);
 
   // ── 우측 열 (H~M) ──
