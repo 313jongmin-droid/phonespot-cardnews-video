@@ -556,6 +556,12 @@ function syncMetaCampaignRecent_(days) {
   Logger.log('syncMetaCampaignRecent ' + days + '일 (ok ' + ok + ' / fail ' + fail + ')');
 }
 
+// ★ 메뉴용(2026-07-06): 메타 수동 동기화 = 최근 7일 self-heal + 완료 알림 (네이버와 범위 통일)
+function syncMetaRecent7() {
+  syncMetaCampaignRecent_(7);
+  try { SpreadsheetApp.getUi().alert('✅ 메타 동기화 완료 (최근 7일)'); } catch (e) {}
+}
+
 // ★ 오후 재sync (2026-07-01): 새벽 01:40엔 메타가 어제치 미확정 → 낮에 확정 후 최근 3일 재수집.
 //   새벽 self-heal(7일)과 별개로, 어제/그제를 "당일 오후"에 채워 표시 지연 하루 단축.
 function afternoonMetaResync() {
@@ -1496,7 +1502,7 @@ function buildMetaSyncMenu_(ui) {
     .addItem('🔄 지금 동기화 (테스트)', 'manualSyncToday')
     .addItem('📥 어제 성과만 가져오기', 'syncMetaDaily')
     .addItem('🎨 광고소재 라이브러리 갱신', 'syncMetaCreatives')
-    .addItem('🔄 동기화 (어제)', 'syncMetaCampaignIntegrated')
+    .addItem('🔄 동기화 (최근 7일)', 'syncMetaRecent7')
     .addSeparator()
     .addItem('🔍 미매핑 광고그룹 보기', 'showUnmappedAdsets')
     .addItem('✅ utm 채운 행 상태 갱신', 'flipMappedUtmStatus')
