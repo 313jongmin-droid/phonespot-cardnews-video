@@ -55,7 +55,7 @@
 - 진입: `CODEX_VIDEO_DESK/00_PHONE_SPOT_PANEL.bat`(직접 실행=콘솔 보임, 디버그용) / **무창 = `dashboard/panel_hidden.vbs`**(고정 바로가기 타깃).
 
 **핵심 심볼 (server.py, 검증된 줄)**
-- `PANEL_VERSION = "phonespot-web-v48"` (L41) — **버전 단일 출처(SSOT)**. ps1이 이 값을 읽음. 화면/CSS 바꾸면 이 숫자만 올림.
+- `PANEL_VERSION = "phonespot-web-v49"` (L41) — **버전 단일 출처(SSOT)**. ps1이 이 값을 읽음. 화면/CSS 바꾸면 이 숫자만 올림.
 - `get_video_slugs()` (L336) — 영상 슬러그 목록. `list_slugs.py` 호출(articles∪output 독립 스캔).
 - `get_cardnews_rows()` (L1073) — 카드뉴스 행. `CARD_OUTPUT ∪ CARD_IMAGES ∪ CARD_ARTICLES` 합집합 스캔. **정렬 = `slug_sort_key` 내림차순(번호 desc)→ `[:80]` 캡 = 최신 80 보존, 최신 위로(v44).** 4개 리스트(영상·카드·tpList·aiList)+`cardnews_summary`(최신 12) 공용 소스라 한 곳에서 정렬 결정.
 - 액션 디스패치: `if action == "..."` 블록들 (L1589~2010). 주요:
@@ -79,7 +79,7 @@
 - **주제목록 공유 + 스타일 요청 큐 (v40, 2026-06-24)**: 타이포·실사AI 탭에 영상후보(주제) 목록을 `/api/slugs` 재사용해 공유(`tpTopic`·`aiTopic` select) + "만들기 요청" 버튼 → 액션 `style_request`(`{slug,track}` → `_state/style_requests.jsonl` append, status=pending) / `style_pending`(목록 표시). **콘텐츠 작성=Claude**(패널은 글 못 씀) — "스타일 요청 처리" 명령으로 큐 읽어 typo=`TOPIC_TO_PROMO.md`·ai=`MEME_TO_VIRAL.md` 작성·렌더, 처리분 status=done. 함정: 자동 즉시 렌더 아님(요청→Claude 작성 게이트).
   - 좌측 슬러그 섹션 = `main > section`만 **`position:sticky; top:80px; align-self:start`**(우측 높이에 안 늘어남), `.list { max-height:calc(100vh-188px) }`.
   - 우측 페어: `.pair`(1fr 1fr) = 상태|로그, `.pair.lopsided`(1.8fr 1fr) = 기록|결과. `align-items:stretch`(박스 높이 맞춤). 마크업에서 두 섹션씩 `<div class="pair">`로 감쌈.
-- **슬러그 행 = 2줄 iOS 리스트**: `.row`(grid `38px 1fr auto`) → 번호배지 + `.row-main`(`.slug-name` 줄바꿈 + `.row-sub`) + `.stage-pill`. **번호배지 = `idx+1`**(영상은 `videoItems.forEach((item,idx)=>`; 이전 `item.number`는 undefined로 "defin" 깨짐).
+- **슬러그 행 = 2줄 iOS 리스트**: `.row`(grid `38px 1fr auto`) → 번호배지 + `.row-main`(`.slug-name` 줄바꿈 + `.row-sub`) + `.stage-pill`. **번호배지 = `idx+1`**(영상은 `videoItems.forEach((item,idx)=>`; 이전 `item.number`는 undefined로 "defin" 깨짐). **주 표기 = 한국어 제목(`item.title||item.slug`), 슬러그(영문 ID)는 `.row-sub` 보조줄로 (v49).** title은 `card_row`→`article_title`(기사 JSON), 없으면 슬러그 폴백. 네 리스트(loadSlugs·loadCardnews·renderTopicList tp/ai) 동일 적용.
 - **상단 4박스(runtime-card)**: 흰 카드 통일, 상태는 값 앞 **컬러 점**(`.runtime-card.good/.bad/.warn b::before { content:"●" }` = 초록/빨강/주황). 배경 틴트 제거.
 - **선택영상 배지**: `.action-head{flex-direction:column}` + `.selected-badge{width:100%}` 18px → 제목 아래 전폭 좌측.
 - **깊이**: 타일/카드 **테두리 없이 그림자 하나**(`.btn{border:none;box-shadow:shadow-subtle}`, 호버=elevated+accent 링). 주황 절제(flag 등 중립).
@@ -690,3 +690,4 @@ rdnews/scripts/update_content_guide.py`로 §2 발행인덱스 자동 재생성,
 - 2026-07-06 (세션): **문의접수 H~M = 카카오 채널 통계(수기), L/M 추가 + KT 적용 (G/J단원).** 문의접수 우측 카톡 블록(옛 삭제된 카톡리포트 자리, 이제 순수 수기): H날짜 I친구수 J채널추가수합계 K채팅요청친구수 **L방문자수 M조회수**(종민 추가). 카카오 채널은 공식 API 없어 수기 입력(SNS_AUTOMATION_ROADMAP 확정). setupInquirySheetDropdowns(danggn-sync.js)에 H~N 헤더 세팅(비었을 때만) 추가 → KT에서도 메뉴 1회 실행하면 F앱가입 드롭다운 + 카톡 H~M 헤더가 동일 적용. 메뉴 🚀통합 '📋 문의접수 드롭다운/헤더 세팅'. 문의접수 전체 컬럼: A날짜 B이름 C개통여부 D유입채널 E메모 F앱가입(O/공백) G(간격) H날짜 I친구수 J채널추가 K채팅요청 L방문자수 M조회수 N비고.
 - 2026-07-06 (세션): **문의접수 셋업 메뉴 이동 (G단원).** '📋 문의접수 드롭다운/헤더 세팅'(setupInquirySheetDropdowns)을 🟠당근 → **🚀통합** 메뉴로 이동. 문의접수는 당근 전용 아닌 공통 탭이라 위치 정정. 함수 정의는 danggn-sync.js 그대로(메뉴 addItem만 Code.js onOpen 통합메뉴로).
 - 2026-06-26 (세션2, 무콘솔 부모 자식창 플래시 — A단원, 패널 task): **pythonw 무창 전환 부작용으로 cmd 창이 자꾸 깜빡 → 수정(v48/worker v5).** 부모(pythonw)에 콘솔이 없어 `subprocess`로 부른 콘솔 프로그램(git 등)이 각자 새 콘솔 창 생성. 주기 주범=`github_status`(폴링 60s마다 git). 수정=server.py 9곳+worker.py 2곳의 subprocess 전부에 `creationflags=NO_WINDOW`(모듈 상수). detached 재시작 스폰만 제외(상호배타·자체 무창). PANEL_VERSION v47→v48, worker v4→v5. 적용=패널 아이콘 재클릭(버전게이트 재기동).
+- 2026-06-26 (세션2, 리스트 한국어 제목 표기 — A단원, 패널 task): **후보 리스트 주 표기를 영문 슬러그→한국어 제목으로(v49).** `card_row`에 이미 있는 `title`(`article_title`=기사 JSON)을 `.slug-name`에 노출(`item.title||item.slug` 폴백), 슬러그는 `.row-sub` 보조줄로 이동. loadSlugs·loadCardnews·renderTopicList(tp/ai) 4리스트 동일. PANEL_VERSION v48→v49.
