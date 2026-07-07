@@ -25,6 +25,14 @@
     {"id": "C10", "line": "qa", "topic": "폰 보험 보상 못 받는 경우", "hook": "보험 들었는데 왜 보상이 안 돼?", "summary": "함정 조건→체크→매장", "track_suggest": "카드/카드영상", "ttsan": "검증·손해후킹", "status": "candidate", "slug": null},
     {"id": "C11", "line": "pick", "topic": "휴가에 강한 폰 3", "hook": "물놀이·캠핑 가는데 이 폰이면 든든", "summary": "배터리·방수·카메라 3종→매장", "track_suggest": "카드/카드영상", "ttsan": "검증·season", "status": "candidate", "slug": null},
     {"id": "C12", "line": "life", "topic": "비행기 타기 전 폰 5초 세팅", "hook": "이거 안 하면 내리자마자 요금 폭탄", "summary": "로밍 차단 5초→매장", "track_suggest": "카드/카드영상", "ttsan": "season·손해후킹", "status": "candidate", "slug": null},
-    {"id": "C13", "line": "news", "topic": "애플 가격 인상 비껴간 제품", "hook": "애플 다 오르는데 이건 안 올랐다", "summary": "인상 비껴간 제품(아이폰·에어팟 일부)→지금 사도 되는 것→매장", "track_suggest": "카드/카드영상", "ttsan": "apple+·검증·035연계", "status": "candidate", "slug": null}
+    {"id": "C13", "line": "news", "topic": "애플 가격 인상 비껴간 제품", "hook": "애플 다 오르는데 이건 안 올랐다", "summary": "인상 비껴간 제품(아이폰·에어팟 일부)→지금 사도 되는 것→매장", "track_suggest": "카드/카드영상", "ttsan": "apple+·검증·035연계", "status": "candidate", "slug": null},
+
+    {"id": "040", "line": "tip", "topic": "iOS27 새 기능 미리보기", "hook": "곧 오는 iOS27, 영수증만 찍으면 더치페이 끝 [②근황+③이것만바꾸면]", "summary": "더치페이·캘린더 AI·시리 강화→베타7월/정식가을→매장", "track_suggest": "카드/카드영상", "ttsan": "apple+·검증", "status": "published", "slug": "040_tip_ios27_features"},
+    {"id": "041", "line": "meme", "topic": "같은 폰인데 왜 여기가 더 싸", "hook": "같은 아이폰인데 왜 옆 매장은 30만원 더 비싸? [⑯질문+⑥비교결론]", "summary": "공통지원금·부가서비스·정찰제 차이→실구매가 서면 비교→매장", "track_suggest": "실사 viral / 카드", "ttsan": "★인스타호구릴스결·경쟁", "status": "published", "slug": "041_meme_price_difference"},
+    {"id": "C14", "line": "qa", "topic": "아이폰17인데 최신 AI 못 씀", "hook": "아이폰17 샀는데 최신 AI 못 쓴다고? [⑯질문+⑬반전]", "summary": "17 일반모델 AI 제외→어느 기종부터 되나→매장", "track_suggest": "카드/카드영상", "ttsan": "apple+·검증·반전", "status": "candidate", "slug": null},
+    {"id": "C15", "line": "scam", "topic": "중고폰 거래 사기", "hook": "'안전결제 링크 보낼게요' 이 말 나오면 사기 [⑨절대하지마세요+⑦공공의적]", "summary": "안전결제·계정넘기기 수법→구별→매장 안전거래", "track_suggest": "카드/카드영상", "ttsan": "검증·season", "status": "candidate", "slug": null},
+    {"id": "C16", "line": "tip", "topic": "폰 저장공간 꽉 찼을 때", "hook": "저장공간 부족 뜰 때, 사진 안 지우고 늘리는 법 [③이것만바꾸면+⑪쉬운방법]", "summary": "캐시·중복·클라우드 정리 순서→매장 셋업", "track_suggest": "카드/카드영상", "ttsan": "공감·실용", "status": "candidate", "slug": null},
+    {"id": "C17", "line": "qa", "topic": "통신사 멤버십 버리는 것", "hook": "통신사 멤버십, 이거 안 챙기면 매년 손해 [⑤안되는이유]", "summary": "안 쓰는 혜택→챙기는 법→매장", "track_suggest": "카드/카드영상", "ttsan": "실용·손해후킹", "status": "candidate", "slug": null},
+    {"id": "C18", "line": "life", "topic": "폰 잃어버린 순간 대처", "hook": "폰 잃어버린 순간, 이 순서대로 하세요 [⑨절대하지마세요+⑪쉬운방법]", "summary": "나의 찾기·유심정지·분실신고 순서→매장", "track_suggest": "카드/카드영상", "ttsan": "실용·season", "status": "candidate", "slug": null}
   ]
 }
