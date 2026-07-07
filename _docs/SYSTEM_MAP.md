@@ -55,7 +55,7 @@
 - 진입: `CODEX_VIDEO_DESK/00_PHONE_SPOT_PANEL.bat`(직접 실행=콘솔 보임, 디버그용) / **무창 = `dashboard/panel_hidden.vbs`**(고정 바로가기 타깃).
 
 **핵심 심볼 (server.py, 검증된 줄)**
-- `PANEL_VERSION = "phonespot-web-v47"` (L41) — **버전 단일 출처(SSOT)**. ps1이 이 값을 읽음. 화면/CSS 바꾸면 이 숫자만 올림.
+- `PANEL_VERSION = "phonespot-web-v48"` (L41) — **버전 단일 출처(SSOT)**. ps1이 이 값을 읽음. 화면/CSS 바꾸면 이 숫자만 올림.
 - `get_video_slugs()` (L336) — 영상 슬러그 목록. `list_slugs.py` 호출(articles∪output 독립 스캔).
 - `get_cardnews_rows()` (L1073) — 카드뉴스 행. `CARD_OUTPUT ∪ CARD_IMAGES ∪ CARD_ARTICLES` 합집합 스캔. **정렬 = `slug_sort_key` 내림차순(번호 desc)→ `[:80]` 캡 = 최신 80 보존, 최신 위로(v44).** 4개 리스트(영상·카드·tpList·aiList)+`cardnews_summary`(최신 12) 공용 소스라 한 곳에서 정렬 결정.
 - 액션 디스패치: `if action == "..."` 블록들 (L1589~2010). 주요:
@@ -108,6 +108,7 @@
 - **결과 mp4 탐지 = 스냅샷 diff + 경계안전 slug 매칭 (worker.py v4, 2026-06-26).** `result_after(slug, started, before)`(`RENDER_WORKER/worker.py`): 렌더 직전 `snapshot_mp4s()`로 RESULTS의 mp4→mtime 스냅샷 → 실행 후 **신규/갱신 mp4 우선** 선택(없으면 mtime≥started−5 시간창 폴백). slug 매칭은 `_slug_in_folder`=양옆 `_` 래핑 비교(부분문자열 X) → "031"이 "0310_…" 폴더에 오매칭 안 됨. 워커는 잡 1개씩 순차 claim이라 신규 diff=이번 산출물. **제작 bat은 결과를 `RESULTS/<slug 포함 세그먼트>_<track>/*.mp4`로 떨궈야 탐지됨**(계약 불변).
 
 - **패널 콘솔 창이 작업표시줄에 상주 = 서버를 콘솔 파이썬으로 띄운 것(2026-06-26 수정).** `start /b python.exe server`는 서버가 그 .bat 콘솔을 생존 내내 붙잡아 창이 안 닫힘 → `start_hidden.ps1`에서 `pythonw.exe`로 기동해야 무창. 진입도 `panel_hidden.vbs`(wscript→bat 히든)로. **`pin_panel.ps1` 바꾸면 `작업표시줄에_패널_고정.bat` 1회 재실행해 바로가기 재생성 필요**(기존 고정은 unpin 후 재고정). Windows 전용=샌드박스 검증 불가.
+- **★ 무콘솔 부모(pythonw)의 부작용 = 자식 콘솔 프로세스가 각자 새 창을 띄움(cmd 깜빡임, v48 수정).** 서버를 pythonw로 띄우면 부모에 콘솔이 없어, `subprocess.run/Popen`으로 부른 콘솔 프로그램(git·bat·python 등)이 **매번 새 콘솔 창을 생성**(python.exe일 땐 부모 콘솔 공유라 안 보였음). 주기 주범=`github_status`(상태폴링 60s마다 git). **해결=server.py/worker.py의 모든 subprocess에 `creationflags=NO_WINDOW`(=`CREATE_NO_WINDOW`)** 부여(모듈 상수 `NO_WINDOW`). **단 `panel_update_restart`의 detached 스폰은 `DETACHED_PROCESS`와 상호배타라 NO_WINDOW 안 붙임**(detached 자체가 무창). 새 subprocess 추가 시 반드시 NO_WINDOW 포함.
 
 **교차 영향**: 렌더/라이브러리/슬러그 액션은 C·D 단원 스크립트를 subprocess로 부름.
 
@@ -688,3 +689,4 @@ rdnews/scripts/update_content_guide.py`로 §2 발행인덱스 자동 재생성,
 - 2026-07-06 (세션): **문의접수 F열 = 앱가입 (폐쇄몰앱, G단원/J단원).** 종민이 F열 '앱가입' 추가 — 폰스팟 폐쇄몰앱 별도 존재, 고객이 앱 가입했는지 여부. 값: O(가입) / 공백(미가입). setupInquirySheetDropdowns(danggn-sync.js)에 F열(6) 드롭다운 추가: requireValueInList(['O']) allowInvalid=false → O 또는 공백만. F1 헤더 '앱가입' 자동세팅(비었을 때만). 메뉴 🚀통합 '📋 문의접수 드롭다운/헤더 세팅'. 문의접수 컬럼: A날짜 B이름 C개통여부(개통/진행중/미상) D유입채널 E메모 **F앱가입(O/공백)**. 향후 앱가입율(앱가입÷개통 or ÷문의) 분석 여지.
 - 2026-07-06 (세션): **문의접수 H~M = 카카오 채널 통계(수기), L/M 추가 + KT 적용 (G/J단원).** 문의접수 우측 카톡 블록(옛 삭제된 카톡리포트 자리, 이제 순수 수기): H날짜 I친구수 J채널추가수합계 K채팅요청친구수 **L방문자수 M조회수**(종민 추가). 카카오 채널은 공식 API 없어 수기 입력(SNS_AUTOMATION_ROADMAP 확정). setupInquirySheetDropdowns(danggn-sync.js)에 H~N 헤더 세팅(비었을 때만) 추가 → KT에서도 메뉴 1회 실행하면 F앱가입 드롭다운 + 카톡 H~M 헤더가 동일 적용. 메뉴 🚀통합 '📋 문의접수 드롭다운/헤더 세팅'. 문의접수 전체 컬럼: A날짜 B이름 C개통여부 D유입채널 E메모 F앱가입(O/공백) G(간격) H날짜 I친구수 J채널추가 K채팅요청 L방문자수 M조회수 N비고.
 - 2026-07-06 (세션): **문의접수 셋업 메뉴 이동 (G단원).** '📋 문의접수 드롭다운/헤더 세팅'(setupInquirySheetDropdowns)을 🟠당근 → **🚀통합** 메뉴로 이동. 문의접수는 당근 전용 아닌 공통 탭이라 위치 정정. 함수 정의는 danggn-sync.js 그대로(메뉴 addItem만 Code.js onOpen 통합메뉴로).
+- 2026-06-26 (세션2, 무콘솔 부모 자식창 플래시 — A단원, 패널 task): **pythonw 무창 전환 부작용으로 cmd 창이 자꾸 깜빡 → 수정(v48/worker v5).** 부모(pythonw)에 콘솔이 없어 `subprocess`로 부른 콘솔 프로그램(git 등)이 각자 새 콘솔 창 생성. 주기 주범=`github_status`(폴링 60s마다 git). 수정=server.py 9곳+worker.py 2곳의 subprocess 전부에 `creationflags=NO_WINDOW`(모듈 상수). detached 재시작 스폰만 제외(상호배타·자체 무창). PANEL_VERSION v47→v48, worker v4→v5. 적용=패널 아이콘 재클릭(버전게이트 재기동).
