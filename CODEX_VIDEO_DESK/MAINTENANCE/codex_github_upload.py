@@ -2,6 +2,15 @@ from __future__ import annotations
 
 import os
 import subprocess
+# 무콘솔 부모(패널 pythonw) 밑에서는 자식 git이 새 콘솔 창을 띄운다(터미널 깜빡임).
+# 이 스크립트의 모든 subprocess.run에 CREATE_NO_WINDOW 기본 주입.
+if os.name == "nt":
+    _NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
+    _orig_run = subprocess.run
+    def _run_no_window(*_a, **_k):
+        _k.setdefault("creationflags", _NO_WINDOW)
+        return _orig_run(*_a, **_k)
+    subprocess.run = _run_no_window
 import sys
 import time
 from datetime import datetime
