@@ -877,6 +877,7 @@ function buildDashboardV2() {
   const kpiPeriods = [
     ['어제',      'TODAY()-1',  'TODAY()-1'],
     ['최근 7일',  'TODAY()-6',  'TODAY()'],
+    ['최근 14일', 'TODAY()-13', 'TODAY()'],
     ['최근 30일', 'TODAY()-29', 'TODAY()'],
   ];
   const kpiStart = 6;
@@ -891,7 +892,7 @@ function buildDashboardV2() {
     dash.getRange(r, 5).setFormula(`=IFERROR(B${r}/C${r},"-")`).setNumberFormat(F_WON);
     dash.getRange(r, 6).setFormula(`=IF($C$3="","-",D${r}*$C$3-B${r})`).setNumberFormat(F_WON);  // 순이익=개통×마진-광고비
   });
-  dataBox(kpiStart, kpiPeriods.length, 6, LCOL);   // 6~8
+  dataBox(kpiStart, kpiPeriods.length, 6, LCOL);   // 6~9
 
   // 3L) 채널별 효율 — 전역 상단 기간(L2) 따라감 / 컬럼헤더 11 / 데이터 12~16
   const chHeaderRow = 10;
