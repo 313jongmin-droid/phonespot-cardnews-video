@@ -32,6 +32,62 @@ RATE = os.getenv("PHONESPOT_TTS_RATE", "+42%")
 VOLUME = os.getenv("PHONESPOT_TTS_VOLUME", "+0%")
 PITCH = os.getenv("PHONESPOT_TTS_PITCH", "+0Hz")
 LOUDNORM = os.getenv("PHONESPOT_TTS_LOUDNORM", "1") != "0"
+
+# --- 슈퍼톤(Sora) TTS + edge-tts 폴백 (2026-07-07) ---
+# 엔진: auto=키+크레딧 있으면 슈퍼톤, 실패/부재 시 edge / edge=강제무료 / supertone=강제
+TTS_ENGINE = os.getenv("PHONESPOT_TTS_ENGINE", "auto").lower()
+def _load_supertone_key() -> str:
+    k = os.getenv("SUPERTONE_API_KEY", "").strip()
+    if k:
+        return k
+    try:
+        kp = Path(__file__).resolve().parent.parent.parent / "_secrets" / "supertone_key.txt"
+        if kp.exists():
+            return kp.read_text(encoding="utf-8").strip()
+    except Exception:
+        pass
+    return ""
+
+
+SUPERTONE_KEY = _load_supertone_key()
+SUPERTONE_VOICE = os.getenv("PHONESPOT_SUPERTONE_VOICE", "f32a02422bd88da70fddb2")  # Sora
+SUPERTONE_STYLE = os.getenv("PHONESPOT_SUPERTONE_STYLE", "friendly")
+SUPERTONE_MODEL = os.getenv("PHONESPOT_SUPERTONE_MODEL", "sona_speech_1")
+SUPERTONE_SPEED = float(os.getenv("PHONESPOT_SUPERTONE_SPEED", "1.4"))  # edge +42% 대응 (캐주얼 빠른 톤)
+SUPERTONE_BASE = "https://supertoneapi.com/v1"
+
+
+def supertone_enabled() -> bool:
+    return TTS_ENGINE in ("auto", "supertone") and bool(SUPERTONE_KEY)
+
+
+def synth_supertone(spoken: str, out: Path) -> bool:
+    """슈퍼톤 REST로 mp3 생성. 성공 True / 실패 False(호출부에서 edge 폴백)."""
+    if not SUPERTONE_KEY:
+        return False
+    try:
+        import requests  # type: ignore
+    except Exception:
+        return False
+    url = f"{SUPERTONE_BASE}/text-to-speech/{SUPERTONE_VOICE}"
+    headers = {"x-sup-api-key": SUPERTONE_KEY, "Content-Type": "application/json"}
+    body = {
+        "text": spoken, "language": "ko", "model": SUPERTONE_MODEL,
+        "output_format": "mp3", "style": SUPERTONE_STYLE,
+        "voice_settings": {"speed": SUPERTONE_SPEED},
+    }
+    try:
+        r = requests.post(url, headers=headers, json=body, timeout=60)
+        if r.status_code >= 400 and "style" in body:
+            # style 미지원 보이스면 style 빼고 재시도
+            b2 = {k: v for k, v in body.items() if k != "style"}
+            r = requests.post(url, headers=headers, json=b2, timeout=60)
+        r.raise_for_status()
+        out.write_bytes(r.content)
+        return True
+    except Exception as exc:
+        print(f"    [supertone] 실패 -> edge-tts 폴백: {exc}")
+        return False
 MIN_CHUNK_MS = int(os.getenv("PHONESPOT_TTS_MIN_CHUNK_MS", "1100"))
 
 project_root = Path(__file__).parent.parent
@@ -288,6 +344,8 @@ def restore_matching_cache(script: dict[str, Any], jobs: list[tuple[str, dict[st
         "volume": VOLUME,
         "pitch": PITCH,
         "loudness_normalize": LOUDNORM,
+        "tts_engine": TTS_ENGINE,
+        "supertone_voice": (SUPERTONE_VOICE if supertone_enabled() else ""),
     }
     for key, expected in expected_settings.items():
         default = "+0%" if key == "volume" else None
@@ -313,8 +371,8 @@ def restore_matching_cache(script: dict[str, Any], jobs: list[tuple[str, dict[st
         if str(report.get("spoken_tts", "")).strip() != spoken:
             return False
         metadata = audio_dir / f"{key}.metadata.jsonl"
-        boundaries = load_word_boundaries(metadata)
-        if not boundaries:
+        boundaries = load_word_boundaries(metadata) if metadata.exists() else []
+        if report.get("engine") != "supertone" and not boundaries:
             return False
         timing = build_chunk_timing(
             section.get("caption_chunks", []) or [],
@@ -372,22 +430,28 @@ async def gen_one(key: str, section: dict[str, Any]) -> tuple[Path, dict[str, An
     metadata = audio_dir / f"{key}.metadata.jsonl"
     metadata.unlink(missing_ok=True)
 
-    try:
-        comm = edge_tts.Communicate(
-            spoken,
-            voice=VOICE,
-            rate=RATE,
-            volume=VOLUME,
-            pitch=PITCH,
-            boundary="WordBoundary",
-        )
-    except TypeError:
-        # Older edge-tts versions still render normally. Metadata falls back.
-        comm = edge_tts.Communicate(spoken, voice=VOICE, rate=RATE, volume=VOLUME, pitch=PITCH)
-    await comm.save(str(out), str(metadata))
-    normalize_audio(out)
+    engine = "edge"
+    if supertone_enabled() and synth_supertone(spoken, out):
+        engine = "supertone"
+        normalize_audio(out)
+    else:
+        try:
+            comm = edge_tts.Communicate(
+                spoken,
+                voice=VOICE,
+                rate=RATE,
+                volume=VOLUME,
+                pitch=PITCH,
+                boundary="WordBoundary",
+            )
+        except TypeError:
+            # Older edge-tts versions still render normally. Metadata falls back.
+            comm = edge_tts.Communicate(spoken, voice=VOICE, rate=RATE, volume=VOLUME, pitch=PITCH)
+        await comm.save(str(out), str(metadata))
+        normalize_audio(out)
 
-    boundaries = load_word_boundaries(metadata)
+    # 슈퍼톤은 WordBoundary 없음 -> character_weight 근사 싱크로 폴백(설계됨)
+    boundaries = load_word_boundaries(metadata) if metadata.exists() else []
     timing = build_chunk_timing(
         section.get("caption_chunks", []) or [],
         boundaries,
@@ -402,6 +466,7 @@ async def gen_one(key: str, section: dict[str, Any]) -> tuple[Path, dict[str, An
     }
     return out, {
         "key": key,
+        "engine": engine,
         "original_tts": original,
         "spoken_tts": spoken,
         "dictionary_applied": applied,
@@ -426,6 +491,8 @@ async def main() -> None:
         "volume": VOLUME,
         "pitch": PITCH,
         "loudness_normalize": LOUDNORM,
+        "tts_engine": TTS_ENGINE,
+        "supertone_voice": (SUPERTONE_VOICE if supertone_enabled() else ""),
         "pronunciation_dictionary": str(config_path),
         "jobs": [],
     }

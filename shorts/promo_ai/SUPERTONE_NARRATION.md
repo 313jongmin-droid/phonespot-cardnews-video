@@ -55,3 +55,24 @@
 ## 7. WORKFLOW 연동
 - `WORKFLOW.md` "1. 나레이션"에서 **TTS = 슈퍼톤(한국어 캐주얼/클론)**으로 교체. 004의 Quinn(영어권 성우)은 임시였음.
 - 나머지(자막 전문일치·청크·효과4·켄번스줌·sound off)는 전부 동일.
+
+---
+
+## 8. 카드뉴스영상(casual) 파이프라인 자동 통합 (2026-07-07)
+
+`shorts/scripts/generate_tts.py`에 **슈퍼톤(Sora) 우선 + edge-tts 자동 폴백** 내장. 패널에서 카드뉴스영상 렌더 돌리면 자동 적용.
+
+**동작**: `supertone_enabled()`(엔진 auto/supertone + 키 존재) → 슈퍼톤 REST(`/text-to-speech/{voice}`) 성공 시 Sora, 실패/키없음/크레딧부족 → **edge-tts로 폴백**(무료). 엔진 전환 시 캐시 자동 무효화, 같은 스크립트 재렌더는 mp3 재사용(재소모 X).
+
+**키 세팅(둘 중 하나, 렌더PC)**:
+- `_secrets/supertone_key.txt`에 API 키 한 줄 (권장 — worker가 확실히 읽음, 영속).
+- 또는 `setx SUPERTONE_API_KEY "키"` (영구 환경변수).
+- (임시 `set SUPERTONE_API_KEY=`는 그 창에서만 — worker가 못 물려받을 수 있음.)
+
+**환경변수 토글**:
+- `PHONESPOT_TTS_ENGINE` = `auto`(기본, 키 있으면 슈퍼톤) / `edge`(강제 무료) / `supertone`(강제).
+- `PHONESPOT_SUPERTONE_VOICE`(기본 Sora `f32a02422bd88da70fddb2`) · `_STYLE`(friendly) · `_MODEL`(sona_speech_1) · `_SPEED`(1.4, edge +42% 대응).
+
+**★ 한계(정직)**: 슈퍼톤은 단어 타임스탬프(WordBoundary)를 안 줘서, 자막 싱크가 edge의 정밀(word_boundary) → **character_weight 근사 싱크**로 떨어짐(깨지진 않음, 설계된 폴백). 렌더PC 첫 결과에서 자막 드리프트 확인 → 심하면 `PHONESPOT_TTS_ENGINE=edge`로 되돌리거나, 나중에 whisper 강제정렬 추가.
+
+**비용**: 1편 30~35초 ≈ 250~360크레딧(모델 따라). 승인 룰(§0) 적용 — 자동 렌더는 사장님이 "패널 렌더=슈퍼톤" 승인한 것으로 간주, 생성 후 잔액 보고 권장.
