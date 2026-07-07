@@ -99,7 +99,8 @@ function setupBrandConfigSheet() {
     ['CARRIER_FILTER_KEYWORDS', 'KT,다이렉트샵', '필터 키워드(콤마 구분)'],
     ['INSIGHTS_DRIVE_FOLDER', 'phonespot_cardnews_state', '인사이트 MD 저장 Drive 폴더명(브랜드별로 분리 권장)'],
     ['DANGGN_UTM_SOURCE', 'daangn', 'GA4 당근 sessionSource 값'],
-    ['TARGET_CPL', '30000', '목표 CPL(경고 기준)']
+    ['TARGET_CPL', '30000', '목표 CPL(경고 기준)'],
+    ['GENERATOR_URL', '', '광고 생성기 웹앱 /exec URL (Apps Script 배포>배포관리에서 복사). 비우면 자동취득 시도']
   ];
   // 기존 값 보존: 이미 _설정에 값이 있으면 덮어쓰지 않음(키 추가/설명 갱신만)
   const existing = {};
@@ -855,8 +856,8 @@ function buildDashboardV2() {
   dash.getRange('F3').setFormula(`=IF($C$3="","-",${countInqFx(GS, GE, ",'문의접수'!C:C,\"개통\"")}*$C$3-(${sumPaidFx(GS, GE)}))`).setNumberFormat(F_WON).setFontWeight('bold').setHorizontalAlignment('center');
 
   // 행3 우측: 광고 생성기(generator.html 웹앱) 바로가기 버튼 — 웹앱 배포 URL을 동적 취득(하드코딩 X)
-  var genUrl = '';
-  try { genUrl = ScriptApp.getService().getUrl() || ''; } catch (e) {}
+  var genUrl = String(getBrandConfig_('GENERATOR_URL', '') || '').trim();   // _설정에 저장한 웹앱 /exec URL 우선(확실)
+  if (!genUrl) { try { genUrl = ScriptApp.getService().getUrl() || ''; } catch (e) {} }   // 없으면 자동취득
   dash.getRange('H3:K3').breakApart();
   dash.getRange('H3:K3').merge();
   if (genUrl) {
