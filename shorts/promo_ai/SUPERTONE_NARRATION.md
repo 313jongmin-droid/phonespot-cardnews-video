@@ -34,6 +34,7 @@
 
 ## 3. 보이스 선택 팁 + 표준 보이스 지정
 - **★ 글래머 실사 라인 표준 보이스 = Selena** `voice_id=2d172d6efe637391880b10` (2026-07-06 종민, 004로 확정).
+- **★ 카드뉴스영상(casual) 표준 보이스 = Sora** `voice_id=f32a02422bd88da70fddb2` (2026-07-07 종민 확정). style=friendly 기본(중립 원하면 neutral), 광고 나레이션 친근·중립 톤. 실사 라인 Selena와 **트랙별 화자 고정**(섞지 않음).
   - 세팅: **neutral 기본 + 반전·현타 비트만 lazy** / **pitch_shift = -2**(성숙하게) / speed는 ffmpeg 1.35배속.
   - 이유: Bomi(c94c72e2)는 큐트해서 섹시·청순 글래머와 안 맞아 교체. teasing 통일은 과하게 들뜸 → neutral 기반 채택.
   - Selena styles: neutral·kind·lazy·teasing·happy·sad·angry → 비트별 감정 배분 가능.
