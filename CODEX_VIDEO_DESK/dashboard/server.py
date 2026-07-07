@@ -38,7 +38,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v49"
+PANEL_VERSION = "phonespot-web-v50"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -46,6 +46,7 @@ LOCAL_WORKER_PROCESS: subprocess.Popen | None = None
 LOCAL_WORKER_STREAMS: list = []
 # 서버가 pythonw(무콘솔)로 돌면 자식 콘솔 프로세스가 새 창을 띄운다 → 모든 subprocess에 적용.
 NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
+_GH_LAST_ATTEMPT = 0.0  # github_status: 실패해도 60s에 한 번만 재시도(매 폴링 스폰 방지)
 
 if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))
@@ -1098,8 +1099,12 @@ def github_status() -> dict:
         except Exception:
             cached = None
     try:
-        stale = (not status_file.exists()) or (time.time() - status_file.stat().st_mtime > 60)
-        if stale and script.exists():
+        global _GH_LAST_ATTEMPT
+        now = time.time()
+        file_fresh = status_file.exists() and (now - status_file.stat().st_mtime <= 60)
+        attempt_recent = (now - _GH_LAST_ATTEMPT) < 60
+        if (not file_fresh) and (not attempt_recent) and script.exists():
+            _GH_LAST_ATTEMPT = now
             subprocess.run(
                 [sys.executable, str(script)],
                 cwd=str(ROOT),
