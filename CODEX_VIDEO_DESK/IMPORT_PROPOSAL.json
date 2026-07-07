@@ -1,95 +1,95 @@
 {
-  "slug": "035_news_iphone18_price_hike",
+  "slug": "040_tip_ios27_features",
   "engine": "fallback-mtime",
-  "generated_at": 1782263355.9519548,
+  "generated_at": 1783407639.5500145,
   "requests": [
     {
-      "filename": "cpt_925e60e4.png",
-      "variant": "cpt_925e60e4",
+      "filename": "apple_70385068.png",
+      "variant": "apple_70385068",
       "section": "hook",
-      "chunk_index": 3,
-      "concept_label": "사려고 마음먹었다면",
+      "chunk_index": 0,
+      "concept_label": "애플",
       "optional": true,
-      "concept_text": "사려고 마음먹었다면 cpt 925e60e4 사려고 마음먹었다면 타이밍 따져볼 auto concept 사려고 마음먹었다면 타이밍을 따져볼 때입니다."
+      "concept_text": "애플 apple 70385068 애플 auto concept 애플이 iOS27을 공개했습니다."
     },
     {
-      "filename": "part_cost_a4d4e5f0.png",
-      "variant": "part_cost_a4d4e5f0",
+      "filename": "cpt_f385671f.png",
+      "variant": "cpt_f385671f",
+      "section": "hook",
+      "chunk_index": 2,
+      "concept_label": "실생활 만한",
+      "optional": true,
+      "concept_text": "실생활 만한 cpt f385671f 실생활 만한 골라 미리 auto concept 실생활에서 바로 쓸 만한 기능만 골라 미리 보여드립니다."
+    },
+    {
+      "filename": "restaurant_receipt_2b916703.png",
+      "variant": "restaurant_receipt_2b916703",
       "section": "fact_1",
-      "chunk_index": 1,
-      "concept_label": "부품값 크게",
+      "chunk_index": 0,
+      "concept_label": "식당 영수증",
       "optional": true,
-      "concept_text": "부품값 크게 part cost a4d4e5f0 부품값 크게 auto concept 부품값이 크게 올랐습니다."
+      "concept_text": "식당 영수증 restaurant receipt 2b916703 식당 영수증 사진 찍으면 auto concept 식당 영수증을 사진으로 찍으면"
     },
     {
-      "filename": "cpt_28acbe43.png",
-      "variant": "cpt_28acbe43",
-      "section": "fact_1",
-      "chunk_index": 3,
-      "concept_label": "달했다",
-      "optional": true,
-      "concept_text": "달했다 cpt 28acbe43 달했다 auto concept 달했다는 설명입니다."
-    },
-    {
-      "filename": "cpt_f5d0e5e2.png",
-      "variant": "cpt_f5d0e5e2",
+      "filename": "cpt_a2a04bc1.png",
+      "variant": "cpt_a2a04bc1",
       "section": "fact_1",
       "chunk_index": 4,
-      "concept_label": "쿡은 넘게",
+      "concept_label": "더치페 다툼",
       "optional": true,
-      "concept_text": "쿡은 넘게 cpt f5d0e5e2 쿡은 넘게 이런 상황 없다 auto concept 팀 쿡은 \"40년 넘게 이런 상황은 본 적 없다\"고 했습니다."
+      "concept_text": "더치페 다툼 cpt a2a04bc1 더치페 다툼 auto concept 더치페이 다툼이 사라집니다."
     },
     {
-      "filename": "start_price_df144b85.png",
-      "variant": "start_price_df144b85",
+      "filename": "cpt_022b5d33.png",
+      "variant": "cpt_022b5d33",
       "section": "fact_2",
-      "chunk_index": 1,
-      "concept_label": "시작가",
+      "chunk_index": 0,
+      "concept_label": "캘린더 자연어로",
       "optional": true,
-      "concept_text": "시작가 start price df144b85 시작가 auto concept 시작가가 200만원을"
+      "concept_text": "캘린더 자연어로 cpt 022b5d33 캘린더 자연어로 일정 말하듯 입력하면 auto concept 캘린더에 자연어로 일정을 말하듯 입력하면 됩니다."
     }
   ],
   "assignments": [
     {
-      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 6월 24일 오전 09_59_24 (5).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 24일 오전 09_59_24 (5).png",
-      "proposed_filename": "cpt_925e60e4.png",
+      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 7월 7일 오후 04_00_32 (5).png",
+      "candidate_name": "ChatGPT Image 2026년 7월 7일 오후 04_00_32 (5).png",
+      "proposed_filename": "apple_70385068.png",
       "confidence": null,
       "exact_name": false,
       "alternatives": [],
       "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 6월 24일 오전 09_59_23 (4).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 24일 오전 09_59_23 (4).png",
-      "proposed_filename": "part_cost_a4d4e5f0.png",
+      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 7월 7일 오후 04_00_32 (4).png",
+      "candidate_name": "ChatGPT Image 2026년 7월 7일 오후 04_00_32 (4).png",
+      "proposed_filename": "cpt_f385671f.png",
       "confidence": null,
       "exact_name": false,
       "alternatives": [],
       "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 6월 24일 오전 09_59_23 (3).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 24일 오전 09_59_23 (3).png",
-      "proposed_filename": "cpt_28acbe43.png",
+      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 7월 7일 오후 04_00_32 (3).png",
+      "candidate_name": "ChatGPT Image 2026년 7월 7일 오후 04_00_32 (3).png",
+      "proposed_filename": "restaurant_receipt_2b916703.png",
       "confidence": null,
       "exact_name": false,
       "alternatives": [],
       "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 6월 24일 오전 09_59_23 (2).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 24일 오전 09_59_23 (2).png",
-      "proposed_filename": "cpt_f5d0e5e2.png",
+      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 7월 7일 오후 04_00_32 (2).png",
+      "candidate_name": "ChatGPT Image 2026년 7월 7일 오후 04_00_32 (2).png",
+      "proposed_filename": "cpt_a2a04bc1.png",
       "confidence": null,
       "exact_name": false,
       "alternatives": [],
       "dedup": null
     },
     {
-      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 6월 24일 오전 09_59_22 (1).png",
-      "candidate_name": "ChatGPT Image 2026년 6월 24일 오전 09_59_22 (1).png",
-      "proposed_filename": "start_price_df144b85.png",
+      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 7월 7일 오후 04_00_31 (1).png",
+      "candidate_name": "ChatGPT Image 2026년 7월 7일 오후 04_00_31 (1).png",
+      "proposed_filename": "cpt_022b5d33.png",
       "confidence": null,
       "exact_name": false,
       "alternatives": [],

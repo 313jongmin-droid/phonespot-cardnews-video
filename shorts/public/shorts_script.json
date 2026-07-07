@@ -1,75 +1,1038 @@
 {
-  "slug": "017_bumonim",
-  "title_short": "부모님 폰",
-  "video_title": "부모님 폰",
-  "preset": "calm",
-  "hook_pattern": "감성·공감",
-  "channel_name": "폰스팟",
-  "channel_tagline": "광교 휴대폰 정찰제",
-  "publication_date": "2026.05.29",
+  "slug": "040_tip_ios27_features",
+  "title_short": "곧 오는 iOS27, 이 기능들 미쳤다",
+  "video_title": "곧 오는 iOS27, 이 기능들 미쳤다",
+  "publication_date": "2026.06.23",
+  "sources": "애플 WWDC 2026 + ZDNet코리아·디지털투데이 2026.06 + 휴대폰성지 폰스팟 자료",
+  "channel_name": "휴대폰성지 폰스팟",
+  "channel_tagline": "휴대폰성지 IT 브리핑",
   "opening": {
-    "line1": "부모님 폰,",
-    "line2": "대신 알아볼 때",
-    "style": "oversize",
-    "sfx": "whoosh"
+    "line1": "휴대폰성지 IT 브리핑",
+    "line2": "곧 오는 iOS27, 이 기능들 미쳤다"
   },
   "hook": {
-    "style": "reveal",
-    "sfx": "whoosh",
-    "caption_chunks": [
-      "혹시",
-      "호갱 될까",
-      "걱정"
+    "tts": "애플이 iOS27을 공개했습니다. 공개 베타는 7월, 정식은 가을 예정입니다. 실생활에서 바로 쓸 만한 기능만 골라 미리 보여드립니다. 저장해두고 업데이트되면 켜보세요.",
+    "caption_body": [
+      "곧 오는",
+      "iOS27 미리보기"
     ],
-    "tts": "부모님 폰, 혹시 호갱 될까 걱정되죠."
+    "caption_emphasis": [
+      "iOS27"
+    ],
+    "headline_lines": [
+      {
+        "text": "곧 오는"
+      },
+      {
+        "text": "iOS27 미리보기",
+        "accent": true
+      }
+    ],
+    "meta": "출처: 휴대폰성지 폰스팟 자료",
+    "topic": "뉴스",
+    "background_image": "",
+    "caption_chunks": [
+      "애플이 iOS27을 공개했습니다.",
+      "공개 베타는 7월, 정식은 가을 예정입니다.",
+      "실생활에서 바로 쓸 만한 기능만 골라 미리 보여드립니다.",
+      "저장해두고 업데이트되면 켜보세요."
+    ],
+    "chunk_visuals": [
+      {
+        "type": "illust",
+        "value": "apple_70385068"
+      },
+      {
+        "type": "illust",
+        "value": "apple_70385068"
+      },
+      {
+        "type": "illust",
+        "value": "cpt_f385671f"
+      },
+      {
+        "type": "illust",
+        "value": "size_guide_afe009df"
+      }
+    ],
+    "stat": {
+      "label": "",
+      "value": "",
+      "note": ""
+    },
+    "display_chunks": [
+      "애플이 iOS27을 공개했습니다",
+      "공개 베타는 7월, 정식은 가을 예정입니다",
+      "실생활에서 바로 쓸 만한 기능만 골라 미리 보여드립니다",
+      "저장해두고 업데이트되면 켜보세요"
+    ],
+    "_codex_caption_lockstep": {
+      "version": 2,
+      "compiler": "korean_caption_compiler_v2",
+      "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+      "chunk_count": 4
+    },
+    "_codex_contextual_narrative": true,
+    "_codex_sync_mode": "global999_tts_caption_lockstep",
+    "tts_chunk_weights": [
+      2720.08,
+      3072.17,
+      3450.71,
+      1778.17
+    ],
+    "_tts_timing": {
+      "mode": "word_boundary_text_align",
+      "windows": [
+        {
+          "start_ms": 0.0,
+          "end_ms": 2720.08,
+          "duration_ms": 2720.08
+        },
+        {
+          "start_ms": 2720.08,
+          "end_ms": 5792.25,
+          "duration_ms": 3072.17
+        },
+        {
+          "start_ms": 5792.25,
+          "end_ms": 9242.96,
+          "duration_ms": 3450.71
+        },
+        {
+          "start_ms": 9242.96,
+          "end_ms": 11021.13,
+          "duration_ms": 1778.17
+        }
+      ],
+      "boundary_count": 23,
+      "caption_signature": "10fe33880d7eeaa432fec2943f641d3c56157d9f8fb6f30d4188e7c8b9bd43f1"
+    }
   },
   "facts": [
     {
-      "id": "problem",
-      "style": "reveal",
-      "sfx": "whoosh",
-      "caption_chunks": [
-        "멀리 안 가도",
-        "집에서",
-        "확인"
+      "tts": "식당 영수증을 사진으로 찍으면 품목별 가격에 세금과 팁까지 반영해 각자 낼 금액을 자동으로 계산해 줍니다. 계산해 놓고 참석자에게 결제 요청까지 보낼 수 있습니다. 더치페이 다툼이 사라집니다.",
+      "caption_body": [
+        "1번",
+        "영수증 더치페이"
       ],
-      "tts": "멀리 안 가도 집에서 확인."
+      "caption_emphasis": [
+        "영수증 더치페이"
+      ],
+      "headline_lines": [
+        {
+          "text": "1번"
+        },
+        {
+          "text": "영수증 더치페이",
+          "accent": true
+        }
+      ],
+      "meta": "출처: ZDNet코리아",
+      "topic": "뉴스",
+      "background_image": "",
+      "caption_chunks": [
+        "식당 영수증을 사진으로 찍으면",
+        "품목별 가격에 세금과 팁까지 반영해 각자",
+        "낼 금액을 자동으로 계산해 줍니다.",
+        "계산해 놓고 참석자에게 결제 요청까지 보낼 수 있습니다.",
+        "더치페이 다툼이 사라집니다."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "restaurant_receipt_2b916703"
+        },
+        {
+          "type": "illust",
+          "value": "event_period_8cafdac4"
+        },
+        {
+          "type": "illust",
+          "value": "nfc_pay"
+        },
+        {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        {
+          "type": "illust",
+          "value": "cpt_a2a04bc1"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_1",
+      "display_chunks": [
+        "식당 영수증을 사진으로 찍으면",
+        "품목별 가격에 세금과 팁까지 반영해 각자",
+        "낼 금액을 자동으로 계산해 줍니다",
+        "계산해 놓고 참석자에게 결제 요청까지 보낼 수 있습니다",
+        "더치페이 다툼이 사라집니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 5
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        1502.46,
+        2332.75,
+        2229.91,
+        3477.13,
+        1382.05
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 1502.46,
+            "duration_ms": 1502.46
+          },
+          {
+            "start_ms": 1502.46,
+            "end_ms": 3835.21,
+            "duration_ms": 2332.75
+          },
+          {
+            "start_ms": 3835.21,
+            "end_ms": 6065.12,
+            "duration_ms": 2229.91
+          },
+          {
+            "start_ms": 6065.12,
+            "end_ms": 9542.25,
+            "duration_ms": 3477.13
+          },
+          {
+            "start_ms": 9542.25,
+            "end_ms": 10924.3,
+            "duration_ms": 1382.05
+          }
+        ],
+        "boundary_count": 26,
+        "caption_signature": "793066d9fbd7a5194f451c7e3e9637351cdf094db577682c7b9477ee9f9eee14"
+      }
     },
     {
-      "id": "solution",
-      "style": "swiss",
-      "sfx": "tick",
-      "caption_chunks": [
-        "가격도",
-        "미리",
-        "투명하게"
+      "tts": "캘린더에 자연어로 일정을 말하듯 입력하면 됩니다. \"다음 주 화요일 저녁 약속\" 식으로 적으면 애플 인텔리전스가 연락처와 위치 정보까지 자동으로 연결해 줍니다.",
+      "caption_body": [
+        "2번",
+        "말로 하는 일정"
       ],
-      "tts": "가격도 미리 투명하게."
+      "caption_emphasis": [
+        "말로 하는 일정"
+      ],
+      "headline_lines": [
+        {
+          "text": "2번"
+        },
+        {
+          "text": "말로 하는 일정",
+          "accent": true
+        }
+      ],
+      "meta": "출처: 디지털투데이",
+      "topic": "뉴스",
+      "background_image": "",
+      "caption_chunks": [
+        "캘린더에 자연어로 일정을 말하듯 입력하면 됩니다.",
+        "\"다음 주 화요일 저녁 약속\" 식으로 적으면",
+        "애플 인텔리전스가 연락처와 위치 정보까지",
+        "자동으로 연결해 줍니다."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "cpt_022b5d33"
+        },
+        {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        {
+          "type": "mascot",
+          "value": "suspicious"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_2",
+      "display_chunks": [
+        "캘린더에 자연어로 일정을 말하듯 입력하면 됩니다",
+        "\"다음 주 화요일 저녁 약속\" 식으로 적으면",
+        "애플 인텔리전스가 연락처와 위치 정보까지",
+        "자동으로 연결해 줍니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 4
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        2975.33,
+        1875.0,
+        2112.71,
+        1276.38
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 2975.33,
+            "duration_ms": 2975.33
+          },
+          {
+            "start_ms": 2975.33,
+            "end_ms": 4850.33,
+            "duration_ms": 1875.0
+          },
+          {
+            "start_ms": 4850.33,
+            "end_ms": 6963.04,
+            "duration_ms": 2112.71
+          },
+          {
+            "start_ms": 6963.04,
+            "end_ms": 8239.42,
+            "duration_ms": 1276.38
+          }
+        ],
+        "boundary_count": 21,
+        "caption_signature": "0dc26f0149018fe39d129c51448bc58a83bd95cb3e10a09a4f5cca553f46319d"
+      }
     },
     {
-      "id": "trust",
-      "style": "kinetic-box",
-      "sfx": "ding",
-      "caption_chunks": [
-        "카톡으로",
-        "대신",
-        "알아보기"
+      "tts": "시리가 더 똑똑해져 여러 정보를 이해하는 개인 비서에 가까워집니다. 카메라로 비추면 영양성분을 분석하거나 연락처를 저장하는 비주얼 인텔리전스도 강화됩니다.",
+      "caption_body": [
+        "3번",
+        "시리·카메라 똑똑"
       ],
-      "tts": "카톡으로 대신 알아보기."
+      "caption_emphasis": [
+        "시리·카메라"
+      ],
+      "headline_lines": [
+        {
+          "text": "3번"
+        },
+        {
+          "text": "시리·카메라 똑똑",
+          "accent": true
+        }
+      ],
+      "meta": "출처: ZDNet코리아",
+      "topic": "뉴스",
+      "background_image": "",
+      "caption_chunks": [
+        "시리가 더 똑똑해져 여러 정보를 이해하는",
+        "개인 비서에 가까워집니다.",
+        "카메라로 비추면 영양성분을 분석하거나",
+        "연락처를 저장하는 비주얼 인텔리전스도 강화됩니다."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "camera_battery_ecd040c7"
+        },
+        {
+          "type": "illust",
+          "value": "chatbot"
+        },
+        {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_3",
+      "display_chunks": [
+        "시리가 더 똑똑해져 여러 정보를 이해하는",
+        "개인 비서에 가까워집니다",
+        "카메라로 비추면 영양성분을 분석하거나",
+        "연락처를 저장하는 비주얼 인텔리전스도 강화됩니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 4
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        2030.62,
+        1825.0,
+        1998.26,
+        2552.79
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 2030.62,
+            "duration_ms": 2030.62
+          },
+          {
+            "start_ms": 2030.62,
+            "end_ms": 3855.62,
+            "duration_ms": 1825.0
+          },
+          {
+            "start_ms": 3855.62,
+            "end_ms": 5853.88,
+            "duration_ms": 1998.26
+          },
+          {
+            "start_ms": 5853.88,
+            "end_ms": 8406.67,
+            "duration_ms": 2552.79
+          }
+        ],
+        "boundary_count": 18,
+        "caption_signature": "244dba480eda629258dde47ffa08bb0fecc1b297130bc812a8e95a4e342f0dfc"
+      }
+    },
+    {
+      "tts": "공개 베타는 7월, 정식은 가을입니다. 아이폰11까지 지원되지만, 일부 AI 기능은 신형 기종에서만 됩니다. 내 폰이 어디까지 되는지는 기종별로 다르니 확인이 필요합니다.",
+      "caption_body": [
+        "언제·누구",
+        "7월 베타"
+      ],
+      "caption_emphasis": [
+        "7월 베타"
+      ],
+      "headline_lines": [
+        {
+          "text": "언제·누구"
+        },
+        {
+          "text": "7월 베타",
+          "accent": true
+        }
+      ],
+      "meta": "출처: 디지털투데이",
+      "topic": "뉴스",
+      "background_image": "",
+      "caption_chunks": [
+        "공개 베타는 7월, 정식은 가을입니다.",
+        "아이폰11까지 지원되지만,",
+        "일부 AI 기능은 신형 기종에서만 됩니다.",
+        "내 폰이 어디까지 되는지는 기종별로",
+        "다르니 확인이 필요합니다."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "mid_release_98cab19a"
+        },
+        {
+          "type": "image",
+          "value": "photos/애플_아이폰17.JPG"
+        },
+        {
+          "type": "illust",
+          "value": "samsung_ai"
+        },
+        {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        {
+          "type": "mascot",
+          "value": "serious"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_4",
+      "display_chunks": [
+        "공개 베타는 7월, 정식은 가을입니다",
+        "아이폰11까지 지원되지만,",
+        "일부 AI 기능은 신형 기종에서만 됩니다",
+        "내 폰이 어디까지 되는지는 기종별로",
+        "다르니 확인이 필요합니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 5
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        2834.5,
+        1496.5,
+        2702.46,
+        1866.21,
+        1170.75
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 2834.5,
+            "duration_ms": 2834.5
+          },
+          {
+            "start_ms": 2834.5,
+            "end_ms": 4331.0,
+            "duration_ms": 1496.5
+          },
+          {
+            "start_ms": 4331.0,
+            "end_ms": 7033.46,
+            "duration_ms": 2702.46
+          },
+          {
+            "start_ms": 7033.46,
+            "end_ms": 8899.67,
+            "duration_ms": 1866.21
+          },
+          {
+            "start_ms": 8899.67,
+            "end_ms": 10070.42,
+            "duration_ms": 1170.75
+          }
+        ],
+        "boundary_count": 23,
+        "caption_signature": "43485afffb6570b592a5c1761e9769991eddcef424183ad46651ea5fe4c36b32"
+      }
     }
   ],
   "cta": {
-    "style": "kinetic-box",
-    "sfx": "ding",
-    "caption_chunks": [
-      "부모님 폰도",
-      "안심"
+    "tts": "휴대폰 구매할 땐? 지원금부터 무료로 조회해보세요.",
+    "caption_body": [
+      "휴대폰 구매할 땐?",
+      "지원금부터 무료로 조회해보세요"
     ],
-    "tts": "부모님 폰도 안심하고, 폰스팟.",
+    "caption_emphasis": [
+      "지원금부터 무료로 조회해보세요"
+    ],
+    "headline_lines": [
+      {
+        "text": "휴대폰 구매할 땐?"
+      },
+      {
+        "text": "지원금부터 무료로 조회해보세요",
+        "accent": true
+      }
+    ],
+    "meta": "휴대폰성지 폰스팟",
+    "topic": "뉴스",
+    "background_image": "",
+    "caption_chunks": [
+      "휴대폰 구매할 땐?",
+      "지원금부터 무료로 조회해보세요"
+    ],
+    "chunk_visuals": [
+      {
+        "type": "illust",
+        "value": "smartphone"
+      },
+      {
+        "type": "logo",
+        "value": null
+      }
+    ],
+    "stat": {
+      "label": "",
+      "value": "",
+      "note": ""
+    },
     "kakao": "@휴대폰성지폰스팟",
+    "location": "내 손 안의 성지찾기, 폰스팟",
     "litt": "litt.ly/phonespot",
-    "location": "광교호수공원 B1-47"
+    "display_chunks": [
+      "휴대폰 구매할 땐?",
+      "지원금부터 무료로 조회해보세요"
+    ],
+    "_codex_caption_lockstep": {
+      "version": 2,
+      "compiler": "korean_caption_compiler_v2",
+      "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+      "chunk_count": 1
+    },
+    "_codex_contextual_narrative": true,
+    "_codex_sync_mode": "global999_tts_caption_lockstep",
+    "_codex_fixed_cta": true,
+    "_codex_narration_source": "fixed_cta_contract",
+    "tts_chunk_weights": [
+      1707.75,
+      1804.54
+    ],
+    "_tts_timing": {
+      "mode": "word_boundary_text_align",
+      "windows": [
+        {
+          "start_ms": 0.0,
+          "end_ms": 1707.75,
+          "duration_ms": 1707.75
+        },
+        {
+          "start_ms": 1707.75,
+          "end_ms": 3512.29,
+          "duration_ms": 1804.54
+        }
+      ],
+      "boundary_count": 6,
+      "caption_signature": "db4c57a05254654841d0c63b2eea20bad43e358510298ef607bf41bcae3b9e5d"
+    }
   },
-  "music_src": "music/calm_01__00.mp3",
-  "music_start": 0
+  "_auto_generated": true,
+  "_chunk_logic_v2": true,
+  "_note": "build_script.py 자동 생성 (v2 로직): 시퀀스 내 이미지 순환 + 마스코트 짝수 시퀀스만.",
+  "_codex_global_999_quality": true,
+  "_codex_common_quality_logic": true,
+  "_codex_sync_quality_logic": true,
+  "_codex_captions_narration_priority": false,
+  "_codex_common_quality_note": "Global 001-999 rule: screen chunks are rebuilt as an ordered, lossless partition of captions.md narration; curated visuals are rebalanced without discarding quality rules.",
+  "_codex_uploaded_illustrations": [
+    {
+      "section": "hook",
+      "chunk": 1,
+      "variant": "apple_70385068"
+    },
+    {
+      "section": "hook",
+      "chunk": 3,
+      "variant": "cpt_f385671f"
+    },
+    {
+      "section": "fact_1",
+      "chunk": 1,
+      "variant": "restaurant_receipt_2b916703"
+    },
+    {
+      "section": "fact_1",
+      "chunk": 5,
+      "variant": "cpt_a2a04bc1"
+    },
+    {
+      "section": "fact_2",
+      "chunk": 1,
+      "variant": "cpt_022b5d33"
+    }
+  ],
+  "_codex_semantic_visual_match": {
+    "version": 1,
+    "policy": "Match chunks to GPT source images using prompt.md descriptions, then fallback to tagged reusable illustrations.",
+    "changes": [
+      {
+        "section": "hook",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "apple_70385068"
+        },
+        "to": {
+          "type": "illust",
+          "value": "final_update"
+        },
+        "context": "애플이 iOS27을 공개했습니다 공개 베타는 7월, 정식은 가을 예정입니다 곧 오는 iOS27 미리보기 ['곧 오는', 'iOS27 미리보기'] 뉴스",
+        "reason": "illust score 24 (content n/a)"
+      },
+      {
+        "section": "hook",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "apple_70385068"
+        },
+        "context": "애플이 iOS27을 공개했습니다 공개 베타는 7월, 정식은 가을 예정입니다 실생활에서 바로 쓸 만한 기능만 골라 미리 보여드립니다 곧 오는 iOS27 미리보기 ['곧 오는', 'iOS27 미리보기'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "hook",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "cpt_f385671f"
+        },
+        "to": {
+          "type": "illust",
+          "value": "forecast"
+        },
+        "context": "공개 베타는 7월, 정식은 가을 예정입니다 실생활에서 바로 쓸 만한 기능만 골라 미리 보여드립니다 저장해두고 업데이트되면 켜보세요 곧 오는 iOS27 미리보기 ['곧 오는', 'iOS27 미리보기'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "hook",
+        "chunk": 4,
+        "from": {
+          "type": "mascot",
+          "value": "surprised"
+        },
+        "to": {
+          "type": "illust",
+          "value": "size_guide_afe009df"
+        },
+        "context": "실생활에서 바로 쓸 만한 기능만 골라 미리 보여드립니다 저장해두고 업데이트되면 켜보세요 곧 오는 iOS27 미리보기 ['곧 오는', 'iOS27 미리보기'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "event_period_8cafdac4"
+        },
+        "context": "식당 영수증을 사진으로 찍으면 품목별 가격에 세금과 팁까지 반영해 각자 낼 금액을 자동으로 계산해 줍니다 1번 영수증 더치페이 ['1번', '영수증 더치페이'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "nfc_pay"
+        },
+        "context": "품목별 가격에 세금과 팁까지 반영해 각자 낼 금액을 자동으로 계산해 줍니다 계산해 놓고 참석자에게 결제 요청까지 보낼 수 있습니다 1번 영수증 더치페이 ['1번', '영수증 더치페이'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "basic_fold_202d754f"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "낼 금액을 자동으로 계산해 줍니다 계산해 놓고 참석자에게 결제 요청까지 보낼 수 있습니다 더치페이 다툼이 사라집니다 1번 영수증 더치페이 ['1번', '영수증 더치페이'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 5,
+        "from": {
+          "type": "illust",
+          "value": "cpt_a2a04bc1"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "계산해 놓고 참석자에게 결제 요청까지 보낼 수 있습니다 더치페이 다툼이 사라집니다 1번 영수증 더치페이 ['1번', '영수증 더치페이'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "cpt_022b5d33"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "캘린더에 자연어로 일정을 말하듯 입력하면 됩니다 \"다음 주 화요일 저녁 약속\" 식으로 적으면 2번 말로 하는 일정 ['2번', '말로 하는 일정'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        "context": "캘린더에 자연어로 일정을 말하듯 입력하면 됩니다 \"다음 주 화요일 저녁 약속\" 식으로 적으면 애플 인텔리전스가 연락처와 위치 정보까지 2번 말로 하는 일정 ['2번', '말로 하는 일정'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "\"다음 주 화요일 저녁 약속\" 식으로 적으면 애플 인텔리전스가 연락처와 위치 정보까지 자동으로 연결해 줍니다 2번 말로 하는 일정 ['2번', '말로 하는 일정'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "camera_battery_ecd040c7"
+        },
+        "context": "시리가 더 똑똑해져 여러 정보를 이해하는 개인 비서에 가까워집니다 3번 시리·카메라 똑똑 ['3번', '시리·카메라 똑똑'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "chatbot"
+        },
+        "context": "시리가 더 똑똑해져 여러 정보를 이해하는 개인 비서에 가까워집니다 카메라로 비추면 영양성분을 분석하거나 3번 시리·카메라 똑똑 ['3번', '시리·카메라 똑똑'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "개인 비서에 가까워집니다 카메라로 비추면 영양성분을 분석하거나 연락처를 저장하는 비주얼 인텔리전스도 강화됩니다 3번 시리·카메라 똑똑 ['3번', '시리·카메라 똑똑'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "basic_fold_202d754f"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "카메라로 비추면 영양성분을 분석하거나 연락처를 저장하는 비주얼 인텔리전스도 강화됩니다 3번 시리·카메라 똑똑 ['3번', '시리·카메라 똑똑'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "mid_release_98cab19a"
+        },
+        "context": "공개 베타는 7월, 정식은 가을입니다 아이폰11까지 지원되지만, 언제·누구 7월 베타 ['언제·누구', '7월 베타'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "image",
+          "value": "photos/애플_아이폰17.JPG"
+        },
+        "context": "공개 베타는 7월, 정식은 가을입니다 아이폰11까지 지원되지만, 일부 AI 기능은 신형 기종에서만 됩니다 언제·누구 7월 베타 ['언제·누구', '7월 베타'] 뉴스",
+        "reason": "photo lexical dist=1 gen=0: 애플_아이폰17.JPG"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "samsung_ai"
+        },
+        "context": "아이폰11까지 지원되지만, 일부 AI 기능은 신형 기종에서만 됩니다 내 폰이 어디까지 되는지는 기종별로 언제·누구 7월 베타 ['언제·누구', '7월 베타'] 뉴스",
+        "reason": "illust score 27 (content n/a)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "basic_fold_202d754f"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "일부 AI 기능은 신형 기종에서만 됩니다 내 폰이 어디까지 되는지는 기종별로 다르니 확인이 필요합니다 언제·누구 7월 베타 ['언제·누구', '7월 베타'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      }
+    ],
+    "weak": [
+      {
+        "section": "fact_1",
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "낼 금액을 자동으로 계산해 줍니다 계산해 놓고 참석자에게 결제 요청까지 보낼 수 있습니다 더치페이 다툼이 사라집니다 1번 영수증 더치페이 ['1번', '영수증 더치페이'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_1",
+        "chunk": 5,
+        "current": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "계산해 놓고 참석자에게 결제 요청까지 보낼 수 있습니다 더치페이 다툼이 사라집니다 1번 영수증 더치페이 ['1번', '영수증 더치페이'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_2",
+        "chunk": 1,
+        "current": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "캘린더에 자연어로 일정을 말하듯 입력하면 됩니다 \"다음 주 화요일 저녁 약속\" 식으로 적으면 2번 말로 하는 일정 ['2번', '말로 하는 일정'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_2",
+        "chunk": 2,
+        "current": {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        "context": "캘린더에 자연어로 일정을 말하듯 입력하면 됩니다 \"다음 주 화요일 저녁 약속\" 식으로 적으면 애플 인텔리전스가 연락처와 위치 정보까지 2번 말로 하는 일정 ['2번', '말로 하는 일정'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_2",
+        "chunk": 3,
+        "current": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "\"다음 주 화요일 저녁 약속\" 식으로 적으면 애플 인텔리전스가 연락처와 위치 정보까지 자동으로 연결해 줍니다 2번 말로 하는 일정 ['2번', '말로 하는 일정'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_2",
+        "chunk": 4,
+        "current": {
+          "type": "mascot",
+          "value": "suspicious"
+        },
+        "context": "애플 인텔리전스가 연락처와 위치 정보까지 자동으로 연결해 줍니다 2번 말로 하는 일정 ['2번', '말로 하는 일정'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_3",
+        "chunk": 3,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "개인 비서에 가까워집니다 카메라로 비추면 영양성분을 분석하거나 연락처를 저장하는 비주얼 인텔리전스도 강화됩니다 3번 시리·카메라 똑똑 ['3번', '시리·카메라 똑똑'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "카메라로 비추면 영양성분을 분석하거나 연락처를 저장하는 비주얼 인텔리전스도 강화됩니다 3번 시리·카메라 똑똑 ['3번', '시리·카메라 똑똑'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_4",
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "일부 AI 기능은 신형 기종에서만 됩니다 내 폰이 어디까지 되는지는 기종별로 다르니 확인이 필요합니다 언제·누구 7월 베타 ['언제·누구', '7월 베타'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 3
+      },
+      {
+        "section": "fact_4",
+        "chunk": 5,
+        "current": {
+          "type": "mascot",
+          "value": "serious"
+        },
+        "context": "내 폰이 어디까지 되는지는 기종별로 다르니 확인이 필요합니다 언제·누구 7월 베타 ['언제·누구', '7월 베타'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      }
+    ]
+  },
+  "_codex_effective_script": {
+    "version": 2,
+    "slug": "040_tip_ios27_features",
+    "source": "C:\\backup\\phonespot_cardnews\\cardnews\\output\\040_tip_ios27_features\\shorts_script.json",
+    "override_applied": false,
+    "override_sections": []
+  }
 }

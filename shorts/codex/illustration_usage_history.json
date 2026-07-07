@@ -517,9 +517,42 @@
         "telecom_discount_compare",
         "smartphone"
       ]
+    },
+    "039_pick_apple_watch_ultra4": {
+      "used_at": "2026-07-07T15:22:56",
+      "source": "codex_enhance",
+      "illustrations": [
+        "smartphone",
+        "aluminum_label",
+        "appliance",
+        "basic_fold_202d754f"
+      ]
+    },
+    "040_tip_ios27_features": {
+      "used_at": "2026-07-07T16:01:08",
+      "source": "uploaded_illustrations",
+      "illustrations": [
+        "apple_70385068",
+        "cpt_f385671f",
+        "size_guide_afe009df",
+        "restaurant_receipt_2b916703",
+        "event_period_8cafdac4",
+        "nfc_pay",
+        "smartphone",
+        "cpt_a2a04bc1",
+        "cpt_022b5d33",
+        "device_os_requirement",
+        "device_data_transfer",
+        "camera_battery_ecd040c7",
+        "chatbot",
+        "phone_setup_ready",
+        "mid_release_98cab19a",
+        "samsung_ai",
+        "phone_settings_toggle"
+      ]
     }
   },
-  "updated_at": "2026-06-24T10:17:00",
+  "updated_at": "2026-07-07T16:01:09",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -629,6 +662,14 @@
     },
     "035_news_iphone18_price_hike": {
       "updated_at": "2026-06-24T10:10:01",
+      "variants": []
+    },
+    "039_pick_apple_watch_ultra4": {
+      "updated_at": "2026-07-07T15:22:57",
+      "variants": []
+    },
+    "040_tip_ios27_features": {
+      "updated_at": "2026-07-07T16:01:09",
       "variants": []
     }
   }

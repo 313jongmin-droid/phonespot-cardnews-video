@@ -28,6 +28,17 @@
       ],
       "note": "자동 발굴 개념: 안드폰 중이신데"
     },
+    "apple_70385068": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "애플"
+      ],
+      "note": "자동 발굴 개념: 애플",
+      "available": true
+    },
     "appliance": {
       "tags": [
         "hardware",
@@ -327,6 +338,21 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "cpt_022b5d33": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "캘린더",
+        "자연어로",
+        "일정",
+        "말하듯",
+        "입력하면"
+      ],
+      "note": "자동 발굴 개념: 캘린더 자연어로",
+      "available": true
+    },
     "cpt_066b1a1b": {
       "tags": [
         "auto",
@@ -611,6 +637,19 @@
       "note": "자동 발굴 개념: 내야 하는",
       "available": true
     },
+    "cpt_4b363ae7": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "심박",
+        "운동",
+        "건강",
+        "측정",
+        "정확도"
+      ],
+      "note": "자동 발굴 개념: 심박 운동"
+    },
     "cpt_4ce4cc8c": {
       "tags": [
         "auto",
@@ -622,6 +661,19 @@
       ],
       "note": "자동 발굴 개념: 총액 물어보세요",
       "available": true
+    },
+    "cpt_52265160": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "올가",
+        "발표",
+        "보고",
+        "정하",
+        "것도"
+      ],
+      "note": "자동 발굴 개념: 올가 발표"
     },
     "cpt_5507911c": {
       "tags": [
@@ -1034,6 +1086,18 @@
       "note": "자동 발굴 개념: 추가 개통",
       "available": true
     },
+    "cpt_a2a04bc1": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "더치페",
+        "다툼"
+      ],
+      "note": "자동 발굴 개념: 더치페 다툼",
+      "available": true
+    },
     "cpt_a30b5cf7": {
       "tags": [
         "auto"
@@ -1042,6 +1106,16 @@
         "유플러스"
       ],
       "note": "자동 발굴 개념: 유플러스"
+    },
+    "cpt_a8f32d51": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "촘촘하게",
+        "들어갈"
+      ],
+      "note": "자동 발굴 개념: 촘촘하게 들어갈"
     },
     "cpt_a91efa70": {
       "tags": [
@@ -1362,6 +1436,20 @@
       ],
       "note": "자동 발굴 개념: 폴더블 신제품인"
     },
+    "cpt_f385671f": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "실생활",
+        "만한",
+        "골라",
+        "미리"
+      ],
+      "note": "자동 발굴 개념: 실생활 만한",
+      "available": true
+    },
     "cpt_f59129df": {
       "tags": [
         "auto",
@@ -1427,6 +1515,15 @@
         "원이"
       ],
       "note": "자동 발굴 개념: 묶을 있고"
+    },
+    "cpt_f7b3b85c": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "이야기"
+      ],
+      "note": "자동 발굴 개념: 이야기"
     },
     "cpt_fa7ce644": {
       "tags": [
@@ -2469,6 +2566,20 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "restaurant_receipt_2b916703": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "식당",
+        "영수증",
+        "사진",
+        "찍으면"
+      ],
+      "note": "자동 발굴 개념: 식당 영수증",
+      "available": true
+    },
     "samsung_ai": {
       "tags": [
         "ai",
@@ -2545,6 +2656,17 @@
       ],
       "note": "자동 발굴 개념: 플립 자체",
       "available": true
+    },
+    "sensor_design_0a6adb38": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "센서",
+        "디자인",
+        "손본다"
+      ],
+      "note": "자동 발굴 개념: 센서 디자인"
     },
     "series_06379766": {
       "tags": [
@@ -2865,5 +2987,5 @@
       "available": true
     }
   },
-  "updated_at": "2026-06-24T10:16:57"
+  "updated_at": "2026-07-07T16:01:05"
 }
