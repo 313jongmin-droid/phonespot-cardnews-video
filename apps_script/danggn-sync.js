@@ -407,7 +407,6 @@ function buildDanggnSyncMenu_(ui) {
     .addSeparator()
     .addItem('🆕 시트 신설 / 헤더 갱신', 'createDanggnIntegratedSheet')
     .addItem('🔍 미매핑 광고그룹 보기', 'showUnmappedDanggnAdgroups')
-    .addItem('📋 문의접수 드롭다운/헤더 세팅', 'setupInquirySheetDropdowns')
     .addSeparator()
     .addItem('⏰ 자동 트리거 (02:30)', 'setupDanggnTrigger')
     .addItem('🔑 utm_source 값 확인', 'showDanggnUtmSource')

@@ -169,6 +169,7 @@ function onOpen() {
     .addItem('📏 날짜(A열) 탭 폭 80 고정', 'fixDateColumnWidths')
     .addItem('📅 채널시트 날짜 정렬 (메타+/네이버+/당근+)', 'sortAllChannelSheetsByDate')
     .addItem('📊 리틀리 방문자 행동 갱신', 'syncLitlyActionsMenu')
+    .addItem('📋 문의접수 드롭다운/헤더 세팅', 'setupInquirySheetDropdowns')
     .addToUi();
 
   // 📘 메타 자동화 메뉴 (meta-sync.gs)
