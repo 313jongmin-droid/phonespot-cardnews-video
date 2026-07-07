@@ -38,7 +38,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v50"
+PANEL_VERSION = "phonespot-web-v51"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -2462,7 +2462,7 @@ INDEX_HTML = r"""<!doctype html>
       items.forEach(function(item, idx){
         var btn=document.createElement("button");
         btn.className="row"+(item.slug===cur?" active":"");
-        btn.innerHTML='<span class="row-number">'+(idx+1)+'</span><span class="row-main"><span class="slug-name">'+(item.title||item.slug)+'</span><span class="row-sub">'+item.slug+(item.date?' · '+item.date:'')+(item.flag&&item.flag!=="undefined"?" \u00b7 "+item.flag:"")+'</span></span>';
+        btn.innerHTML='<span class="row-number">'+((item.slug.match(/^\d+/)||[idx+1])[0])+'</span><span class="row-main"><span class="slug-name">'+(item.title||item.slug)+'</span><span class="row-sub">'+item.slug+(item.date?' · '+item.date:'')+(item.flag&&item.flag!=="undefined"?" \u00b7 "+item.flag:"")+'</span></span>';
         btn.onclick=function(){ selectTopic(track, item.slug); };
         box.appendChild(btn);
       });
@@ -2574,7 +2574,7 @@ INDEX_HTML = r"""<!doctype html>
       videoItems.forEach((item, idx) => {
         const btn = document.createElement("button");
         btn.className = "row video" + (item.slug === selected ? " active" : "");
-        btn.innerHTML = `<span class="row-number">${idx + 1}</span><span class="row-main"><span class="slug-name">${item.title || item.slug}</span><span class="row-sub">${item.slug}${item.date ? " · " + item.date : ""}${item.flag && item.flag !== "undefined" ? " · " + item.flag : ""}</span></span><span class="stage-pill ${item.stageClass || "muted"}">${item.stage || "-"}</span>`;
+        btn.innerHTML = `<span class="row-number">${(item.slug.match(/^\d+/) || [idx + 1])[0]}</span><span class="row-main"><span class="slug-name">${item.title || item.slug}</span><span class="row-sub">${item.slug}${item.date ? " · " + item.date : ""}${item.flag && item.flag !== "undefined" ? " · " + item.flag : ""}</span></span><span class="stage-pill ${item.stageClass || "muted"}">${item.stage || "-"}</span>`;
         btn.onclick = () => { selected = item.slug; document.getElementById("selectedSlug").textContent = selected; setMode("video"); updateSelectedStatus(); loadSlugs(); };
         box.appendChild(btn);
       });
@@ -2585,7 +2585,7 @@ INDEX_HTML = r"""<!doctype html>
       cardItems.forEach((item, idx) => {
         const btn = document.createElement("button");
         btn.className = "row card" + (item.slug === selectedCard ? " active" : "");
-        btn.innerHTML = `<span class="row-number">${idx + 1}</span><span class="row-main"><span class="slug-name">${item.title || item.slug}</span><span class="row-sub">${item.slug}</span><span class="row-sub">${item.date || "-"} · 이미지 ${item.images}/5 · 카드 ${item.cards} · 프롬프트 ${item.prompt ? "있음" : "없음"}</span></span><span class="stage-pill ${item.stageClass || "muted"}">${item.stage || item.status}</span>`;
+        btn.innerHTML = `<span class="row-number">${(item.slug.match(/^\d+/) || [idx + 1])[0]}</span><span class="row-main"><span class="slug-name">${item.title || item.slug}</span><span class="row-sub">${item.slug}</span><span class="row-sub">${item.date || "-"} · 이미지 ${item.images}/5 · 카드 ${item.cards} · 프롬프트 ${item.prompt ? "있음" : "없음"}</span></span><span class="stage-pill ${item.stageClass || "muted"}">${item.stage || item.status}</span>`;
         btn.onclick = () => { selectedCard = item.slug; selected = item.slug; document.getElementById("selectedSlug").textContent = selected; setMode("card"); updateSelectedStatus(); loadCardnews(); loadSlugs(); };
         box.appendChild(btn);
       });
