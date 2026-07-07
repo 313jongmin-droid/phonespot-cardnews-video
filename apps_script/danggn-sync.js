@@ -130,13 +130,13 @@ function setupInquirySheetDropdowns() {
   results.push('✅ F열 드롭다운 설정 (앱가입: O / 공백)');
 
   // ===== 카톡(카카오 채널) 통계 헤더 H~M (수기 입력 — 카카오 API 없음). 없을 때만 세팅 =====
-  const kkHeaders = { 8: '날짜', 9: '친구수', 10: '채널 추가수 합계', 11: '채팅 요청 친구수', 12: '방문자수', 13: '조회수' };
+  const kkHeaders = { 8: '날짜', 9: '친구수', 10: '채널 추가수 합계', 11: '채팅 요청 친구수', 12: '방문자수', 13: '조회수', 14: '비고' };
   let hset = 0;
   Object.keys(kkHeaders).forEach(function (col) {
     col = Number(col);
     if (String(sheet.getRange(1, col).getValue()).trim() === '') { sheet.getRange(1, col).setValue(kkHeaders[col]); hset++; }
   });
-  results.push('✅ 카톡 채널 통계 헤더 H~M 확인 (날짜/친구수/채널추가/채팅요청/방문자/조회, 신규세팅 ' + hset + ')');
+  results.push('✅ 카톡 채널 통계 헤더 H~N 확인 (날짜/친구수/채널추가/채팅요청/방문자/조회/비고, 신규세팅 ' + hset + ')');
 
   // ===== 3. 옛 D열 값 일괄 치환 =====
   const dataLastRow = sheet.getLastRow();
