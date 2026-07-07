@@ -10,12 +10,8 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 DESK = ROOT / "CODEX_VIDEO_DESK"
 
 
-BASE_STYLE = """한국 휴대폰/IT 쇼츠 뉴스용 재사용 일러스트를 만들어주세요.
-한 기사에만 묶이는 세부 묘사는 피하고, 같은 주제의 다른 뉴스에서도 다시 쓸 수 있게 범용적으로 표현해주세요.
-일러스트 자체는 완성도 있게 그려주세요. 단순 낙서나 너무 추상적인 도형만으로 처리하지 마세요.
-브랜드 로고, 실제 제품명, 날짜, 가격, 매장명, 워터마크, 긴 문장은 넣지 마세요.
-오렌지 #F74B0B, 검정, 흰색, 라이트 살구색 배경을 기본으로 사용해주세요.
-화면 비율은 4:3, 1024x768 PNG입니다."""
+BASE_STYLE = """재사용 가능한 한국 휴대폰/IT 뉴스 쇼츠용 에디토리얼 일러스트(완성도 있게, 낙서·단순도형 금지). 한 기사 전용 세부(모델명·날짜·가격·수치) 없이 범용 개념으로 표현.
+브랜드 로고·제품명·매장명·워터마크·긴 문장 금지. 색: 오렌지 #F74B0B, 검정, 흰색, 라이트 살구색 배경. 비율 4:3, 1024x768 PNG."""
 
 
 CONCEPTS = {
@@ -47,12 +43,12 @@ def concept_for_item(item: dict, variant: str) -> str:
     source = str(item.get("source_text") or "").strip()
     if source or label or keywords:
         head = label or variant.replace("_", " ")
-        parts = [head + " 개념을 휴대폰/IT 뉴스에서 반복 사용 가능한 범용 일러스트로 표현."]
+        detail = []
         if keywords:
-            parts.append("핵심 요소: " + ", ".join(keywords) + ".")
+            detail.append("핵심 요소: " + ", ".join(keywords[:4]))
         if source:
-            parts.append("아래 문장의 의미를 담되 특정 브랜드/제품명/숫자/날짜는 빼고 일반화하세요: \"" + source + "\"")
-        return " ".join(parts)
+            detail.append("맥락: \"" + source + "\"")
+        return head + (" — " + " / ".join(detail) if detail else "")
     return concept_for(variant)
 
 
@@ -67,36 +63,38 @@ def main() -> int:
         data["slug"] = slug
     requests = data.get("requests", []) or []
     gaps = data.get("uncovered_gaps", []) or []
+    n = len(requests)
     lines = []
-    lines.append(f"# Codex GPT Illustration Prompt: {data.get('slug') or slug or 'latest'}")
+    lines.append(f"# 이미지 생성 프롬프트: {data.get('slug') or slug or 'latest'}")
     lines.append("")
-    lines.append("## ⚠️ 먼저 읽기: 각 항목을 **개별 이미지로 한 장씩** 생성하세요")
+    lines.append(f"아래 {n}개를 각각 별도 이미지로 생성. 격자·콜라주·분할 화면 금지(한 이미지에 한 개념만).")
+    lines.append("1 -> 2 -> ... 순서대로 한 장씩 만들어 그대로 다운로드한 뒤, 웹 패널 `2. 가져오고 렌더`를 실행하세요.")
     lines.append("")
-    lines.append(f"- 아래 항목은 총 {len(requests)}개입니다. **한 항목당 정확히 1장**, 총 {len(requests)}장의 PNG를 따로 만드세요.")
-    lines.append("- 여러 항목을 **한 장에 모아 그리지 마세요.** 콜라주/그리드/한 캔버스에 여러 컷으로 묶는 것 금지.")
-    lines.append("- 1번 1장 → 2번 1장 → ... 순서대로 하나씩 생성하고, 각각 따로 다운로드하세요.")
-    lines.append("")
-    lines.append("아래 순서대로 GPT Plus에서 이미지를 생성한 뒤, 그대로 다운로드하세요.")
-    lines.append("다운로드가 끝나면 `02_IMPORT_DOWNLOADS_AND_RENDER.bat` 또는 웹 패널의 `2. 가져오고 렌더`를 실행하세요.")
+    lines.append("## 공통 스타일")
+    lines.append(BASE_STYLE)
     lines.append("")
     if requests:
-        for idx, item in enumerate(requests, 1):
-            variant = item.get("variant") or f"illustration_{idx}"
+        lines.append("## 이미지 목록")
+        lines.append("")
+        for idx2, item in enumerate(requests, 1):
+            variant = item.get("variant") or f"illustration_{idx2}"
             filename = item.get("filename") or f"{variant}.png"
-            section = item.get("section", "")
-            chunk_index = int(item.get("chunk_index", 0)) + 1
             badge = " (자동 발굴)" if item.get("source") == "concept_scout" else ""
-            lines.append(f"## {idx}. {filename}{badge}")
-            lines.append("")
-            lines.append(f"- 적용 위치: `{section}` 청크 {chunk_index}")
-            lines.append(f"- 재사용 태그: {', '.join(item.get('tags', []) or [])}")
-            lines.append("")
-            lines.append("```text")
-            lines.append(BASE_STYLE)
-            lines.append("")
-            lines.append("핵심 콘셉트:")
-            lines.append(concept_for_item(item, variant))
-            lines.append("```")
+            lines.append(f"{idx2}. `{filename}`{badge}")
+            lines.append(f"   {concept_for_item(item, variant)}")
             lines.append("")
     else:
-        lines.append("## 신규 GPT 이미지 요청 없음")
+        lines.append("신규로 만들 GPT 이미지 요청이 없습니다. 바로 렌더링해도 됩니다.")
+
+    if gaps:
+        lines.append("")
+        lines.append(f"(참고: 문맥 커버리지 경고 {len(gaps)}건 — 렌더는 막지 않음)")
+
+    out_md = DESK / "LATEST_PROMPT.md"
+    out_md.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(f"[clean_prompt] wrote concise prompt: {out_md} ({n} requests)")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
