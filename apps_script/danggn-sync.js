@@ -119,6 +119,16 @@ function setupInquirySheetDropdowns() {
   cRange.setDataValidation(cRule);
   results.push(`✅ C열 드롭다운 설정 (개통/진행중/미상)`);
 
+  // ===== 2.5 F열 (6) = 앱가입 (폐쇄몰앱 가입 여부, O/공백) 2026-07-06 =====
+  const fRange = sheet.getRange(2, 6, targetLastRow - 1, 1);
+  const fRule = SpreadsheetApp.newDataValidation()
+    .requireValueInList(['O'], true)
+    .setAllowInvalid(false)   // 'O' 또는 공백만 (드롭다운 O, 비우면 미가입)
+    .build();
+  fRange.setDataValidation(fRule);
+  if (String(sheet.getRange(1, 6).getValue()).trim() === '') sheet.getRange(1, 6).setValue('앱가입');
+  results.push('✅ F열 드롭다운 설정 (앱가입: O / 공백)');
+
   // ===== 3. 옛 D열 값 일괄 치환 =====
   const dataLastRow = sheet.getLastRow();
   if (dataLastRow >= 2) {
@@ -388,7 +398,7 @@ function buildDanggnSyncMenu_(ui) {
     .addSeparator()
     .addItem('🆕 시트 신설 / 헤더 갱신', 'createDanggnIntegratedSheet')
     .addItem('🔍 미매핑 광고그룹 보기', 'showUnmappedDanggnAdgroups')
-    .addItem('📋 문의접수 D열 표준화', 'setupInquirySheetDropdowns')
+    .addItem('📋 문의접수 드롭다운 (C/D/F)', 'setupInquirySheetDropdowns')
     .addSeparator()
     .addItem('⏰ 자동 트리거 (02:30)', 'setupDanggnTrigger')
     .addItem('🔑 utm_source 값 확인', 'showDanggnUtmSource')
