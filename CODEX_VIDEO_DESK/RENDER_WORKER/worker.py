@@ -30,7 +30,9 @@ SERVER = (os.environ.get("PHONESPOT_PANEL_URL") or SAVED_URL or "http://127.0.0.
 # 로컬 패널이면 결과가 이미 RESULTS/<키>/ 에 있으므로 업로드/패키지 다운로드(=remote_ 폴더) 불필요
 LOCAL_PANEL = ("127.0.0.1" in SERVER) or ("localhost" in SERVER)
 WORKER_ID = os.environ.get("PHONESPOT_WORKER_ID") or socket.gethostname()
-VERSION = "render-worker-v4"
+VERSION = "render-worker-v5"
+# 워커가 pythonw(무콘솔)로 돌면 자식(bat/python) 콘솔이 새 창을 띄움 → subprocess에 적용.
+NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
 INSTANCE_ID = uuid4().hex
 PID_FILE = Path(os.environ["PHONESPOT_WORKER_PID_FILE"]) if os.environ.get("PHONESPOT_WORKER_PID_FILE") else None
 
@@ -296,6 +298,7 @@ def run_job(job: dict) -> tuple[bool, int, str]:
                         ["python", str(SHORTS / "scripts" / "codex_library_sync.py")],
                         cwd=str(SHORTS), text=True, encoding="utf-8", errors="replace",
                         stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=env, timeout=900,
+                        creationflags=NO_WINDOW,
                     )
                     send_log(job_id, "\n----- 렌더 전 라이브러리 동기화 -----\n" + (sp.stdout or ""))
                 except Exception as exc:
@@ -311,6 +314,7 @@ def run_job(job: dict) -> tuple[bool, int, str]:
                 encoding="utf-8",
                 errors="replace",
                 env=env,
+                creationflags=NO_WINDOW,
             )
             def cancel_monitor() -> None:
                 cancel_requested.wait()

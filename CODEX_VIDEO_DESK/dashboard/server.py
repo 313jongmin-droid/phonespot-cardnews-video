@@ -38,12 +38,14 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v47"
+PANEL_VERSION = "phonespot-web-v48"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
 LOCAL_WORKER_PROCESS: subprocess.Popen | None = None
 LOCAL_WORKER_STREAMS: list = []
+# 서버가 pythonw(무콘솔)로 돌면 자식 콘솔 프로세스가 새 창을 띄운다 → 모든 subprocess에 적용.
+NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
 
 if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))
@@ -247,6 +249,7 @@ def run_job(name: str, commands: list[list[str]], cwd: Path, stdin_text: str | N
                 process = subprocess.Popen(
                     command,
                     cwd=str(cwd),
+                    creationflags=NO_WINDOW,
                     stdin=subprocess.PIPE if use_stdin is not None else subprocess.DEVNULL,
                     stdout=subprocess.PIPE,
                     stderr=subprocess.STDOUT,
@@ -314,6 +317,7 @@ def run_capture(command: list[str], cwd: Path = SHORTS) -> str:
         errors="replace",
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
+        creationflags=NO_WINDOW,
     )
     return result.stdout
 
@@ -1099,6 +1103,7 @@ def github_status() -> dict:
             subprocess.run(
                 [sys.executable, str(script)],
                 cwd=str(ROOT),
+                creationflags=NO_WINDOW,
                 text=True,
                 encoding="utf-8",
                 errors="replace",
@@ -1244,6 +1249,7 @@ def start_card_webui(slug: str = "") -> None:
             cwd=str(CARDNEWS),
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
+            creationflags=NO_WINDOW,
         )
     target = f"http://localhost:8080/slug/{slug}" if slug else "http://localhost:8080/"
     webbrowser.open(target)
@@ -1433,6 +1439,7 @@ class Handler(BaseHTTPRequestHandler):
                 encoding="utf-8",
                 errors="replace",
                 capture_output=True,
+                creationflags=NO_WINDOW,
             )
             try:
                 payload = json.loads(proc.stdout)
@@ -1687,7 +1694,7 @@ class Handler(BaseHTTPRequestHandler):
                     proc = subprocess.run(
                         [sys.executable, str(SCRIPTS / "codex_import_propose.py"), slug_now],
                         cwd=str(SHORTS), text=True, encoding="utf-8", errors="replace",
-                        capture_output=True, timeout=120,
+                        capture_output=True, timeout=120, creationflags=NO_WINDOW,
                     )
                 except subprocess.TimeoutExpired:
                     json_response(self, {"ok": False, "message": "제안 생성 시간초과(120s). CLIP 모델 로드/다운로드가 지연됐을 수 있습니다. 부사수 PC에서 실행하거나 SETUP_EMBED 후 재시도하세요."})
@@ -1762,7 +1769,7 @@ class Handler(BaseHTTPRequestHandler):
                     proc = subprocess.run(
                         [sys.executable, str(SCRIPTS / "cardnews_import_propose.py"), slug_now],
                         cwd=str(SHORTS), text=True, encoding="utf-8", errors="replace",
-                        capture_output=True, timeout=120,
+                        capture_output=True, timeout=120, creationflags=NO_WINDOW,
                     )
                 except subprocess.TimeoutExpired:
                     json_response(self, {"ok": False, "message": "제안 생성 시간초과(120s). CLIP 모델 로드/다운로드가 지연됐을 수 있습니다. 부사수 PC에서 실행하거나 SETUP_EMBED 후 재시도하세요."})
@@ -1842,7 +1849,7 @@ class Handler(BaseHTTPRequestHandler):
             if action == "promo_list":
                 try:
                     out = subprocess.run([sys.executable, "scripts/promo_list.py"], cwd=str(SHORTS),
-                                         capture_output=True, text=True, timeout=20)
+                                         capture_output=True, text=True, timeout=20, creationflags=NO_WINDOW)
                     items = []
                     for line in (out.stdout or "").splitlines():
                         m = re.match(r"^\s*(\d{3})\s+(\S+)\s+(.+?)\s+\[(\w+)\]\s*$", line)
@@ -1878,7 +1885,7 @@ class Handler(BaseHTTPRequestHandler):
                     cmd = [sys.executable, "scripts/promo_generate.py", title, "--slug", slug_req]
                     if preset:
                         cmd += ["--preset", preset]
-                    gen = subprocess.run(cmd, cwd=str(SHORTS), capture_output=True, text=True, timeout=90)
+                    gen = subprocess.run(cmd, cwd=str(SHORTS), capture_output=True, text=True, timeout=90, creationflags=NO_WINDOW)
                     okline = ""
                     for ln in (gen.stdout or "").splitlines():
                         if ln.startswith("OK "):
