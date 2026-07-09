@@ -131,8 +131,8 @@
 | `cpt_fd9edf65` | auto, library | 3 | 020_qa_apple_pay_korea_card |
 | `cut_theft_43505b9f` | auto | 0 |  |
 | `deal_fd9edf65` | library | 0 |  |
-| `device_data_transfer` | device, migration, backup, tips, library | 18 | 042_news_foldable_iphone_ultra |
-| `device_os_requirement` | library | 14 | 042_news_foldable_iphone_ultra |
+| `device_data_transfer` | device, migration, backup, tips, library | 17 | 040_tip_ios27_features |
+| `device_os_requirement` | library | 13 | 040_tip_ios27_features |
 | `device_price_rise` | price, increase, device | 0 |  |
 | `display_maintenance_c1ff39c1` | auto, library | 0 |  |
 | `display_ratio_change` | library | 0 |  |
@@ -143,7 +143,7 @@
 | `fake_government_page` | security, smishing, government, warning | 0 |  |
 | `fast_charging` | battery, charging, library | 0 |  |
 | `festival_41b2e7cf` | auto, library | 1 | 019_news_samsung_thank_you_festival |
-| `final_update` | software, update, library | 8 | 042_news_foldable_iphone_ultra |
+| `final_update` | software, update, library | 7 | 035_news_iphone18_price_hike |
 | `foldable` | hardware, foldable, library | 2 | 042_news_foldable_iphone_ultra |
 | `folding_rumors_545e4e3e` | auto | 0 |  |
 | `forecast` | news, forecast, library | 13 | 042_news_foldable_iphone_ultra |
@@ -244,7 +244,7 @@
 
 ## Recent videos
 
-- `042_news_foldable_iphone_ultra`: event_period_8cafdac4, foldable, apple_70385068, final_update, forecast, smartphone, phone_setup_ready, newspaper, phone_settings_toggle, device_os_requirement, london_unpack_eb61ad77, mid_release_98cab19a, samsung_korea_04b00795, device_data_transfer, gift_voucher
+- `042_news_foldable_iphone_ultra`: event_period_8cafdac4, foldable, apple_70385068, forecast, smartphone, newspaper, phone_setup_ready, london_unpack_eb61ad77, mid_release_98cab19a, samsung_korea_04b00795, phone_settings_toggle, gift_voucher
 - `040_tip_ios27_features`: apple_70385068, cpt_f385671f, size_guide_afe009df, restaurant_receipt_2b916703, event_period_8cafdac4, nfc_pay, smartphone, cpt_a2a04bc1, cpt_022b5d33, device_os_requirement, device_data_transfer, camera_battery_ecd040c7, chatbot, phone_setup_ready, mid_release_98cab19a, samsung_ai, phone_settings_toggle
 - `039_pick_apple_watch_ultra4`: smartphone, aluminum_label, appliance, basic_fold_202d754f
 - `032_meme_carrier_hidden_tips`: mystery_number_63279925, document_article, smartphone, gift_voucher, telecom_discount_compare, phone_setup_ready, phone_settings_toggle, chart_down, device_os_requirement, device_data_transfer

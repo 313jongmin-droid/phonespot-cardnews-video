@@ -205,6 +205,7 @@ job2 = mcp__83aadcc7-...__generate_video(
 - **검증 프레임 = `out_promo_ai/<slug>/_chk*`·`_insp*` 폴더**(png) → `.gitignore` 차단. **발행 전 삭제**(sandbox 권한 밖이라 종민이 탐색기에서).
 - 구버전 영상 = `out_promo_ai/<slug>/_archive/`로, 최신본만 INDEX 기록(타임스탬프 누적, 덮어쓰기 ❌).
 - **캡션(`<slug>_captions.md`)은 최종 영상 버전과 톤·내용 일치 유지** — 영상 갱신 시 캡션도 같이 갱신(004는 v9 7비트 썰톤+댓글유발로 정합).
+- ★ **사전승낙서 필수(한국법·재발방지)**: 캡션 작성 시 **모든 채널 마지막 줄에 `[사전승낙서] <precon_url>` 반드시 삽입**. URL 정본 = `_brand.json` `precon_url`(현재 `...PRE0000194479...`). 발행 전 채널 수 == 사전승낙서 줄 수 확인(빠진 채널 0). 005 최초 누락 사례 → 이 체크로 방지.
 - ★ **푸시는 영역 지정**: `git add shorts/promo_ai .gitignore`. **`git add -A` 금지** — repo에 줄끝(CRLF/LF) 미커밋 변경(.bat/.ps1 다수)이 상존해 의도 안 한 것까지 딸려감(STEP7 리포위생 연동).
 
 ---
