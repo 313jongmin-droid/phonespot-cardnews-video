@@ -252,6 +252,7 @@ def build_chunk_timing(
             "weights": fallback_weights,
             "windows": [],
             "boundary_count": 0,
+            "caption_signature": chunk_signature(safe_chunks),
         }
 
     total_ms = max(
