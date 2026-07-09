@@ -36,13 +36,14 @@ interface Props {
   durFrames: number;
 }
 
+// 켄번스 모션 (2026-07-09: 줌 16%->6%, 팬 절반. 저해상 실사 확대·물러짐 완화)
 const IMAGE_MOTION_PRESETS = [
-  { scaleFrom: 1.0, scaleTo: 1.14, xFrom: -18, xTo: 18, yFrom: 6, yTo: -6 },
-  { scaleFrom: 1.08, scaleTo: 1.08, xFrom: -42, xTo: 42, yFrom: 0, yTo: 0 },
-  { scaleFrom: 1.08, scaleTo: 1.08, xFrom: 42, xTo: -42, yFrom: 0, yTo: 0 },
-  { scaleFrom: 1.04, scaleTo: 1.16, xFrom: 0, xTo: 0, yFrom: 24, yTo: -24 },
-  { scaleFrom: 1.16, scaleTo: 1.03, xFrom: -22, xTo: 22, yFrom: -18, yTo: 18 },
-  { scaleFrom: 1.05, scaleTo: 1.15, xFrom: 34, xTo: -28, yFrom: 18, yTo: -14 },
+  { scaleFrom: 1.0, scaleTo: 1.05, xFrom: -9, xTo: 9, yFrom: 3, yTo: -3 },
+  { scaleFrom: 1.03, scaleTo: 1.03, xFrom: -20, xTo: 20, yFrom: 0, yTo: 0 },
+  { scaleFrom: 1.03, scaleTo: 1.03, xFrom: 20, xTo: -20, yFrom: 0, yTo: 0 },
+  { scaleFrom: 1.02, scaleTo: 1.06, xFrom: 0, xTo: 0, yFrom: 12, yTo: -12 },
+  { scaleFrom: 1.06, scaleTo: 1.01, xFrom: -11, xTo: 11, yFrom: -9, yTo: 9 },
+  { scaleFrom: 1.02, scaleTo: 1.06, xFrom: 16, xTo: -14, yFrom: 9, yTo: -7 },
 ];
 
 const clampProgress = (frame: number, duration: number) =>
