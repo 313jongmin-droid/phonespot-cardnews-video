@@ -2,6 +2,7 @@
 
 > 영상: 같은 아이폰인데 옆 매장이 30만원 더 비쌌던 썰 → 알고 보니 정찰제 차이.
 > 후킹타입 D(대비충격). 링크: litt.ly/phonespot
+> ★ 모든 채널에 [사전승낙서] 고지 필수(한국 전기통신사업법·방통위 통신판매 표시의무).
 
 ---
 
@@ -15,6 +16,8 @@
 
 #휴대폰호구탈출 #같은폰다른가격 #정찰제 #실구매가 #아이폰 #부가서비스 #폰스팟 #휴대폰성지
 
+[사전승낙서] https://ictmarket.or.kr:8443/precon/pop_CertIcon.do?PRECON_REQ_ID=PRE0000194479&YN=1
+
 ---
 
 ## 2. 유튜브 쇼츠
@@ -27,6 +30,8 @@
 → litt.ly/phonespot
 
 #휴대폰호구탈출 #정찰제 #같은폰다른가격 #실구매가 #폰스팟 #휴대폰성지폰스팟
+
+[사전승낙서] https://ictmarket.or.kr:8443/precon/pop_CertIcon.do?PRECON_REQ_ID=PRE0000194479&YN=1
 
 ---
 
@@ -47,6 +52,8 @@
 
 #휴대폰호구탈출 #같은폰다른가격 #정찰제 #실구매가 #아이폰개통 #부가서비스 #통신비절약 #휴대폰성지 #폰스팟 #휴대폰성지폰스팟
 
+[사전승낙서] https://ictmarket.or.kr:8443/precon/pop_CertIcon.do?PRECON_REQ_ID=PRE0000194479&YN=1
+
 ---
 
 ## 4. 스레드
@@ -60,6 +67,8 @@
 월 납부금 말고 실구매가로 비교하세요.
 폰스팟은 정찰제로 투명 공개 → litt.ly/phonespot
 
+[사전승낙서] https://ictmarket.or.kr:8443/precon/pop_CertIcon.do?PRECON_REQ_ID=PRE0000194479&YN=1
+
 ---
 
 ## 5. 네이버(짧은 소개형)
@@ -70,3 +79,5 @@
 
 휴대폰성지 폰스팟은 정찰제로 실구매가를 공개하고, 다른 곳 견적을 들고 오시면 같은 기준으로 나란히 비교해 드립니다.
 링크: litt.ly/phonespot
+
+[사전승낙서] https://ictmarket.or.kr:8443/precon/pop_CertIcon.do?PRECON_REQ_ID=PRE0000194479&YN=1
