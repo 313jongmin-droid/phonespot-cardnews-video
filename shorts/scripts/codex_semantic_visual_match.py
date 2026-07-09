@@ -506,14 +506,18 @@ def semantic_match(data: dict, slug: str) -> bool:
             # 0순위: 실사 포토 — 렉시컬 모델명 매칭(임베딩 X, 청크 자체 기준). 구별 토큰이
             #   청크에 실제 등장할 때만. 동점이면 일반토큰 일치수로. 없으면 일러스트로 폴백.
             best_photo = (0, 0, "")  # (구별토큰수, 일반토큰수, 파일명)
+            best_lg = 0  # 동점 시 로고 우선: 브랜드명만 겹치는 순수 브랜드 청크(삼성 독무대 등)엔 제품샷 대신 로고
             if photo_files:
                 _pchunk = clean(chunks[idx]) if idx < len(chunks) else context
                 for _pf in photo_files:
                     if f"image:photos/{_pf}" in used_visuals:
                         continue
-                    _d, _g = photo_lexical_score(photo_label(_pf), _pchunk)
-                    if _d > 0 and (_d, _g) > (best_photo[0], best_photo[1]):
+                    _lab = photo_label(_pf)
+                    _d, _g = photo_lexical_score(_lab, _pchunk)
+                    _lg = 1 if "로고" in _lab else 0
+                    if _d > 0 and (_d, _g, _lg) > (best_photo[0], best_photo[1], best_lg):
                         best_photo = (_d, _g, _pf)
+                        best_lg = _lg
                 if best_photo[2]:
                     print(f"[photo] {section_name} c{idx+1}: {best_photo[2]} dist={best_photo[0]} gen={best_photo[1]}")
 
