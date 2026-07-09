@@ -179,7 +179,7 @@
 | `mystery_number_63279925` | auto, library | 3 | 032_meme_carrier_hidden_tips |
 | `new_policy_f48caded` | auto, library | 3 | 042_news_foldable_iphone_ultra |
 | `new_release_98cab19a` | library | 0 |  |
-| `newspaper` | news, source, library | 9 | 042_news_foldable_iphone_ultra |
+| `newspaper` | news, source, library | 8 | 020_qa_apple_pay_korea_card |
 | `nfc_open_access` | payment, nfc, access | 0 |  |
 | `nfc_pay` | payment, nfc, access, library | 3 | 040_tip_ios27_features |
 | `official_sale_9dc82f05` | auto, library | 4 | 031_meme_phone_buying_checklist |
@@ -209,7 +209,7 @@
 | `reset` | security, privacy, software, library | 0 |  |
 | `restaurant_receipt_2b916703` | auto, library | 1 | 040_tip_ios27_features |
 | `samsung_ai` | ai, assistant, software, library | 5 | 040_tip_ios27_features |
-| `samsung_korea_04b00795` | auto, library | 3 | 042_news_foldable_iphone_ultra |
+| `samsung_korea_04b00795` | auto, library | 2 | 035_news_iphone18_price_hike |
 | `secure_app_reregistration` | security, bank, authentication, setup, library | 1 | 015_qa_msafer_pass_identity_block |
 | `security_feature_lock` | library | 2 | 018_scam_wedding_invite_smishing |
 | `select_option_76495b69` | auto | 0 |  |
@@ -244,7 +244,7 @@
 
 ## Recent videos
 
-- `042_news_foldable_iphone_ultra`: event_period_8cafdac4, apple_70385068, foldable, newspaper, samsung_korea_04b00795, london_unpack_eb61ad77, mid_release_98cab19a, smartphone, new_policy_f48caded, gift_voucher
+- `042_news_foldable_iphone_ultra`: event_period_8cafdac4, apple_70385068, foldable, london_unpack_eb61ad77, mid_release_98cab19a, new_policy_f48caded, gift_voucher, smartphone
 - `040_tip_ios27_features`: apple_70385068, cpt_f385671f, size_guide_afe009df, restaurant_receipt_2b916703, event_period_8cafdac4, nfc_pay, smartphone, cpt_a2a04bc1, cpt_022b5d33, device_os_requirement, device_data_transfer, camera_battery_ecd040c7, chatbot, phone_setup_ready, mid_release_98cab19a, samsung_ai, phone_settings_toggle
 - `039_pick_apple_watch_ultra4`: smartphone, aluminum_label, appliance, basic_fold_202d754f
 - `032_meme_carrier_hidden_tips`: mystery_number_63279925, document_article, smartphone, gift_voucher, telecom_discount_compare, phone_setup_ready, phone_settings_toggle, chart_down, device_os_requirement, device_data_transfer

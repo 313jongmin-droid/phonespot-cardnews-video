@@ -110,8 +110,8 @@
           "value": "photos/애플_아이폰_2개.JPG"
         },
         {
-          "type": "illust",
-          "value": "apple_70385068"
+          "type": "image",
+          "value": "photos/애플_로고.JPG"
         }
       ],
       "stat": {
@@ -174,8 +174,8 @@
       ],
       "chunk_visuals": [
         {
-          "type": "illust",
-          "value": "foldable"
+          "type": "image",
+          "value": "photos/애플_로고.png"
         },
         {
           "type": "image",
@@ -183,11 +183,11 @@
         },
         {
           "type": "illust",
-          "value": "newspaper"
+          "value": "apple_70385068"
         },
         {
-          "type": "mascot",
-          "value": "suspicious"
+          "type": "image",
+          "value": "photos/애플_아이폰17.JPG"
         }
       ],
       "stat": {
@@ -252,8 +252,12 @@
       ],
       "chunk_visuals": [
         {
+          "type": "image",
+          "value": "photos/삼성_갤럭시A.JPG"
+        },
+        {
           "type": "illust",
-          "value": "samsung_korea_04b00795"
+          "value": "foldable"
         },
         {
           "type": "illust",
@@ -262,10 +266,6 @@
         {
           "type": "illust",
           "value": "mid_release_98cab19a"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
         }
       ],
       "stat": {
@@ -443,6 +443,7 @@
   },
   "_auto_generated": true,
   "_chunk_logic_v2": true,
+  "_source_hash": "a90794d12e01bc652135a3071021ab4dfb50aea5",
   "_note": "build_script.py 자동 생성 (v2 로직): 시퀀스 내 이미지 순환 + 마스코트 짝수 시퀀스만.",
   "_codex_global_999_quality": true,
   "_codex_common_quality_logic": true,
@@ -510,6 +511,20 @@
         "reason": "photo lexical dist=1 gen=1: 애플_아이폰_2개.JPG"
       },
       {
+        "section": "fact_1",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "apple_70385068"
+        },
+        "to": {
+          "type": "image",
+          "value": "photos/애플_로고.JPG"
+        },
+        "context": "첫 폴더블폰 '아이폰 울트라'가 공개된다는 소식입니다 애플이 접는 폰을 처음 내놓는 거라 관심이 큽니다 뭐가 나오나 아이폰 울트라 ['뭐가 나오나', '아이폰 울트라'] 뉴스",
+        "reason": "photo lexical dist=1 gen=0: 애플_로고.JPG"
+      },
+      {
         "section": "fact_2",
         "chunk": 1,
         "from": {
@@ -517,11 +532,11 @@
           "value": "smartphone"
         },
         "to": {
-          "type": "illust",
-          "value": "foldable"
+          "type": "image",
+          "value": "photos/애플_로고.png"
         },
         "context": "애플이 공급업체에 올해 약 1000만 대의 폴더블 아이폰을 준비시켰다는 보도가 나왔습니다 규모 1000만 대 생산 ['규모', '1000만 대 생산'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
+        "reason": "photo lexical dist=1 gen=0: 애플_로고.png"
       },
       {
         "section": "fact_2",
@@ -539,17 +554,17 @@
       },
       {
         "section": "fact_2",
-        "chunk": 3,
+        "chunk": 4,
         "from": {
-          "type": "illust",
-          "value": "apple_70385068"
+          "type": "mascot",
+          "value": "suspicious"
         },
         "to": {
-          "type": "illust",
-          "value": "newspaper"
+          "type": "image",
+          "value": "photos/애플_아이폰17.JPG"
         },
-        "context": "대의 폴더블 아이폰을 준비시켰다는 보도가 나왔습니다 첫 물량치고 큰 규모라, 애플이 폴더블에 제대로 뛰어든 겁니다 규모 1000만 대 생산 ['규모', '1000만 대 생산'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
+        "context": "첫 물량치고 큰 규모라, 애플이 폴더블에 제대로 뛰어든 겁니다 규모 1000만 대 생산 ['규모', '1000만 대 생산'] 뉴스",
+        "reason": "photo lexical dist=1 gen=0: 애플_아이폰17.JPG"
       },
       {
         "section": "fact_3",
@@ -559,11 +574,11 @@
           "value": "smartphone"
         },
         "to": {
-          "type": "illust",
-          "value": "samsung_korea_04b00795"
+          "type": "image",
+          "value": "photos/삼성_갤럭시A.JPG"
         },
         "context": "지금까지 폴더블폰은 삼성 독무대였습니다 여기에 애플이 뛰어들면서 의미 삼성 vs 애플 ['의미', '삼성 vs 애플'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
+        "reason": "photo lexical dist=1 gen=0: 삼성_갤럭시A.JPG"
       },
       {
         "section": "fact_3",
@@ -574,7 +589,7 @@
         },
         "to": {
           "type": "illust",
-          "value": "london_unpack_eb61ad77"
+          "value": "foldable"
         },
         "context": "지금까지 폴더블폰은 삼성 독무대였습니다 여기에 애플이 뛰어들면서 하반기에 폴더블 맞대결이 벌어집니다 의미 삼성 vs 애플 ['의미', '삼성 vs 애플'] 뉴스",
         "reason": "illust score 12 (content n/a)"
@@ -588,7 +603,7 @@
         },
         "to": {
           "type": "illust",
-          "value": "mid_release_98cab19a"
+          "value": "london_unpack_eb61ad77"
         },
         "context": "여기에 애플이 뛰어들면서 하반기에 폴더블 맞대결이 벌어집니다 고를 게 많아지니 소비자한텐 좋은 일이죠 의미 삼성 vs 애플 ['의미', '삼성 vs 애플'] 뉴스",
         "reason": "illust score 12 (content n/a)"
@@ -602,10 +617,10 @@
         },
         "to": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "mid_release_98cab19a"
         },
         "context": "하반기에 폴더블 맞대결이 벌어집니다 고를 게 많아지니 소비자한텐 좋은 일이죠 의미 삼성 vs 애플 ['의미', '삼성 vs 애플'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
+        "reason": "illust score 12 (content n/a)"
       },
       {
         "section": "fact_4",
@@ -650,41 +665,7 @@
         "reason": "photo lexical dist=1 gen=0: 아이폰_카메라.png"
       }
     ],
-    "weak": [
-      {
-        "section": "fact_2",
-        "chunk": 4,
-        "current": {
-          "type": "mascot",
-          "value": "suspicious"
-        },
-        "context": "첫 물량치고 큰 규모라, 애플이 폴더블에 제대로 뛰어든 겁니다 규모 1000만 대 생산 ['규모', '1000만 대 생산'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_3",
-        "chunk": 4,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "하반기에 폴더블 맞대결이 벌어집니다 고를 게 많아지니 소비자한텐 좋은 일이죠 의미 삼성 vs 애플 ['의미', '삼성 vs 애플'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_4",
-        "chunk": 3,
-        "current": {
-          "type": "image",
-          "value": "photos/아이폰_카메라.png"
-        },
-        "context": "지금 당장 폰이 필요하면, 현재 아이폰 실구매가와 지원금부터 확인하는 게 이득입니다 살 사람은 9월 대기 or 지금 ['살 사람은', '9월 대기 or 지금'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      }
-    ]
+    "weak": []
   },
   "_codex_effective_script": {
     "version": 2,
