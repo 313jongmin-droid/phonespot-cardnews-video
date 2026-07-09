@@ -24,6 +24,12 @@ ARTICLES = SCRIPT_DIR.parent / 'articles'
 REQUIRED_ERROR = ['slug', 'title', 'cards', 'captions_md']
 # 스펙/품질 키 (CARDNEWS_BUILD D-2 권장 스키마)
 REQUIRED_WARN = ['content_type', 'publication_date', 'source_line', 'narration_md']
+
+# ★ 어색·군더더기 금칙어 (2026-07-09, article_authoring_spec 하드룰 프로그램 게이트)
+# 정확 문구 = ERROR(렌더 게이트), 패턴/전문용어 = WARN
+BANNED_HEDGE_ERR = ['급한지 아닌지에 따라 갈립니다', '아직 공식 발표 전이라 전망입니다']
+BANNED_HEDGE_WARN = ['에 따라 갈립니다', '신호로 읽힙니다', '로 읽힙니다']
+BANNED_JARGON = ['폼팩터', '폼 팩터']
 VALID_TYPES = {'news', 'scam', 'tip', 'qa', 'pick', 'meme', 'life'}
 NUM_RE = re.compile(r'^(\d{3})_')
 # 해시태그 = # 뒤에 공백/# 아닌 글자가 바로 옴 (마크다운 '## 헤더'는 제외)
@@ -82,6 +88,19 @@ def validate_one(path):
     HOOK_MARKERS = ('?', '라고', '손해', '존버', '이유', '왜', '실화', '딱', '단 ', '꼭', '주의', '안보면', '안 보면', '비밀', '충격', '대박', '이렇게', '레전드', 'vs')
     if title and not any(m in title for m in HOOK_MARKERS):
         warns.append(f"제목 설명형(후킹 마커 없음): '{title[:30]}' - 호기심갭/손해회피 패턴 권장(싸당 벤치마크)")
+
+    # ★ 어색·군더더기 금칙어 검사 (cards body + narration + captions)
+    blob = ' '.join(str((c or {}).get('body', '')) for c in (cards or [])) \
+        + ' ' + str(d.get('narration_md') or '') + ' ' + str(d.get('captions_md') or '')
+    for bp in BANNED_HEDGE_ERR:
+        if bp in blob:
+            errors.append(f"[금칙-어색] 군더더기 마무리 문구 금지: '{bp}' (스펙 하드룰)")
+    for bp in BANNED_HEDGE_WARN:
+        if bp in blob:
+            warns.append(f"군더더기 패턴 의심: '{bp}' - 비트 끝 요약/분석체 제거 권장")
+    for bp in BANNED_JARGON:
+        if bp in blob:
+            warns.append(f"전문용어 금지(한글 구체어로): '{bp}'")
 
     return errors, warns
 
