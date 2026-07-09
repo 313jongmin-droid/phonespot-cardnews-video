@@ -11,7 +11,7 @@
     "line2": "접히는 아이폰, 드디어 9월에 나온다"
   },
   "hook": {
-    "tts": "그동안 소문만 무성했던 접는 아이폰이 올 9월에 나올 전망입니다. 납품 일정이 순조롭다는 소식까지 나왔습니다. 폴더블 아이폰을 기다렸다면 지금부터 챙겨볼 때입니다.",
+    "tts": "말로만 돌던 접는 아이폰, 드디어 올 9월에 나올 전망입니다. 납품 일정까지 순조롭다는 소식이 나왔습니다.",
     "caption_body": [
       "접히는 아이폰",
       "드디어 9월에"
@@ -32,10 +32,8 @@
     "topic": "뉴스",
     "background_image": "",
     "caption_chunks": [
-      "그동안 소문만 무성했던 접는 아이폰이",
-      "올 9월에 나올 전망입니다.",
-      "납품 일정이 순조롭다는 소식까지 나왔습니다.",
-      "폴더블 아이폰을 기다렸다면 지금부터 챙겨볼 때입니다."
+      "말로만 돌던 접는 아이폰, 드디어 올 9월에 나올 전망입니다.",
+      "납품 일정까지 순조롭다는 소식이 나왔습니다."
     ],
     "chunk_visuals": [
       {
@@ -45,14 +43,6 @@
       {
         "type": "illust",
         "value": "event_period_8cafdac4"
-      },
-      {
-        "type": "illust",
-        "value": "foldable"
-      },
-      {
-        "type": "image",
-        "value": "photos/아이폰_정면.png"
       }
     ],
     "stat": {
@@ -61,35 +51,31 @@
       "note": ""
     },
     "display_chunks": [
-      "그동안 소문만 무성했던 접는 아이폰이",
-      "올 9월에 나올 전망입니다",
-      "납품 일정이 순조롭다는 소식까지 나왔습니다",
-      "폴더블 아이폰을 기다렸다면 지금부터 챙겨볼 때입니다"
+      "말로만 돌던 접는 아이폰, 드디어 올 9월에 나올 전망입니다",
+      "납품 일정까지 순조롭다는 소식이 나왔습니다"
     ],
     "_codex_caption_lockstep": {
       "version": 2,
       "compiler": "korean_caption_compiler_v2",
       "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-      "chunk_count": 4
+      "chunk_count": 2
     },
     "_codex_contextual_narrative": true,
     "_codex_sync_mode": "global999_tts_caption_lockstep",
     "tts_chunk_weights": [
-      16,
-      12,
-      20,
-      24
+      26,
+      20
     ],
     "_tts_timing": {
       "mode": "character_weight_fallback",
       "windows": [],
       "boundary_count": 0,
-      "caption_signature": "b59781d0d2e72afa32f2feff939e9fa42d16775da0d799163d902a3c73770e1c"
+      "caption_signature": "d063d33524910a52a6c3410410c51e7d1ef315afd3c90fbb91b1996b65865947"
     }
   },
   "facts": [
     {
-      "tts": "9월에 아이폰18 프로와 함께 애플의 첫 폴더블폰 '아이폰 울트라'가 공개될 것으로 전해집니다. 접는 폼팩터를 애플이 처음 선보이는 만큼 관심이 큽니다. 아직 공식 발표 전이라 전망입니다.",
+      "tts": "9월, 아이폰18 프로와 함께 애플의 첫 폴더블폰 '아이폰 울트라'가 공개된다는 소식입니다. 애플이 접는 폰을 처음 내놓는 거라 관심이 큽니다.",
       "caption_body": [
         "뭐가 나오나",
         "아이폰 울트라"
@@ -110,10 +96,9 @@
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "9월에 아이폰18 프로와 함께 애플의",
-        "첫 폴더블폰 '아이폰 울트라'가 공개될 것으로 전해집니다.",
-        "접는 폼팩터를 애플이 처음 선보이는 만큼 관심이 큽니다.",
-        "아직 공식 발표 전이라 전망입니다."
+        "9월, 아이폰18 프로와 함께 애플의",
+        "첫 폴더블폰 '아이폰 울트라'가 공개된다는 소식입니다.",
+        "애플이 접는 폰을 처음 내놓는 거라 관심이 큽니다."
       ],
       "chunk_visuals": [
         {
@@ -127,10 +112,6 @@
         {
           "type": "illust",
           "value": "apple_70385068"
-        },
-        {
-          "type": "illust",
-          "value": "forecast"
         }
       ],
       "stat": {
@@ -140,34 +121,32 @@
       },
       "id": "fact_1",
       "display_chunks": [
-        "9월에 아이폰18 프로와 함께 애플의",
-        "첫 폴더블폰 '아이폰 울트라'가 공개될 것으로 전해집니다",
-        "접는 폼팩터를 애플이 처음 선보이는 만큼 관심이 큽니다",
-        "아직 공식 발표 전이라 전망입니다"
+        "9월, 아이폰18 프로와 함께 애플의",
+        "첫 폴더블폰 '아이폰 울트라'가 공개된다는 소식입니다",
+        "애플이 접는 폰을 처음 내놓는 거라 관심이 큽니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 4
+        "chunk_count": 3
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
         16,
-        26,
-        24,
-        15
+        25,
+        21
       ],
       "_tts_timing": {
         "mode": "character_weight_fallback",
         "windows": [],
         "boundary_count": 0,
-        "caption_signature": "c654c9b16edf9e89fd47d19b16e46c937ca9d9d363d81856c3e53e7033716a9e"
+        "caption_signature": "d71f527d7923130d2519e2e207e2ecad0844266bc072f950800b5819f29dcdd4"
       }
     },
     {
-      "tts": "애플이 공급업체에 올해 약 1000만 대의 폴더블 아이폰 생산을 준비하도록 지시했다는 보도가 나왔습니다. 시범 물량치고는 큰 규모라, 애플이 진심으로 폴더블 시장에 들어온다는 신호로 읽힙니다.",
+      "tts": "애플이 공급업체에 올해 약 1000만 대의 폴더블 아이폰을 준비시켰다는 보도가 나왔습니다. 첫 물량치고 큰 규모라, 애플이 폴더블에 제대로 뛰어든 겁니다.",
       "caption_body": [
         "규모",
         "1000만 대 생산"
@@ -189,27 +168,22 @@
       "background_image": "",
       "caption_chunks": [
         "애플이 공급업체에 올해 약 1000만",
-        "대의 폴더블 아이폰 생산을 준비하도록",
-        "지시했다는 보도가 나왔습니다.",
-        "시범 물량치고는 큰 규모라,",
-        "애플이 진심으로 폴더블 시장에 들어온다는 신호로 읽힙니다."
+        "대의 폴더블 아이폰을 준비시켰다는 보도가 나왔습니다.",
+        "첫 물량치고 큰 규모라,",
+        "애플이 폴더블에 제대로 뛰어든 겁니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "smartphone"
+          "value": "foldable"
         },
         {
           "type": "image",
-          "value": "photos/아이폰_카메라.png"
+          "value": "photos/아이폰_정면.png"
         },
         {
           "type": "illust",
           "value": "newspaper"
-        },
-        {
-          "type": "illust",
-          "value": "phone_setup_ready"
         },
         {
           "type": "mascot",
@@ -224,35 +198,33 @@
       "id": "fact_2",
       "display_chunks": [
         "애플이 공급업체에 올해 약 1000만",
-        "대의 폴더블 아이폰 생산을 준비하도록",
-        "지시했다는 보도가 나왔습니다",
-        "시범 물량치고는 큰 규모라,",
-        "애플이 진심으로 폴더블 시장에 들어온다는 신호로 읽힙니다"
+        "대의 폴더블 아이폰을 준비시켰다는 보도가 나왔습니다",
+        "첫 물량치고 큰 규모라,",
+        "애플이 폴더블에 제대로 뛰어든 겁니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 5
+        "chunk_count": 4
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
         16,
-        16,
-        14,
-        12,
-        26
+        24,
+        10,
+        17
       ],
       "_tts_timing": {
         "mode": "character_weight_fallback",
         "windows": [],
         "boundary_count": 0,
-        "caption_signature": "735eb53567540dbc4a87bf3a2e636a145926c85cfaf5f5267a26716935267cbe"
+        "caption_signature": "83b34ef17bd6fc753b53bb46af62bb882e6e59bba039ed6f292b019e97ffac2b"
       }
     },
     {
-      "tts": "그동안 폴더블폰은 삼성이 주도해 왔습니다. 여기에 애플이 참전하면서 하반기 폴더블 대결이 예고됩니다. 선택지가 늘어나는 건 소비자에게 좋은 소식입니다.",
+      "tts": "지금까지 폴더블폰은 삼성 독무대였습니다. 여기에 애플이 뛰어들면서 하반기에 폴더블 맞대결이 벌어집니다. 고를 게 많아지니 소비자한텐 좋은 일이죠.",
       "caption_body": [
         "의미",
         "삼성 vs 애플"
@@ -273,11 +245,16 @@
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "그동안 폴더블폰은 삼성이 주도해 왔습니다.",
-        "여기에 애플이 참전하면서 하반기 폴더블 대결이 예고됩니다.",
-        "선택지가 늘어나는 건 소비자에게 좋은 소식입니다."
+        "지금까지 폴더블폰은 삼성 독무대였습니다.",
+        "여기에 애플이 뛰어들면서",
+        "하반기에 폴더블 맞대결이 벌어집니다.",
+        "고를 게 많아지니 소비자한텐 좋은 일이죠."
       ],
       "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "samsung_korea_04b00795"
+        },
         {
           "type": "illust",
           "value": "london_unpack_eb61ad77"
@@ -288,7 +265,7 @@
         },
         {
           "type": "illust",
-          "value": "samsung_korea_04b00795"
+          "value": "smartphone"
         }
       ],
       "stat": {
@@ -298,32 +275,34 @@
       },
       "id": "fact_3",
       "display_chunks": [
-        "그동안 폴더블폰은 삼성이 주도해 왔습니다",
-        "여기에 애플이 참전하면서 하반기 폴더블 대결이 예고됩니다",
-        "선택지가 늘어나는 건 소비자에게 좋은 소식입니다"
+        "지금까지 폴더블폰은 삼성 독무대였습니다",
+        "여기에 애플이 뛰어들면서",
+        "하반기에 폴더블 맞대결이 벌어집니다",
+        "고를 게 많아지니 소비자한텐 좋은 일이죠"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 3
+        "chunk_count": 4
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
         19,
-        26,
-        22
+        11,
+        17,
+        18
       ],
       "_tts_timing": {
         "mode": "character_weight_fallback",
         "windows": [],
         "boundary_count": 0,
-        "caption_signature": "ca2e4b266a868dee76ce4052e41fdfaf0bb4efd5288cd9dc7e41f1ba93d25fed"
+        "caption_signature": "a27cbe54ad50baac609ace629f8599626f4e22da911d8f49cf1d48607102ea2e"
       }
     },
     {
-      "tts": "폴더블에 관심 있다면 9월 발표를 보고 정하는 게 낫습니다. 당장 폰이 필요하면 현재 아이폰의 실구매가와 지원금을 확인해 사는 게 좋습니다. 급한지 아닌지에 따라 갈립니다.",
+      "tts": "폴더블이 궁금하면 9월 발표부터 보고 정하세요. 지금 당장 폰이 필요하면, 현재 아이폰 실구매가와 지원금부터 확인하는 게 이득입니다.",
       "caption_body": [
         "살 사람은",
         "9월 대기 or 지금"
@@ -344,27 +323,22 @@
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "폴더블에 관심 있다면 9월 발표를 보고 정하는 게 낫습니다.",
-        "당장 폰이 필요하면 현재 아이폰의",
-        "실구매가와 지원금을 확인해 사는 게 좋습니다.",
-        "급한지 아닌지에 따라 갈립니다."
+        "폴더블이 궁금하면 9월 발표부터 보고 정하세요.",
+        "지금 당장 폰이 필요하면,",
+        "현재 아이폰 실구매가와 지원금부터 확인하는 게 이득입니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "phone_settings_toggle"
-        },
-        {
-          "type": "image",
-          "value": "photos/아이폰_화면.png"
+          "value": "new_policy_f48caded"
         },
         {
           "type": "illust",
           "value": "gift_voucher"
         },
         {
-          "type": "mascot",
-          "value": "serious"
+          "type": "image",
+          "value": "photos/아이폰_카메라.png"
         }
       ],
       "stat": {
@@ -374,30 +348,28 @@
       },
       "id": "fact_4",
       "display_chunks": [
-        "폴더블에 관심 있다면 9월 발표를 보고 정하는 게 낫습니다",
-        "당장 폰이 필요하면 현재 아이폰의",
-        "실구매가와 지원금을 확인해 사는 게 좋습니다",
-        "급한지 아닌지에 따라 갈립니다"
+        "폴더블이 궁금하면 9월 발표부터 보고 정하세요",
+        "지금 당장 폰이 필요하면,",
+        "현재 아이폰 실구매가와 지원금부터 확인하는 게 이득입니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 4
+        "chunk_count": 3
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        25,
-        14,
-        20,
-        14
+        21,
+        11,
+        26
       ],
       "_tts_timing": {
         "mode": "character_weight_fallback",
         "windows": [],
         "boundary_count": 0,
-        "caption_signature": "ffe5c24be39bad4efdcd7b2f838206980667810170fe0c801ee26553168d2fec"
+        "caption_signature": "95c07422e44e2282d3b83ed1f1b96c0b9a3028ca26d146bcfdd5cf248ec5e418"
       }
     }
   ],
@@ -452,7 +424,7 @@
       "version": 2,
       "compiler": "korean_caption_compiler_v2",
       "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-      "chunk_count": 1
+      "chunk_count": 5
     },
     "_codex_contextual_narrative": true,
     "_codex_sync_mode": "global999_tts_caption_lockstep",
@@ -485,42 +457,42 @@
         "section": "hook",
         "chunk": 1,
         "from": {
-          "type": "image",
-          "value": "photos/애플_아이폰17.JPG"
+          "type": "illust",
+          "value": "smartphone"
         },
         "to": {
           "type": "image",
           "value": "photos/아이폰_실물.jpg"
         },
-        "context": "그동안 소문만 무성했던 접는 아이폰이 올 9월에 나올 전망입니다 접히는 아이폰 드디어 9월에 ['접히는 아이폰', '드디어 9월에'] 뉴스",
+        "context": "말로만 돌던 접는 아이폰, 드디어 올 9월에 나올 전망입니다 납품 일정까지 순조롭다는 소식이 나왔습니다 접히는 아이폰 드디어 9월에 ['접히는 아이폰', '드디어 9월에'] 뉴스",
         "reason": "photo lexical dist=1 gen=0: 아이폰_실물.jpg"
       },
       {
         "section": "hook",
-        "chunk": 4,
+        "chunk": 2,
         "from": {
-          "type": "image",
-          "value": "photos/애플_아이폰_2개.JPG"
+          "type": "mascot",
+          "value": "surprised"
         },
         "to": {
-          "type": "image",
-          "value": "photos/아이폰_정면.png"
+          "type": "illust",
+          "value": "event_period_8cafdac4"
         },
-        "context": "납품 일정이 순조롭다는 소식까지 나왔습니다 폴더블 아이폰을 기다렸다면 지금부터 챙겨볼 때입니다 접히는 아이폰 드디어 9월에 ['접히는 아이폰', '드디어 9월에'] 뉴스",
-        "reason": "photo lexical dist=1 gen=0: 아이폰_정면.png"
+        "context": "말로만 돌던 접는 아이폰, 드디어 올 9월에 나올 전망입니다 납품 일정까지 순조롭다는 소식이 나왔습니다 접히는 아이폰 드디어 9월에 ['접히는 아이폰', '드디어 9월에'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
       },
       {
         "section": "fact_1",
         "chunk": 1,
         "from": {
           "type": "illust",
-          "value": "apple_70385068"
+          "value": "smartphone"
         },
         "to": {
           "type": "image",
           "value": "photos/아이폰_프로.png"
         },
-        "context": "9월에 아이폰18 프로와 함께 애플의 첫 폴더블폰 '아이폰 울트라'가 공개될 것으로 전해집니다 뭐가 나오나 아이폰 울트라 ['뭐가 나오나', '아이폰 울트라'] 뉴스",
+        "context": "9월, 아이폰18 프로와 함께 애플의 첫 폴더블폰 '아이폰 울트라'가 공개된다는 소식입니다 뭐가 나오나 아이폰 울트라 ['뭐가 나오나', '아이폰 울트라'] 뉴스",
         "reason": "photo lexical dist=2 gen=0: 아이폰_프로.png"
       },
       {
@@ -528,195 +500,187 @@
         "chunk": 2,
         "from": {
           "type": "illust",
-          "value": "final_update"
+          "value": "aluminum_label"
         },
         "to": {
           "type": "image",
           "value": "photos/애플_아이폰_2개.JPG"
         },
-        "context": "9월에 아이폰18 프로와 함께 애플의 첫 폴더블폰 '아이폰 울트라'가 공개될 것으로 전해집니다 접는 폼팩터를 애플이 처음 선보이는 만큼 관심이 큽니다 뭐가 나오나 아이폰 울트라 ['뭐가 나오나', '아이폰 울트라']",
+        "context": "9월, 아이폰18 프로와 함께 애플의 첫 폴더블폰 '아이폰 울트라'가 공개된다는 소식입니다 애플이 접는 폰을 처음 내놓는 거라 관심이 큽니다 뭐가 나오나 아이폰 울트라 ['뭐가 나오나', '아이폰 울트라'] 뉴스",
         "reason": "photo lexical dist=1 gen=1: 애플_아이폰_2개.JPG"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "forecast"
-        },
-        "to": {
-          "type": "illust",
-          "value": "apple_70385068"
-        },
-        "context": "첫 폴더블폰 '아이폰 울트라'가 공개될 것으로 전해집니다 접는 폼팩터를 애플이 처음 선보이는 만큼 관심이 큽니다 아직 공식 발표 전이라 전망입니다 뭐가 나오나 아이폰 울트라 ['뭐가 나오나', '아이폰 울트라'] 뉴",
-        "reason": "illust score 12 (content n/a)"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "forecast"
-        },
-        "context": "접는 폼팩터를 애플이 처음 선보이는 만큼 관심이 큽니다 아직 공식 발표 전이라 전망입니다 뭐가 나오나 아이폰 울트라 ['뭐가 나오나', '아이폰 울트라'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
       },
       {
         "section": "fact_2",
         "chunk": 1,
         "from": {
           "type": "illust",
-          "value": "phone_setup_ready"
+          "value": "smartphone"
         },
         "to": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "foldable"
         },
-        "context": "애플이 공급업체에 올해 약 1000만 대의 폴더블 아이폰 생산을 준비하도록 규모 1000만 대 생산 ['규모', '1000만 대 생산'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
+        "context": "애플이 공급업체에 올해 약 1000만 대의 폴더블 아이폰을 준비시켰다는 보도가 나왔습니다 규모 1000만 대 생산 ['규모', '1000만 대 생산'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
       },
       {
         "section": "fact_2",
         "chunk": 2,
         "from": {
           "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "image",
+          "value": "photos/아이폰_정면.png"
+        },
+        "context": "애플이 공급업체에 올해 약 1000만 대의 폴더블 아이폰을 준비시켰다는 보도가 나왔습니다 첫 물량치고 큰 규모라, 규모 1000만 대 생산 ['규모', '1000만 대 생산'] 뉴스",
+        "reason": "photo lexical dist=1 gen=0: 아이폰_정면.png"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "apple_70385068"
+        },
+        "to": {
+          "type": "illust",
           "value": "newspaper"
+        },
+        "context": "대의 폴더블 아이폰을 준비시켰다는 보도가 나왔습니다 첫 물량치고 큰 규모라, 애플이 폴더블에 제대로 뛰어든 겁니다 규모 1000만 대 생산 ['규모', '1000만 대 생산'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "samsung_korea_04b00795"
+        },
+        "context": "지금까지 폴더블폰은 삼성 독무대였습니다 여기에 애플이 뛰어들면서 의미 삼성 vs 애플 ['의미', '삼성 vs 애플'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "london_unpack_eb61ad77"
+        },
+        "context": "지금까지 폴더블폰은 삼성 독무대였습니다 여기에 애플이 뛰어들면서 하반기에 폴더블 맞대결이 벌어집니다 의미 삼성 vs 애플 ['의미', '삼성 vs 애플'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "apple_70385068"
+        },
+        "to": {
+          "type": "illust",
+          "value": "mid_release_98cab19a"
+        },
+        "context": "여기에 애플이 뛰어들면서 하반기에 폴더블 맞대결이 벌어집니다 고를 게 많아지니 소비자한텐 좋은 일이죠 의미 삼성 vs 애플 ['의미', '삼성 vs 애플'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "하반기에 폴더블 맞대결이 벌어집니다 고를 게 많아지니 소비자한텐 좋은 일이죠 의미 삼성 vs 애플 ['의미', '삼성 vs 애플'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "new_policy_f48caded"
+        },
+        "context": "폴더블이 궁금하면 9월 발표부터 보고 정하세요 지금 당장 폰이 필요하면, 살 사람은 9월 대기 or 지금 ['살 사람은', '9월 대기 or 지금'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "gift_voucher"
+        },
+        "context": "폴더블이 궁금하면 9월 발표부터 보고 정하세요 지금 당장 폰이 필요하면, 현재 아이폰 실구매가와 지원금부터 확인하는 게 이득입니다 살 사람은 9월 대기 or 지금 ['살 사람은', '9월 대기 or 지금'] 뉴스",
+        "reason": "illust score 24 (content n/a)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 3,
+        "from": {
+          "type": "mascot",
+          "value": "serious"
         },
         "to": {
           "type": "image",
           "value": "photos/아이폰_카메라.png"
         },
-        "context": "애플이 공급업체에 올해 약 1000만 대의 폴더블 아이폰 생산을 준비하도록 지시했다는 보도가 나왔습니다 규모 1000만 대 생산 ['규모', '1000만 대 생산'] 뉴스",
+        "context": "지금 당장 폰이 필요하면, 현재 아이폰 실구매가와 지원금부터 확인하는 게 이득입니다 살 사람은 9월 대기 or 지금 ['살 사람은', '9월 대기 or 지금'] 뉴스",
         "reason": "photo lexical dist=1 gen=0: 아이폰_카메라.png"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "phone_settings_toggle"
-        },
-        "to": {
-          "type": "illust",
-          "value": "newspaper"
-        },
-        "context": "대의 폴더블 아이폰 생산을 준비하도록 지시했다는 보도가 나왔습니다 시범 물량치고는 큰 규모라, 규모 1000만 대 생산 ['규모', '1000만 대 생산'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "device_os_requirement"
-        },
-        "to": {
-          "type": "illust",
-          "value": "phone_setup_ready"
-        },
-        "context": "지시했다는 보도가 나왔습니다 시범 물량치고는 큰 규모라, 애플이 진심으로 폴더블 시장에 들어온다는 신호로 읽힙니다 규모 1000만 대 생산 ['규모', '1000만 대 생산'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "device_data_transfer"
-        },
-        "to": {
-          "type": "illust",
-          "value": "phone_settings_toggle"
-        },
-        "context": "폴더블에 관심 있다면 9월 발표를 보고 정하는 게 낫습니다 당장 폰이 필요하면 현재 아이폰의 살 사람은 9월 대기 or 지금 ['살 사람은', '9월 대기 or 지금'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "gift_voucher"
-        },
-        "to": {
-          "type": "image",
-          "value": "photos/아이폰_화면.png"
-        },
-        "context": "폴더블에 관심 있다면 9월 발표를 보고 정하는 게 낫습니다 당장 폰이 필요하면 현재 아이폰의 실구매가와 지원금을 확인해 사는 게 좋습니다 살 사람은 9월 대기 or 지금 ['살 사람은', '9월 대기 or 지금'] ",
-        "reason": "photo lexical dist=1 gen=0: 아이폰_화면.png"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "gift_voucher"
-        },
-        "context": "당장 폰이 필요하면 현재 아이폰의 실구매가와 지원금을 확인해 사는 게 좋습니다 급한지 아닌지에 따라 갈립니다 살 사람은 9월 대기 or 지금 ['살 사람은', '9월 대기 or 지금'] 뉴스",
-        "reason": "illust score 24 (content n/a)"
       }
     ],
     "weak": [
       {
         "section": "fact_2",
-        "chunk": 1,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "애플이 공급업체에 올해 약 1000만 대의 폴더블 아이폰 생산을 준비하도록 규모 1000만 대 생산 ['규모', '1000만 대 생산'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_2",
         "chunk": 4,
-        "current": {
-          "type": "illust",
-          "value": "phone_setup_ready"
-        },
-        "context": "지시했다는 보도가 나왔습니다 시범 물량치고는 큰 규모라, 애플이 진심으로 폴더블 시장에 들어온다는 신호로 읽힙니다 규모 1000만 대 생산 ['규모', '1000만 대 생산'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_2",
-        "chunk": 5,
         "current": {
           "type": "mascot",
           "value": "suspicious"
         },
-        "context": "시범 물량치고는 큰 규모라, 애플이 진심으로 폴더블 시장에 들어온다는 신호로 읽힙니다 규모 1000만 대 생산 ['규모', '1000만 대 생산'] 뉴스",
+        "context": "첫 물량치고 큰 규모라, 애플이 폴더블에 제대로 뛰어든 겁니다 규모 1000만 대 생산 ['규모', '1000만 대 생산'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       },
       {
-        "section": "fact_4",
-        "chunk": 1,
-        "current": {
-          "type": "illust",
-          "value": "phone_settings_toggle"
-        },
-        "context": "폴더블에 관심 있다면 9월 발표를 보고 정하는 게 낫습니다 당장 폰이 필요하면 현재 아이폰의 살 사람은 9월 대기 or 지금 ['살 사람은', '9월 대기 or 지금'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_4",
+        "section": "fact_3",
         "chunk": 4,
         "current": {
-          "type": "mascot",
-          "value": "serious"
+          "type": "illust",
+          "value": "smartphone"
         },
-        "context": "실구매가와 지원금을 확인해 사는 게 좋습니다 급한지 아닌지에 따라 갈립니다 살 사람은 9월 대기 or 지금 ['살 사람은', '9월 대기 or 지금'] 뉴스",
+        "context": "하반기에 폴더블 맞대결이 벌어집니다 고를 게 많아지니 소비자한텐 좋은 일이죠 의미 삼성 vs 애플 ['의미', '삼성 vs 애플'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_4",
+        "chunk": 3,
+        "current": {
+          "type": "image",
+          "value": "photos/아이폰_카메라.png"
+        },
+        "context": "지금 당장 폰이 필요하면, 현재 아이폰 실구매가와 지원금부터 확인하는 게 이득입니다 살 사람은 9월 대기 or 지금 ['살 사람은', '9월 대기 or 지금'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       }

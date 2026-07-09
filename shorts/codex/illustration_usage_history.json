@@ -552,25 +552,23 @@
       ]
     },
     "042_news_foldable_iphone_ultra": {
-      "used_at": "2026-07-09T18:00:15",
+      "used_at": "2026-07-09T18:05:01",
       "source": "semantic_visual_match",
       "illustrations": [
         "event_period_8cafdac4",
-        "foldable",
         "apple_70385068",
-        "forecast",
-        "smartphone",
+        "foldable",
         "newspaper",
-        "phone_setup_ready",
+        "samsung_korea_04b00795",
         "london_unpack_eb61ad77",
         "mid_release_98cab19a",
-        "samsung_korea_04b00795",
-        "phone_settings_toggle",
+        "smartphone",
+        "new_policy_f48caded",
         "gift_voucher"
       ]
     }
   },
-  "updated_at": "2026-07-09T18:00:18",
+  "updated_at": "2026-07-09T18:05:04",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -691,7 +689,7 @@
       "variants": []
     },
     "042_news_foldable_iphone_ultra": {
-      "updated_at": "2026-07-09T18:00:18",
+      "updated_at": "2026-07-09T18:05:04",
       "variants": []
     }
   }
