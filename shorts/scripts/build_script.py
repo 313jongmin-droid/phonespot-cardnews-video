@@ -7,6 +7,7 @@
 강제 재생성: python scripts/build_script.py <slug> --force
 """
 import json
+import hashlib
 import re
 import shutil as _sh
 import sys
@@ -72,9 +73,32 @@ def _is_outdated(p):
     return False
 
 
+def _source_hash_of(a):
+    """기사 본문(cards body+headline) 해시. 본문 바뀌면 값이 달라져 재빌드 트리거."""
+    parts = []
+    for c in a.get("cards", []):
+        parts.append(str(c.get("body", "")))
+        parts.append(str(c.get("headline", "")))
+    return hashlib.sha1("\u241f".join(parts).encode("utf-8")).hexdigest()
+
+
+def _article_source_hash(art_path):
+    try:
+        return _source_hash_of(json.load(open(art_path, encoding="utf-8")))
+    except Exception:
+        return ""
+
+
 if out_path.exists() and not force:
-    if _is_outdated(out_path):
-        print(f"[UPGRADE] 기존 shorts_script.json 이 구 스키마 - 자동 재생성: {out_path}")
+    cur_hash = _article_source_hash(article_path)
+    try:
+        stored_hash = str(json.load(open(out_path, encoding="utf-8")).get("_source_hash") or "")
+    except Exception:
+        stored_hash = ""
+    content_changed = bool(cur_hash) and cur_hash != stored_hash
+    if _is_outdated(out_path) or content_changed:
+        reason = "본문 변경 감지" if content_changed else "구 스키마"
+        print(f"[REBUILD] 기존 shorts_script.json {reason} - 자동 재생성: {out_path}")
         bak = out_path.with_suffix(".json.bak")
         try:
             _sh.copy(out_path, bak)
@@ -82,7 +106,7 @@ if out_path.exists() and not force:
         except Exception:
             pass
     else:
-        print(f"[SKIP] shorts_script.json already exists: {out_path}")
+        print(f"[SKIP] shorts_script.json already exists (본문 동일): {out_path}")
         print("       (use --force to regenerate)")
         sys.exit(0)
 
@@ -275,6 +299,7 @@ script = {
     "cta": cta,
     "_auto_generated": True,
     "_chunk_logic_v2": True,
+    "_source_hash": _source_hash_of(art),
     "_note": "build_script.py 자동 생성 (v2 로직): 시퀀스 내 이미지 순환 + 마스코트 짝수 시퀀스만.",
 }
 
