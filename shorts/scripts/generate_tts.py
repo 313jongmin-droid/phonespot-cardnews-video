@@ -506,7 +506,7 @@ async def main() -> None:
             size = out.stat().st_size
             timing = report["timing"]
             applied = ", ".join(report["dictionary_applied"]) or "-"
-            print(f"           OK  {size:,} bytes | {timing['mode']} | dict: {applied}")
+            print(f"           OK  {size:,} bytes | TTS:{report.get('engine','edge')} | {timing['mode']} | dict: {applied}")
         except Exception as exc:
             print(f"           FAIL {exc}")
             sys.exit(1)
