@@ -1664,6 +1664,15 @@
       "note": "Reusable editorial illustration. 문서/자료 카드.",
       "available": true
     },
+    "emerge_ad70f98b": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "나올"
+      ],
+      "note": "자동 발굴 개념: 나올"
+    },
     "emergency_account_freeze": {
       "tags": [
         "security",
@@ -1765,6 +1774,18 @@
       ],
       "note": "Reusable editorial illustration.",
       "available": true
+    },
+    "folding_rumors_545e4e3e": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "그동안",
+        "소문",
+        "무성했던",
+        "접는"
+      ],
+      "note": "자동 발굴 개념: 그동안 소문"
     },
     "forecast": {
       "tags": [
@@ -2426,6 +2447,17 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "pilot_scale_82f258e3": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "시범",
+        "물량치고",
+        "규모라"
+      ],
+      "note": "자동 발굴 개념: 시범 물량치고"
+    },
     "plan_price_tier_compare": {
       "tags": [
         "price",
@@ -2987,5 +3019,5 @@
       "available": true
     }
   },
-  "updated_at": "2026-07-07T16:01:05"
+  "updated_at": "2026-07-09T16:19:05"
 }

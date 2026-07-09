@@ -550,9 +550,30 @@
         "samsung_ai",
         "phone_settings_toggle"
       ]
+    },
+    "042_news_foldable_iphone_ultra": {
+      "used_at": "2026-07-09T16:19:05",
+      "source": "codex_enhance",
+      "illustrations": [
+        "event_period_8cafdac4",
+        "foldable",
+        "apple_70385068",
+        "final_update",
+        "forecast",
+        "smartphone",
+        "phone_setup_ready",
+        "newspaper",
+        "phone_settings_toggle",
+        "device_os_requirement",
+        "london_unpack_eb61ad77",
+        "mid_release_98cab19a",
+        "samsung_korea_04b00795",
+        "device_data_transfer",
+        "gift_voucher"
+      ]
     }
   },
-  "updated_at": "2026-07-07T16:01:09",
+  "updated_at": "2026-07-09T16:19:07",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -670,6 +691,10 @@
     },
     "040_tip_ios27_features": {
       "updated_at": "2026-07-07T16:01:09",
+      "variants": []
+    },
+    "042_news_foldable_iphone_ultra": {
+      "updated_at": "2026-07-09T16:19:07",
       "variants": []
     }
   }

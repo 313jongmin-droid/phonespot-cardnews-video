@@ -1,100 +1,40 @@
 {
-  "slug": "040_tip_ios27_features",
-  "engine": "fallback-mtime",
-  "generated_at": 1783407639.5500145,
+  "slug": "042_news_foldable_iphone_ultra",
+  "engine": "none",
+  "generated_at": 1783581136.2409735,
   "requests": [
     {
-      "filename": "apple_70385068.png",
-      "variant": "apple_70385068",
+      "filename": "folding_rumors_545e4e3e.png",
+      "variant": "folding_rumors_545e4e3e",
       "section": "hook",
       "chunk_index": 0,
-      "concept_label": "애플",
+      "concept_label": "그동안 소문",
       "optional": true,
-      "concept_text": "애플 apple 70385068 애플 auto concept 애플이 iOS27을 공개했습니다."
+      "concept_text": "그동안 소문 folding rumors 545e4e3e 그동안 소문 무성했던 접는 auto concept 그동안 소문만 무성했던 접는 아이폰이"
     },
     {
-      "filename": "cpt_f385671f.png",
-      "variant": "cpt_f385671f",
+      "filename": "emerge_ad70f98b.png",
+      "variant": "emerge_ad70f98b",
       "section": "hook",
-      "chunk_index": 2,
-      "concept_label": "실생활 만한",
+      "chunk_index": 1,
+      "concept_label": "나올",
       "optional": true,
-      "concept_text": "실생활 만한 cpt f385671f 실생활 만한 골라 미리 auto concept 실생활에서 바로 쓸 만한 기능만 골라 미리 보여드립니다."
+      "concept_text": "나올 emerge ad70f98b 나올 auto concept 올 9월에 나올 전망입니다."
     },
     {
-      "filename": "restaurant_receipt_2b916703.png",
-      "variant": "restaurant_receipt_2b916703",
-      "section": "fact_1",
-      "chunk_index": 0,
-      "concept_label": "식당 영수증",
-      "optional": true,
-      "concept_text": "식당 영수증 restaurant receipt 2b916703 식당 영수증 사진 찍으면 auto concept 식당 영수증을 사진으로 찍으면"
-    },
-    {
-      "filename": "cpt_a2a04bc1.png",
-      "variant": "cpt_a2a04bc1",
-      "section": "fact_1",
-      "chunk_index": 4,
-      "concept_label": "더치페 다툼",
-      "optional": true,
-      "concept_text": "더치페 다툼 cpt a2a04bc1 더치페 다툼 auto concept 더치페이 다툼이 사라집니다."
-    },
-    {
-      "filename": "cpt_022b5d33.png",
-      "variant": "cpt_022b5d33",
+      "filename": "pilot_scale_82f258e3.png",
+      "variant": "pilot_scale_82f258e3",
       "section": "fact_2",
-      "chunk_index": 0,
-      "concept_label": "캘린더 자연어로",
+      "chunk_index": 3,
+      "concept_label": "시범 물량치고",
       "optional": true,
-      "concept_text": "캘린더 자연어로 cpt 022b5d33 캘린더 자연어로 일정 말하듯 입력하면 auto concept 캘린더에 자연어로 일정을 말하듯 입력하면 됩니다."
+      "concept_text": "시범 물량치고 pilot scale 82f258e3 시범 물량치고 규모라 auto concept 시범 물량치고는 큰 규모라,"
     }
   ],
-  "assignments": [
-    {
-      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 7월 7일 오후 04_00_32 (5).png",
-      "candidate_name": "ChatGPT Image 2026년 7월 7일 오후 04_00_32 (5).png",
-      "proposed_filename": "apple_70385068.png",
-      "confidence": null,
-      "exact_name": false,
-      "alternatives": [],
-      "dedup": null
-    },
-    {
-      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 7월 7일 오후 04_00_32 (4).png",
-      "candidate_name": "ChatGPT Image 2026년 7월 7일 오후 04_00_32 (4).png",
-      "proposed_filename": "cpt_f385671f.png",
-      "confidence": null,
-      "exact_name": false,
-      "alternatives": [],
-      "dedup": null
-    },
-    {
-      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 7월 7일 오후 04_00_32 (3).png",
-      "candidate_name": "ChatGPT Image 2026년 7월 7일 오후 04_00_32 (3).png",
-      "proposed_filename": "restaurant_receipt_2b916703.png",
-      "confidence": null,
-      "exact_name": false,
-      "alternatives": [],
-      "dedup": null
-    },
-    {
-      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 7월 7일 오후 04_00_32 (2).png",
-      "candidate_name": "ChatGPT Image 2026년 7월 7일 오후 04_00_32 (2).png",
-      "proposed_filename": "cpt_a2a04bc1.png",
-      "confidence": null,
-      "exact_name": false,
-      "alternatives": [],
-      "dedup": null
-    },
-    {
-      "candidate_path": "C:\\Users\\313jo\\Downloads\\ChatGPT Image 2026년 7월 7일 오후 04_00_31 (1).png",
-      "candidate_name": "ChatGPT Image 2026년 7월 7일 오후 04_00_31 (1).png",
-      "proposed_filename": "cpt_022b5d33.png",
-      "confidence": null,
-      "exact_name": false,
-      "alternatives": [],
-      "dedup": null
-    }
-  ],
-  "unmatched_requests": []
+  "assignments": [],
+  "unmatched_requests": [
+    "folding_rumors_545e4e3e.png",
+    "emerge_ad70f98b.png",
+    "pilot_scale_82f258e3.png"
+  ]
 }

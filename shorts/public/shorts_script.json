@@ -1,30 +1,30 @@
 {
-  "slug": "040_tip_ios27_features",
-  "title_short": "곧 오는 iOS27, 이 기능들 미쳤다",
-  "video_title": "곧 오는 iOS27, 이 기능들 미쳤다",
-  "publication_date": "2026.06.23",
-  "sources": "애플 WWDC 2026 + ZDNet코리아·디지털투데이 2026.06 + 휴대폰성지 폰스팟 자료",
+  "slug": "042_news_foldable_iphone_ultra",
+  "title_short": "접히는 아이폰, 드디어 9월에 나온다",
+  "video_title": "접히는 아이폰, 드디어 9월에 나온다",
+  "publication_date": "2026.07.09",
+  "sources": "ZDNet코리아·헤럴드경제 2026.07.09 + 휴대폰성지 폰스팟 자료",
   "channel_name": "휴대폰성지 폰스팟",
   "channel_tagline": "휴대폰성지 IT 브리핑",
   "opening": {
     "line1": "휴대폰성지 IT 브리핑",
-    "line2": "곧 오는 iOS27, 이 기능들 미쳤다"
+    "line2": "접히는 아이폰, 드디어 9월에 나온다"
   },
   "hook": {
-    "tts": "애플이 iOS27을 공개했습니다. 공개 베타는 7월, 정식은 가을 예정입니다. 실생활에서 바로 쓸 만한 기능만 골라 미리 보여드립니다. 저장해두고 업데이트되면 켜보세요.",
+    "tts": "그동안 소문만 무성했던 접는 아이폰이 올 9월에 나올 전망입니다. 납품 일정이 순조롭다는 소식까지 나왔습니다. 폴더블 아이폰을 기다렸다면 지금부터 챙겨볼 때입니다.",
     "caption_body": [
-      "곧 오는",
-      "iOS27 미리보기"
+      "접히는 아이폰",
+      "드디어 9월에"
     ],
     "caption_emphasis": [
-      "iOS27"
+      "드디어 9월"
     ],
     "headline_lines": [
       {
-        "text": "곧 오는"
+        "text": "접히는 아이폰"
       },
       {
-        "text": "iOS27 미리보기",
+        "text": "드디어 9월에",
         "accent": true
       }
     ],
@@ -32,27 +32,27 @@
     "topic": "뉴스",
     "background_image": "",
     "caption_chunks": [
-      "애플이 iOS27을 공개했습니다.",
-      "공개 베타는 7월, 정식은 가을 예정입니다.",
-      "실생활에서 바로 쓸 만한 기능만 골라 미리 보여드립니다.",
-      "저장해두고 업데이트되면 켜보세요."
+      "그동안 소문만 무성했던 접는 아이폰이",
+      "올 9월에 나올 전망입니다.",
+      "납품 일정이 순조롭다는 소식까지 나왔습니다.",
+      "폴더블 아이폰을 기다렸다면 지금부터 챙겨볼 때입니다."
     ],
     "chunk_visuals": [
       {
-        "type": "illust",
-        "value": "apple_70385068"
+        "type": "image",
+        "value": "photos/애플_아이폰17.JPG"
       },
       {
         "type": "illust",
-        "value": "apple_70385068"
+        "value": "event_period_8cafdac4"
       },
       {
         "type": "illust",
-        "value": "cpt_f385671f"
+        "value": "foldable"
       },
       {
-        "type": "illust",
-        "value": "size_guide_afe009df"
+        "type": "image",
+        "value": "photos/애플_아이폰_2개.JPG"
       }
     ],
     "stat": {
@@ -61,10 +61,10 @@
       "note": ""
     },
     "display_chunks": [
-      "애플이 iOS27을 공개했습니다",
-      "공개 베타는 7월, 정식은 가을 예정입니다",
-      "실생활에서 바로 쓸 만한 기능만 골라 미리 보여드립니다",
-      "저장해두고 업데이트되면 켜보세요"
+      "그동안 소문만 무성했던 접는 아이폰이",
+      "올 9월에 나올 전망입니다",
+      "납품 일정이 순조롭다는 소식까지 나왔습니다",
+      "폴더블 아이폰을 기다렸다면 지금부터 챙겨볼 때입니다"
     ],
     "_codex_caption_lockstep": {
       "version": 2,
@@ -75,88 +75,62 @@
     "_codex_contextual_narrative": true,
     "_codex_sync_mode": "global999_tts_caption_lockstep",
     "tts_chunk_weights": [
-      2720.08,
-      3072.17,
-      3450.71,
-      1778.17
+      16,
+      12,
+      20,
+      24
     ],
     "_tts_timing": {
-      "mode": "word_boundary_text_align",
-      "windows": [
-        {
-          "start_ms": 0.0,
-          "end_ms": 2720.08,
-          "duration_ms": 2720.08
-        },
-        {
-          "start_ms": 2720.08,
-          "end_ms": 5792.25,
-          "duration_ms": 3072.17
-        },
-        {
-          "start_ms": 5792.25,
-          "end_ms": 9242.96,
-          "duration_ms": 3450.71
-        },
-        {
-          "start_ms": 9242.96,
-          "end_ms": 11021.13,
-          "duration_ms": 1778.17
-        }
-      ],
-      "boundary_count": 23,
-      "caption_signature": "10fe33880d7eeaa432fec2943f641d3c56157d9f8fb6f30d4188e7c8b9bd43f1"
+      "mode": "character_weight_fallback",
+      "windows": [],
+      "boundary_count": 0,
+      "caption_signature": "b59781d0d2e72afa32f2feff939e9fa42d16775da0d799163d902a3c73770e1c"
     }
   },
   "facts": [
     {
-      "tts": "식당 영수증을 사진으로 찍으면 품목별 가격에 세금과 팁까지 반영해 각자 낼 금액을 자동으로 계산해 줍니다. 계산해 놓고 참석자에게 결제 요청까지 보낼 수 있습니다. 더치페이 다툼이 사라집니다.",
+      "tts": "9월에 아이폰18 프로와 함께 애플의 첫 폴더블폰 '아이폰 울트라'가 공개될 것으로 전해집니다. 접는 폼팩터를 애플이 처음 선보이는 만큼 관심이 큽니다. 아직 공식 발표 전이라 전망입니다.",
       "caption_body": [
-        "1번",
-        "영수증 더치페이"
+        "뭐가 나오나",
+        "아이폰 울트라"
       ],
       "caption_emphasis": [
-        "영수증 더치페이"
+        "아이폰 울트라"
       ],
       "headline_lines": [
         {
-          "text": "1번"
+          "text": "뭐가 나오나"
         },
         {
-          "text": "영수증 더치페이",
+          "text": "아이폰 울트라",
           "accent": true
         }
       ],
-      "meta": "출처: ZDNet코리아",
+      "meta": "출처: 헤럴드경제",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "식당 영수증을 사진으로 찍으면",
-        "품목별 가격에 세금과 팁까지 반영해 각자",
-        "낼 금액을 자동으로 계산해 줍니다.",
-        "계산해 놓고 참석자에게 결제 요청까지 보낼 수 있습니다.",
-        "더치페이 다툼이 사라집니다."
+        "9월에 아이폰18 프로와 함께 애플의",
+        "첫 폴더블폰 '아이폰 울트라'가 공개될 것으로 전해집니다.",
+        "접는 폼팩터를 애플이 처음 선보이는 만큼 관심이 큽니다.",
+        "아직 공식 발표 전이라 전망입니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "restaurant_receipt_2b916703"
+          "value": "apple_70385068"
         },
         {
           "type": "illust",
-          "value": "event_period_8cafdac4"
+          "value": "final_update"
         },
         {
           "type": "illust",
-          "value": "nfc_pay"
+          "value": "forecast"
         },
         {
           "type": "illust",
           "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "cpt_a2a04bc1"
         }
       ],
       "stat": {
@@ -166,99 +140,76 @@
       },
       "id": "fact_1",
       "display_chunks": [
-        "식당 영수증을 사진으로 찍으면",
-        "품목별 가격에 세금과 팁까지 반영해 각자",
-        "낼 금액을 자동으로 계산해 줍니다",
-        "계산해 놓고 참석자에게 결제 요청까지 보낼 수 있습니다",
-        "더치페이 다툼이 사라집니다"
+        "9월에 아이폰18 프로와 함께 애플의",
+        "첫 폴더블폰 '아이폰 울트라'가 공개될 것으로 전해집니다",
+        "접는 폼팩터를 애플이 처음 선보이는 만큼 관심이 큽니다",
+        "아직 공식 발표 전이라 전망입니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 5
+        "chunk_count": 4
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        1502.46,
-        2332.75,
-        2229.91,
-        3477.13,
-        1382.05
+        16,
+        26,
+        24,
+        15
       ],
       "_tts_timing": {
-        "mode": "word_boundary_text_align",
-        "windows": [
-          {
-            "start_ms": 0.0,
-            "end_ms": 1502.46,
-            "duration_ms": 1502.46
-          },
-          {
-            "start_ms": 1502.46,
-            "end_ms": 3835.21,
-            "duration_ms": 2332.75
-          },
-          {
-            "start_ms": 3835.21,
-            "end_ms": 6065.12,
-            "duration_ms": 2229.91
-          },
-          {
-            "start_ms": 6065.12,
-            "end_ms": 9542.25,
-            "duration_ms": 3477.13
-          },
-          {
-            "start_ms": 9542.25,
-            "end_ms": 10924.3,
-            "duration_ms": 1382.05
-          }
-        ],
-        "boundary_count": 26,
-        "caption_signature": "793066d9fbd7a5194f451c7e3e9637351cdf094db577682c7b9477ee9f9eee14"
+        "mode": "character_weight_fallback",
+        "windows": [],
+        "boundary_count": 0,
+        "caption_signature": "c654c9b16edf9e89fd47d19b16e46c937ca9d9d363d81856c3e53e7033716a9e"
       }
     },
     {
-      "tts": "캘린더에 자연어로 일정을 말하듯 입력하면 됩니다. \"다음 주 화요일 저녁 약속\" 식으로 적으면 애플 인텔리전스가 연락처와 위치 정보까지 자동으로 연결해 줍니다.",
+      "tts": "애플이 공급업체에 올해 약 1000만 대의 폴더블 아이폰 생산을 준비하도록 지시했다는 보도가 나왔습니다. 시범 물량치고는 큰 규모라, 애플이 진심으로 폴더블 시장에 들어온다는 신호로 읽힙니다.",
       "caption_body": [
-        "2번",
-        "말로 하는 일정"
+        "규모",
+        "1000만 대 생산"
       ],
       "caption_emphasis": [
-        "말로 하는 일정"
+        "1000만 대"
       ],
       "headline_lines": [
         {
-          "text": "2번"
+          "text": "규모"
         },
         {
-          "text": "말로 하는 일정",
+          "text": "1000만 대 생산",
           "accent": true
         }
       ],
-      "meta": "출처: 디지털투데이",
+      "meta": "출처: ZDNet코리아",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "캘린더에 자연어로 일정을 말하듯 입력하면 됩니다.",
-        "\"다음 주 화요일 저녁 약속\" 식으로 적으면",
-        "애플 인텔리전스가 연락처와 위치 정보까지",
-        "자동으로 연결해 줍니다."
+        "애플이 공급업체에 올해 약 1000만",
+        "대의 폴더블 아이폰 생산을 준비하도록",
+        "지시했다는 보도가 나왔습니다.",
+        "시범 물량치고는 큰 규모라,",
+        "애플이 진심으로 폴더블 시장에 들어온다는 신호로 읽힙니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "cpt_022b5d33"
+          "value": "phone_setup_ready"
+        },
+        {
+          "type": "illust",
+          "value": "newspaper"
+        },
+        {
+          "type": "illust",
+          "value": "phone_settings_toggle"
         },
         {
           "type": "illust",
           "value": "device_os_requirement"
-        },
-        {
-          "type": "illust",
-          "value": "device_data_transfer"
         },
         {
           "type": "mascot",
@@ -272,96 +223,72 @@
       },
       "id": "fact_2",
       "display_chunks": [
-        "캘린더에 자연어로 일정을 말하듯 입력하면 됩니다",
-        "\"다음 주 화요일 저녁 약속\" 식으로 적으면",
-        "애플 인텔리전스가 연락처와 위치 정보까지",
-        "자동으로 연결해 줍니다"
+        "애플이 공급업체에 올해 약 1000만",
+        "대의 폴더블 아이폰 생산을 준비하도록",
+        "지시했다는 보도가 나왔습니다",
+        "시범 물량치고는 큰 규모라,",
+        "애플이 진심으로 폴더블 시장에 들어온다는 신호로 읽힙니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 4
+        "chunk_count": 5
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        2975.33,
-        1875.0,
-        2112.71,
-        1276.38
+        16,
+        16,
+        14,
+        12,
+        26
       ],
       "_tts_timing": {
-        "mode": "word_boundary_text_align",
-        "windows": [
-          {
-            "start_ms": 0.0,
-            "end_ms": 2975.33,
-            "duration_ms": 2975.33
-          },
-          {
-            "start_ms": 2975.33,
-            "end_ms": 4850.33,
-            "duration_ms": 1875.0
-          },
-          {
-            "start_ms": 4850.33,
-            "end_ms": 6963.04,
-            "duration_ms": 2112.71
-          },
-          {
-            "start_ms": 6963.04,
-            "end_ms": 8239.42,
-            "duration_ms": 1276.38
-          }
-        ],
-        "boundary_count": 21,
-        "caption_signature": "0dc26f0149018fe39d129c51448bc58a83bd95cb3e10a09a4f5cca553f46319d"
+        "mode": "character_weight_fallback",
+        "windows": [],
+        "boundary_count": 0,
+        "caption_signature": "735eb53567540dbc4a87bf3a2e636a145926c85cfaf5f5267a26716935267cbe"
       }
     },
     {
-      "tts": "시리가 더 똑똑해져 여러 정보를 이해하는 개인 비서에 가까워집니다. 카메라로 비추면 영양성분을 분석하거나 연락처를 저장하는 비주얼 인텔리전스도 강화됩니다.",
+      "tts": "그동안 폴더블폰은 삼성이 주도해 왔습니다. 여기에 애플이 참전하면서 하반기 폴더블 대결이 예고됩니다. 선택지가 늘어나는 건 소비자에게 좋은 소식입니다.",
       "caption_body": [
-        "3번",
-        "시리·카메라 똑똑"
+        "의미",
+        "삼성 vs 애플"
       ],
       "caption_emphasis": [
-        "시리·카메라"
+        "삼성 vs 애플"
       ],
       "headline_lines": [
         {
-          "text": "3번"
+          "text": "의미"
         },
         {
-          "text": "시리·카메라 똑똑",
+          "text": "삼성 vs 애플",
           "accent": true
         }
       ],
-      "meta": "출처: ZDNet코리아",
+      "meta": "출처: 헤럴드경제",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "시리가 더 똑똑해져 여러 정보를 이해하는",
-        "개인 비서에 가까워집니다.",
-        "카메라로 비추면 영양성분을 분석하거나",
-        "연락처를 저장하는 비주얼 인텔리전스도 강화됩니다."
+        "그동안 폴더블폰은 삼성이 주도해 왔습니다.",
+        "여기에 애플이 참전하면서 하반기 폴더블 대결이 예고됩니다.",
+        "선택지가 늘어나는 건 소비자에게 좋은 소식입니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "camera_battery_ecd040c7"
+          "value": "london_unpack_eb61ad77"
         },
         {
           "type": "illust",
-          "value": "chatbot"
+          "value": "mid_release_98cab19a"
         },
         {
           "type": "illust",
-          "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "phone_setup_ready"
+          "value": "samsung_korea_04b00795"
         }
       ],
       "stat": {
@@ -371,97 +298,69 @@
       },
       "id": "fact_3",
       "display_chunks": [
-        "시리가 더 똑똑해져 여러 정보를 이해하는",
-        "개인 비서에 가까워집니다",
-        "카메라로 비추면 영양성분을 분석하거나",
-        "연락처를 저장하는 비주얼 인텔리전스도 강화됩니다"
+        "그동안 폴더블폰은 삼성이 주도해 왔습니다",
+        "여기에 애플이 참전하면서 하반기 폴더블 대결이 예고됩니다",
+        "선택지가 늘어나는 건 소비자에게 좋은 소식입니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 4
+        "chunk_count": 3
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        2030.62,
-        1825.0,
-        1998.26,
-        2552.79
+        19,
+        26,
+        22
       ],
       "_tts_timing": {
-        "mode": "word_boundary_text_align",
-        "windows": [
-          {
-            "start_ms": 0.0,
-            "end_ms": 2030.62,
-            "duration_ms": 2030.62
-          },
-          {
-            "start_ms": 2030.62,
-            "end_ms": 3855.62,
-            "duration_ms": 1825.0
-          },
-          {
-            "start_ms": 3855.62,
-            "end_ms": 5853.88,
-            "duration_ms": 1998.26
-          },
-          {
-            "start_ms": 5853.88,
-            "end_ms": 8406.67,
-            "duration_ms": 2552.79
-          }
-        ],
-        "boundary_count": 18,
-        "caption_signature": "244dba480eda629258dde47ffa08bb0fecc1b297130bc812a8e95a4e342f0dfc"
+        "mode": "character_weight_fallback",
+        "windows": [],
+        "boundary_count": 0,
+        "caption_signature": "ca2e4b266a868dee76ce4052e41fdfaf0bb4efd5288cd9dc7e41f1ba93d25fed"
       }
     },
     {
-      "tts": "공개 베타는 7월, 정식은 가을입니다. 아이폰11까지 지원되지만, 일부 AI 기능은 신형 기종에서만 됩니다. 내 폰이 어디까지 되는지는 기종별로 다르니 확인이 필요합니다.",
+      "tts": "폴더블에 관심 있다면 9월 발표를 보고 정하는 게 낫습니다. 당장 폰이 필요하면 현재 아이폰의 실구매가와 지원금을 확인해 사는 게 좋습니다. 급한지 아닌지에 따라 갈립니다.",
       "caption_body": [
-        "언제·누구",
-        "7월 베타"
+        "살 사람은",
+        "9월 대기 or 지금"
       ],
       "caption_emphasis": [
-        "7월 베타"
+        "9월 대기 or 지금"
       ],
       "headline_lines": [
         {
-          "text": "언제·누구"
+          "text": "살 사람은"
         },
         {
-          "text": "7월 베타",
+          "text": "9월 대기 or 지금",
           "accent": true
         }
       ],
-      "meta": "출처: 디지털투데이",
+      "meta": "출처: 휴대폰성지 폰스팟 자료",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "공개 베타는 7월, 정식은 가을입니다.",
-        "아이폰11까지 지원되지만,",
-        "일부 AI 기능은 신형 기종에서만 됩니다.",
-        "내 폰이 어디까지 되는지는 기종별로",
-        "다르니 확인이 필요합니다."
+        "폴더블에 관심 있다면 9월 발표를 보고 정하는 게 낫습니다.",
+        "당장 폰이 필요하면 현재 아이폰의",
+        "실구매가와 지원금을 확인해 사는 게 좋습니다.",
+        "급한지 아닌지에 따라 갈립니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "mid_release_98cab19a"
-        },
-        {
-          "type": "image",
-          "value": "photos/애플_아이폰17.JPG"
+          "value": "device_data_transfer"
         },
         {
           "type": "illust",
-          "value": "samsung_ai"
+          "value": "gift_voucher"
         },
         {
           "type": "illust",
-          "value": "phone_settings_toggle"
+          "value": "smartphone"
         },
         {
           "type": "mascot",
@@ -475,58 +374,30 @@
       },
       "id": "fact_4",
       "display_chunks": [
-        "공개 베타는 7월, 정식은 가을입니다",
-        "아이폰11까지 지원되지만,",
-        "일부 AI 기능은 신형 기종에서만 됩니다",
-        "내 폰이 어디까지 되는지는 기종별로",
-        "다르니 확인이 필요합니다"
+        "폴더블에 관심 있다면 9월 발표를 보고 정하는 게 낫습니다",
+        "당장 폰이 필요하면 현재 아이폰의",
+        "실구매가와 지원금을 확인해 사는 게 좋습니다",
+        "급한지 아닌지에 따라 갈립니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 5
+        "chunk_count": 4
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        2834.5,
-        1496.5,
-        2702.46,
-        1866.21,
-        1170.75
+        25,
+        14,
+        20,
+        14
       ],
       "_tts_timing": {
-        "mode": "word_boundary_text_align",
-        "windows": [
-          {
-            "start_ms": 0.0,
-            "end_ms": 2834.5,
-            "duration_ms": 2834.5
-          },
-          {
-            "start_ms": 2834.5,
-            "end_ms": 4331.0,
-            "duration_ms": 1496.5
-          },
-          {
-            "start_ms": 4331.0,
-            "end_ms": 7033.46,
-            "duration_ms": 2702.46
-          },
-          {
-            "start_ms": 7033.46,
-            "end_ms": 8899.67,
-            "duration_ms": 1866.21
-          },
-          {
-            "start_ms": 8899.67,
-            "end_ms": 10070.42,
-            "duration_ms": 1170.75
-          }
-        ],
-        "boundary_count": 23,
-        "caption_signature": "43485afffb6570b592a5c1761e9769991eddcef424183ad46651ea5fe4c36b32"
+        "mode": "character_weight_fallback",
+        "windows": [],
+        "boundary_count": 0,
+        "caption_signature": "ffe5c24be39bad4efdcd7b2f838206980667810170fe0c801ee26553168d2fec"
       }
     }
   ],
@@ -588,24 +459,13 @@
     "_codex_fixed_cta": true,
     "_codex_narration_source": "fixed_cta_contract",
     "tts_chunk_weights": [
-      1707.75,
-      1804.54
+      8,
+      14
     ],
     "_tts_timing": {
-      "mode": "word_boundary_text_align",
-      "windows": [
-        {
-          "start_ms": 0.0,
-          "end_ms": 1707.75,
-          "duration_ms": 1707.75
-        },
-        {
-          "start_ms": 1707.75,
-          "end_ms": 3512.29,
-          "duration_ms": 1804.54
-        }
-      ],
-      "boundary_count": 6,
+      "mode": "character_weight_fallback",
+      "windows": [],
+      "boundary_count": 0,
       "caption_signature": "db4c57a05254654841d0c63b2eea20bad43e358510298ef607bf41bcae3b9e5d"
     }
   },
@@ -617,33 +477,6 @@
   "_codex_sync_quality_logic": true,
   "_codex_captions_narration_priority": false,
   "_codex_common_quality_note": "Global 001-999 rule: screen chunks are rebuilt as an ordered, lossless partition of captions.md narration; curated visuals are rebalanced without discarding quality rules.",
-  "_codex_uploaded_illustrations": [
-    {
-      "section": "hook",
-      "chunk": 1,
-      "variant": "apple_70385068"
-    },
-    {
-      "section": "hook",
-      "chunk": 3,
-      "variant": "cpt_f385671f"
-    },
-    {
-      "section": "fact_1",
-      "chunk": 1,
-      "variant": "restaurant_receipt_2b916703"
-    },
-    {
-      "section": "fact_1",
-      "chunk": 5,
-      "variant": "cpt_a2a04bc1"
-    },
-    {
-      "section": "fact_2",
-      "chunk": 1,
-      "variant": "cpt_022b5d33"
-    }
-  ],
   "_codex_semantic_visual_match": {
     "version": 1,
     "policy": "Match chunks to GPT source images using prompt.md descriptions, then fallback to tagged reusable illustrations.",
@@ -653,14 +486,14 @@
         "chunk": 1,
         "from": {
           "type": "illust",
-          "value": "apple_70385068"
+          "value": "smartphone"
         },
         "to": {
-          "type": "illust",
-          "value": "final_update"
+          "type": "image",
+          "value": "photos/애플_아이폰17.JPG"
         },
-        "context": "애플이 iOS27을 공개했습니다 공개 베타는 7월, 정식은 가을 예정입니다 곧 오는 iOS27 미리보기 ['곧 오는', 'iOS27 미리보기'] 뉴스",
-        "reason": "illust score 24 (content n/a)"
+        "context": "그동안 소문만 무성했던 접는 아이폰이 올 9월에 나올 전망입니다 접히는 아이폰 드디어 9월에 ['접히는 아이폰', '드디어 9월에'] 뉴스",
+        "reason": "photo lexical dist=1 gen=0: 애플_아이폰17.JPG"
       },
       {
         "section": "hook",
@@ -671,9 +504,9 @@
         },
         "to": {
           "type": "illust",
-          "value": "apple_70385068"
+          "value": "event_period_8cafdac4"
         },
-        "context": "애플이 iOS27을 공개했습니다 공개 베타는 7월, 정식은 가을 예정입니다 실생활에서 바로 쓸 만한 기능만 골라 미리 보여드립니다 곧 오는 iOS27 미리보기 ['곧 오는', 'iOS27 미리보기'] 뉴스",
+        "context": "그동안 소문만 무성했던 접는 아이폰이 올 9월에 나올 전망입니다 납품 일정이 순조롭다는 소식까지 나왔습니다 접히는 아이폰 드디어 9월에 ['접히는 아이폰', '드디어 9월에'] 뉴스",
         "reason": "illust score 12 (content n/a)"
       },
       {
@@ -681,13 +514,13 @@
         "chunk": 3,
         "from": {
           "type": "illust",
-          "value": "cpt_f385671f"
+          "value": "apple_70385068"
         },
         "to": {
           "type": "illust",
-          "value": "forecast"
+          "value": "foldable"
         },
-        "context": "공개 베타는 7월, 정식은 가을 예정입니다 실생활에서 바로 쓸 만한 기능만 골라 미리 보여드립니다 저장해두고 업데이트되면 켜보세요 곧 오는 iOS27 미리보기 ['곧 오는', 'iOS27 미리보기'] 뉴스",
+        "context": "올 9월에 나올 전망입니다 납품 일정이 순조롭다는 소식까지 나왔습니다 폴더블 아이폰을 기다렸다면 지금부터 챙겨볼 때입니다 접히는 아이폰 드디어 9월에 ['접히는 아이폰', '드디어 9월에'] 뉴스",
         "reason": "illust score 12 (content n/a)"
       },
       {
@@ -698,10 +531,24 @@
           "value": "surprised"
         },
         "to": {
-          "type": "illust",
-          "value": "size_guide_afe009df"
+          "type": "image",
+          "value": "photos/애플_아이폰_2개.JPG"
         },
-        "context": "실생활에서 바로 쓸 만한 기능만 골라 미리 보여드립니다 저장해두고 업데이트되면 켜보세요 곧 오는 iOS27 미리보기 ['곧 오는', 'iOS27 미리보기'] 뉴스",
+        "context": "납품 일정이 순조롭다는 소식까지 나왔습니다 폴더블 아이폰을 기다렸다면 지금부터 챙겨볼 때입니다 접히는 아이폰 드디어 9월에 ['접히는 아이폰', '드디어 9월에'] 뉴스",
+        "reason": "photo lexical dist=1 gen=0: 애플_아이폰_2개.JPG"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "apple_70385068"
+        },
+        "context": "9월에 아이폰18 프로와 함께 애플의 첫 폴더블폰 '아이폰 울트라'가 공개될 것으로 전해집니다 뭐가 나오나 아이폰 울트라 ['뭐가 나오나', '아이폰 울트라'] 뉴스",
         "reason": "illust score 12 (content n/a)"
       },
       {
@@ -713,9 +560,9 @@
         },
         "to": {
           "type": "illust",
-          "value": "event_period_8cafdac4"
+          "value": "final_update"
         },
-        "context": "식당 영수증을 사진으로 찍으면 품목별 가격에 세금과 팁까지 반영해 각자 낼 금액을 자동으로 계산해 줍니다 1번 영수증 더치페이 ['1번', '영수증 더치페이'] 뉴스",
+        "context": "9월에 아이폰18 프로와 함께 애플의 첫 폴더블폰 '아이폰 울트라'가 공개될 것으로 전해집니다 접는 폼팩터를 애플이 처음 선보이는 만큼 관심이 큽니다 뭐가 나오나 아이폰 울트라 ['뭐가 나오나', '아이폰 울트라']",
         "reason": "illust score 12 (content n/a)"
       },
       {
@@ -723,13 +570,13 @@
         "chunk": 3,
         "from": {
           "type": "illust",
-          "value": "appliance"
+          "value": "apple_70385068"
         },
         "to": {
           "type": "illust",
-          "value": "nfc_pay"
+          "value": "forecast"
         },
-        "context": "품목별 가격에 세금과 팁까지 반영해 각자 낼 금액을 자동으로 계산해 줍니다 계산해 놓고 참석자에게 결제 요청까지 보낼 수 있습니다 1번 영수증 더치페이 ['1번', '영수증 더치페이'] 뉴스",
+        "context": "첫 폴더블폰 '아이폰 울트라'가 공개될 것으로 전해집니다 접는 폼팩터를 애플이 처음 선보이는 만큼 관심이 큽니다 아직 공식 발표 전이라 전망입니다 뭐가 나오나 아이폰 울트라 ['뭐가 나오나', '아이폰 울트라'] 뉴",
         "reason": "illust score 12 (content n/a)"
       },
       {
@@ -737,27 +584,13 @@
         "chunk": 4,
         "from": {
           "type": "illust",
-          "value": "basic_fold_202d754f"
+          "value": "appliance"
         },
         "to": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "낼 금액을 자동으로 계산해 줍니다 계산해 놓고 참석자에게 결제 요청까지 보낼 수 있습니다 더치페이 다툼이 사라집니다 1번 영수증 더치페이 ['1번', '영수증 더치페이'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 5,
-        "from": {
-          "type": "illust",
-          "value": "cpt_a2a04bc1"
-        },
-        "to": {
-          "type": "illust",
-          "value": "phone_setup_ready"
-        },
-        "context": "계산해 놓고 참석자에게 결제 요청까지 보낼 수 있습니다 더치페이 다툼이 사라집니다 1번 영수증 더치페이 ['1번', '영수증 더치페이'] 뉴스",
+        "context": "접는 폼팩터를 애플이 처음 선보이는 만큼 관심이 큽니다 아직 공식 발표 전이라 전망입니다 뭐가 나오나 아이폰 울트라 ['뭐가 나오나', '아이폰 울트라'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
@@ -765,13 +598,13 @@
         "chunk": 1,
         "from": {
           "type": "illust",
-          "value": "cpt_022b5d33"
+          "value": "smartphone"
         },
         "to": {
           "type": "illust",
-          "value": "phone_settings_toggle"
+          "value": "phone_setup_ready"
         },
-        "context": "캘린더에 자연어로 일정을 말하듯 입력하면 됩니다 \"다음 주 화요일 저녁 약속\" 식으로 적으면 2번 말로 하는 일정 ['2번', '말로 하는 일정'] 뉴스",
+        "context": "애플이 공급업체에 올해 약 1000만 대의 폴더블 아이폰 생산을 준비하도록 규모 1000만 대 생산 ['규모', '1000만 대 생산'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
@@ -780,26 +613,40 @@
         "from": {
           "type": "illust",
           "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "newspaper"
+        },
+        "context": "애플이 공급업체에 올해 약 1000만 대의 폴더블 아이폰 생산을 준비하도록 지시했다는 보도가 나왔습니다 규모 1000만 대 생산 ['규모', '1000만 대 생산'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "apple_70385068"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "대의 폴더블 아이폰 생산을 준비하도록 지시했다는 보도가 나왔습니다 시범 물량치고는 큰 규모라, 규모 1000만 대 생산 ['규모', '1000만 대 생산'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "appliance"
         },
         "to": {
           "type": "illust",
           "value": "device_os_requirement"
         },
-        "context": "캘린더에 자연어로 일정을 말하듯 입력하면 됩니다 \"다음 주 화요일 저녁 약속\" 식으로 적으면 애플 인텔리전스가 연락처와 위치 정보까지 2번 말로 하는 일정 ['2번', '말로 하는 일정'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "appliance"
-        },
-        "to": {
-          "type": "illust",
-          "value": "device_data_transfer"
-        },
-        "context": "\"다음 주 화요일 저녁 약속\" 식으로 적으면 애플 인텔리전스가 연락처와 위치 정보까지 자동으로 연결해 줍니다 2번 말로 하는 일정 ['2번', '말로 하는 일정'] 뉴스",
+        "context": "지시했다는 보도가 나왔습니다 시범 물량치고는 큰 규모라, 애플이 진심으로 폴더블 시장에 들어온다는 신호로 읽힙니다 규모 1000만 대 생산 ['규모', '1000만 대 생산'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
@@ -811,9 +658,9 @@
         },
         "to": {
           "type": "illust",
-          "value": "camera_battery_ecd040c7"
+          "value": "london_unpack_eb61ad77"
         },
-        "context": "시리가 더 똑똑해져 여러 정보를 이해하는 개인 비서에 가까워집니다 3번 시리·카메라 똑똑 ['3번', '시리·카메라 똑똑'] 뉴스",
+        "context": "그동안 폴더블폰은 삼성이 주도해 왔습니다 여기에 애플이 참전하면서 하반기 폴더블 대결이 예고됩니다 의미 삼성 vs 애플 ['의미', '삼성 vs 애플'] 뉴스",
         "reason": "illust score 12 (content n/a)"
       },
       {
@@ -822,55 +669,41 @@
         "from": {
           "type": "illust",
           "value": "aluminum_label"
-        },
-        "to": {
-          "type": "illust",
-          "value": "chatbot"
-        },
-        "context": "시리가 더 똑똑해져 여러 정보를 이해하는 개인 비서에 가까워집니다 카메라로 비추면 영양성분을 분석하거나 3번 시리·카메라 똑똑 ['3번', '시리·카메라 똑똑'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "appliance"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "개인 비서에 가까워집니다 카메라로 비추면 영양성분을 분석하거나 연락처를 저장하는 비주얼 인텔리전스도 강화됩니다 3번 시리·카메라 똑똑 ['3번', '시리·카메라 똑똑'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "basic_fold_202d754f"
-        },
-        "to": {
-          "type": "illust",
-          "value": "phone_setup_ready"
-        },
-        "context": "카메라로 비추면 영양성분을 분석하거나 연락처를 저장하는 비주얼 인텔리전스도 강화됩니다 3번 시리·카메라 똑똑 ['3번', '시리·카메라 똑똑'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
         },
         "to": {
           "type": "illust",
           "value": "mid_release_98cab19a"
         },
-        "context": "공개 베타는 7월, 정식은 가을입니다 아이폰11까지 지원되지만, 언제·누구 7월 베타 ['언제·누구', '7월 베타'] 뉴스",
+        "context": "그동안 폴더블폰은 삼성이 주도해 왔습니다 여기에 애플이 참전하면서 하반기 폴더블 대결이 예고됩니다 선택지가 늘어나는 건 소비자에게 좋은 소식입니다 의미 삼성 vs 애플 ['의미', '삼성 vs 애플'] 뉴스",
         "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "apple_70385068"
+        },
+        "to": {
+          "type": "illust",
+          "value": "samsung_korea_04b00795"
+        },
+        "context": "여기에 애플이 참전하면서 하반기 폴더블 대결이 예고됩니다 선택지가 늘어나는 건 소비자에게 좋은 소식입니다 의미 삼성 vs 애플 ['의미', '삼성 vs 애플'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "폴더블에 관심 있다면 9월 발표를 보고 정하는 게 낫습니다 당장 폰이 필요하면 현재 아이폰의 살 사람은 9월 대기 or 지금 ['살 사람은', '9월 대기 or 지금'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
       },
       {
         "section": "fact_4",
@@ -880,38 +713,24 @@
           "value": "aluminum_label"
         },
         "to": {
-          "type": "image",
-          "value": "photos/애플_아이폰17.JPG"
+          "type": "illust",
+          "value": "gift_voucher"
         },
-        "context": "공개 베타는 7월, 정식은 가을입니다 아이폰11까지 지원되지만, 일부 AI 기능은 신형 기종에서만 됩니다 언제·누구 7월 베타 ['언제·누구', '7월 베타'] 뉴스",
-        "reason": "photo lexical dist=1 gen=0: 애플_아이폰17.JPG"
+        "context": "폴더블에 관심 있다면 9월 발표를 보고 정하는 게 낫습니다 당장 폰이 필요하면 현재 아이폰의 실구매가와 지원금을 확인해 사는 게 좋습니다 살 사람은 9월 대기 or 지금 ['살 사람은', '9월 대기 or 지금'] ",
+        "reason": "illust score 24 (content n/a)"
       },
       {
         "section": "fact_4",
         "chunk": 3,
         "from": {
           "type": "illust",
-          "value": "appliance"
+          "value": "apple_70385068"
         },
         "to": {
           "type": "illust",
-          "value": "samsung_ai"
+          "value": "smartphone"
         },
-        "context": "아이폰11까지 지원되지만, 일부 AI 기능은 신형 기종에서만 됩니다 내 폰이 어디까지 되는지는 기종별로 언제·누구 7월 베타 ['언제·누구', '7월 베타'] 뉴스",
-        "reason": "illust score 27 (content n/a)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "basic_fold_202d754f"
-        },
-        "to": {
-          "type": "illust",
-          "value": "phone_settings_toggle"
-        },
-        "context": "일부 AI 기능은 신형 기종에서만 됩니다 내 폰이 어디까지 되는지는 기종별로 다르니 확인이 필요합니다 언제·누구 7월 베타 ['언제·누구', '7월 베타'] 뉴스",
+        "context": "당장 폰이 필요하면 현재 아이폰의 실구매가와 지원금을 확인해 사는 게 좋습니다 급한지 아닌지에 따라 갈립니다 살 사람은 9월 대기 or 지금 ['살 사람은', '9월 대기 or 지금'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       }
     ],
@@ -923,18 +742,7 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "낼 금액을 자동으로 계산해 줍니다 계산해 놓고 참석자에게 결제 요청까지 보낼 수 있습니다 더치페이 다툼이 사라집니다 1번 영수증 더치페이 ['1번', '영수증 더치페이'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_1",
-        "chunk": 5,
-        "current": {
-          "type": "illust",
-          "value": "phone_setup_ready"
-        },
-        "context": "계산해 놓고 참석자에게 결제 요청까지 보낼 수 있습니다 더치페이 다툼이 사라집니다 1번 영수증 더치페이 ['1번', '영수증 더치페이'] 뉴스",
+        "context": "접는 폼팩터를 애플이 처음 선보이는 만큼 관심이 큽니다 아직 공식 발표 전이라 전망입니다 뭐가 나오나 아이폰 울트라 ['뭐가 나오나', '아이폰 울트라'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       },
@@ -943,20 +751,9 @@
         "chunk": 1,
         "current": {
           "type": "illust",
-          "value": "phone_settings_toggle"
+          "value": "phone_setup_ready"
         },
-        "context": "캘린더에 자연어로 일정을 말하듯 입력하면 됩니다 \"다음 주 화요일 저녁 약속\" 식으로 적으면 2번 말로 하는 일정 ['2번', '말로 하는 일정'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_2",
-        "chunk": 2,
-        "current": {
-          "type": "illust",
-          "value": "device_os_requirement"
-        },
-        "context": "캘린더에 자연어로 일정을 말하듯 입력하면 됩니다 \"다음 주 화요일 저녁 약속\" 식으로 적으면 애플 인텔리전스가 연락처와 위치 정보까지 2번 말로 하는 일정 ['2번', '말로 하는 일정'] 뉴스",
+        "context": "애플이 공급업체에 올해 약 1000만 대의 폴더블 아이폰 생산을 준비하도록 규모 1000만 대 생산 ['규모', '1000만 대 생산'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       },
@@ -965,9 +762,9 @@
         "chunk": 3,
         "current": {
           "type": "illust",
-          "value": "device_data_transfer"
+          "value": "phone_settings_toggle"
         },
-        "context": "\"다음 주 화요일 저녁 약속\" 식으로 적으면 애플 인텔리전스가 연락처와 위치 정보까지 자동으로 연결해 줍니다 2번 말로 하는 일정 ['2번', '말로 하는 일정'] 뉴스",
+        "context": "대의 폴더블 아이폰 생산을 준비하도록 지시했다는 보도가 나왔습니다 시범 물량치고는 큰 규모라, 규모 1000만 대 생산 ['규모', '1000만 대 생산'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       },
@@ -975,54 +772,54 @@
         "section": "fact_2",
         "chunk": 4,
         "current": {
-          "type": "mascot",
-          "value": "suspicious"
+          "type": "illust",
+          "value": "device_os_requirement"
         },
-        "context": "애플 인텔리전스가 연락처와 위치 정보까지 자동으로 연결해 줍니다 2번 말로 하는 일정 ['2번', '말로 하는 일정'] 뉴스",
+        "context": "지시했다는 보도가 나왔습니다 시범 물량치고는 큰 규모라, 애플이 진심으로 폴더블 시장에 들어온다는 신호로 읽힙니다 규모 1000만 대 생산 ['규모', '1000만 대 생산'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       },
       {
-        "section": "fact_3",
+        "section": "fact_2",
+        "chunk": 5,
+        "current": {
+          "type": "mascot",
+          "value": "suspicious"
+        },
+        "context": "시범 물량치고는 큰 규모라, 애플이 진심으로 폴더블 시장에 들어온다는 신호로 읽힙니다 규모 1000만 대 생산 ['규모', '1000만 대 생산'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_4",
+        "chunk": 1,
+        "current": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "폴더블에 관심 있다면 9월 발표를 보고 정하는 게 낫습니다 당장 폰이 필요하면 현재 아이폰의 살 사람은 9월 대기 or 지금 ['살 사람은', '9월 대기 or 지금'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_4",
         "chunk": 3,
         "current": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "개인 비서에 가까워집니다 카메라로 비추면 영양성분을 분석하거나 연락처를 저장하는 비주얼 인텔리전스도 강화됩니다 3번 시리·카메라 똑똑 ['3번', '시리·카메라 똑똑'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_3",
-        "chunk": 4,
-        "current": {
-          "type": "illust",
-          "value": "phone_setup_ready"
-        },
-        "context": "카메라로 비추면 영양성분을 분석하거나 연락처를 저장하는 비주얼 인텔리전스도 강화됩니다 3번 시리·카메라 똑똑 ['3번', '시리·카메라 똑똑'] 뉴스",
+        "context": "당장 폰이 필요하면 현재 아이폰의 실구매가와 지원금을 확인해 사는 게 좋습니다 급한지 아닌지에 따라 갈립니다 살 사람은 9월 대기 or 지금 ['살 사람은', '9월 대기 or 지금'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       },
       {
         "section": "fact_4",
         "chunk": 4,
-        "current": {
-          "type": "illust",
-          "value": "phone_settings_toggle"
-        },
-        "context": "일부 AI 기능은 신형 기종에서만 됩니다 내 폰이 어디까지 되는지는 기종별로 다르니 확인이 필요합니다 언제·누구 7월 베타 ['언제·누구', '7월 베타'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 3
-      },
-      {
-        "section": "fact_4",
-        "chunk": 5,
         "current": {
           "type": "mascot",
           "value": "serious"
         },
-        "context": "내 폰이 어디까지 되는지는 기종별로 다르니 확인이 필요합니다 언제·누구 7월 베타 ['언제·누구', '7월 베타'] 뉴스",
+        "context": "실구매가와 지원금을 확인해 사는 게 좋습니다 급한지 아닌지에 따라 갈립니다 살 사람은 9월 대기 or 지금 ['살 사람은', '9월 대기 or 지금'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       }
@@ -1030,8 +827,8 @@
   },
   "_codex_effective_script": {
     "version": 2,
-    "slug": "040_tip_ios27_features",
-    "source": "C:\\backup\\phonespot_cardnews\\cardnews\\output\\040_tip_ios27_features\\shorts_script.json",
+    "slug": "042_news_foldable_iphone_ultra",
+    "source": "C:\\backup\\phonespot_cardnews\\cardnews\\output\\042_news_foldable_iphone_ultra\\shorts_script.json",
     "override_applied": false,
     "override_sections": []
   }
