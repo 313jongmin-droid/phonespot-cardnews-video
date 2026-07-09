@@ -33,6 +33,10 @@
     {"id": "C15", "line": "scam", "topic": "중고폰 거래 사기", "hook": "'안전결제 링크 보낼게요' 이 말 나오면 사기 [⑨절대하지마세요+⑦공공의적]", "summary": "안전결제·계정넘기기 수법→구별→매장 안전거래", "track_suggest": "카드/카드영상", "ttsan": "검증·season", "status": "candidate", "slug": null},
     {"id": "C16", "line": "tip", "topic": "폰 저장공간 꽉 찼을 때", "hook": "저장공간 부족 뜰 때, 사진 안 지우고 늘리는 법 [③이것만바꾸면+⑪쉬운방법]", "summary": "캐시·중복·클라우드 정리 순서→매장 셋업", "track_suggest": "카드/카드영상", "ttsan": "공감·실용", "status": "candidate", "slug": null},
     {"id": "C17", "line": "qa", "topic": "통신사 멤버십 버리는 것", "hook": "통신사 멤버십, 이거 안 챙기면 매년 손해 [⑤안되는이유]", "summary": "안 쓰는 혜택→챙기는 법→매장", "track_suggest": "카드/카드영상", "ttsan": "실용·손해후킹", "status": "candidate", "slug": null},
-    {"id": "C18", "line": "life", "topic": "폰 잃어버린 순간 대처", "hook": "폰 잃어버린 순간, 이 순서대로 하세요 [⑨절대하지마세요+⑪쉬운방법]", "summary": "나의 찾기·유심정지·분실신고 순서→매장", "track_suggest": "카드/카드영상", "ttsan": "실용·season", "status": "candidate", "slug": null}
+    {"id": "C18", "line": "life", "topic": "폰 잃어버린 순간 대처", "hook": "폰 잃어버린 순간, 이 순서대로 하세요 [⑨절대하지마세요+⑪쉬운방법]", "summary": "나의 찾기·유심정지·분실신고 순서→매장", "track_suggest": "카드/카드영상", "ttsan": "실용·season", "status": "candidate", "slug": null},
+
+    {"id": "042", "line": "news", "topic": "폴더블 아이폰 9월 출시 전망", "hook": "접히는 아이폰, 드디어 9월에 나온다 [②근황+⑭긴급]", "summary": "아이폰18프로+첫 폴더블 아이폰울트라 9월·1000만대 생산→매장", "track_suggest": "카드/카드영상", "ttsan": "★apple+·datalab검색1위·검증(07.09)", "status": "published", "slug": "042_news_foldable_iphone_ultra"},
+    {"id": "043", "line": "pick", "topic": "갤럭시 언팩 7/22 스마트글래스", "hook": "7월 22일, 삼성이 스마트글래스까지 던진다 [②근황+①TOP N]", "summary": "폴드8·플립8·폴드8울트라·워치·첫 스마트글래스→관전→예약", "track_suggest": "카드/카드영상", "ttsan": "검증·D-13·검색상승", "status": "published", "slug": "043_pick_galaxy_unpacked_722"},
+    {"id": "C19", "line": "news", "topic": "통신 결합할인 축소", "hook": "'가족결합' 할인 줄이고 호텔·공연으로? [⑬반전]", "summary": "결합할인 축소·경험경쟁·안면인증→내 결합 점검→매장", "track_suggest": "카드/카드영상", "ttsan": "검증·D-7 / ⚠️datalab검색매우낮음(우선순위↓)", "status": "candidate", "slug": null}
   ]
 }
