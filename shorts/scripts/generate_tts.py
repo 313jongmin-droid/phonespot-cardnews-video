@@ -375,12 +375,24 @@ def restore_matching_cache(script: dict[str, Any], jobs: list[tuple[str, dict[st
         boundaries = load_word_boundaries(metadata) if metadata.exists() else []
         if report.get("engine") != "supertone" and not boundaries:
             return False
-        timing = build_chunk_timing(
-            section.get("caption_chunks", []) or [],
-            boundaries,
-            spoken,
-            entries,
-        )
+        _stored = report.get("timing") or {}
+        _safe = [str(c).strip() for c in (section.get("caption_chunks", []) or []) if str(c).strip()] or [""]
+        if (report.get("engine") == "supertone"
+                and _stored.get("mode") == "word_boundary_text_align"
+                and _stored.get("caption_signature") == chunk_signature(_safe)):
+            timing = _stored  # whisper 정밀정렬 보존(캐시 재렌더에 char로 덮어쓰지 않음)
+        elif report.get("engine") == "supertone":
+            # 기존 char 캐시 → 캐시 오디오로 whisper 업그레이드(재synth 없음). 실패=char.
+            timing = _whisper_timing(audio_dir / f"{key}.mp3",
+                                     section.get("caption_chunks", []) or [], spoken) \
+                or build_chunk_timing(section.get("caption_chunks", []) or [], boundaries, spoken, entries)
+        else:
+            timing = build_chunk_timing(
+                section.get("caption_chunks", []) or [],
+                boundaries,
+                spoken,
+                entries,
+            )
         if report.get("timing") != timing:
             report["timing"] = timing
             report["caption_signature"] = timing.get("caption_signature")
@@ -424,6 +436,87 @@ except ImportError:
     sys.exit(1)
 
 
+_WHISPER_MODEL = None
+
+
+def _whisper_words(mp3_path):
+    """faster-whisper로 단어별 (정규화텍스트, 시작ms, 끝ms). 미설치/off/실패면 None → char 근사 폴백."""
+    if os.getenv("PHONESPOT_WHISPER_ALIGN", "auto").lower() == "off":
+        return None
+    try:
+        from faster_whisper import WhisperModel  # type: ignore
+    except Exception:
+        return None
+    global _WHISPER_MODEL
+    try:
+        if _WHISPER_MODEL is None:
+            _WHISPER_MODEL = WhisperModel(
+                os.getenv("PHONESPOT_WHISPER_MODEL", "base"),
+                device=os.getenv("PHONESPOT_WHISPER_DEVICE", "cpu"),
+                compute_type=os.getenv("PHONESPOT_WHISPER_COMPUTE", "int8"),
+            )
+        segments, _info = _WHISPER_MODEL.transcribe(str(mp3_path), language="ko", word_timestamps=True)
+        words = []
+        for seg in segments:
+            for w in (getattr(seg, "words", None) or []):
+                t = re.sub(r"[\W_]+", "", w.word or "", flags=re.UNICODE).lower()
+                if t and w.start is not None and w.end is not None:
+                    words.append((t, float(w.start) * 1000.0, float(w.end) * 1000.0))
+        return words or None
+    except Exception as exc:
+        print(f"    [whisper] 정렬 실패 -> char 근사: {exc}")
+        return None
+
+
+def _whisper_timing(mp3_path, chunks, spoken):
+    """슈퍼톤 오디오를 whisper로 정렬 → 청크별 정밀 타이밍(word_boundary와 동일 shape). 실패=None."""
+    words = _whisper_words(mp3_path)
+    if not words:
+        return None
+    safe_chunks = [str(c).strip() for c in chunks if str(c).strip()] or [""]
+
+    def _norm(t):
+        return re.sub(r"[\W_]+", "", str(t or ""), flags=re.UNICODE).lower()
+
+    pts = [(0, words[0][1])]
+    cum = 0
+    for norm_t, _st, en in words:
+        cum += len(norm_t)
+        pts.append((cum, en))
+    w_total_chars = cum or 1
+    total_ms = words[-1][2]
+    chunk_norm = [_norm(c) for c in safe_chunks]
+    c_total = sum(len(c) for c in chunk_norm) or 1
+
+    def _time_at(target):
+        w = target * w_total_chars / c_total  # 청크문자 → whisper문자 공간 스케일
+        for i in range(1, len(pts)):
+            if pts[i][0] >= w:
+                (c0, t0), (c1, t1) = pts[i - 1], pts[i]
+                return t1 if c1 == c0 else t0 + (t1 - t0) * (w - c0) / (c1 - c0)
+        return total_ms
+
+    cuts, acc = [], 0
+    for i in range(len(chunk_norm) - 1):
+        acc += len(chunk_norm[i])
+        cuts.append(_time_at(acc))
+    bounds = [0.0] + cuts + [total_ms]
+    windows, weights = [], []
+    for i in range(len(safe_chunks)):
+        s2, e2 = bounds[i], bounds[i + 1]
+        d = max(1.0, e2 - s2)
+        windows.append({"start_ms": round(s2, 2), "end_ms": round(e2, 2), "duration_ms": round(d, 2)})
+        weights.append(round(d, 2))
+    print(f"    [whisper] 정밀정렬 OK ({len(words)}단어)")
+    return {
+        "mode": "word_boundary_text_align",
+        "weights": weights,
+        "windows": windows,
+        "boundary_count": len(words),
+        "caption_signature": chunk_signature(safe_chunks),
+    }
+
+
 async def gen_one(key: str, section: dict[str, Any]) -> tuple[Path, dict[str, Any]]:
     original = str(section.get("tts", "")).strip()
     spoken, applied = apply_pronunciation(original, entries)
@@ -451,14 +544,18 @@ async def gen_one(key: str, section: dict[str, Any]) -> tuple[Path, dict[str, An
         await comm.save(str(out), str(metadata))
         normalize_audio(out)
 
-    # 슈퍼톤은 WordBoundary 없음 -> character_weight 근사 싱크로 폴백(설계됨)
+    # 슈퍼톤은 WordBoundary 없음 -> whisper 정밀정렬 시도 → 실패 시 character_weight 근사
     boundaries = load_word_boundaries(metadata) if metadata.exists() else []
-    timing = build_chunk_timing(
-        section.get("caption_chunks", []) or [],
-        boundaries,
-        spoken,
-        entries,
-    )
+    timing = None
+    if engine == "supertone" and not boundaries:
+        timing = _whisper_timing(out, section.get("caption_chunks", []) or [], spoken)
+    if timing is None:
+        timing = build_chunk_timing(
+            section.get("caption_chunks", []) or [],
+            boundaries,
+            spoken,
+            entries,
+        )
     section["tts_chunk_weights"] = timing["weights"]
     section["_tts_timing"] = {
         key: value
