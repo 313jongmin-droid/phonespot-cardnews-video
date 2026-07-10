@@ -65,8 +65,24 @@ ILLUST_BLOCKLIST = set(
 # CLIP 켜지면 content 경로에서 실제 그림으로 검증되어 다시 쓰일 수 있다. env 로 해제 가능.
 EXCLUDE_UNVERIFIED_CONCEPT = os.getenv("PHONESPOT_TRUST_CONCEPT_ART", "0") == "0"
 CONCEPT_PREFIX = "cpt_"
+def _load_img_verified() -> set:
+    """gemini vision(codex_illust_tag.py)으로 실제 그림 검증·태깅된 변주 집합. 이건 cpt_여도 재사용 허용."""
+    try:
+        _p = SHORTS / "config" / "illustration_tag_db.json"
+        d = json.loads(_p.read_text(encoding="utf-8"))
+        return {k for k, v in (d.get("illustrations") or {}).items()
+                if isinstance(v, dict) and v.get("img_verified")}
+    except Exception:
+        return set()
+
+
+_IMG_VERIFIED = _load_img_verified()
+
+
 def _is_unverified_concept(variant: str) -> bool:
-    return EXCLUDE_UNVERIFIED_CONCEPT and str(variant).startswith(CONCEPT_PREFIX)
+    if not (EXCLUDE_UNVERIFIED_CONCEPT and str(variant).startswith(CONCEPT_PREFIX)):
+        return False
+    return str(variant) not in _IMG_VERIFIED  # gemini가 실제 그림 확인한 cpt_는 재사용 허용
 
 
 # ★ 실사(제품/인물) 포토 라이브러리 — 일러스트와 별개 폴더. '사용 가능한' 실사만 한글
