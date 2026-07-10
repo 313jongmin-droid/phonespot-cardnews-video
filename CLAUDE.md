@@ -135,6 +135,7 @@
 | "일러스트 공유" / "라이브러리 동기화" / "허브" | 패널 "관리>라이브러리 동기화" 또는 `라이브러리_공유_동기화.bat`. 허브=Drive `PhoneSpot_Library`(데스크톱 동기), 경로파일 `shorts/config/library_share_path.txt` |
 | "주제(기사) 깃에 올려" / "전파" | `기사_깃에_올리기.bat`(대표 push) → 부사수 git pull |
 | "노트북 개발" / "깃허브 연동" / "사무실에서 실행" / "이어받기" | `_docs/DEV_LAPTOP_OFFICE_RUN_GITHUB.md` — 노트북=개발(push), 사무실=실행(pull). clone/pull/push 명령 포함 |
+| **"시세 사이트" / "citymarket" / "/pb" / "공개사이트" / "성지 사이트" / "셀프가입 페이지" UI/UX** | `_docs/SYSTEM_MAP.md` **K단원** Read → 시안 `citymarket_pb/index.html` 수정. 정본=라이브 `citymarket.co.kr/pb`(백엔드 다중파일, 상세=`/applyInquiry`). 실서비스 반영은 홈+applyInquiry 매핑 별도 |
 
 ---
 

@@ -545,6 +545,30 @@
 
 ---
 
+## K. 공개 시세 사이트 (폰스팟 / citymarket `/pb`)
+
+**목적**: 상담 없이 오늘 실구매가 즉시 조회 + 셀프가입 공개 웹. 프레임 "알뜰폰이 쌀까, 성지가 쌀까"(단정형 X, 가능성형 `~할 수 있어요`). 디자인 토큰: Pretendard, `--accent #f0610f`, canvas `#edeef0`, radius 22/16/12, 필터 pill.
+
+**정본 = 라이브 `https://citymarket.co.kr/pb`** (종민 지정 "마지막 업데이트본", 2026-07 기준)
+- 홈: 백엔드 서빙. 데이터 전역 `deals`(단일), 외부 JS 8 + 외부 CSS 1. `info-band`=번호이동/기기변경 설명에 **이미 사용**. 상단 "총 N개 모델" 카운트.
+- 상세: **별도 백엔드 페이지 `/applyInquiry?...`**(전 파라미터 쿼리스트링). base64 오버레이 아님. `PRICE_UPDATED`/`CM_DB`/`DETAIL_B64` 없음. CTA 버튼 이미 "개통요청"(배지·서브·헬퍼만 상담/개통 혼용).
+- **함의: 실서비스=백엔드 다중파일 → repo에서 "파일 하나 수정 → 반영" 불가.** 실반영은 홈 템플릿 + `/applyInquiry` 상세에 항목별 매핑하는 별도 작업.
+
+**실험/시안 소스(구버전)** = GitHub `shrjsdn10/citymarket_data` 단일 `index.html`(≈145KB). 상세=`DETAIL_B64` base64 iframe 오버레이, 홈=`deals`+`pctOf`/`priceBody`+`PRICE_UPDATED`. **/pb와 아키텍처 상이(더 옛 실험본)**.
+
+**repo 내 시안** = `citymarket_pb/index.html`(+`img/` 24). /pb 베이스라인 동기화된 **단일파일 디자인 시안**(탐색용, 실배포 아님). GitHub 샘플 기반 + /pb 최신 카피·구조 반영(히어로 "휴대폰, 정직한 가격으로.", info-band 번호이동/기기변경 설명, "총 N개 모델" `dealCount`). 반영 UI/UX 8건: ①갱신일 노출(`priceUpd`/`pxUpd`) ②가격표기(`pctOf` 100%상한·`priceBody`/상세 breakdown 음수→"기기값 0원 + 페이백") ③상세 CTA 상담→개통(상담유지+역할분리) ④계산기 url-pop 내부도구 제거 ⑤상세 중복 `.footer-cert`(죽은`#`) 제거·`.precon`(실링크) 유지 ⑥카톡카드 기종단위 알림(`kcHeadline` 모델명 주입) ⑦진단 배너 자리예약(`.diag-band`, "질문 3개·30초", 비링크+준비중) ⑧사업자 placeholder TODO.
+
+**수정 시 읽을 것**: 이 단원 + (실서비스 반영이면) 라이브 /pb 실측. 시안만 고치면 `citymarket_pb/index.html`.
+
+**함정**
+- **/pb ≠ github 샘플**(아키텍처 상이). 시안의 base64 상세·`PRICE_UPDATED`·url-pop 계산기는 **/pb엔 없음** → 항목④는 실서비스 기준 **해당없음**, 항목③은 /pb에서 버튼 이미 개통(카피 정리만).
+- 제조사 "특가"→"기타" 강제 금지: /pb "기타"=비삼성/비애플 기타 브랜드 탭인데 시안 데이터엔 해당 기종 없어 **빈 탭** 됨. 시안은 "특가"(0원·페이백 필터) 유지.
+- 사전승낙 링크: /pb는 죽은 `#`, 시안은 실제 `ictmarket.or.kr` 링크 유지(회귀 방지).
+- 시안 상세=`DETAIL_B64` base64 → 편집=디코드→수정→`base64(utf-8)` 재주입(=`btoa(unescape(encodeURIComponent()))` 등가). **오프셋 스플라이스 금지**(텍스트 편집으로 길이 밀림 → 최종 `re.sub`로 재주입).
+- 브라우저 `file://` 로컬 렌더는 claude-in-chrome이 https 강제라 불가 → 정적검증(태그균형·`node --check`·함수 단위테스트)로 갈음.
+
+---
+
 ## 변경 이력 (이 맵 자체)
 - 2026-06-14: **TTS 타이밍 graceful fallback (C단원).** 단어경계 정렬 실패(날짜/영문 발음≠글자)가 빌드를 죽이던 것 수정 → `generate_tts` char_weight_fallback 반환 + `verify_tts_timing` 게이트(char_fallback 모드 통과 + ms/window 검사 word_boundary 한정) + bat `--allow-char-fallback`. 날짜/영문 섹션만 근사싱크+경고, 나머지 정밀, 빌드 성공. 정밀=기사 한글화 레버(024 hook 검증).
 - 2026-06-14: **★ 자막 정밀싱크(B)+오렌지강조 + content-gate 키워드면제 + CLIP 설치 + 한글화룰 (C·E·J단원).** ① B=`chunkUtil` 정밀모드(word_boundary)면 가독바닥 OFF→자막 발화에 정확 비례(`CasualCard`가 `_tts_timing.mode` 읽어 `precise` 전파). ② 자막강조=`CasualCaption` 작성자 `caption_emphasis`만 오렌지·정확매칭·못맞으면 스킵(자동패턴 OFF). ③ 키워드≥2 매칭은 CLIP content-gate 면제(추상 일러 거부 보완, cpt 제외). ④ CLIP(jina-clip) 설치완료(text_model snapshot_download로 채움) + 임계 0.28→0.24(bat env). ⑤ 기사스펙에 영문기능명→한글구체어 룰(`article_authoring_spec.md`). 검증: 023(한글) 주제비주얼 8개·smartphone 2·전섹션 정밀싱크 vs 022(영문) 2개·19중립 = 한글화 효과 입증. **콘텐츠 한계(영문/추상)는 임계/일러 아니라 기사집필 레버.**
@@ -697,11 +721,5 @@ rdnews/scripts/update_content_guide.py`로 §2 발행인덱스 자동 재생성,
 - 2026-07-06 (세션): **문의접수 셋업 메뉴 이동 (G단원).** '📋 문의접수 드롭다운/헤더 세팅'(setupInquirySheetDropdowns)을 🟠당근 → **🚀통합** 메뉴로 이동. 문의접수는 당근 전용 아닌 공통 탭이라 위치 정정. 함수 정의는 danggn-sync.js 그대로(메뉴 addItem만 Code.js onOpen 통합메뉴로).
 - 2026-06-26 (세션2, 무콘솔 부모 자식창 플래시 — A단원, 패널 task): **pythonw 무창 전환 부작용으로 cmd 창이 자꾸 깜빡 → 수정(v48/worker v5).** 부모(pythonw)에 콘솔이 없어 `subprocess`로 부른 콘솔 프로그램(git 등)이 각자 새 콘솔 창 생성. 주기 주범=`github_status`(폴링 60s마다 git). 수정=server.py 9곳+worker.py 2곳의 subprocess 전부에 `creationflags=NO_WINDOW`(모듈 상수). detached 재시작 스폰만 제외(상호배타·자체 무창). PANEL_VERSION v47→v48, worker v4→v5. 적용=패널 아이콘 재클릭(버전게이트 재기동).
 - 2026-06-26 (세션2, 리스트 한국어 제목 표기 — A단원, 패널 task): **후보 리스트 주 표기를 영문 슬러그→한국어 제목으로(v49).** `card_row`에 이미 있는 `title`(`article_title`=기사 JSON)을 `.slug-name`에 노출(`item.title||item.slug` 폴백), 슬러그는 `.row-sub` 보조줄로 이동. loadSlugs·loadCardnews·renderTopicList(tp/ai) 4리스트 동일. PANEL_VERSION v48→v49.
-- 2026-06-26 (세션2, GPT 이미지 프롬프트 간결화 — C단원, 패널 세션서 제작파일 크로스): **`LATEST_PROMPT.md`가 너무 길던 문제 수정(종민).** 원인=`codex_clean_latest_prompt.py`가 항목마다 `BASE_STYLE`(6줄)+`##`헤더+적용위치/추천이유/```text``` 반복 → 5장이면 수천자. 수정=상단 "공통 스타일" 1회 + 항목당 한 줄(파일명 + `concept_for_item`: 라벨/키워드/맥락, 공통과 중복되던 "빼고 일반화" 보일러플레이트 제거). 의도(개별생성·격자금지·범용·색·4:3 1024x768) 유지. **+ 트렁케이션 복구**: 이 파일이 커밋 상태부터 파일저장(`write_text`)·`if __name__` 없이 잘려 실제 no-op였음 → 준비 파이프라인 마지막에 정상 실행되게 복구(next "1. 준비"부터 반영). 검증=실제 LATEST_PROMPT.json으로 실행(AST OK, 5장 855자). 소유=제작(RENDER) task, 병렬세션 없어 크로스.- 2026-07-06 (세션): **기간별 핵심에 최근14일 행 추가 (G단원, buildDashboardV2 kpiPeriods).** 어제/최근7일/**최근14일**(TODAY()-13)/최근30일 4행. 데이터 6~9행(dataBox 6,4). 우측 SNS(4행)와 줄맞춤 일치 + 빈칸(9행) 메움, 채널별효율(10행~) 충돌 없음.
-- 2026-07-07: **나레이션 TTS 슈퍼톤(Sora)+edge 폴백 (C단원).** `generate_tts.py`에 슈퍼톤 REST 우선+실패시 edge 자동전환, 엔진 env `PHONESPOT_TTS_ENGINE`(auto/edge/supertone), 키=env 또는 `_secrets/supertone_key.txt`. 슈퍼톤 시 자막 char_weight 근사(WordBoundary 없음). 캐시 엔진인식. 정본 `SUPERTONE_NARRATION.md §8`.
-- 2026-07-09: **대본 어색함 방지 하드룰 (J단원·기사스펙).** `article_authoring_spec.md`에 5룰 추가(비트끝 군더더기 금지·전문용어 금지·어미반복 금지·훅 후킹·소리내 자가검증). 042 대본 재작성 예시. 원인=AI 대본이 매 비트를 '정보2+hedge마무리1' 공식으로 써서 밋밋.
-- 2026-07-09: **실사 포토 매칭 — 브랜드명 스톱 해제 (E단원).** `codex_semantic_visual_match.py` `PHOTO_STOP` 기본값에서 애플/삼성/갤럭시/구글/샤오미/퀄컴 제거 → 브랜드 로고/사진(`애플_로고` 등)이 '애플' 등 브랜드명 청크에 매칭됨. 렉시컬+used_visuals 1회사용이라 예전 임베딩 '통신사 로고 곳곳' 문제 재발 안 함. 제품샷(dist≥2) 우선, 로고는 순수 브랜드 청크에. `로고/제품/폰/통신사` 등 진짜 흔한단어만 스톱 유지. env `PHONESPOT_PHOTO_STOP`로 원복 가능. + build_script 본문해시 자동재빌드(C단원), validate 어색문구 금칙(J단원) 같은 세션.
-- 2026-07-09: **실사 포토 동점 시 로고 우선 (E단원).** `codex_semantic_visual_match.py` best_photo 선택에 `_lg`(파일명에 '로고') 3차 키 추가 — 브랜드명만 겹치는 순수 브랜드 청크(삼성 독무대·애플 참전 등)에서 제품샷 대신 **브랜드 로고** 채택. 모델 구체 청크는 dist 높은 제품샷 여전히 우선. 예전엔 동점→파일명정렬 첫번째(삼성_갤럭시A)가 로고를 밀어냄.
-- 2026-07-09: **켄번스 줌 완화 (C단원, 실사 화질).** `CasualCard.tsx IMAGE_MOTION_PRESETS` 줌 최대 1.16→1.06(16%→6%), 팬 절반. 저해상 실사가 확대되며 물러 보이던 문제 완화(일러스트=벡터라 무영향). 실사는 컨테이너폭(≈1080px) 이상 권장.
-- 2026-07-09: **패널 영상후보 즉시표시(A,v52) + build_script 본문해시 자동재빌드(C) + char_fallback caption_signature 렌더게이트 수정(C).** reloadLists 동기화를 백그라운드로(3분 대기 제거). 기사 본문 바뀌면 shorts_script 자동 재빌드(수동삭제 불필요). 슈퍼톤 char_fallback 서명누락으로 렌더 죽던 버그 수정.
-- 2026-07-09: **실사 포토 AI 자동태깅 (E단원).** `codex_photo_tag.py`(gemini vision→`photo_tag_db.json` 한글키워드) + 매처 `_photo_db_hits` 가산 → 파일명 안 지어도 단말기 사진이 청크에 자동 매칭. `run_codex_casual.bat`에서 렌더 시 자동(신규만·캐시). 파일명 매칭과 병행(비파괴). 모델번호는 파일명 보조.
+- 2026-06-26 (세션2, GPT 이미지 프롬프트 간결화 — C단원, 패널 세션서 제작파일 크로스): **`LATEST_PROMPT.md`가 너무 길던 문제 수정(종민).** 원인=`codex_clean_latest_prompt.py`가 항목마다 `BASE_STYLE`(6줄)+`##`헤더+적용위치/추천이유/```text``` 반복 → 5장이면 수천자. 수정=상단 "공통 스타일" 1회 + 항목당 한 줄(파일명 + `concept_for_item`: 라벨/키워드/맥락, 공통과 중복되던 "빼고 일반화" 보일러플레이트 제거). 의도(개별생성·격자금지·범용·색·4:3 1024x768) 유지. **+ 트렁케이션 복구**: 이 파일이 커밋 상태부터 파일저장(`write_text`)·`if __name__` 없이 잘려 실제 no
+- 2026-07-10: **K단원 신설 — 공개 시세 사이트(폰스팟/citymarket `/pb`).** 정본=라이브 `citymarket.co.kr/pb`(백엔드 다중파일, 상세=`/applyInquiry` 별도페이지, `deals` 전역, base64/PRICE_UPDATED 없음). 시안=`citymarket_pb/index.html`(+img) — GitHub `shrjsdn10/citymarket_data` 단일파일 기반 + /pb 베이스라인 동기화(히어로·info-band 설명·총N개모델) + UI/UX 8건 반영. 0번 인덱스 표 K행 등록. 함정: /pb≠샘플 아키텍처, 특가→기타 금지(빈탭), 사전승낙 실링크 유지, base64 재주입은 re.sub, file:// 렌더 불가.
