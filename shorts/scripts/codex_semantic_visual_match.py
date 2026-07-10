@@ -154,6 +154,19 @@ def _photo_db_hits(pf: str, chunk: str) -> int:
     return n
 
 
+# 폼팩터 충돌 방지: 폴더블 청크엔 바 폰(갤럭시A/S25 등) 배제 → 내용 미스매치 차단(없으면 일러스트 폴백)
+_FOLDABLE_WORDS = ("폴더블", "폴드", "플립", "접는")
+
+
+def _chunk_is_foldable(chunk: str) -> bool:
+    return any(w in (chunk or "") for w in _FOLDABLE_WORDS)
+
+
+def _photo_is_foldable(pf: str) -> bool:
+    blob = " ".join((PHOTO_TAG_DB.get(pf) or {}).get("keywords", [])) + " " + photo_label(pf)
+    return any(w in blob for w in _FOLDABLE_WORDS)
+
+
 def photo_lexical_score(label: str, chunk: str) -> tuple[int, int]:
     """(구별토큰 일치수, 일반토큰 일치수). 한글=부분문자열, 영문=단어경계."""
     c_low = chunk.lower()
@@ -534,6 +547,8 @@ def semantic_match(data: dict, slug: str) -> bool:
                 for _pf in photo_files:
                     if f"image:photos/{_pf}" in used_visuals:
                         continue
+                    if _chunk_is_foldable(_pchunk) and not _photo_is_foldable(_pf):
+                        continue  # 폴더블 얘기 청크에 바 폰 배제(미스매치 방지)
                     _lab = photo_label(_pf)
                     _d, _g = photo_lexical_score(_lab, _pchunk)
                     _d += _photo_db_hits(_pf, _pchunk)  # AI 자동태깅 키워드 히트 가산(파일명 없어도 매칭)
