@@ -11,7 +11,7 @@
 키:    _secrets/gemini_key.txt (없으면 조용히 스킵 — 파일명 매칭만으로 동작, 비파괴)
 """
 from __future__ import annotations
-import base64, json, os, sys, time, urllib.request
+import base64, json, os, sys, time, urllib.request, urllib.error
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent.parent
@@ -50,14 +50,25 @@ def _tag_image(key: str, path: Path) -> list[str]:
     ]}]}
     url = ("https://generativelanguage.googleapis.com/v1beta/models/" + MODEL
            + ":generateContent?key=" + key)
-    try:
-        req = urllib.request.Request(url, data=json.dumps(payload).encode("utf-8"),
-                                     headers={"Content-Type": "application/json"}, method="POST")
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            data = json.loads(resp.read().decode("utf-8"))
-        text = data["candidates"][0]["content"]["parts"][0]["text"]
-    except Exception as exc:
-        print(f"    [photo-tag] 실패 {path.name}: {exc}")
+    text = None
+    for attempt in range(3):
+        try:
+            req = urllib.request.Request(url, data=json.dumps(payload).encode("utf-8"),
+                                         headers={"Content-Type": "application/json"}, method="POST")
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+            text = data["candidates"][0]["content"]["parts"][0]["text"]
+            break
+        except urllib.error.HTTPError as exc:
+            if exc.code in (429, 503) and attempt < 2:
+                time.sleep(6 * (attempt + 1))  # 속도제한/일시장애 → 백오프 후 재시도
+                continue
+            print(f"    [photo-tag] 실패 {path.name}: {exc}")
+            return []
+        except Exception as exc:
+            print(f"    [photo-tag] 실패 {path.name}: {exc}")
+            return []
+    if text is None:
         return []
     kws = [w.strip() for w in text.replace("\n", ",").split(",")]
     seen, out = set(), []
@@ -93,6 +104,7 @@ def main() -> int:
             db[p.name] = {"keywords": kws, "mtime": mt, "ts": int(time.time())}
             tagged += 1
             print(f"    [photo-tag] {p.name} -> {', '.join(kws)}")
+        time.sleep(1.5)  # 호출 간 간격 → gemini RPM 제한(429) 예방
     DB_PATH.parent.mkdir(parents=True, exist_ok=True)
     tmp = DB_PATH.with_suffix(".json.tmp")
     tmp.write_text(json.dumps(db, ensure_ascii=False, indent=2), encoding="utf-8")
