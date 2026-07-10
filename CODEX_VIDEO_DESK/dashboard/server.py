@@ -38,7 +38,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v52"
+PANEL_VERSION = "phonespot-web-v53"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -279,11 +279,13 @@ def run_job(name: str, commands: list[list[str]], cwd: Path, stdin_text: str | N
                 JOB["ended"] = ended
                 JOB["exit_code"] = exit_code
                 JOB["log"] += "\n[DONE]\n" if exit_code == 0 else "\n[FAILED]\n"
+                final_log = JOB["log"]
             update_local_history(job_id, {
                 "status": "done" if exit_code == 0 else "failed",
                 "finished_at": datetime.fromtimestamp(ended).isoformat(timespec="seconds"),
                 "exit_code": exit_code,
                 "message": "완료" if exit_code == 0 else f"종료 코드 {exit_code}",
+                "log": final_log[-40000:],
             })
             telegram_send(telegram_job_message(name, exit_code))
 
@@ -1484,6 +1486,20 @@ class Handler(BaseHTTPRequestHandler):
             except ValueError:
                 limit = 50
             json_response(self, {"rows": job_history(limit)})
+            return
+        if parsed.path == "/api/job_log":
+            job_id = (urllib.parse.parse_qs(parsed.query).get("id") or [""])[0]
+            log = ""
+            for job in REMOTE_QUEUE.jobs():
+                if job.get("id") == job_id:
+                    log = job.get("log") or ""
+                    break
+            if not log:
+                for job in read_local_history():
+                    if job.get("id") == job_id:
+                        log = job.get("log") or ""
+                        break
+            json_response(self, {"ok": True, "log": log})
             return
         if parsed.path == "/api/result":
             query = urllib.parse.parse_qs(parsed.query)
@@ -2748,34 +2764,60 @@ INDEX_HTML = r"""<!doctype html>
       if (minutes) return `${minutes}분 ${secs}초`;
       return `${secs}초`;
     }
+    let expandedJobId = null;
+    const jobLogCache = {};
+    let lastJobRows = [];
     async function loadJobHistory() {
-      const body = document.getElementById("jobHistoryRows");
       try {
         const data = await api("/api/jobs?limit=50");
-        const rows = data.rows || [];
-        if (!rows.length) {
-          body.innerHTML = "<tr><td colspan='6'>아직 실행 기록이 없습니다.</td></tr>";
-          return;
-        }
-        const statusLabels = {pending:"대기", running:"실행 중", done:"성공", failed:"실패", cancelled:"취소"};
-        body.innerHTML = rows.map(row => {
-          const status = ["pending", "running", "done", "failed", "cancelled"].includes(row.status) ? row.status : "failed";
-          const results = (row.result_files || []).map(file =>
-            `<a href="/api/result?folder=${encodeURIComponent(file.folder)}&file=${encodeURIComponent(file.file)}">${escapeHtml(file.name)}</a>`
-          ).join("");
-          const worker = row.worker_id || (row.kind === "local" ? "패널 PC" : "배정 대기");
-          const detail = row.message ? ` title="${escapeHtml(row.message)}"` : "";
-          return `<tr${detail}>
+        lastJobRows = data.rows || [];
+        renderJobHistory();
+      } catch (err) {
+        document.getElementById("jobHistoryRows").innerHTML = `<tr><td colspan="6">작업 기록을 불러오지 못했습니다: ${escapeHtml(String(err))}</td></tr>`;
+      }
+    }
+    function renderJobHistory() {
+      const body = document.getElementById("jobHistoryRows");
+      const rows = lastJobRows;
+      if (!rows.length) { body.innerHTML = "<tr><td colspan='6'>아직 실행 기록이 없습니다.</td></tr>"; return; }
+      const statusLabels = {pending:"대기", running:"실행 중", done:"성공", failed:"실패", cancelled:"취소"};
+      let html = "";
+      rows.forEach(row => {
+        const status = ["pending", "running", "done", "failed", "cancelled"].includes(row.status) ? row.status : "failed";
+        const results = (row.result_files || []).map(file =>
+          `<a onclick="event.stopPropagation()" href="/api/result?folder=${encodeURIComponent(file.folder)}&file=${encodeURIComponent(file.file)}">${escapeHtml(file.name)}</a>`
+        ).join("");
+        const worker = row.worker_id || (row.kind === "local" ? "패널 PC" : "배정 대기");
+        const rid = row.id || "";
+        const isOpen = !!rid && expandedJobId === rid;
+        const caret = isOpen ? "\u25be" : "\u25b8";
+        html += `<tr onclick="toggleJobLog('${rid}')" style="cursor:pointer">
             <td><span class="history-status ${status}">${statusLabels[row.status] || escapeHtml(row.status || "-")}</span></td>
-            <td>${escapeHtml(row.name || "-")}</td>
+            <td>${caret} ${escapeHtml(row.name || "-")}</td>
             <td>${escapeHtml(worker)}</td>
             <td>${formatHistoryTime(row.started_at || row.created_at)}</td>
             <td>${formatDuration(row.duration_seconds)}</td>
             <td class="history-result">${results || "-"}</td>
           </tr>`;
-        }).join("");
-      } catch (err) {
-        body.innerHTML = `<tr><td colspan="6">작업 기록을 불러오지 못했습니다: ${escapeHtml(String(err))}</td></tr>`;
+        if (isOpen) {
+          const cached = jobLogCache[rid];
+          const text = cached === undefined ? "로그를 불러오는 중..." : (cached || "(로그 없음)");
+          html += `<tr><td colspan="6" style="padding:0 12px 10px"><div class="log" style="height:auto;max-height:260px;margin:0">${escapeHtml(text)}</div></td></tr>`;
+        }
+      });
+      body.innerHTML = html;
+    }
+    async function toggleJobLog(id) {
+      if (!id) return;
+      if (expandedJobId === id) { expandedJobId = null; renderJobHistory(); return; }
+      expandedJobId = id;
+      renderJobHistory();
+      if (jobLogCache[id] === undefined) {
+        try {
+          const d = await api("/api/job_log?id=" + encodeURIComponent(id));
+          jobLogCache[id] = d.log || "";
+        } catch (e) { jobLogCache[id] = "로그 로드 실패: " + String(e); }
+        if (expandedJobId === id) renderJobHistory();
       }
     }
     async function loadState() {
