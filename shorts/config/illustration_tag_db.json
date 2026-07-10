@@ -28,6 +28,17 @@
       ],
       "note": "자동 발굴 개념: 안드폰 중이신데"
     },
+    "appear_e5f828cc": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "나온다"
+      ],
+      "note": "자동 발굴 개념: 나온다",
+      "available": true
+    },
     "apple_70385068": {
       "tags": [
         "auto",
@@ -145,6 +156,20 @@
         "인증"
       ],
       "note": "Reusable editorial illustration.",
+      "available": true
+    },
+    "budget_choice_42fbdd85": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "용도",
+        "예산",
+        "맞춰",
+        "고르기"
+      ],
+      "note": "자동 발굴 개념: 용도 예산",
       "available": true
     },
     "calendar_75c6eba6": {
@@ -1266,6 +1291,20 @@
       ],
       "note": "자동 발굴 개념: 미지원이지 SKT"
     },
+    "cpt_cecbbc92": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "스냅드래곤",
+        "엘리트",
+        "세대급",
+        "프로세서"
+      ],
+      "note": "자동 발굴 개념: 스냅드래곤 엘리트",
+      "available": true
+    },
     "cpt_d124a858": {
       "tags": [
         "auto",
@@ -1304,6 +1343,31 @@
         "기록"
       ],
       "note": "자동 발굴 개념: 녹음본 메모"
+    },
+    "cpt_da94c5b9": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "넓히",
+        "첫걸음"
+      ],
+      "note": "자동 발굴 개념: 넓히 첫걸음",
+      "available": true
+    },
+    "cpt_dca98748": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "경량화",
+        "목표로",
+        "하고"
+      ],
+      "note": "자동 발굴 개념: 경량화 목표로",
+      "available": true
     },
     "cpt_de81a562": {
       "tags": [
@@ -3019,5 +3083,5 @@
       "available": true
     }
   },
-  "updated_at": "2026-07-09T18:37:57"
+  "updated_at": "2026-07-10T18:17:54"
 }

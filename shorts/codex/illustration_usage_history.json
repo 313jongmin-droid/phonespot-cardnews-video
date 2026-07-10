@@ -564,9 +564,30 @@
         "gift_voucher",
         "smartphone"
       ]
+    },
+    "043_pick_galaxy_unpacked_722": {
+      "used_at": "2026-07-10T18:19:52",
+      "source": "uploaded_illustrations",
+      "illustrations": [
+        "appear_e5f828cc",
+        "document_article",
+        "forecast",
+        "budget_choice_42fbdd85",
+        "event_period_8cafdac4",
+        "cpt_da94c5b9",
+        "mid_release_98cab19a",
+        "smartphone",
+        "cpt_dca98748",
+        "cpt_cecbbc92",
+        "display_maintenance_c1ff39c1",
+        "phone_settings_toggle",
+        "gift_voucher",
+        "device_os_requirement",
+        "device_data_transfer"
+      ]
     }
   },
-  "updated_at": "2026-07-09T18:37:59",
+  "updated_at": "2026-07-10T18:19:53",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -688,6 +709,10 @@
     },
     "042_news_foldable_iphone_ultra": {
       "updated_at": "2026-07-09T18:37:59",
+      "variants": []
+    },
+    "043_pick_galaxy_unpacked_722": {
+      "updated_at": "2026-07-10T18:19:53",
       "variants": []
     }
   }

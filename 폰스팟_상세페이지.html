@@ -1,0 +1,400 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><style>
+@page{ size:860px 20000px; margin:0; }
+*{ margin:0; padding:0; box-sizing:border-box; }
+:root{ --ink:#17172A; --accent:#FF5A1F; --accent2:#FF8A3D; --peach:#FFF3EC; --peach2:#FFE7D6; --muted:#6B7280; --line:#ECE6E0; --skt:#3617CE; --kt:#111; --lg:#E6007E; --good:#17A66B; }
+html,body{ width:860px; }
+body{ font-family:"Noto Sans CJK KR",sans-serif; color:var(--ink); background:#fff; }
+.band{ padding:56px 60px; }
+.band.peach{ background:linear-gradient(170deg,#FFF6EF,#FFE7D6); }
+.band.gray{ background:#F7F6F4; }
+.band.dark{ background:#17172A; }
+.center{ text-align:center; }
+.s-tag{ font-size:13px; font-weight:800; color:var(--accent); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:10px; }
+.s-title{ font-size:30px; font-weight:900; letter-spacing:-1px; line-height:1.3; }
+.s-lead{ margin-top:14px; font-size:15px; color:var(--muted); line-height:1.7; }
+.divider{ width:44px; height:4px; border-radius:3px; background:var(--accent); margin:14px auto 0; }
+/* header */
+.brand{ display:flex; align-items:center; justify-content:center; gap:11px; margin-bottom:30px; }
+.logo-dot{ width:38px; height:38px; border-radius:11px; background:var(--accent); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:20px; }
+.brand-name{ font-size:24px; font-weight:800; letter-spacing:-.5px; }
+.hero-h{ font-size:52px; font-weight:900; line-height:1.14; letter-spacing:-1.5px; }
+.hero-h .o{ color:var(--accent); }
+.hero-sub{ margin-top:20px; font-size:18px; color:#5a4a40; line-height:1.6; font-weight:500; }
+.hero-meta{ margin-top:26px; font-size:13px; color:#8a7a6c; }
+.hero-meta b{ color:var(--ink); }
+/* bubbles */
+.askq{ font-size:20px; font-weight:800; line-height:1.55; margin:6px 0 26px; }
+.bubble-wrap{ max-width:560px; margin:0 auto; }
+.bubble-row{ display:flex; margin-bottom:14px; }
+.bubble-row.r{ justify-content:flex-end; }
+.bubble{ display:inline-flex; align-items:center; gap:13px; background:#fff; border:1.5px solid var(--line); border-radius:16px; padding:13px 20px; box-shadow:0 4px 12px rgba(0,0,0,.06); }
+.av{ position:relative; width:34px; height:34px; border-radius:50%; background:#ECE7E1; overflow:hidden; flex:0 0 auto; }
+.av .h{ position:absolute; top:6px; left:50%; margin-left:-5.5px; width:11px; height:11px; border-radius:50%; background:#AEA49A; }
+.av .b{ position:absolute; bottom:-8px; left:50%; margin-left:-11px; width:22px; height:17px; border-radius:50%; background:#AEA49A; }
+.bubble span.tx{ font-size:15px; font-weight:700; }
+.bridge{ text-align:center; margin:28px 0 6px; }
+.bridge .a{ font-size:22px; font-weight:900; letter-spacing:-.5px; }
+.bridge .b{ font-size:16px; color:var(--accent); font-weight:800; margin-top:7px; }
+/* principle / feature grid */
+.grid2{ display:flex; flex-wrap:wrap; gap:16px; margin-top:28px; }
+.gi{ width:calc(50% - 8px); background:#fff; border:1.5px solid var(--line); border-radius:15px; padding:20px 22px; display:flex; gap:14px; align-items:flex-start; }
+.gi .ic{ width:44px; height:44px; border-radius:12px; background:var(--peach); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:900; color:var(--accent); flex:0 0 auto; }
+.gi h4{ font-size:16px; font-weight:800; }
+.gi p{ font-size:13px; color:var(--muted); line-height:1.5; margin-top:4px; }
+.grid3{ display:flex; gap:16px; margin-top:28px; }
+.gcard{ flex:1; background:#fff; border:1.5px solid var(--line); border-radius:15px; padding:22px; text-align:center; }
+.gcard .ic{ width:46px; height:46px; border-radius:12px; background:var(--peach); display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:900; color:var(--accent); margin:0 auto 12px; }
+.gcard h4{ font-size:16px; font-weight:800; margin-bottom:6px; }
+.gcard p{ font-size:12.5px; color:var(--muted); line-height:1.55; }
+/* screen shot frame */
+.shot{ border:1.5px solid #E7E1DB; border-radius:18px; overflow:hidden; box-shadow:0 14px 34px rgba(23,23,42,.10); background:#fff; margin-top:26px; }
+.mk{ display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; background:var(--accent); color:#fff; font-size:12.5px; font-weight:800; vertical-align:middle; box-shadow:0 1px 3px rgba(0,0,0,.2); }
+.legend{ margin-top:22px; display:flex; flex-wrap:wrap; gap:14px 24px; }
+.lg{ width:calc(50% - 12px); font-size:13.5px; color:#3A3A48; line-height:1.5; display:flex; gap:9px; align-items:flex-start; }
+.lg .mk{ flex:0 0 auto; margin-top:1px; }
+.lg b{ color:var(--ink); }
+.legend.one .lg{ width:100%; }
+/* main list repro */
+.s-hero{ background:linear-gradient(160deg,#FFF6EF,#FFE3CE); padding:24px 26px 26px; text-align:center; }
+.s-htitle{ font-size:27px; font-weight:900; letter-spacing:-.8px; }
+.s-htitle .o{ color:var(--accent); }
+.s-hsub{ font-size:14px; color:#6a5a50; margin-top:8px; }
+.fbar{ margin:18px auto 0; background:#fff; border-radius:14px; box-shadow:0 5px 16px rgba(23,23,42,.09); padding:13px 16px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:center; }
+.fbar .flabel{ font-size:12.5px; color:#7a7a86; font-weight:700; }
+.chip{ font-size:13px; font-weight:800; border:1.5px solid var(--line); border-radius:10px; padding:7px 13px; color:#3A3A48; background:#fff; }
+.chip.on{ border-color:var(--accent); color:var(--accent); }
+.chip.t{ color:var(--skt); } .chip.lg{ color:var(--lg); }
+.fdiv{ width:1px; height:20px; background:var(--line); margin:0 4px; }
+.notebar{ background:var(--peach); border:1px solid var(--peach2); border-radius:12px; margin:16px 18px 0; padding:11px 16px; font-size:12.5px; color:#7a5c46; line-height:1.5; }
+.notebar b{ color:var(--accent); }
+.gridcount{ text-align:right; font-size:12.5px; color:#8a8a94; padding:12px 20px 0; }
+.gridcount b{ color:var(--ink); }
+.cardgrid{ display:flex; gap:13px; padding:10px 18px 20px; }
+.mc{ flex:1; border:1.5px solid var(--line); border-radius:14px; overflow:hidden; }
+.mc-top{ background:linear-gradient(135deg,#FFF7F0,#FFE9DA); padding:18px 10px 6px; text-align:center; }
+.pmock{ width:36px; height:56px; border:3px solid var(--accent); border-radius:9px; margin:0 auto; position:relative; background:#fff; }
+.pmock::before{ content:""; position:absolute; top:5px; left:50%; transform:translateX(-50%); width:12px; height:2.5px; border-radius:2px; background:var(--accent2); }
+.mc-name{ text-align:center; font-size:14.5px; font-weight:800; padding:9px 6px 4px; }
+.mc-rows{ padding:4px 13px 13px; }
+.mcr{ display:flex; align-items:center; gap:9px; padding:7px 0; border-bottom:1px dashed var(--line); }
+.mcr:last-child{ border-bottom:none; }
+.clogo{ font-size:12px; font-weight:900; width:36px; text-align:center; }
+.clogo.t{ color:var(--skt); } .clogo.lg{ color:var(--lg); }
+.mcr .typ{ font-size:10px; color:#9a9aa2; font-weight:700; }
+.mcr .pct{ font-size:12.5px; font-weight:900; color:var(--accent); }
+.mcr .amt{ font-size:13px; font-weight:900; }
+.mcr .amt.free{ color:var(--good); }
+.mcr .rt{ margin-left:auto; text-align:right; }
+.mcr .org{ font-size:10px; color:#b4b0aa; text-decoration:line-through; }
+/* detail repro */
+.d-head{ padding:16px 18px 0; }
+.d-back{ font-size:12px; color:#9a9aa2; font-weight:700; }
+.d-badge{ display:inline-block; font-size:11px; font-weight:800; color:var(--accent); background:var(--peach); border-radius:999px; padding:3px 11px; margin:9px 0 6px; }
+.d-title{ font-size:22px; font-weight:900; letter-spacing:-.5px; }
+.d-sub{ font-size:12.5px; color:#8a8a94; margin-top:4px; }
+.d-body{ display:flex; gap:16px; padding:16px 18px 18px; }
+.d-left{ flex:1.2; } .d-right{ flex:1; }
+.panel{ border:1.5px solid var(--line); border-radius:14px; padding:15px; margin-bottom:12px; }
+.panel-lab{ font-size:12px; color:#8a8a94; font-weight:700; margin-bottom:10px; display:flex; justify-content:space-between; }
+.panel-lab .hot{ color:var(--accent); }
+.sel-chip{ display:inline-block; font-size:11px; font-weight:800; border-radius:8px; padding:5px 10px; margin:3px 4px 0 0; }
+.sel-chip.on{ background:var(--accent); color:#fff; }
+.sel-chip.o{ border:1.5px solid var(--line); color:#555; }
+.sel-chip.cap{ border:1.5px solid var(--line); color:#555; }
+.sel-chip.cap.on{ background:var(--peach); border-color:var(--accent); color:var(--accent); }
+.tabs{ display:flex; background:#F1EEEA; border-radius:12px; padding:4px; margin-bottom:11px; }
+.tab{ flex:1; text-align:center; font-size:13px; font-weight:800; padding:10px 0; border-radius:9px; color:#8a8a94; }
+.tab.on{ background:#fff; color:var(--ink); box-shadow:0 1px 4px rgba(0,0,0,.08); }
+.chrow{ border:1.5px solid var(--peach2); background:var(--peach); border-radius:12px; padding:12px 15px; display:flex; align-items:center; gap:10px; }
+.chrow .nm{ font-size:13px; font-weight:800; }
+.chrow .low{ font-size:10px; font-weight:800; color:#fff; background:var(--accent); border-radius:6px; padding:2px 8px; }
+.chrow .buy{ margin-left:auto; font-size:13px; font-weight:900; }
+.hint{ font-size:11px; color:#a0a0a8; margin-top:8px; }
+.plan{ display:flex; align-items:center; border-radius:12px; padding:12px 15px; margin-bottom:9px; }
+.plan.on{ background:var(--peach); border:1.5px solid var(--accent); }
+.plan.off{ background:#F6F5F7; border:1.5px solid var(--line); }
+.plan .pn{ font-size:13px; font-weight:800; }
+.plan .pn .low{ font-size:9.5px; font-weight:800; color:#fff; background:var(--accent); border-radius:5px; padding:1px 6px; margin-left:6px; }
+.plan .pm{ font-size:10.5px; color:#8a8a94; margin-top:2px; }
+.plan .pr{ margin-left:auto; text-align:right; }
+.plan .pr .v{ font-size:14px; font-weight:900; }
+.plan .pr .u{ font-size:10px; color:#8a8a94; }
+.bkrow{ display:flex; justify-content:space-between; font-size:12.5px; padding:8px 0; border-bottom:1px dashed var(--line); }
+.bkrow .k{ color:#555; } .bkrow .v{ font-weight:700; }
+.bkrow.m .v{ color:var(--good); }
+.bkrow.tot{ border-bottom:none; border-top:2px solid var(--ink); margin-top:3px; padding-top:11px; }
+.bkrow.tot .k{ font-weight:900; font-size:13.5px; } .bkrow.tot .v{ font-size:18px; font-weight:900; color:var(--accent); }
+.sumcard{ background:#fff; border:1.5px solid var(--line); border-radius:14px; padding:16px; }
+.sum-top{ display:flex; justify-content:space-between; align-items:baseline; padding-bottom:4px; }
+.sum-top .lab{ font-size:12.5px; color:#8a8a94; font-weight:700; }
+.sum-top .big{ font-size:25px; font-weight:900; color:var(--accent); letter-spacing:-1px; }
+.sum-mon{ font-size:12.5px; color:#555; margin-top:15px; } .sum-mon b{ color:var(--ink); }
+.sum-brk{ font-size:11px; color:#9a9aa2; margin-top:3px; }
+.sum-chan{ display:inline-block; font-size:11px; font-weight:800; color:var(--accent); background:var(--peach); border-radius:999px; padding:3px 11px; margin-top:11px; }
+.kko{ margin-top:12px; background:linear-gradient(135deg,#FFE45C,#FFD400); border-radius:12px; padding:13px 15px; }
+.kko .t{ font-size:14px; font-weight:900; color:#3a2e00; }
+.kko .s{ font-size:10.5px; color:#6a5800; margin-top:3px; }
+.kko .btn{ margin-top:9px; background:#2a2400; color:#FFD400; font-size:11.5px; font-weight:800; text-align:center; border-radius:8px; padding:9px; }
+/* steps / notice / cta */
+.steps{ display:flex; gap:12px; margin-top:28px; }
+.step{ flex:1; background:#fff; border:1.5px solid var(--line); border-radius:15px; padding:22px 16px; text-align:center; position:relative; }
+.step .sn{ width:32px; height:32px; border-radius:50%; background:var(--accent); color:#fff; font-weight:900; font-size:15px; display:flex; align-items:center; justify-content:center; margin:0 auto 11px; }
+.step h5{ font-size:15px; font-weight:800; margin-bottom:6px; }
+.step p{ font-size:12.5px; color:var(--muted); line-height:1.5; }
+.step .arw{ position:absolute; right:-9px; top:50%; transform:translateY(-50%); color:var(--accent2); font-weight:900; font-size:18px; z-index:2; }
+.notice{ margin-top:28px; background:#fff; border:1.5px solid var(--line); border-radius:16px; padding:24px 26px; text-align:left; }
+.notice h3{ font-size:16px; font-weight:800; margin-bottom:13px; }
+.notice ul{ list-style:none; }
+.notice li{ font-size:13.5px; color:#3A3A48; line-height:1.55; margin-bottom:9px; padding-left:19px; position:relative; }
+.notice li::before{ content:"\2022"; color:var(--accent); position:absolute; left:3px; font-weight:900; }
+.notice li:last-child{ margin-bottom:0; }
+.cta-h{ font-size:30px; font-weight:900; color:#fff; letter-spacing:-1px; line-height:1.3; }
+.cta-h .o{ color:var(--accent2); }
+.cta-sub{ font-size:15px; color:#C9C7D6; margin-top:14px; line-height:1.6; }
+.cta-btn{ display:inline-block; margin-top:26px; background:var(--accent); color:#fff; font-size:17px; font-weight:900; border-radius:999px; padding:16px 42px; }
+.cta-foot{ margin-top:22px; font-size:12.5px; color:#8f8da0; line-height:1.7; }
+.cta-foot b{ color:#fff; }
+</style></head><body>
+<!-- HERO -->
+<div class="band peach center">
+  <div class="brand"><span class="logo-dot">P</span><span class="brand-name">폰스팟 <span style="color:var(--accent)">PHONESPOT</span></span></div>
+  <div class="hero-h">휴대폰,<br><span class="o">정직한 가격</span>으로.</div>
+  <div class="hero-sub">통신사·기종별 실구매가를 한눈에 비교하고 바로 신청하는<br>휴대폰 셀프가입 서비스</div>
+  <div class="hero-meta">서비스 <b>citymarket.co.kr/pspot</b> · <b>폰스팟(PHONESPOT)</b> · KAIT 사전승낙 정식 휴대폰 판매점</div>
+</div>
+
+<!-- WHY -->
+<div class="band center">
+  <div class="s-tag">Why we started · 출범 배경</div>
+  <div class="s-title">왜 폰스팟을 만들었나</div>
+  <div class="divider"></div>
+  <div class="askq" style="margin-top:26px;">아직도 더 저렴한 조건을 찾으려<br>수많은 커뮤니티를 떠돌며 발품을 팔고 계신가요?</div>
+  <div class="bubble-wrap">
+    <div class="bubble-row"><div class="bubble"><span class="av"><span class="h"></span><span class="b"></span></span><span class="tx">알아보는데 시간이 너무 소요돼요.</span></div></div>
+    <div class="bubble-row r"><div class="bubble"><span class="av"><span class="h"></span><span class="b"></span></span><span class="tx">허위 광고가 걱정돼요.</span></div></div>
+    <div class="bubble-row"><div class="bubble"><span class="av"><span class="h"></span><span class="b"></span></span><span class="tx">가격표가 알아보기 어려워요.</span></div></div>
+  </div>
+  <div class="bridge">
+    <div class="a">가장 가까운 '성지'를 대신 찾아드립니다.</div>
+    <div class="b">이제 폰스팟에서 해결하세요.</div>
+  </div>
+</div>
+
+<!-- PRINCIPLES -->
+<div class="band gray center">
+  <div class="s-title" style="font-size:26px;">"폰스팟은 다릅니다"</div>
+  <div class="s-lead">그래서 정한 4가지 원칙</div>
+  <div class="grid2" style="text-align:left;">
+    <div class="gi"><span class="ic">성지</span><div><h4>가까운 성지 자동 매칭</h4><p>주변 판매처 정보를 비교해 가장 합리적인 선택지를 쉽게 찾습니다.</p></div></div>
+    <div class="gi"><span class="ic">통합</span><div><h4>통합된 가격표 제공</h4><p>성지마다 제각각인 복잡한 가격표를 하나로 통일해 한눈에 보여줍니다.</p></div></div>
+    <div class="gi"><span class="ic" style="font-size:11px;">실조건</span><div><h4>추가 조건 없이 그대로</h4><p>기기 반납·카드 할부 강요 없이, 제시된 가격 그대로 개통 가능한 실조건만 안내합니다.</p></div></div>
+    <div class="gi"><span class="ic">안전</span><div><h4>개통 후 입금 진행</h4><p>선입금 없이 개통 후 정산하는 방식으로 안전한 거래를 보장합니다.</p></div></div>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<div class="band center">
+  <div class="s-tag">Overview</div>
+  <div class="s-title">폰스팟은 이런 서비스입니다</div>
+  <div class="divider"></div>
+  <div class="s-lead">복잡한 휴대폰 구매를 '가격조회 → 비교 → 신청' 세 단계로 단순화했습니다.<br>회원가입도 방문도 없이, 웹에서 비교하고 카카오톡으로 신청까지 끝냅니다.</div>
+  <div class="grid3" style="text-align:left;">
+    <div class="gcard"><div class="ic">투명</div><h4>가격을 숨기지 않습니다</h4><p>출고가부터 공시지원금·추가지원금·자체할인까지 전 항목을 공개하고 실구매가를 그대로 보여줍니다.</p></div>
+    <div class="gcard"><div class="ic">비교</div><h4>전 통신사·전 기종</h4><p>SKT·KT·LG U+·알뜰폰과 아이폰·갤럭시 최신 기종을 번호이동·기기변경별로 비교합니다.</p></div>
+    <div class="gcard"><div class="ic">정식</div><h4>KAIT 정식 판매점</h4><p>SKT·KT·LG U+ 사전승낙을 받은 정식 판매점. 개통은 통신사 공식 대리점을 통해 진행됩니다.</p></div>
+  </div>
+</div>
+<!-- SCREEN 1 MAIN -->
+<div class="band gray center">
+  <div class="s-tag">Screen 1 · 메인 가격비교</div>
+  <div class="s-title">기종별 최저가를 한눈에</div>
+  <div class="divider"></div>
+  <div class="s-lead">접속하면 바로 보이는 첫 화면. 통신사·제조사로 걸러 원하는 기종의 통신사별 실구매가를 카드로 비교합니다.</div>
+  <div class="shot">
+    <div class="s-hero">
+      <div class="s-htitle">휴대폰, <span class="o">정직한 가격</span>으로. <span class="mk">1</span></div>
+      <div class="s-hsub">통신사·기종별 실구매가를 한눈에 비교하고 바로 신청하세요.</div>
+      <div class="fbar">
+        <span class="flabel">이용중인 통신사</span>
+        <span class="chip t on">T</span><span class="chip">kt</span><span class="chip lg">U+</span><span class="chip">알뜰폰</span>
+        <span class="fdiv"></span><span class="flabel">제조사</span>
+        <span class="chip on">전체</span><span class="chip">삼성</span><span class="chip">애플</span><span class="chip">기타</span><span class="mk">2</span>
+      </div>
+    </div>
+    <div class="notebar"><b>번호이동</b>은 타 통신사에서 옮기는 경우, <b>기기변경</b>은 현재 통신사를 유지하는 경우의 예상가입니다. · 할인방식: <b>공시지원금</b> 기준 <span class="mk">3</span></div>
+    <div class="gridcount">총 <b>28</b>개 모델</div>
+    <div class="cardgrid">
+      <div class="mc"><div class="mc-top"><div class="pmock"></div></div><div class="mc-name">아이폰17</div><div class="mc-rows">
+        <div class="mcr"><span class="clogo lg">U+</span><span class="typ">번호이동</span><span class="rt"><span class="pct">89%</span> <span class="amt">147,000원</span><br><span class="org">1,287,000원</span></span></div>
+        <div class="mcr"><span class="clogo">kt</span><span class="typ">번호이동</span><span class="rt"><span class="pct">87%</span> <span class="amt">162,000원</span><br><span class="org">1,287,000원</span></span></div>
+        <div class="mcr"><span class="clogo t">T</span><span class="typ">기기변경</span><span class="rt"><span class="pct">55%</span> <span class="amt">577,000원</span><br><span class="org">1,287,000원</span></span></div>
+      </div></div>
+      <div class="mc"><div class="mc-top"><div class="pmock"></div></div><div class="mc-name">갤럭시 S25</div><div class="mc-rows">
+        <div class="mcr"><span class="clogo">kt</span><span class="typ">번호이동</span><span class="rt"><span class="amt free">기기공짜</span><br><span class="org">1,155,000원</span></span></div>
+        <div class="mcr"><span class="clogo lg">U+</span><span class="typ">번호이동</span><span class="rt"><span class="pct">86%</span> <span class="amt">165,000원</span><br><span class="org">1,155,000원</span></span></div>
+        <div class="mcr"><span class="clogo t">T</span><span class="typ">기기변경</span><span class="rt"><span class="pct">62%</span> <span class="amt">435,000원</span><br><span class="org">1,155,000원</span></span></div>
+      </div></div>
+      <div class="mc"><div class="mc-top"><div class="pmock"></div></div><div class="mc-name">갤럭시 Z플립7</div><div class="mc-rows">
+        <div class="mcr"><span class="clogo">kt</span><span class="typ">번호이동</span><span class="rt"><span class="pct">78%</span> <span class="amt">330,000원</span><br><span class="org">1,485,000원</span></span></div>
+        <div class="mcr"><span class="clogo lg">U+</span><span class="typ">번호이동</span><span class="rt"><span class="pct">65%</span> <span class="amt">515,000원</span><br><span class="org">1,485,000원</span></span></div>
+        <div class="mcr"><span class="clogo t">T</span><span class="typ">기기변경</span><span class="rt"><span class="pct">48%</span> <span class="amt">765,000원</span><br><span class="org">1,485,000원</span></span></div>
+      </div></div>
+    </div>
+  </div>
+  <div class="legend" style="text-align:left;">
+    <div class="lg"><span class="mk">1</span><span><b>정직한 가격 히어로</b> — "실구매가를 한눈에 비교하고 바로 신청"이 핵심 메시지입니다.</span></div>
+    <div class="lg"><span class="mk">2</span><span><b>필터</b> — 이용중인 통신사와 제조사(삼성·애플)로 원하는 조건만 추립니다.</span></div>
+    <div class="lg"><span class="mk">3</span><span><b>기준 안내</b> — 번호이동/기기변경 차이와 '공시지원금 기준'임을 명시합니다.</span></div>
+    <div class="lg"><span class="mk">4</span><span><b>기종 카드</b> — 기종마다 통신사별 최저가·할인율·실구매가를 카드로 노출합니다.</span></div>
+  </div>
+</div>
+
+<!-- SCREEN 2 DETAIL TOP -->
+<div class="band center">
+  <div class="s-tag">Screen 2 · 단말기 상세페이지</div>
+  <div class="s-title">기종을 누르면, 상담·신청 화면</div>
+  <div class="divider"></div>
+  <div class="s-lead">선택한 조건을 요약해 보여주고, 오른쪽에서 예상 실구매가와 월 납부액을 실시간으로 계산합니다.</div>
+  <div class="shot"><div style="text-align:left;">
+    <div class="d-head"><div class="d-back">‹ 가격 조회로 돌아가기</div><span class="d-badge">● 구매 상담 신청</span><div class="d-title">아이폰17프로맥스</div><div class="d-sub">판매 채널을 선택해 예상 실구매가를 확인하고 상담을 신청하세요.</div></div>
+    <div class="d-body">
+      <div class="d-left"><div class="panel">
+        <div class="panel-lab">선택한 단말기 <span class="mk">1</span></div>
+        <div style="display:flex; gap:14px; align-items:center;">
+          <div class="pmock" style="width:46px;height:68px;"></div>
+          <div>
+            <div style="font-size:11.5px;color:#8a8a94;font-weight:700;">· 온라인(택배)</div>
+            <div style="font-size:15.5px;font-weight:900;margin:2px 0 7px;">아이폰17프로맥스</div>
+            <div><span class="sel-chip on">번호이동</span><span class="sel-chip o">SKT → KT</span><span class="sel-chip o">공통지원금(단말할인)</span></div>
+            <div style="margin-top:7px;"><span class="sel-chip cap on">256GB</span><span class="sel-chip cap">512GB</span> <span class="mk">2</span></div>
+          </div>
+        </div>
+      </div></div>
+      <div class="d-right"><div class="sumcard">
+        <div class="sum-top"><span class="lab">예상 실구매가</span><span class="big">1,154,000원 <span class="mk">3</span></span></div>
+        <div class="sum-mon">월 예상 납부액 <b>약 158,083원</b> <span class="mk">4</span></div>
+        <div class="sum-brk">요금합계 110,000원 + 단말 할부 약 48,083원</div>
+        <div class="sum-chan">● 온라인(택배)</div>
+        <div class="kko"><div class="t">카카오톡으로 빠른 상담 <span class="mk">5</span></div><div class="s">신청하기 전에 카카오톡으로 문의하고 빠르게 상담받으세요!</div><div class="btn">카카오톡 상담하기 ›</div></div>
+      </div></div>
+    </div>
+  </div></div>
+  <div class="legend" style="text-align:left;">
+    <div class="lg"><span class="mk">1</span><span><b>선택 요약</b> — 기종·가입유형·통신사 이동(SKT→KT)·지원금 방식을 상단에 고정 표시합니다.</span></div>
+    <div class="lg"><span class="mk">2</span><span><b>용량 선택</b> — 256/512GB를 바꾸면 가격이 그 용량 기준으로 다시 계산됩니다.</span></div>
+    <div class="lg"><span class="mk">3</span><span><b>예상 실구매가</b> — 선택한 조건 기준 최종 단말 구매가를 크게 보여줍니다.</span></div>
+    <div class="lg"><span class="mk">4</span><span><b>월 예상 납부액</b> — 요금 + 단말 할부금을 합친 실제 월 부담을 미리 확인합니다.</span></div>
+    <div class="lg"><span class="mk">5</span><span><b>카카오톡 상담</b> — 신청 전 궁금한 점을 카톡으로 바로 문의·상담합니다.</span></div>
+  </div>
+</div>
+<!-- CHANNEL -->
+<div class="band gray center">
+  <div class="s-tag">Screen 2 · 채널·지점별 최저가</div>
+  <div class="s-title">채널·지점마다 최저가를 따로</div>
+  <div class="divider"></div>
+  <div class="s-lead">폰스팟의 핵심 기능. 같은 기종이라도 온라인(택배)과 오프라인 지점(예: 광교점)은 지원금이 다릅니다. 채널을 바꾸면 가격·지원금·할부원금이 즉시 재계산됩니다.</div>
+  <div class="shot"><div style="padding:18px; text-align:left;">
+    <div class="panel-lab" style="margin-bottom:10px;">판매 채널 <span class="mk">1</span></div>
+    <div class="tabs"><div class="tab">오프라인</div><div class="tab on">온라인</div></div>
+    <div class="chrow" style="margin-bottom:11px;"><span class="nm">모링/포니</span><span class="low">온라인 최저가</span><span class="buy">구매가 : 1,154,000원</span></div>
+    <div class="hint" style="margin-bottom:18px;">▸ 다른 판매 채널을 선택하면 가격·지원금·할부원금이 해당 채널 기준으로 바뀝니다.</div>
+    <div class="tabs"><div class="tab on">오프라인</div><div class="tab">온라인</div></div>
+    <div class="chrow"><span class="nm">오프라인</span><span class="low">오프라인(광교점) 최저가</span><span class="buy">구매가 : 1,379,000원</span></div>
+    <div class="hint">▸ 오프라인 지점을 고르면 그 지점(광교점 등) 기준 최저가로 견적이 바뀝니다. <span class="mk">2</span></div>
+  </div></div>
+  <div class="legend one" style="text-align:left;">
+    <div class="lg"><span class="mk">1</span><span><b>온라인 / 오프라인 탭</b> — 판매 채널을 전환합니다. 온라인은 택배 개통, 오프라인은 지점 방문 개통이며, 각 채널의 <b>최저가</b>가 배지로 표시됩니다.</span></div>
+    <div class="lg"><span class="mk">2</span><span><b>지점별 최저가</b> — 오프라인은 "오프라인(광교점) 최저가"처럼 지점 단위로 안내합니다. 채널·지점을 바꾸면 예상 실구매가·월 납부액도 함께 재계산됩니다. (예시: 온라인 1,154,000원 → 오프라인 광교점 1,379,000원)</span></div>
+  </div>
+</div>
+
+<!-- PLAN + BREAKDOWN -->
+<div class="band center">
+  <div class="s-tag">Screen 2 · 요금제 · 가격 상세</div>
+  <div class="s-title">요금제별 실구매가 + 가격 100% 공개</div>
+  <div class="divider"></div>
+  <div class="s-lead">요금제마다 지원금과 실구매가가 달라집니다. 가장 유리한 요금제엔 '최저가'가 붙고, 출고가에서 실구매가까지 계산 과정을 전부 공개합니다.</div>
+  <div class="d-body" style="padding:0; margin-top:26px;">
+    <div class="d-left"><div class="shot" style="margin-top:0; padding:16px; text-align:left;">
+      <div class="panel-lab">요금제 <span class="hot">원하는 요금제를 선택하세요</span></div>
+      <div class="plan on" style="margin-top:6px;"><div><div class="pn">초이스110 넷플릭스 <span class="low">최저가</span></div><div class="pm">월정액 110,000원</div></div><div class="pr"><div class="v">1,154,000원</div><div class="u">실구매가</div></div></div>
+      <div class="plan off"><div><div class="pn">초이스90 넷플릭스</div><div class="pm">월정액 90,000원</div></div><div class="pr"><div class="v">1,305,000원</div><div class="u">실구매가</div></div></div>
+      <div class="hint">▸ 요금제에 따라 지원금과 실구매가가 달라집니다. <span class="mk">1</span></div>
+    </div></div>
+    <div class="d-right"><div class="shot" style="margin-top:0; padding:16px; text-align:left;">
+      <div class="panel-lab">가격 상세 <span class="hot">견적 복사</span></div>
+      <div style="margin-top:4px;">
+        <div class="bkrow"><span class="k">출고가</span><span class="v">1,980,000원</span></div>
+        <div class="bkrow m"><span class="k">공통지원금(공시)</span><span class="v">- 201,000원</span></div>
+        <div class="bkrow m"><span class="k">추가지원금</span><span class="v">- 200,000원</span></div>
+        <div class="bkrow m"><span class="k">자체할인</span><span class="v">- 200,000원</span></div>
+        <div class="bkrow"><span class="k">선택약정할인</span><span class="v">—</span></div>
+        <div class="bkrow tot"><span class="k">실구매가</span><span class="v">1,379,000원</span></div>
+      </div>
+      <div class="hint" style="margin-top:8px;">요금합계 110,000원 · 단말 할부원금 기준 <span class="mk">2</span></div>
+    </div></div>
+  </div>
+  <div class="legend one" style="text-align:left; margin-top:16px;">
+    <div class="lg"><span class="mk">1</span><span><b>요금제별 실구매가 · 최저가</b> — 요금제를 고르면 실구매가가 즉시 바뀌고, 가장 유리한 요금제에 '최저가' 배지가 붙습니다.</span></div>
+    <div class="lg"><span class="mk">2</span><span><b>가격 상세 100% 공개</b> — 출고가 → 공통지원금(공시) → 추가지원금 → 자체할인 → 선택약정할인 → 실구매가까지 전부 공개하고, '견적 복사'로 저장·공유할 수 있습니다.</span></div>
+  </div>
+</div>
+
+<!-- CONSULT -->
+<div class="band gray center">
+  <div class="s-tag">Screen 2 · 신청 · 상담</div>
+  <div class="s-title">카카오톡으로 셀프 신청</div>
+  <div class="divider"></div>
+  <div class="s-lead">조건을 다 골랐다면 카카오톡으로 바로 상담·신청합니다. 할인가는 매일 업데이트되고, 채널을 추가해두면 다음에도 최신 가격을 편하게 조회할 수 있습니다.</div>
+  <div class="shot"><div style="padding:18px; text-align:left;">
+    <div class="kko"><div class="t">카카오톡으로 빠른 상담</div><div class="s">신청하기 전에 카카오톡으로 문의하고 빠르게 상담받으세요!</div><div class="btn">카카오톡 상담하기 ›</div></div>
+    <div class="panel" style="margin-top:14px; background:#F8F7F9;">
+      <div style="font-size:11.5px;color:#8a8a94;font-weight:700;">할인 알림 <span class="mk">1</span></div>
+      <div style="font-size:15.5px;font-weight:900;margin:5px 0 4px;">할인 금액은 매일 업데이트돼요</div>
+      <div style="font-size:12.5px;color:#6a6a74;line-height:1.5;">카카오톡 채널을 추가해두면, 다음에도 편하게 최신 가격을 조회할 수 있어요.</div>
+      <div style="margin-top:12px;display:inline-block;background:linear-gradient(135deg,#FFE45C,#FFD400);color:#2a2400;font-size:11.5px;font-weight:800;border-radius:8px;padding:9px 15px;">카카오톡 채널 추가하기 <span class="mk">2</span></div>
+    </div>
+    <div style="display:flex;gap:11px;justify-content:flex-end;margin-top:14px;">
+      <span style="font-size:12.5px;font-weight:800;color:#555;border:1.5px solid var(--line);border-radius:999px;padding:10px 18px;">주소 복사 <span class="mk">3</span></span>
+      <span style="font-size:12.5px;font-weight:800;color:#2a2400;background:linear-gradient(135deg,#FFE45C,#FFD400);border-radius:999px;padding:10px 18px;">카톡 상담 <span class="mk">4</span></span>
+    </div>
+  </div></div>
+  <div class="legend" style="text-align:left;">
+    <div class="lg"><span class="mk">1</span><span><b>매일 업데이트</b> — 통신사 정책에 맞춰 할인가가 매일 갱신됩니다.</span></div>
+    <div class="lg"><span class="mk">2</span><span><b>카톡 채널 추가</b> — 재방문 때도 최신가를 편히 조회하고 알림을 받습니다.</span></div>
+    <div class="lg"><span class="mk">3</span><span><b>주소(견적) 복사</b> — 견적 화면 링크를 복사해 가족·지인과 공유합니다.</span></div>
+    <div class="lg"><span class="mk">4</span><span><b>카톡 상담</b> — 선택 조건 그대로 카톡 상담으로 이어 바로 신청합니다.</span></div>
+  </div>
+</div>
+
+<!-- HOW TO + NOTICE -->
+<div class="band center">
+  <div class="s-tag">How to use</div>
+  <div class="s-title">이렇게 이용합니다</div>
+  <div class="divider"></div>
+  <div class="s-lead">회원가입도, 방문도 필요 없습니다. 세 단계면 끝납니다.</div>
+  <div class="steps">
+    <div class="step"><div class="sn">1</div><h5>기종·통신사 선택</h5><p>메인 화면에서 원하는 휴대폰과 통신사를 고릅니다.</p><span class="arw">›</span></div>
+    <div class="step"><div class="sn">2</div><h5>채널·요금제 비교</h5><p>상세페이지에서 채널·지점·요금제별 실구매가를 확인합니다.</p><span class="arw">›</span></div>
+    <div class="step"><div class="sn">3</div><h5>카카오톡 신청</h5><p>마음에 드는 조건을 골라 카톡으로 바로 상담·신청합니다.</p></div>
+  </div>
+  <div class="notice">
+    <h3>서비스 안내</h3>
+    <ul>
+      <li>폰스팟은 KAIT 사전승낙을 받은 <b>정식 휴대폰 판매점</b>입니다. (SKT·KT·LG U+ 사전승낙서 보유)</li>
+      <li>개통은 사전승낙서에 기재된 <b>통신사 공식 대리점</b>을 통해 안전하게 진행됩니다.</li>
+      <li>표시 가격은 <b>공시지원금 기준</b>이며, 판매 채널·지점·요금제·조건에 따라 실제 금액은 달라질 수 있습니다.</li>
+      <li>할인 금액은 <b>매일 업데이트</b>되며, 표시 가격·이미지는 예시이며 실제와 다를 수 있습니다.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="band dark center">
+  <div class="cta-h">내 손안의 휴대폰 성지,<br>이제 <span class="o">폰스팟</span>에서 시작하세요.</div>
+  <div class="cta-sub">전국 통신사 휴대폰 가격을 투명하게 비교하는 셀프가입 서비스</div>
+  <div class="cta-btn">내 폰 가격 확인하기 ▶</div>
+  <div class="cta-foot"><b>citymarket.co.kr/pspot</b> · 카카오톡 채널 상담 운영<br>폰스팟(PHONESPOT) · KAIT 사전승낙 정식 휴대폰 판매점</div>
+</div>
+
+</body></html>

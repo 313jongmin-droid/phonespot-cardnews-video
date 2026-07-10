@@ -1,0 +1,196 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>폰스팟 인터랙티브 데모</title>
+<style>
+:root{--ink:#17172A;--accent:#FF5A1F;--accent2:#FF8A3D;--peach:#FFF3EC;--peach2:#FFE7D6;--muted:#6B7280;--line:#ECE6E0;--skt:#3617CE;--lg:#E6007E;--good:#17A66B;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:"Noto Sans KR","Malgun Gothic",sans-serif;color:var(--ink);background:#F3F1EE;padding:24px;}
+.top{max-width:1080px;margin:0 auto 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.logo{width:34px;height:34px;border-radius:10px;background:var(--accent);color:#fff;font-weight:800;font-size:18px;display:flex;align-items:center;justify-content:center;}
+.top h1{font-size:19px;font-weight:800;}
+.top .sub{font-size:12.5px;color:var(--muted);}
+.top a.real{margin-left:auto;background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:9px 16px;font-size:12.5px;font-weight:800;color:var(--accent);text-decoration:none;}
+.note{max-width:1080px;margin:0 auto 16px;background:#FFF7EF;border:1.5px solid var(--peach2);border-radius:12px;padding:11px 16px;font-size:12.5px;color:#8a6a50;line-height:1.5;}
+.wrap{max-width:1080px;margin:0 auto;display:flex;gap:20px;align-items:flex-start;}
+.app{width:560px;flex:0 0 auto;background:#fff;border:1.5px solid var(--line);border-radius:18px;box-shadow:0 12px 30px rgba(23,23,42,.08);overflow:hidden;}
+.guide{flex:1;position:sticky;top:24px;}
+.guide h2{font-size:15px;font-weight:800;margin-bottom:12px;color:var(--accent);}
+.gstep{background:#fff;border:1.5px solid var(--line);border-radius:13px;padding:14px 16px;margin-bottom:11px;display:flex;gap:11px;}
+.gstep .n{flex:0 0 auto;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-weight:800;font-size:12.5px;display:flex;align-items:center;justify-content:center;}
+.gstep h4{font-size:14px;font-weight:800;margin-bottom:3px;}
+.gstep p{font-size:12.5px;color:var(--muted);line-height:1.5;}
+/* app inner */
+.hero{background:linear-gradient(160deg,#FFF6EF,#FFE3CE);padding:20px 22px 22px;text-align:center;}
+.hero .t{font-size:22px;font-weight:900;letter-spacing:-.5px;}
+.hero .t b{color:var(--accent);}
+.hero .s{font-size:12.5px;color:#6a5a50;margin-top:6px;}
+.filters{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin-top:14px;}
+.chip{font-size:12px;font-weight:800;border:1.5px solid var(--line);border-radius:9px;padding:6px 12px;background:#fff;color:#555;cursor:pointer;}
+.chip.on{border-color:var(--accent);color:var(--accent);background:#fff;}
+.flabel{font-size:11px;color:#8a8a94;font-weight:700;align-self:center;}
+.list{padding:14px 16px 18px;display:flex;flex-direction:column;gap:11px;}
+.pcard{border:1.5px solid var(--line);border-radius:14px;padding:14px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:.12s;}
+.pcard:hover{border-color:var(--accent);box-shadow:0 6px 16px rgba(255,90,31,.12);}
+.pmock{width:38px;height:58px;border:3px solid var(--accent);border-radius:9px;position:relative;flex:0 0 auto;}
+.pmock::before{content:"";position:absolute;top:5px;left:50%;transform:translateX(-50%);width:12px;height:2.5px;border-radius:2px;background:var(--accent2);}
+.pcard .nm{font-size:15px;font-weight:800;}
+.pcard .lo{font-size:11.5px;color:var(--muted);margin-top:3px;}
+.pcard .lo b{color:var(--accent);}
+.pcard .go{margin-left:auto;color:#c9c2ba;font-size:20px;font-weight:800;}
+.mfr-tag{font-size:10px;color:#a9a29a;background:#F4F1ED;border-radius:5px;padding:2px 6px;margin-left:8px;}
+/* detail */
+.dtop{padding:14px 16px 0;}
+.back{font-size:12.5px;color:var(--muted);font-weight:700;cursor:pointer;background:none;border:none;padding:0;}
+.dbadge{display:inline-block;font-size:11px;font-weight:800;color:var(--accent);background:var(--peach);border-radius:999px;padding:3px 11px;margin:10px 0 6px;}
+.dtitle{font-size:20px;font-weight:900;}
+.dsub{font-size:12px;color:#8a8a94;margin-top:3px;}
+.sec{padding:14px 16px;}
+.seclab{font-size:11.5px;color:#8a8a94;font-weight:700;margin-bottom:9px;}
+.tabs{display:flex;background:#F1EEEA;border-radius:11px;padding:4px;}
+.tab{flex:1;text-align:center;font-size:13px;font-weight:800;padding:10px 0;border-radius:8px;color:#8a8a94;cursor:pointer;}
+.tab.on{background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.08);}
+.chrow{margin-top:10px;border:1.5px solid var(--peach2);background:var(--peach);border-radius:11px;padding:11px 14px;display:flex;align-items:center;gap:9px;}
+.chrow .low{font-size:10px;font-weight:800;color:#fff;background:var(--accent);border-radius:6px;padding:2px 8px;}
+.chrow .buy{margin-left:auto;font-size:13px;font-weight:900;}
+.plans{display:flex;flex-direction:column;gap:8px;}
+.plan{display:flex;align-items:center;border-radius:11px;padding:12px 14px;border:1.5px solid var(--line);background:#F8F7F6;cursor:pointer;}
+.plan.on{background:var(--peach);border-color:var(--accent);}
+.plan .pn{font-size:13px;font-weight:800;}
+.plan .pm{font-size:10.5px;color:#8a8a94;margin-top:2px;}
+.plan .low{font-size:9px;font-weight:800;color:#fff;background:var(--accent);border-radius:5px;padding:1px 6px;margin-left:6px;}
+.plan .pr{margin-left:auto;text-align:right;}
+.plan .pr .v{font-size:14px;font-weight:900;}
+.plan .pr .u{font-size:9.5px;color:#8a8a94;}
+.caps{display:flex;gap:8px;}
+.cap{font-size:11.5px;font-weight:800;border:1.5px solid var(--line);border-radius:8px;padding:6px 14px;color:#555;cursor:pointer;background:#fff;}
+.cap.on{background:var(--peach);border-color:var(--accent);color:var(--accent);}
+.summary{background:#fff;border-top:8px solid #F3F1EE;padding:16px;}
+.stop{display:flex;justify-content:space-between;align-items:baseline;}
+.stop .l{font-size:12.5px;color:#8a8a94;font-weight:700;}
+.stop .big{font-size:26px;font-weight:900;color:var(--accent);letter-spacing:-1px;}
+.mon{font-size:12.5px;color:#555;margin-top:8px;}
+.mon b{color:var(--ink);}
+.brk{margin-top:12px;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;}
+.brow{display:flex;justify-content:space-between;font-size:12.5px;padding:6px 0;border-bottom:1px dashed var(--line);}
+.brow .v{font-weight:700;}
+.brow.m .v{color:var(--good);}
+.brow.tot{border-bottom:none;border-top:2px solid var(--ink);margin-top:3px;padding-top:10px;}
+.brow.tot .k{font-weight:900;}.brow.tot .v{font-size:16px;font-weight:900;color:var(--accent);}
+.kko{margin-top:12px;background:linear-gradient(135deg,#FFE45C,#FFD400);border-radius:11px;padding:12px 14px;text-align:center;cursor:pointer;}
+.kko b{font-size:13.5px;font-weight:900;color:#2a2400;}
+.hint{font-size:10.5px;color:#a0a0a8;margin-top:8px;}
+@media(max-width:1000px){.wrap{flex-direction:column;}.app{width:100%;}.guide{position:static;width:100%;}}
+</style></head>
+<body>
+<div class="top">
+  <span class="logo">P</span>
+  <div><h1>폰스팟 인터랙티브 데모</h1><div class="sub">실제 화면을 재현한 '눌러보는' 데모입니다 · 표시 가격은 예시</div></div>
+  <a class="real" href="https://citymarket.co.kr/pspot" target="_blank" rel="noopener">실제 사이트 열기 ↗</a>
+</div>
+<div class="note">※ 실제 citymarket.co.kr/pspot 은 외부 페이지 삽입(iframe)이 차단되어 나란히 띄울 수 없습니다. 그래서 실제 화면을 그대로 재현해 <b>클릭·전환이 되는 데모</b>로 만들었습니다. 오른쪽 안내를 보며 왼쪽에서 눌러보세요.</div>
+<div class="wrap">
+  <div class="app" id="app"></div>
+  <div class="guide" id="guide"></div>
+</div>
+
+<script>
+const won = n => n.toLocaleString('ko-KR')+'원';
+const MODELS = [
+  {id:'ip17pm', name:'아이폰17프로맥스', mfr:'apple', ship:1980000, base:{gong:201000, add:200000},
+   combo:{ 'online-110':1154000,'online-90':1305000,'offline-110':1379000,'offline-90':1500000 }},
+  {id:'ip17', name:'아이폰17', mfr:'apple', ship:1287000, base:{gong:300000, add:250000},
+   combo:{ 'online-110':147000,'online-90':320000,'offline-110':400000,'offline-90':560000 }},
+  {id:'s25', name:'갤럭시 S25', mfr:'samsung', ship:1155000, base:{gong:250000, add:250000},
+   combo:{ 'online-110':0,'online-90':165000,'offline-110':300000,'offline-90':435000 }},
+];
+const PLANS = { '110':{name:'초이스110 넷플릭스', fee:110000}, '90':{name:'초이스90 넷플릭스', fee:90000} };
+const CH = { 'online':{name:'온라인', low:'온라인 최저가', tag:'온라인(택배)'}, 'offline':{name:'오프라인', low:'오프라인(광교점) 최저가', tag:'오프라인(광교점)'} };
+let S = { view:'list', mfr:'all', model:null, ch:'online', plan:'110', cap:'256' };
+
+function calc(m, ch, plan){
+  const price = m.combo[ch+'-'+plan];
+  const gong = m.base.gong, add = m.base.add;
+  const self = Math.max(0, m.ship - gong - add - price);
+  const fee = PLANS[plan].fee;
+  const halbu = Math.round(price/24);
+  return {price, gong, add, self, fee, halbu, month:fee+halbu};
+}
+function channelLow(m, ch){ return Math.min(m.combo[ch+'-110'], m.combo[ch+'-90']); }
+
+function render(){ document.getElementById('app').innerHTML = S.view==='list'?listView():detailView(); renderGuide(); }
+
+function listView(){
+  const items = MODELS.filter(m=>S.mfr==='all'||m.mfr===S.mfr).map(m=>{
+    const lo = Math.min(...Object.values(m.combo));
+    const loTxt = lo===0? '기기공짜' : won(lo)+'~';
+    return `<div class="pcard" onclick="openModel('${m.id}')">
+      <div class="pmock"></div>
+      <div><div class="nm">${m.name}<span class="mfr-tag">${m.mfr==='apple'?'애플':'삼성'}</span></div>
+      <div class="lo">최저 <b>${loTxt}</b> · 눌러서 채널·요금제 비교</div></div>
+      <div class="go">›</div></div>`;
+  }).join('');
+  const chip=(v,t)=>`<span class="chip ${S.mfr===v?'on':''}" onclick="setMfr('${v}')">${t}</span>`;
+  return `<div class="hero"><div class="t">휴대폰, <b>정직한 가격</b>으로.</div>
+    <div class="s">통신사·기종별 실구매가를 한눈에 비교하고 바로 신청하세요.</div>
+    <div class="filters"><span class="flabel">제조사</span>${chip('all','전체')}${chip('samsung','삼성')}${chip('apple','애플')}</div></div>
+    <div class="list">${items}</div>`;
+}
+
+function detailView(){
+  const m = MODELS.find(x=>x.id===S.model);
+  const c = calc(m, S.ch, S.plan);
+  const tab=(v)=>`<div class="tab ${S.ch===v?'on':''}" onclick="setCh('${v}')">${CH[v].name}</div>`;
+  const planRow=(p)=>{const cc=calc(m,S.ch,p);const isLow=cc.price===channelLow(m,S.ch);
+    return `<div class="plan ${S.plan===p?'on':''}" onclick="setPlan('${p}')">
+      <div><div class="pn">${PLANS[p].name}${isLow?'<span class="low">최저가</span>':''}</div><div class="pm">월정액 ${won(PLANS[p].fee)}</div></div>
+      <div class="pr"><div class="v">${cc.price===0?'0원 (기기공짜)':won(cc.price)}</div><div class="u">실구매가</div></div></div>`;};
+  const cap=(v)=>`<span class="cap ${S.cap===v?'on':''}" onclick="setCap('${v}')">${v}GB</span>`;
+  return `<div class="dtop"><button class="back" onclick="go('list')">‹ 가격 조회로 돌아가기</button>
+    <div class="dbadge">● 구매 상담 신청</div><div class="dtitle">${m.name}</div>
+    <div class="dsub">판매 채널·요금제를 선택해 예상 실구매가를 확인하세요.</div></div>
+    <div class="sec"><div class="seclab">판매 채널 <span style="color:var(--accent)">(눌러서 전환)</span></div>
+      <div class="tabs">${tab('online')}${tab('offline')}</div>
+      <div class="chrow"><b>${CH[S.ch].name}</b><span class="low">${CH[S.ch].low}</span><span class="buy">구매가 : ${won(channelLow(m,S.ch))}</span></div>
+      <div class="hint">▸ 채널을 바꾸면 지원금·할부원금이 그 채널 기준으로 재계산됩니다.</div></div>
+    <div class="sec" style="padding-top:0"><div class="seclab">요금제 <span style="color:var(--accent)">(눌러서 선택)</span></div>
+      <div class="plans">${planRow('110')}${planRow('90')}</div></div>
+    <div class="sec" style="padding-top:0"><div class="seclab">용량</div><div class="caps">${cap('256')}${cap('512')}</div></div>
+    <div class="summary">
+      <div class="stop"><span class="l">예상 실구매가</span><span class="big">${c.price===0?'0원':won(c.price)}</span></div>
+      <div class="mon">월 예상 납부액 <b>약 ${won(c.month)}</b> <span style="color:#9a9aa2">(요금 ${won(c.fee)} + 할부 약 ${won(c.halbu)})</span></div>
+      <div class="brk">
+        <div class="brow"><span class="k">출고가</span><span class="v">${won(m.ship)}</span></div>
+        <div class="brow m"><span class="k">공통지원금(공시)</span><span class="v">- ${won(c.gong)}</span></div>
+        <div class="brow m"><span class="k">추가지원금</span><span class="v">- ${won(c.add)}</span></div>
+        <div class="brow m"><span class="k">자체할인</span><span class="v">- ${won(c.self)}</span></div>
+        <div class="brow tot"><span class="k">실구매가</span><span class="v">${c.price===0?'0원':won(c.price)}</span></div>
+      </div>
+      <div class="kko" onclick="alert('실제 사이트에서는 카카오톡 상담으로 연결됩니다.\\n\\n실제 사이트: citymarket.co.kr/pspot')"><b>카카오톡으로 상담·신청하기 ›</b></div>
+      <div class="hint">▸ 표시 수치는 예시입니다. 실제 견적은 citymarket.co.kr/pspot 에서 확인하세요.</div>
+    </div>`;
+}
+
+function renderGuide(){
+  let steps;
+  if(S.view==='list'){
+    steps=[['1','기종을 눌러보세요','목록에서 아무 기종이나 클릭하면 상세 비교 화면으로 들어갑니다.'],
+      ['2','제조사 필터','삼성 / 애플 칩을 눌러 원하는 기종만 추릴 수 있습니다.'],
+      ['3','최저가 미리보기','각 카드에 통신사·채널을 통틀어 가장 싼 실구매가가 표시됩니다.']];
+  } else {
+    steps=[['1','판매 채널 전환','온라인 / 오프라인(광교점) 탭을 눌러보세요. 채널마다 최저가와 실구매가가 즉시 바뀝니다.'],
+      ['2','요금제 선택','초이스110 / 초이스90 을 눌러보세요. 요금제에 따라 지원금·실구매가가 달라집니다.'],
+      ['3','가격 100% 공개','아래 상세 내역에서 출고가→지원금→자체할인→실구매가 계산이 실시간으로 반영됩니다.'],
+      ['4','월 납부액','요금 + 단말 할부금을 합친 월 예상 납부액이 자동 계산됩니다.']];
+  }
+  document.getElementById('guide').innerHTML = '<h2>'+(S.view==='list'?'① 메인 — 이렇게 눌러보세요':'② 상세 — 이렇게 눌러보세요')+'</h2>'+
+    steps.map(s=>`<div class="gstep"><span class="n">${s[0]}</span><div><h4>${s[1]}</h4><p>${s[2]}</p></div></div>`).join('');
+}
+
+function openModel(id){ S.model=id; S.ch='online'; S.plan='110'; S.cap='256'; S.view='detail'; render(); }
+function go(v){ S.view=v; render(); }
+function setMfr(v){ S.mfr=v; render(); }
+function setCh(v){ S.ch=v; render(); }
+function setPlan(v){ S.plan=v; render(); }
+function setCap(v){ S.cap=v; render(); }
+render();
+</script>
+</body></html>
