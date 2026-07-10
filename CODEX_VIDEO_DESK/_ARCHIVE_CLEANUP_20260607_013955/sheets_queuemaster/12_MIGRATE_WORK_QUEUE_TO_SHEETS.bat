@@ -1,4 +1,4 @@
-@echo off
+﻿@echo off
 setlocal
 chcp 65001 >nul
 title PhoneSpot - Work Queue Migrate To Sheets (1회)

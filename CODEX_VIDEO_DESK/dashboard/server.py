@@ -38,7 +38,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v51"
+PANEL_VERSION = "phonespot-web-v52"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -2658,6 +2658,10 @@ INDEX_HTML = r"""<!doctype html>
       return null;
     }
     async function reloadLists() {
+      // ★ 목록 먼저 즉시 표시(로컬 폴더 스캔=빠름). 동기화는 뒤에서 백그라운드로 → 영상 후보가 3분 안 기다림.
+      await loadSlugs();
+      await loadCardnews();
+      await loadState();
       try {
         const result = await api("/api/action", {
           method:"POST",
@@ -2666,15 +2670,13 @@ INDEX_HTML = r"""<!doctype html>
         });
         if (result.ok) {
           await waitForCurrentJob(180000);
-        } else if (!result.busy) {
-          alert(result.message || "카드뉴스 동기화를 시작하지 못했습니다. 로컬 목록만 새로고침합니다.");
+          await loadSlugs();
+          await loadCardnews();
+          await loadState();
         }
       } catch (e) {
-        alert("카드뉴스 동기화 호출 실패: " + e.message + "\n로컬 목록만 새로고침합니다.");
+        // 동기화 호출 실패해도 목록은 이미 표시됨 — 무시
       }
-      await loadSlugs();
-      await loadCardnews();
-      await loadState();
     }
     function findCardRow(slug) {
       return (cardItems || []).find(x => x.slug === slug) || null;

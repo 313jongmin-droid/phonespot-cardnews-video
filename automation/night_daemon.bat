@@ -1,4 +1,4 @@
-@echo off
+﻿@echo off
 REM Windows Task Scheduler용 야간 daemon 실행 wrapper
 REM 매일 02:00 실행 권장. 로그는 logs\night_daemon_log.txt에 누적.
 

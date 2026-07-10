@@ -132,6 +132,28 @@ def _is_distinctive(tok: str) -> bool:
     return False
 
 
+def _load_photo_tag_db():
+    """AI 자동태깅 DB(codex_photo_tag.py 생성). 없으면 빈 dict → 파일명 매칭만(비파괴)."""
+    try:
+        _p = Path(__file__).resolve().parent.parent / "config" / "photo_tag_db.json"
+        return json.loads(_p.read_text(encoding="utf-8")) if _p.exists() else {}
+    except Exception:
+        return {}
+
+
+PHOTO_TAG_DB = _load_photo_tag_db()
+
+
+def _photo_db_hits(pf: str, chunk: str) -> int:
+    """이 사진의 AI 키워드 중 청크에 실제 등장하는 구별토큰 수(파일명 점수에 가산)."""
+    n = 0
+    for kw in (PHOTO_TAG_DB.get(pf) or {}).get("keywords", []):
+        kw = str(kw).strip()
+        if kw and _is_distinctive(kw) and kw in chunk:
+            n += 1
+    return n
+
+
 def photo_lexical_score(label: str, chunk: str) -> tuple[int, int]:
     """(구별토큰 일치수, 일반토큰 일치수). 한글=부분문자열, 영문=단어경계."""
     c_low = chunk.lower()
@@ -514,6 +536,7 @@ def semantic_match(data: dict, slug: str) -> bool:
                         continue
                     _lab = photo_label(_pf)
                     _d, _g = photo_lexical_score(_lab, _pchunk)
+                    _d += _photo_db_hits(_pf, _pchunk)  # AI 자동태깅 키워드 히트 가산(파일명 없어도 매칭)
                     _lg = 1 if "로고" in _lab else 0
                     if _d > 0 and (_d, _g, _lg) > (best_photo[0], best_photo[1], best_lg):
                         best_photo = (_d, _g, _pf)
