@@ -78,7 +78,7 @@ if errorlevel 1 goto :fail
 python scripts\codex_enhance_script.py !SLUG!
 if errorlevel 1 goto :fail
 python scripts\codex_photo_tag.py
-python scripts\codex_illust_tag.py --limit 12
+rem [disabled 2026-07-10: CLIP(codex_image_embed) handles illustration matching now - no gemini 429] python scripts\codex_illust_tag.py --limit 12
 python scripts\codex_semantic_visual_match.py !SLUG!
 if errorlevel 1 goto :fail
 python scripts\codex_unique_illustration_guard.py !SLUG!

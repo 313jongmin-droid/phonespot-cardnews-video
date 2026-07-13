@@ -33,7 +33,11 @@ echo (this MUST be the same python the panel runs - the runtime venv if present)
 echo.
 echo ===== 1/4: install fastembed / numpy / pillow / socksio =====
 rem pillow is needed by the CLIP image embedder to decode PNG/JPG.
-"%PY%" -m pip install --upgrade fastembed numpy pillow socksio
+"%PY%" -m pip install --use-deprecated=legacy-certs --upgrade fastembed numpy pillow socksio
+if errorlevel 1 (
+  echo [WARN] legacy-certs failed ^(older pip?^) - retry plain
+  "%PY%" -m pip install --upgrade fastembed numpy pillow socksio
+)
 if errorlevel 1 (
   echo [WARN] normal install failed - retry with --user
   "%PY%" -m pip install --user --upgrade fastembed numpy pillow socksio

@@ -33,11 +33,19 @@ popd >nul
 
 echo.
 echo ===== 2/5: python deps (render + cardnews + embedding) =====
-"%PY%" -m pip install --upgrade edge-tts mutagen pillow requests playwright flask fastembed numpy socksio
+"%PY%" -m pip install --use-deprecated=legacy-certs --upgrade edge-tts mutagen pillow requests playwright flask fastembed numpy socksio
+if errorlevel 1 (
+  echo [WARN] legacy-certs failed ^(older pip?^) - retry plain
+  "%PY%" -m pip install --upgrade edge-tts mutagen pillow requests playwright flask fastembed numpy socksio
+)
 if errorlevel 1 (
   echo [WARN] normal install failed - retry with --user
   "%PY%" -m pip install --user --upgrade edge-tts mutagen pillow requests playwright flask fastembed numpy socksio
 )
+
+rem optional: whisper forced-alignment for Supertone precise sync (non-fatal)
+"%PY%" -m pip install --use-deprecated=legacy-certs --upgrade faster-whisper
+if errorlevel 1 "%PY%" -m pip install --upgrade faster-whisper
 
 echo.
 echo ===== 3/5: playwright chromium =====
