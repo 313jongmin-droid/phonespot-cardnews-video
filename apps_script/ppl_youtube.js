@@ -24,11 +24,14 @@
 var PPL_ACTOR_PATH = 'streamers~youtube-scraper';      // api.apify.com actor path
 var PPL_SHEET = '유튜브_협찬발굴';
 var PPL_GEMINI_MODEL = 'gemini-2.5-flash';
+var PPL_MAX_ENRICH = 35;     // Pass2 채널 상한 (6분 제한 방어)
+var PPL_BUDGET_P1 = 120;     // Pass1 폴링 예산(초)
+var PPL_BUDGET_P2 = 180;     // Pass2 폴링 예산(초)
 
 // 기본 키워드 — 30~50 남성 시청층 스큐 + 폰스팟 협찬 도메인. (시트 프롬프트에서 콤마로 덮어쓰기 가능)
 var PPL_DEFAULT_KEYWORDS = [
-  '자급제 휴대폰', '통신비 절약', '알뜰폰 요금제', '휴대폰 성지 시세',
-  '갤럭시 리뷰', '아이폰 리뷰', '스마트폰 개통', 'IT 가젯 리뷰'
+  '자급제 휴대폰', '통신비 절약', '알뜰폰 요금제',
+  '휴대폰 성지 시세', '갤럭시 리뷰', '아이폰 리뷰'
 ];
 
 // 규모 프리셋 (구독자 범위)
@@ -62,7 +65,7 @@ function buildPplYoutubeMenu_(ui) {
 }
 
 function pplRunDefault() {
-  pplRunDiscovery_(PPL_DEFAULT_KEYWORDS, 'micro', 30, 20);
+  pplRunDiscovery_(PPL_DEFAULT_KEYWORDS, 'micro', 30, 8);
 }
 
 function pplPromptDiscovery() {
@@ -84,7 +87,7 @@ function pplPromptDiscovery() {
   if (cntRes.getSelectedButton() !== ui.Button.OK) return;
   var targetN = parseInt((cntRes.getResponseText() || '').trim(), 10) || 30;
 
-  pplRunDiscovery_(keywords, scaleKey, targetN, 20);
+  pplRunDiscovery_(keywords, scaleKey, targetN, 10);
 }
 
 // ───────────────────────── 메인 오케스트레이션 ─────────────────────────
@@ -135,21 +138,16 @@ function pplRunDiscovery_(keywords, scaleKey, targetN, perKeyword) {
       });
     });
 
-    // 점수 내림차순 → 상위 targetN
+    // 점수 내림차순 → 상위 targetN (초안은 별도 ✍️ 메뉴에서 — 6분 제한 방어)
     rows.sort(function (a, b) { return b.score - a.score; });
     rows = rows.slice(0, targetN);
 
-    // 초안 생성 (상위 N만)
-    rows.forEach(function (r) {
-      r.draft = pplGenerateDraft_(r);
-    });
-
     var res = pplWriteSheet_(rows);
-    var msg = '✅ 발굴 완료\n\n' +
+    var msg = '✅ 발굴 완료 (초안 제외)\n\n' +
       '키워드: ' + keywords.length + '개\n' +
       'Pass1 채널: ' + discovered.length + ' → 규모(' + scale.label + ') 통과 후 상위: ' + rows.length + '\n' +
       '시트 신규 추가: ' + res.added + ' (중복 제외: ' + res.skipped + ')\n' +
-      '초안 생성: ' + rows.length + '건 (O열)';
+      '다음: 메뉴 ✍️ 초안만 재생성 클릭 → O열 채움 (재실행 가능)';
     if (ui) ui.alert(msg);
     try { logSync_('pplRunDiscovery', keywords.join('|') + ' → ' + res.added + ' new'); } catch (e) {}
     return res;
@@ -161,21 +159,30 @@ function pplRunDiscovery_(keywords, scaleKey, targetN, perKeyword) {
 }
 
 // ───────────────────────── Apify 호출 ─────────────────────────
-function pplFetchApify_(input) {
+function pplFetchApify_(input, budgetSec) {
   var token = getApifyToken_();   // meta-sync.js 정의 재사용
-  var apiUrl = 'https://api.apify.com/v2/acts/' + PPL_ACTOR_PATH +
-               '/run-sync-get-dataset-items?token=' + token;
-  var res = UrlFetchApp.fetch(apiUrl, {
-    method: 'post',
-    contentType: 'application/json',
-    payload: JSON.stringify(input),
-    muteHttpExceptions: true
+  // run-sync는 최대 300s 블로킹 → Apps Script 6분 제한과 충돌 → 비동기 시작 + 폴링.
+  var startUrl = 'https://api.apify.com/v2/acts/' + PPL_ACTOR_PATH + '/runs?token=' + token;
+  var startRes = UrlFetchApp.fetch(startUrl, {
+    method: 'post', contentType: 'application/json',
+    payload: JSON.stringify(input), muteHttpExceptions: true
   });
-  var code = res.getResponseCode();
-  if (code !== 200 && code !== 201) {
-    throw new Error('Apify 호출 실패 ' + code + ': ' + res.getContentText().slice(0, 400));
+  var sc = startRes.getResponseCode();
+  if (sc !== 200 && sc !== 201) throw new Error('Apify 시작 실패 ' + sc + ': ' + startRes.getContentText().slice(0, 300));
+  var run = JSON.parse(startRes.getContentText()).data;
+  var runId = run.id, dsId = run.defaultDatasetId, status = run.status;
+  var budget = (budgetSec || 150) * 1000, waited = 0, step = 5000;
+  while (waited < budget && status !== 'SUCCEEDED') {
+    if (status === 'FAILED' || status === 'ABORTED' || status === 'TIMED-OUT')
+      throw new Error('Apify 실행 ' + status + ' (runId ' + runId + ')');
+    Utilities.sleep(step); waited += step;
+    var pr = UrlFetchApp.fetch('https://api.apify.com/v2/actor-runs/' + runId + '?token=' + token, { muteHttpExceptions: true });
+    if (pr.getResponseCode() === 200) { var d = JSON.parse(pr.getContentText()).data; status = d.status; dsId = d.defaultDatasetId || dsId; }
   }
-  return JSON.parse(res.getContentText());
+  if (status !== 'SUCCEEDED') throw new Error('Apify 시간초과(' + Math.round(budget/1000) + 's, status=' + status + '). 키워드/건수 줄여 재시도.');
+  var itRes = UrlFetchApp.fetch('https://api.apify.com/v2/datasets/' + dsId + '/items?clean=true&token=' + token, { muteHttpExceptions: true });
+  if (itRes.getResponseCode() !== 200) throw new Error('Apify 데이터셋 실패 ' + itRes.getResponseCode());
+  return JSON.parse(itRes.getContentText());
 }
 
 // Pass1: 키워드 검색 → 유니크 채널
@@ -187,7 +194,7 @@ function pplDiscoverChannels_(keywords, perKeyword) {
     maxResultStreams: 0,
     sortingOrder: 'relevance'
   };
-  var items = pplFetchApify_(input);
+  var items = pplFetchApify_(input, PPL_BUDGET_P1);
   var map = {};   // urlKey -> {channelUrl, channelName, topicTags:Set}
   (items || []).forEach(function (it) {
     if (it && it.error) return;
@@ -207,6 +214,7 @@ function pplDiscoverChannels_(keywords, perKeyword) {
 
 // Pass2: 채널 URL 보강 (구독자·설명·위치·최신업로드)
 function pplEnrichChannels_(channelUrls) {
+  channelUrls = channelUrls.slice(0, PPL_MAX_ENRICH);   // 6분 제한 방어
   var startUrls = channelUrls.map(function (u) { return { url: pplChannelVideosUrl_(u) }; });
   var input = {
     startUrls: startUrls,
@@ -215,7 +223,7 @@ function pplEnrichChannels_(channelUrls) {
     maxResultStreams: 0,
     sortVideosBy: 'NEWEST'
   };
-  var items = pplFetchApify_(input);
+  var items = pplFetchApify_(input, PPL_BUDGET_P2);
   var out = {};
   (items || []).forEach(function (it) {
     if (!it || it.error) return;
