@@ -402,7 +402,7 @@ function setupDanggnTrigger() {
  * Code.js onOpen에서 buildDanggnSyncMenu_(SpreadsheetApp.getUi()) 호출.
  */
 function buildDanggnSyncMenu_(ui) {
-  ui.createMenu('🟠 당근')
+  ui.createMenu('당근')
     .addItem('🔄 동기화 (GA4 매칭·전체)', 'syncDanggnGA4')
     .addSeparator()
     .addItem('🆕 시트 신설 / 헤더 갱신', 'createDanggnIntegratedSheet')

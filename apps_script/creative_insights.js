@@ -95,7 +95,7 @@ function setupBenchmarkTrigger() {
 
 // ============ 메뉴 ============
 function buildCreativeInsightsMenu_(ui) {
-  ui.createMenu('🎨 소재 인사이트')
+  ui.createMenu('소재 인사이트')
     .addItem('🏆 소재 A/B 평가 지금 실행', 'analyzeCreativePerformance')
     .addSeparator()
     .addItem('🔍 벤치마크 자동수집 지금 실행', 'syncBenchmarkScheduled')

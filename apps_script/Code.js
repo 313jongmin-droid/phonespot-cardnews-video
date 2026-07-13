@@ -153,7 +153,7 @@ function fixDateColumnWidths() {
 
 function onOpen() {
   SpreadsheetApp.getUi()
-    .createMenu('🚀 ' + getBrandConfig_('BRAND_NAME', '폰스팟') + ' 통합')
+    .createMenu(getBrandConfig_('BRAND_NAME', '폰스팟') + ' 통합')
     .addItem('⚡ 전체 새로고침 (모든 채널)', 'refreshAll')
     .addSeparator()
     .addItem('🔄 GA4 최신 데이터 가져오기 (어제)', 'fetchGA4Daily')

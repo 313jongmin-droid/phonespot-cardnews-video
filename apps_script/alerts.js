@@ -293,7 +293,7 @@ function setupWeeklyReportTrigger() {
 
 // ============ 알림 메뉴 ============
 function buildAlertsMenu_(ui) {
-  ui.createMenu('🔔 알림/모니터링')
+  ui.createMenu('알림/모니터링')
     .addItem('🩺 헬스체크 지금 실행', 'runHealthCheckMenu')
     .addItem('🎯 목표 경고 지금 점검', 'checkAdTargets_')
     .addItem('☀️ 아침 브리핑 지금 보내기', 'sendMorningBriefing')

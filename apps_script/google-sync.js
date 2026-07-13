@@ -149,7 +149,7 @@ function setupGoogleTrigger() {
 
 // ============ 메뉴 ============
 function buildGoogleSyncMenu_(ui) {
-  const m = ui.createMenu('🔵 구글');
+  const m = ui.createMenu('구글');
   if (typeof syncGoogleAdsData === 'function') {
     m.addItem('🔄 동기화 (Ads·최근 7일)', 'syncGoogleAdsData')
       .addItem('⏪ 전체 백필 (Ads·최근 30일)', 'syncGoogleAdsData30')

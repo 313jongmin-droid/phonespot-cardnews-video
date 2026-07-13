@@ -64,7 +64,7 @@ const ADGROUP_TREND_CHANNELS = {
 
 // 메뉴 빌더 — Code.js의 onOpen에서 try-catch로 호출
 function buildAdgroupTrendMenu_(ui) {
-  ui.createMenu('📊 광고그룹 추이')
+  ui.createMenu('광고그룹 추이')
     .addItem('🆕 차트 셋업 (1회)', 'setupAdgroupTrendChart')
     .addItem('🔄 추이 갱신 (수동)', 'refreshAdgroupTrendChart')
     .addItem('⚡ 토글 자동갱신 켜기 (1회)', 'setupAdgroupEditTrigger')

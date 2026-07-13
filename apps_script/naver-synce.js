@@ -592,7 +592,7 @@ function showUnmappedNaverAdgroups() {
 
 
 function buildNaverSyncMenu_(ui) {
-  ui.createMenu('🟢 네이버')
+  ui.createMenu('네이버')
     .addItem('🔄 동기화 (최근 7일)', 'syncNaverIntegrated')
     .addSeparator()
     .addItem('🔍 미매핑 광고그룹 보기', 'showUnmappedNaverAdgroups')

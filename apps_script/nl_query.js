@@ -62,7 +62,7 @@ function askSheetQuestion() {
 }
 
 function buildNlQueryMenu_(ui) {
-  ui.createMenu('🤖 데이터 질문')
+  ui.createMenu('데이터 질문')
     .addItem('💬 광고 데이터에 질문하기', 'askSheetQuestion')
     .addToUi();
 }
