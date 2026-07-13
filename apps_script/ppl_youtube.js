@@ -451,3 +451,11 @@ function pplOpenSheet() {
   var sheet = pplGetOrCreateSheet_();
   SpreadsheetApp.getActive().setActiveSheet(sheet);
 }
+
+// ───────────────────────── 디버그 ─────────────────────────
+// 메뉴가 안 뜰 때: 에디터에서 이 함수 직접 실행(▶). try/catch 없이 메뉴를 그려서
+// 에러가 있으면 실행 로그에 그대로 노출. 성공하면 시트에 '🎯 유튜브 협찬발굴' 메뉴가 붙음.
+function pplTestMenu() {
+  buildPplYoutubeMenu_(SpreadsheetApp.getUi());
+  return '✅ buildPplYoutubeMenu_ 실행 성공 — 시트 상단에 메뉴가 붙어야 함';
+}
