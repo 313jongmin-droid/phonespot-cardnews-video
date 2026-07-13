@@ -85,6 +85,28 @@ APIFY_TOKEN·GEMINI_API_KEY = PropertiesService(클라우드, PC 이식 무관).
 이번 요청: [보류 ①컨셉_뱅크 구현 / ②코어 hard-lock / ③L2 지역설정 시트 / 라이브러리 탭 ____ 기능 추가 / 버그 ____].
 ```
 
+## ⑧ 유튜브 협찬(PPL) 대상 발굴 + 제안 메일 초안 — 신규 트랙
+
+```
+유튜브 PPL 협찬 발굴 task. 정본 = _docs/PPL_YOUTUBE_OUTREACH_GUIDE.md.
+범위 1-b: 채널 발굴 → 시트 정리 → 채널별 제안 메일 초안 자동 작성. 발송은 수동(유튜브 정책).
+비용: Data API 무료($0). Apify는 나중(3-b)만.
+
+[발굴 도구] 경로 B(즉시) = 이 세션 YouTube Data MCP(search_videos / get_channel_details / get_channel_statistics / get_channel_top_videos).
+경로 A(상주) = Apps Script Advanced YouTube Service(YouTube.Search.list + Channels.list, 새 키 불필요).
+※ 기존 youtube_sync.js는 본인채널(mine:true) 전용 → 발굴엔 못 씀.
+
+[로직] 주제 키워드(휴대폰 리뷰/자급제/통신비/개통/알뜰폰/성지) regionCode=KR → channelId 수집 → 통계 →
+규모 필터(★선택: 마이크로 1만~10만 / 중형 10만~50만 / 무관) → 적합도 점수(주제·활성도·참여도) → 등급.
+이메일 = 설명란 정규식 파싱만(3-a, 수집률 낮음). 채널 이메일 필드는 API에 없음.
+
+[산출] 시트 '유튜브_협찬발굴'(17열: 채널ID~발굴일, O열=제안초안, P열=상태). 제안초안 = Gemini/Claude 개인화 1문단 + 폰스팟 협찬조건 템플릿(과장 금지). 발송 수동(이메일), 자동 DM ❌.
+
+[단계] L1 지금 = MCP로 키워드 발굴 → 필터 → 시트 채우기 → 초안. L2 = Apps Script 상주화. L3 = Apify 연락처 보강.
+
+이번 요청: [키워드 = ____ , 규모 = 마이크로/중형/무관 중 ____ 로 L1 발굴 N건 + 제안초안]
+```
+
 ---
 
 ## 추가 트랙 (목록 외, 필요 시)

@@ -607,7 +607,8 @@ def article_title(slug: str) -> str:
         return ""
     try:
         data = json.loads(path.read_text(encoding="utf-8", errors="replace"))
-        return data.get("title", "") or ""
+        # 제목은 SNS 캡션 제목과 동일한 한글 title. 목록엔 첫 구절(/ 앞)만 깔끔하게. (2026-07-09)
+        return (data.get("title", "") or "").split("/")[0].strip()
     except Exception:
         return ""
 

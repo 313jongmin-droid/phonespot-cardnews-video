@@ -566,28 +566,42 @@
       ]
     },
     "043_pick_galaxy_unpacked_722": {
-      "used_at": "2026-07-10T18:19:52",
-      "source": "uploaded_illustrations",
+      "used_at": "2026-07-10T18:44:40",
+      "source": "semantic_visual_match",
       "illustrations": [
         "appear_e5f828cc",
+        "basic_fold_202d754f",
         "document_article",
         "forecast",
-        "budget_choice_42fbdd85",
+        "foldable",
         "event_period_8cafdac4",
-        "cpt_da94c5b9",
+        "budget_choice_42fbdd85",
+        "self_flip_6728256c",
+        "final_update",
+        "london_unpack_eb61ad77",
         "mid_release_98cab19a",
         "smartphone",
-        "cpt_dca98748",
-        "cpt_cecbbc92",
+        "phone_setup_ready",
         "display_maintenance_c1ff39c1",
         "phone_settings_toggle",
         "gift_voucher",
         "device_os_requirement",
         "device_data_transfer"
       ]
+    },
+    "044_news_chipflation_price": {
+      "used_at": "2026-07-10T18:47:08",
+      "source": "codex_enhance",
+      "illustrations": [
+        "smartphone",
+        "aluminum_label",
+        "appear_e5f828cc",
+        "apple_70385068",
+        "appliance"
+      ]
     }
   },
-  "updated_at": "2026-07-10T18:19:53",
+  "updated_at": "2026-07-10T18:47:15",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -712,7 +726,11 @@
       "variants": []
     },
     "043_pick_galaxy_unpacked_722": {
-      "updated_at": "2026-07-10T18:19:53",
+      "updated_at": "2026-07-10T18:44:44",
+      "variants": []
+    },
+    "044_news_chipflation_price": {
+      "updated_at": "2026-07-10T18:47:15",
       "variants": []
     }
   }

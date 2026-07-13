@@ -1,0 +1,274 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=860, initial-scale=1"><title>폰스팟 서비스 소개</title><style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--ink:#17172A;--accent:#FF5A1F;--accent2:#FF8A3D;--peach:#FFF3EC;--peach2:#FFE7D6;--muted:#6B7280;--line:#ECE6E0;--skt:#3617CE;--lg:#E6007E;--good:#17A66B;}
+body{font-family:"Noto Sans KR","Malgun Gothic","Noto Sans CJK KR",sans-serif;color:var(--ink);background:#E9E6E2;}
+.sheet{width:860px;margin:0 auto;background:#fff;box-shadow:0 0 40px rgba(0,0,0,.08);}
+.band{padding:56px 60px;}
+.band.peach{background:linear-gradient(170deg,#FFF6EF,#FFE7D6);}
+.band.gray{background:#F7F6F4;}
+.band.dark{background:#17172A;}
+.center{text-align:center;}
+.s-tag{font-size:13px;font-weight:800;color:var(--accent);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;}
+.s-title{font-size:30px;font-weight:900;letter-spacing:-1px;line-height:1.3;}
+.s-lead{margin-top:14px;font-size:15px;color:var(--muted);line-height:1.7;}
+.divider{width:44px;height:4px;border-radius:3px;background:var(--accent);margin:14px auto 0;}
+.try-tag{display:inline-block;background:var(--accent);color:#fff;font-size:12px;font-weight:800;border-radius:999px;padding:5px 14px;margin-bottom:12px;}
+.brand{display:flex;align-items:center;justify-content:center;gap:11px;margin-bottom:30px;}
+.logo-dot{width:38px;height:38px;border-radius:11px;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:20px;}
+.brand-name{font-size:24px;font-weight:800;letter-spacing:-.5px;}
+.hero-h{font-size:52px;font-weight:900;line-height:1.14;letter-spacing:-1.5px;}
+.hero-h .o{color:var(--accent);}
+.hero-sub{margin-top:20px;font-size:18px;color:#5a4a40;line-height:1.6;font-weight:500;}
+.hero-meta{margin-top:26px;font-size:13px;color:#8a7a6c;}
+.hero-meta b{color:var(--ink);}
+.askq{font-size:20px;font-weight:800;line-height:1.55;margin:6px 0 26px;}
+.bubble-wrap{max-width:560px;margin:0 auto;}
+.bubble-row{display:flex;margin-bottom:14px;}
+.bubble-row.r{justify-content:flex-end;}
+.bubble{display:inline-flex;align-items:center;gap:13px;background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:13px 20px;box-shadow:0 4px 12px rgba(0,0,0,.06);}
+.av{position:relative;width:34px;height:34px;border-radius:50%;background:#ECE7E1;overflow:hidden;flex:0 0 auto;}
+.av .h{position:absolute;top:6px;left:50%;margin-left:-5.5px;width:11px;height:11px;border-radius:50%;background:#AEA49A;}
+.av .b{position:absolute;bottom:-8px;left:50%;margin-left:-11px;width:22px;height:17px;border-radius:50%;background:#AEA49A;}
+.bubble span.tx{font-size:15px;font-weight:700;}
+.bridge{text-align:center;margin:28px 0 6px;}
+.bridge .a{font-size:22px;font-weight:900;letter-spacing:-.5px;}
+.bridge .b{font-size:16px;color:var(--accent);font-weight:800;margin-top:7px;}
+.grid2{display:flex;flex-wrap:wrap;gap:16px;margin-top:28px;text-align:left;}
+.gi{width:calc(50% - 8px);background:#fff;border:1.5px solid var(--line);border-radius:15px;padding:20px 22px;display:flex;gap:14px;align-items:flex-start;}
+.gi .ic{width:44px;height:44px;border-radius:12px;background:var(--peach);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:var(--accent);flex:0 0 auto;}
+.gi h4{font-size:16px;font-weight:800;}
+.gi p{font-size:13px;color:var(--muted);line-height:1.5;margin-top:4px;}
+.grid3{display:flex;gap:16px;margin-top:28px;text-align:left;}
+.gcard{flex:1;background:#fff;border:1.5px solid var(--line);border-radius:15px;padding:22px;text-align:center;}
+.gcard .ic{width:46px;height:46px;border-radius:12px;background:var(--peach);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:var(--accent);margin:0 auto 12px;}
+.gcard h4{font-size:16px;font-weight:800;margin-bottom:6px;}
+.gcard p{font-size:12.5px;color:var(--muted);line-height:1.55;}
+.legend{margin-top:24px;display:flex;flex-wrap:wrap;gap:14px 24px;text-align:left;}
+.lg{width:calc(50% - 12px);font-size:13.5px;color:#3A3A48;line-height:1.5;display:flex;gap:9px;align-items:flex-start;}
+.lg .mk{flex:0 0 auto;margin-top:1px;}
+.mk{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:12.5px;font-weight:800;}
+.lg b{color:var(--ink);}
+.legend.one .lg{width:100%;}
+/* interactive widget */
+.widget{border:1.5px solid #E7E1DB;border-radius:18px;overflow:hidden;box-shadow:0 14px 34px rgba(23,23,42,.10);background:#fff;margin-top:26px;text-align:left;}
+.w-hero{background:linear-gradient(160deg,#FFF6EF,#FFE3CE);padding:22px 24px;text-align:center;}
+.w-hero .t{font-size:23px;font-weight:900;letter-spacing:-.5px;}
+.w-hero .t b{color:var(--accent);}
+.w-hero .s{font-size:13px;color:#6a5a50;margin-top:7px;}
+.filters{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:15px;}
+.flabel{font-size:12px;color:#8a8a94;font-weight:700;align-self:center;}
+.chip{font-size:12.5px;font-weight:800;border:1.5px solid var(--line);border-radius:9px;padding:7px 13px;background:#fff;color:#555;cursor:pointer;}
+.chip.on{border-color:var(--accent);color:var(--accent);}
+.list{padding:16px 18px;display:flex;flex-direction:column;gap:12px;}
+.pcard{border:1.5px solid var(--line);border-radius:14px;padding:15px;display:flex;align-items:center;gap:15px;cursor:pointer;transition:.12s;}
+.pcard:hover{border-color:var(--accent);box-shadow:0 6px 16px rgba(255,90,31,.13);}
+.pcard.sel{border-color:var(--accent);background:#FFF9F5;}
+.pmock{width:40px;height:60px;border:3px solid var(--accent);border-radius:9px;position:relative;flex:0 0 auto;}
+.pmock::before{content:"";position:absolute;top:6px;left:50%;transform:translateX(-50%);width:12px;height:2.5px;border-radius:2px;background:var(--accent2);}
+.pcard .nm{font-size:16px;font-weight:800;}
+.pcard .lo{font-size:12px;color:var(--muted);margin-top:3px;}
+.pcard .lo b{color:var(--accent);}
+.pcard .go{margin-left:auto;color:#c9c2ba;font-size:22px;font-weight:800;}
+.mfr-tag{font-size:10px;color:#a9a29a;background:#F4F1ED;border-radius:5px;padding:2px 6px;margin-left:8px;}
+.dtop{padding:16px 18px 0;}
+.dtitle{font-size:21px;font-weight:900;}
+.dsub{font-size:12.5px;color:#8a8a94;margin-top:3px;}
+.dbadge{display:inline-block;font-size:11px;font-weight:800;color:var(--accent);background:var(--peach);border-radius:999px;padding:3px 11px;margin-bottom:7px;}
+.sec{padding:16px 18px;}
+.seclab{font-size:12px;color:#8a8a94;font-weight:700;margin-bottom:10px;}
+.seclab .h{color:var(--accent);}
+.tabs{display:flex;background:#F1EEEA;border-radius:12px;padding:4px;}
+.tab{flex:1;text-align:center;font-size:13.5px;font-weight:800;padding:11px 0;border-radius:9px;color:#8a8a94;cursor:pointer;}
+.tab.on{background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.08);}
+.chrow{margin-top:11px;border:1.5px solid var(--peach2);background:var(--peach);border-radius:12px;padding:12px 15px;display:flex;align-items:center;gap:10px;}
+.chrow .low{font-size:10px;font-weight:800;color:#fff;background:var(--accent);border-radius:6px;padding:2px 8px;}
+.chrow .buy{margin-left:auto;font-size:13.5px;font-weight:900;}
+.plans{display:flex;flex-direction:column;gap:9px;}
+.plan{display:flex;align-items:center;border-radius:12px;padding:13px 15px;border:1.5px solid var(--line);background:#F8F7F6;cursor:pointer;}
+.plan.on{background:var(--peach);border-color:var(--accent);}
+.plan .pn{font-size:13.5px;font-weight:800;}
+.plan .pm{font-size:11px;color:#8a8a94;margin-top:2px;}
+.plan .low{font-size:9.5px;font-weight:800;color:#fff;background:var(--accent);border-radius:5px;padding:1px 6px;margin-left:6px;}
+.plan .pr{margin-left:auto;text-align:right;}
+.plan .pr .v{font-size:15px;font-weight:900;}
+.plan .pr .u{font-size:10px;color:#8a8a94;}
+.caps{display:flex;gap:9px;}
+.cap{font-size:12px;font-weight:800;border:1.5px solid var(--line);border-radius:9px;padding:7px 16px;color:#555;cursor:pointer;background:#fff;}
+.cap.on{background:var(--peach);border-color:var(--accent);color:var(--accent);}
+.summary{background:#fff;border-top:9px solid #F3F1EE;padding:18px;}
+.stop{display:flex;justify-content:space-between;align-items:baseline;}
+.stop .l{font-size:13px;color:#8a8a94;font-weight:700;}
+.stop .big{font-size:28px;font-weight:900;color:var(--accent);letter-spacing:-1px;}
+.mon{font-size:13px;color:#555;margin-top:9px;}
+.mon b{color:var(--ink);}
+.mon .g{color:#9a9aa2;}
+.brk{margin-top:13px;border:1.5px solid var(--line);border-radius:13px;padding:14px 16px;}
+.brow{display:flex;justify-content:space-between;font-size:13px;padding:7px 0;border-bottom:1px dashed var(--line);}
+.brow .v{font-weight:700;}
+.brow.m .v{color:var(--good);}
+.brow.tot{border-bottom:none;border-top:2px solid var(--ink);margin-top:3px;padding-top:11px;}
+.brow.tot .k{font-weight:900;}.brow.tot .v{font-size:17px;font-weight:900;color:var(--accent);}
+.kko{margin-top:13px;background:linear-gradient(135deg,#FFE45C,#FFD400);border-radius:12px;padding:14px;text-align:center;cursor:pointer;}
+.kko b{font-size:14px;font-weight:900;color:#2a2400;}
+.hint{font-size:11px;color:#a0a0a8;margin-top:9px;}
+.steps{display:flex;gap:12px;margin-top:28px;}
+.step{flex:1;background:#fff;border:1.5px solid var(--line);border-radius:15px;padding:22px 16px;text-align:center;position:relative;}
+.step .sn{width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;font-weight:900;font-size:15px;display:flex;align-items:center;justify-content:center;margin:0 auto 11px;}
+.step h5{font-size:15px;font-weight:800;margin-bottom:6px;}
+.step p{font-size:12.5px;color:var(--muted);line-height:1.5;}
+.step .arw{position:absolute;right:-9px;top:50%;transform:translateY(-50%);color:var(--accent2);font-weight:900;font-size:18px;}
+.notice{margin-top:28px;background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:24px 26px;text-align:left;}
+.notice h3{font-size:16px;font-weight:800;margin-bottom:13px;}
+.notice ul{list-style:none;}
+.notice li{font-size:13.5px;color:#3A3A48;line-height:1.55;margin-bottom:9px;padding-left:19px;position:relative;}
+.notice li::before{content:"\2022";color:var(--accent);position:absolute;left:3px;font-weight:900;}
+.notice li:last-child{margin-bottom:0;}
+.cta-h{font-size:30px;font-weight:900;color:#fff;letter-spacing:-1px;line-height:1.3;}
+.cta-h .o{color:var(--accent2);}
+.cta-sub{font-size:15px;color:#C9C7D6;margin-top:14px;line-height:1.6;}
+.cta-btn{display:inline-block;margin-top:26px;background:var(--accent);color:#fff;font-size:17px;font-weight:900;border-radius:999px;padding:16px 42px;text-decoration:none;cursor:pointer;}
+.cta-foot{margin-top:22px;font-size:12.5px;color:#8f8da0;line-height:1.7;}
+.cta-foot b{color:#fff;}
+
+.browser{border:2.5px solid var(--accent);border-radius:16px;overflow:hidden;box-shadow:0 0 0 6px rgba(255,90,31,.10),0 20px 44px rgba(23,23,42,.16);background:#fff;margin-top:26px;text-align:left;animation:frameGlow 2.6s ease-in-out infinite;}
+@keyframes frameGlow{0%,100%{box-shadow:0 0 0 6px rgba(255,90,31,.10),0 20px 44px rgba(23,23,42,.16);}50%{box-shadow:0 0 0 11px rgba(255,90,31,.17),0 22px 46px rgba(23,23,42,.19);}}
+.bbar{display:flex;align-items:center;gap:9px;background:#26262F;padding:11px 15px;}
+.bdots{display:flex;gap:6px;}
+.bdots i{width:11px;height:11px;border-radius:50%;display:inline-block;}
+.burl{flex:1;background:#3a3a46;color:#d6d6e4;font-size:12px;border-radius:8px;padding:6px 14px;text-align:center;font-weight:600;}
+.blive{color:#fff;font-size:11px;font-weight:800;background:var(--accent);border-radius:999px;padding:4px 11px;white-space:nowrap;}
+.blive .pd{display:inline-block;width:7px;height:7px;border-radius:50%;background:#fff;margin-right:5px;vertical-align:middle;animation:blink 1.1s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.click-hint{margin-top:13px;font-size:13px;color:var(--accent);font-weight:800;text-align:center;}
+.click-hint .k{display:inline-block;background:var(--peach);border:1.5px solid var(--peach2);border-radius:999px;padding:7px 16px;}
+</style></head><body><div class="sheet">
+<div class="band peach center">
+  <div class="brand"><span class="logo-dot">P</span><span class="brand-name">폰스팟 <span style="color:var(--accent)">PHONESPOT</span></span></div>
+  <div class="hero-h">휴대폰,<br><span class="o">정직한 가격</span>으로.</div>
+  <div class="hero-sub">통신사·기종별 실구매가를 한눈에 비교하고 바로 신청하는<br>휴대폰 셀프가입 서비스</div>
+  <div class="hero-meta">서비스 <b>citymarket.co.kr/pspot</b> · <b>폰스팟(PHONESPOT)</b> · KAIT 사전승낙 정식 휴대폰 판매점</div>
+</div>
+<div class="band center">
+  <div class="s-tag">Why we started · 출범 배경</div>
+  <div class="s-title">왜 폰스팟을 만들었나</div><div class="divider"></div>
+  <div class="askq" style="margin-top:26px;">아직도 더 저렴한 조건을 찾으려<br>수많은 커뮤니티를 떠돌며 발품을 팔고 계신가요?</div>
+  <div class="bubble-wrap">
+    <div class="bubble-row"><div class="bubble"><span class="av"><span class="h"></span><span class="b"></span></span><span class="tx">알아보는데 시간이 너무 소요돼요.</span></div></div>
+    <div class="bubble-row r"><div class="bubble"><span class="av"><span class="h"></span><span class="b"></span></span><span class="tx">허위 광고가 걱정돼요.</span></div></div>
+    <div class="bubble-row"><div class="bubble"><span class="av"><span class="h"></span><span class="b"></span></span><span class="tx">가격표가 알아보기 어려워요.</span></div></div>
+  </div>
+  <div class="bridge"><div class="a">가장 가까운 '성지'를 대신 찾아드립니다.</div><div class="b">이제 폰스팟에서 해결하세요.</div></div>
+</div>
+<div class="band gray center">
+  <div class="s-title" style="font-size:26px;">"폰스팟은 다릅니다"</div>
+  <div class="s-lead">그래서 정한 4가지 원칙</div>
+  <div class="grid2">
+    <div class="gi"><span class="ic">성지</span><div><h4>가까운 성지 자동 매칭</h4><p>주변 판매처 정보를 비교해 가장 합리적인 선택지를 쉽게 찾습니다.</p></div></div>
+    <div class="gi"><span class="ic">통합</span><div><h4>통합된 가격표 제공</h4><p>성지마다 제각각인 복잡한 가격표를 하나로 통일해 한눈에 보여줍니다.</p></div></div>
+    <div class="gi"><span class="ic" style="font-size:11px;">실조건</span><div><h4>추가 조건 없이 그대로</h4><p>기기 반납·카드 할부 강요 없이, 제시된 가격 그대로 개통 가능한 실조건만 안내합니다.</p></div></div>
+    <div class="gi"><span class="ic">안전</span><div><h4>개통 후 입금 진행</h4><p>선입금 없이 개통 후 정산하는 방식으로 안전한 거래를 보장합니다.</p></div></div>
+  </div>
+</div>
+<div class="band center">
+  <div class="s-tag">Overview</div><div class="s-title">폰스팟은 이런 서비스입니다</div><div class="divider"></div>
+  <div class="s-lead">복잡한 휴대폰 구매를 '가격조회 → 비교 → 신청' 세 단계로 단순화했습니다.<br>회원가입도 방문도 없이, 웹에서 비교하고 카카오톡으로 신청까지 끝냅니다.</div>
+  <div class="grid3">
+    <div class="gcard"><div class="ic">투명</div><h4>가격을 숨기지 않습니다</h4><p>출고가부터 공시지원금·추가지원금·자체할인까지 전 항목을 공개하고 실구매가를 그대로 보여줍니다.</p></div>
+    <div class="gcard"><div class="ic">비교</div><h4>전 통신사·전 기종</h4><p>SKT·KT·LG U+·알뜰폰과 아이폰·갤럭시 최신 기종을 번호이동·기기변경별로 비교합니다.</p></div>
+    <div class="gcard"><div class="ic">정식</div><h4>KAIT 정식 판매점</h4><p>SKT·KT·LG U+ 사전승낙을 받은 정식 판매점. 개통은 통신사 공식 대리점을 통해 진행됩니다.</p></div>
+  </div>
+</div>
+<div class="band gray center">
+  <span class="try-tag">직접 눌러보세요</span>
+  <div class="s-tag">Screen 1 · 메인 가격비교</div>
+  <div class="s-title">기종별 최저가를 한눈에</div><div class="divider"></div>
+  <div class="s-lead">아래는 실제 화면을 재현한 작동 위젯입니다. 제조사 필터를 누르고, 기종을 클릭하면 상세 비교로 이어집니다.</div>
+  <div class="browser"><div class="bbar"><span class="bdots"><i style="background:#FF5F57"></i><i style="background:#FEBC2E"></i><i style="background:#28C840"></i></span><span class="burl">citymarket.co.kr/pspot</span><span class="blive"><span class="pd"></span>실시간 작동</span></div><div id="wList"></div></div>
+  <div class="click-hint"><span class="k">↑ 필터·기종 카드를 직접 눌러보세요</span></div>
+  <div class="legend">
+    <div class="lg"><span class="mk">1</span><span><b>제조사 필터</b> — 전체·삼성·애플 칩을 눌러 원하는 기종만 추립니다.</span></div>
+    <div class="lg"><span class="mk">2</span><span><b>기종 카드</b> — 카드마다 최저 실구매가가 표시됩니다. 클릭하면 상세 비교로 이동합니다.</span></div>
+  </div>
+</div>
+
+<div class="band center" id="detailBand">
+  <span class="try-tag">탭·요금제를 눌러보세요</span>
+  <div class="s-tag">Screen 2 · 채널·요금제·가격 상세</div>
+  <div class="s-title">채널·요금제마다 실시간 재계산</div><div class="divider"></div>
+  <div class="s-lead">온라인/오프라인(광교점) 탭과 요금제를 바꾸면 예상 실구매가와 가격 상세가 즉시 다시 계산됩니다.</div>
+  <div class="browser"><div class="bbar"><span class="bdots"><i style="background:#FF5F57"></i><i style="background:#FEBC2E"></i><i style="background:#28C840"></i></span><span class="burl">citymarket.co.kr/pspot &middot; 단말기 상세</span><span class="blive"><span class="pd"></span>실시간 작동</span></div><div id="wDetail"></div></div>
+  <div class="click-hint"><span class="k">↑ 온라인/오프라인 탭·요금제를 눌러 가격이 바뀌는지 보세요</span></div>
+  <div class="legend">
+    <div class="lg"><span class="mk">1</span><span><b>판매 채널 전환</b> — 온라인·오프라인(광교점) 탭마다 최저가와 실구매가가 즉시 바뀝니다.</span></div>
+    <div class="lg"><span class="mk">2</span><span><b>요금제 선택</b> — 요금제에 따라 지원금·실구매가가 달라지고 최저가 요금제가 표시됩니다.</span></div>
+    <div class="lg"><span class="mk">3</span><span><b>가격 100% 공개</b> — 출고가→공통·추가지원금→자체할인→실구매가 계산이 실시간 반영됩니다.</span></div>
+    <div class="lg"><span class="mk">4</span><span><b>월 납부액</b> — 요금 + 단말 할부금을 합친 월 예상 납부액이 자동 계산됩니다.</span></div>
+  </div>
+</div>
+<div class="band gray center">
+  <div class="s-tag">How to use</div><div class="s-title">이렇게 이용합니다</div><div class="divider"></div>
+  <div class="s-lead">회원가입도, 방문도 필요 없습니다. 세 단계면 끝납니다.</div>
+  <div class="steps">
+    <div class="step"><div class="sn">1</div><h5>기종·통신사 선택</h5><p>원하는 휴대폰과 통신사를 고릅니다.</p><span class="arw">›</span></div>
+    <div class="step"><div class="sn">2</div><h5>채널·요금제 비교</h5><p>채널·지점·요금제별 실구매가와 상세를 확인합니다.</p><span class="arw">›</span></div>
+    <div class="step"><div class="sn">3</div><h5>카카오톡 신청</h5><p>조건을 골라 카톡으로 바로 상담·신청합니다.</p></div>
+  </div>
+  <div class="notice">
+    <h3>서비스 안내</h3>
+    <ul>
+      <li>폰스팟은 KAIT 사전승낙을 받은 <b>정식 휴대폰 판매점</b>입니다. (SKT·KT·LG U+ 사전승낙서 보유)</li>
+      <li>개통은 사전승낙서에 기재된 <b>통신사 공식 대리점</b>을 통해 안전하게 진행됩니다.</li>
+      <li>표시 가격은 <b>공시지원금 기준</b>이며, 판매 채널·지점·요금제·조건에 따라 실제 금액은 달라질 수 있습니다.</li>
+      <li>할인 금액은 <b>매일 업데이트</b>되며, 위젯의 표시 수치는 예시입니다. 실제 견적은 사이트에서 확인하세요.</li>
+    </ul>
+  </div>
+</div>
+<div class="band dark center">
+  <div class="cta-h">내 손안의 휴대폰 성지,<br>이제 <span class="o">폰스팟</span>에서 시작하세요.</div>
+  <div class="cta-sub">전국 통신사 휴대폰 가격을 투명하게 비교하는 셀프가입 서비스</div>
+  <a class="cta-btn" href="https://citymarket.co.kr/pspot" target="_blank" rel="noopener">실제 화면에서 내 폰 가격 확인하기 ▶</a>
+  <div class="cta-foot"><b>citymarket.co.kr/pspot</b> · 카카오톡 채널 상담 운영<br>폰스팟(PHONESPOT) · KAIT 사전승낙 정식 휴대폰 판매점</div>
+</div>
+</div><!--/sheet-->
+<script>
+const won=n=>n.toLocaleString('ko-KR')+'원';
+const MODELS=[
+ {id:'ip17pm',name:'아이폰17프로맥스',mfr:'apple',ship:1980000,base:{gong:201000,add:200000},combo:{'online-110':1154000,'online-90':1305000,'offline-110':1379000,'offline-90':1500000}},
+ {id:'ip17',name:'아이폰17',mfr:'apple',ship:1287000,base:{gong:300000,add:250000},combo:{'online-110':147000,'online-90':320000,'offline-110':400000,'offline-90':560000}},
+ {id:'s25',name:'갤럭시 S25',mfr:'samsung',ship:1155000,base:{gong:250000,add:250000},combo:{'online-110':0,'online-90':165000,'offline-110':300000,'offline-90':435000}},
+ {id:'zflip7',name:'갤럭시 Z플립7',mfr:'samsung',ship:1485000,base:{gong:300000,add:250000},combo:{'online-110':330000,'online-90':515000,'offline-110':620000,'offline-90':780000}},
+];
+const PLANS={'110':{name:'초이스110 넷플릭스',fee:110000},'90':{name:'초이스90 넷플릭스',fee:90000}};
+const CH={'online':{name:'온라인',low:'온라인 최저가'},'offline':{name:'오프라인',low:'오프라인(광교점) 최저가'}};
+let S={mfr:'all',model:'ip17pm',ch:'online',plan:'110',cap:'256'};
+function calc(m,ch,plan){const price=m.combo[ch+'-'+plan];const gong=m.base.gong,add=m.base.add;const self=Math.max(0,m.ship-gong-add-price);const fee=PLANS[plan].fee;const halbu=Math.round(price/24);return{price,gong,add,self,fee,halbu,month:fee+halbu};}
+function channelLow(m,ch){return Math.min(m.combo[ch+'-110'],m.combo[ch+'-90']);}
+function renderList(){
+ const items=MODELS.filter(m=>S.mfr==='all'||m.mfr===S.mfr).map(m=>{const lo=Math.min(...Object.values(m.combo));const t=lo===0?'기기공짜':won(lo)+'~';
+  return `<div class="pcard ${S.model===m.id?'sel':''}" onclick="pick('${m.id}')"><div class="pmock"></div><div><div class="nm">${m.name}<span class="mfr-tag">${m.mfr==='apple'?'애플':'삼성'}</span></div><div class="lo">최저 <b>${t}</b> · 눌러서 채널·요금제 비교</div></div><div class="go">›</div></div>`;}).join('');
+ const chip=(v,t)=>`<span class="chip ${S.mfr===v?'on':''}" onclick="setMfr('${v}')">${t}</span>`;
+ document.getElementById('wList').innerHTML=`<div class="w-hero"><div class="t">휴대폰, <b>정직한 가격</b>으로.</div><div class="s">통신사·기종별 실구매가를 한눈에 비교하고 바로 신청하세요.</div><div class="filters"><span class="flabel">제조사</span>${chip('all','전체')}${chip('samsung','삼성')}${chip('apple','애플')}</div></div><div class="list">${items}</div>`;
+}
+function renderDetail(){
+ const m=MODELS.find(x=>x.id===S.model);const c=calc(m,S.ch,S.plan);
+ const tab=v=>`<div class="tab ${S.ch===v?'on':''}" onclick="setCh('${v}')">${CH[v].name}</div>`;
+ const planRow=p=>{const cc=calc(m,S.ch,p);const low=cc.price===channelLow(m,S.ch);return `<div class="plan ${S.plan===p?'on':''}" onclick="setPlan('${p}')"><div><div class="pn">${PLANS[p].name}${low?'<span class="low">최저가</span>':''}</div><div class="pm">월정액 ${won(PLANS[p].fee)}</div></div><div class="pr"><div class="v">${cc.price===0?'0원':won(cc.price)}</div><div class="u">실구매가</div></div></div>`;};
+ const cap=v=>`<span class="cap ${S.cap===v?'on':''}" onclick="setCap('${v}')">${v}GB</span>`;
+ document.getElementById('wDetail').innerHTML=`<div class="dtop"><div class="dbadge">● ${m.name} · 구매 상담 신청</div><div class="dtitle">${m.name}</div><div class="dsub">판매 채널·요금제를 선택해 예상 실구매가를 확인하세요.</div></div>
+ <div class="sec"><div class="seclab">판매 채널 <span class="h">(눌러서 전환)</span></div><div class="tabs">${tab('online')}${tab('offline')}</div><div class="chrow"><b>${CH[S.ch].name}</b><span class="low">${CH[S.ch].low}</span><span class="buy">구매가 : ${won(channelLow(m,S.ch))}</span></div><div class="hint">▸ 채널을 바꾸면 지원금·할부원금이 그 채널 기준으로 재계산됩니다.</div></div>
+ <div class="sec" style="padding-top:0"><div class="seclab">요금제 <span class="h">(눌러서 선택)</span></div><div class="plans">${planRow('110')}${planRow('90')}</div></div>
+ <div class="sec" style="padding-top:0"><div class="seclab">용량</div><div class="caps">${cap('256')}${cap('512')}</div></div>
+ <div class="summary"><div class="stop"><span class="l">예상 실구매가</span><span class="big">${c.price===0?'0원':won(c.price)}</span></div>
+ <div class="mon">월 예상 납부액 <b>약 ${won(c.month)}</b> <span class="g">(요금 ${won(c.fee)} + 할부 약 ${won(c.halbu)})</span></div>
+ <div class="brk"><div class="brow"><span class="k">출고가</span><span class="v">${won(m.ship)}</span></div><div class="brow m"><span class="k">공통지원금(공시)</span><span class="v">- ${won(c.gong)}</span></div><div class="brow m"><span class="k">추가지원금</span><span class="v">- ${won(c.add)}</span></div><div class="brow m"><span class="k">자체할인</span><span class="v">- ${won(c.self)}</span></div><div class="brow tot"><span class="k">실구매가</span><span class="v">${c.price===0?'0원':won(c.price)}</span></div></div>
+ <div class="kko" onclick="alert('실제 사이트에서는 카카오톡 상담으로 연결됩니다.\\n\\ncitymarket.co.kr/pspot')"><b>카카오톡으로 상담·신청하기 ›</b></div>
+ <div class="hint">▸ 표시 수치는 예시입니다. 실제 견적은 citymarket.co.kr/pspot 에서 확인하세요.</div></div>`;
+}
+function pick(id){S.model=id;S.ch='online';S.plan='110';S.cap='256';renderList();renderDetail();document.getElementById('detailBand').scrollIntoView({behavior:'smooth'});}
+function setMfr(v){S.mfr=v;renderList();}
+function setCh(v){S.ch=v;renderDetail();}
+function setPlan(v){S.plan=v;renderDetail();}
+function setCap(v){S.cap=v;renderDetail();}
+renderList();renderDetail();
+</script>
+</body></html>

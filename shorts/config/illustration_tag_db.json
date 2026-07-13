@@ -3081,7 +3081,45 @@
       ],
       "note": "자동 발굴 개념: 일요일 주간",
       "available": true
+    },
+    "cpt_ef8ab8dd": {
+      "keywords": [
+        "흐름",
+        "폰값",
+        "계속",
+        "밀어",
+        "올리고"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 흐름 폰값",
+      "available": false
+    },
+    "cpt_0fdcea66": {
+      "keywords": [
+        "무슨",
+        "뜻인지"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 무슨 뜻인지",
+      "available": false
+    },
+    "cpt_ce27b5f6": {
+      "keywords": [
+        "수급",
+        "풀리기",
+        "전까진",
+        "이어질"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 수급 풀리기",
+      "available": false
     }
   },
-  "updated_at": "2026-07-10T18:17:54"
+  "updated_at": "2026-07-10T18:47:16"
 }

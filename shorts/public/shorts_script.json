@@ -54,7 +54,7 @@
       },
       {
         "type": "illust",
-        "value": "appear_e5f828cc"
+        "value": "basic_fold_202d754f"
       },
       {
         "type": "illust",
@@ -131,12 +131,12 @@
       ],
       "chunk_visuals": [
         {
-          "type": "image",
-          "value": "photos/삼성_갤럭시A.JPG"
+          "type": "illust",
+          "value": "foldable"
         },
         {
-          "type": "image",
-          "value": "photos/배터리_충전.JPG"
+          "type": "illust",
+          "value": "event_period_8cafdac4"
         },
         {
           "type": "illust",
@@ -144,7 +144,7 @@
         },
         {
           "type": "illust",
-          "value": "budget_choice_42fbdd85"
+          "value": "self_flip_6728256c"
         }
       ],
       "stat": {
@@ -211,19 +211,19 @@
       "chunk_visuals": [
         {
           "type": "image",
-          "value": "photos/삼성_갤럭시S25.JPG"
+          "value": "photos/삼성_갤럭시A.JPG"
         },
         {
           "type": "illust",
-          "value": "event_period_8cafdac4"
+          "value": "final_update"
         },
         {
           "type": "image",
-          "value": "photos/삼성_엑시노스.JPG"
+          "value": "photos/삼성_로고.png"
         },
         {
           "type": "illust",
-          "value": "cpt_da94c5b9"
+          "value": "london_unpack_eb61ad77"
         },
         {
           "type": "illust",
@@ -300,11 +300,11 @@
         },
         {
           "type": "illust",
-          "value": "cpt_dca98748"
+          "value": "phone_setup_ready"
         },
         {
-          "type": "illust",
-          "value": "cpt_cecbbc92"
+          "type": "image",
+          "value": "photos/삼성_엑시노스.JPG"
         },
         {
           "type": "illust",
@@ -539,52 +539,10 @@
     "changes": [
       {
         "section": "hook",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "image",
-          "value": "photos/삼성_로고.JPG"
-        },
-        "context": "삼성이 오는 7월 22일 영국 런던에서 갤럭시 언팩 2026을 엽니다 7월 22일 삼성 언팩 D-DAY ['7월 22일', '삼성 언팩 D-DAY'] 뉴스",
-        "reason": "photo lexical dist=2 gen=0: 삼성_로고.JPG"
-      },
-      {
-        "section": "hook",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "aluminum_label"
-        },
-        "to": {
-          "type": "image",
-          "value": "photos/갤럭시z플립7_z폴드7.JPG"
-        },
-        "context": "삼성이 오는 7월 22일 영국 런던에서 갤럭시 언팩 2026을 엽니다 이번엔 폴더블폰뿐 아니라 스마트글래스까지 7월 22일 삼성 언팩 D-DAY ['7월 22일', '삼성 언팩 D-DAY'] 뉴스",
-        "reason": "photo lexical dist=2 gen=0: 갤럭시z플립7_z폴드7.JPG"
-      },
-      {
-        "section": "hook",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "apple_70385068"
-        },
-        "to": {
-          "type": "illust",
-          "value": "appear_e5f828cc"
-        },
-        "context": "갤럭시 언팩 2026을 엽니다 이번엔 폴더블폰뿐 아니라 스마트글래스까지 나온다는 전망입니다 7월 22일 삼성 언팩 D-DAY ['7월 22일', '삼성 언팩 D-DAY'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
-      },
-      {
-        "section": "hook",
         "chunk": 4,
         "from": {
           "type": "illust",
-          "value": "appear_e5f828cc"
+          "value": "aluminum_label"
         },
         "to": {
           "type": "illust",
@@ -594,113 +552,71 @@
         "reason": "illust score 12 (content n/a)"
       },
       {
-        "section": "hook",
-        "chunk": 5,
-        "from": {
-          "type": "illust",
-          "value": "basic_fold_202d754f"
-        },
-        "to": {
-          "type": "illust",
-          "value": "document_article"
-        },
-        "context": "나온다는 전망입니다 뭐가 나오는지 미리 정리해 드립니다 아직 발표 전이라 전망입니다 7월 22일 삼성 언팩 D-DAY ['7월 22일', '삼성 언팩 D-DAY'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
-      },
-      {
-        "section": "hook",
-        "chunk": 6,
-        "from": {
-          "type": "mascot",
-          "value": "surprised"
-        },
-        "to": {
-          "type": "illust",
-          "value": "forecast"
-        },
-        "context": "뭐가 나오는지 미리 정리해 드립니다 아직 발표 전이라 전망입니다 7월 22일 삼성 언팩 D-DAY ['7월 22일', '삼성 언팩 D-DAY'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
-      },
-      {
         "section": "fact_1",
         "chunk": 1,
         "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
           "type": "image",
           "value": "photos/삼성_갤럭시A.JPG"
         },
+        "to": {
+          "type": "illust",
+          "value": "foldable"
+        },
         "context": "갤럭시 Z 폴드8과 플립8에, 더 큰 화면의 폴드8 울트라까지 라인업이 넓어질 전망입니다 폴더블 폴드8·플립8·울트라 ['폴더블', '폴드8·플립8·울트라'] 뉴스",
-        "reason": "photo lexical dist=2 gen=0: 삼성_갤럭시A.JPG"
+        "reason": "illust score 36 (content n/a)"
       },
       {
         "section": "fact_1",
         "chunk": 2,
         "from": {
-          "type": "illust",
-          "value": "aluminum_label"
-        },
-        "to": {
           "type": "image",
           "value": "photos/배터리_충전.JPG"
         },
-        "context": "갤럭시 Z 폴드8과 플립8에, 더 큰 화면의 폴드8 울트라까지 라인업이 넓어질 전망입니다 접는 폰 선택지가 세 갈래로 늘어나, 폴더블 폴드8·플립8·울트라 ['폴더블', '폴드8·플립8·울트라'] 뉴스",
-        "reason": "photo lexical dist=1 gen=0: 배터리_충전.JPG"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "apple_70385068"
-        },
         "to": {
           "type": "illust",
-          "value": "budget_choice_42fbdd85"
+          "value": "event_period_8cafdac4"
         },
-        "context": "더 큰 화면의 폴드8 울트라까지 라인업이 넓어질 전망입니다 접는 폰 선택지가 세 갈래로 늘어나, 용도와 예산에 맞춰 고르기 쉬워집니다 폴더블 폴드8·플립8·울트라 ['폴더블', '폴드8·플립8·울트라'] 뉴스",
-        "reason": "illust score 48 (content n/a)"
+        "context": "갤럭시 Z 폴드8과 플립8에, 더 큰 화면의 폴드8 울트라까지 라인업이 넓어질 전망입니다 접는 폰 선택지가 세 갈래로 늘어나, 폴더블 폴드8·플립8·울트라 ['폴더블', '폴드8·플립8·울트라'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
       },
       {
         "section": "fact_1",
         "chunk": 4,
         "from": {
           "type": "illust",
-          "value": "budget_choice_42fbdd85"
+          "value": "aluminum_label"
         },
         "to": {
           "type": "illust",
-          "value": "foldable"
+          "value": "self_flip_6728256c"
         },
         "context": "접는 폰 선택지가 세 갈래로 늘어나, 용도와 예산에 맞춰 고르기 쉬워집니다 폴더블 폴드8·플립8·울트라 ['폴더블', '폴드8·플립8·울트라'] 뉴스",
-        "reason": "illust score 36 (content n/a)"
+        "reason": "illust score 12 (content n/a)"
       },
       {
         "section": "fact_2",
         "chunk": 1,
         "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
           "type": "image",
           "value": "photos/삼성_갤럭시S25.JPG"
         },
+        "to": {
+          "type": "image",
+          "value": "photos/삼성_갤럭시A.JPG"
+        },
         "context": "새 갤럭시 워치와 함께 삼성의 첫 스마트글래스가 공개될 가능성이 제기됩니다 신제품 워치·스마트글래스 ['신제품', '워치·스마트글래스'] 뉴스",
-        "reason": "photo lexical dist=4 gen=0: 삼성_갤럭시S25.JPG"
+        "reason": "photo lexical dist=4 gen=0: 삼성_갤럭시A.JPG"
       },
       {
         "section": "fact_2",
         "chunk": 2,
         "from": {
           "type": "illust",
-          "value": "aluminum_label"
+          "value": "event_period_8cafdac4"
         },
         "to": {
           "type": "illust",
-          "value": "event_period_8cafdac4"
+          "value": "final_update"
         },
         "context": "새 갤럭시 워치와 함께 삼성의 첫 스마트글래스가 공개될 가능성이 제기됩니다 사실이면 삼성이 웨어러블을 안경으로까지 신제품 워치·스마트글래스 ['신제품', '워치·스마트글래스'] 뉴스",
         "reason": "illust score 12 (content n/a)"
@@ -709,15 +625,15 @@
         "section": "fact_2",
         "chunk": 3,
         "from": {
-          "type": "illust",
-          "value": "apple_70385068"
-        },
-        "to": {
           "type": "image",
           "value": "photos/삼성_엑시노스.JPG"
         },
+        "to": {
+          "type": "image",
+          "value": "photos/삼성_로고.png"
+        },
         "context": "스마트글래스가 공개될 가능성이 제기됩니다 사실이면 삼성이 웨어러블을 안경으로까지 넓히는 첫걸음이 됩니다 신제품 워치·스마트글래스 ['신제품', '워치·스마트글래스'] 뉴스",
-        "reason": "photo lexical dist=2 gen=0: 삼성_엑시노스.JPG"
+        "reason": "photo lexical dist=2 gen=0: 삼성_로고.png"
       },
       {
         "section": "fact_2",
@@ -731,20 +647,6 @@
           "value": "london_unpack_eb61ad77"
         },
         "context": "사실이면 삼성이 웨어러블을 안경으로까지 넓히는 첫걸음이 됩니다 이번 언팩에서 가장 주목받는 제품입니다 신제품 워치·스마트글래스 ['신제품', '워치·스마트글래스'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 5,
-        "from": {
-          "type": "mascot",
-          "value": "suspicious"
-        },
-        "to": {
-          "type": "illust",
-          "value": "mid_release_98cab19a"
-        },
-        "context": "넓히는 첫걸음이 됩니다 이번 언팩에서 가장 주목받는 제품입니다 신제품 워치·스마트글래스 ['신제품', '워치·스마트글래스'] 뉴스",
         "reason": "illust score 12 (content n/a)"
       },
       {
@@ -770,80 +672,10 @@
         },
         "to": {
           "type": "image",
-          "value": "photos/아이폰_프로.png"
+          "value": "photos/삼성_엑시노스.JPG"
         },
         "context": "경량화를 목표로 하고, 스냅드래곤 8 엘리트 5세대급 프로세서가 실릴 것으로 전해집니다 폴드8 스펙 가볍고 강하게 ['폴드8 스펙', '가볍고 강하게'] 뉴스",
-        "reason": "photo lexical dist=1 gen=0: 아이폰_프로.png"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "appliance"
-        },
-        "to": {
-          "type": "illust",
-          "value": "display_maintenance_c1ff39c1"
-        },
-        "context": "스냅드래곤 8 엘리트 5세대급 프로세서가 실릴 것으로 전해집니다 접는 폰의 단점이던 무게와 성능이 개선되는 방향입니다 폴드8 스펙 가볍고 강하게 ['폴드8 스펙', '가볍고 강하게'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 5,
-        "from": {
-          "type": "illust",
-          "value": "basic_fold_202d754f"
-        },
-        "to": {
-          "type": "illust",
-          "value": "phone_settings_toggle"
-        },
-        "context": "실릴 것으로 전해집니다 접는 폰의 단점이던 무게와 성능이 개선되는 방향입니다 폴드8 스펙 가볍고 강하게 ['폴드8 스펙', '가볍고 강하게'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "gift_voucher"
-        },
-        "context": "폴더블이나 웨어러블에 관심 있다면 7월 22일 발표를 챙겨보세요 살 사람은 예약 혜택 주목 ['살 사람은', '예약 혜택 주목'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "aluminum_label"
-        },
-        "to": {
-          "type": "illust",
-          "value": "device_os_requirement"
-        },
-        "context": "폴더블이나 웨어러블에 관심 있다면 7월 22일 발표를 챙겨보세요 신제품은 초반 사전예약 혜택이 큰 경우가 많습니다 살 사람은 예약 혜택 주목 ['살 사람은', '예약 혜택 주목'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "apple_70385068"
-        },
-        "to": {
-          "type": "illust",
-          "value": "device_data_transfer"
-        },
-        "context": "발표를 챙겨보세요 신제품은 초반 사전예약 혜택이 큰 경우가 많습니다 조건을 미리 알아두면 유리하게 살 수 있습니다 살 사람은 예약 혜택 주목 ['살 사람은', '예약 혜택 주목'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
+        "reason": "photo lexical dist=1 gen=0: 삼성_엑시노스.JPG"
       }
     ],
     "weak": [
@@ -874,7 +706,7 @@
         "chunk": 3,
         "current": {
           "type": "image",
-          "value": "photos/아이폰_프로.png"
+          "value": "photos/삼성_엑시노스.JPG"
         },
         "context": "경량화를 목표로 하고, 스냅드래곤 8 엘리트 5세대급 프로세서가 실릴 것으로 전해집니다 폴드8 스펙 가볍고 강하게 ['폴드8 스펙', '가볍고 강하게'] 뉴스",
         "best_image_score": 0,
