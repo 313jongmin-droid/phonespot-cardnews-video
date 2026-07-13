@@ -85,7 +85,7 @@ function setupAdgroupTrendChart() {
   try { sh.getRange(60, 1, 1, 15).breakApart(); } catch (e) {}
   sh.getRange(60, 1, 1, 15).merge();
   sh.getRange(60, 1)
-    .setValue('★ 광고그룹별 성과 추이 (CTR·카톡전환율·카톡당CPL)')
+    .setValue('★ 광고그룹별 성과 추이 (CTR·카톡전환률·카톡당 CPL)')
     .setFontWeight('bold').setFontSize(14)
     .setBackground('#1F4E78').setFontColor('#FFFFFF')
     .setHorizontalAlignment('center');
@@ -131,7 +131,7 @@ function setupAdgroupTrendChart() {
     .setFontStyle('italic').setFontColor('#666666');
 
   // R63: 데이터 헤더
-  const dataHeaders = ['날짜', '노출', '클릭', '지출', 'CTR', 'CPC', '카톡클릭', '카톡전환율', '카톡당CPL', '문의수', '문의율', 'CPL'];
+  const dataHeaders = ['날짜', '노출', '클릭', '지출', 'CTR', 'CPC', '카톡클릭', '카톡전환률', '카톡당 CPL', '문의수', '문의율', 'CPL'];
   sh.getRange(63, 1, 1, 12).setValues([dataHeaders])
     .setBackground('#f5f5f7').setFontWeight('bold')
     .setHorizontalAlignment('center');
@@ -296,7 +296,7 @@ function ensureAdgroupTrendChart_(sh) {
     .addRange(kkCplRange)
     .setNumHeaders(1)
     .setPosition(95, 1, 0, 0)
-    .setOption('title', '광고그룹별 성과 추이 (CTR·카톡전환율·카톡당CPL)')
+    .setOption('title', '광고그룹별 성과 추이 (CTR·카톡전환률·카톡당 CPL)')
     .setOption('width', 900)
     .setOption('height', 400)
     .setOption('useFirstColumnAsDomain', true)
@@ -306,8 +306,8 @@ function ensureAdgroupTrendChart_(sh) {
       2: { targetAxisIndex: 1, color: '#388E3C', lineWidth: 3 }   // 카톡당CPL
     })
     .setOption('vAxes', {
-      0: { title: 'CTR·카톡전환율 (%)', format: '0.00%' },
-      1: { title: '카톡당CPL (원)', format: '#,##0' }
+      0: { title: 'CTR·카톡전환률 (%)', format: '0.00%' },
+      1: { title: '카톡당 CPL (원)', format: '#,##0' }
     })
     .setOption('hAxis', { title: '날짜', format: 'M/d' })
     .setOption('legend', { position: 'right' })

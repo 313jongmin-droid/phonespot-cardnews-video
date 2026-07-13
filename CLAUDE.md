@@ -146,6 +146,7 @@
 - 매뉴얼 인용 시 줄 번호로 직접 가리키기 (예: `INSTRUCTIONS_CARDNEWS.md:329-352`).
 - 옵션 제시는 정직한 한계 동봉. **클로드가 권장 강요 ❌**. 사장님이 직접 선택.
 - **★ 모든 task(광고운영·카드뉴스·영상·기사 등) 코드/파일 변경을 끝낼 때마다 cmd 푸시 코드를 항상 같이 줄 것** (종민 요청 2026-06-18 광고운영 → 2026-06-19 전체 task로 확대). "bat 돌려라"로 대체 ❌ — 실제 명령을 매번 명시. git이 PATH에 없으니 형식: (stale lock 걸리면 먼저 `del /f /q C:\backup\phonespot_cardnews\.git\index.lock 2>nul`) `cd /d C:\backup\phonespot_cardnews` → `set GIT="C:\Program Files\Git\cmd\git.exe"` → `%GIT% add -A`(특정 영역만 올릴 땐 폴더 지정; 광고=apps_script) → `%GIT% commit -m "..."`(ASCII 메시지, cmd 인코딩 안전) → `%GIT% push origin main`. safe.directory·user.identity는 이미 설정됨. 영상/카드뉴스 track은 패널 '시스템 업로드'(commit 게이트 포함)도 가능하나 **cmd도 항상 함께** 제공. (보조 bat: `광고_깃에_올리기.bat`·`기사_깃에_올리기.bat`.)
+- **★ 멀티브랜드 상시 적용 (종민 2026-07-13)**: 모든 코드/대시보드/시트 변경은 **폰스팟 + KT폰샵 둘 다 무조건 100% 상시 적용**. "어느 브랜드에 적용?"을 **묻지 말 것**. 코드는 push→GitHub Actions clasp가 양쪽 scriptId 자동 배포(멀티브랜드 허브). 가이드/문서도 브랜드 구분 없이 "둘 다" 전제로 기술. 사장님은 각 시트에서 재빌드/메뉴 실행만 양쪽에.
 
 ---
 
