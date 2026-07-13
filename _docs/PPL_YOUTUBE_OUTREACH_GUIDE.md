@@ -101,6 +101,7 @@
 ---
 
 변경 이력
+- 2026-07-13(3): 비동기 Apify 폴링(6분 제한 방어)·초안 분리(✍️ 재실행)·부하 축소. 판매점/대리점·기관 채널 자동 제외(PPL_EXCLUDE_SELLERS)+협찬신호 가점. 종민 지적.
 - 2026-07-13(2): 메뉴 폭 초과 잘림 → 유튜브 하위메뉴로 편입(youtube_sync.js), Code.js 최상위 훅 제거.
 - 2026-07-13: L2 구현(§5-A). MCP Search 쿼터 소진 → Apify `streamers/youtube-scraper` 2패스로 상주화. `apps_script/ppl_youtube.js` 신설, Code.js onOpen 훅. 종민 결정.
 - 2026-06-18: 신설. 범위 1-b(발굴+제안초안, 발송수동), 규모 선택 필터, 3-a(Data API 무료) 시작 → 3-b(Apify) 업글. 종민 결정.

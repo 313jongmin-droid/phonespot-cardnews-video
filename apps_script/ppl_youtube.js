@@ -31,7 +31,7 @@ var PPL_BUDGET_P2 = 180;     // Pass2 폴링 예산(초)
 // 기본 키워드 — 30~50 남성 시청층 스큐 + 폰스팟 협찬 도메인. (시트 프롬프트에서 콤마로 덮어쓰기 가능)
 var PPL_DEFAULT_KEYWORDS = [
   '자급제 휴대폰', '통신비 절약', '알뜰폰 요금제',
-  '휴대폰 성지 시세', '갤럭시 리뷰', '아이폰 리뷰'
+  'IT 리뷰', '갤럭시 리뷰', '아이폰 리뷰'
 ];
 
 // 규모 프리셋 (구독자 범위)
@@ -40,6 +40,11 @@ var PPL_SCALE = {
   'mid':   { min: 100000, max: 500000,  label: '중형' },
   'all':   { min: 0,      max: 1e12,    label: '무관' }
 };
+
+// 채널 유형 필터 — 판매점/대리점·기관은 협찬 대상 아님(자기 폰 판매/경쟁·기관). 기본 제외. (2026-07-13 종민 지적)
+var PPL_EXCLUDE_SELLERS = true;
+var PPL_SELLER_TERMS = ['대리점','가맹점','판매왕','판매점','판매 전문','판매전문','개통문의','개통 문의','좌표','도매','폰팔','성지 문의','싸게 판매','최저가로','예약 판매','판매합니다'];
+var PPL_ORG_TERMS = ['위원회','협회','공식 유튜브','공식유튜브','방송통신','진흥원','공단','정부기관'];
 
 // 폰스팟 협찬 조건 템플릿 (과장·허위 금지 — 실제 조건만. 필요 시 여기만 수정)
 var PPL_OFFER_TEMPLATE =
@@ -111,7 +116,11 @@ function pplRunDiscovery_(keywords, scaleKey, targetN, perKeyword) {
       if (!info) return;
       var subs = info.numberOfSubscribers || 0;
       if (subs < scale.min || subs >= scale.max) return;           // 규모 필터
+      var ctype = pplChannelType_(info);
+      if (PPL_EXCLUDE_SELLERS && ctype !== 'reviewer') return;     // 판매점/대리점·기관 제외 (자기 폰 파는 곳은 협찬 대상 X)
       var scoreObj = pplScoreChannel_(info, d.topicTags, keywords);
+      if (pplWantsSponsor_(info)) scoreObj.score = Math.min(10, scoreObj.score + 2);   // 협찬 오픈 신호 가점
+      scoreObj.grade = scoreObj.score >= 7 ? '★★★' : (scoreObj.score >= 4 ? '★★' : '★');
       var totalViews = pplToNum_(info.channelTotalViews);
       var totalVideos = info.channelTotalVideos || 0;
       var avgViews = totalVideos ? Math.round(totalViews / totalVideos) : 0;
@@ -123,7 +132,7 @@ function pplRunDiscovery_(keywords, scaleKey, targetN, perKeyword) {
         totalViews: totalViews,
         totalVideos: totalVideos,
         avgViews: avgViews,
-        topicTags: d.topicTags.join(', '),
+        topicTags: (ctype === 'reviewer' ? '리뷰어' : ctype) + ' · ' + d.topicTags.join(', '),
         lastUpload: info.lastUploadRaw || '',
         descExcerpt: (info.channelDescription || '').slice(0, 200),
         externalLink: info.channelUrl || d.channelUrl,
@@ -296,6 +305,21 @@ function pplParseEmail_(desc) {
   if (!desc) return '';
   var m = String(desc).match(/[\w.+-]+@[\w-]+\.[\w.-]+/);
   return m ? m[0] : '';
+}
+
+// 채널 유형: 'seller'(판매점/대리점) / 'org'(기관) / 'reviewer'(그 외=리뷰어/크리에이터)
+function pplChannelType_(info) {
+  var raw = (info.channelName || '') + ' ' + (info.channelDescription || '');
+  for (var i = 0; i < PPL_SELLER_TERMS.length; i++) if (raw.indexOf(PPL_SELLER_TERMS[i]) >= 0) return 'seller';
+  for (var j = 0; j < PPL_ORG_TERMS.length; j++) if (raw.indexOf(PPL_ORG_TERMS[j]) >= 0) return 'org';
+  return 'reviewer';
+}
+// 협찬 오픈 신호(협찬/광고/비즈니스 문의 또는 설명란 이메일) → 가점
+function pplWantsSponsor_(info) {
+  var raw = ((info.channelName || '') + ' ' + (info.channelDescription || '')).toLowerCase();
+  var terms = ['협찬','광고문의','광고 문의','비즈니스문의','비즈니스 문의','제휴','sponsor','business'];
+  for (var i = 0; i < terms.length; i++) if (raw.indexOf(terms[i].toLowerCase()) >= 0) return true;
+  return !!pplParseEmail_(info.channelDescription);
 }
 
 function pplIsKorean_(info) {
