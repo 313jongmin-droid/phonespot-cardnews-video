@@ -198,6 +198,9 @@ function onOpen() {
 
   // 🤖 자연어 데이터 질문 메뉴 (nl_query.js, 2026-06-18)
   try { buildNlQueryMenu_(SpreadsheetApp.getUi()); } catch (e) {}
+
+  // 🎯 유튜브 PPL 협찬발굴 메뉴 (ppl_youtube.js, 2026-07-13)
+  try { buildPplYoutubeMenu_(SpreadsheetApp.getUi()); } catch (e) {}
 }
 
 // ──[일상]── 전체 새로고침: 모든 채널 sync + 대시보드 빌드 + 인사이트 MD 생성 (2026-06-15 강화)
