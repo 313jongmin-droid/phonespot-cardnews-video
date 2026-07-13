@@ -388,13 +388,23 @@ function parseISO8601DurationSeconds(s) {
 // ============== 메뉴 / 트리거 ==============
 
 function addYouTubeMenuItem() {
-  SpreadsheetApp.getUi()
-    .createMenu('유튜브')
+  var ui = SpreadsheetApp.getUi();
+  // 🎯 PPL 협찬발굴 — 메뉴 폭 초과 방지 위해 별도 최상위 메뉴 대신 유튜브 하위메뉴로 편입 (2026-07-13)
+  var pplSub = ui.createMenu('🎯 협찬발굴 (PPL)')
+    .addItem('🔍 발굴 실행 (키워드·규모·건수)', 'pplPromptDiscovery')
+    .addItem('⚡ 기본 발굴 (마이크로 30건)', 'pplRunDefault')
+    .addSeparator()
+    .addItem('✍️ 초안만 재생성', 'pplRegenerateDrafts')
+    .addItem('📂 발굴 시트 열기', 'pplOpenSheet')
+    .addItem('🧪 메뉴 진단 (pplTestMenu)', 'pplTestMenu');
+  ui.createMenu('유튜브')
     .addItem('🔄 지금 갱신 (데이터)', 'fetchYouTubeAnalyticsDaily')
     .addItem('🧠 인사이트 MD 생성', 'generateYouTubeInsightsMarkdown')
     .addSeparator()
     .addItem('⏰ Daily Trigger 설정', 'setupYouTubeTriggers')
     .addItem('📋 로그 보기', 'showLastLog')
+    .addSeparator()
+    .addSubMenu(pplSub)
     .addToUi();
 }
 

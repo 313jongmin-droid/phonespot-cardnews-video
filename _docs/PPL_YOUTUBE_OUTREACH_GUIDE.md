@@ -87,7 +87,7 @@
 - **이메일(K열):** `pplParseEmail_` = `channelDescription` 정규식 파싱만(3-a, 수집률 낮음). Apify 채널 About 설명 기반.
 - **초안(O열):** `pplGenerateDraft_` = Gemini(`GEMINI_API_KEY` 재사용) 개인화 1문단 + `PPL_OFFER_TEMPLATE`(과장 금지 실제 조건). 키 없으면 폴백 문구.
 - **시트:** `pplWriteSheet_` → `유튜브_협찬발굴` 17열(A~Q, §3), A열 채널ID 중복 제거, 등급/헤더 서식.
-- **메뉴 (🎯 유튜브 협찬발굴):** 발굴 실행(키워드·규모·건수 프롬프트) / ⚡기본 발굴(마이크로 30건) / ✍️초안만 재생성 / 📂시트 열기.
+- **메뉴 위치:** 별도 최상위 메뉴는 시트 커스텀 메뉴가 11개라 화면 폭 초과로 잘림 → **`유튜브` 메뉴 하위 `🎯 협찬발굴 (PPL)`** 로 편입(2026-07-13, `youtube_sync.js` addYouTubeMenuItem). 항목: 발굴 실행(키워드·규모·건수)/⚡기본 발굴(마이크로 30건)/✍️초안만 재생성/📂시트 열기/🧪 메뉴 진단(pplTestMenu). `Code.js` 최상위 훅은 제거. (buildPplYoutubeMenu_/pplTestMenu는 ppl_youtube.js에 잔존, 진단용).
 - **함정:** ① 검색결과 아이템엔 구독자 없음 → Pass2 필수. ② 최신업로드 date는 상대/절대 혼재 → `pplActivityScore_`가 방어적 파싱. ③ 채널ID는 `/channel/UC…`일 때만 UC, 핸들뿐이면 `@handle` 저장. ④ Apps Script 6분 제한 — 초안은 상위 N만 생성.
 - **멀티브랜드:** push → GitHub Actions clasp --force → 폰스팟 + KT 양쪽 자동 배포. 시트 메뉴 실행만 양쪽에서.
 
@@ -101,5 +101,6 @@
 ---
 
 변경 이력
+- 2026-07-13(2): 메뉴 폭 초과 잘림 → 유튜브 하위메뉴로 편입(youtube_sync.js), Code.js 최상위 훅 제거.
 - 2026-07-13: L2 구현(§5-A). MCP Search 쿼터 소진 → Apify `streamers/youtube-scraper` 2패스로 상주화. `apps_script/ppl_youtube.js` 신설, Code.js onOpen 훅. 종민 결정.
 - 2026-06-18: 신설. 범위 1-b(발굴+제안초안, 발송수동), 규모 선택 필터, 3-a(Data API 무료) 시작 → 3-b(Apify) 업글. 종민 결정.
