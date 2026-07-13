@@ -117,11 +117,11 @@ function setupAdgroupTrendChart() {
 
   // W60: 채널별 광고그룹 unique 리스트 (B61 변경 시 자동 갱신)
   sh.getRange(60, 23).setFormula(
-    '=IFERROR(IF(B61="메타", UNIQUE(FILTER(메타+!E2:E, 메타+!E2:E<>"")), ' +
-    'IF(B61="당근", UNIQUE(FILTER(당근+!C2:C, 당근+!C2:C<>"")), ' +
-    'UNIQUE(FILTER(네이버+!E2:E, 네이버+!E2:E<>"")))), "")'
+    '=IFERROR(IF(B61="메타", SORT(UNIQUE(FILTER(메타+!E2:E, 메타+!E2:E<>"", 메타+!A2:A>=TODAY()-60))), ' +
+    'IF(B61="당근", SORT(UNIQUE(FILTER(당근+!C2:C, 당근+!C2:C<>"", 당근+!A2:A>=TODAY()-60))), ' +
+    'SORT(UNIQUE(FILTER(네이버+!E2:E, 네이버+!E2:E<>"", 네이버+!A2:A>=TODAY()-60))))), "")'
   );
-  sh.getRange(60, 23).setNote('동적 광고그룹 리스트 (E61 드롭다운 데이터). 숨겨두기 가능.');
+  sh.getRange(60, 23).setNote('동적 광고그룹 리스트 (E61 드롭다운). 가나다 정렬 + 최근 60일 활성만. 숨겨두기 가능.');
 
   // R62: 안내
   try { sh.getRange(62, 1, 1, 15).breakApart(); } catch (e) {}
