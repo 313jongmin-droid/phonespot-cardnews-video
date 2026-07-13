@@ -85,7 +85,7 @@ function setupAdgroupTrendChart() {
   try { sh.getRange(60, 1, 1, 15).breakApart(); } catch (e) {}
   sh.getRange(60, 1, 1, 15).merge();
   sh.getRange(60, 1)
-    .setValue('★ 광고그룹별 성과 추이 (클릭율·CPC·문의율)')
+    .setValue('★ 광고그룹별 성과 추이 (CTR·카톡전환율·카톡당CPL)')
     .setFontWeight('bold').setFontSize(14)
     .setBackground('#1F4E78').setFontColor('#FFFFFF')
     .setHorizontalAlignment('center');
@@ -131,8 +131,8 @@ function setupAdgroupTrendChart() {
     .setFontStyle('italic').setFontColor('#666666');
 
   // R63: 데이터 헤더
-  const dataHeaders = ['날짜', '노출', '클릭', '지출', 'CTR', 'CPC', '카톡클릭', '문의수', '문의율', 'CPL'];
-  sh.getRange(63, 1, 1, 10).setValues([dataHeaders])
+  const dataHeaders = ['날짜', '노출', '클릭', '지출', 'CTR', 'CPC', '카톡클릭', '카톡전환율', '카톡당CPL', '문의수', '문의율', 'CPL'];
+  sh.getRange(63, 1, 1, 12).setValues([dataHeaders])
     .setBackground('#f5f5f7').setFontWeight('bold')
     .setHorizontalAlignment('center');
 
@@ -234,11 +234,13 @@ function refreshAdgroupTrendChart() {
       anyData = true;
       const ctr = d.imp > 0 ? d.click / d.imp : 0;
       const cpc = d.click > 0 ? d.spend / d.click : 0;
+      const kakaoRate = d.click > 0 ? d.kakaoClick / d.click : 0;      // 카톡전환율=카톡클릭/클릭
+      const kakaoCPL = d.kakaoClick > 0 ? d.spend / d.kakaoClick : 0;  // 카톡당CPL=지출/카톡클릭
       const inquiryRate = d.kakaoClick > 0 ? d.inquiry / d.kakaoClick : 0;
       const cpl = d.inquiry > 0 ? d.spend / d.inquiry : 0;
-      rows.push([d.date, d.imp, d.click, d.spend, ctr, cpc, d.kakaoClick, d.inquiry, inquiryRate, cpl]);
+      rows.push([d.date, d.imp, d.click, d.spend, ctr, cpc, d.kakaoClick, kakaoRate, kakaoCPL, d.inquiry, inquiryRate, cpl]);
     } else {
-      rows.push([dd, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+      rows.push([dd, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
     }
   }
   if (!anyData) {
@@ -248,16 +250,19 @@ function refreshAdgroupTrendChart() {
   }
 
   // R64~ 박음
-  sh.getRange(64, 1, rows.length, 10).setValues(rows);
+  sh.getRange(64, 1, rows.length, 12).setValues(rows);
   // 포맷
   sh.getRange(64, 1, rows.length, 1).setNumberFormat('yyyy-mm-dd');
   sh.getRange(64, 2, rows.length, 2).setNumberFormat('#,##0');       // 노출/클릭
   sh.getRange(64, 4, rows.length, 1).setNumberFormat('#,##0"원"');   // 지출
   sh.getRange(64, 5, rows.length, 1).setNumberFormat('0.00%');       // CTR
   sh.getRange(64, 6, rows.length, 1).setNumberFormat('#,##0"원"');   // CPC
-  sh.getRange(64, 7, rows.length, 2).setNumberFormat('#,##0');       // 카톡클릭/문의수
-  sh.getRange(64, 9, rows.length, 1).setNumberFormat('0.00%');       // 문의율
-  sh.getRange(64, 10, rows.length, 1).setNumberFormat('#,##0"원"');  // CPL
+  sh.getRange(64, 7, rows.length, 1).setNumberFormat('#,##0');       // 카톡클릭
+  sh.getRange(64, 8, rows.length, 1).setNumberFormat('0.00%');       // 카톡전환율
+  sh.getRange(64, 9, rows.length, 1).setNumberFormat('#,##0"원"');   // 카톡당CPL
+  sh.getRange(64, 10, rows.length, 1).setNumberFormat('#,##0');      // 문의수
+  sh.getRange(64, 11, rows.length, 1).setNumberFormat('0.00%');      // 문의율
+  sh.getRange(64, 12, rows.length, 1).setNumberFormat('#,##0"원"');  // CPL
 
   // 차트 갱신
   ensureAdgroupTrendChart_(sh);
@@ -271,38 +276,38 @@ function ensureAdgroupTrendChart_(sh) {
   sh.getCharts().forEach(function (c) {
     const ranges = c.getRanges();
     const hit = ranges.some(function (r) {
-      return r.getRow() >= 63 && r.getRow() <= 94 && r.getColumn() <= 8;
+      return r.getRow() >= 63 && r.getRow() <= 94 && r.getColumn() <= 12;
     });
     if (hit) sh.removeChart(c);
   });
 
-  // 데이터 범위 (날짜 + CTR + CPC + 문의율 3개 지표)
-  const dateRange = sh.getRange(63, 1, ADGROUP_TREND_DATA_MAX_ROWS + 1, 1);  // A: 날짜
-  const ctrRange = sh.getRange(63, 5, ADGROUP_TREND_DATA_MAX_ROWS + 1, 1);   // E: CTR
-  const inqRange = sh.getRange(63, 9, ADGROUP_TREND_DATA_MAX_ROWS + 1, 1);   // I: 문의율
-  const cplRange = sh.getRange(63, 10, ADGROUP_TREND_DATA_MAX_ROWS + 1, 1);  // J: CPL
+  // 데이터 범위 (날짜 + CTR + 카톡전환율 + 카톡당CPL) — 문의수 부실 → 카톡 지표 중심
+  const dateRange = sh.getRange(63, 1, ADGROUP_TREND_DATA_MAX_ROWS + 1, 1);   // A: 날짜
+  const ctrRange = sh.getRange(63, 5, ADGROUP_TREND_DATA_MAX_ROWS + 1, 1);    // E: CTR
+  const kkRateRange = sh.getRange(63, 8, ADGROUP_TREND_DATA_MAX_ROWS + 1, 1); // H: 카톡전환율
+  const kkCplRange = sh.getRange(63, 9, ADGROUP_TREND_DATA_MAX_ROWS + 1, 1);  // I: 카톡당CPL
 
-  // 차트 = CTR·문의율(좌축 %) + CPL(우축 원). CPC는 표에만(스케일 충돌 회피).
+  // 차트 = CTR·카톡전환율(좌축 %) + 카톡당CPL(우축 원). CPC/문의는 표에만.
   const chart = sh.newChart()
     .setChartType(Charts.ChartType.LINE)
     .addRange(dateRange)
     .addRange(ctrRange)
-    .addRange(inqRange)
-    .addRange(cplRange)
+    .addRange(kkRateRange)
+    .addRange(kkCplRange)
     .setNumHeaders(1)
     .setPosition(95, 1, 0, 0)
-    .setOption('title', '광고그룹별 성과 추이 (CTR·문의율·CPL)')
+    .setOption('title', '광고그룹별 성과 추이 (CTR·카톡전환율·카톡당CPL)')
     .setOption('width', 900)
     .setOption('height', 400)
     .setOption('useFirstColumnAsDomain', true)
     .setOption('series', {
       0: { targetAxisIndex: 0, color: '#1976D2', lineWidth: 2 },  // CTR
-      1: { targetAxisIndex: 0, color: '#D32F2F', lineWidth: 2 },  // 문의율
-      2: { targetAxisIndex: 1, color: '#388E3C', lineWidth: 3 }   // CPL
+      1: { targetAxisIndex: 0, color: '#D32F2F', lineWidth: 2 },  // 카톡전환율
+      2: { targetAxisIndex: 1, color: '#388E3C', lineWidth: 3 }   // 카톡당CPL
     })
     .setOption('vAxes', {
-      0: { title: 'CTR·문의율 (%)', format: '0.00%' },
-      1: { title: 'CPL (원)', format: '#,##0' }
+      0: { title: 'CTR·카톡전환율 (%)', format: '0.00%' },
+      1: { title: '카톡당CPL (원)', format: '#,##0' }
     })
     .setOption('hAxis', { title: '날짜', format: 'M/d' })
     .setOption('legend', { position: 'right' })
