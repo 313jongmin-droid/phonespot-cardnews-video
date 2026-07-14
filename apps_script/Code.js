@@ -124,6 +124,50 @@ function setupBrandConfigSheet() {
   } catch (e) {}
 }
 
+// ──[GA4 페이지]── 페이지별 GA4 이벤트 수집 (시티마켓 페이지 추적 확인/데이터). 새 탭 'GA4_페이지'.
+//   기존 GA4_자동(source/이벤트)엔 page 차원이 없어 시티마켓을 못 가려냄 → hostName/pagePath 차원으로 별도 수집.
+//   실행 후 '호스트'열에 citymarket 보이면 = 시티마켓 페이지가 이 GA4에 추적됨(표/분석 가능).
+function fetchCitymarketPages() {
+  const ss = SpreadsheetApp.getActive();
+  const name = 'GA4_페이지';
+  let sh = ss.getSheetByName(name);
+  if (!sh) sh = ss.insertSheet(name);
+  sh.clearContents();
+  sh.getRange(1, 1, 1, 6).setValues([['날짜', '호스트', '페이지경로', '이벤트', '이벤트수', '세션']])
+    .setBackground('#1F4E78').setFontColor('#FFFFFF').setFontWeight('bold');
+  const TZ = 'Asia/Seoul';
+  const end = new Date(); end.setDate(end.getDate() - 1);
+  const start = new Date(); start.setDate(start.getDate() - 30);
+  const req = {
+    dateRanges: [{ startDate: Utilities.formatDate(start, TZ, 'yyyy-MM-dd'), endDate: Utilities.formatDate(end, TZ, 'yyyy-MM-dd') }],
+    dimensions: [{ name: 'date' }, { name: 'hostName' }, { name: 'pagePath' }, { name: 'eventName' }],
+    metrics: [{ name: 'eventCount' }, { name: 'sessions' }],
+    orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
+    limit: 5000
+  };
+  const resp = AnalyticsData.Properties.runReport(req, 'properties/' + getBrandConfig_('GA4_PROP_ID', GA4_PROP_ID));
+  if (!resp.rows || !resp.rows.length) {
+    sh.getRange(2, 1).setValue('데이터 없음 (기간 내 페이지 이벤트 없음 or GA4 권한 확인)');
+    try { SpreadsheetApp.getUi().alert('GA4_페이지: 데이터 없음.'); } catch (e) {}
+    return;
+  }
+  const out = resp.rows.map(function (r) {
+    return [r.dimensionValues[0].value, r.dimensionValues[1].value, r.dimensionValues[2].value,
+            r.dimensionValues[3].value, parseInt(r.metricValues[0].value), parseInt(r.metricValues[1].value)];
+  });
+  sh.getRange(2, 1, out.length, 6).setValues(out);
+  sh.getRange(2, 1, out.length, 1).setNumberFormat('@');   // yyyymmdd 문자열
+  const hosts = {};
+  out.forEach(function (r) { hosts[r[1]] = (hosts[r[1]] || 0) + r[4]; });
+  const hostList = Object.keys(hosts).sort(function (a, b) { return hosts[b] - hosts[a]; });
+  try {
+    SpreadsheetApp.getUi().alert('✅ GA4_페이지 ' + out.length + '행 수집 (최근 30일).\n\n호스트별 이벤트:\n' +
+      hostList.slice(0, 8).map(function (h) { return '· ' + h + ': ' + hosts[h].toLocaleString(); }).join('\n') +
+      '\n\ncitymarket 호스트가 있으면 시티마켓 페이지 추적됨 = 표/분석 가능.');
+  } catch (e) {}
+  if (typeof logSync_ === 'function') { try { logSync_('fetchCitymarketPages', out.length + '행 / 호스트 ' + hostList.length); } catch (e) {} }
+}
+
 // ──[유틸]── A열에 날짜가 들어가는 모든 탭 → A열 폭 80 고정 (2026-07-01 종민 요청)
 // 판별: 상단 12행 중 A열에 Date / yyyymmdd 정수(GA4) / yyyy-mm-dd 문자열이 하나라도 있으면 날짜탭.
 // 통합대시보드(A=라벨·큰숫자)는 매칭 안 됨. 새 탭 추가 시 재실행.
@@ -158,6 +202,7 @@ function onOpen() {
     .addSeparator()
     .addItem('🔄 GA4 최신 데이터 가져오기 (어제)', 'fetchGA4Daily')
     .addItem('📥 GA4 30일 다시 가져오기 (백필)', 'fetchGA4Backfill')
+    .addItem('🌐 GA4 페이지별 수집 (시티마켓 확인)', 'fetchCitymarketPages')
     .addSeparator()
     .addItem('📊 SNS 월별 합계 수식 복구', 'repairSNSMonthlySummaries')
     .addItem('🏷️ UTM 슬러그 드롭다운 갱신', 'refreshUtmSlugDropdowns')
