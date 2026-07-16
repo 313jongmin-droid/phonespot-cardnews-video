@@ -38,7 +38,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v53"
+PANEL_VERSION = "phonespot-web-v54"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -2423,7 +2423,6 @@ INDEX_HTML = r"""<!doctype html>
     </div>
   </div>
   <div id="commonMonitor" style="display:grid;gap:16px;padding:16px 20px">
-      <section><div class="head"><h2>실행 로그</h2><div style="display:flex;gap:8px;align-items:center"><span class="small">실패하면 이 로그를 복사해서 보내면 됩니다.</span><button class="mini-btn" onclick="copyLog()">로그 복사</button></div></div><div id="log" class="log"></div></section>
       <div class="pair lopsided">
       <section>
         <div class="head"><h2>최근 작업 기록</h2><button onclick="loadJobHistory()">새로고침</button></div>
@@ -2803,7 +2802,8 @@ INDEX_HTML = r"""<!doctype html>
         if (isOpen) {
           const cached = jobLogCache[rid];
           const text = cached === undefined ? "로그를 불러오는 중..." : (cached || "(로그 없음)");
-          html += `<tr><td colspan="6" style="padding:0 12px 10px"><div class="log" style="height:auto;max-height:260px;margin:0">${escapeHtml(text)}</div></td></tr>`;
+          const live = row.status === "running" ? `<span style="font-size:11px;color:var(--text-muted)">실행 중 · 자동 갱신</span>` : `<span></span>`;
+          html += `<tr><td colspan="6" style="padding:0 12px 10px"><div style="display:flex;justify-content:space-between;align-items:center;margin:2px 0 5px">${live}<button class="mini-btn" onclick="event.stopPropagation();copyLog()">로그 복사</button></div><div class="log" style="height:auto;max-height:260px;margin:0">${escapeHtml(text)}</div></td></tr>`;
         }
       });
       body.innerHTML = html;
@@ -2875,7 +2875,7 @@ INDEX_HTML = r"""<!doctype html>
       const statusCancel = document.getElementById("statusCancelButton");
       if (statusCancel) statusCancel.style.display = job.remote && job.running ? "" : "none";
       document.getElementById("jobText").textContent = job.running ? (`실행 중: ${job.name}` + (prog ? ` · ${prog}` : "")) : (job.exit_code === null ? "대기 중" : `마지막 종료 코드: ${job.exit_code}`);
-      const log = document.getElementById("log"); log.textContent = job.log || ""; log.scrollTop = log.scrollHeight;
+      if (job.running && job.job_id) { jobLogCache[job.job_id] = job.log || ""; if (expandedJobId === job.job_id) renderJobHistory(); }
       const results = document.getElementById("results"); results.innerHTML = ""; (data.results || []).forEach(r => {
         const div = document.createElement("div");
         div.className = "result-row";
@@ -3288,16 +3288,15 @@ INDEX_HTML = r"""<!doctype html>
       }
     }
     async function copyLog() {
-      const el = document.getElementById("log");
-      const text = el ? el.innerText : "";
-      if (!text.trim()) { alert("복사할 로그가 없습니다."); return; }
+      const text = (expandedJobId && jobLogCache[expandedJobId]) || "";
+      if (!text.trim()) { alert("복사할 로그가 없습니다. 먼저 작업 기록에서 로그를 펼치세요."); return; }
       try {
         await navigator.clipboard.writeText(text);
-        alert("실행 로그를 전체 복사했습니다.");
+        alert("로그를 복사했습니다.");
       } catch (e) {
         const t = document.createElement("textarea");
         t.value = text; document.body.appendChild(t); t.select();
-        try { document.execCommand("copy"); alert("실행 로그를 전체 복사했습니다."); }
+        try { document.execCommand("copy"); alert("로그를 복사했습니다."); }
         finally { t.remove(); }
       }
     }
