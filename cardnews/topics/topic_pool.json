@@ -20,6 +20,9 @@
     {"id": "044", "line": "news", "topic": "칩플레이션(폰값 오르는 이유)", "hook": "폰값 계속 오르는 진짜 이유, '칩플레이션' [⑰단어재정의+⑤안되는이유]", "summary": "AI반도체→메모리 폭등→폰값·폴더블 300만원→매장 타이밍", "track_suggest": "카드/카드영상", "ttsan": "★검증·가격검색↑", "status": "published", "slug": "044_news_chipflation_price"},
     {"id": "045", "line": "news", "topic": "아이폰 두껍고 갤럭시 얇고", "hook": "아이폰 두꺼워지고 갤럭시는 얇아진다? [⑥비교결론+⑬반전]", "summary": "애플 배터리 확대 vs 삼성 슬림→선택 기준→매장", "track_suggest": "카드/카드영상", "ttsan": "검증·비교후킹", "status": "published", "slug": "045_news_iphone_thick_galaxy_thin"},
     {"id": "046", "line": "news", "topic": "메모리 폭등 아이폰만 웃는다", "hook": "메모리값 폭등에 갤럭시 울고 아이폰 웃는 이유 [⑬반전]", "summary": "안드로이드 원가부담↑·아이폰 9월 인상설→타이밍→매장", "track_suggest": "카드/카드영상", "ttsan": "검증·apple+", "status": "published", "slug": "046_news_memory_price_android"},
-    {"id": "047", "line": "meme", "topic": "가짜 성지 구분법", "hook": "이런 매장은 100% 호구됩니다 [⑦공공의적+⑨절대하지마세요]", "summary": "가격 공개 거부·방문 유도·서면없음 신호→정찰제 매장", "track_suggest": "실사 viral / 카드", "ttsan": "★인스타릴스208·경쟁실증", "status": "published", "slug": "047_meme_fake_seongji"}
+    {"id": "047", "line": "meme", "topic": "가짜 성지 구분법", "hook": "이런 매장은 100% 호구됩니다 [⑦공공의적+⑨절대하지마세요]", "summary": "가격 공개 거부·방문 유도·서면없음 신호→정찰제 매장", "track_suggest": "실사 viral / 카드", "ttsan": "★인스타릴스208·경쟁실증", "status": "published", "slug": "047_meme_fake_seongji"},
+    {"id": "048", "line": "qa", "topic": "무제한 요금제 QoS의 진실", "hook": "무제한이라며 왜 느려져? [⑰단어재정의+⑯질문]", "summary": "QoS=속도제한 무제한→완전무제한 구분→사용량 맞춤→매장", "track_suggest": "카드/카드영상", "ttsan": "검증·통신·채널▶️📝", "status": "published", "slug": "048_qa_unlimited_qos_truth"},
+    {"id": "049", "line": "qa", "topic": "중고폰 살 때 체크리스트", "hook": "중고폰 싸게 샀다 호구되는 5가지 [⑨절대+①TOP N]", "summary": "잠금·IMEI·할부·배터리·정품 확인→매장 점검", "track_suggest": "카드/카드영상", "ttsan": "실용·검증·채널▶️📸", "status": "published", "slug": "049_qa_used_phone_buying_check"},
+    {"id": "050", "line": "meme", "topic": "폰 살 때 듣는 거짓말", "hook": "매장에서 이 말 하면 90% 거짓말 [⑧비밀폭로+⑨절대]", "summary": "마지막물량·오늘만·공짜 멘트 폭로→서면·실구매가→매장", "track_suggest": "실사 viral / 카드", "ttsan": "경쟁실증·공감·채널📸", "status": "published", "slug": "050_meme_store_lies"}
   ]
 }

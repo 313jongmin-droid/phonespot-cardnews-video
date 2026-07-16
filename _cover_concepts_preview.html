@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>폰스팟 커버 시안 — A 변형 3종</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  :root{ --brand:#F74B0B; --peach:#FFF1EA; --ink:#1A1A1A; }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  body{ font-family:'Pretendard',sans-serif; background:#3a3a3a; color:#fff; padding:32px; }
+  h1{ font-size:20px; font-weight:800; margin-bottom:4px; }
+  .sub{ opacity:.7; font-size:13px; margin-bottom:24px; }
+  .row{ display:flex; gap:24px; flex-wrap:wrap; }
+  .item{ width:300px; }
+  .label{ font-weight:700; font-size:14px; margin:10px 2px 4px; }
+  .desc{ opacity:.75; font-size:12px; margin:0 2px 10px; line-height:1.5; }
+  .cover{ width:300px; height:533px; border-radius:20px; overflow:hidden; position:relative; display:flex; flex-direction:column; padding:34px 30px; }
+  .badge{ display:inline-block; font-weight:900; font-size:15px; padding:5px 13px; border-radius:9px; letter-spacing:-.5px; }
+  .top{ display:flex; align-items:center; gap:10px; }
+  .tag{ font-weight:700; font-size:13px; opacity:.6; }
+  .rule{ height:7px; border-radius:5px; }
+  .handle{ font-weight:700; font-size:14px; opacity:.55; }
+  h2{ font-weight:800; font-size:44px; line-height:1.1; letter-spacing:-2px; }
+
+  /* A1 화이트 — 헤드라인 하단 좌측, 마지막 줄 오렌지 */
+  .a1{ background:#fff; }
+  .a1 .badge{ background:var(--brand); color:#fff; }
+  .a1 .tag{ color:var(--ink); }
+  .a1 .rule{ width:52px; background:var(--brand); margin:auto 0 16px; }
+  .a1 h2{ color:var(--ink); }
+  .a1 h2 .hl{ color:var(--brand); font-weight:900; }
+  .a1 .handle{ color:var(--ink); margin-top:16px; }
+
+  /* A2 피치 — 헤드라인 중앙, 강조 줄 오렌지 하이라이트 박스 */
+  .a2{ background:var(--peach); }
+  .a2 .badge{ background:#fff; color:var(--brand); border:2px solid var(--brand); }
+  .a2 .tag{ color:var(--ink); }
+  .a2 .mid{ margin:auto 0; }
+  .a2 .rule{ width:80px; background:var(--brand); margin-bottom:18px; }
+  .a2 h2{ color:var(--ink); }
+  .a2 h2 .hl{ background:var(--brand); color:#fff; padding:0 10px; border-radius:8px; box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+  .a2 .handle{ color:var(--ink); }
+
+  /* A3 오렌지 — 전면 오렌지, 흰 헤드라인, 강조 줄 흰 칩(반전) */
+  .a3{ background:var(--brand); }
+  .a3 .badge{ background:#fff; color:var(--brand); }
+  .a3 .tag{ color:#fff; opacity:.85; }
+  .a3 .rule{ width:52px; background:#fff; margin:auto 0 16px; }
+  .a3 h2{ color:#fff; }
+  .a3 h2 .hl{ background:#fff; color:var(--brand); font-weight:900; padding:0 10px; border-radius:8px; box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+  .a3 .handle{ color:#fff; opacity:.8; margin-top:16px; }
+</style>
+</head>
+<body>
+  <h1>폰스팟 커버 — A(빅 타이포) 변형 3종 · 이미지 없음</h1>
+  <p class="sub">9:16 · 헤드라인 예시 042 "접히는 아이폰, 드디어 9월" · 슬러그 번호로 자동 로테이션(피드 다양성)</p>
+  <div class="row">
+
+    <div class="item">
+      <div class="cover a1">
+        <div class="top"><span class="badge">폰스팟</span><span class="tag">휴대폰성지 IT 브리핑</span></div>
+        <div class="rule"></div>
+        <h2>접히는<br>아이폰<br><span class="hl">드디어 9월</span></h2>
+        <div class="handle">@휴대폰성지폰스팟</div>
+      </div>
+      <div class="label">A1. 화이트</div>
+      <div class="desc">흰 배경·검정 헤드라인·마지막 줄만 오렌지 글씨. 기본·깔끔.</div>
+    </div>
+
+    <div class="item">
+      <div class="cover a2">
+        <div class="top"><span class="badge">폰스팟</span><span class="tag">휴대폰성지 IT 브리핑</span></div>
+        <div class="mid">
+          <div class="rule"></div>
+          <h2>접히는 아이폰<br><span class="hl">드디어 9월</span></h2>
+        </div>
+        <div class="handle">@휴대폰성지폰스팟</div>
+      </div>
+      <div class="label">A2. 피치 + 하이라이트 박스</div>
+      <div class="desc">피치 배경·중앙 정렬·강조 줄에 오렌지 형광펜 박스. 부드럽고 눈에 띔.</div>
+    </div>
+
+    <div class="item">
+      <div class="cover a3">
+        <div class="top"><span class="badge">폰스팟</span><span class="tag">휴대폰성지 IT 브리핑</span></div>
+        <div class="rule"></div>
+        <h2>접히는<br>아이폰<br><span class="hl">드디어 9월</span></h2>
+        <div class="handle">@휴대폰성지폰스팟</div>
+      </div>
+      <div class="label">A3. 오렌지 반전</div>
+      <div class="desc">전면 오렌지·흰 헤드라인·강조 줄 흰 칩(반전). 임팩트 강함.</div>
+    </div>
+
+  </div>
+  <p class="sub" style="margin-top:24px">→ 셋을 슬러그 번호 %3 으로 자동 배정하면, 연속 업로드해도 커버가 화이트→피치→오렌지로 번갈아 나와서 그리드가 다양해짐.</p>
+</body>
+</html>
