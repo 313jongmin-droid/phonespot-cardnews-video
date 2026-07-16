@@ -118,8 +118,8 @@ export const CoverShort: React.FC<{ script: Script }> = ({ script }) => {
           flex: 1,
           display: "flex",
           flexDirection: "column",
-          justifyContent: v.center ? "center" : "flex-end",
-          paddingBottom: v.center ? 0 : 40,
+          justifyContent: "center",
+          paddingBottom: 200,
         }}
       >
         <div style={{ width: 110, height: 14, backgroundColor: v.rule, borderRadius: 8, marginBottom: 30 }} />
