@@ -1168,8 +1168,7 @@ function buildDashboardV2() {
   dash.setColumnWidth(1, 100);                              // A (라벨) 고정
   for (let c = 2; c <= 6; c++) dash.setColumnWidth(c, 80);  // B~F = 80 고정
   dash.setColumnWidth(7, 60);                               // G = 좌우 간격칸 고정
-  dash.setColumnWidth(8, 100);                              // H (우측 라벨) 고정
-  for (let c = 9; c <= 13; c++) dash.setColumnWidth(c, 108);// I~M
+  for (let c = 8; c <= 13; c++) dash.setColumnWidth(c, 80); // H~M = 80 고정 (좌측 B~F와 통일)
   try { dash.setRowHeight(1, 18); dash.setRowHeight(2, 34); } catch (e) {}
 
   // 조건부 색: 출처미상(I2) 위험 / 실비용 차이(K12:K17) 음수 — 매번 내 규칙만 갱신
