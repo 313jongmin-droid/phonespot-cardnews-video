@@ -56,7 +56,7 @@
 - 진입: `CODEX_VIDEO_DESK/00_PHONE_SPOT_PANEL.bat`(직접 실행=콘솔 보임, 디버그용) / **무창 = `dashboard/panel_hidden.vbs`**(고정 바로가기 타깃).
 
 **핵심 심볼 (server.py, 검증된 줄)**
-- `PANEL_VERSION = "phonespot-web-v54"` (L41) — **버전 단일 출처(SSOT)**. ps1이 이 값을 읽음. 화면/CSS 바꾸면 이 숫자만 올림.
+- `PANEL_VERSION = "phonespot-web-v55"` (L41) — **버전 단일 출처(SSOT)**. ps1이 이 값을 읽음. 화면/CSS 바꾸면 이 숫자만 올림.
 - `get_video_slugs()` (L336) — 영상 슬러그 목록. `list_slugs.py` 호출(articles∪output 독립 스캔).
 - `get_cardnews_rows()` (L1073) — 카드뉴스 행. `CARD_OUTPUT ∪ CARD_IMAGES ∪ CARD_ARTICLES` 합집합 스캔. **정렬 = `slug_sort_key` 내림차순(번호 desc)→ `[:80]` 캡 = 최신 80 보존, 최신 위로(v44).** 4개 리스트(영상·카드·tpList·aiList)+`cardnews_summary`(최신 12) 공용 소스라 한 곳에서 정렬 결정.
 - 액션 디스패치: `if action == "..."` 블록들 (L1589~2010). 주요:
@@ -109,6 +109,7 @@
 - **렌더 잡 '배정 대기' 고착 = 로컬 워커 readiness 실패(2026-06-18 실증).** 패널 기동 시 `start_local_worker()`가 로컬 워커(`RENDER_WORKER/worker.py`)를 띄우고, 워커는 `readiness()` 의존성 체크를 통과해야만 잡 claim. 하나라도 미설치면 워커는 죽지 않고 **5초마다 재확인만**(claim 안 함) → UI는 `worker_id` 없는 잡을 '배정 대기'로 표시(`server.py` L2568). 진단 = `CODEX_VIDEO_DESK/TEMP/worker/logs/worker_*.out.log`의 `[setup required] …`. 필요 모듈(`worker.py readiness()` L74)=edge-tts·Pillow·**mutagen**·requests·playwright + remotion·ffmpeg·chromium. 해결=빠진 것만 런타임 venv에 설치 → 워커가 5초 내 자동 claim(패널 재시작 불필요).
 
 - **결과 mp4 탐지 = 스냅샷 diff + 경계안전 slug 매칭 (worker.py v4, 2026-06-26).** `result_after(slug, started, before)`(`RENDER_WORKER/worker.py`): 렌더 직전 `snapshot_mp4s()`로 RESULTS의 mp4→mtime 스냅샷 → 실행 후 **신규/갱신 mp4 우선** 선택(없으면 mtime≥started−5 시간창 폴백). slug 매칭은 `_slug_in_folder`=양옆 `_` 래핑 비교(부분문자열 X) → "031"이 "0310_…" 폴더에 오매칭 안 됨. 워커는 잡 1개씩 순차 claim이라 신규 diff=이번 산출물. **제작 bat은 결과를 `RESULTS/<slug 포함 세그먼트>_<track>/*.mp4`로 떨궈야 탐지됨**(계약 불변).
+- **커버만 재생성 (v55/worker v6, 2026-06-26)**: 영상작업 "커버만 다시 만들기" 버튼 → 액션 `cover_render`(server.py, enqueue) → worker `commands_for` = `run_cover.bat <slug>` → **결과가 mp4 아닌 jpg라 `find_cover`(worker.py, 경계안전 slug + jpg/png)로 탐지**(mp4 `result_after` 대신). 전체 재렌더 없이 커버(썸네일)만 몇 초. 결과 `RESULTS/<slug>_cover/`. **업로드 생략**(RESULTS 보관). run_cover.bat·Cover.tsx = C단원(제작).
 
 - **패널 콘솔 창이 작업표시줄에 상주 = 서버를 콘솔 파이썬으로 띄운 것(2026-06-26 수정).** `start /b python.exe server`는 서버가 그 .bat 콘솔을 생존 내내 붙잡아 창이 안 닫힘 → `start_hidden.ps1`에서 `pythonw.exe`로 기동해야 무창. 진입도 `panel_hidden.vbs`(wscript→bat 히든)로. **`pin_panel.ps1` 바꾸면 `작업표시줄에_패널_고정.bat` 1회 재실행해 바로가기 재생성 필요**(기존 고정은 unpin 후 재고정). Windows 전용=샌드박스 검증 불가.
 - **★ 무콘솔 부모(pythonw)의 부작용 = 자식 콘솔 프로세스가 각자 새 창을 띄움(cmd 깜빡임, v48 수정).** 서버를 pythonw로 띄우면 부모에 콘솔이 없어, `subprocess.run/Popen`으로 부른 콘솔 프로그램(git·bat·python 등)이 **매번 새 콘솔 창을 생성**(python.exe일 땐 부모 콘솔 공유라 안 보였음). 주기 주범=`github_status`(상태폴링 60s마다 git). **해결=server.py/worker.py의 모든 subprocess에 `creationflags=NO_WINDOW`(=`CREATE_NO_WINDOW`)** 부여(모듈 상수 `NO_WINDOW`). **단 `panel_update_restart`의 detached 스폰은 `DETACHED_PROCESS`와 상호배타라 NO_WINDOW 안 붙임**(detached 자체가 무창). 새 subprocess 추가 시 반드시 NO_WINDOW 포함.
@@ -185,6 +186,7 @@
   - `clean_title()`: 이모지(`_TITLE_EMOJI`) + 장식 괄호(`_TITLE_DECOR_BRACKETS=【】〔〕「」『』《》〈〉［］｛｝`) 제거, `?! ~ . ( )`는 유지.
   - `strip_youtube_extra_sections()`/`clean_youtube_description()`: 타임스탬프·핵심데이터·출처 제거.
 - `codex_clean_latest_prompt.py` — **GPT용 `LATEST_PROMPT.md` 최종 정리(준비 파이프라인 마지막에 실행 → 최종본을 덮어씀).** `LATEST_PROMPT.json`을 읽어 **공통 스타일 1블록 + 항목별 한 줄(파일명 + `concept_for_item`)** 로 간결화(격자·콜라주 금지·개별생성 안내 유지). `BASE_STYLE`=스타일 정본(색/비율/금지). **함정: 항목마다 스타일 반복하면 5장에서 수천자로 폭증**(2026-06-26 간결화). ※ 과거 이 파일이 파일저장·`if __name__` 없이 잘려 no-op였음 → 복구.
+- **커버 전용 재생성 (2026-06-26)**: `run_cover.bat <slug>`(shorts/) = 슬러그 빌드 스크립트(`cardnews/output/<slug>/shorts_script.json`)를 `public/shorts_script.json`에 복사 → `render_cover.mjs`를 **변형 0·1·2 루프**로 3장 렌더(`RESULTS/<slug>_cover/<slug>_cover_v{0,1,2}.jpg`). `Cover.tsx`=변형은 원래 `variantIndex(slug)`(slug 번호 %3)로 **한 슬러그=한 변형** 고정 → 커버전용은 `coverVariant` prop(inputProps)로 3종 강제. `render_cover.mjs`가 argv[4] 변형을 `inputProps`로 selectComposition+renderStill 양쪽 전달. **헤드라인 위치**=`Cover.tsx` 중앙 div `justifyContent:"center"`+`paddingBottom:200`(값 클수록 위로). 함정: Cover.tsx src 바뀌면 첫 렌더 재번들(이후 캐시). 패널·worker 연결=A단원 `cover_render`.
 - 기타: `codex_chunk_overrides.py`(청크 수동분할), `codex_refresh_workbench.py`, `validate_codex_korean.py`, `verify_video_quality.py`.
 
 **렌더 엔진**
@@ -741,3 +743,4 @@ rdnews/scripts/update_content_guide.py`로 §2 발행인덱스 자동 재생성,
 - 2026-07-16: **슈퍼톤 whisper 정밀정렬 (C단원).** `generate_tts.py`에 faster-whisper 단어정렬(`_whisper_timing`) 추가 → 슈퍼톤(Sora)도 `word_boundary_text_align` 정밀 싱크. restore가 캐시오디오로 업그레이드(재synth 0). faster-whisper 설치 필요(legacy-certs).
 - 2026-07-16: **CLIP 재활성화 + pip 3.14 truststore 우회 (E·F단원).** Python 3.14 런타임서 pip truststore 재귀로 fastembed 설치 실패 → `--use-deprecated=legacy-certs` 우회(SETUP_EMBED/SETUP_FULL_PRODUCER 3-tier 폴백). fastembed 재설치로 CLIP 그림매칭 복구(캐시 123→168), gemini 일러스트 태거(`run_codex_casual.bat:81`) 비활성화.
 - 2026-06-26 (세션2, 실행로그 박스 통합 — A단원, 패널 task): **별도 "실행 로그" 박스 폐기, 작업기록 펼침으로 일원화(v54, 종민).** 실행 중 잡 라이브 로그 = `loadState`가 `jobLogCache[job.job_id]` 갱신 + 펼침 시 `renderJobHistory` 재렌더로 실시간 스트리밍. 복사 버튼 펼침 내부 이동. `#log` element·구 `copyLog`(#log 읽기) 제거. PANEL_VERSION →v54.
+- 2026-06-26 (세션2, 커버 전용 재생성 — A·C단원, 패널 세션서 제작파일 크로스): **영상 전체 재렌더 없이 커버만(3변형) 재생성(종민).** 패널 버튼 `cover_render`(server v55) → worker `run_cover.bat <slug>`(worker v6, jpg 결과=`find_cover`) → `Cover.tsx` `coverVariant` prop으로 변형 0·1·2 강제, `render_cover.mjs` inputProps 전달, `run_cover.bat` 3-loop → `RESULTS/<slug>_cover/*_v{0,1,2}.jpg`. 커버 헤드라인 위치 중앙+paddingBottom:200으로 상향. ※ 편집 중 Edit툴이 `Cover.tsx`·`render_cover.mjs` 꼬리 truncate→bash-python 복구(I단원 함정 재확인). 부사수 PC 미사용으로 렌더 검증 보류(코드/문법만 확인).
