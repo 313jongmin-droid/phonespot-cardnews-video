@@ -697,6 +697,21 @@
       "note": "자동 발굴 개념: 총액 물어보세요",
       "available": true
     },
+    "cpt_5091b78e": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "키우려",
+        "두께",
+        "늘릴",
+        "있다",
+        "관측"
+      ],
+      "note": "자동 발굴 개념: 키우려 두께",
+      "available": true
+    },
     "cpt_52265160": {
       "tags": [
         "auto"
@@ -776,6 +791,19 @@
         "진짜"
       ],
       "note": "자동 발굴 개념: 값이 진짜"
+    },
+    "cpt_65a9841a": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "회사",
+        "정반대로",
+        "가고"
+      ],
+      "note": "자동 발굴 개념: 회사 정반대로",
+      "available": true
     },
     "cpt_678358f4": {
       "tags": [
@@ -1044,6 +1072,19 @@
         "금액"
       ],
       "note": "자동 발굴 개념: 개월 수를",
+      "available": true
+    },
+    "cpt_98b43912": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "맞추",
+        "돈을",
+        "아끼"
+      ],
+      "note": "자동 발굴 개념: 맞추 돈을",
       "available": true
     },
     "cpt_98cab19a": {
@@ -1353,6 +1394,21 @@
       ],
       "note": "자동 발굴 개념: 일부 반영해"
     },
+    "cpt_d5ec3971": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "반대로",
+        "가는지",
+        "선택엔",
+        "뭐가",
+        "나은지"
+      ],
+      "note": "자동 발굴 개념: 반대로 가는지",
+      "available": true
+    },
     "cpt_d877aced": {
       "tags": [
         "auto"
@@ -1439,6 +1495,18 @@
         "주사율"
       ],
       "note": "자동 발굴 개념: 최대 주사율",
+      "available": true
+    },
+    "cpt_e73a695f": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "휴대성",
+        "앞세우"
+      ],
+      "note": "자동 발굴 개념: 휴대성 앞세우",
       "available": true
     },
     "cpt_e9fd442e": {
@@ -1801,6 +1869,20 @@
         "까지"
       ],
       "note": "자동 발굴 개념: 행사 기간",
+      "available": true
+    },
+    "example_cd30b6fe": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "예를",
+        "들어",
+        "하루",
+        "쓰면"
+      ],
+      "note": "자동 발굴 개념: 예를 들어",
       "available": true
     },
     "fake_government_page": {
@@ -2642,6 +2724,21 @@
       ],
       "note": "자동 발굴 개념: 공개 영국"
     },
+    "qos_failure_bd461333": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "고장",
+        "QoS",
+        "라는",
+        "숨은",
+        "규칙"
+      ],
+      "note": "자동 발굴 개념: 고장 QoS",
+      "available": true
+    },
     "recording_archive": {
       "tags": [
         "library"
@@ -3014,6 +3111,18 @@
       "note": "Reusable editorial illustration.",
       "available": false
     },
+    "thinning_news_ed51d22a": {
+      "tags": [
+        "auto",
+        "library"
+      ],
+      "keywords": [
+        "얇아진다",
+        "소식"
+      ],
+      "note": "자동 발굴 개념: 얇아진다 소식",
+      "available": true
+    },
     "ti_decrease": {
       "tags": [
         "materials",
@@ -3118,5 +3227,5 @@
       "available": true
     }
   },
-  "updated_at": "2026-07-13T15:59:43"
+  "updated_at": "2026-07-16T15:15:07"
 }

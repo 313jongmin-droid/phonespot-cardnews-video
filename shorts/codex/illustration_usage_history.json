@@ -610,9 +610,46 @@
         "gift_voucher",
         "payment_fall_8fb48590"
       ]
+    },
+    "048_qa_unlimited_qos_truth": {
+      "used_at": "2026-07-16T14:51:02",
+      "source": "uploaded_illustrations",
+      "illustrations": [
+        "qos_failure_bd461333",
+        "basic_fold_202d754f",
+        "example_cd30b6fe",
+        "smartphone",
+        "phone_setup_ready",
+        "new_policy_f48caded",
+        "parents_chat_c1d70b74",
+        "size_guide_afe009df",
+        "phone_settings_toggle",
+        "device_os_requirement",
+        "device_data_transfer",
+        "cpt_98b43912"
+      ]
+    },
+    "045_news_iphone_thick_galaxy_thin": {
+      "used_at": "2026-07-16T15:15:10",
+      "source": "uploaded_illustrations",
+      "illustrations": [
+        "cpt_65a9841a",
+        "thinning_news_ed51d22a",
+        "cpt_d5ec3971",
+        "cpt_5091b78e",
+        "camera_battery_ecd040c7",
+        "basic_fold_202d754f",
+        "event_period_8cafdac4",
+        "cpt_e73a695f",
+        "stretch_month_da92f81f",
+        "smartphone",
+        "phone_setup_ready",
+        "example_cd30b6fe",
+        "phone_settings_toggle"
+      ]
     }
   },
-  "updated_at": "2026-07-13T16:01:40",
+  "updated_at": "2026-07-16T15:15:11",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -742,6 +779,14 @@
     },
     "044_news_chipflation_price": {
       "updated_at": "2026-07-13T16:01:40",
+      "variants": []
+    },
+    "048_qa_unlimited_qos_truth": {
+      "updated_at": "2026-07-16T14:51:03",
+      "variants": []
+    },
+    "045_news_iphone_thick_galaxy_thin": {
+      "updated_at": "2026-07-16T15:15:11",
       "variants": []
     }
   }

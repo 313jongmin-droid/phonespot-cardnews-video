@@ -1,30 +1,30 @@
 {
-  "slug": "044_news_chipflation_price",
-  "title_short": "폰값 계속 오르는 진짜 이유, '칩플레이션'",
-  "video_title": "폰값 계속 오르는 진짜 이유, '칩플레이션'",
-  "publication_date": "2026.07.09",
-  "sources": "아시아경제·카운터포인트리서치 2026.07 + 휴대폰성지 폰스팟 자료",
+  "slug": "048_qa_unlimited_qos_truth",
+  "title_short": "무제한이라며 왜 느려져?",
+  "video_title": "무제한이라며 왜 느려져?",
+  "publication_date": "2026.07.16",
+  "sources": "통신3사 약관·스마트초이스 + 휴대폰성지 폰스팟 자료",
   "channel_name": "휴대폰성지 폰스팟",
   "channel_tagline": "휴대폰성지 IT 브리핑",
   "opening": {
     "line1": "휴대폰성지 IT 브리핑",
-    "line2": "폰값 계속 오르는 진짜 이유, '칩플레이션'"
+    "line2": "무제한이라며 왜 느려져?"
   },
   "hook": {
-    "tts": "요즘 새 폰 가격 보고 놀라는 분 많습니다. 우연이 아닙니다. '칩플레이션'이라는 흐름이 폰값을 계속 밀어 올리고 있습니다. 무슨 뜻인지 풀어드립니다.",
+    "tts": "데이터 무제한 요금제인데 월 후반에 인터넷이 느려진 경험, 있으시죠? 고장이 아닙니다. 'QoS'라는 숨은 규칙 때문입니다. 무제한의 진짜 뜻을 풀어드립니다.",
     "caption_body": [
-      "폰값이 왜 자꾸",
-      "오르나?"
+      "무제한이라며",
+      "왜 느려져?"
     ],
     "caption_emphasis": [
-      "오르나"
+      "왜 느려져?"
     ],
     "headline_lines": [
       {
-        "text": "폰값이 왜 자꾸"
+        "text": "무제한이라며"
       },
       {
-        "text": "오르나?",
+        "text": "왜 느려져?",
         "accent": true
       }
     ],
@@ -32,23 +32,23 @@
     "topic": "뉴스",
     "background_image": "",
     "caption_chunks": [
-      "요즘 새 폰 가격 보고 놀라는 분 많습니다.",
-      "우연이 아닙니다. '칩플레이션'이라는",
-      "흐름이 폰값을 계속 밀어 올리고 있습니다.",
-      "무슨 뜻인지 풀어드립니다."
+      "데이터 무제한 요금제인데 월 후반에",
+      "인터넷이 느려진 경험, 있으시죠?",
+      "고장이 아닙니다. 'QoS'라는 숨은 규칙 때문입니다.",
+      "무제한의 진짜 뜻을 풀어드립니다."
     ],
     "chunk_visuals": [
       {
-        "type": "illust",
-        "value": "chart_up"
+        "type": "image",
+        "value": "photos/알뜰폰_로고.JPG"
       },
       {
         "type": "illust",
-        "value": "memory_chip"
+        "value": "qos_failure_bd461333"
       },
       {
         "type": "illust",
-        "value": "smartphone"
+        "value": "qos_failure_bd461333"
       },
       {
         "type": "mascot",
@@ -61,10 +61,10 @@
       "note": ""
     },
     "display_chunks": [
-      "요즘 새 폰 가격 보고 놀라는 분 많습니다",
-      "우연이 아닙니다 '칩플레이션'이라는",
-      "흐름이 폰값을 계속 밀어 올리고 있습니다",
-      "무슨 뜻인지 풀어드립니다"
+      "데이터 무제한 요금제인데 월 후반에",
+      "인터넷이 느려진 경험, 있으시죠?",
+      "고장이 아닙니다 'QoS'라는 숨은 규칙 때문입니다",
+      "무제한의 진짜 뜻을 풀어드립니다"
     ],
     "_codex_caption_lockstep": {
       "version": 2,
@@ -73,85 +73,52 @@
       "chunk_count": 4
     },
     "_codex_contextual_narrative": true,
-    "_codex_sync_mode": "global999_tts_caption_lockstep",
-    "tts_chunk_weights": [
-      2200.0,
-      2780.0,
-      2260.0,
-      1900.0
-    ],
-    "_tts_timing": {
-      "mode": "word_boundary_text_align",
-      "windows": [
-        {
-          "start_ms": 0.0,
-          "end_ms": 2200.0,
-          "duration_ms": 2200.0
-        },
-        {
-          "start_ms": 2200.0,
-          "end_ms": 4980.0,
-          "duration_ms": 2780.0
-        },
-        {
-          "start_ms": 4980.0,
-          "end_ms": 7240.0,
-          "duration_ms": 2260.0
-        },
-        {
-          "start_ms": 7240.0,
-          "end_ms": 9140.0,
-          "duration_ms": 1900.0
-        }
-      ],
-      "boundary_count": 18,
-      "caption_signature": "5a37f0b4fd13f1baa0acfccff031d37e47f4bd35e83f2654b970349f56d1f5c9"
-    }
+    "_codex_sync_mode": "global999_tts_caption_lockstep"
   },
   "facts": [
     {
-      "tts": "칩(반도체)과 인플레이션(물가 상승)을 합친 말입니다. 반도체 값이 물가처럼 계속 올라 그게 들어가는 제품 가격까지 밀어 올리는 현상을 뜻합니다. 스마트폰이 직격탄을 맞고 있습니다.",
+      "tts": "QoS는 기본 제공량을 다 쓰면 속도를 낮춰 계속 쓰게 해주는 규칙입니다. 데이터가 아예 끊기진 않지만, 정해진 속도로 제한됩니다. 즉 '무제한'은 대부분 '속도제한 무제한'입니다.",
       "caption_body": [
-        "칩플레이션",
-        "이란?"
+        "QoS",
+        "란 뭘까"
       ],
       "caption_emphasis": [
-        "이란"
+        "란 뭘까"
       ],
       "headline_lines": [
         {
-          "text": "칩플레이션"
+          "text": "QoS"
         },
         {
-          "text": "이란?",
+          "text": "란 뭘까",
           "accent": true
         }
       ],
-      "meta": "출처: 휴대폰성지 폰스팟 자료",
+      "meta": "출처: 통신3사 약관",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "칩(반도체)과 인플레이션(물가 상승)을 합친 말입니다.",
-        "반도체 값이 물가처럼 계속 올라 그게",
-        "들어가는 제품 가격까지 밀어 올리는 현상을 뜻합니다.",
-        "스마트폰이 직격탄을 맞고 있습니다."
+        "QoS는 기본 제공량을 다 쓰면",
+        "속도를 낮춰 계속 쓰게 해주는 규칙입니다.",
+        "데이터가 아예 끊기진 않지만, 정해진 속도로 제한됩니다.",
+        "즉 '무제한'은 대부분 '속도제한 무제한'입니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
+          "value": "basic_fold_202d754f"
+        },
+        {
+          "type": "illust",
+          "value": "example_cd30b6fe"
+        },
+        {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        {
+          "type": "illust",
           "value": "phone_setup_ready"
-        },
-        {
-          "type": "illust",
-          "value": "event_period_8cafdac4"
-        },
-        {
-          "type": "illust",
-          "value": "phone_settings_toggle"
-        },
-        {
-          "type": "illust",
-          "value": "device_os_requirement"
         }
       ],
       "stat": {
@@ -161,10 +128,10 @@
       },
       "id": "fact_1",
       "display_chunks": [
-        "칩(반도체)과 인플레이션(물가 상승)을 합친 말입니다",
-        "반도체 값이 물가처럼 계속 올라 그게",
-        "들어가는 제품 가격까지 밀어 올리는 현상을 뜻합니다",
-        "스마트폰이 직격탄을 맞고 있습니다"
+        "QoS는 기본 제공량을 다 쓰면",
+        "속도를 낮춰 계속 쓰게 해주는 규칙입니다",
+        "데이터가 아예 끊기진 않지만, 정해진 속도로 제한됩니다",
+        "즉 '무제한'은 대부분 '속도제한 무제한'입니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
@@ -173,80 +140,47 @@
         "chunk_count": 4
       },
       "_codex_contextual_narrative": true,
-      "_codex_sync_mode": "global999_tts_caption_lockstep",
-      "tts_chunk_weights": [
-        2980.0,
-        3100.0,
-        2400.0,
-        2480.0
-      ],
-      "_tts_timing": {
-        "mode": "word_boundary_text_align",
-        "windows": [
-          {
-            "start_ms": 0.0,
-            "end_ms": 2980.0,
-            "duration_ms": 2980.0
-          },
-          {
-            "start_ms": 2980.0,
-            "end_ms": 6080.0,
-            "duration_ms": 3100.0
-          },
-          {
-            "start_ms": 6080.0,
-            "end_ms": 8480.0,
-            "duration_ms": 2400.0
-          },
-          {
-            "start_ms": 8480.0,
-            "end_ms": 10960.0,
-            "duration_ms": 2480.0
-          }
-        ],
-        "boundary_count": 24,
-        "caption_signature": "feda14817a2f0ca61ae8803cf599d3f9726c1d2ad0f371de9bdbf6ff2d313554"
-      }
+      "_codex_sync_mode": "global999_tts_caption_lockstep"
     },
     {
-      "tts": "인공지능 열풍으로 메모리와 반도체 수요가 폭발했습니다. AI 서버가 물량을 싹쓸이하면서 값이 급등했고, 그 부담이 스마트폰 부품값으로 넘어옵니다. 수급이 풀리기 전까진 이어질 전망입니다.",
+      "tts": "예를 들어 하루 몇 GB를 쓰면 그 뒤부터 3Mbps 같은 속도로 낮춰집니다. 카톡·검색은 되지만 고화질 영상은 버벅일 수 있습니다. 요금제마다 기본량과 제한 속도가 다릅니다.",
       "caption_body": [
-        "원인",
-        "AI 열풍"
+        "실제로는",
+        "이렇게 제한"
       ],
       "caption_emphasis": [
-        "AI 열풍"
+        "이렇게"
       ],
       "headline_lines": [
         {
-          "text": "원인"
+          "text": "실제로는"
         },
         {
-          "text": "AI 열풍",
+          "text": "이렇게 제한",
           "accent": true
         }
       ],
-      "meta": "출처: 카운터포인트리서치",
+      "meta": "출처: 스마트초이스",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "인공지능 열풍으로 메모리와 반도체 수요가 폭발했습니다.",
-        "AI 서버가 물량을 싹쓸이하면서 값이 급등했고,",
-        "그 부담이 스마트폰 부품값으로 넘어옵니다.",
-        "수급이 풀리기 전까진 이어질 전망입니다."
+        "예를 들어 하루 몇 GB를 쓰면",
+        "그 뒤부터 3Mbps 같은 속도로 낮춰집니다.",
+        "카톡·검색은 되지만 고화질 영상은 버벅일 수 있습니다.",
+        "요금제마다 기본량과 제한 속도가 다릅니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "samsung_ai"
+          "value": "example_cd30b6fe"
         },
         {
           "type": "illust",
-          "value": "part_cost_a4d4e5f0"
+          "value": "new_policy_f48caded"
         },
         {
           "type": "illust",
-          "value": "forecast"
+          "value": "parents_chat_c1d70b74"
         },
         {
           "type": "mascot",
@@ -260,10 +194,10 @@
       },
       "id": "fact_2",
       "display_chunks": [
-        "인공지능 열풍으로 메모리와 반도체 수요가 폭발했습니다",
-        "AI 서버가 물량을 싹쓸이하면서 값이 급등했고,",
-        "그 부담이 스마트폰 부품값으로 넘어옵니다",
-        "수급이 풀리기 전까진 이어질 전망입니다"
+        "예를 들어 하루 몇 GB를 쓰면",
+        "그 뒤부터 3Mbps 같은 속도로 낮춰집니다",
+        "카톡·검색은 되지만 고화질 영상은 버벅일 수 있습니다",
+        "요금제마다 기본량과 제한 속도가 다릅니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
@@ -272,89 +206,56 @@
         "chunk_count": 4
       },
       "_codex_contextual_narrative": true,
-      "_codex_sync_mode": "global999_tts_caption_lockstep",
-      "tts_chunk_weights": [
-        3085.82,
-        3399.49,
-        2455.36,
-        2059.32
-      ],
-      "_tts_timing": {
-        "mode": "word_boundary_text_align",
-        "windows": [
-          {
-            "start_ms": 0.0,
-            "end_ms": 3085.82,
-            "duration_ms": 3085.82
-          },
-          {
-            "start_ms": 3085.82,
-            "end_ms": 6485.32,
-            "duration_ms": 3399.49
-          },
-          {
-            "start_ms": 6485.32,
-            "end_ms": 8940.68,
-            "duration_ms": 2455.36
-          },
-          {
-            "start_ms": 8940.68,
-            "end_ms": 11000.0,
-            "duration_ms": 2059.32
-          }
-        ],
-        "boundary_count": 22,
-        "caption_signature": "91fc28524ce4844d3d3935a72f8b2f733c00629f72aafca5ce7321defc3d3ae0"
-      }
+      "_codex_sync_mode": "global999_tts_caption_lockstep"
     },
     {
-      "tts": "800달러급이던 스마트폰 가격대가 위로 밀리고, 접는 폰은 300만원대까지 거론됩니다. 애플·삼성 할 것 없이 프리미엄 신제품 가격이 오르는 방향입니다. 소비자 부담이 커집니다.",
+      "tts": "완전무제한(속도제한 없음)인지, QoS형(제한 있음)인지 약관에서 확인하세요. '데이터 소진 후 최대 O Mbps' 같은 문구가 있으면 QoS형입니다. 가격만 보지 말고 이 조건을 봐야 합니다.",
       "caption_body": [
-        "결과",
-        "폴더블 300만원"
+        "내 요금제",
+        "구분하는 법"
       ],
       "caption_emphasis": [
-        "폴더블 300만원"
+        "구분하는 법"
       ],
       "headline_lines": [
         {
-          "text": "결과"
+          "text": "내 요금제"
         },
         {
-          "text": "폴더블 300만원",
+          "text": "구분하는 법",
           "accent": true
         }
       ],
-      "meta": "출처: 아시아경제",
+      "meta": "출처: 휴대폰성지 폰스팟 자료",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "800달러급이던 스마트폰 가격대가 위로 밀리고,",
-        "접는 폰은 300만원대까지 거론됩니다.",
-        "애플·삼성 할 것 없이 프리미엄 신제품",
-        "가격이 오르는 방향입니다.",
-        "소비자 부담이 커집니다."
+        "완전무제한(속도제한 없음)인지,",
+        "QoS형(제한 있음)인지 약관에서 확인하세요.",
+        "'데이터 소진 후 최대 O Mbps' 같은",
+        "문구가 있으면 QoS형입니다.",
+        "가격만 보지 말고 이 조건을 봐야 합니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "foldable"
+          "value": "size_guide_afe009df"
         },
         {
           "type": "illust",
-          "value": "apple_70385068"
-        },
-        {
-          "type": "image",
-          "value": "photos/삼성_로고.JPG"
+          "value": "phone_settings_toggle"
         },
         {
           "type": "illust",
-          "value": "samsung_korea_04b00795"
+          "value": "device_os_requirement"
         },
         {
           "type": "illust",
           "value": "device_data_transfer"
+        },
+        {
+          "type": "illust",
+          "value": "smartphone"
         }
       ],
       "stat": {
@@ -364,11 +265,11 @@
       },
       "id": "fact_3",
       "display_chunks": [
-        "800달러급이던 스마트폰 가격대가 위로 밀리고,",
-        "접는 폰은 300만원대까지 거론됩니다",
-        "애플·삼성 할 것 없이 프리미엄 신제품",
-        "가격이 오르는 방향입니다",
-        "소비자 부담이 커집니다"
+        "완전무제한(속도제한 없음)인지,",
+        "QoS형(제한 있음)인지 약관에서 확인하세요",
+        "'데이터 소진 후 최대 O Mbps' 같은",
+        "문구가 있으면 QoS형입니다",
+        "가격만 보지 말고 이 조건을 봐야 합니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
@@ -377,62 +278,23 @@
         "chunk_count": 5
       },
       "_codex_contextual_narrative": true,
-      "_codex_sync_mode": "global999_tts_caption_lockstep",
-      "tts_chunk_weights": [
-        2420.0,
-        2720.0,
-        3000.0,
-        1240.0,
-        1480.0
-      ],
-      "_tts_timing": {
-        "mode": "word_boundary_text_align",
-        "windows": [
-          {
-            "start_ms": 0.0,
-            "end_ms": 2420.0,
-            "duration_ms": 2420.0
-          },
-          {
-            "start_ms": 2420.0,
-            "end_ms": 5140.0,
-            "duration_ms": 2720.0
-          },
-          {
-            "start_ms": 5140.0,
-            "end_ms": 8140.0,
-            "duration_ms": 3000.0
-          },
-          {
-            "start_ms": 8140.0,
-            "end_ms": 9380.0,
-            "duration_ms": 1240.0
-          },
-          {
-            "start_ms": 9380.0,
-            "end_ms": 10860.0,
-            "duration_ms": 1480.0
-          }
-        ],
-        "boundary_count": 24,
-        "caption_signature": "111120407960123a7adc10789350c9f8d46a4811b7dc6cb2255ccbcf444f1985"
-      }
+      "_codex_sync_mode": "global999_tts_caption_lockstep"
     },
     {
-      "tts": "더 오르기 전에 사는 게 이득일 수 있습니다. 단 월 납부금이 아니라 실구매가와 지원금을 함께 봐야 진짜 부담이 보입니다. 지금 재고가와 신제품 예상가를 비교해 타이밍을 잡으세요.",
+      "tts": "영상·테더링을 많이 쓰면 완전무제한이나 기본량 큰 요금제가 낫고, 가볍게 쓰면 QoS형으로 충분합니다. 매달 데이터 사용량을 확인하고 거기에 맞추는 게 돈을 아끼는 길입니다.",
       "caption_body": [
-        "그래서",
-        "지금 따질 것"
+        "선택 기준",
+        "내 사용량"
       ],
       "caption_emphasis": [
-        "지금 따질 것"
+        "내 사용량"
       ],
       "headline_lines": [
         {
-          "text": "그래서"
+          "text": "선택 기준"
         },
         {
-          "text": "지금 따질 것",
+          "text": "내 사용량",
           "accent": true
         }
       ],
@@ -440,27 +302,32 @@
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "더 오르기 전에 사는 게 이득일 수 있습니다.",
-        "단 월 납부금이 아니라 실구매가와 지원금을",
-        "함께 봐야 진짜 부담이 보입니다.",
-        "지금 재고가와 신제품 예상가를 비교해 타이밍을 잡으세요."
+        "영상·테더링을 많이 쓰면",
+        "완전무제한이나 기본량 큰 요금제가 낫고,",
+        "가볍게 쓰면 QoS형으로 충분합니다.",
+        "매달 데이터 사용량을 확인하고",
+        "거기에 맞추는 게 돈을 아끼는 길입니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "gift_voucher"
+          "value": "phone_setup_ready"
         },
         {
           "type": "illust",
-          "value": "payment_fall_8fb48590"
+          "value": "phone_settings_toggle"
         },
         {
           "type": "illust",
-          "value": "smartphone"
+          "value": "device_os_requirement"
         },
         {
-          "type": "image",
-          "value": "photos/애플_아이폰_2개.JPG"
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        {
+          "type": "illust",
+          "value": "cpt_98b43912"
         }
       ],
       "stat": {
@@ -470,52 +337,20 @@
       },
       "id": "fact_4",
       "display_chunks": [
-        "더 오르기 전에 사는 게 이득일 수 있습니다",
-        "단 월 납부금이 아니라 실구매가와 지원금을",
-        "함께 봐야 진짜 부담이 보입니다",
-        "지금 재고가와 신제품 예상가를 비교해 타이밍을 잡으세요"
+        "영상·테더링을 많이 쓰면",
+        "완전무제한이나 기본량 큰 요금제가 낫고,",
+        "가볍게 쓰면 QoS형으로 충분합니다",
+        "매달 데이터 사용량을 확인하고",
+        "거기에 맞추는 게 돈을 아끼는 길입니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 4
+        "chunk_count": 5
       },
       "_codex_contextual_narrative": true,
-      "_codex_sync_mode": "global999_tts_caption_lockstep",
-      "tts_chunk_weights": [
-        1780.0,
-        3000.0,
-        1800.0,
-        3240.0
-      ],
-      "_tts_timing": {
-        "mode": "word_boundary_text_align",
-        "windows": [
-          {
-            "start_ms": 0.0,
-            "end_ms": 1780.0,
-            "duration_ms": 1780.0
-          },
-          {
-            "start_ms": 1780.0,
-            "end_ms": 4780.0,
-            "duration_ms": 3000.0
-          },
-          {
-            "start_ms": 4780.0,
-            "end_ms": 6580.0,
-            "duration_ms": 1800.0
-          },
-          {
-            "start_ms": 6580.0,
-            "end_ms": 9820.0,
-            "duration_ms": 3240.0
-          }
-        ],
-        "boundary_count": 27,
-        "caption_signature": "8b589af26fe7e29e72486e02421198bf98ec006c433c8b9bca62fcf72617da33"
-      }
+      "_codex_sync_mode": "global999_tts_caption_lockstep"
     }
   ],
   "cta": {
@@ -574,38 +409,34 @@
     "_codex_contextual_narrative": true,
     "_codex_sync_mode": "global999_tts_caption_lockstep",
     "_codex_fixed_cta": true,
-    "_codex_narration_source": "fixed_cta_contract",
-    "tts_chunk_weights": [
-      1346.67,
-      1533.33
-    ],
-    "_tts_timing": {
-      "mode": "word_boundary_text_align",
-      "windows": [
-        {
-          "start_ms": 0.0,
-          "end_ms": 1346.67,
-          "duration_ms": 1346.67
-        },
-        {
-          "start_ms": 1346.67,
-          "end_ms": 2880.0,
-          "duration_ms": 1533.33
-        }
-      ],
-      "boundary_count": 6,
-      "caption_signature": "db4c57a05254654841d0c63b2eea20bad43e358510298ef607bf41bcae3b9e5d"
-    }
+    "_codex_narration_source": "fixed_cta_contract"
   },
   "_auto_generated": true,
   "_chunk_logic_v2": true,
-  "_source_hash": "7a9206ec430ce748537d9cb6c5372bc6b837bc39",
+  "_source_hash": "157c0f5f1683f136e3f77373c2ce1f9e7bb44a83",
   "_note": "build_script.py 자동 생성 (v2 로직): 시퀀스 내 이미지 순환 + 마스코트 짝수 시퀀스만.",
   "_codex_global_999_quality": true,
   "_codex_common_quality_logic": true,
   "_codex_sync_quality_logic": true,
   "_codex_captions_narration_priority": false,
   "_codex_common_quality_note": "Global 001-999 rule: screen chunks are rebuilt as an ordered, lossless partition of captions.md narration; curated visuals are rebalanced without discarding quality rules.",
+  "_codex_uploaded_illustrations": [
+    {
+      "section": "hook",
+      "chunk": 3,
+      "variant": "qos_failure_bd461333"
+    },
+    {
+      "section": "fact_2",
+      "chunk": 1,
+      "variant": "example_cd30b6fe"
+    },
+    {
+      "section": "fact_4",
+      "chunk": 5,
+      "variant": "cpt_98b43912"
+    }
+  ],
   "_codex_semantic_visual_match": {
     "version": 1,
     "policy": "Match chunks to GPT source images using prompt.md descriptions, then fallback to tagged reusable illustrations.",
@@ -618,11 +449,11 @@
           "value": "smartphone"
         },
         "to": {
-          "type": "illust",
-          "value": "chart_up"
+          "type": "image",
+          "value": "photos/알뜰폰_로고.JPG"
         },
-        "context": "요즘 새 폰 가격 보고 놀라는 분 많습니다 우연이 아닙니다 '칩플레이션'이라는 폰값이 왜 자꾸 오르나? ['폰값이 왜 자꾸', '오르나?'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
+        "context": "데이터 무제한 요금제인데 월 후반에 인터넷이 느려진 경험, 있으시죠? 무제한이라며 왜 느려져? ['무제한이라며', '왜 느려져?'] 뉴스",
+        "reason": "photo lexical dist=1 gen=0: 알뜰폰_로고.JPG"
       },
       {
         "section": "hook",
@@ -633,13 +464,55 @@
         },
         "to": {
           "type": "illust",
-          "value": "memory_chip"
+          "value": "qos_failure_bd461333"
         },
-        "context": "요즘 새 폰 가격 보고 놀라는 분 많습니다 우연이 아닙니다 '칩플레이션'이라는 흐름이 폰값을 계속 밀어 올리고 있습니다 폰값이 왜 자꾸 오르나? ['폰값이 왜 자꾸', '오르나?'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
+        "context": "데이터 무제한 요금제인데 월 후반에 인터넷이 느려진 경험, 있으시죠? 고장이 아닙니다 'QoS'라는 숨은 규칙 때문입니다 무제한이라며 왜 느려져? ['무제한이라며', '왜 느려져?'] 뉴스",
+        "reason": "illust score 60 (content n/a)"
       },
       {
         "section": "hook",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "qos_failure_bd461333"
+        },
+        "to": {
+          "type": "illust",
+          "value": "prohibit"
+        },
+        "context": "인터넷이 느려진 경험, 있으시죠? 고장이 아닙니다 'QoS'라는 숨은 규칙 때문입니다 무제한의 진짜 뜻을 풀어드립니다 무제한이라며 왜 느려져? ['무제한이라며', '왜 느려져?'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "basic_fold_202d754f"
+        },
+        "context": "QoS는 기본 제공량을 다 쓰면 속도를 낮춰 계속 쓰게 해주는 규칙입니다 QoS 란 뭘까 ['QoS', '란 뭘까'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "example_cd30b6fe"
+        },
+        "context": "QoS는 기본 제공량을 다 쓰면 속도를 낮춰 계속 쓰게 해주는 규칙입니다 데이터가 아예 끊기진 않지만, 정해진 속도로 제한됩니다 QoS 란 뭘까 ['QoS', '란 뭘까'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_1",
         "chunk": 3,
         "from": {
           "type": "illust",
@@ -649,148 +522,106 @@
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "우연이 아닙니다 '칩플레이션'이라는 흐름이 폰값을 계속 밀어 올리고 있습니다 무슨 뜻인지 풀어드립니다 폰값이 왜 자꾸 오르나? ['폰값이 왜 자꾸', '오르나?'] 뉴스",
+        "context": "속도를 낮춰 계속 쓰게 해주는 규칙입니다 데이터가 아예 끊기진 않지만, 정해진 속도로 제한됩니다 즉 '무제한'은 대부분 '속도제한 무제한'입니다 QoS 란 뭘까 ['QoS', '란 뭘까'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
         "section": "fact_1",
-        "chunk": 1,
+        "chunk": 4,
         "from": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "apple_70385068"
         },
         "to": {
           "type": "illust",
           "value": "phone_setup_ready"
         },
-        "context": "칩(반도체)과 인플레이션(물가 상승)을 합친 말입니다 반도체 값이 물가처럼 계속 올라 그게 칩플레이션 이란? ['칩플레이션', '이란?'] 뉴스",
+        "context": "데이터가 아예 끊기진 않지만, 정해진 속도로 제한됩니다 즉 '무제한'은 대부분 '속도제한 무제한'입니다 QoS 란 뭘까 ['QoS', '란 뭘까'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
-        "section": "fact_1",
-        "chunk": 2,
+        "section": "fact_2",
+        "chunk": 1,
         "from": {
           "type": "illust",
-          "value": "aluminum_label"
+          "value": "example_cd30b6fe"
         },
         "to": {
           "type": "illust",
           "value": "event_period_8cafdac4"
         },
-        "context": "칩(반도체)과 인플레이션(물가 상승)을 합친 말입니다 반도체 값이 물가처럼 계속 올라 그게 들어가는 제품 가격까지 밀어 올리는 현상을 뜻합니다 칩플레이션 이란? ['칩플레이션', '이란?'] 뉴스",
+        "context": "예를 들어 하루 몇 GB를 쓰면 그 뒤부터 3Mbps 같은 속도로 낮춰집니다 실제로는 이렇게 제한 ['실제로는', '이렇게 제한'] 뉴스",
         "reason": "illust score 12 (content n/a)"
       },
       {
-        "section": "fact_1",
+        "section": "fact_2",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "new_policy_f48caded"
+        },
+        "context": "예를 들어 하루 몇 GB를 쓰면 그 뒤부터 3Mbps 같은 속도로 낮춰집니다 카톡·검색은 되지만 고화질 영상은 버벅일 수 있습니다 실제로는 이렇게 제한 ['실제로는', '이렇게 제한'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_2",
         "chunk": 3,
         "from": {
           "type": "illust",
           "value": "appear_e5f828cc"
+        },
+        "to": {
+          "type": "illust",
+          "value": "parents_chat_c1d70b74"
+        },
+        "context": "그 뒤부터 3Mbps 같은 속도로 낮춰집니다 카톡·검색은 되지만 고화질 영상은 버벅일 수 있습니다 요금제마다 기본량과 제한 속도가 다릅니다 실제로는 이렇게 제한 ['실제로는', '이렇게 제한'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "size_guide_afe009df"
+        },
+        "context": "완전무제한(속도제한 없음)인지, QoS형(제한 있음)인지 약관에서 확인하세요 내 요금제 구분하는 법 ['내 요금제', '구분하는 법'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
         },
         "to": {
           "type": "illust",
           "value": "phone_settings_toggle"
         },
-        "context": "반도체 값이 물가처럼 계속 올라 그게 들어가는 제품 가격까지 밀어 올리는 현상을 뜻합니다 스마트폰이 직격탄을 맞고 있습니다 칩플레이션 이란? ['칩플레이션', '이란?'] 뉴스",
+        "context": "완전무제한(속도제한 없음)인지, QoS형(제한 있음)인지 약관에서 확인하세요 '데이터 소진 후 최대 O Mbps' 같은 내 요금제 구분하는 법 ['내 요금제', '구분하는 법'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
-        "section": "fact_1",
-        "chunk": 4,
+        "section": "fact_3",
+        "chunk": 3,
         "from": {
           "type": "illust",
-          "value": "apple_70385068"
+          "value": "appear_e5f828cc"
         },
         "to": {
           "type": "illust",
           "value": "device_os_requirement"
         },
-        "context": "들어가는 제품 가격까지 밀어 올리는 현상을 뜻합니다 스마트폰이 직격탄을 맞고 있습니다 칩플레이션 이란? ['칩플레이션', '이란?'] 뉴스",
+        "context": "QoS형(제한 있음)인지 약관에서 확인하세요 '데이터 소진 후 최대 O Mbps' 같은 문구가 있으면 QoS형입니다 내 요금제 구분하는 법 ['내 요금제', '구분하는 법'] 뉴스",
         "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "samsung_ai"
-        },
-        "context": "인공지능 열풍으로 메모리와 반도체 수요가 폭발했습니다 AI 서버가 물량을 싹쓸이하면서 값이 급등했고, 원인 AI 열풍 ['원인', 'AI 열풍'] 뉴스",
-        "reason": "illust score 27 (content n/a)"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "aluminum_label"
-        },
-        "to": {
-          "type": "illust",
-          "value": "part_cost_a4d4e5f0"
-        },
-        "context": "인공지능 열풍으로 메모리와 반도체 수요가 폭발했습니다 AI 서버가 물량을 싹쓸이하면서 값이 급등했고, 그 부담이 스마트폰 부품값으로 넘어옵니다 원인 AI 열풍 ['원인', 'AI 열풍'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "appear_e5f828cc"
-        },
-        "to": {
-          "type": "illust",
-          "value": "forecast"
-        },
-        "context": "AI 서버가 물량을 싹쓸이하면서 값이 급등했고, 그 부담이 스마트폰 부품값으로 넘어옵니다 수급이 풀리기 전까진 이어질 전망입니다 원인 AI 열풍 ['원인', 'AI 열풍'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "foldable"
-        },
-        "context": "800달러급이던 스마트폰 가격대가 위로 밀리고, 접는 폰은 300만원대까지 거론됩니다 결과 폴더블 300만원 ['결과', '폴더블 300만원'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "aluminum_label"
-        },
-        "to": {
-          "type": "illust",
-          "value": "apple_70385068"
-        },
-        "context": "800달러급이던 스마트폰 가격대가 위로 밀리고, 접는 폰은 300만원대까지 거론됩니다 애플·삼성 할 것 없이 프리미엄 신제품 결과 폴더블 300만원 ['결과', '폴더블 300만원'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "appear_e5f828cc"
-        },
-        "to": {
-          "type": "image",
-          "value": "photos/삼성_로고.JPG"
-        },
-        "context": "접는 폰은 300만원대까지 거론됩니다 애플·삼성 할 것 없이 프리미엄 신제품 가격이 오르는 방향입니다 결과 폴더블 300만원 ['결과', '폴더블 300만원'] 뉴스",
-        "reason": "photo lexical dist=2 gen=0: 삼성_로고.JPG"
       },
       {
         "section": "fact_3",
@@ -801,10 +632,10 @@
         },
         "to": {
           "type": "illust",
-          "value": "samsung_korea_04b00795"
+          "value": "device_data_transfer"
         },
-        "context": "애플·삼성 할 것 없이 프리미엄 신제품 가격이 오르는 방향입니다 소비자 부담이 커집니다 결과 폴더블 300만원 ['결과', '폴더블 300만원'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
+        "context": "'데이터 소진 후 최대 O Mbps' 같은 문구가 있으면 QoS형입니다 가격만 보지 말고 이 조건을 봐야 합니다 내 요금제 구분하는 법 ['내 요금제', '구분하는 법'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
       },
       {
         "section": "fact_3",
@@ -815,9 +646,9 @@
         },
         "to": {
           "type": "illust",
-          "value": "device_data_transfer"
+          "value": "smartphone"
         },
-        "context": "가격이 오르는 방향입니다 소비자 부담이 커집니다 결과 폴더블 300만원 ['결과', '폴더블 300만원'] 뉴스",
+        "context": "문구가 있으면 QoS형입니다 가격만 보지 말고 이 조건을 봐야 합니다 내 요금제 구분하는 법 ['내 요금제', '구분하는 법'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
@@ -829,10 +660,10 @@
         },
         "to": {
           "type": "illust",
-          "value": "gift_voucher"
+          "value": "phone_setup_ready"
         },
-        "context": "더 오르기 전에 사는 게 이득일 수 있습니다 단 월 납부금이 아니라 실구매가와 지원금을 그래서 지금 따질 것 ['그래서', '지금 따질 것'] 뉴스",
-        "reason": "illust score 24 (content n/a)"
+        "context": "영상·테더링을 많이 쓰면 완전무제한이나 기본량 큰 요금제가 낫고, 선택 기준 내 사용량 ['선택 기준', '내 사용량'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
       },
       {
         "section": "fact_4",
@@ -843,10 +674,10 @@
         },
         "to": {
           "type": "illust",
-          "value": "payment_fall_8fb48590"
+          "value": "phone_settings_toggle"
         },
-        "context": "더 오르기 전에 사는 게 이득일 수 있습니다 단 월 납부금이 아니라 실구매가와 지원금을 함께 봐야 진짜 부담이 보입니다 그래서 지금 따질 것 ['그래서', '지금 따질 것'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
+        "context": "영상·테더링을 많이 쓰면 완전무제한이나 기본량 큰 요금제가 낫고, 가볍게 쓰면 QoS형으로 충분합니다 선택 기준 내 사용량 ['선택 기준', '내 사용량'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
       },
       {
         "section": "fact_4",
@@ -857,38 +688,41 @@
         },
         "to": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "device_os_requirement"
         },
-        "context": "단 월 납부금이 아니라 실구매가와 지원금을 함께 봐야 진짜 부담이 보입니다 지금 재고가와 신제품 예상가를 비교해 타이밍을 잡으세요 그래서 지금 따질 것 ['그래서', '지금 따질 것'] 뉴스",
+        "context": "완전무제한이나 기본량 큰 요금제가 낫고, 가볍게 쓰면 QoS형으로 충분합니다 매달 데이터 사용량을 확인하고 선택 기준 내 사용량 ['선택 기준', '내 사용량'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
         "section": "fact_4",
         "chunk": 4,
         "from": {
-          "type": "mascot",
-          "value": "serious"
+          "type": "illust",
+          "value": "apple_70385068"
         },
         "to": {
-          "type": "image",
-          "value": "photos/애플_아이폰_2개.JPG"
+          "type": "illust",
+          "value": "device_data_transfer"
         },
-        "context": "함께 봐야 진짜 부담이 보입니다 지금 재고가와 신제품 예상가를 비교해 타이밍을 잡으세요 그래서 지금 따질 것 ['그래서', '지금 따질 것'] 뉴스",
-        "reason": "photo lexical dist=1 gen=0: 애플_아이폰_2개.JPG"
-      }
-    ],
-    "weak": [
+        "context": "가볍게 쓰면 QoS형으로 충분합니다 매달 데이터 사용량을 확인하고 거기에 맞추는 게 돈을 아끼는 길입니다 선택 기준 내 사용량 ['선택 기준', '내 사용량'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
       {
-        "section": "hook",
-        "chunk": 3,
-        "current": {
+        "section": "fact_4",
+        "chunk": 5,
+        "from": {
+          "type": "illust",
+          "value": "cpt_98b43912"
+        },
+        "to": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "우연이 아닙니다 '칩플레이션'이라는 흐름이 폰값을 계속 밀어 올리고 있습니다 무슨 뜻인지 풀어드립니다 폰값이 왜 자꾸 오르나? ['폰값이 왜 자꾸', '오르나?'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
+        "context": "매달 데이터 사용량을 확인하고 거기에 맞추는 게 돈을 아끼는 길입니다 선택 기준 내 사용량 ['선택 기준', '내 사용량'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      }
+    ],
+    "weak": [
       {
         "section": "hook",
         "chunk": 4,
@@ -896,18 +730,7 @@
           "type": "mascot",
           "value": "surprised"
         },
-        "context": "흐름이 폰값을 계속 밀어 올리고 있습니다 무슨 뜻인지 풀어드립니다 폰값이 왜 자꾸 오르나? ['폰값이 왜 자꾸', '오르나?'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_1",
-        "chunk": 1,
-        "current": {
-          "type": "illust",
-          "value": "phone_setup_ready"
-        },
-        "context": "칩(반도체)과 인플레이션(물가 상승)을 합친 말입니다 반도체 값이 물가처럼 계속 올라 그게 칩플레이션 이란? ['칩플레이션', '이란?'] 뉴스",
+        "context": "고장이 아닙니다 'QoS'라는 숨은 규칙 때문입니다 무제한의 진짜 뜻을 풀어드립니다 무제한이라며 왜 느려져? ['무제한이라며', '왜 느려져?'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       },
@@ -916,9 +739,9 @@
         "chunk": 3,
         "current": {
           "type": "illust",
-          "value": "phone_settings_toggle"
+          "value": "smartphone"
         },
-        "context": "반도체 값이 물가처럼 계속 올라 그게 들어가는 제품 가격까지 밀어 올리는 현상을 뜻합니다 스마트폰이 직격탄을 맞고 있습니다 칩플레이션 이란? ['칩플레이션', '이란?'] 뉴스",
+        "context": "속도를 낮춰 계속 쓰게 해주는 규칙입니다 데이터가 아예 끊기진 않지만, 정해진 속도로 제한됩니다 즉 '무제한'은 대부분 '속도제한 무제한'입니다 QoS 란 뭘까 ['QoS', '란 뭘까'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       },
@@ -927,9 +750,9 @@
         "chunk": 4,
         "current": {
           "type": "illust",
-          "value": "device_os_requirement"
+          "value": "phone_setup_ready"
         },
-        "context": "들어가는 제품 가격까지 밀어 올리는 현상을 뜻합니다 스마트폰이 직격탄을 맞고 있습니다 칩플레이션 이란? ['칩플레이션', '이란?'] 뉴스",
+        "context": "데이터가 아예 끊기진 않지만, 정해진 속도로 제한됩니다 즉 '무제한'은 대부분 '속도제한 무제한'입니다 QoS 란 뭘까 ['QoS', '란 뭘까'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       },
@@ -940,18 +763,73 @@
           "type": "mascot",
           "value": "suspicious"
         },
-        "context": "그 부담이 스마트폰 부품값으로 넘어옵니다 수급이 풀리기 전까진 이어질 전망입니다 원인 AI 열풍 ['원인', 'AI 열풍'] 뉴스",
+        "context": "카톡·검색은 되지만 고화질 영상은 버벅일 수 있습니다 요금제마다 기본량과 제한 속도가 다릅니다 실제로는 이렇게 제한 ['실제로는', '이렇게 제한'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 3
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_3",
+        "chunk": 2,
+        "current": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "완전무제한(속도제한 없음)인지, QoS형(제한 있음)인지 약관에서 확인하세요 '데이터 소진 후 최대 O Mbps' 같은 내 요금제 구분하는 법 ['내 요금제', '구분하는 법'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_3",
+        "chunk": 3,
+        "current": {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        "context": "QoS형(제한 있음)인지 약관에서 확인하세요 '데이터 소진 후 최대 O Mbps' 같은 문구가 있으면 QoS형입니다 내 요금제 구분하는 법 ['내 요금제', '구분하는 법'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "'데이터 소진 후 최대 O Mbps' 같은 문구가 있으면 QoS형입니다 가격만 보지 말고 이 조건을 봐야 합니다 내 요금제 구분하는 법 ['내 요금제', '구분하는 법'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
       },
       {
         "section": "fact_3",
         "chunk": 5,
         "current": {
           "type": "illust",
-          "value": "device_data_transfer"
+          "value": "smartphone"
         },
-        "context": "가격이 오르는 방향입니다 소비자 부담이 커집니다 결과 폴더블 300만원 ['결과', '폴더블 300만원'] 뉴스",
+        "context": "문구가 있으면 QoS형입니다 가격만 보지 말고 이 조건을 봐야 합니다 내 요금제 구분하는 법 ['내 요금제', '구분하는 법'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_4",
+        "chunk": 1,
+        "current": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "영상·테더링을 많이 쓰면 완전무제한이나 기본량 큰 요금제가 낫고, 선택 기준 내 사용량 ['선택 기준', '내 사용량'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_4",
+        "chunk": 2,
+        "current": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "영상·테더링을 많이 쓰면 완전무제한이나 기본량 큰 요금제가 낫고, 가볍게 쓰면 QoS형으로 충분합니다 선택 기준 내 사용량 ['선택 기준', '내 사용량'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       },
@@ -960,9 +838,9 @@
         "chunk": 3,
         "current": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "device_os_requirement"
         },
-        "context": "단 월 납부금이 아니라 실구매가와 지원금을 함께 봐야 진짜 부담이 보입니다 지금 재고가와 신제품 예상가를 비교해 타이밍을 잡으세요 그래서 지금 따질 것 ['그래서', '지금 따질 것'] 뉴스",
+        "context": "완전무제한이나 기본량 큰 요금제가 낫고, 가볍게 쓰면 QoS형으로 충분합니다 매달 데이터 사용량을 확인하고 선택 기준 내 사용량 ['선택 기준', '내 사용량'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       },
@@ -970,20 +848,24 @@
         "section": "fact_4",
         "chunk": 4,
         "current": {
-          "type": "image",
-          "value": "photos/애플_아이폰_2개.JPG"
+          "type": "illust",
+          "value": "device_data_transfer"
         },
-        "context": "함께 봐야 진짜 부담이 보입니다 지금 재고가와 신제품 예상가를 비교해 타이밍을 잡으세요 그래서 지금 따질 것 ['그래서', '지금 따질 것'] 뉴스",
+        "context": "가볍게 쓰면 QoS형으로 충분합니다 매달 데이터 사용량을 확인하고 거기에 맞추는 게 돈을 아끼는 길입니다 선택 기준 내 사용량 ['선택 기준', '내 사용량'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_4",
+        "chunk": 5,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "매달 데이터 사용량을 확인하고 거기에 맞추는 게 돈을 아끼는 길입니다 선택 기준 내 사용량 ['선택 기준', '내 사용량'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       }
     ]
-  },
-  "_codex_effective_script": {
-    "version": 2,
-    "slug": "044_news_chipflation_price",
-    "source": "C:\\backup\\phonespot_cardnews\\cardnews\\output\\044_news_chipflation_price\\shorts_script.json",
-    "override_applied": false,
-    "override_sections": []
   }
 }
