@@ -118,9 +118,10 @@ function setupAdgroupTrendChart() {
   // W60: 채널별 광고그룹 unique 리스트 (B61 변경 시 자동 갱신)
   sh.getRange(60, 23).setValue('(전체)');   // W60 = 고정 옵션(맨 위)
   sh.getRange(61, 23).setFormula(           // W61~ = 채널별 동적 리스트(가나다·최근60일 활성). 배열리터럴 에러 회피로 분리
-    '=IFERROR(IF(B61="메타", SORT(UNIQUE(FILTER(메타+!E2:E, 메타+!E2:E<>"", 메타+!A2:A>=TODAY()-60))), ' +
-    'IF(B61="당근", SORT(UNIQUE(FILTER(당근+!C2:C, 당근+!C2:C<>"", 당근+!A2:A>=TODAY()-60))), ' +
-    'SORT(UNIQUE(FILTER(네이버+!E2:E, 네이버+!E2:E<>"", 네이버+!A2:A>=TODAY()-60))))), "")'
+    // ★ 시트명에 '+' 포함 → 따옴표 필수. 미따옴표 시 '메타+'가 덧셈 연산자로 파싱되어 #ERROR!
+    '=IFERROR(IF(B61="메타", SORT(UNIQUE(FILTER(\'메타+\'!E2:E, \'메타+\'!E2:E<>"", \'메타+\'!A2:A>=TODAY()-60))), ' +
+    'IF(B61="당근", SORT(UNIQUE(FILTER(\'당근+\'!C2:C, \'당근+\'!C2:C<>"", \'당근+\'!A2:A>=TODAY()-60))), ' +
+    'SORT(UNIQUE(FILTER(\'네이버+\'!E2:E, \'네이버+\'!E2:E<>"", \'네이버+\'!A2:A>=TODAY()-60))))), "")'
   );
   sh.getRange(60, 23).setNote('동적 광고그룹 리스트 (E61 드롭다운). 가나다 정렬 + 최근 60일 활성만. 숨겨두기 가능.');
 
@@ -237,7 +238,9 @@ function refreshAdgroupTrendChart() {
       const cpc = d.click > 0 ? d.spend / d.click : 0;
       const kakaoRate = d.click > 0 ? d.kakaoClick / d.click : 0;      // 카톡전환율=카톡클릭/클릭
       const kakaoCPL = d.kakaoClick > 0 ? d.spend / d.kakaoClick : 0;  // 카톡당CPL=지출/카톡클릭
-      const inquiryRate = d.kakaoClick > 0 ? d.inquiry / d.kakaoClick : 0;
+      // 문의율 = 문의수/카톡클릭 (메타·네이버). 당근은 카톡클릭 미집계(0) → 클릭 기준 폴백(문의수/클릭)
+      const inquiryRate = d.kakaoClick > 0 ? d.inquiry / d.kakaoClick
+                        : (d.click > 0 ? d.inquiry / d.click : 0);
       const cpl = d.inquiry > 0 ? d.spend / d.inquiry : 0;
       rows.push([d.date, d.imp, d.click, d.spend, ctr, cpc, d.kakaoClick, kakaoRate, kakaoCPL, d.inquiry, inquiryRate, cpl]);
     } else {
