@@ -1,50 +1,67 @@
 import React from "react";
-import { AbsoluteFill, Img, staticFile } from "remotion";
+import { AbsoluteFill } from "remotion";
 import type { Script } from "./Composition";
 
 // 9:16 Reels/Shorts 커버(정지컷). renderStill 로 1프레임만 렌더한다.
-// 데이터는 영상과 동일한 public/shorts_script.json 의 hook 을 사용한다.
-// - 헤드라인: hook.headline_lines ([{text},{text,accent}]) → 없으면 video_title 분할
-// - 비주얼: hook.chunk_visuals 에서 첫 illust/image → background_image → facts 폴백
-//   illust  value -> assets/illustrations/<value>.png
-//   image   value -> assets/<value>   (예: "1.png")
+// 이미지 없이 타이포·컬러만 사용(라이브러리 그림 재사용/누적으로 커버가 서로 비슷해지는 문제 제거).
+// 헤드라인: hook.headline_lines([{text},{text,accent}]) → 없으면 video_title 분할.
+// 변형 3종을 slug 앞 숫자 %3 으로 자동 로테이션(피드에 나란히 놓여도 단조롭지 않게).
+//   0=화이트 / 1=피치+하이라이트박스 / 2=오렌지 반전
 
 const BRAND = "#F74B0B";
 const PEACH = "#FFF1EA";
 const INK = "#1A1A1A";
+const WHITE = "#FFFFFF";
 const FONT = "'Pretendard', -apple-system, 'Apple SD Gothic Neo', sans-serif";
 
-type Visual = { type: string; value: any };
+type Variant = {
+  bg: string;
+  tag: string;
+  tagOpacity: number;
+  rule: string;
+  badgeBg: string;
+  badgeFg: string;
+  badgeBorder: string;
+  l1: string;
+  l2Mode: "text" | "chip";
+  l2Fg: string;
+  l2Bg?: string;
+  handle: string;
+  handleOpacity: number;
+  center: boolean;
+};
 
-function visualSrc(v: Visual | undefined): string | null {
-  if (!v) return null;
-  if (v.type === "illust" && typeof v.value === "string") {
-    return staticFile(`assets/illustrations/${v.value}.png`);
-  }
-  if (v.type === "image" && typeof v.value === "string" && v.value) {
-    return staticFile(`assets/${v.value}`);
-  }
-  return null;
-}
+const VARIANTS: Variant[] = [
+  {
+    bg: WHITE, tag: INK, tagOpacity: 0.6, rule: BRAND,
+    badgeBg: BRAND, badgeFg: WHITE, badgeBorder: "none",
+    l1: INK, l2Mode: "text", l2Fg: BRAND,
+    handle: INK, handleOpacity: 0.55, center: false,
+  },
+  {
+    bg: PEACH, tag: INK, tagOpacity: 0.6, rule: BRAND,
+    badgeBg: WHITE, badgeFg: BRAND, badgeBorder: `3px solid ${BRAND}`,
+    l1: INK, l2Mode: "chip", l2Fg: WHITE, l2Bg: BRAND,
+    handle: INK, handleOpacity: 0.6, center: true,
+  },
+  {
+    bg: BRAND, tag: WHITE, tagOpacity: 0.85, rule: WHITE,
+    badgeBg: WHITE, badgeFg: BRAND, badgeBorder: "none",
+    l1: WHITE, l2Mode: "chip", l2Fg: BRAND, l2Bg: WHITE,
+    handle: WHITE, handleOpacity: 0.8, center: false,
+  },
+];
 
-function pickHeroSrc(script: Script): string | null {
-  const hook: any = script.hook || {};
-  const sections: any[] = [hook, ...(script.facts || [])];
-  // 실사 사진/카드이미지(type image, photos/ 등) 우선 → 없으면 일러스트(2026-06-19, 싸당 벤치마크)
-  for (const wantImage of [true, false]) {
-    for (const sec of sections) {
-      for (const v of (sec.chunk_visuals || []) as Visual[]) {
-        if (wantImage && v.type !== "image") continue;
-        if (!wantImage && v.type !== "illust") continue;
-        const src = visualSrc(v);
-        if (src) return src;
-      }
-    }
+function variantIndex(slug: string): number {
+  const s = String(slug || "");
+  const m = s.match(/^(\d+)/);
+  let n = 0;
+  if (m) {
+    n = parseInt(m[1], 10);
+  } else {
+    for (let i = 0; i < s.length; i++) n = (n + s.charCodeAt(i)) >>> 0;
   }
-  // 폴백: background_image (카드이미지)
-  const bg = hook.background_image;
-  if (typeof bg === "string" && bg) return staticFile(`assets/${bg}`);
-  return null;
+  return ((n % 3) + 3) % 3;
 }
 
 function pickHeadline(script: Script): { l1: string; l2: string } {
@@ -52,7 +69,6 @@ function pickHeadline(script: Script): { l1: string; l2: string } {
   const l1 = (hl[0] && String(hl[0].text || "").trim()) || "";
   const l2 = (hl[1] && String(hl[1].text || "").trim()) || "";
   if (l1 || l2) return { l1, l2 };
-  // 폴백: video_title 를 두 줄로
   const t = String(script.video_title || script.title_short || "").trim();
   if (!t) return { l1: "", l2: "" };
   const words = t.split(/\s+/);
@@ -62,85 +78,85 @@ function pickHeadline(script: Script): { l1: string; l2: string } {
 }
 
 export const CoverShort: React.FC<{ script: Script }> = ({ script }) => {
-  const hero = pickHeroSrc(script);
+  const v = VARIANTS[variantIndex((script as any).slug || "")];
   const { l1, l2 } = pickHeadline(script);
 
   return (
-    <AbsoluteFill style={{ backgroundColor: "#FFFFFF", fontFamily: FONT }}>
-      {/* 상단 브랜드 배지 */}
-      <div
-        style={{
-          position: "absolute",
-          top: 64,
-          left: 64,
-          display: "flex",
-          alignItems: "center",
-          gap: 16,
-        }}
-      >
+    <AbsoluteFill
+      style={{
+        backgroundColor: v.bg,
+        fontFamily: FONT,
+        display: "flex",
+        flexDirection: "column",
+        padding: 88,
+        boxSizing: "border-box",
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
         <div
           style={{
-            backgroundColor: BRAND,
-            color: "#FFFFFF",
+            backgroundColor: v.badgeBg,
+            color: v.badgeFg,
+            border: v.badgeBorder,
             fontWeight: 900,
             fontSize: 40,
             letterSpacing: -1,
             padding: "12px 28px",
             borderRadius: 18,
+            boxSizing: "border-box",
           }}
         >
           {"폰스팟"}
         </div>
-        <div style={{ color: INK, fontWeight: 700, fontSize: 30, opacity: 0.7 }}>
+        <div style={{ color: v.tag, fontWeight: 700, fontSize: 30, opacity: v.tagOpacity }}>
           {"휴대폰성지 IT 브리핑"}
         </div>
       </div>
 
-      {/* 히어로 비주얼 */}
       <div
         style={{
-          position: "absolute",
-          top: 200,
-          left: 64,
-          right: 64,
-          height: 900,
-          backgroundColor: PEACH,
-          borderRadius: 48,
-          overflow: "hidden",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        {hero ? (
-          <Img src={hero} style={{ width: "100%", height: "100%", objectFit: "contain", padding: 56, boxSizing: "border-box" }} />
-        ) : (
-          <div style={{ fontSize: 200, fontWeight: 900, color: BRAND, opacity: 0.25 }}>{"폰스팟"}</div>
-        )}
-      </div>
-
-      {/* 하단 헤드라인 블록 */}
-      <div
-        style={{
-          position: "absolute",
-          left: 64,
-          right: 64,
-          top: 1180,
+          flex: 1,
           display: "flex",
           flexDirection: "column",
-          gap: 10,
+          justifyContent: v.center ? "center" : "flex-end",
+          paddingBottom: v.center ? 0 : 40,
         }}
       >
-        <div style={{ width: 110, height: 12, backgroundColor: BRAND, borderRadius: 8, marginBottom: 18 }} />
+        <div style={{ width: 110, height: 14, backgroundColor: v.rule, borderRadius: 8, marginBottom: 30 }} />
         {l1 ? (
-          <div style={{ color: INK, fontWeight: 800, fontSize: 72, lineHeight: 1.12, letterSpacing: -2 }}>{l1}</div>
+          <div style={{ color: v.l1, fontWeight: 800, fontSize: 104, lineHeight: 1.14, letterSpacing: -3 }}>
+            {l1}
+          </div>
         ) : null}
         {l2 ? (
-          <div style={{ color: BRAND, fontWeight: 900, fontSize: 96, lineHeight: 1.1, letterSpacing: -2.5 }}>{l2}</div>
+          <div style={{ marginTop: 18 }}>
+            {v.l2Mode === "chip" ? (
+              <span
+                style={{
+                  display: "inline-block",
+                  backgroundColor: v.l2Bg,
+                  color: v.l2Fg,
+                  fontWeight: 900,
+                  fontSize: 132,
+                  lineHeight: 1.28,
+                  letterSpacing: -3,
+                  padding: "0 26px",
+                  borderRadius: 22,
+                }}
+              >
+                {l2}
+              </span>
+            ) : (
+              <div style={{ color: v.l2Fg, fontWeight: 900, fontSize: 132, lineHeight: 1.1, letterSpacing: -3 }}>
+                {l2}
+              </div>
+            )}
+          </div>
         ) : null}
-        <div style={{ color: INK, fontWeight: 700, fontSize: 34, opacity: 0.55, marginTop: 22 }}>
-          {"@휴대폰성지폰스팟"}
-        </div>
+      </div>
+
+      <div style={{ color: v.handle, fontWeight: 700, fontSize: 34, opacity: v.handleOpacity }}>
+        {"@휴대폰성지폰스팟"}
       </div>
     </AbsoluteFill>
   );
