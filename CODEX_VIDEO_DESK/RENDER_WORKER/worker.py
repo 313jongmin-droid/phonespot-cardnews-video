@@ -30,7 +30,7 @@ SERVER = (os.environ.get("PHONESPOT_PANEL_URL") or SAVED_URL or "http://127.0.0.
 # 로컬 패널이면 결과가 이미 RESULTS/<키>/ 에 있으므로 업로드/패키지 다운로드(=remote_ 폴더) 불필요
 LOCAL_PANEL = ("127.0.0.1" in SERVER) or ("localhost" in SERVER)
 WORKER_ID = os.environ.get("PHONESPOT_WORKER_ID") or socket.gethostname()
-VERSION = "render-worker-v5"
+VERSION = "render-worker-v6"
 # 워커가 pythonw(무콘솔)로 돌면 자식(bat/python) 콘솔이 새 창을 띄움 → subprocess에 적용.
 NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
 INSTANCE_ID = uuid4().hex
@@ -204,6 +204,22 @@ def result_after(slug: str, started: float, before: dict | None = None) -> Path 
     return max(pool, key=lambda path: path.stat().st_mtime) if pool else None
 
 
+def find_cover(slug: str, started: float) -> Path | None:
+    # 커버 잡: 결과는 mp4가 아니라 jpg/png. 경계안전 slug 매칭 + started 이후.
+    if not RESULTS.exists():
+        return None
+    cands = []
+    for folder in RESULTS.iterdir():
+        try:
+            if folder.is_dir() and _slug_in_folder(slug, folder.name):
+                for img in list(folder.glob("*.jpg")) + list(folder.glob("*.png")):
+                    if img.stat().st_mtime >= started - 5:
+                        cands.append(img)
+        except OSError:
+            pass
+    return max(cands, key=lambda p: p.stat().st_mtime) if cands else None
+
+
 def upload_result(job_id: str, path: Path) -> None:
     parsed = urllib.parse.urlsplit(SERVER)
     connection_class = http.client.HTTPSConnection if parsed.scheme == "https" else http.client.HTTPConnection
@@ -251,6 +267,8 @@ def commands_for(job: dict) -> list[list[str]]:
         num = str(int(parts[0]))
         preset = parts[-1]
         return [["cmd", "/c", str(SHORTS / "run_promo.bat"), num, preset]]
+    if job["action"] == "cover_render":
+        return [["cmd", "/c", str(SHORTS / "run_cover.bat"), slug]]
     raise RuntimeError(f"unsupported worker action: {job['action']}")
 
 
@@ -340,6 +358,12 @@ def run_job(job: dict) -> tuple[bool, int, str]:
                 return False, 96, "cancelled by user"
             if exit_code:
                 return False, exit_code, f"command {index} failed"
+        if job["action"] == "cover_render":
+            cover = find_cover(slug, started)
+            if not cover:
+                return False, 1, "cover completed but jpg not found"
+            send_log(job_id, f"[COVER] {cover.name} (RESULTS 보관, 업로드 생략)\n")
+            return True, 0, cover.name
         result = result_after(slug, started, before_mp4s)
         if not result:
             return False, 1, "render completed but result mp4 was not found"

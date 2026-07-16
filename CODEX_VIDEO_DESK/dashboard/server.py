@@ -38,7 +38,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v54"
+PANEL_VERSION = "phonespot-web-v55"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -1868,6 +1868,12 @@ class Handler(BaseHTTPRequestHandler):
                     "message": "선택 영상 렌더를 대기열에 등록했습니다.",
                 })
                 return
+            if action == "cover_render":
+                slug = validate_slug(slug)
+                job = REMOTE_QUEUE.enqueue("cover_render", slug, str(data.get("target_worker") or ""))
+                json_response(self, {"ok": True, "queued": True, "job": job,
+                                     "message": "커버만 다시 만들기 대기열 등록: " + slug + " (전체 재렌더 없음)"})
+                return
             if action == "promo_list":
                 try:
                     out = subprocess.run([sys.executable, "scripts/promo_list.py"], cwd=str(SHORTS),
@@ -2279,6 +2285,7 @@ INDEX_HTML = r"""<!doctype html>
           <button class="btn primary" onclick="runAction('video_prepare')"><strong>1. 영상용 프롬프트 준비</strong><span>선택한 카드뉴스 결과를 숏폼 영상 스크립트와 일러스트 요청으로 변환합니다.</span></button>
           <button class="btn primary" onclick="openImportReview()"><strong>2. 이미지 가져오기 + 렌더</strong><span>다운로드한 GPT 이미지를 그림 내용으로 자동 배정 제안 → 확인하고 확정합니다.</span></button>
           <button class="btn primary" onclick="runAction('video_render_selected')"><strong>3. 선택 영상만 렌더</strong><span>추가 이미지 없이 현재 선택한 슬러그를 다시 렌더합니다.</span></button>
+          <button class="btn" onclick="runAction('cover_render')"><strong>커버만 다시 만들기</strong><span>영상 전체 재렌더 없이 커버(썸네일)만 다시 생성. 결과는 RESULTS/&lt;slug&gt;_cover/.</span></button>
           <button class="foldbar" id="viewEditToggle" onclick="toggleViewEdit()">보기 · 편집 <span class="foldbar-caret" id="viewEditCaret">▾</span></button>
           <div id="viewEditActions" style="display:none;grid-column:1/-1;gap:12px;grid-template-columns:repeat(3,minmax(160px,1fr))">
             <button class="btn compact" onclick="runPreflight()"><strong>렌더 전 사전검사</strong><span>이미지·스크립트·CTA·한글·중복 사용을 먼저 확인합니다.</span></button>
