@@ -116,10 +116,11 @@ function setupAdgroupTrendChart() {
   if (!sh.getRange(61, 8).getValue()) sh.getRange(61, 8).setValue('30일');
 
   // W60: 채널별 광고그룹 unique 리스트 (B61 변경 시 자동 갱신)
-  sh.getRange(60, 23).setFormula(
-    '={"(전체)"; IFERROR(IF(B61="메타", SORT(UNIQUE(FILTER(메타+!E2:E, 메타+!E2:E<>"", 메타+!A2:A>=TODAY()-60))), ' +
+  sh.getRange(60, 23).setValue('(전체)');   // W60 = 고정 옵션(맨 위)
+  sh.getRange(61, 23).setFormula(           // W61~ = 채널별 동적 리스트(가나다·최근60일 활성). 배열리터럴 에러 회피로 분리
+    '=IFERROR(IF(B61="메타", SORT(UNIQUE(FILTER(메타+!E2:E, 메타+!E2:E<>"", 메타+!A2:A>=TODAY()-60))), ' +
     'IF(B61="당근", SORT(UNIQUE(FILTER(당근+!C2:C, 당근+!C2:C<>"", 당근+!A2:A>=TODAY()-60))), ' +
-    'SORT(UNIQUE(FILTER(네이버+!E2:E, 네이버+!E2:E<>"", 네이버+!A2:A>=TODAY()-60))))), "")}'
+    'SORT(UNIQUE(FILTER(네이버+!E2:E, 네이버+!E2:E<>"", 네이버+!A2:A>=TODAY()-60))))), "")'
   );
   sh.getRange(60, 23).setNote('동적 광고그룹 리스트 (E61 드롭다운). 가나다 정렬 + 최근 60일 활성만. 숨겨두기 가능.');
 
