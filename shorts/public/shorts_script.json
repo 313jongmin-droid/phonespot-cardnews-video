@@ -1,30 +1,30 @@
 {
-  "slug": "043_pick_galaxy_unpacked_722",
-  "title_short": "7월 22일, 삼성이 스마트글래스까지 던진다",
-  "video_title": "7월 22일, 삼성이 스마트글래스까지 던진다",
+  "slug": "044_news_chipflation_price",
+  "title_short": "폰값 계속 오르는 진짜 이유, '칩플레이션'",
+  "video_title": "폰값 계속 오르는 진짜 이유, '칩플레이션'",
   "publication_date": "2026.07.09",
-  "sources": "디지털투데이·뉴스1 2026.07.09 (언팩 전 유출·전망) + 휴대폰성지 폰스팟 자료",
+  "sources": "아시아경제·카운터포인트리서치 2026.07 + 휴대폰성지 폰스팟 자료",
   "channel_name": "휴대폰성지 폰스팟",
   "channel_tagline": "휴대폰성지 IT 브리핑",
   "opening": {
     "line1": "휴대폰성지 IT 브리핑",
-    "line2": "7월 22일, 삼성이 스마트글래스까지 던진다"
+    "line2": "폰값 계속 오르는 진짜 이유, '칩플레이션'"
   },
   "hook": {
-    "tts": "삼성이 오는 7월 22일 영국 런던에서 갤럭시 언팩 2026을 엽니다. 이번엔 폴더블폰뿐 아니라 스마트글래스까지 나온다는 전망입니다. 뭐가 나오는지 미리 정리해 드립니다. 아직 발표 전이라 전망입니다.",
+    "tts": "요즘 새 폰 가격 보고 놀라는 분 많습니다. 우연이 아닙니다. '칩플레이션'이라는 흐름이 폰값을 계속 밀어 올리고 있습니다. 무슨 뜻인지 풀어드립니다.",
     "caption_body": [
-      "7월 22일",
-      "삼성 언팩 D-DAY"
+      "폰값이 왜 자꾸",
+      "오르나?"
     ],
     "caption_emphasis": [
-      "삼성 언팩"
+      "오르나"
     ],
     "headline_lines": [
       {
-        "text": "7월 22일"
+        "text": "폰값이 왜 자꾸"
       },
       {
-        "text": "삼성 언팩 D-DAY",
+        "text": "오르나?",
         "accent": true
       }
     ],
@@ -32,37 +32,27 @@
     "topic": "뉴스",
     "background_image": "",
     "caption_chunks": [
-      "삼성이 오는 7월 22일 영국 런던에서",
-      "갤럭시 언팩 2026을 엽니다.",
-      "이번엔 폴더블폰뿐 아니라 스마트글래스까지",
-      "나온다는 전망입니다.",
-      "뭐가 나오는지 미리 정리해 드립니다.",
-      "아직 발표 전이라 전망입니다."
+      "요즘 새 폰 가격 보고 놀라는 분 많습니다.",
+      "우연이 아닙니다. '칩플레이션'이라는",
+      "흐름이 폰값을 계속 밀어 올리고 있습니다.",
+      "무슨 뜻인지 풀어드립니다."
     ],
     "chunk_visuals": [
       {
-        "type": "image",
-        "value": "photos/삼성_로고.JPG"
-      },
-      {
-        "type": "image",
-        "value": "photos/갤럭시z플립7_z폴드7.JPG"
+        "type": "illust",
+        "value": "chart_up"
       },
       {
         "type": "illust",
-        "value": "appear_e5f828cc"
+        "value": "memory_chip"
       },
       {
         "type": "illust",
-        "value": "basic_fold_202d754f"
+        "value": "smartphone"
       },
       {
-        "type": "illust",
-        "value": "document_article"
-      },
-      {
-        "type": "illust",
-        "value": "forecast"
+        "type": "mascot",
+        "value": "surprised"
       }
     ],
     "stat": {
@@ -71,68 +61,85 @@
       "note": ""
     },
     "display_chunks": [
-      "삼성이 오는 7월 22일 영국 런던에서",
-      "갤럭시 언팩 2026을 엽니다",
-      "이번엔 폴더블폰뿐 아니라 스마트글래스까지",
-      "나온다는 전망입니다",
-      "뭐가 나오는지 미리 정리해 드립니다",
-      "아직 발표 전이라 전망입니다"
+      "요즘 새 폰 가격 보고 놀라는 분 많습니다",
+      "우연이 아닙니다 '칩플레이션'이라는",
+      "흐름이 폰값을 계속 밀어 올리고 있습니다",
+      "무슨 뜻인지 풀어드립니다"
     ],
     "_codex_caption_lockstep": {
       "version": 2,
       "compiler": "korean_caption_compiler_v2",
       "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-      "chunk_count": 6
+      "chunk_count": 4
     },
     "_codex_contextual_narrative": true,
     "_codex_sync_mode": "global999_tts_caption_lockstep",
     "tts_chunk_weights": [
-      16,
-      14,
-      19,
-      10,
-      16,
-      13
+      2200.0,
+      2780.0,
+      2260.0,
+      1900.0
     ],
     "_tts_timing": {
-      "mode": "character_weight_fallback",
-      "windows": [],
-      "boundary_count": 0,
-      "caption_signature": "5f2d7a356756a5f3603e21df5a2bcefdfca009178170729395b5212d34552419"
+      "mode": "word_boundary_text_align",
+      "windows": [
+        {
+          "start_ms": 0.0,
+          "end_ms": 2200.0,
+          "duration_ms": 2200.0
+        },
+        {
+          "start_ms": 2200.0,
+          "end_ms": 4980.0,
+          "duration_ms": 2780.0
+        },
+        {
+          "start_ms": 4980.0,
+          "end_ms": 7240.0,
+          "duration_ms": 2260.0
+        },
+        {
+          "start_ms": 7240.0,
+          "end_ms": 9140.0,
+          "duration_ms": 1900.0
+        }
+      ],
+      "boundary_count": 18,
+      "caption_signature": "5a37f0b4fd13f1baa0acfccff031d37e47f4bd35e83f2654b970349f56d1f5c9"
     }
   },
   "facts": [
     {
-      "tts": "갤럭시 Z 폴드8과 플립8에, 더 큰 화면의 폴드8 울트라까지 라인업이 넓어질 전망입니다. 접는 폰 선택지가 세 갈래로 늘어나, 용도와 예산에 맞춰 고르기 쉬워집니다.",
+      "tts": "칩(반도체)과 인플레이션(물가 상승)을 합친 말입니다. 반도체 값이 물가처럼 계속 올라 그게 들어가는 제품 가격까지 밀어 올리는 현상을 뜻합니다. 스마트폰이 직격탄을 맞고 있습니다.",
       "caption_body": [
-        "폴더블",
-        "폴드8·플립8·울트라"
+        "칩플레이션",
+        "이란?"
       ],
       "caption_emphasis": [
-        "폴드8·플립8·울트라"
+        "이란"
       ],
       "headline_lines": [
         {
-          "text": "폴더블"
+          "text": "칩플레이션"
         },
         {
-          "text": "폴드8·플립8·울트라",
+          "text": "이란?",
           "accent": true
         }
       ],
-      "meta": "출처: 뉴스1",
+      "meta": "출처: 휴대폰성지 폰스팟 자료",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "갤럭시 Z 폴드8과 플립8에,",
-        "더 큰 화면의 폴드8 울트라까지 라인업이 넓어질 전망입니다.",
-        "접는 폰 선택지가 세 갈래로 늘어나,",
-        "용도와 예산에 맞춰 고르기 쉬워집니다."
+        "칩(반도체)과 인플레이션(물가 상승)을 합친 말입니다.",
+        "반도체 값이 물가처럼 계속 올라 그게",
+        "들어가는 제품 가격까지 밀어 올리는 현상을 뜻합니다.",
+        "스마트폰이 직격탄을 맞고 있습니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "foldable"
+          "value": "phone_setup_ready"
         },
         {
           "type": "illust",
@@ -140,11 +147,11 @@
         },
         {
           "type": "illust",
-          "value": "budget_choice_42fbdd85"
+          "value": "phone_settings_toggle"
         },
         {
           "type": "illust",
-          "value": "self_flip_6728256c"
+          "value": "device_os_requirement"
         }
       ],
       "stat": {
@@ -154,10 +161,10 @@
       },
       "id": "fact_1",
       "display_chunks": [
-        "갤럭시 Z 폴드8과 플립8에,",
-        "더 큰 화면의 폴드8 울트라까지 라인업이 넓어질 전망입니다",
-        "접는 폰 선택지가 세 갈래로 늘어나,",
-        "용도와 예산에 맞춰 고르기 쉬워집니다"
+        "칩(반도체)과 인플레이션(물가 상승)을 합친 말입니다",
+        "반도체 값이 물가처럼 계속 올라 그게",
+        "들어가는 제품 가격까지 밀어 올리는 현상을 뜻합니다",
+        "스마트폰이 직격탄을 맞고 있습니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
@@ -168,66 +175,82 @@
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        13,
-        26,
-        15,
-        17
+        2980.0,
+        3100.0,
+        2400.0,
+        2480.0
       ],
       "_tts_timing": {
-        "mode": "character_weight_fallback",
-        "windows": [],
-        "boundary_count": 0,
-        "caption_signature": "7ffa0891fbd6a34d2fc7f11a0e65752d6125000e0b4c83e39299976f51f3d0fa"
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 2980.0,
+            "duration_ms": 2980.0
+          },
+          {
+            "start_ms": 2980.0,
+            "end_ms": 6080.0,
+            "duration_ms": 3100.0
+          },
+          {
+            "start_ms": 6080.0,
+            "end_ms": 8480.0,
+            "duration_ms": 2400.0
+          },
+          {
+            "start_ms": 8480.0,
+            "end_ms": 10960.0,
+            "duration_ms": 2480.0
+          }
+        ],
+        "boundary_count": 24,
+        "caption_signature": "feda14817a2f0ca61ae8803cf599d3f9726c1d2ad0f371de9bdbf6ff2d313554"
       }
     },
     {
-      "tts": "새 갤럭시 워치와 함께 삼성의 첫 스마트글래스가 공개될 가능성이 제기됩니다. 사실이면 삼성이 웨어러블을 안경으로까지 넓히는 첫걸음이 됩니다. 이번 언팩에서 가장 주목받는 제품입니다.",
+      "tts": "인공지능 열풍으로 메모리와 반도체 수요가 폭발했습니다. AI 서버가 물량을 싹쓸이하면서 값이 급등했고, 그 부담이 스마트폰 부품값으로 넘어옵니다. 수급이 풀리기 전까진 이어질 전망입니다.",
       "caption_body": [
-        "신제품",
-        "워치·스마트글래스"
+        "원인",
+        "AI 열풍"
       ],
       "caption_emphasis": [
-        "워치·스마트글래스"
+        "AI 열풍"
       ],
       "headline_lines": [
         {
-          "text": "신제품"
+          "text": "원인"
         },
         {
-          "text": "워치·스마트글래스",
+          "text": "AI 열풍",
           "accent": true
         }
       ],
-      "meta": "출처: 디지털투데이",
+      "meta": "출처: 카운터포인트리서치",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "새 갤럭시 워치와 함께 삼성의 첫",
-        "스마트글래스가 공개될 가능성이 제기됩니다.",
-        "사실이면 삼성이 웨어러블을 안경으로까지",
-        "넓히는 첫걸음이 됩니다.",
-        "이번 언팩에서 가장 주목받는 제품입니다."
+        "인공지능 열풍으로 메모리와 반도체 수요가 폭발했습니다.",
+        "AI 서버가 물량을 싹쓸이하면서 값이 급등했고,",
+        "그 부담이 스마트폰 부품값으로 넘어옵니다.",
+        "수급이 풀리기 전까진 이어질 전망입니다."
       ],
       "chunk_visuals": [
         {
-          "type": "image",
-          "value": "photos/삼성_갤럭시A.JPG"
+          "type": "illust",
+          "value": "samsung_ai"
         },
         {
           "type": "illust",
-          "value": "final_update"
-        },
-        {
-          "type": "image",
-          "value": "photos/삼성_로고.png"
+          "value": "part_cost_a4d4e5f0"
         },
         {
           "type": "illust",
-          "value": "london_unpack_eb61ad77"
+          "value": "forecast"
         },
         {
-          "type": "illust",
-          "value": "mid_release_98cab19a"
+          "type": "mascot",
+          "value": "suspicious"
         }
       ],
       "stat": {
@@ -237,175 +260,10 @@
       },
       "id": "fact_2",
       "display_chunks": [
-        "새 갤럭시 워치와 함께 삼성의 첫",
-        "스마트글래스가 공개될 가능성이 제기됩니다",
-        "사실이면 삼성이 웨어러블을 안경으로까지",
-        "넓히는 첫걸음이 됩니다",
-        "이번 언팩에서 가장 주목받는 제품입니다"
-      ],
-      "_codex_caption_lockstep": {
-        "version": 2,
-        "compiler": "korean_caption_compiler_v2",
-        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 5
-      },
-      "_codex_contextual_narrative": true,
-      "_codex_sync_mode": "global999_tts_caption_lockstep",
-      "tts_chunk_weights": [
-        13,
-        20,
-        18,
-        11,
-        18
-      ],
-      "_tts_timing": {
-        "mode": "character_weight_fallback",
-        "windows": [],
-        "boundary_count": 0,
-        "caption_signature": "83760c4de403ea15dcea2c372cee7d8928df7b2cceca64db2c34b5d4dea6d653"
-      }
-    },
-    {
-      "tts": "갤럭시 Z 폴드8은 약 200g 수준의 경량화를 목표로 하고, 스냅드래곤 8 엘리트 5세대급 프로세서가 실릴 것으로 전해집니다. 접는 폰의 단점이던 무게와 성능이 개선되는 방향입니다.",
-      "caption_body": [
-        "폴드8 스펙",
-        "가볍고 강하게"
-      ],
-      "caption_emphasis": [
-        "가볍고 강하게"
-      ],
-      "headline_lines": [
-        {
-          "text": "폴드8 스펙"
-        },
-        {
-          "text": "가볍고 강하게",
-          "accent": true
-        }
-      ],
-      "meta": "출처: 디지털투데이",
-      "topic": "뉴스",
-      "background_image": "",
-      "caption_chunks": [
-        "갤럭시 Z 폴드8은 약 200g 수준의",
-        "경량화를 목표로 하고,",
-        "스냅드래곤 8 엘리트 5세대급 프로세서가",
-        "실릴 것으로 전해집니다.",
-        "접는 폰의 단점이던 무게와 성능이 개선되는 방향입니다."
-      ],
-      "chunk_visuals": [
-        {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "phone_setup_ready"
-        },
-        {
-          "type": "image",
-          "value": "photos/삼성_엑시노스.JPG"
-        },
-        {
-          "type": "illust",
-          "value": "display_maintenance_c1ff39c1"
-        },
-        {
-          "type": "illust",
-          "value": "phone_settings_toggle"
-        }
-      ],
-      "stat": {
-        "label": "",
-        "value": "",
-        "note": ""
-      },
-      "id": "fact_3",
-      "display_chunks": [
-        "갤럭시 Z 폴드8은 약 200g 수준의",
-        "경량화를 목표로 하고,",
-        "스냅드래곤 8 엘리트 5세대급 프로세서가",
-        "실릴 것으로 전해집니다",
-        "접는 폰의 단점이던 무게와 성능이 개선되는 방향입니다"
-      ],
-      "_codex_caption_lockstep": {
-        "version": 2,
-        "compiler": "korean_caption_compiler_v2",
-        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 5
-      },
-      "_codex_contextual_narrative": true,
-      "_codex_sync_mode": "global999_tts_caption_lockstep",
-      "tts_chunk_weights": [
-        16,
-        10,
-        18,
-        11,
-        24
-      ],
-      "_tts_timing": {
-        "mode": "character_weight_fallback",
-        "windows": [],
-        "boundary_count": 0,
-        "caption_signature": "1df5d340e1a191e485fec027740cdbb09f222fab152a02ba6875370afc2e74cb"
-      }
-    },
-    {
-      "tts": "폴더블이나 웨어러블에 관심 있다면 7월 22일 발표를 챙겨보세요. 신제품은 초반 사전예약 혜택이 큰 경우가 많습니다. 조건을 미리 알아두면 유리하게 살 수 있습니다.",
-      "caption_body": [
-        "살 사람은",
-        "예약 혜택 주목"
-      ],
-      "caption_emphasis": [
-        "예약 혜택"
-      ],
-      "headline_lines": [
-        {
-          "text": "살 사람은"
-        },
-        {
-          "text": "예약 혜택 주목",
-          "accent": true
-        }
-      ],
-      "meta": "출처: 휴대폰성지 폰스팟 자료",
-      "topic": "뉴스",
-      "background_image": "",
-      "caption_chunks": [
-        "폴더블이나 웨어러블에 관심 있다면 7월 22일",
-        "발표를 챙겨보세요.",
-        "신제품은 초반 사전예약 혜택이 큰 경우가 많습니다.",
-        "조건을 미리 알아두면 유리하게 살 수 있습니다."
-      ],
-      "chunk_visuals": [
-        {
-          "type": "illust",
-          "value": "gift_voucher"
-        },
-        {
-          "type": "illust",
-          "value": "device_os_requirement"
-        },
-        {
-          "type": "illust",
-          "value": "device_data_transfer"
-        },
-        {
-          "type": "mascot",
-          "value": "serious"
-        }
-      ],
-      "stat": {
-        "label": "",
-        "value": "",
-        "note": ""
-      },
-      "id": "fact_4",
-      "display_chunks": [
-        "폴더블이나 웨어러블에 관심 있다면 7월 22일",
-        "발표를 챙겨보세요",
-        "신제품은 초반 사전예약 혜택이 큰 경우가 많습니다",
-        "조건을 미리 알아두면 유리하게 살 수 있습니다"
+        "인공지능 열풍으로 메모리와 반도체 수요가 폭발했습니다",
+        "AI 서버가 물량을 싹쓸이하면서 값이 급등했고,",
+        "그 부담이 스마트폰 부품값으로 넘어옵니다",
+        "수급이 풀리기 전까진 이어질 전망입니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
@@ -416,16 +274,247 @@
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        20,
-        9,
-        22,
-        20
+        3085.82,
+        3399.49,
+        2455.36,
+        2059.32
       ],
       "_tts_timing": {
-        "mode": "character_weight_fallback",
-        "windows": [],
-        "boundary_count": 0,
-        "caption_signature": "95785b892340eef4ce839765e661f917f575e0470e1742c93cb3263b3f2c831a"
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 3085.82,
+            "duration_ms": 3085.82
+          },
+          {
+            "start_ms": 3085.82,
+            "end_ms": 6485.32,
+            "duration_ms": 3399.49
+          },
+          {
+            "start_ms": 6485.32,
+            "end_ms": 8940.68,
+            "duration_ms": 2455.36
+          },
+          {
+            "start_ms": 8940.68,
+            "end_ms": 11000.0,
+            "duration_ms": 2059.32
+          }
+        ],
+        "boundary_count": 22,
+        "caption_signature": "91fc28524ce4844d3d3935a72f8b2f733c00629f72aafca5ce7321defc3d3ae0"
+      }
+    },
+    {
+      "tts": "800달러급이던 스마트폰 가격대가 위로 밀리고, 접는 폰은 300만원대까지 거론됩니다. 애플·삼성 할 것 없이 프리미엄 신제품 가격이 오르는 방향입니다. 소비자 부담이 커집니다.",
+      "caption_body": [
+        "결과",
+        "폴더블 300만원"
+      ],
+      "caption_emphasis": [
+        "폴더블 300만원"
+      ],
+      "headline_lines": [
+        {
+          "text": "결과"
+        },
+        {
+          "text": "폴더블 300만원",
+          "accent": true
+        }
+      ],
+      "meta": "출처: 아시아경제",
+      "topic": "뉴스",
+      "background_image": "",
+      "caption_chunks": [
+        "800달러급이던 스마트폰 가격대가 위로 밀리고,",
+        "접는 폰은 300만원대까지 거론됩니다.",
+        "애플·삼성 할 것 없이 프리미엄 신제품",
+        "가격이 오르는 방향입니다.",
+        "소비자 부담이 커집니다."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "foldable"
+        },
+        {
+          "type": "illust",
+          "value": "apple_70385068"
+        },
+        {
+          "type": "image",
+          "value": "photos/삼성_로고.JPG"
+        },
+        {
+          "type": "illust",
+          "value": "samsung_korea_04b00795"
+        },
+        {
+          "type": "illust",
+          "value": "device_data_transfer"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_3",
+      "display_chunks": [
+        "800달러급이던 스마트폰 가격대가 위로 밀리고,",
+        "접는 폰은 300만원대까지 거론됩니다",
+        "애플·삼성 할 것 없이 프리미엄 신제품",
+        "가격이 오르는 방향입니다",
+        "소비자 부담이 커집니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 5
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        2420.0,
+        2720.0,
+        3000.0,
+        1240.0,
+        1480.0
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 2420.0,
+            "duration_ms": 2420.0
+          },
+          {
+            "start_ms": 2420.0,
+            "end_ms": 5140.0,
+            "duration_ms": 2720.0
+          },
+          {
+            "start_ms": 5140.0,
+            "end_ms": 8140.0,
+            "duration_ms": 3000.0
+          },
+          {
+            "start_ms": 8140.0,
+            "end_ms": 9380.0,
+            "duration_ms": 1240.0
+          },
+          {
+            "start_ms": 9380.0,
+            "end_ms": 10860.0,
+            "duration_ms": 1480.0
+          }
+        ],
+        "boundary_count": 24,
+        "caption_signature": "111120407960123a7adc10789350c9f8d46a4811b7dc6cb2255ccbcf444f1985"
+      }
+    },
+    {
+      "tts": "더 오르기 전에 사는 게 이득일 수 있습니다. 단 월 납부금이 아니라 실구매가와 지원금을 함께 봐야 진짜 부담이 보입니다. 지금 재고가와 신제품 예상가를 비교해 타이밍을 잡으세요.",
+      "caption_body": [
+        "그래서",
+        "지금 따질 것"
+      ],
+      "caption_emphasis": [
+        "지금 따질 것"
+      ],
+      "headline_lines": [
+        {
+          "text": "그래서"
+        },
+        {
+          "text": "지금 따질 것",
+          "accent": true
+        }
+      ],
+      "meta": "출처: 휴대폰성지 폰스팟 자료",
+      "topic": "뉴스",
+      "background_image": "",
+      "caption_chunks": [
+        "더 오르기 전에 사는 게 이득일 수 있습니다.",
+        "단 월 납부금이 아니라 실구매가와 지원금을",
+        "함께 봐야 진짜 부담이 보입니다.",
+        "지금 재고가와 신제품 예상가를 비교해 타이밍을 잡으세요."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "gift_voucher"
+        },
+        {
+          "type": "illust",
+          "value": "payment_fall_8fb48590"
+        },
+        {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        {
+          "type": "image",
+          "value": "photos/애플_아이폰_2개.JPG"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_4",
+      "display_chunks": [
+        "더 오르기 전에 사는 게 이득일 수 있습니다",
+        "단 월 납부금이 아니라 실구매가와 지원금을",
+        "함께 봐야 진짜 부담이 보입니다",
+        "지금 재고가와 신제품 예상가를 비교해 타이밍을 잡으세요"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 4
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        1780.0,
+        3000.0,
+        1800.0,
+        3240.0
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 1780.0,
+            "duration_ms": 1780.0
+          },
+          {
+            "start_ms": 1780.0,
+            "end_ms": 4780.0,
+            "duration_ms": 3000.0
+          },
+          {
+            "start_ms": 4780.0,
+            "end_ms": 6580.0,
+            "duration_ms": 1800.0
+          },
+          {
+            "start_ms": 6580.0,
+            "end_ms": 9820.0,
+            "duration_ms": 3240.0
+          }
+        ],
+        "boundary_count": 27,
+        "caption_signature": "8b589af26fe7e29e72486e02421198bf98ec006c433c8b9bca62fcf72617da33"
       }
     }
   ],
@@ -487,250 +576,382 @@
     "_codex_fixed_cta": true,
     "_codex_narration_source": "fixed_cta_contract",
     "tts_chunk_weights": [
-      8,
-      14
+      1346.67,
+      1533.33
     ],
     "_tts_timing": {
-      "mode": "character_weight_fallback",
-      "windows": [],
-      "boundary_count": 0,
+      "mode": "word_boundary_text_align",
+      "windows": [
+        {
+          "start_ms": 0.0,
+          "end_ms": 1346.67,
+          "duration_ms": 1346.67
+        },
+        {
+          "start_ms": 1346.67,
+          "end_ms": 2880.0,
+          "duration_ms": 1533.33
+        }
+      ],
+      "boundary_count": 6,
       "caption_signature": "db4c57a05254654841d0c63b2eea20bad43e358510298ef607bf41bcae3b9e5d"
     }
   },
   "_auto_generated": true,
   "_chunk_logic_v2": true,
-  "_source_hash": "d057c1b72fb43581693397266dd718de46df77ea",
+  "_source_hash": "7a9206ec430ce748537d9cb6c5372bc6b837bc39",
   "_note": "build_script.py 자동 생성 (v2 로직): 시퀀스 내 이미지 순환 + 마스코트 짝수 시퀀스만.",
   "_codex_global_999_quality": true,
   "_codex_common_quality_logic": true,
   "_codex_sync_quality_logic": true,
   "_codex_captions_narration_priority": false,
   "_codex_common_quality_note": "Global 001-999 rule: screen chunks are rebuilt as an ordered, lossless partition of captions.md narration; curated visuals are rebalanced without discarding quality rules.",
-  "_codex_uploaded_illustrations": [
-    {
-      "section": "hook",
-      "chunk": 4,
-      "variant": "appear_e5f828cc"
-    },
-    {
-      "section": "fact_1",
-      "chunk": 4,
-      "variant": "budget_choice_42fbdd85"
-    },
-    {
-      "section": "fact_2",
-      "chunk": 4,
-      "variant": "cpt_da94c5b9"
-    },
-    {
-      "section": "fact_3",
-      "chunk": 2,
-      "variant": "cpt_dca98748"
-    },
-    {
-      "section": "fact_3",
-      "chunk": 3,
-      "variant": "cpt_cecbbc92"
-    }
-  ],
   "_codex_semantic_visual_match": {
     "version": 1,
     "policy": "Match chunks to GPT source images using prompt.md descriptions, then fallback to tagged reusable illustrations.",
     "changes": [
       {
         "section": "hook",
-        "chunk": 4,
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "chart_up"
+        },
+        "context": "요즘 새 폰 가격 보고 놀라는 분 많습니다 우연이 아닙니다 '칩플레이션'이라는 폰값이 왜 자꾸 오르나? ['폰값이 왜 자꾸', '오르나?'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "hook",
+        "chunk": 2,
         "from": {
           "type": "illust",
           "value": "aluminum_label"
         },
         "to": {
           "type": "illust",
-          "value": "basic_fold_202d754f"
+          "value": "memory_chip"
         },
-        "context": "이번엔 폴더블폰뿐 아니라 스마트글래스까지 나온다는 전망입니다 뭐가 나오는지 미리 정리해 드립니다 7월 22일 삼성 언팩 D-DAY ['7월 22일', '삼성 언팩 D-DAY'] 뉴스",
+        "context": "요즘 새 폰 가격 보고 놀라는 분 많습니다 우연이 아닙니다 '칩플레이션'이라는 흐름이 폰값을 계속 밀어 올리고 있습니다 폰값이 왜 자꾸 오르나? ['폰값이 왜 자꾸', '오르나?'] 뉴스",
         "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "hook",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appear_e5f828cc"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "우연이 아닙니다 '칩플레이션'이라는 흐름이 폰값을 계속 밀어 올리고 있습니다 무슨 뜻인지 풀어드립니다 폰값이 왜 자꾸 오르나? ['폰값이 왜 자꾸', '오르나?'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
       },
       {
         "section": "fact_1",
         "chunk": 1,
         "from": {
-          "type": "image",
-          "value": "photos/삼성_갤럭시A.JPG"
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "칩(반도체)과 인플레이션(물가 상승)을 합친 말입니다 반도체 값이 물가처럼 계속 올라 그게 칩플레이션 이란? ['칩플레이션', '이란?'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "event_period_8cafdac4"
+        },
+        "context": "칩(반도체)과 인플레이션(물가 상승)을 합친 말입니다 반도체 값이 물가처럼 계속 올라 그게 들어가는 제품 가격까지 밀어 올리는 현상을 뜻합니다 칩플레이션 이란? ['칩플레이션', '이란?'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appear_e5f828cc"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "반도체 값이 물가처럼 계속 올라 그게 들어가는 제품 가격까지 밀어 올리는 현상을 뜻합니다 스마트폰이 직격탄을 맞고 있습니다 칩플레이션 이란? ['칩플레이션', '이란?'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "apple_70385068"
+        },
+        "to": {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        "context": "들어가는 제품 가격까지 밀어 올리는 현상을 뜻합니다 스마트폰이 직격탄을 맞고 있습니다 칩플레이션 이란? ['칩플레이션', '이란?'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "samsung_ai"
+        },
+        "context": "인공지능 열풍으로 메모리와 반도체 수요가 폭발했습니다 AI 서버가 물량을 싹쓸이하면서 값이 급등했고, 원인 AI 열풍 ['원인', 'AI 열풍'] 뉴스",
+        "reason": "illust score 27 (content n/a)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "part_cost_a4d4e5f0"
+        },
+        "context": "인공지능 열풍으로 메모리와 반도체 수요가 폭발했습니다 AI 서버가 물량을 싹쓸이하면서 값이 급등했고, 그 부담이 스마트폰 부품값으로 넘어옵니다 원인 AI 열풍 ['원인', 'AI 열풍'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appear_e5f828cc"
+        },
+        "to": {
+          "type": "illust",
+          "value": "forecast"
+        },
+        "context": "AI 서버가 물량을 싹쓸이하면서 값이 급등했고, 그 부담이 스마트폰 부품값으로 넘어옵니다 수급이 풀리기 전까진 이어질 전망입니다 원인 AI 열풍 ['원인', 'AI 열풍'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
         },
         "to": {
           "type": "illust",
           "value": "foldable"
         },
-        "context": "갤럭시 Z 폴드8과 플립8에, 더 큰 화면의 폴드8 울트라까지 라인업이 넓어질 전망입니다 폴더블 폴드8·플립8·울트라 ['폴더블', '폴드8·플립8·울트라'] 뉴스",
-        "reason": "illust score 36 (content n/a)"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 2,
-        "from": {
-          "type": "image",
-          "value": "photos/배터리_충전.JPG"
-        },
-        "to": {
-          "type": "illust",
-          "value": "event_period_8cafdac4"
-        },
-        "context": "갤럭시 Z 폴드8과 플립8에, 더 큰 화면의 폴드8 울트라까지 라인업이 넓어질 전망입니다 접는 폰 선택지가 세 갈래로 늘어나, 폴더블 폴드8·플립8·울트라 ['폴더블', '폴드8·플립8·울트라'] 뉴스",
+        "context": "800달러급이던 스마트폰 가격대가 위로 밀리고, 접는 폰은 300만원대까지 거론됩니다 결과 폴더블 300만원 ['결과', '폴더블 300만원'] 뉴스",
         "reason": "illust score 12 (content n/a)"
       },
       {
-        "section": "fact_1",
-        "chunk": 4,
+        "section": "fact_3",
+        "chunk": 2,
         "from": {
           "type": "illust",
           "value": "aluminum_label"
         },
         "to": {
           "type": "illust",
-          "value": "self_flip_6728256c"
+          "value": "apple_70385068"
         },
-        "context": "접는 폰 선택지가 세 갈래로 늘어나, 용도와 예산에 맞춰 고르기 쉬워집니다 폴더블 폴드8·플립8·울트라 ['폴더블', '폴드8·플립8·울트라'] 뉴스",
+        "context": "800달러급이던 스마트폰 가격대가 위로 밀리고, 접는 폰은 300만원대까지 거론됩니다 애플·삼성 할 것 없이 프리미엄 신제품 결과 폴더블 300만원 ['결과', '폴더블 300만원'] 뉴스",
         "reason": "illust score 12 (content n/a)"
       },
       {
-        "section": "fact_2",
-        "chunk": 1,
-        "from": {
-          "type": "image",
-          "value": "photos/삼성_갤럭시S25.JPG"
-        },
-        "to": {
-          "type": "image",
-          "value": "photos/삼성_갤럭시A.JPG"
-        },
-        "context": "새 갤럭시 워치와 함께 삼성의 첫 스마트글래스가 공개될 가능성이 제기됩니다 신제품 워치·스마트글래스 ['신제품', '워치·스마트글래스'] 뉴스",
-        "reason": "photo lexical dist=4 gen=0: 삼성_갤럭시A.JPG"
-      },
-      {
-        "section": "fact_2",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "event_period_8cafdac4"
-        },
-        "to": {
-          "type": "illust",
-          "value": "final_update"
-        },
-        "context": "새 갤럭시 워치와 함께 삼성의 첫 스마트글래스가 공개될 가능성이 제기됩니다 사실이면 삼성이 웨어러블을 안경으로까지 신제품 워치·스마트글래스 ['신제품', '워치·스마트글래스'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
-      },
-      {
-        "section": "fact_2",
+        "section": "fact_3",
         "chunk": 3,
         "from": {
-          "type": "image",
-          "value": "photos/삼성_엑시노스.JPG"
+          "type": "illust",
+          "value": "appear_e5f828cc"
         },
         "to": {
           "type": "image",
-          "value": "photos/삼성_로고.png"
+          "value": "photos/삼성_로고.JPG"
         },
-        "context": "스마트글래스가 공개될 가능성이 제기됩니다 사실이면 삼성이 웨어러블을 안경으로까지 넓히는 첫걸음이 됩니다 신제품 워치·스마트글래스 ['신제품', '워치·스마트글래스'] 뉴스",
-        "reason": "photo lexical dist=2 gen=0: 삼성_로고.png"
+        "context": "접는 폰은 300만원대까지 거론됩니다 애플·삼성 할 것 없이 프리미엄 신제품 가격이 오르는 방향입니다 결과 폴더블 300만원 ['결과', '폴더블 300만원'] 뉴스",
+        "reason": "photo lexical dist=2 gen=0: 삼성_로고.JPG"
       },
       {
-        "section": "fact_2",
+        "section": "fact_3",
         "chunk": 4,
         "from": {
           "type": "illust",
-          "value": "cpt_da94c5b9"
+          "value": "apple_70385068"
         },
         "to": {
           "type": "illust",
-          "value": "london_unpack_eb61ad77"
+          "value": "samsung_korea_04b00795"
         },
-        "context": "사실이면 삼성이 웨어러블을 안경으로까지 넓히는 첫걸음이 됩니다 이번 언팩에서 가장 주목받는 제품입니다 신제품 워치·스마트글래스 ['신제품', '워치·스마트글래스'] 뉴스",
+        "context": "애플·삼성 할 것 없이 프리미엄 신제품 가격이 오르는 방향입니다 소비자 부담이 커집니다 결과 폴더블 300만원 ['결과', '폴더블 300만원'] 뉴스",
         "reason": "illust score 12 (content n/a)"
       },
       {
         "section": "fact_3",
-        "chunk": 2,
+        "chunk": 5,
         "from": {
           "type": "illust",
-          "value": "cpt_dca98748"
+          "value": "appliance"
         },
         "to": {
           "type": "illust",
-          "value": "phone_setup_ready"
+          "value": "device_data_transfer"
         },
-        "context": "갤럭시 Z 폴드8은 약 200g 수준의 경량화를 목표로 하고, 스냅드래곤 8 엘리트 5세대급 프로세서가 폴드8 스펙 가볍고 강하게 ['폴드8 스펙', '가볍고 강하게'] 뉴스",
+        "context": "가격이 오르는 방향입니다 소비자 부담이 커집니다 결과 폴더블 300만원 ['결과', '폴더블 300만원'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
-        "section": "fact_3",
+        "section": "fact_4",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "gift_voucher"
+        },
+        "context": "더 오르기 전에 사는 게 이득일 수 있습니다 단 월 납부금이 아니라 실구매가와 지원금을 그래서 지금 따질 것 ['그래서', '지금 따질 것'] 뉴스",
+        "reason": "illust score 24 (content n/a)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "payment_fall_8fb48590"
+        },
+        "context": "더 오르기 전에 사는 게 이득일 수 있습니다 단 월 납부금이 아니라 실구매가와 지원금을 함께 봐야 진짜 부담이 보입니다 그래서 지금 따질 것 ['그래서', '지금 따질 것'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_4",
         "chunk": 3,
         "from": {
           "type": "illust",
-          "value": "cpt_cecbbc92"
+          "value": "appear_e5f828cc"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "단 월 납부금이 아니라 실구매가와 지원금을 함께 봐야 진짜 부담이 보입니다 지금 재고가와 신제품 예상가를 비교해 타이밍을 잡으세요 그래서 지금 따질 것 ['그래서', '지금 따질 것'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 4,
+        "from": {
+          "type": "mascot",
+          "value": "serious"
         },
         "to": {
           "type": "image",
-          "value": "photos/삼성_엑시노스.JPG"
+          "value": "photos/애플_아이폰_2개.JPG"
         },
-        "context": "경량화를 목표로 하고, 스냅드래곤 8 엘리트 5세대급 프로세서가 실릴 것으로 전해집니다 폴드8 스펙 가볍고 강하게 ['폴드8 스펙', '가볍고 강하게'] 뉴스",
-        "reason": "photo lexical dist=1 gen=0: 삼성_엑시노스.JPG"
+        "context": "함께 봐야 진짜 부담이 보입니다 지금 재고가와 신제품 예상가를 비교해 타이밍을 잡으세요 그래서 지금 따질 것 ['그래서', '지금 따질 것'] 뉴스",
+        "reason": "photo lexical dist=1 gen=0: 애플_아이폰_2개.JPG"
       }
     ],
     "weak": [
       {
-        "section": "fact_3",
-        "chunk": 1,
+        "section": "hook",
+        "chunk": 3,
         "current": {
           "type": "illust",
           "value": "smartphone"
         },
-        "context": "갤럭시 Z 폴드8은 약 200g 수준의 경량화를 목표로 하고, 폴드8 스펙 가볍고 강하게 ['폴드8 스펙', '가볍고 강하게'] 뉴스",
+        "context": "우연이 아닙니다 '칩플레이션'이라는 흐름이 폰값을 계속 밀어 올리고 있습니다 무슨 뜻인지 풀어드립니다 폰값이 왜 자꾸 오르나? ['폰값이 왜 자꾸', '오르나?'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       },
       {
-        "section": "fact_3",
-        "chunk": 2,
+        "section": "hook",
+        "chunk": 4,
+        "current": {
+          "type": "mascot",
+          "value": "surprised"
+        },
+        "context": "흐름이 폰값을 계속 밀어 올리고 있습니다 무슨 뜻인지 풀어드립니다 폰값이 왜 자꾸 오르나? ['폰값이 왜 자꾸', '오르나?'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_1",
+        "chunk": 1,
         "current": {
           "type": "illust",
           "value": "phone_setup_ready"
         },
-        "context": "갤럭시 Z 폴드8은 약 200g 수준의 경량화를 목표로 하고, 스냅드래곤 8 엘리트 5세대급 프로세서가 폴드8 스펙 가볍고 강하게 ['폴드8 스펙', '가볍고 강하게'] 뉴스",
+        "context": "칩(반도체)과 인플레이션(물가 상승)을 합친 말입니다 반도체 값이 물가처럼 계속 올라 그게 칩플레이션 이란? ['칩플레이션', '이란?'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       },
       {
-        "section": "fact_3",
+        "section": "fact_1",
         "chunk": 3,
         "current": {
-          "type": "image",
-          "value": "photos/삼성_엑시노스.JPG"
+          "type": "illust",
+          "value": "phone_settings_toggle"
         },
-        "context": "경량화를 목표로 하고, 스냅드래곤 8 엘리트 5세대급 프로세서가 실릴 것으로 전해집니다 폴드8 스펙 가볍고 강하게 ['폴드8 스펙', '가볍고 강하게'] 뉴스",
+        "context": "반도체 값이 물가처럼 계속 올라 그게 들어가는 제품 가격까지 밀어 올리는 현상을 뜻합니다 스마트폰이 직격탄을 맞고 있습니다 칩플레이션 이란? ['칩플레이션', '이란?'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
+      },
+      {
+        "section": "fact_1",
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        "context": "들어가는 제품 가격까지 밀어 올리는 현상을 뜻합니다 스마트폰이 직격탄을 맞고 있습니다 칩플레이션 이란? ['칩플레이션', '이란?'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_2",
+        "chunk": 4,
+        "current": {
+          "type": "mascot",
+          "value": "suspicious"
+        },
+        "context": "그 부담이 스마트폰 부품값으로 넘어옵니다 수급이 풀리기 전까진 이어질 전망입니다 원인 AI 열풍 ['원인', 'AI 열풍'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 3
       },
       {
         "section": "fact_3",
         "chunk": 5,
         "current": {
           "type": "illust",
-          "value": "phone_settings_toggle"
+          "value": "device_data_transfer"
         },
-        "context": "실릴 것으로 전해집니다 접는 폰의 단점이던 무게와 성능이 개선되는 방향입니다 폴드8 스펙 가볍고 강하게 ['폴드8 스펙', '가볍고 강하게'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_4",
-        "chunk": 2,
-        "current": {
-          "type": "illust",
-          "value": "device_os_requirement"
-        },
-        "context": "폴더블이나 웨어러블에 관심 있다면 7월 22일 발표를 챙겨보세요 신제품은 초반 사전예약 혜택이 큰 경우가 많습니다 살 사람은 예약 혜택 주목 ['살 사람은', '예약 혜택 주목'] 뉴스",
+        "context": "가격이 오르는 방향입니다 소비자 부담이 커집니다 결과 폴더블 300만원 ['결과', '폴더블 300만원'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       },
@@ -739,9 +960,9 @@
         "chunk": 3,
         "current": {
           "type": "illust",
-          "value": "device_data_transfer"
+          "value": "smartphone"
         },
-        "context": "발표를 챙겨보세요 신제품은 초반 사전예약 혜택이 큰 경우가 많습니다 조건을 미리 알아두면 유리하게 살 수 있습니다 살 사람은 예약 혜택 주목 ['살 사람은', '예약 혜택 주목'] 뉴스",
+        "context": "단 월 납부금이 아니라 실구매가와 지원금을 함께 봐야 진짜 부담이 보입니다 지금 재고가와 신제품 예상가를 비교해 타이밍을 잡으세요 그래서 지금 따질 것 ['그래서', '지금 따질 것'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       },
@@ -749,10 +970,10 @@
         "section": "fact_4",
         "chunk": 4,
         "current": {
-          "type": "mascot",
-          "value": "serious"
+          "type": "image",
+          "value": "photos/애플_아이폰_2개.JPG"
         },
-        "context": "신제품은 초반 사전예약 혜택이 큰 경우가 많습니다 조건을 미리 알아두면 유리하게 살 수 있습니다 살 사람은 예약 혜택 주목 ['살 사람은', '예약 혜택 주목'] 뉴스",
+        "context": "함께 봐야 진짜 부담이 보입니다 지금 재고가와 신제품 예상가를 비교해 타이밍을 잡으세요 그래서 지금 따질 것 ['그래서', '지금 따질 것'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       }
@@ -760,8 +981,8 @@
   },
   "_codex_effective_script": {
     "version": 2,
-    "slug": "043_pick_galaxy_unpacked_722",
-    "source": "C:\\backup\\phonespot_cardnews\\cardnews\\output\\043_pick_galaxy_unpacked_722\\shorts_script.json",
+    "slug": "044_news_chipflation_price",
+    "source": "C:\\backup\\phonespot_cardnews\\cardnews\\output\\044_news_chipflation_price\\shorts_script.json",
     "override_applied": false,
     "override_sections": []
   }

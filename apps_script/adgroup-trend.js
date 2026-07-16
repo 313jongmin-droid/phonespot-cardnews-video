@@ -117,9 +117,9 @@ function setupAdgroupTrendChart() {
 
   // W60: 채널별 광고그룹 unique 리스트 (B61 변경 시 자동 갱신)
   sh.getRange(60, 23).setFormula(
-    '=IFERROR(IF(B61="메타", SORT(UNIQUE(FILTER(메타+!E2:E, 메타+!E2:E<>"", 메타+!A2:A>=TODAY()-60))), ' +
+    '={"(전체)"; IFERROR(IF(B61="메타", SORT(UNIQUE(FILTER(메타+!E2:E, 메타+!E2:E<>"", 메타+!A2:A>=TODAY()-60))), ' +
     'IF(B61="당근", SORT(UNIQUE(FILTER(당근+!C2:C, 당근+!C2:C<>"", 당근+!A2:A>=TODAY()-60))), ' +
-    'SORT(UNIQUE(FILTER(네이버+!E2:E, 네이버+!E2:E<>"", 네이버+!A2:A>=TODAY()-60))))), "")'
+    'SORT(UNIQUE(FILTER(네이버+!E2:E, 네이버+!E2:E<>"", 네이버+!A2:A>=TODAY()-60))))), "")}'
   );
   sh.getRange(60, 23).setNote('동적 광고그룹 리스트 (E61 드롭다운). 가나다 정렬 + 최근 60일 활성만. 숨겨두기 가능.');
 
@@ -203,7 +203,7 @@ function refreshAdgroupTrendChart() {
     const dt = row[cfg.colDate - 1];
     const name = String(row[cfg.colName - 1] || '').trim();
     if (!(dt instanceof Date)) return;
-    if (name !== adgroupName) return;
+    if (adgroupName !== '(전체)' && name !== adgroupName) return;   // (전체)=채널 전체 광고그룹 합산
     if (dt < sinceDate) return;
     if (dt > today) return;
 

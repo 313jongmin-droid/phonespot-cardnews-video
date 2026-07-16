@@ -590,18 +590,29 @@
       ]
     },
     "044_news_chipflation_price": {
-      "used_at": "2026-07-10T18:47:08",
-      "source": "codex_enhance",
+      "used_at": "2026-07-13T16:01:35",
+      "source": "semantic_visual_match",
       "illustrations": [
+        "chart_up",
+        "memory_chip",
         "smartphone",
-        "aluminum_label",
-        "appear_e5f828cc",
+        "phone_setup_ready",
+        "event_period_8cafdac4",
+        "phone_settings_toggle",
+        "device_os_requirement",
+        "samsung_ai",
+        "part_cost_a4d4e5f0",
+        "forecast",
+        "foldable",
         "apple_70385068",
-        "appliance"
+        "samsung_korea_04b00795",
+        "device_data_transfer",
+        "gift_voucher",
+        "payment_fall_8fb48590"
       ]
     }
   },
-  "updated_at": "2026-07-10T18:47:15",
+  "updated_at": "2026-07-13T16:01:40",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -730,7 +741,7 @@
       "variants": []
     },
     "044_news_chipflation_price": {
-      "updated_at": "2026-07-10T18:47:15",
+      "updated_at": "2026-07-13T16:01:40",
       "variants": []
     }
   }

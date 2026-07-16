@@ -454,6 +454,16 @@
       "note": "자동 발굴 개념: 영상 흔들림",
       "available": true
     },
+    "cpt_0fdcea66": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "무슨",
+        "뜻인지"
+      ],
+      "note": "자동 발굴 개념: 무슨 뜻인지"
+    },
     "cpt_163f537d": {
       "tags": [
         "auto"
@@ -1291,6 +1301,18 @@
       ],
       "note": "자동 발굴 개념: 미지원이지 SKT"
     },
+    "cpt_ce27b5f6": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "수급",
+        "풀리기",
+        "전까진",
+        "이어질"
+      ],
+      "note": "자동 발굴 개념: 수급 풀리기"
+    },
     "cpt_cecbbc92": {
       "tags": [
         "auto",
@@ -1453,6 +1475,19 @@
         "기종"
       ],
       "note": "자동 발굴 개념: 지원 기종"
+    },
+    "cpt_ef8ab8dd": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "흐름",
+        "폰값",
+        "계속",
+        "밀어",
+        "올리고"
+      ],
+      "note": "자동 발굴 개념: 흐름 폰값"
     },
     "cpt_f14977dc": {
       "tags": [
@@ -3081,45 +3116,7 @@
       ],
       "note": "자동 발굴 개념: 일요일 주간",
       "available": true
-    },
-    "cpt_ef8ab8dd": {
-      "keywords": [
-        "흐름",
-        "폰값",
-        "계속",
-        "밀어",
-        "올리고"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 흐름 폰값",
-      "available": false
-    },
-    "cpt_0fdcea66": {
-      "keywords": [
-        "무슨",
-        "뜻인지"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 무슨 뜻인지",
-      "available": false
-    },
-    "cpt_ce27b5f6": {
-      "keywords": [
-        "수급",
-        "풀리기",
-        "전까진",
-        "이어질"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 수급 풀리기",
-      "available": false
     }
   },
-  "updated_at": "2026-07-10T18:47:16"
+  "updated_at": "2026-07-13T15:59:43"
 }
