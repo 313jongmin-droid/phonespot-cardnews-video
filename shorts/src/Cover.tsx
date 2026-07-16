@@ -77,8 +77,11 @@ function pickHeadline(script: Script): { l1: string; l2: string } {
   return { l1: words.slice(0, mid).join(" "), l2: words.slice(mid).join(" ") };
 }
 
-export const CoverShort: React.FC<{ script: Script }> = ({ script }) => {
-  const v = VARIANTS[variantIndex((script as any).slug || "")];
+export const CoverShort: React.FC<{ script: Script; coverVariant?: number }> = ({ script, coverVariant }) => {
+  const idx = (typeof coverVariant === "number" && coverVariant >= 0 && coverVariant <= 2)
+    ? coverVariant
+    : variantIndex((script as any).slug || "");
+  const v = VARIANTS[idx];
   const { l1, l2 } = pickHeadline(script);
 
   return (

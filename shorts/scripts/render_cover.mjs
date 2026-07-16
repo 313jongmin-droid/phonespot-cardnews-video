@@ -106,13 +106,16 @@ try {
   console.log("[cover] Remotion browser download failed; using local Chrome: " + browserExecutable);
 }
 const serveUrl = await getServeUrl();
-const composition = await selectComposition({ serveUrl, id: compId, inputProps: {}, browserExecutable });
+const variantArg = process.argv[4];
+const inputProps = (variantArg !== undefined && variantArg !== "") ? { coverVariant: Number(variantArg) } : {};
+const composition = await selectComposition({ serveUrl, id: compId, inputProps, browserExecutable });
 const isJpg = /\.jpe?g$/i.test(outPath);
 fs.mkdirSync(path.dirname(outPath), { recursive: true });
 await renderStill({
   serveUrl,
   composition,
   browserExecutable,
+  inputProps,
   output: outPath,
   frame: 0,
   imageFormat: isJpg ? "jpeg" : "png",
