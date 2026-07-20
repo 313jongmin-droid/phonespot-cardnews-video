@@ -244,6 +244,9 @@ function onOpen() {
   // 🤖 자연어 데이터 질문 메뉴 (nl_query.js, 2026-06-18)
   try { buildNlQueryMenu_(SpreadsheetApp.getUi()); } catch (e) {}
 
+  // 📑 페이지별 퍼널 메뉴 (page-funnel.js, 2026-07-20 — 리틀리/시티마켓 분리측정)
+  try { buildPageFunnelMenu_(SpreadsheetApp.getUi()); } catch (e) {}
+
 }
 
 // ──[일상]── 전체 새로고침: 모든 채널 sync + 대시보드 빌드 + 인사이트 MD 생성 (2026-06-15 강화)
