@@ -187,13 +187,8 @@ function pf_dateSet_(start, end) {
   return s;
 }
 
-// ── 메뉴 (Code.js onOpen에서 buildPageFunnelMenu_ 호출) ──
-function buildPageFunnelMenu_(ui) {
-  ui.createMenu('📑 페이지별(리틀리/시티마켓)')
-    .addItem('🧭 페이지별 퍼널 수집·갱신', 'fetchPageFunnel')
-    .addItem('⏰ 페이지별 퍼널 트리거 등록 (매일 03:30)', 'setupPageFunnelTrigger')
-    .addToUi();
-}
+// ── 메뉴 항목은 Code.js 메인 메뉴('브랜드 통합' > GA4 그룹)에 직접 추가됨
+//    (fetchPageFunnel / setupPageFunnelTrigger). 별도 상단 메뉴는 오버플로로 안 보여서 폐기 (2026-07-20).
 
 // ── 전용 시간트리거 (동명 트리거 삭제 후 재생성 = 중복 방지) ──
 function setupPageFunnelTrigger() {

@@ -203,6 +203,8 @@ function onOpen() {
     .addItem('🔄 GA4 최신 데이터 가져오기 (어제)', 'fetchGA4Daily')
     .addItem('📥 GA4 30일 다시 가져오기 (백필)', 'fetchGA4Backfill')
     .addItem('🌐 GA4 페이지별 수집 (시티마켓 확인)', 'fetchCitymarketPages')
+    .addItem('🧭 페이지별 퍼널 (리틀리/시티마켓) 갱신', 'fetchPageFunnel')
+    .addItem('⏰ 페이지별 퍼널 트리거 등록 (매일 03:30)', 'setupPageFunnelTrigger')
     .addSeparator()
     .addItem('📊 SNS 월별 합계 수식 복구', 'repairSNSMonthlySummaries')
     .addItem('🏷️ UTM 슬러그 드롭다운 갱신', 'refreshUtmSlugDropdowns')
@@ -243,9 +245,6 @@ function onOpen() {
 
   // 🤖 자연어 데이터 질문 메뉴 (nl_query.js, 2026-06-18)
   try { buildNlQueryMenu_(SpreadsheetApp.getUi()); } catch (e) {}
-
-  // 📑 페이지별 퍼널 메뉴 (page-funnel.js, 2026-07-20 — 리틀리/시티마켓 분리측정)
-  try { buildPageFunnelMenu_(SpreadsheetApp.getUi()); } catch (e) {}
 
 }
 
