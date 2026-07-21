@@ -27,7 +27,10 @@ function pf_buckets_() {
     a: { name: String(getBrandConfig_('PF_A_NAME', '리틀리')),
          paths: pf_splitPaths_(getBrandConfig_('PF_A_PATHS', '/phonespot')) },
     b: { name: String(getBrandConfig_('PF_B_NAME', '시티마켓')),
-         paths: pf_splitPaths_(getBrandConfig_('PF_B_PATHS', '/pb,/poni,/pspot,/b2b')) }
+         paths: pf_splitPaths_(getBrandConfig_('PF_B_PATHS', '/pb,/poni,/pspot,/b2b')) },
+    // 랜딩페이지 (not set)/빈값 = GA4가 랜딩을 못 잡은 세션. 어느 버킷으로 볼지 _설정에서 조정.
+    // 기본 '기타'(정직). '시티마켓'으로 두면 랜딩 소실된 시티마켓 유입을 시티마켓 성과로 귀속(추정).
+    notset: String(getBrandConfig_('PF_NOTSET_BUCKET', '기타'))
   };
 }
 function pf_splitPaths_(s) {
@@ -36,6 +39,7 @@ function pf_splitPaths_(s) {
 function pf_classify_(landingPath, bk) {
   var p = String(landingPath || '');
   var q = p.indexOf('?'); if (q >= 0) p = p.slice(0, q);   // 쿼리스트링 제거
+  if (p === '' || p === '(not set)') return bk.notset;      // 랜딩 소실 세션
   var i;
   for (i = 0; i < bk.a.paths.length; i++) if (p.indexOf(bk.a.paths[i]) === 0) return bk.a.name;
   for (i = 0; i < bk.b.paths.length; i++) if (p.indexOf(bk.b.paths[i]) === 0) return bk.b.name;
@@ -98,11 +102,10 @@ function fetchPageFunnel() {
   if (typeof logSync_ === 'function') {
     try { logSync_('fetchPageFunnel', Object.keys(agg).length + '일 / 원천 ' + rows.length + '행 (' + dimUsed + ')'); } catch (e) {}
   }
+  // ★ 논블로킹 토스트 (getUi().alert는 확인 클릭 대기 → '무한로딩'처럼 보임. toast로 교체 2026-07-21)
   try {
-    SpreadsheetApp.getUi().alert('✅ 페이지별 퍼널 갱신 (' + PF_LOOKBACK_DAYS + '일, ' + rows.length + '행)\n' +
-      '· ' + bk.a.name + ' / ' + bk.b.name + ' 분리 (세션 시작 위치 기준)\n' +
-      '· 탭: ' + PF_FUNNEL_SHEET + ' (요약+랜딩진단) + ' + PF_DETAIL_SHEET + ' (일별)\n' +
-      '⚠️ 시티마켓 카톡·전화는 GTM 이벤트 태그가 있어야 0이 아님.');
+    ss.toast(rows.length + '행 · ' + bk.a.name + '/' + bk.b.name + ' 분리 완료. 시티마켓 카톡·전화는 GTM 태그 필요.',
+      '✅ 페이지별 퍼널 갱신 (' + PF_LOOKBACK_DAYS + '일)', 8);
   } catch (e) {}
 }
 
