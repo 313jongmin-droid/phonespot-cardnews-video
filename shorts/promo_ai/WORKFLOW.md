@@ -194,6 +194,39 @@ job2 = mcp__83aadcc7-...__generate_video(
 - **글래머 전 컷 유지**(머리~힙·깊은 U넥, 입 다물어도 몸매). 자막 중앙배치가 가슴 가리면 청크 1줄로 완화.
 - 인물 일관성 = AI 한계로 컷마다 미묘차이. 같은 reference media_id(`82abdf0f`)로 완화. 배경 통일도 도움(004 B1 집→매장).
 
+### 5-1. ★ 조명 일체화 — "AI 티" 제거 (2026-07-21, 종민 검증 확립)
+
+**증상**: 컷이 미묘하게 AI 같음. 원인 규명 결과 = **모델만 따로 조명받은 것처럼 보여 배경에 합성한 느낌**.
+레퍼런스 인물(`82abdf0f`)이 스튜디오 정면광으로 찍힌 상태라, 배경만 매장으로 바뀌고 인물 라이팅은 원본을 그대로 들고 오기 때문.
+
+**★ 모든 실사 컷 이미지 프롬프트에 아래 블록을 고정 삽입** (2cr 검증컷으로 개선 확인함):
+```
+IMPORTANT LIGHTING: lit ONLY by the store's own neutral white LED ceiling lights,
+exactly the same light direction and color as the background;
+NO studio lighting, NO separate key light on her;
+visible contact shadow on the floor beneath her feet;
+subtle rim light from the store windows behind her.
+Background clearly visible and mostly IN FOCUS (deep depth of field, ordinary phone camera look, not cinematic bokeh).
+```
+
+**핵심 4가지**
+1. **광원 일치** — 인물을 매장 자체 조명으로만. 별도 키라이트 금지.
+2. **접지 그림자** — 발밑 contact shadow 필수(공간에 붙는 느낌).
+3. **심도 깊게** — 폰 카메라는 센서가 작아 배경이 어느 정도 선명. **시네마틱 얕은 보케 = 오히려 세트 룩**이라 역효과.
+4. **림라이트** — 뒤·옆 광원이 윤곽에 걸려야 같은 공간에 있는 것처럼 보임.
+
+**★ `warm store light` 금지** — 주황 톤에서 AI가 피부를 오렌지로 균일하게 물들이고 질감을 뭉갬. 실제 폰매장 조명은 중성 백색이므로 `neutral white LED retail lighting, daylight balanced` 고정.
+
+**검증된 반례(=효과 없던 시도, 재시도 금지)**
+- 그레인·노이즈·압축·비네팅 추가 → 그냥 저화질. 요즘 폰은 화질 좋아서 "폰 느낌" 아님. **원본이 더 나음**(종민 판정).
+- 핸드헬드 흔들림 시뮬레이션·배속(1.1~1.25)·앞뒤 트림 → 체감 차이 미미.
+- 색온도 후보정(colortemperature) → 조명 구조 문제라 색만 바꿔선 안 고쳐짐.
+- **결론: 후처리로는 못 고친다. 생성 단계 프롬프트에서 잡아야 한다.**
+
+**남은 한계(정직)**: 피부 질감(모공·잔털), 표정 전환의 모핑감, 손가락 움직임은 kling std 모델 한계라 현재 스택으로 해결 불가. 필요 시 모델 변경 논의(크레딧 증가).
+
+**적용 이력**: 050은 이미 구컷으로 24cr 소진해 **C안(현행 유지)**으로 완성. **051편부터 이 룰 적용.**
+
 ### 6. 비용/환경
 - **영상 kling `sound:"off"` 명시 필수**(off=6cr/4s, on=8cr → +2cr 낭비).
 - 이미지 먼저(nano 2cr)로 글래머 확정 → 영상화(컷당 4s 6cr / 3s 4.5cr).
