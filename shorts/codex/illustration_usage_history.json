@@ -667,18 +667,25 @@
       ]
     },
     "049_qa_used_phone_buying_check": {
-      "used_at": "2026-07-21T12:20:21",
-      "source": "codex_enhance",
+      "used_at": "2026-07-21T16:05:52",
+      "source": "semantic_visual_match",
       "illustrations": [
         "smartphone",
-        "aluminum_label",
-        "appear_e5f828cc",
-        "apple_70385068",
-        "appliance"
+        "phone_setup_ready",
+        "lock",
+        "lock_screen_only_e80c4860",
+        "reset",
+        "mystery_number_63279925",
+        "phone_settings_toggle",
+        "nfc_pay",
+        "device_os_requirement",
+        "device_data_transfer",
+        "camera_battery_ecd040c7",
+        "event_period_8cafdac4"
       ]
     }
   },
-  "updated_at": "2026-07-21T12:20:23",
+  "updated_at": "2026-07-21T16:05:55",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -823,7 +830,7 @@
       "variants": []
     },
     "049_qa_used_phone_buying_check": {
-      "updated_at": "2026-07-21T12:20:23",
+      "updated_at": "2026-07-21T16:05:55",
       "variants": []
     }
   }

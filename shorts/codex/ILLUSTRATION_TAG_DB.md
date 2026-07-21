@@ -5,11 +5,11 @@
 
 | illustration | tags | use count | last slug |
 |---|---|---:|---|
-| `aluminum_label` | materials, hardware, library | 7 | 049_qa_used_phone_buying_check |
+| `aluminum_label` | materials, hardware, library | 6 | 039_pick_apple_watch_ultra4 |
 | `android_user_a91efa70` | auto | 0 |  |
-| `appear_e5f828cc` | auto, library | 2 | 049_qa_used_phone_buying_check |
-| `apple_70385068` | auto, library | 4 | 049_qa_used_phone_buying_check |
-| `appliance` | hardware, device, library | 7 | 049_qa_used_phone_buying_check |
+| `appear_e5f828cc` | auto, library | 1 | 043_pick_galaxy_unpacked_722 |
+| `apple_70385068` | auto, library | 3 | 044_news_chipflation_price |
+| `appliance` | hardware, device, library | 6 | 039_pick_apple_watch_ultra4 |
 | `basic_fold_202d754f` | auto, library | 7 | 045_news_iphone_thick_galaxy_thin |
 | `battery_capacity` | battery, hardware, library | 0 |  |
 | `battery_charge_range` | battery, charging, tips, library | 2 | 021_news_galaxy_flip8_exynos |
@@ -23,7 +23,7 @@
 | `call_filter_rules` | library | 0 |  |
 | `call_recording_notice` | library | 1 | 010_tip_iphone_call_record |
 | `calling_066b1a1b` | library | 0 |  |
-| `camera_battery_ecd040c7` | auto, library | 5 | 045_news_iphone_thick_galaxy_thin |
+| `camera_battery_ecd040c7` | auto, library | 6 | 049_qa_used_phone_buying_check |
 | `camera_quality` | camera, hardware, library | 1 | 029_pick_galaxy_vs_iphone_camera |
 | `card_struggle_81529308` | auto | 0 |  |
 | `change_review_b93b867a` | auto, library | 1 | 030_pick_new_vs_old_subsidy |
@@ -55,6 +55,7 @@
 | `cpt_392743cd` | auto, library | 1 | 023_qa_senior_phone_recommendation |
 | `cpt_3a2d2cbd` | auto, library | 0 |  |
 | `cpt_3be04d33` | auto | 0 |  |
+| `cpt_464ec29f` | auto | 0 |  |
 | `cpt_4729c912` | auto, library | 3 | 019_news_samsung_thank_you_festival |
 | `cpt_496029c6` | auto, library | 0 |  |
 | `cpt_4a239341` | auto, library | 0 |  |
@@ -118,6 +119,7 @@
 | `cpt_d124a858` | auto, library | 0 |  |
 | `cpt_d3ebd1ae` | auto | 0 |  |
 | `cpt_d5ec3971` | auto, library | 1 | 045_news_iphone_thick_galaxy_thin |
+| `cpt_d661ddd9` | auto | 0 |  |
 | `cpt_d877aced` | auto | 0 |  |
 | `cpt_da94c5b9` | auto, library | 0 |  |
 | `cpt_dca98748` | auto, library | 0 |  |
@@ -146,20 +148,21 @@
 | `cpt_fd9edf65` | auto, library | 3 | 020_qa_apple_pay_korea_card |
 | `cut_theft_43505b9f` | auto | 0 |  |
 | `deal_fd9edf65` | library | 0 |  |
-| `device_data_transfer` | device, migration, backup, tips, library | 21 | 046_news_memory_price_android |
-| `device_os_requirement` | library | 17 | 046_news_memory_price_android |
+| `device_data_transfer` | device, migration, backup, tips, library | 22 | 049_qa_used_phone_buying_check |
+| `device_os_requirement` | library | 18 | 049_qa_used_phone_buying_check |
 | `device_price_rise` | price, increase, device | 0 |  |
 | `display_maintenance_c1ff39c1` | auto, library | 1 | 043_pick_galaxy_unpacked_722 |
 | `display_ratio_change` | library | 0 |  |
 | `document_article` | news, document, library | 3 | 043_pick_galaxy_unpacked_722 |
 | `emerge_ad70f98b` | auto | 0 |  |
 | `emergency_account_freeze` | security, bank, response, golden-time, library | 2 | 015_qa_msafer_pass_identity_block |
-| `event_period_8cafdac4` | auto, library | 12 | 046_news_memory_price_android |
+| `event_period_8cafdac4` | auto, library | 13 | 049_qa_used_phone_buying_check |
 | `example_cd30b6fe` | auto, library | 2 | 045_news_iphone_thick_galaxy_thin |
 | `fake_government_page` | security, smishing, government, warning | 0 |  |
 | `fast_charging` | battery, charging, library | 0 |  |
 | `festival_41b2e7cf` | auto, library | 1 | 019_news_samsung_thank_you_festival |
 | `final_update` | software, update, library | 8 | 043_pick_galaxy_unpacked_722 |
+| `find_self_f878c3be` | auto | 0 |  |
 | `foldable` | hardware, foldable, library | 4 | 044_news_chipflation_price |
 | `folding_rumors_545e4e3e` | auto | 0 |  |
 | `forecast` | news, forecast, library | 15 | 046_news_memory_price_android |
@@ -178,8 +181,8 @@
 | `launch_event` | library | 0 |  |
 | `lavender_color_7ffb0a8d` | auto, library | 1 | 026_news_galaxy_a37_5g_launch |
 | `liquid_titanium` | materials, hardware, library | 0 |  |
-| `lock` | security, privacy, lock, library | 3 | 018_scam_wedding_invite_smishing |
-| `lock_screen_only_e80c4860` | auto, library | 1 | 022_tip_galaxy_battery_save_5 |
+| `lock` | security, privacy, lock, library | 4 | 049_qa_used_phone_buying_check |
+| `lock_screen_only_e80c4860` | auto, library | 2 | 049_qa_used_phone_buying_check |
 | `logout` | security, privacy, account, library | 1 | 015_qa_msafer_pass_identity_block |
 | `london_unpack_eb61ad77` | auto, library | 3 | 043_pick_galaxy_unpacked_722 |
 | `market_cap` | price, data, market, library | 2 | 029_pick_galaxy_vs_iphone_camera |
@@ -193,12 +196,13 @@
 | `module_install` | library | 0 |  |
 | `monday_d77265f0` | auto, library | 1 | 019_news_samsung_thank_you_festival |
 | `mounted_body_496029c6` | auto, library | 2 | 026_news_galaxy_a37_5g_launch |
-| `mystery_number_63279925` | auto, library | 3 | 032_meme_carrier_hidden_tips |
+| `must_99a6abac` | auto | 0 |  |
+| `mystery_number_63279925` | auto, library | 4 | 049_qa_used_phone_buying_check |
 | `new_policy_f48caded` | auto, library | 4 | 048_qa_unlimited_qos_truth |
 | `new_release_98cab19a` | library | 0 |  |
 | `newspaper` | news, source, library | 8 | 020_qa_apple_pay_korea_card |
 | `nfc_open_access` | payment, nfc, access | 0 |  |
-| `nfc_pay` | payment, nfc, access, library | 3 | 040_tip_ios27_features |
+| `nfc_pay` | payment, nfc, access, library | 4 | 049_qa_used_phone_buying_check |
 | `official_sale_9dc82f05` | auto, library | 4 | 031_meme_phone_buying_checklist |
 | `official_site_check` | security, official-site, check | 0 |  |
 | `ondevice_ai_chip` | ai, hardware, privacy | 0 |  |
@@ -210,8 +214,8 @@
 | `payment_fall_8fb48590` | auto, library | 3 | 044_news_chipflation_price |
 | `personal_data_63b96014` | auto, library | 1 | 022_tip_galaxy_battery_save_5 |
 | `personal_data_leak` | security, privacy, leak | 0 |  |
-| `phone_settings_toggle` | library | 24 | 046_news_memory_price_android |
-| `phone_setup_ready` | library | 21 | 046_news_memory_price_android |
+| `phone_settings_toggle` | library | 25 | 049_qa_used_phone_buying_check |
+| `phone_setup_ready` | library | 22 | 049_qa_used_phone_buying_check |
 | `pilot_scale_82f258e3` | auto | 0 |  |
 | `plan_price_tier_compare` | price, plan, compare, telecom | 0 |  |
 | `post_parents_phone_5e1d6c3b` | auto, library | 1 | 023_qa_senior_phone_recommendation |
@@ -224,7 +228,7 @@
 | `register_14135bd2` | auto | 0 |  |
 | `release_calendar` | library | 0 |  |
 | `repair_privacy` | security, privacy, repair | 0 |  |
-| `reset` | security, privacy, software, library | 0 |  |
+| `reset` | security, privacy, software, library | 1 | 049_qa_used_phone_buying_check |
 | `restaurant_receipt_2b916703` | auto, library | 1 | 040_tip_ios27_features |
 | `samsung_ai` | ai, assistant, software, library | 7 | 046_news_memory_price_android |
 | `samsung_korea_04b00795` | auto, library | 4 | 046_news_memory_price_android |
@@ -263,7 +267,7 @@
 
 ## Recent videos
 
-- `049_qa_used_phone_buying_check`: smartphone, aluminum_label, appear_e5f828cc, apple_70385068, appliance
+- `049_qa_used_phone_buying_check`: smartphone, phone_setup_ready, lock, lock_screen_only_e80c4860, reset, mystery_number_63279925, phone_settings_toggle, nfc_pay, device_os_requirement, device_data_transfer, camera_battery_ecd040c7, event_period_8cafdac4
 - `046_news_memory_price_android`: chart_up, memory_chip, smartphone, samsung_ai, phone_setup_ready, part_cost_a4d4e5f0, phone_settings_toggle, event_period_8cafdac4, samsung_korea_04b00795, forecast, device_os_requirement, device_data_transfer
 - `045_news_iphone_thick_galaxy_thin`: cpt_65a9841a, thinning_news_ed51d22a, cpt_d5ec3971, cpt_5091b78e, camera_battery_ecd040c7, basic_fold_202d754f, event_period_8cafdac4, cpt_e73a695f, stretch_month_da92f81f, smartphone, phone_setup_ready, example_cd30b6fe, phone_settings_toggle
 - `048_qa_unlimited_qos_truth`: qos_failure_bd461333, basic_fold_202d754f, example_cd30b6fe, smartphone, phone_setup_ready, new_policy_f48caded, parents_chat_c1d70b74, size_guide_afe009df, phone_settings_toggle, device_os_requirement, device_data_transfer, cpt_98b43912

@@ -639,6 +639,16 @@
       ],
       "note": "자동 발굴 개념: 정식 판매"
     },
+    "cpt_464ec29f": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "상태",
+        "켜서"
+      ],
+      "note": "자동 발굴 개념: 상태 켜서"
+    },
     "cpt_4729c912": {
       "tags": [
         "auto",
@@ -1430,6 +1440,19 @@
       "note": "자동 발굴 개념: 반대로 가는지",
       "available": true
     },
+    "cpt_d661ddd9": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "중고폰",
+        "사면",
+        "이득이지",
+        "하면",
+        "큰돈"
+      ],
+      "note": "자동 발굴 개념: 중고폰 사면"
+    },
     "cpt_d877aced": {
       "tags": [
         "auto"
@@ -1963,6 +1986,16 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "find_self_f878c3be": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "나의",
+        "찾기"
+      ],
+      "note": "자동 발굴 개념: 나의 찾기"
+    },
     "foldable": {
       "tags": [
         "hardware",
@@ -2407,6 +2440,15 @@
       ],
       "note": "자동 발굴 개념: 탑재 본체",
       "available": true
+    },
+    "must_99a6abac": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "반드시"
+      ],
+      "note": "자동 발굴 개념: 반드시"
     },
     "mystery_number_63279925": {
       "tags": [
@@ -3255,53 +3297,7 @@
       ],
       "note": "자동 발굴 개념: 일요일 주간",
       "available": true
-    },
-    "cpt_d661ddd9": {
-      "keywords": [
-        "중고폰",
-        "사면",
-        "이득이지",
-        "하면",
-        "큰돈"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 중고폰 사면",
-      "available": false
-    },
-    "find_self_f878c3be": {
-      "keywords": [
-        "나의",
-        "찾기"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 나의 찾기",
-      "available": false
-    },
-    "must_99a6abac": {
-      "keywords": [
-        "반드시"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 반드시",
-      "available": false
-    },
-    "cpt_464ec29f": {
-      "keywords": [
-        "상태",
-        "켜서"
-      ],
-      "tags": [
-        "auto"
-      ],
-      "note": "자동 발굴 개념: 상태 켜서",
-      "available": false
     }
   },
-  "updated_at": "2026-07-21T12:20:25"
+  "updated_at": "2026-07-21T16:05:50"
 }
