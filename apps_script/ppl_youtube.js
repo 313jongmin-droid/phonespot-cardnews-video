@@ -48,13 +48,16 @@ var PPL_SEED_CONFIG = [
 ];
 
 var PPL_SEED_TAXONOMY = [
-  ['자동차',       '자동차 리뷰,신차 시승기,국산차 리뷰,수입차 리뷰,중고차 구매', 2, 'Y'],
-  ['IT·가젯',      'IT 리뷰,스마트폰 리뷰,노트북 리뷰,가젯 리뷰,PC 견적',        2, 'Y'],
-  ['자급제·통신',   '자급제 휴대폰,통신비 절약,알뜰폰 요금제',                     1, 'Y'],
-  ['경제·재테크',   '재테크,주식 투자,부동산 투자,경제 뉴스,자산관리',            2, 'Y'],
-  ['시사·지식',    '시사 브리핑,뉴스 해설,역사 이야기,과학 지식',                1, 'Y'],
-  ['취미·아웃도어', '낚시,캠핑 차박,골프 레슨,등산,밀리터리',                     2, 'Y'],
-  ['스포츠',       '축구 분석,야구 하이라이트,격투기,헬스 운동',                 1, 'Y']
+  ['주식·투자',    '주가,코스피,배당주,ETF,미국주식',           2, 'Y', '검색량 1위(자동차의 33배)·상승추세 — 네이버 데이터랩 검증'],
+  ['격투기·스포츠', 'UFC,격투기,복싱,축구 분석,야구 하이라이트',  2, 'Y', '검색량 2위, 이벤트月 급등 — 데이터랩 검증'],
+  ['자동차',       '중고차,신차,시승기,국산차 리뷰,전기차',       2, 'Y', '검색량 3위·객단가 높음 — 데이터랩 검증'],
+  ['IT·가젯',      'IT 리뷰,스마트폰 리뷰,노트북 리뷰,PC 견적',   2, 'Y', '제품리뷰=협찬 친화적(폰스팟 인접). 검색량은 미검증'],
+  ['금리·예적금',   '금리,예금금리,적금,파킹통장',               1, 'Y', '자동차와 비슷한 검색량, 연중 평탄 — 데이터랩 검증'],
+  ['자급제·통신',   '자급제 휴대폰,통신비 절약,알뜰폰 요금제',     1, 'Y', '폰스팟 본업 인접'],
+  ['캠핑·차박',    '캠핑,차박,캠핑장비',                       1, 'Y', '7~10월 피크(지금 적기). 연령검증은 표본부족으로 실패'],
+  ['시사·지식',    '시사 브리핑,뉴스 해설,역사 이야기',          1, 'Y', '검색량 미검증'],
+  ['골프',        '골프,골프레슨',                            0, 'N', '골프공 구매 40~50대 80%·30대 6%(데이터랩) → 30-40 타깃이면 제외'],
+  ['부동산',      '아파트 시세,청약,분양',                     0, 'N', '검색량이 자동차의 1/4 수준으로 낮음 — 데이터랩 검증']
 ];
 
 var PPL_SHOP_TERMS = ['대리점','가맹점','판매왕','판매점','판매 전문','판매전문','공식몰','쇼핑몰','스토어','최저가로','도매','좌표','개통문의','개통 문의'];
@@ -85,6 +88,7 @@ function buildPplYoutubeMenu_(ui) {
     .addSeparator()
     .addItem('⚙️ 설정 탭 열기', 'pplOpenConfig')
     .addItem('🗂 카테고리 탭 열기', 'pplOpenTaxonomy')
+    .addItem('♻️ 카테고리 시드 재적용', 'pplResetTaxonomy')
     .addItem('📂 발굴 시트 열기', 'pplOpenSheet')
     .addToUi();
 }
@@ -119,10 +123,10 @@ function pplOpenConfig() { var sh = SpreadsheetApp.getActive().getSheetByName(PP
 function pplCreateTaxonomySheet_() {
   var ss = SpreadsheetApp.getActive(), sh = ss.insertSheet(PPL_CAT_SHEET);
   sh.appendRow(['PPL 카테고리 분류 — 여기 고치면 발굴에 즉시 반영']);
-  sh.appendRow(['카테고리', '검색 키워드(콤마 구분)', '남성30-50 가중치(0~2)', '사용(Y/N)']);
-  sh.getRange(2, 1, 1, 4).setBackground('#1F4E78').setFontColor('#FFFFFF').setFontWeight('bold');
+  sh.appendRow(['카테고리', '검색 키워드(콤마 구분)', '가중치(0~2)', '사용(Y/N)', '비고(근거)']);
+  sh.getRange(2, 1, 1, 5).setBackground('#1F4E78').setFontColor('#FFFFFF').setFontWeight('bold');
   PPL_SEED_TAXONOMY.forEach(function (r) { sh.appendRow(r); });
-  sh.setColumnWidth(1, 130); sh.setColumnWidth(2, 460); sh.setColumnWidth(3, 160); sh.setFrozenRows(2);
+  sh.setColumnWidth(1, 130); sh.setColumnWidth(2, 400); sh.setColumnWidth(3, 110); sh.setColumnWidth(5, 420); sh.setFrozenRows(2);
   return sh;
 }
 function pplGetTaxonomy_() {
@@ -137,6 +141,18 @@ function pplGetTaxonomy_() {
     if (kws.length) out.push({ category: cat, keywords: kws, weight: w });
   });
   return out;
+}
+function pplResetTaxonomy() {
+  var ui = SpreadsheetApp.getUi();
+  var r = ui.alert('카테고리 시드 재적용',
+    '현재 PPL_카테고리 탭 내용을 지우고 최신 시드(데이터랩 검증 반영)로 덮어씁니다.\n직접 수정한 키워드가 있으면 사라집니다. 진행할까요?',
+    ui.ButtonSet.YES_NO);
+  if (r !== ui.Button.YES) return;
+  var ss = SpreadsheetApp.getActive(), sh = ss.getSheetByName(PPL_CAT_SHEET);
+  if (sh) ss.deleteSheet(sh);
+  sh = pplCreateTaxonomySheet_();
+  ss.setActiveSheet(sh);
+  pplAlert_('✅ 카테고리 시드 재적용 완료 (' + PPL_SEED_TAXONOMY.length + '개, 골프·부동산은 사용=N).');
 }
 function pplOpenTaxonomy() { var sh = SpreadsheetApp.getActive().getSheetByName(PPL_CAT_SHEET) || pplCreateTaxonomySheet_(); SpreadsheetApp.getActive().setActiveSheet(sh); }
 

@@ -400,6 +400,7 @@ function addYouTubeMenuItem() {
     .addSeparator()
     .addItem('⚙️ 설정 탭 열기', 'pplOpenConfig')
     .addItem('🗂 카테고리 탭 열기', 'pplOpenTaxonomy')
+    .addItem('♻️ 카테고리 시드 재적용', 'pplResetTaxonomy')
     .addItem('📂 발굴 시트 열기', 'pplOpenSheet');
   ui.createMenu('유튜브')
     .addItem('🔄 지금 갱신 (데이터)', 'fetchYouTubeAnalyticsDaily')
