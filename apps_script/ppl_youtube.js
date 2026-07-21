@@ -3,7 +3,7 @@
  * 정본 가이드: _docs/PPL_YOUTUBE_OUTREACH_GUIDE.md
  *
  * ★ 사실 한계: YouTube/Apify는 타 채널 시청자 연령·성별 미제공(채널 주인만 조회).
- *   → 30~50 남성은 직접 필터 불가. 카테고리로 근사 + 회신율 집계로 정밀화.
+ *   → 주타깃 30·40·50대 남성은 직접 필터 불가. 카테고리로 근사 + 회신율 집계로 정밀화.
  *
  * 편집 탭 2개 (코드 push 없이 종민이 조정):
  *   PPL_설정      — 정렬/기간/길이/구독자범위/최소조건/건수/배치 등 전체 옵션
@@ -56,8 +56,8 @@ var PPL_SEED_TAXONOMY = [
   ['자급제·통신',   '자급제 휴대폰,통신비 절약,알뜰폰 요금제',     1, 'Y', '폰스팟 본업 인접'],
   ['캠핑·차박',    '캠핑,차박,캠핑장비',                       1, 'Y', '7~10월 피크(지금 적기). 연령검증은 표본부족으로 실패'],
   ['시사·지식',    '시사 브리핑,뉴스 해설,역사 이야기',          1, 'Y', '검색량 미검증'],
-  ['골프',        '골프,골프레슨',                            0, 'N', '골프공 구매 40~50대 80%·30대 6%(데이터랩) → 30-40 타깃이면 제외'],
-  ['부동산',      '아파트 시세,청약,분양',                     0, 'N', '검색량이 자동차의 1/4 수준으로 낮음 — 데이터랩 검증']
+  ['골프',        '골프,골프레슨,골프클럽',                     2, 'Y', '골프공 구매 40~50대 80%(데이터랩) → 30-50 남성 타깃에 정확히 부합. 검색량은 낮음'],
+  ['부동산',      '아파트 시세,청약,분양,부동산 전망',           1, 'Y', '검색량은 자동차의 1/4로 낮으나 30-50 남성 핵심 관심축']
 ];
 
 var PPL_SHOP_TERMS = ['대리점','가맹점','판매왕','판매점','판매 전문','판매전문','공식몰','쇼핑몰','스토어','최저가로','도매','좌표','개통문의','개통 문의'];
@@ -152,7 +152,7 @@ function pplResetTaxonomy() {
   if (sh) ss.deleteSheet(sh);
   sh = pplCreateTaxonomySheet_();
   ss.setActiveSheet(sh);
-  pplAlert_('✅ 카테고리 시드 재적용 완료 (' + PPL_SEED_TAXONOMY.length + '개, 골프·부동산은 사용=N).');
+  pplAlert_('✅ 카테고리 시드 재적용 완료 (' + PPL_SEED_TAXONOMY.length + '개, 전부 사용=Y).');
 }
 function pplOpenTaxonomy() { var sh = SpreadsheetApp.getActive().getSheetByName(PPL_CAT_SHEET) || pplCreateTaxonomySheet_(); SpreadsheetApp.getActive().setActiveSheet(sh); }
 
