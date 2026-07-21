@@ -647,9 +647,38 @@
         "example_cd30b6fe",
         "phone_settings_toggle"
       ]
+    },
+    "046_news_memory_price_android": {
+      "used_at": "2026-07-16T17:14:03",
+      "source": "semantic_visual_match",
+      "illustrations": [
+        "chart_up",
+        "memory_chip",
+        "smartphone",
+        "samsung_ai",
+        "phone_setup_ready",
+        "part_cost_a4d4e5f0",
+        "phone_settings_toggle",
+        "event_period_8cafdac4",
+        "samsung_korea_04b00795",
+        "forecast",
+        "device_os_requirement",
+        "device_data_transfer"
+      ]
+    },
+    "049_qa_used_phone_buying_check": {
+      "used_at": "2026-07-21T12:20:21",
+      "source": "codex_enhance",
+      "illustrations": [
+        "smartphone",
+        "aluminum_label",
+        "appear_e5f828cc",
+        "apple_70385068",
+        "appliance"
+      ]
     }
   },
-  "updated_at": "2026-07-16T15:15:11",
+  "updated_at": "2026-07-21T12:20:23",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -787,6 +816,14 @@
     },
     "045_news_iphone_thick_galaxy_thin": {
       "updated_at": "2026-07-16T15:15:11",
+      "variants": []
+    },
+    "046_news_memory_price_android": {
+      "updated_at": "2026-07-16T17:14:05",
+      "variants": []
+    },
+    "049_qa_used_phone_buying_check": {
+      "updated_at": "2026-07-21T12:20:23",
       "variants": []
     }
   }

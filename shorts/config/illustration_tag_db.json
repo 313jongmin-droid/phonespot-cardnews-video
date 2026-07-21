@@ -142,6 +142,15 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "big_f82f633f": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "크다"
+      ],
+      "note": "자동 발굴 개념: 크다"
+    },
     "biometric": {
       "tags": [
         "security",
@@ -171,6 +180,18 @@
       ],
       "note": "자동 발굴 개념: 용도 예산",
       "available": true
+    },
+    "budget_lineup_a9dd01f6": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "보급형",
+        "라인업",
+        "원가",
+        "압박"
+      ],
+      "note": "자동 발굴 개념: 보급형 라인업"
     },
     "calendar_75c6eba6": {
       "tags": [
@@ -2068,6 +2089,15 @@
       ],
       "note": "자동 발굴 개념: 다른 나라처럼"
     },
+    "grunge_61796acc": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "그런지"
+      ],
+      "note": "자동 발굴 개념: 그런지"
+    },
     "handshake": {
       "tags": [
         "policy",
@@ -3225,7 +3255,53 @@
       ],
       "note": "자동 발굴 개념: 일요일 주간",
       "available": true
+    },
+    "cpt_d661ddd9": {
+      "keywords": [
+        "중고폰",
+        "사면",
+        "이득이지",
+        "하면",
+        "큰돈"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 중고폰 사면",
+      "available": false
+    },
+    "find_self_f878c3be": {
+      "keywords": [
+        "나의",
+        "찾기"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 나의 찾기",
+      "available": false
+    },
+    "must_99a6abac": {
+      "keywords": [
+        "반드시"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 반드시",
+      "available": false
+    },
+    "cpt_464ec29f": {
+      "keywords": [
+        "상태",
+        "켜서"
+      ],
+      "tags": [
+        "auto"
+      ],
+      "note": "자동 발굴 개념: 상태 켜서",
+      "available": false
     }
   },
-  "updated_at": "2026-07-16T15:15:07"
+  "updated_at": "2026-07-21T12:20:25"
 }
