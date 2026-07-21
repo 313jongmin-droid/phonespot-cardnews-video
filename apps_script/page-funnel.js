@@ -9,12 +9,16 @@
 //  ★ 격리 원칙(무회귀): 기존 GA4_자동 / SUMIFS 소비수식 / 통합대시보드 / 리틀리 탭은 절대 수정 안 함.
 //     신규 탭 2개(GA4_페이지별, 페이지별_퍼널)만 insertSheet로 생성. insertColumnBefore 미사용.
 //  ★ 시티마켓 카톡/전화 클릭은 GTM 이벤트 태그(kakao_chat_click / phone_click)가 있어야 집계됨.
-//     버튼은 있는데 태그가 없으면 시티마켓 카톡 칸은 0으로 나옴(사이트/GTM 작업 = 종민/사이트팀).
 //  ★ 멀티브랜드: 폰스팟 기본값 하드코딩. KT 등 랜딩 경로가 다르면 _설정 시트에 PF_* 키로 덮어쓰기.
+//
+//  성능(2026-07-21): 6분 한도 초과 방지 —
+//    (1) 랜딩 차원 = landingPage(경로만, 쿼리 제거) → 원천 행 수 급감. 실패 시 landingPagePlusQueryString 폴백.
+//    (2) 시트 쓰기는 탭당 setValues 1회(배치). 행별 setValues/setNote 금지.
+//    (3) 마지막 날 누락 버그(날짜 타임스탬프 비교)를 날짜 문자열 비교로 수정.
 // ══════════════════════════════════════════════════════════════
 
 var PF_DETAIL_SHEET = 'GA4_페이지별';   // 날짜×유입×이벤트 집계(투명성/차팅용)
-var PF_FUNNEL_SHEET = '페이지별_퍼널';  // 요약 퍼널(어제/최근7일/최근30일)
+var PF_FUNNEL_SHEET = '페이지별_퍼널';  // 요약 퍼널 + 랜딩경로 진단
 var PF_LOOKBACK_DAYS = 30;
 
 // ── 유입 버킷 분류 (landingPage 경로 프리픽스). 브랜드별로 _설정에서 덮어쓸 수 있음. ──
@@ -38,30 +42,42 @@ function pf_classify_(landingPath, bk) {
   return '기타';
 }
 
-// ──[일상/수동]── GA4 Data API → 랜딩페이지 차원으로 수집 → 유입별 집계 → 두 신규 탭 재작성
-function fetchPageFunnel() {
-  var ss = SpreadsheetApp.getActive();
+// ── GA4 runReport (landing 차원 지정). 유효하지 않은 차원명이면 throw → 폴백에서 처리. ──
+function pf_fetch_(landingDim, start, end, propId) {
   var TZ = 'Asia/Seoul';
-  var end = new Date(); end.setDate(end.getDate() - 1);
-  var start = new Date(); start.setDate(start.getDate() - PF_LOOKBACK_DAYS);
-
   var req = {
     dateRanges: [{ startDate: Utilities.formatDate(start, TZ, 'yyyy-MM-dd'),
                    endDate: Utilities.formatDate(end, TZ, 'yyyy-MM-dd') }],
-    dimensions: [{ name: 'date' }, { name: 'landingPagePlusQueryString' }, { name: 'eventName' }],
+    dimensions: [{ name: 'date' }, { name: landingDim }, { name: 'eventName' }],
     metrics: [{ name: 'eventCount' }, { name: 'sessions' }],
     orderBys: [{ dimension: { dimensionName: 'date' }, desc: true }],
     limit: 100000
   };
-  var resp = AnalyticsData.Properties.runReport(req, 'properties/' + getBrandConfig_('GA4_PROP_ID', GA4_PROP_ID));
+  return AnalyticsData.Properties.runReport(req, 'properties/' + propId);
+}
+
+// ──[일상/수동]── GA4 → 랜딩페이지 차원 수집 → 유입별 집계 → 두 신규 탭 재작성 ──
+function fetchPageFunnel() {
+  var ss = SpreadsheetApp.getActive();
+  var end = new Date(); end.setDate(end.getDate() - 1);
+  var start = new Date(); start.setDate(start.getDate() - PF_LOOKBACK_DAYS);
+  var propId = getBrandConfig_('GA4_PROP_ID', GA4_PROP_ID);
+
+  // 경로만(landingPage)로 먼저 시도(행 수 급감) → 안 되면 쿼리포함 폴백
+  var resp, dimUsed = 'landingPage';
+  try {
+    resp = pf_fetch_('landingPage', start, end, propId);
+  } catch (e1) {
+    dimUsed = 'landingPagePlusQueryString';
+    resp = pf_fetch_('landingPagePlusQueryString', start, end, propId);
+  }
   var rows = (resp && resp.rows) ? resp.rows : [];
 
   var bk = pf_buckets_();
-  // agg[yyyymmdd][bucket][event] = {ec, ss}
-  var agg = {};
+  var agg = {};    // agg[yyyymmdd][bucket][event] = {ec, ss}
   var land = {};   // 랜딩경로(쿼리제거) -> {bucket, ev:{event:ec}} (분류 점검용)
   rows.forEach(function (r) {
-    var d = r.dimensionValues[0].value;               // yyyymmdd
+    var d = r.dimensionValues[0].value;
     var lp = r.dimensionValues[1].value;
     var ev = r.dimensionValues[2].value;
     var ec = parseInt(r.metricValues[0].value, 10) || 0;
@@ -80,54 +96,49 @@ function fetchPageFunnel() {
   pf_writeFunnel_(ss, agg, bk, start, end, land);
 
   if (typeof logSync_ === 'function') {
-    try { logSync_('fetchPageFunnel', Object.keys(agg).length + '일 / 원천 ' + rows.length + '행 집계'); } catch (e) {}
+    try { logSync_('fetchPageFunnel', Object.keys(agg).length + '일 / 원천 ' + rows.length + '행 (' + dimUsed + ')'); } catch (e) {}
   }
   try {
-    SpreadsheetApp.getUi().alert('✅ 페이지별 퍼널 갱신 (' + PF_LOOKBACK_DAYS + '일)\n' +
+    SpreadsheetApp.getUi().alert('✅ 페이지별 퍼널 갱신 (' + PF_LOOKBACK_DAYS + '일, ' + rows.length + '행)\n' +
       '· ' + bk.a.name + ' / ' + bk.b.name + ' 분리 (세션 시작 위치 기준)\n' +
-      '· 탭: ' + PF_FUNNEL_SHEET + ' (요약) + ' + PF_DETAIL_SHEET + ' (일별 상세)\n' +
+      '· 탭: ' + PF_FUNNEL_SHEET + ' (요약+랜딩진단) + ' + PF_DETAIL_SHEET + ' (일별)\n' +
       '⚠️ 시티마켓 카톡·전화는 GTM 이벤트 태그가 있어야 0이 아님.');
   } catch (e) {}
 }
 
-// ── 일별 상세 탭 (날짜|유입|이벤트|이벤트수|세션) ──
+// ── 일별 상세 탭 (날짜|유입|이벤트|이벤트수|세션) — setValues 1회 배치 ──
 function pf_writeDetail_(ss, agg, bk) {
   var sh = ss.getSheetByName(PF_DETAIL_SHEET);
   if (!sh) sh = ss.insertSheet(PF_DETAIL_SHEET);
   sh.clearContents();
-  sh.getCharts().forEach(function (c) { sh.removeChart(c); });
-  sh.getRange(1, 1, 1, 5).setValues([['날짜', '유입', '이벤트', '이벤트수', '세션']])
-    .setBackground('#1F4E78').setFontColor('#FFFFFF').setFontWeight('bold');
-  var out = [];
+  var grid = [['날짜', '유입', '이벤트', '이벤트수', '세션']];
   var order = [bk.a.name, bk.b.name, '기타'];
   Object.keys(agg).sort().reverse().forEach(function (d) {
     order.forEach(function (bkt) {
       var evs = agg[d][bkt];
       if (!evs) return;
       Object.keys(evs).sort().forEach(function (ev) {
-        out.push([d, bkt, ev, evs[ev].ec, evs[ev].ss]);
+        grid.push([d, bkt, ev, evs[ev].ec, evs[ev].ss]);
       });
     });
   });
-  if (out.length) {
-    sh.getRange(2, 1, out.length, 5).setValues(out);
-    sh.getRange(2, 1, out.length, 1).setNumberFormat('@');   // yyyymmdd 문자열
-    sh.getRange(2, 4, out.length, 2).setNumberFormat('#,##0');
+  sh.getRange(1, 1, grid.length, 5).setValues(grid);
+  sh.getRange(1, 1, 1, 5).setBackground('#1F4E78').setFontColor('#FFFFFF').setFontWeight('bold');
+  if (grid.length > 1) {
+    sh.getRange(2, 1, grid.length - 1, 1).setNumberFormat('@');       // yyyymmdd 문자열
+    sh.getRange(2, 4, grid.length - 1, 2).setNumberFormat('#,##0');
   }
   sh.setColumnWidths(1, 5, 120);
 }
 
-// ── 요약 퍼널 탭 (기간 × 유입버킷) + 랜딩경로 진단 ──
+// ── 요약 퍼널 탭 (기간 × 유입버킷) + 랜딩경로 진단 — setValues 1회 배치 ──
 function pf_writeFunnel_(ss, agg, bk, start, end, land) {
   var sh = ss.getSheetByName(PF_FUNNEL_SHEET);
   if (!sh) sh = ss.insertSheet(PF_FUNNEL_SHEET);
   sh.clear();
 
   var buckets = [bk.a.name, bk.b.name, '기타'];
-  // 이벤트 라벨 ↔ GA4 eventName (방문=session_start, 가격확인도착=citymarket_arrival ...)
-  var EV = [['방문(세션)', 'session_start'], ['가격확인도착', 'citymarket_arrival'],
-            ['카톡클릭', 'kakao_chat_click'], ['전화클릭', 'phone_click'], ['링크클릭', 'click']];
-
+  var EVENTS = ['session_start', 'citymarket_arrival', 'kakao_chat_click', 'phone_click', 'click'];
   var yKey = Utilities.formatDate(end, 'Asia/Seoul', 'yyyyMMdd');
   var ySet = {}; ySet[yKey] = 1;
   var d7s = new Date(end.getTime()); d7s.setDate(d7s.getDate() - 6);
@@ -135,58 +146,50 @@ function pf_writeFunnel_(ss, agg, bk, start, end, land) {
                  ['최근 7일', pf_dateSet_(d7s, end)],
                  ['최근 30일', pf_dateSet_(start, end)]];
 
-  sh.getRange('A1:G1').merge()
-    .setValue('■ 페이지별 퍼널 — ' + bk.a.name + ' vs ' + bk.b.name + ' (세션 시작 위치 기준 분리, GA4)')
-    .setBackground('#1F4E78').setFontColor('#FFFFFF').setFontWeight('bold').setFontSize(12);
-  sh.getRange('A2:G2').merge()
-    .setValue('※ ' + bk.a.name + '=세션이 ' + bk.a.name + '에서 시작 / ' + bk.b.name + '=' + bk.b.name +
-      '에서 직접 시작. ' + bk.a.name + ' 경유로 ' + bk.b.name + ' 도착·카톡한 건은 ' + bk.a.name +
-      ' 성과로 집계. ⚠️ ' + bk.b.name + ' 카톡·전화는 GTM 이벤트 태그(kakao_chat_click/phone_click)가 있어야 잡힘.')
-    .setFontStyle('italic').setFontColor('#666').setWrap(true);
+  var title = '■ 페이지별 퍼널 — ' + bk.a.name + ' vs ' + bk.b.name + ' (세션 시작 위치 기준 분리, GA4)';
+  var note = '※ ' + bk.a.name + '=세션이 ' + bk.a.name + '에서 시작 / ' + bk.b.name + '=' + bk.b.name +
+    '에서 직접 시작. ' + bk.a.name + ' 경유로 ' + bk.b.name + ' 도착·카톡한 건은 ' + bk.a.name +
+    ' 성과로 집계. ⚠️ ' + bk.b.name + ' 카톡·전화는 GTM 이벤트 태그(kakao_chat_click/phone_click)가 있어야 잡힘.';
 
-  var row = 4;
+  var grid = [];
+  grid.push([title, '', '', '', '', '', '']);
+  grid.push([note, '', '', '', '', '', '']);
+  grid.push(['', '', '', '', '', '', '']);
+  var headerRows = [];   // 1-index 저장(배경 칠)
   periods.forEach(function (p) {
-    sh.getRange(row, 1, 1, 7)
-      .setValues([['── ' + p[0] + ' ──', '방문(세션)', '가격확인도착', '카톡클릭', '전화클릭', '링크클릭', '카톡전환율']])
-      .setBackground('#D9E1F2').setFontWeight('bold').setHorizontalAlignment('center');
-    sh.getRange(row, 1).setHorizontalAlignment('left');
-    row++;
+    headerRows.push(grid.length + 1);
+    grid.push(['── ' + p[0] + ' ──', '방문(세션)', '가격확인도착', '카톡클릭', '전화클릭', '링크클릭', '카톡전환율']);
     buckets.forEach(function (bkt) {
-      var vals = [bkt];
-      EV.forEach(function (e) { vals.push(pf_sum_(agg, p[1], bkt, e[1])); });
-      var visit = pf_sum_(agg, p[1], bkt, 'session_start');
-      var kakao = pf_sum_(agg, p[1], bkt, 'kakao_chat_click');
-      vals.push(visit > 0 ? kakao / visit : '');
-      sh.getRange(row, 1, 1, 7).setValues([vals]);
-      sh.getRange(row, 2, 1, 5).setNumberFormat('#,##0');
-      sh.getRange(row, 7, 1, 1).setNumberFormat('0.0%');
-      if (bkt === bk.b.name) sh.getRange(row, 4, 1, 2).setNote('GTM 이벤트 태그 없으면 0 (태그 필요)');
-      row++;
+      var v = {};
+      EVENTS.forEach(function (e) { v[e] = pf_sum_(agg, p[1], bkt, e); });
+      var rate = v.session_start > 0 ? v.kakao_chat_click / v.session_start : '';
+      grid.push([bkt, v.session_start, v.citymarket_arrival, v.kakao_chat_click, v.phone_click, v.click, rate]);
     });
-    row++;
+    grid.push(['', '', '', '', '', '', '']);
   });
 
-  // ── 분류 점검: 랜딩경로 상위 (기타가 크면 여기서 실제 경로 확인 → _설정 PF_A_PATHS/PF_B_PATHS 보정) ──
-  if (land) {
-    row++;
-    sh.getRange(row, 1, 1, 5)
-      .setValues([['── 랜딩경로 상위 (분류 점검용, 30일) ──', '유입', '방문(session_start)', '가격확인도착', '카톡클릭']])
-      .setBackground('#FCE4D6').setFontWeight('bold');
-    row++;
-    var arr = Object.keys(land).map(function (p) {
-      var e = land[p].ev;
-      return { p: p, b: land[p].bucket, ss: e['session_start'] || 0, ca: e['citymarket_arrival'] || 0, kk: e['kakao_chat_click'] || 0 };
-    });
-    arr.sort(function (a, b) { return (b.ss + b.ca) - (a.ss + a.ca); });
-    arr.slice(0, 25).forEach(function (x) {
-      sh.getRange(row, 1, 1, 5).setValues([[x.p, x.b, x.ss, x.ca, x.kk]]);
-      sh.getRange(row, 3, 1, 3).setNumberFormat('#,##0');
-      row++;
-    });
-  }
+  // 랜딩경로 진단 (기타가 크면 실제 경로 확인 → _설정 PF_A_PATHS/PF_B_PATHS 보정)
+  var diagHeaderRow = grid.length + 1;
+  grid.push(['── 랜딩경로 상위 (분류 점검용, 30일) ──', '유입', '방문(session_start)', '가격확인도착', '카톡클릭', '', '']);
+  var arr = Object.keys(land).map(function (p) {
+    var e = land[p].ev;
+    return { p: p, b: land[p].bucket, ss: e['session_start'] || 0, ca: e['citymarket_arrival'] || 0, kk: e['kakao_chat_click'] || 0 };
+  });
+  arr.sort(function (a, b) { return (b.ss + b.ca) - (a.ss + a.ca); });
+  arr.slice(0, 25).forEach(function (x) {
+    grid.push([x.p, x.b, x.ss, x.ca, x.kk, '', '']);
+  });
 
+  // ── 단일 배치 쓰기 ──
+  sh.getRange(1, 1, grid.length, 7).setValues(grid);
+  // 서식(범위 단위 몇 번만)
+  sh.getRange(1, 1, 1, 7).setBackground('#1F4E78').setFontColor('#FFFFFF').setFontWeight('bold').setFontSize(12);
+  sh.getRange(2, 1, 1, 7).setFontStyle('italic').setFontColor('#666').setWrap(true);
+  sh.getRange(4, 2, grid.length - 3, 5).setNumberFormat('#,##0');   // 숫자 열
+  sh.getRange(4, 7, grid.length - 3, 1).setNumberFormat('0.0%');    // 전환율 열
+  headerRows.forEach(function (r) { sh.getRange(r, 1, 1, 7).setBackground('#D9E1F2').setFontWeight('bold'); });
+  sh.getRange(diagHeaderRow, 1, 1, 5).setBackground('#FCE4D6').setFontWeight('bold');
   sh.setColumnWidths(1, 7, 110);
-  sh.setColumnWidth(1, 150);
   sh.setColumnWidth(1, 320);
   sh.setFrozenRows(3);
 }
@@ -203,7 +206,7 @@ function pf_sum_(agg, dateSet, bucket, event) {
 }
 
 // [start..end] 포함 yyyymmdd 집합.
-// ★ 날짜 "문자열(yyyymmdd)"로 비교 — start/end가 서로 다른 new Date()로 만들어져 ms가 어긋나면
+// ★ 날짜 "문자열(yyyymmdd)"로 비교 — start/end가 서로 다른 new Date()라 ms가 어긋나면
 //   타임스탬프 비교 시 마지막 날이 <= 에서 탈락하는 버그가 있었음(2026-07-21 수정).
 function pf_dateSet_(start, end) {
   var TZ = 'Asia/Seoul', s = {}, cur = new Date(start.getTime());
