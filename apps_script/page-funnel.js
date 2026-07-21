@@ -59,6 +59,7 @@ function fetchPageFunnel() {
   var bk = pf_buckets_();
   // agg[yyyymmdd][bucket][event] = {ec, ss}
   var agg = {};
+  var land = {};   // 랜딩경로(쿼리제거) -> {bucket, ev:{event:ec}} (분류 점검용)
   rows.forEach(function (r) {
     var d = r.dimensionValues[0].value;               // yyyymmdd
     var lp = r.dimensionValues[1].value;
@@ -70,10 +71,13 @@ function fetchPageFunnel() {
     (agg[d][bkt] = agg[d][bkt] || {});
     var cell = (agg[d][bkt][ev] = agg[d][bkt][ev] || { ec: 0, ss: 0 });
     cell.ec += ec; cell.ss += ssn;
+    var lpath = String(lp || ''); var qq = lpath.indexOf('?'); if (qq >= 0) lpath = lpath.slice(0, qq);
+    var L = (land[lpath] = land[lpath] || { bucket: bkt, ev: {} });
+    L.ev[ev] = (L.ev[ev] || 0) + ec;
   });
 
   pf_writeDetail_(ss, agg, bk);
-  pf_writeFunnel_(ss, agg, bk, start, end);
+  pf_writeFunnel_(ss, agg, bk, start, end, land);
 
   if (typeof logSync_ === 'function') {
     try { logSync_('fetchPageFunnel', Object.keys(agg).length + '일 / 원천 ' + rows.length + '행 집계'); } catch (e) {}
@@ -113,8 +117,8 @@ function pf_writeDetail_(ss, agg, bk) {
   sh.setColumnWidths(1, 5, 120);
 }
 
-// ── 요약 퍼널 탭 (기간 × 유입버킷) ──
-function pf_writeFunnel_(ss, agg, bk, start, end) {
+// ── 요약 퍼널 탭 (기간 × 유입버킷) + 랜딩경로 진단 ──
+function pf_writeFunnel_(ss, agg, bk, start, end, land) {
   var sh = ss.getSheetByName(PF_FUNNEL_SHEET);
   if (!sh) sh = ss.insertSheet(PF_FUNNEL_SHEET);
   sh.clear();
@@ -161,8 +165,29 @@ function pf_writeFunnel_(ss, agg, bk, start, end) {
     });
     row++;
   });
+
+  // ── 분류 점검: 랜딩경로 상위 (기타가 크면 여기서 실제 경로 확인 → _설정 PF_A_PATHS/PF_B_PATHS 보정) ──
+  if (land) {
+    row++;
+    sh.getRange(row, 1, 1, 5)
+      .setValues([['── 랜딩경로 상위 (분류 점검용, 30일) ──', '유입', '방문(session_start)', '가격확인도착', '카톡클릭']])
+      .setBackground('#FCE4D6').setFontWeight('bold');
+    row++;
+    var arr = Object.keys(land).map(function (p) {
+      var e = land[p].ev;
+      return { p: p, b: land[p].bucket, ss: e['session_start'] || 0, ca: e['citymarket_arrival'] || 0, kk: e['kakao_chat_click'] || 0 };
+    });
+    arr.sort(function (a, b) { return (b.ss + b.ca) - (a.ss + a.ca); });
+    arr.slice(0, 25).forEach(function (x) {
+      sh.getRange(row, 1, 1, 5).setValues([[x.p, x.b, x.ss, x.ca, x.kk]]);
+      sh.getRange(row, 3, 1, 3).setNumberFormat('#,##0');
+      row++;
+    });
+  }
+
   sh.setColumnWidths(1, 7, 110);
   sh.setColumnWidth(1, 150);
+  sh.setColumnWidth(1, 320);
   sh.setFrozenRows(3);
 }
 
@@ -177,12 +202,19 @@ function pf_sum_(agg, dateSet, bucket, event) {
   return t;
 }
 
-// [start..end] 포함 yyyymmdd 집합
+// [start..end] 포함 yyyymmdd 집합.
+// ★ 날짜 "문자열(yyyymmdd)"로 비교 — start/end가 서로 다른 new Date()로 만들어져 ms가 어긋나면
+//   타임스탬프 비교 시 마지막 날이 <= 에서 탈락하는 버그가 있었음(2026-07-21 수정).
 function pf_dateSet_(start, end) {
   var TZ = 'Asia/Seoul', s = {}, cur = new Date(start.getTime());
-  while (cur.getTime() <= end.getTime()) {
-    s[Utilities.formatDate(cur, TZ, 'yyyyMMdd')] = 1;
+  var endK = Utilities.formatDate(end, TZ, 'yyyyMMdd');
+  var k = Utilities.formatDate(cur, TZ, 'yyyyMMdd');
+  var guard = 0;
+  while (k <= endK && guard < 400) {
+    s[k] = 1;
     cur.setDate(cur.getDate() + 1);
+    k = Utilities.formatDate(cur, TZ, 'yyyyMMdd');
+    guard++;
   }
   return s;
 }
