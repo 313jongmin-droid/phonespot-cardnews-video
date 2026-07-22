@@ -1529,6 +1529,18 @@
       "note": "자동 발굴 개념: 부담",
       "available": true
     },
+    "cpt_e423f12b": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "투자",
+        "확대",
+        "해킹",
+        "사고"
+      ],
+      "note": "자동 발굴 개념: 투자 확대"
+    },
     "cpt_e646864a": {
       "tags": [
         "auto",
@@ -2292,6 +2304,16 @@
       "note": "자동 발굴 개념: 런던 진행되",
       "available": true
     },
+    "maintenance_industry_4782d377": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "정비하",
+        "업계"
+      ],
+      "note": "자동 발굴 개념: 정비하 업계"
+    },
     "market_cap": {
       "tags": [
         "price",
@@ -2655,6 +2677,15 @@
       ],
       "note": "자동 발굴 개념: 납부금 떨어져",
       "available": true
+    },
+    "people_f22745a0": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "사람들"
+      ],
+      "note": "자동 발굴 개념: 사람들"
     },
     "personal_data_63b96014": {
       "tags": [
@@ -3152,6 +3183,17 @@
       "note": "자동 발굴 개념: 급증하고",
       "available": true
     },
+    "switch_evaluation_49089c4a": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "갈아탈",
+        "이득인지",
+        "따져봐야"
+      ],
+      "note": "자동 발굴 개념: 갈아탈 이득인지"
+    },
     "telecom_discount_compare": {
       "tags": [
         "price",
@@ -3299,5 +3341,5 @@
       "available": true
     }
   },
-  "updated_at": "2026-07-21T16:05:50"
+  "updated_at": "2026-07-22T15:42:06"
 }

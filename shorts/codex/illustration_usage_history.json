@@ -683,9 +683,29 @@
         "camera_battery_ecd040c7",
         "event_period_8cafdac4"
       ]
+    },
+    "051_news_combined_discount_cut": {
+      "used_at": "2026-07-22T15:42:08",
+      "source": "semantic_visual_match",
+      "illustrations": [
+        "chart_down",
+        "gift_voucher",
+        "event_period_8cafdac4",
+        "display_maintenance_c1ff39c1",
+        "document_article",
+        "samsung_ai",
+        "smartphone",
+        "phone_setup_ready",
+        "phone_settings_toggle",
+        "budget_choice_42fbdd85",
+        "device_os_requirement",
+        "meeting_room",
+        "device_data_transfer",
+        "store"
+      ]
     }
   },
-  "updated_at": "2026-07-21T16:05:55",
+  "updated_at": "2026-07-22T15:42:11",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -831,6 +851,10 @@
     },
     "049_qa_used_phone_buying_check": {
       "updated_at": "2026-07-21T16:05:55",
+      "variants": []
+    },
+    "051_news_combined_discount_cut": {
+      "updated_at": "2026-07-22T15:42:11",
       "variants": []
     }
   }

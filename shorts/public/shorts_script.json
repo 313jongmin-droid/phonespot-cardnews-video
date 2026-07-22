@@ -1,30 +1,30 @@
 {
-  "slug": "049_qa_used_phone_buying_check",
-  "title_short": "중고폰 싸게 샀다 호구되는 5가지",
-  "video_title": "중고폰 싸게 샀다 호구되는 5가지",
-  "publication_date": "2026.07.16",
-  "sources": "한국정보통신진흥협회 + 통신3사 약관 + 휴대폰성지 폰스팟 자료",
+  "slug": "051_news_combined_discount_cut",
+  "title_short": "가족끼리 묶으면 할인? 이제 옛말",
+  "video_title": "가족끼리 묶으면 할인? 이제 옛말",
+  "publication_date": "2026.07.22",
+  "sources": "조선일보·인사이트코리아 2026.07 + 휴대폰성지 폰스팟 자료",
   "channel_name": "휴대폰성지 폰스팟",
   "channel_tagline": "휴대폰성지 IT 브리핑",
   "opening": {
     "line1": "휴대폰성지 IT 브리핑",
-    "line2": "중고폰 싸게 샀다 호구되는 5가지"
+    "line2": "가족끼리 묶으면 할인? 이제 옛말"
   },
   "hook": {
-    "tts": "중고폰은 잘 사면 이득이지만, 확인 안 하면 큰돈 날립니다. 개통조차 안 되는 폰을 사는 경우도 있습니다. 사기 전에 이 다섯 가지만 확인하면 안전합니다.",
+    "tts": "가족 회선을 묶어 통신비를 아끼던 결합할인이 줄어들고 있습니다. 통신3사가 장기 결합할인을 손보기 시작했습니다. 내 할인이 사라지는 건 아닌지 확인이 필요합니다.",
     "caption_body": [
-      "중고폰 싸게 샀다",
-      "호구 되는 5가지"
+      "가족끼리 묶으면 할인?",
+      "이제 옛말"
     ],
     "caption_emphasis": [
-      "호구"
+      "이제 옛말"
     ],
     "headline_lines": [
       {
-        "text": "중고폰 싸게 샀다"
+        "text": "가족끼리 묶으면 할인?"
       },
       {
-        "text": "호구 되는 5가지",
+        "text": "이제 옛말",
         "accent": true
       }
     ],
@@ -32,18 +32,23 @@
     "topic": "뉴스",
     "background_image": "",
     "caption_chunks": [
-      "중고폰은 잘 사면 이득이지만, 확인 안 하면 큰돈 날립니다.",
-      "개통조차 안 되는 폰을 사는 경우도 있습니다.",
-      "사기 전에 이 다섯 가지만 확인하면 안전합니다."
+      "가족 회선을 묶어 통신비를 아끼던",
+      "결합할인이 줄어들고 있습니다.",
+      "통신3사가 장기 결합할인을 손보기 시작했습니다.",
+      "내 할인이 사라지는 건 아닌지 확인이 필요합니다."
     ],
     "chunk_visuals": [
       {
-        "type": "illust",
-        "value": "smartphone"
+        "type": "image",
+        "value": "photos/알뜰폰_로고.JPG"
       },
       {
         "type": "illust",
-        "value": "phone_setup_ready"
+        "value": "chart_down"
+      },
+      {
+        "type": "illust",
+        "value": "gift_voucher"
       },
       {
         "type": "mascot",
@@ -56,95 +61,102 @@
       "note": ""
     },
     "display_chunks": [
-      "중고폰은 잘 사면 이득이지만, 확인 안 하면 큰돈 날립니다",
-      "개통조차 안 되는 폰을 사는 경우도 있습니다",
-      "사기 전에 이 다섯 가지만 확인하면 안전합니다"
+      "가족 회선을 묶어 통신비를 아끼던",
+      "결합할인이 줄어들고 있습니다",
+      "통신3사가 장기 결합할인을 손보기 시작했습니다",
+      "내 할인이 사라지는 건 아닌지 확인이 필요합니다"
     ],
     "_codex_caption_lockstep": {
       "version": 2,
       "compiler": "korean_caption_compiler_v2",
       "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-      "chunk_count": 3
+      "chunk_count": 4
     },
     "_codex_contextual_narrative": true,
     "_codex_sync_mode": "global999_tts_caption_lockstep",
     "tts_chunk_weights": [
-      3539.75,
-      2582.67,
-      3037.58
+      2016.67,
+      1173.55,
+      3559.19,
+      2730.59
     ],
     "_tts_timing": {
       "mode": "word_boundary_text_align",
       "windows": [
         {
           "start_ms": 0.0,
-          "end_ms": 3539.75,
-          "duration_ms": 3539.75
+          "end_ms": 2016.67,
+          "duration_ms": 2016.67
         },
         {
-          "start_ms": 3539.75,
-          "end_ms": 6122.42,
-          "duration_ms": 2582.67
+          "start_ms": 2016.67,
+          "end_ms": 3190.22,
+          "duration_ms": 1173.55
         },
         {
-          "start_ms": 6122.42,
-          "end_ms": 9160.0,
-          "duration_ms": 3037.58
+          "start_ms": 3190.22,
+          "end_ms": 6749.41,
+          "duration_ms": 3559.19
+        },
+        {
+          "start_ms": 6749.41,
+          "end_ms": 9480.0,
+          "duration_ms": 2730.59
         }
       ],
-      "boundary_count": 23,
-      "caption_signature": "541035325086b0d08e32c32636b5c584f5131709d15fc27ced94610d0c2dc75b"
+      "boundary_count": 20,
+      "caption_signature": "160fbbe3659c5e57225faf78eaf71430a03dbac6f4a8c0fea46fdcce7d782c87"
     }
   },
   "facts": [
     {
-      "tts": "아이폰의 '나의 찾기', 갤럭시의 계정 잠금이 걸려 있으면 그 폰은 못 씁니다. 판매자 계정이 완전히 로그아웃·해제됐는지 반드시 확인하세요. 초기화만으론 안 풀리는 경우가 있습니다.",
+      "tts": "SKT는 최대 55% 온가족할인과 T+인터넷 결합의 신규 가입을 7월 말까지만 받고 중단합니다. KT·LG유플러스도 오래된 결합상품의 신규 가입을 정리하는 흐름입니다. 이미 쓰는 사람은 유지되지만 새로 드는 건 막힙니다.",
       "caption_body": [
-        "1번",
-        "잠금 해제 확인"
+        "무슨 일",
+        "신규 가입 중단"
       ],
       "caption_emphasis": [
-        "잠금 해제"
+        "신규 가입 중단"
       ],
       "headline_lines": [
         {
-          "text": "1번"
+          "text": "무슨 일"
         },
         {
-          "text": "잠금 해제 확인",
+          "text": "신규 가입 중단",
           "accent": true
         }
       ],
-      "meta": "출처: 휴대폰성지 폰스팟 자료",
+      "meta": "출처: 인사이트코리아",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "아이폰의 '나의 찾기',",
-        "갤럭시의 계정 잠금이 걸려 있으면 그 폰은 못 씁니다.",
-        "판매자 계정이 완전히 로그아웃·해제됐는지",
-        "반드시 확인하세요.",
-        "초기화만으론 안 풀리는 경우가 있습니다."
+        "SKT는 최대 55% 온가족할인과 T+인터넷",
+        "결합의 신규 가입을 7월 말까지만 받고 중단합니다.",
+        "KT·LG유플러스도 오래된 결합상품의",
+        "신규 가입을 정리하는 흐름입니다.",
+        "이미 쓰는 사람은 유지되지만 새로 드는 건 막힙니다."
       ],
       "chunk_visuals": [
         {
           "type": "image",
-          "value": "photos/아이폰_실물.jpg"
+          "value": "photos/SKT_로고.png"
+        },
+        {
+          "type": "illust",
+          "value": "event_period_8cafdac4"
         },
         {
           "type": "image",
-          "value": "photos/갤럭시z플립7_z폴드7.JPG"
+          "value": "photos/lgu로고.png"
         },
         {
           "type": "illust",
-          "value": "lock"
+          "value": "display_maintenance_c1ff39c1"
         },
         {
           "type": "illust",
-          "value": "lock_screen_only_e80c4860"
-        },
-        {
-          "type": "illust",
-          "value": "reset"
+          "value": "document_article"
         }
       ],
       "stat": {
@@ -154,11 +166,11 @@
       },
       "id": "fact_1",
       "display_chunks": [
-        "아이폰의 '나의 찾기',",
-        "갤럭시의 계정 잠금이 걸려 있으면 그 폰은 못 씁니다",
-        "판매자 계정이 완전히 로그아웃·해제됐는지",
-        "반드시 확인하세요",
-        "초기화만으론 안 풀리는 경우가 있습니다"
+        "SKT는 최대 55% 온가족할인과 T+인터넷",
+        "결합의 신규 가입을 7월 말까지만 받고 중단합니다",
+        "KT·LG유플러스도 오래된 결합상품의",
+        "신규 가입을 정리하는 흐름입니다",
+        "이미 쓰는 사람은 유지되지만 새로 드는 건 막힙니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
@@ -169,80 +181,85 @@
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        1298.89,
-        3463.33,
-        3004.63,
-        969.66,
-        2043.49
+        4051.21,
+        3200.22,
+        3560.88,
+        1739.38,
+        3948.31
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 1298.89,
-            "duration_ms": 1298.89
+            "end_ms": 4051.21,
+            "duration_ms": 4051.21
           },
           {
-            "start_ms": 1298.89,
-            "end_ms": 4762.22,
-            "duration_ms": 3463.33
+            "start_ms": 4051.21,
+            "end_ms": 7251.43,
+            "duration_ms": 3200.22
           },
           {
-            "start_ms": 4762.22,
-            "end_ms": 7766.85,
-            "duration_ms": 3004.63
+            "start_ms": 7251.43,
+            "end_ms": 10812.31,
+            "duration_ms": 3560.88
           },
           {
-            "start_ms": 7766.85,
-            "end_ms": 8736.51,
-            "duration_ms": 969.66
+            "start_ms": 10812.31,
+            "end_ms": 12551.69,
+            "duration_ms": 1739.38
           },
           {
-            "start_ms": 8736.51,
-            "end_ms": 10780.0,
-            "duration_ms": 2043.49
+            "start_ms": 12551.69,
+            "end_ms": 16500.0,
+            "duration_ms": 3948.31
           }
         ],
-        "boundary_count": 22,
-        "caption_signature": "bdbe5832d3c4ff5e6f95dab2ee02d78a1e4c96f855a4e5ef0f1d24ddab7d470a"
+        "boundary_count": 32,
+        "caption_signature": "f47b58860b21dd6acc618e618c94e0d9a511a3c2a30b61d0e9701b7ce2218ba2"
       }
     },
     {
-      "tts": "분실·도난 신고된 폰은 개통이 막힙니다. IMEI(고유번호)를 통신사나 조회 서비스로 확인해 정상 단말인지 봐야 합니다. 싸다고 덜컥 샀다가 개통 정지된 벽돌폰을 받을 수 있습니다.",
+      "tts": "AI 투자 확대와 해킹 사고 수습으로 통신사 비용 부담이 커졌습니다. 수익성이 낮은 장기 고객 할인 제도를 정비하는 것으로 업계는 봅니다. 소비자 입장에선 혜택이 줄어드는 셈입니다.",
       "caption_body": [
-        "2번",
-        "분실·도난폰 여부"
+        "왜",
+        "장기할인 손보나"
       ],
       "caption_emphasis": [
-        "분실·도난폰"
+        "장기할인"
       ],
       "headline_lines": [
         {
-          "text": "2번"
+          "text": "왜"
         },
         {
-          "text": "분실·도난폰 여부",
+          "text": "장기할인 손보나",
           "accent": true
         }
       ],
-      "meta": "출처: 통신3사 약관",
+      "meta": "출처: 조선일보",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "분실·도난 신고된 폰은 개통이 막힙니다.",
-        "IMEI(고유번호)를 통신사나 조회",
-        "서비스로 확인해 정상 단말인지 봐야 합니다.",
-        "싸다고 덜컥 샀다가 개통 정지된 벽돌폰을 받을 수 있습니다."
+        "AI 투자 확대와 해킹 사고",
+        "수습으로 통신사 비용 부담이 커졌습니다.",
+        "수익성이 낮은 장기 고객 할인 제도를",
+        "정비하는 것으로 업계는 봅니다.",
+        "소비자 입장에선 혜택이 줄어드는 셈입니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "mystery_number_63279925"
+          "value": "samsung_ai"
         },
         {
-          "type": "image",
-          "value": "photos/알뜰폰_로고.JPG"
+          "type": "illust",
+          "value": "smartphone"
+        },
+        {
+          "type": "illust",
+          "value": "phone_setup_ready"
         },
         {
           "type": "illust",
@@ -260,84 +277,91 @@
       },
       "id": "fact_2",
       "display_chunks": [
-        "분실·도난 신고된 폰은 개통이 막힙니다",
-        "IMEI(고유번호)를 통신사나 조회",
-        "서비스로 확인해 정상 단말인지 봐야 합니다",
-        "싸다고 덜컥 샀다가 개통 정지된 벽돌폰을 받을 수 있습니다"
+        "AI 투자 확대와 해킹 사고",
+        "수습으로 통신사 비용 부담이 커졌습니다",
+        "수익성이 낮은 장기 고객 할인 제도를",
+        "정비하는 것으로 업계는 봅니다",
+        "소비자 입장에선 혜택이 줄어드는 셈입니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 4
+        "chunk_count": 5
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        2800.0,
-        3580.0,
-        2160.0,
-        4240.0
+        1835.61,
+        2217.91,
+        2721.69,
+        1562.09,
+        2402.7
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 2800.0,
-            "duration_ms": 2800.0
+            "end_ms": 1835.61,
+            "duration_ms": 1835.61
           },
           {
-            "start_ms": 2800.0,
-            "end_ms": 6380.0,
-            "duration_ms": 3580.0
+            "start_ms": 1835.61,
+            "end_ms": 4053.51,
+            "duration_ms": 2217.91
           },
           {
-            "start_ms": 6380.0,
-            "end_ms": 8540.0,
-            "duration_ms": 2160.0
+            "start_ms": 4053.51,
+            "end_ms": 6775.2,
+            "duration_ms": 2721.69
           },
           {
-            "start_ms": 8540.0,
-            "end_ms": 12780.0,
-            "duration_ms": 4240.0
+            "start_ms": 6775.2,
+            "end_ms": 8337.3,
+            "duration_ms": 1562.09
+          },
+          {
+            "start_ms": 8337.3,
+            "end_ms": 10740.0,
+            "duration_ms": 2402.7
           }
         ],
-        "boundary_count": 27,
-        "caption_signature": "89f530d2917cedbd7c37fef4f3f5554959ba0fdc4db8465657a1cfee89fb2314"
+        "boundary_count": 25,
+        "caption_signature": "5bc61334812bbfafa6dd7884de77380941010cf6090ae5b25955e323cbbe2f7b"
       }
     },
     {
-      "tts": "이전 주인의 할부가 남아 있거나 소액결제·약정이 걸린 폰일 수 있습니다. 할부가 끝난 '완납' 단말인지 확인하세요. 남은 할부가 있으면 나중에 문제가 생길 수 있습니다.",
+      "tts": "할인을 위해 온 가족 통신사를 하나로 맞춰 온 사람들이 특히 반발합니다. 이제는 통신사를 유지할 이유가 줄었다며 알뜰폰이나 경쟁사 이동을 검토하는 목소리도 나옵니다.",
       "caption_body": [
-        "3번",
-        "잔여 할부·소액결제"
+        "영향",
+        "장기고객 불만"
       ],
       "caption_emphasis": [
-        "잔여 할부·소액결제"
+        "장기고객 불만"
       ],
       "headline_lines": [
         {
-          "text": "3번"
+          "text": "영향"
         },
         {
-          "text": "잔여 할부·소액결제",
+          "text": "장기고객 불만",
           "accent": true
         }
       ],
-      "meta": "출처: 통신3사 약관",
+      "meta": "출처: 인사이트코리아",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "이전 주인의 할부가 남아 있거나",
-        "소액결제·약정이 걸린 폰일 수 있습니다.",
-        "할부가 끝난 '완납' 단말인지 확인하세요.",
-        "남은 할부가 있으면 나중에 문제가 생길 수 있습니다."
+        "할인을 위해 온 가족 통신사를 하나로 맞춰",
+        "온 사람들이 특히 반발합니다.",
+        "이제는 통신사를 유지할 이유가 줄었다며",
+        "알뜰폰이나 경쟁사 이동을 검토하는 목소리도 나옵니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "nfc_pay"
+          "value": "budget_choice_42fbdd85"
         },
         {
           "type": "illust",
@@ -345,11 +369,11 @@
         },
         {
           "type": "illust",
-          "value": "device_data_transfer"
+          "value": "meeting_room"
         },
         {
           "type": "illust",
-          "value": "smartphone"
+          "value": "device_data_transfer"
         }
       ],
       "stat": {
@@ -359,10 +383,10 @@
       },
       "id": "fact_3",
       "display_chunks": [
-        "이전 주인의 할부가 남아 있거나",
-        "소액결제·약정이 걸린 폰일 수 있습니다",
-        "할부가 끝난 '완납' 단말인지 확인하세요",
-        "남은 할부가 있으면 나중에 문제가 생길 수 있습니다"
+        "할인을 위해 온 가족 통신사를 하나로 맞춰",
+        "온 사람들이 특히 반발합니다",
+        "이제는 통신사를 유지할 이유가 줄었다며",
+        "알뜰폰이나 경쟁사 이동을 검토하는 목소리도 나옵니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
@@ -373,54 +397,54 @@
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        1540.0,
-        2640.0,
-        2660.0,
-        3140.0
+        2313.33,
+        1286.67,
+        2480.0,
+        2820.0
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 1540.0,
-            "duration_ms": 1540.0
+            "end_ms": 2313.33,
+            "duration_ms": 2313.33
           },
           {
-            "start_ms": 1540.0,
-            "end_ms": 4180.0,
-            "duration_ms": 2640.0
+            "start_ms": 2313.33,
+            "end_ms": 3600.0,
+            "duration_ms": 1286.67
           },
           {
-            "start_ms": 4180.0,
-            "end_ms": 6840.0,
-            "duration_ms": 2660.0
+            "start_ms": 3600.0,
+            "end_ms": 6080.0,
+            "duration_ms": 2480.0
           },
           {
-            "start_ms": 6840.0,
-            "end_ms": 9980.0,
-            "duration_ms": 3140.0
+            "start_ms": 6080.0,
+            "end_ms": 8900.0,
+            "duration_ms": 2820.0
           }
         ],
-        "boundary_count": 25,
-        "caption_signature": "ee60a8383575398cc08503c367513d39814ccc5b87af2d6016a1249271a2b081"
+        "boundary_count": 21,
+        "caption_signature": "95d80cf8dac7b0886fce5c787e5fa0aab2a8c83c4e029fffc085eb7f176c2523"
       }
     },
     {
-      "tts": "배터리 성능(최대 용량 %)과 화면·카메라 상태를 직접 켜서 확인하세요. 사설 수리로 부품이 바뀐 폰은 값이 다릅니다. 정품 여부와 수리 이력까지 물어보고 사는 게 안전합니다.",
+      "tts": "내가 받는 결합할인이 축소·종료 대상인지, 대안 상품(요즘가족결합 등)으로 갈아탈 때 이득인지 따져봐야 합니다. 무작정 유지하거나 옮기기보다 총비용을 비교하는 게 먼저입니다.",
       "caption_body": [
-        "4·5번",
-        "배터리·정품 확인"
+        "대응",
+        "내 결합 점검"
       ],
       "caption_emphasis": [
-        "배터리·정품"
+        "내 결합"
       ],
       "headline_lines": [
         {
-          "text": "4·5번"
+          "text": "대응"
         },
         {
-          "text": "배터리·정품 확인",
+          "text": "내 결합 점검",
           "accent": true
         }
       ],
@@ -428,27 +452,32 @@
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "배터리 성능(최대 용량 %)과 화면·카메라",
-        "상태를 직접 켜서 확인하세요.",
-        "사설 수리로 부품이 바뀐 폰은 값이 다릅니다.",
-        "정품 여부와 수리 이력까지 물어보고 사는 게 안전합니다."
+        "내가 받는 결합할인이 축소·종료 대상인지,",
+        "대안 상품(요즘가족결합 등)으로",
+        "갈아탈 때 이득인지 따져봐야 합니다.",
+        "무작정 유지하거나 옮기기보다 총비용을",
+        "비교하는 게 먼저입니다."
       ],
       "chunk_visuals": [
         {
+          "type": "illust",
+          "value": "store"
+        },
+        {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        {
           "type": "image",
-          "value": "photos/배터리_충전.JPG"
-        },
-        {
-          "type": "illust",
-          "value": "camera_battery_ecd040c7"
-        },
-        {
-          "type": "illust",
-          "value": "event_period_8cafdac4"
-        },
-        {
-          "type": "mascot",
-          "value": "serious"
+          "value": "photos/애플_아이폰_2개.JPG"
         }
       ],
       "stat": {
@@ -458,51 +487,58 @@
       },
       "id": "fact_4",
       "display_chunks": [
-        "배터리 성능(최대 용량 %)과 화면·카메라",
-        "상태를 직접 켜서 확인하세요",
-        "사설 수리로 부품이 바뀐 폰은 값이 다릅니다",
-        "정품 여부와 수리 이력까지 물어보고 사는 게 안전합니다"
+        "내가 받는 결합할인이 축소·종료 대상인지,",
+        "대안 상품(요즘가족결합 등)으로",
+        "갈아탈 때 이득인지 따져봐야 합니다",
+        "무작정 유지하거나 옮기기보다 총비용을",
+        "비교하는 게 먼저입니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
         "compiler": "korean_caption_compiler_v2",
         "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 4
+        "chunk_count": 5
       },
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        2872.06,
-        2118.12,
-        3328.65,
-        3801.18
+        2840.0,
+        2460.0,
+        1840.0,
+        3180.0,
+        1040.0
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 2872.06,
-            "duration_ms": 2872.06
+            "end_ms": 2840.0,
+            "duration_ms": 2840.0
           },
           {
-            "start_ms": 2872.06,
-            "end_ms": 4990.18,
-            "duration_ms": 2118.12
+            "start_ms": 2840.0,
+            "end_ms": 5300.0,
+            "duration_ms": 2460.0
           },
           {
-            "start_ms": 4990.18,
-            "end_ms": 8318.82,
-            "duration_ms": 3328.65
+            "start_ms": 5300.0,
+            "end_ms": 7140.0,
+            "duration_ms": 1840.0
           },
           {
-            "start_ms": 8318.82,
-            "end_ms": 12120.0,
-            "duration_ms": 3801.18
+            "start_ms": 7140.0,
+            "end_ms": 10320.0,
+            "duration_ms": 3180.0
+          },
+          {
+            "start_ms": 10320.0,
+            "end_ms": 11360.0,
+            "duration_ms": 1040.0
           }
         ],
-        "boundary_count": 26,
-        "caption_signature": "34c5092459232ea9203eb7d7841385742a5e3260aad339d517be969bbf1680ad"
+        "boundary_count": 25,
+        "caption_signature": "da5d2e5b34b10ecc4e9af21b10de3e6a7840a1184acd66fb6c0be68986f90d72"
       }
     }
   ],
@@ -564,21 +600,21 @@
     "_codex_fixed_cta": true,
     "_codex_narration_source": "fixed_cta_contract",
     "tts_chunk_weights": [
-      1066.67,
-      1953.33
+      1080.0,
+      1960.0
     ],
     "_tts_timing": {
       "mode": "word_boundary_text_align",
       "windows": [
         {
           "start_ms": 0.0,
-          "end_ms": 1066.67,
-          "duration_ms": 1066.67
+          "end_ms": 1080.0,
+          "duration_ms": 1080.0
         },
         {
-          "start_ms": 1066.67,
-          "end_ms": 3020.0,
-          "duration_ms": 1953.33
+          "start_ms": 1080.0,
+          "end_ms": 3040.0,
+          "duration_ms": 1960.0
         }
       ],
       "boundary_count": 6,
@@ -587,7 +623,7 @@
   },
   "_auto_generated": true,
   "_chunk_logic_v2": true,
-  "_source_hash": "7eae4acec09450b6980bc595a48ccb870fec9a87",
+  "_source_hash": "e9257339630ecc6b3582a2a4c8f6a8fdf10f5555",
   "_note": "build_script.py 자동 생성 (v2 로직): 시퀀스 내 이미지 순환 + 마스코트 짝수 시퀀스만.",
   "_codex_global_999_quality": true,
   "_codex_common_quality_logic": true,
@@ -600,6 +636,20 @@
     "changes": [
       {
         "section": "hook",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "image",
+          "value": "photos/알뜰폰_로고.JPG"
+        },
+        "context": "가족 회선을 묶어 통신비를 아끼던 결합할인이 줄어들고 있습니다 가족끼리 묶으면 할인? 이제 옛말 ['가족끼리 묶으면 할인?', '이제 옛말'] 뉴스",
+        "reason": "photo lexical dist=1 gen=0: 알뜰폰_로고.JPG"
+      },
+      {
+        "section": "hook",
         "chunk": 2,
         "from": {
           "type": "illust",
@@ -607,10 +657,24 @@
         },
         "to": {
           "type": "illust",
-          "value": "phone_setup_ready"
+          "value": "chart_down"
         },
-        "context": "중고폰은 잘 사면 이득이지만, 확인 안 하면 큰돈 날립니다 개통조차 안 되는 폰을 사는 경우도 있습니다 사기 전에 이 다섯 가지만 확인하면 안전합니다 중고폰 싸게 샀다 호구 되는 5가지 ['중고폰 싸게 샀다', '호",
-        "reason": "neutral filler (no semantic match)"
+        "context": "가족 회선을 묶어 통신비를 아끼던 결합할인이 줄어들고 있습니다 통신3사가 장기 결합할인을 손보기 시작했습니다 가족끼리 묶으면 할인? 이제 옛말 ['가족끼리 묶으면 할인?', '이제 옛말'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "hook",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appear_e5f828cc"
+        },
+        "to": {
+          "type": "illust",
+          "value": "gift_voucher"
+        },
+        "context": "결합할인이 줄어들고 있습니다 통신3사가 장기 결합할인을 손보기 시작했습니다 내 할인이 사라지는 건 아닌지 확인이 필요합니다 가족끼리 묶으면 할인? 이제 옛말 ['가족끼리 묶으면 할인?', '이제 옛말'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
       },
       {
         "section": "fact_1",
@@ -621,10 +685,10 @@
         },
         "to": {
           "type": "image",
-          "value": "photos/아이폰_실물.jpg"
+          "value": "photos/SKT_로고.png"
         },
-        "context": "아이폰의 '나의 찾기', 갤럭시의 계정 잠금이 걸려 있으면 그 폰은 못 씁니다 1번 잠금 해제 확인 ['1번', '잠금 해제 확인'] 뉴스",
-        "reason": "photo lexical dist=2 gen=0: 아이폰_실물.jpg"
+        "context": "SKT는 최대 55% 온가족할인과 T+인터넷 결합의 신규 가입을 7월 말까지만 받고 중단합니다 무슨 일 신규 가입 중단 ['무슨 일', '신규 가입 중단'] 뉴스",
+        "reason": "photo lexical dist=1 gen=0: SKT_로고.png"
       },
       {
         "section": "fact_1",
@@ -634,11 +698,11 @@
           "value": "aluminum_label"
         },
         "to": {
-          "type": "image",
-          "value": "photos/갤럭시z플립7_z폴드7.JPG"
+          "type": "illust",
+          "value": "event_period_8cafdac4"
         },
-        "context": "아이폰의 '나의 찾기', 갤럭시의 계정 잠금이 걸려 있으면 그 폰은 못 씁니다 판매자 계정이 완전히 로그아웃·해제됐는지 1번 잠금 해제 확인 ['1번', '잠금 해제 확인'] 뉴스",
-        "reason": "photo lexical dist=2 gen=0: 갤럭시z플립7_z폴드7.JPG"
+        "context": "SKT는 최대 55% 온가족할인과 T+인터넷 결합의 신규 가입을 7월 말까지만 받고 중단합니다 KT·LG유플러스도 오래된 결합상품의 무슨 일 신규 가입 중단 ['무슨 일', '신규 가입 중단'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
       },
       {
         "section": "fact_1",
@@ -648,11 +712,11 @@
           "value": "appear_e5f828cc"
         },
         "to": {
-          "type": "illust",
-          "value": "lock"
+          "type": "image",
+          "value": "photos/lgu로고.png"
         },
-        "context": "갤럭시의 계정 잠금이 걸려 있으면 그 폰은 못 씁니다 판매자 계정이 완전히 로그아웃·해제됐는지 반드시 확인하세요 1번 잠금 해제 확인 ['1번', '잠금 해제 확인'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
+        "context": "결합의 신규 가입을 7월 말까지만 받고 중단합니다 KT·LG유플러스도 오래된 결합상품의 신규 가입을 정리하는 흐름입니다 무슨 일 신규 가입 중단 ['무슨 일', '신규 가입 중단'] 뉴스",
+        "reason": "photo lexical dist=1 gen=0: lgu로고.png"
       },
       {
         "section": "fact_1",
@@ -663,9 +727,9 @@
         },
         "to": {
           "type": "illust",
-          "value": "lock_screen_only_e80c4860"
+          "value": "display_maintenance_c1ff39c1"
         },
-        "context": "판매자 계정이 완전히 로그아웃·해제됐는지 반드시 확인하세요 초기화만으론 안 풀리는 경우가 있습니다 1번 잠금 해제 확인 ['1번', '잠금 해제 확인'] 뉴스",
+        "context": "KT·LG유플러스도 오래된 결합상품의 신규 가입을 정리하는 흐름입니다 이미 쓰는 사람은 유지되지만 새로 드는 건 막힙니다 무슨 일 신규 가입 중단 ['무슨 일', '신규 가입 중단'] 뉴스",
         "reason": "illust score 12 (content n/a)"
       },
       {
@@ -677,9 +741,9 @@
         },
         "to": {
           "type": "illust",
-          "value": "reset"
+          "value": "document_article"
         },
-        "context": "반드시 확인하세요 초기화만으론 안 풀리는 경우가 있습니다 1번 잠금 해제 확인 ['1번', '잠금 해제 확인'] 뉴스",
+        "context": "신규 가입을 정리하는 흐름입니다 이미 쓰는 사람은 유지되지만 새로 드는 건 막힙니다 무슨 일 신규 가입 중단 ['무슨 일', '신규 가입 중단'] 뉴스",
         "reason": "illust score 12 (content n/a)"
       },
       {
@@ -691,10 +755,10 @@
         },
         "to": {
           "type": "illust",
-          "value": "mystery_number_63279925"
+          "value": "samsung_ai"
         },
-        "context": "분실·도난 신고된 폰은 개통이 막힙니다 IMEI(고유번호)를 통신사나 조회 2번 분실·도난폰 여부 ['2번', '분실·도난폰 여부'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
+        "context": "AI 투자 확대와 해킹 사고 수습으로 통신사 비용 부담이 커졌습니다 왜 장기할인 손보나 ['왜', '장기할인 손보나'] 뉴스",
+        "reason": "illust score 15 (content n/a)"
       },
       {
         "section": "fact_2",
@@ -704,11 +768,11 @@
           "value": "aluminum_label"
         },
         "to": {
-          "type": "image",
-          "value": "photos/알뜰폰_로고.JPG"
+          "type": "illust",
+          "value": "smartphone"
         },
-        "context": "분실·도난 신고된 폰은 개통이 막힙니다 IMEI(고유번호)를 통신사나 조회 서비스로 확인해 정상 단말인지 봐야 합니다 2번 분실·도난폰 여부 ['2번', '분실·도난폰 여부'] 뉴스",
-        "reason": "photo lexical dist=1 gen=0: 알뜰폰_로고.JPG"
+        "context": "AI 투자 확대와 해킹 사고 수습으로 통신사 비용 부담이 커졌습니다 수익성이 낮은 장기 고객 할인 제도를 왜 장기할인 손보나 ['왜', '장기할인 손보나'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
       },
       {
         "section": "fact_2",
@@ -719,9 +783,23 @@
         },
         "to": {
           "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "수습으로 통신사 비용 부담이 커졌습니다 수익성이 낮은 장기 고객 할인 제도를 정비하는 것으로 업계는 봅니다 왜 장기할인 손보나 ['왜', '장기할인 손보나'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_2",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "apple_70385068"
+        },
+        "to": {
+          "type": "illust",
           "value": "phone_settings_toggle"
         },
-        "context": "IMEI(고유번호)를 통신사나 조회 서비스로 확인해 정상 단말인지 봐야 합니다 싸다고 덜컥 샀다가 개통 정지된 벽돌폰을 받을 수 있습니다 2번 분실·도난폰 여부 ['2번', '분실·도난폰 여부'] 뉴스",
+        "context": "수익성이 낮은 장기 고객 할인 제도를 정비하는 것으로 업계는 봅니다 소비자 입장에선 혜택이 줄어드는 셈입니다 왜 장기할인 손보나 ['왜', '장기할인 손보나'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
@@ -733,9 +811,9 @@
         },
         "to": {
           "type": "illust",
-          "value": "nfc_pay"
+          "value": "budget_choice_42fbdd85"
         },
-        "context": "이전 주인의 할부가 남아 있거나 소액결제·약정이 걸린 폰일 수 있습니다 3번 잔여 할부·소액결제 ['3번', '잔여 할부·소액결제'] 뉴스",
+        "context": "할인을 위해 온 가족 통신사를 하나로 맞춰 온 사람들이 특히 반발합니다 영향 장기고객 불만 ['영향', '장기고객 불만'] 뉴스",
         "reason": "illust score 12 (content n/a)"
       },
       {
@@ -749,7 +827,7 @@
           "type": "illust",
           "value": "device_os_requirement"
         },
-        "context": "이전 주인의 할부가 남아 있거나 소액결제·약정이 걸린 폰일 수 있습니다 할부가 끝난 '완납' 단말인지 확인하세요 3번 잔여 할부·소액결제 ['3번', '잔여 할부·소액결제'] 뉴스",
+        "context": "할인을 위해 온 가족 통신사를 하나로 맞춰 온 사람들이 특히 반발합니다 이제는 통신사를 유지할 이유가 줄었다며 영향 장기고객 불만 ['영향', '장기고객 불만'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
@@ -761,10 +839,10 @@
         },
         "to": {
           "type": "illust",
-          "value": "device_data_transfer"
+          "value": "meeting_room"
         },
-        "context": "소액결제·약정이 걸린 폰일 수 있습니다 할부가 끝난 '완납' 단말인지 확인하세요 남은 할부가 있으면 나중에 문제가 생길 수 있습니다 3번 잔여 할부·소액결제 ['3번', '잔여 할부·소액결제'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
+        "context": "온 사람들이 특히 반발합니다 이제는 통신사를 유지할 이유가 줄었다며 알뜰폰이나 경쟁사 이동을 검토하는 목소리도 나옵니다 영향 장기고객 불만 ['영향', '장기고객 불만'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
       },
       {
         "section": "fact_3",
@@ -775,9 +853,9 @@
         },
         "to": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "device_data_transfer"
         },
-        "context": "할부가 끝난 '완납' 단말인지 확인하세요 남은 할부가 있으면 나중에 문제가 생길 수 있습니다 3번 잔여 할부·소액결제 ['3번', '잔여 할부·소액결제'] 뉴스",
+        "context": "이제는 통신사를 유지할 이유가 줄었다며 알뜰폰이나 경쟁사 이동을 검토하는 목소리도 나옵니다 영향 장기고객 불만 ['영향', '장기고객 불만'] 뉴스",
         "reason": "neutral filler (no semantic match)"
       },
       {
@@ -788,11 +866,11 @@
           "value": "smartphone"
         },
         "to": {
-          "type": "image",
-          "value": "photos/배터리_충전.JPG"
+          "type": "illust",
+          "value": "store"
         },
-        "context": "배터리 성능(최대 용량 %)과 화면·카메라 상태를 직접 켜서 확인하세요 4·5번 배터리·정품 확인 ['4·5번', '배터리·정품 확인'] 뉴스",
-        "reason": "photo lexical dist=3 gen=0: 배터리_충전.JPG"
+        "context": "내가 받는 결합할인이 축소·종료 대상인지, 대안 상품(요즘가족결합 등)으로 대응 내 결합 점검 ['대응', '내 결합 점검'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
       },
       {
         "section": "fact_4",
@@ -803,10 +881,10 @@
         },
         "to": {
           "type": "illust",
-          "value": "camera_battery_ecd040c7"
+          "value": "smartphone"
         },
-        "context": "배터리 성능(최대 용량 %)과 화면·카메라 상태를 직접 켜서 확인하세요 사설 수리로 부품이 바뀐 폰은 값이 다릅니다 4·5번 배터리·정품 확인 ['4·5번', '배터리·정품 확인'] 뉴스",
-        "reason": "illust score 24 (content n/a)"
+        "context": "내가 받는 결합할인이 축소·종료 대상인지, 대안 상품(요즘가족결합 등)으로 갈아탈 때 이득인지 따져봐야 합니다 대응 내 결합 점검 ['대응', '내 결합 점검'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
       },
       {
         "section": "fact_4",
@@ -817,43 +895,49 @@
         },
         "to": {
           "type": "illust",
-          "value": "event_period_8cafdac4"
+          "value": "phone_setup_ready"
         },
-        "context": "상태를 직접 켜서 확인하세요 사설 수리로 부품이 바뀐 폰은 값이 다릅니다 정품 여부와 수리 이력까지 물어보고 사는 게 안전합니다 4·5번 배터리·정품 확인 ['4·5번', '배터리·정품 확인'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
+        "context": "대안 상품(요즘가족결합 등)으로 갈아탈 때 이득인지 따져봐야 합니다 무작정 유지하거나 옮기기보다 총비용을 대응 내 결합 점검 ['대응', '내 결합 점검'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "apple_70385068"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "갈아탈 때 이득인지 따져봐야 합니다 무작정 유지하거나 옮기기보다 총비용을 비교하는 게 먼저입니다 대응 내 결합 점검 ['대응', '내 결합 점검'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 5,
+        "from": {
+          "type": "mascot",
+          "value": "serious"
+        },
+        "to": {
+          "type": "image",
+          "value": "photos/애플_아이폰_2개.JPG"
+        },
+        "context": "무작정 유지하거나 옮기기보다 총비용을 비교하는 게 먼저입니다 대응 내 결합 점검 ['대응', '내 결합 점검'] 뉴스",
+        "reason": "photo lexical dist=1 gen=0: 애플_아이폰_2개.JPG"
       }
     ],
     "weak": [
       {
         "section": "hook",
-        "chunk": 1,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "중고폰은 잘 사면 이득이지만, 확인 안 하면 큰돈 날립니다 개통조차 안 되는 폰을 사는 경우도 있습니다 중고폰 싸게 샀다 호구 되는 5가지 ['중고폰 싸게 샀다', '호구 되는 5가지'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "hook",
-        "chunk": 2,
-        "current": {
-          "type": "illust",
-          "value": "phone_setup_ready"
-        },
-        "context": "중고폰은 잘 사면 이득이지만, 확인 안 하면 큰돈 날립니다 개통조차 안 되는 폰을 사는 경우도 있습니다 사기 전에 이 다섯 가지만 확인하면 안전합니다 중고폰 싸게 샀다 호구 되는 5가지 ['중고폰 싸게 샀다', '호구 되는 5가지'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "hook",
-        "chunk": 3,
+        "chunk": 4,
         "current": {
           "type": "mascot",
           "value": "surprised"
         },
-        "context": "개통조차 안 되는 폰을 사는 경우도 있습니다 사기 전에 이 다섯 가지만 확인하면 안전합니다 중고폰 싸게 샀다 호구 되는 5가지 ['중고폰 싸게 샀다', '호구 되는 5가지'] 뉴스",
+        "context": "통신3사가 장기 결합할인을 손보기 시작했습니다 내 할인이 사라지는 건 아닌지 확인이 필요합니다 가족끼리 묶으면 할인? 이제 옛말 ['가족끼리 묶으면 할인?', '이제 옛말'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       },
@@ -861,21 +945,21 @@
         "section": "fact_2",
         "chunk": 2,
         "current": {
-          "type": "image",
-          "value": "photos/알뜰폰_로고.JPG"
+          "type": "illust",
+          "value": "smartphone"
         },
-        "context": "분실·도난 신고된 폰은 개통이 막힙니다 IMEI(고유번호)를 통신사나 조회 서비스로 확인해 정상 단말인지 봐야 합니다 2번 분실·도난폰 여부 ['2번', '분실·도난폰 여부'] 뉴스",
+        "context": "AI 투자 확대와 해킹 사고 수습으로 통신사 비용 부담이 커졌습니다 수익성이 낮은 장기 고객 할인 제도를 왜 장기할인 손보나 ['왜', '장기할인 손보나'] 뉴스",
         "best_image_score": 0,
-        "best_illust_score": 0
+        "best_illust_score": 3
       },
       {
         "section": "fact_2",
         "chunk": 3,
         "current": {
           "type": "illust",
-          "value": "phone_settings_toggle"
+          "value": "phone_setup_ready"
         },
-        "context": "IMEI(고유번호)를 통신사나 조회 서비스로 확인해 정상 단말인지 봐야 합니다 싸다고 덜컥 샀다가 개통 정지된 벽돌폰을 받을 수 있습니다 2번 분실·도난폰 여부 ['2번', '분실·도난폰 여부'] 뉴스",
+        "context": "수습으로 통신사 비용 부담이 커졌습니다 수익성이 낮은 장기 고객 할인 제도를 정비하는 것으로 업계는 봅니다 왜 장기할인 손보나 ['왜', '장기할인 손보나'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       },
@@ -883,10 +967,21 @@
         "section": "fact_2",
         "chunk": 4,
         "current": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "수익성이 낮은 장기 고객 할인 제도를 정비하는 것으로 업계는 봅니다 소비자 입장에선 혜택이 줄어드는 셈입니다 왜 장기할인 손보나 ['왜', '장기할인 손보나'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_2",
+        "chunk": 5,
+        "current": {
           "type": "mascot",
           "value": "suspicious"
         },
-        "context": "서비스로 확인해 정상 단말인지 봐야 합니다 싸다고 덜컥 샀다가 개통 정지된 벽돌폰을 받을 수 있습니다 2번 분실·도난폰 여부 ['2번', '분실·도난폰 여부'] 뉴스",
+        "context": "정비하는 것으로 업계는 봅니다 소비자 입장에선 혜택이 줄어드는 셈입니다 왜 장기할인 손보나 ['왜', '장기할인 손보나'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       },
@@ -897,18 +992,7 @@
           "type": "illust",
           "value": "device_os_requirement"
         },
-        "context": "이전 주인의 할부가 남아 있거나 소액결제·약정이 걸린 폰일 수 있습니다 할부가 끝난 '완납' 단말인지 확인하세요 3번 잔여 할부·소액결제 ['3번', '잔여 할부·소액결제'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_3",
-        "chunk": 3,
-        "current": {
-          "type": "illust",
-          "value": "device_data_transfer"
-        },
-        "context": "소액결제·약정이 걸린 폰일 수 있습니다 할부가 끝난 '완납' 단말인지 확인하세요 남은 할부가 있으면 나중에 문제가 생길 수 있습니다 3번 잔여 할부·소액결제 ['3번', '잔여 할부·소액결제'] 뉴스",
+        "context": "할인을 위해 온 가족 통신사를 하나로 맞춰 온 사람들이 특히 반발합니다 이제는 통신사를 유지할 이유가 줄었다며 영향 장기고객 불만 ['영향', '장기고객 불만'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       },
@@ -917,9 +1001,31 @@
         "chunk": 4,
         "current": {
           "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "이제는 통신사를 유지할 이유가 줄었다며 알뜰폰이나 경쟁사 이동을 검토하는 목소리도 나옵니다 영향 장기고객 불만 ['영향', '장기고객 불만'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_4",
+        "chunk": 2,
+        "current": {
+          "type": "illust",
           "value": "smartphone"
         },
-        "context": "할부가 끝난 '완납' 단말인지 확인하세요 남은 할부가 있으면 나중에 문제가 생길 수 있습니다 3번 잔여 할부·소액결제 ['3번', '잔여 할부·소액결제'] 뉴스",
+        "context": "내가 받는 결합할인이 축소·종료 대상인지, 대안 상품(요즘가족결합 등)으로 갈아탈 때 이득인지 따져봐야 합니다 대응 내 결합 점검 ['대응', '내 결합 점검'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_4",
+        "chunk": 3,
+        "current": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "대안 상품(요즘가족결합 등)으로 갈아탈 때 이득인지 따져봐야 합니다 무작정 유지하거나 옮기기보다 총비용을 대응 내 결합 점검 ['대응', '내 결합 점검'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       },
@@ -927,10 +1033,21 @@
         "section": "fact_4",
         "chunk": 4,
         "current": {
-          "type": "mascot",
-          "value": "serious"
+          "type": "illust",
+          "value": "phone_settings_toggle"
         },
-        "context": "사설 수리로 부품이 바뀐 폰은 값이 다릅니다 정품 여부와 수리 이력까지 물어보고 사는 게 안전합니다 4·5번 배터리·정품 확인 ['4·5번', '배터리·정품 확인'] 뉴스",
+        "context": "갈아탈 때 이득인지 따져봐야 합니다 무작정 유지하거나 옮기기보다 총비용을 비교하는 게 먼저입니다 대응 내 결합 점검 ['대응', '내 결합 점검'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_4",
+        "chunk": 5,
+        "current": {
+          "type": "image",
+          "value": "photos/애플_아이폰_2개.JPG"
+        },
+        "context": "무작정 유지하거나 옮기기보다 총비용을 비교하는 게 먼저입니다 대응 내 결합 점검 ['대응', '내 결합 점검'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       }
@@ -938,8 +1055,8 @@
   },
   "_codex_effective_script": {
     "version": 2,
-    "slug": "049_qa_used_phone_buying_check",
-    "source": "C:\\backup\\phonespot_cardnews\\cardnews\\output\\049_qa_used_phone_buying_check\\shorts_script.json",
+    "slug": "051_news_combined_discount_cut",
+    "source": "C:\\backup\\phonespot_cardnews\\cardnews\\output\\051_news_combined_discount_cut\\shorts_script.json",
     "override_applied": false,
     "override_sections": []
   }
