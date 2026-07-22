@@ -327,6 +327,18 @@ function fetchGA4Backfill() {
   importGA4('30daysAgo', 'yesterday', true);
 }
 
+// ──[GA4 유틸]── 이벤트명 정규화 (멀티브랜드, 2026-07-22)
+//   KT는 카톡클릭 이벤트명이 'chat_click', 폰스팟은 'kakao_chat_click' → 소비 수식은 'kakao_chat_click'만 봄.
+//   수집단에서 통일(폰스팟엔 'chat_click' 없어 무영향). 소비 수식·컬럼은 안 건드림 = 무회귀.
+//   추가 별칭 필요 시 _설정 'KAKAO_EVENT_ALIASES'(콤마 구분)로 확장.
+function normalizeGA4Event_(ev) {
+  var e = String(ev == null ? '' : ev);
+  var aliases = String(getBrandConfig_('KAKAO_EVENT_ALIASES', 'chat_click'))
+    .split(',').map(function (x) { return x.trim(); }).filter(Boolean);
+  if (aliases.indexOf(e) >= 0) return 'kakao_chat_click';
+  return e;
+}
+
 // ──[일상]── GA4 Data API 호출 → GA4_자동 시트 적재
 function importGA4(startDate, endDate, clearAll) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -368,7 +380,7 @@ function importGA4(startDate, endDate, clearAll) {
     row.dimensionValues[1].value,
     row.dimensionValues[2].value,
     row.dimensionValues[3].value,
-    row.dimensionValues[4].value,
+    normalizeGA4Event_(row.dimensionValues[4].value),
     parseInt(row.metricValues[0].value),
     parseInt(row.metricValues[1].value),
     parseInt(row.metricValues[2].value)

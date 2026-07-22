@@ -83,7 +83,7 @@ function fetchPageFunnel() {
   rows.forEach(function (r) {
     var d = r.dimensionValues[0].value;
     var lp = r.dimensionValues[1].value;
-    var ev = r.dimensionValues[2].value;
+    var ev = (typeof normalizeGA4Event_ === 'function') ? normalizeGA4Event_(r.dimensionValues[2].value) : r.dimensionValues[2].value;
     var ec = parseInt(r.metricValues[0].value, 10) || 0;
     var ssn = parseInt(r.metricValues[1].value, 10) || 0;
     var bkt = pf_classify_(lp, bk);
