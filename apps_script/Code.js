@@ -882,10 +882,11 @@ function buildDashboardV2() {
   dash.getRange('K2').setValue('📅 기간:').setFontColor(C_LABEL).setFontSize(9).setFontWeight('bold').setHorizontalAlignment('right');
   const gdd = dash.getRange('L2');
   gdd.setBackground('#FFF59D').setFontWeight('bold').setHorizontalAlignment('center')
-    .setDataValidation(SpreadsheetApp.newDataValidation().requireValueInList(['어제', '최근 3일', '최근 7일', '최근 14일', '최근 30일'], true).setAllowInvalid(false).build());
+    .setDataValidation(SpreadsheetApp.newDataValidation().requireValueInList(['어제', '최근 3일', '최근 7일', '최근 14일', '최근 30일', '이번달', '지난달'], true).setAllowInvalid(false).build());
   if (gdd.getValue() === '') gdd.setValue('최근 30일');
-  dash.getRange('N2').setFormula('=IF($L$2="어제",TODAY()-1,IF($L$2="최근 3일",TODAY()-2,IF($L$2="최근 7일",TODAY()-6,IF($L$2="최근 14일",TODAY()-13,TODAY()-29))))').setNumberFormat('m/d').setFontColor('#BBBBBB');
-  dash.getRange('O2').setFormula('=IF($L$2="어제",TODAY()-1,TODAY())').setNumberFormat('m/d').setFontColor('#BBBBBB');
+  // N2=시작일 / O2=종료일. 이번달=1일~오늘(진행중), 지난달=전월 1일~말일.
+  dash.getRange('N2').setFormula('=IFS($L$2="어제",TODAY()-1,$L$2="최근 3일",TODAY()-2,$L$2="최근 7일",TODAY()-6,$L$2="최근 14일",TODAY()-13,$L$2="최근 30일",TODAY()-29,$L$2="이번달",DATE(YEAR(TODAY()),MONTH(TODAY()),1),$L$2="지난달",DATE(YEAR(TODAY()),MONTH(TODAY())-1,1),TRUE,TODAY()-29)').setNumberFormat('m/d').setFontColor('#BBBBBB');
+  dash.getRange('O2').setFormula('=IFS($L$2="어제",TODAY()-1,$L$2="지난달",EOMONTH(TODAY(),-1),TRUE,TODAY())').setNumberFormat('m/d').setFontColor('#BBBBBB');
 
   const trackedInqG = `(${countInqFx(GS, GE)}-${countInqFx(GS, GE, ",'문의접수'!D:D,\"불확실\"")}-${countInqFx(GS, GE, ",'문의접수'!D:D,\"\"")})`;
   const inqG = countInqFx(GS, GE);
@@ -1161,14 +1162,35 @@ function buildDashboardV2() {
   dash.getRange(24, RCOL, 1, 6).merge().setValue('※ GA4 랜딩 행동(사이트 전체, 대부분 리틀리). 방문=세션 / 가격확인=시티마켓도착 / 카톡=카톡클릭.')
     .setFontColor('#AAAAAA').setFontStyle('italic').setFontSize(9).setHorizontalAlignment('left');
 
-  // ── 푸터 — 38행 (실적매칭 섹션 추가로 아래 이동) ──
-  const footerRow = 38;
-  const stamp = Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyy-MM-dd HH:mm');
-  dash.getRange(footerRow, 1, 1, 6).merge()
-    .setValue('🕐 마지막 업데이트: ' + stamp + '  ·  기간 변경 = 상단 L2 드롭다운(전체 반영)')
+  // ── 9L) 월별 핵심 (달력 기준) — 헤더 40 / 컬럼헤더 41 / 데이터 42~47 (최근 6개월, 최신월 위) ──
+  //   기간별 핵심과 같은 지표(광고비/문의/개통/CPL/순이익)를 달력월(1일~말일)로. 상단 L2와 무관(고정 참조표).
+  const MONTHS_BACK = 6;
+  sectionHeader(40, '월별 핵심 (달력 기준)', LCOL);
+  colHeader(41, ['월', '광고비', '문의', '개통', 'CPL', '순이익'], LCOL);
+  const moStart = 42;
+  for (var mi = 0; mi < MONTHS_BACK; mi++) {
+    var mr = moStart + mi;
+    var mS = `EDATE(DATE(YEAR(TODAY()),MONTH(TODAY()),1),-${mi})`;   // 해당 월 1일
+    var mE = `EOMONTH(${mS},0)`;                                    // 해당 월 말일
+    dash.getRange(mr, 1).setFormula(`=TEXT(${mS},"yyyy-mm")`);
+    dash.getRange(mr, 2).setFormula(`=${sumPaidFx(mS, mE)}`).setNumberFormat(F_WON);
+    dash.getRange(mr, 3).setFormula(`=${countInqFx(mS, mE)}`).setNumberFormat('#,##0"건"');
+    dash.getRange(mr, 4).setFormula(`=${countInqFx(mS, mE, ",'문의접수'!C:C,\"개통\"")}`).setNumberFormat('#,##0"건"');
+    dash.getRange(mr, 5).setFormula(`=IFERROR(B${mr}/C${mr},"-")`).setNumberFormat(F_WON);
+    dash.getRange(mr, 6).setFormula(`=IF($C$3="","-",D${mr}*$C$3-B${mr})`).setNumberFormat(F_WON);   // 순이익=개통×마진-광고비
+  }
+  dataBox(moStart, MONTHS_BACK, 6, LCOL);   // 42~47
+  dash.getRange(48, 1, 1, 6).merge().setValue('※ 달력월 기준(1일~말일). 맨 위=이번달(오늘까지 진행중). 데이터 쌓이면 이전 달 자동 채워짐.')
     .setFontColor('#AAAAAA').setFontStyle('italic').setFontSize(9).setHorizontalAlignment('left');
 
-  const hideFrom = footerRow + 1;   // 24
+  // ── 푸터 — 50행 (월별 핵심 섹션 추가로 아래 이동) ──
+  const footerRow = 50;
+  const stamp = Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyy-MM-dd HH:mm');
+  dash.getRange(footerRow, 1, 1, 6).merge()
+    .setValue('🕐 마지막 업데이트: ' + stamp + '  ·  기간 = 상단 L2(이번달·지난달 포함) / 월별 핵심 = 40행')
+    .setFontColor('#AAAAAA').setFontStyle('italic').setFontSize(9).setHorizontalAlignment('left');
+
+  const hideFrom = footerRow + 1;   // 51
   if (hideFrom <= 59) { try { dash.hideRows(hideFrom, 59 - hideFrom + 1); } catch (e) {} }
 
   // 광고그룹 추이 자동복구 가드
@@ -1194,14 +1216,14 @@ function buildDashboardV2() {
     keep.push(SpreadsheetApp.newConditionalFormatRule().whenNumberLessThan(0)
       .setFontColor('#9F1A1A').setRanges([dash.getRange('K12:K17')]).build());
     keep.push(SpreadsheetApp.newConditionalFormatRule().whenNumberLessThan(0)
-      .setFontColor('#9F1A1A').setRanges([dash.getRange('F3'), dash.getRange('F6:F8')]).build());
+      .setFontColor('#9F1A1A').setRanges([dash.getRange('F3'), dash.getRange('F6:F8'), dash.getRange('F42:F47')]).build());
     keep.push(SpreadsheetApp.newConditionalFormatRule().whenNumberGreaterThan(0)
-      .setFontColor('#1D7A4D').setRanges([dash.getRange('F3'), dash.getRange('F6:F8')]).build());
+      .setFontColor('#1D7A4D').setRanges([dash.getRange('F3'), dash.getRange('F6:F8'), dash.getRange('F42:F47')]).build());
     dash.setConditionalFormatRules(keep);
   } catch (e) { Logger.log('조건부서식: ' + e.message); }
 
   try {
-    SpreadsheetApp.getUi().alert('✅ 통합대시보드 V2 빌드 완료 (2열 가로 레이아웃)\n· 1~2행 요약 스트립(고정)\n· 좌: 기간별 핵심 / 채널별 효율 / 리틀리\n· 우: SNS / 실비용 대조 / 리틀리 퍼널 / 카톡 현황\n· 60행 이후 = 광고그룹 추이 영역(미변경)');
+    SpreadsheetApp.getUi().alert('✅ 통합대시보드 V2 빌드 완료 (2열 가로 레이아웃)\n· 1~2행 요약 스트립(고정) · 상단 L2 기간에 이번달/지난달 추가\n· 좌: 기간별 핵심 / 채널별 효율 / 리틀리 / 실적매칭 / 월별 핵심(40행)\n· 우: SNS / 실비용 대조 / 리틀리 퍼널 / 카톡 현황\n· 60행 이후 = 광고그룹 추이 영역(미변경)');
   } catch (e) {}
 
   if (typeof logSync_ === 'function') { try { logSync_('buildDashboardV2', '대시보드 V2 빌드 (2열)'); } catch (e) {} }
