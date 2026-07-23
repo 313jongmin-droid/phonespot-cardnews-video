@@ -882,11 +882,17 @@ function buildDashboardV2() {
   dash.getRange('K2').setValue('📅 기간:').setFontColor(C_LABEL).setFontSize(9).setFontWeight('bold').setHorizontalAlignment('right');
   const gdd = dash.getRange('L2');
   gdd.setBackground('#FFF59D').setFontWeight('bold').setHorizontalAlignment('center')
-    .setDataValidation(SpreadsheetApp.newDataValidation().requireValueInList(['어제', '최근 3일', '최근 7일', '최근 14일', '최근 30일', '이번달', '지난달'], true).setAllowInvalid(false).build());
+    .setDataValidation(SpreadsheetApp.newDataValidation().requireValueInList(['어제', '최근 3일', '최근 7일', '최근 14일', '최근 30일', '이번달', '지난달', '특정월'], true).setAllowInvalid(false).build());
   if (gdd.getValue() === '') gdd.setValue('최근 30일');
-  // N2=시작일 / O2=종료일. 이번달=1일~오늘(진행중), 지난달=전월 1일~말일.
-  dash.getRange('N2').setFormula('=IFS($L$2="어제",TODAY()-1,$L$2="최근 3일",TODAY()-2,$L$2="최근 7일",TODAY()-6,$L$2="최근 14일",TODAY()-13,$L$2="최근 30일",TODAY()-29,$L$2="이번달",DATE(YEAR(TODAY()),MONTH(TODAY()),1),$L$2="지난달",DATE(YEAR(TODAY()),MONTH(TODAY())-1,1),TRUE,TODAY()-29)').setNumberFormat('m/d').setFontColor('#BBBBBB');
-  dash.getRange('O2').setFormula('=IFS($L$2="어제",TODAY()-1,$L$2="지난달",EOMONTH(TODAY(),-1),TRUE,TODAY())').setNumberFormat('m/d').setFontColor('#BBBBBB');
+  // M2 = 특정월 선택(1~12, 당해년도). L2="특정월"일 때만 사용. 라벨 M1.
+  dash.getRange('M1').setValue('월지정').setFontColor(C_LABEL).setFontSize(9).setFontWeight('bold').setHorizontalAlignment('center');
+  const mdd = dash.getRange('M2');
+  mdd.setBackground('#FFF59D').setFontWeight('bold').setHorizontalAlignment('center').setNumberFormat('0"월"')
+    .setDataValidation(SpreadsheetApp.newDataValidation().requireValueInList([1,2,3,4,5,6,7,8,9,10,11,12], true).setAllowInvalid(false).build());
+  if (mdd.getValue() === '') mdd.setValue(new Date().getMonth() + 1);
+  // N2=시작일 / O2=종료일. 이번달=1일~오늘(진행중), 지난달=전월 1일~말일, 특정월=M2월 1일~말일(당월이면 오늘까지).
+  dash.getRange('N2').setFormula('=IFS($L$2="어제",TODAY()-1,$L$2="최근 3일",TODAY()-2,$L$2="최근 7일",TODAY()-6,$L$2="최근 14일",TODAY()-13,$L$2="최근 30일",TODAY()-29,$L$2="이번달",DATE(YEAR(TODAY()),MONTH(TODAY()),1),$L$2="지난달",DATE(YEAR(TODAY()),MONTH(TODAY())-1,1),$L$2="특정월",DATE(YEAR(TODAY()),$M$2,1),TRUE,TODAY()-29)').setNumberFormat('m/d').setFontColor('#BBBBBB');
+  dash.getRange('O2').setFormula('=IFS($L$2="어제",TODAY()-1,$L$2="지난달",EOMONTH(TODAY(),-1),$L$2="특정월",MIN(EOMONTH(DATE(YEAR(TODAY()),$M$2,1),0),TODAY()),TRUE,TODAY())').setNumberFormat('m/d').setFontColor('#BBBBBB');
 
   const trackedInqG = `(${countInqFx(GS, GE)}-${countInqFx(GS, GE, ",'문의접수'!D:D,\"불확실\"")}-${countInqFx(GS, GE, ",'문의접수'!D:D,\"\"")})`;
   const inqG = countInqFx(GS, GE);
