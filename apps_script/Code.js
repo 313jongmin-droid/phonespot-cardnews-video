@@ -887,7 +887,7 @@ function buildDashboardV2() {
   // M2 = 특정월 선택(1~12, 당해년도). L2="특정월"일 때만 사용. 라벨 M1.
   dash.getRange('M1').setValue('월지정').setFontColor(C_LABEL).setFontSize(9).setFontWeight('bold').setHorizontalAlignment('center');
   const mdd = dash.getRange('M2');
-  mdd.setBackground('#FFF59D').setFontWeight('bold').setHorizontalAlignment('center').setNumberFormat('0"월"')
+  mdd.setBackground('#FFF59D').setFontWeight('bold').setHorizontalAlignment('center').setNumberFormat('0')  // 숫자 그대로(월 접미 붙이면 드롭다운이 "7월" 텍스트로 저장→검증 위반)
     .setDataValidation(SpreadsheetApp.newDataValidation().requireValueInList([1,2,3,4,5,6,7,8,9,10,11,12], true).setAllowInvalid(false).build());
   if (mdd.getValue() === '') mdd.setValue(new Date().getMonth() + 1);
   // N2=시작일 / O2=종료일. 이번달=1일~오늘(진행중), 지난달=전월 1일~말일, 특정월=M2월 1일~말일(당월이면 오늘까지).
