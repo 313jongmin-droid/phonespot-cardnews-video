@@ -656,6 +656,12 @@ function ensureUtmNamedRanges_() {
     if (existing[name]) existing[name].setRange(rng);
     else ss.setNamedRange(name, rng);
   });
+  // G1 '유입구분' 헤더 + G열 노란 배경 자동 생성 — 셋업 시 컬럼 라벨 보장 (2026-07-27)
+  var g1 = sh.getRange('G1');
+  if (String(g1.getValue()).trim() !== '유입구분') {
+    g1.setValue('유입구분').setFontWeight('bold').setBackground('#1F4E78').setFontColor('#FFFFFF').setHorizontalAlignment('center');
+    sh.getRange('G2:G').setBackground('#FFF59D');
+  }
 }
 
 function setupUtmNamedRanges() {
