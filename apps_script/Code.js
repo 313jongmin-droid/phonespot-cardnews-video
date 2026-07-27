@@ -646,7 +646,8 @@ function ensureUtmNamedRanges_() {
   const ss = SpreadsheetApp.getActive();
   const sh = ss.getSheetByName('UTM');
   if (!sh) return;
-  const want = { 'UTM_CH': 'A:A', 'UTM_KEYVAL': 'B:C' };
+  // UTM_GRP=B열(광고그룹), UTM_INF=F열(유입: 리틀리/시티마켓/사전예약) — 2026-07-27, 유입별 GA4 소스 분기용
+  const want = { 'UTM_CH': 'A:A', 'UTM_KEYVAL': 'B:C', 'UTM_GRP': 'B:B', 'UTM_INF': 'F:F' };
   const existing = {};
   ss.getNamedRanges().forEach(function (nr) { existing[nr.getName()] = nr; });
   Object.keys(want).forEach(function (name) {

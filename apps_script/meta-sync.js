@@ -295,10 +295,10 @@ function syncMetaCampaignIntegrated(targetDate) {
     }
   }
 
-  // ★ 2026-07-27: 사전예약(별도 GA4 속성) 반영 여부 — _설정 PREORDER_GA4_PROP_ID 있는 브랜드(폰스팟)만.
-  //   있으면 M(13) 전화클릭 열을 '카톡클릭(랜딩)'으로 용도 변경 + 세션/전환율에 사전예약 페이지 합산.
+  // ★ 2026-07-27: 사전예약(별도 GA4 속성) 있는 브랜드(폰스팟)면 유입-소스분기 활성.
+  //   M(13) 전화클릭 열을 '유입'(리틀리/시티마켓/사전예약) 라벨로 용도 변경. 유입=사전예약이면 세션·카톡을 사전예약_GA4에서 읽음.
   const hasPre = String(getBrandConfig_('PREORDER_GA4_PROP_ID', '')).trim() !== '';
-  if (hasPre) { try { sh.getRange(1, 13).setValue('카톡클릭(랜딩)'); } catch (e) {} }
+  if (hasPre) { try { sh.getRange(1, 13).setValue('유입'); } catch (e) {} }
 
   // 같은 날짜 행 중복 제거 (재실행 안전) — 단, 수기 개통수(20)/메모(21)는 광고그룹키로 보존
   const lastRow = sh.getLastRow();
@@ -342,32 +342,42 @@ function syncMetaCampaignIntegrated(targetDate) {
     const ga4Base = `'GA4_자동'!A:A,${ymdText},'GA4_자동'!B:B,"meta",'GA4_자동'!D:D,${slugLookup}`;
     // 사전예약(별도 속성) 매칭 base — 캠페인 슬러그로 매칭 (사전예약_GA4: A날짜 D캠페인 E이벤트 F이벤트수 G세션)
     const preBase = `'사전예약_GA4'!A:A,${ymdText},'사전예약_GA4'!D:D,${slugLookup}`;
-    // K(11) GA4세션 = 본속성 세션 + (사전예약 페이지 세션, hasPre일 때만)
+    // ★ 2026-07-27 유입-소스분기: UTM F열(UTM_INF)의 유입 라벨로 GA4 소스를 가름.
+    //   유입="사전예약" → 사전예약_GA4(별도 속성)에서, 그 외 → GA4_자동(본속성). meta_earlybird 등 캠페인명 충돌 무해화.
+    const inflowExpr = `IFERROR(VLOOKUP(E${r},FILTER({UTM_GRP,UTM_INF},UTM_CH="페북"),2,FALSE),"")`;
+    // K(11) 세션 — hasPre면 유입에 따라 소스 분기, 아니면(KT) 기존 GA4_자동
     sh.getRange(r, 11).setFormula(
-      `=IFERROR(SUMIFS('GA4_자동'!G:G,${ga4Base},'GA4_자동'!E:E,"session_start"),0)` +
-      (hasPre ? `+IFERROR(SUMIFS('사전예약_GA4'!G:G,${preBase},'사전예약_GA4'!E:E,"session_start"),0)` : '')
+      hasPre
+        ? `=IF(${inflowExpr}="사전예약",IFERROR(SUMIFS('사전예약_GA4'!G:G,${preBase},'사전예약_GA4'!E:E,"session_start"),0),IFERROR(SUMIFS('GA4_자동'!G:G,${ga4Base},'GA4_자동'!E:E,"session_start"),0))`
+        : `=IFERROR(SUMIFS('GA4_자동'!G:G,${ga4Base},'GA4_자동'!E:E,"session_start"),0)`
     ).setNumberFormat('#,##0');
-    // L(12) 카톡클릭 = 본속성 kakao_chat_click (기존 그대로)
+    // L(12) 카톡클릭 — 유입=사전예약이면 사전예약 페이지 kakao_click, 아니면 본속성 kakao_chat_click
     sh.getRange(r, 12).setFormula(
-      `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"kakao_chat_click"),0)`
+      hasPre
+        ? `=IF(${inflowExpr}="사전예약",IFERROR(SUMIFS('사전예약_GA4'!F:F,${preBase},'사전예약_GA4'!E:E,"kakao_click"),0),IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"kakao_chat_click"),0))`
+        : `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"kakao_chat_click"),0)`
     ).setNumberFormat('#,##0');
-    // M(13) hasPre면 '카톡클릭(랜딩)'=사전예약 페이지 kakao_click, 아니면 기존 전화클릭(phone_click)
+    // M(13) — hasPre면 '유입' 라벨(리틀리/시티마켓/사전예약), 아니면 기존 전화클릭(phone_click)
     sh.getRange(r, 13).setFormula(
       hasPre
-        ? `=IFERROR(SUMIFS('사전예약_GA4'!F:F,${preBase},'사전예약_GA4'!E:E,"kakao_click"),0)`
+        ? `=${inflowExpr}`
         : `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"phone_click"),0)`
-    ).setNumberFormat('#,##0');
-    // N (14) = 시티마켓 클릭 (리틀리 경유, citymarket_click 이벤트만)
+    ).setNumberFormat(hasPre ? '@' : '#,##0');
+    // N (14) = 시티마켓 클릭 — 사전예약이면 0, 아니면 citymarket_click
     sh.getRange(r, 14).setFormula(
-      `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_click"),0)`
+      hasPre
+        ? `=IF(${inflowExpr}="사전예약",0,IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_click"),0))`
+        : `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_click"),0)`
     ).setNumberFormat('#,##0');
-    // O (15) = 시티마켓 직접 (광고→시티마켓 직접 도달, citymarket_arrival 이벤트만, GTM 2026-06-15)
+    // O (15) = 시티마켓 직접 — 사전예약이면 0, 아니면 citymarket_arrival
     sh.getRange(r, 15).setFormula(
-      `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_arrival"),0)`
+      hasPre
+        ? `=IF(${inflowExpr}="사전예약",0,IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_arrival"),0))`
+        : `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_arrival"),0)`
     ).setNumberFormat('#,##0');
-    // P (16) = 카톡전환률 — hasPre면 (L 카톡클릭 + M 카톡클릭랜딩)/K 세션, 아니면 L/K (기존)
+    // P (16) = 카톡전환률 = 카톡클릭(L)/세션(K) — L이 이미 유입 소스 반영
     sh.getRange(r, 16).setFormula(
-      hasPre ? `=IFERROR(IF(K${r}=0,0,(L${r}+M${r})/K${r}),0)` : `=IFERROR(IF(K${r}=0,0,L${r}/K${r}),0)`
+      `=IFERROR(IF(K${r}=0,0,L${r}/K${r}),0)`
     ).setNumberFormat('0.00%');
     // Q (17) = 카톡당CPC (H=지출 / L=카톡클릭)
     sh.getRange(r, 17).setFormula(
