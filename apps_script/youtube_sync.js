@@ -35,8 +35,13 @@ function fetchYouTubeAnalyticsDaily() {
   var startTime = new Date();
   Logger.log('=== YouTube sync 시작 ' + startTime.toLocaleString('ko-KR') + ' ===');
 
-  var chResp = YouTube.Channels.list('id,snippet,statistics,contentDetails', {mine: true});
-  if (!chResp.items || chResp.items.length === 0) throw new Error('채널 없음');
+  // 채널 지정: _설정 YOUTUBE_HANDLE(예 @phonespot_1) 있으면 그 채널, 없으면 인증 계정 기본 채널(mine:true).
+  // ★ 폰스팟·KT가 같은 구글계정으로 인증 → mine:true면 오채널 잡힘. 브랜드별 핸들 명시가 정확.
+  var ytHandle = String((typeof getBrandConfig_ === 'function' ? getBrandConfig_('YOUTUBE_HANDLE', '') : '') || '').replace(/^@/, '').trim();
+  var chResp = ytHandle
+    ? YouTube.Channels.list('id,snippet,statistics,contentDetails', {forHandle: ytHandle})
+    : YouTube.Channels.list('id,snippet,statistics,contentDetails', {mine: true});
+  if (!chResp.items || chResp.items.length === 0) throw new Error('채널 없음 (YOUTUBE_HANDLE=' + (ytHandle || 'mine') + ')');
   var channel = chResp.items[0];
   var channelId = channel.id;
   var channelTitle = channel.snippet.title;
