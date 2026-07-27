@@ -295,6 +295,11 @@ function syncMetaCampaignIntegrated(targetDate) {
     }
   }
 
+  // ★ 2026-07-27: 사전예약(별도 GA4 속성) 반영 여부 — _설정 PREORDER_GA4_PROP_ID 있는 브랜드(폰스팟)만.
+  //   있으면 M(13) 전화클릭 열을 '카톡클릭(랜딩)'으로 용도 변경 + 세션/전환율에 사전예약 페이지 합산.
+  const hasPre = String(getBrandConfig_('PREORDER_GA4_PROP_ID', '')).trim() !== '';
+  if (hasPre) { try { sh.getRange(1, 13).setValue('카톡클릭(랜딩)'); } catch (e) {} }
+
   // 같은 날짜 행 중복 제거 (재실행 안전) — 단, 수기 개통수(20)/메모(21)는 광고그룹키로 보존
   const lastRow = sh.getLastRow();
   var preservedManual = {};
@@ -335,14 +340,22 @@ function syncMetaCampaignIntegrated(targetDate) {
     const slugRaw = `IFERROR(VLOOKUP(E${r}, FILTER(UTM_KEYVAL, UTM_CH="페북"), 2, FALSE),"")`;
     const slugLookup = `IF(${slugRaw}="","__UNMAPPED_NO_MATCH__",${slugRaw})`;
     const ga4Base = `'GA4_자동'!A:A,${ymdText},'GA4_자동'!B:B,"meta",'GA4_자동'!D:D,${slugLookup}`;
+    // 사전예약(별도 속성) 매칭 base — 캠페인 슬러그로 매칭 (사전예약_GA4: A날짜 D캠페인 E이벤트 F이벤트수 G세션)
+    const preBase = `'사전예약_GA4'!A:A,${ymdText},'사전예약_GA4'!D:D,${slugLookup}`;
+    // K(11) GA4세션 = 본속성 세션 + (사전예약 페이지 세션, hasPre일 때만)
     sh.getRange(r, 11).setFormula(
-      `=IFERROR(SUMIFS('GA4_자동'!G:G,${ga4Base},'GA4_자동'!E:E,"session_start"),0)`
+      `=IFERROR(SUMIFS('GA4_자동'!G:G,${ga4Base},'GA4_자동'!E:E,"session_start"),0)` +
+      (hasPre ? `+IFERROR(SUMIFS('사전예약_GA4'!G:G,${preBase},'사전예약_GA4'!E:E,"session_start"),0)` : '')
     ).setNumberFormat('#,##0');
+    // L(12) 카톡클릭 = 본속성 kakao_chat_click (기존 그대로)
     sh.getRange(r, 12).setFormula(
       `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"kakao_chat_click"),0)`
     ).setNumberFormat('#,##0');
+    // M(13) hasPre면 '카톡클릭(랜딩)'=사전예약 페이지 kakao_click, 아니면 기존 전화클릭(phone_click)
     sh.getRange(r, 13).setFormula(
-      `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"phone_click"),0)`
+      hasPre
+        ? `=IFERROR(SUMIFS('사전예약_GA4'!F:F,${preBase},'사전예약_GA4'!E:E,"kakao_click"),0)`
+        : `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"phone_click"),0)`
     ).setNumberFormat('#,##0');
     // N (14) = 시티마켓 클릭 (리틀리 경유, citymarket_click 이벤트만)
     sh.getRange(r, 14).setFormula(
@@ -352,9 +365,9 @@ function syncMetaCampaignIntegrated(targetDate) {
     sh.getRange(r, 15).setFormula(
       `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_arrival"),0)`
     ).setNumberFormat('#,##0');
-    // P (16) = 카톡전환률 (L=카톡클릭 / K=세션, 컬럼 위치 그대로)
+    // P (16) = 카톡전환률 — hasPre면 (L 카톡클릭 + M 카톡클릭랜딩)/K 세션, 아니면 L/K (기존)
     sh.getRange(r, 16).setFormula(
-      `=IFERROR(IF(K${r}=0,0,L${r}/K${r}),0)`
+      hasPre ? `=IFERROR(IF(K${r}=0,0,(L${r}+M${r})/K${r}),0)` : `=IFERROR(IF(K${r}=0,0,L${r}/K${r}),0)`
     ).setNumberFormat('0.00%');
     // Q (17) = 카톡당CPC (H=지출 / L=카톡클릭)
     sh.getRange(r, 17).setFormula(
