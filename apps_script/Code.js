@@ -204,6 +204,7 @@ function onOpen() {
     .addItem('📥 GA4 30일 다시 가져오기 (백필)', 'fetchGA4Backfill')
     .addItem('🌐 GA4 페이지별 수집 (시티마켓 확인)', 'fetchCitymarketPages')
     .addItem('🧭 페이지별 퍼널 (리틀리/시티마켓) 갱신', 'fetchPageFunnel')
+    .addItem('🧾 사전예약 페이지 GA4 수집 (별도 속성)', 'fetchPreorderGA4')
     .addItem('⏰ 페이지별 퍼널 트리거 등록 (매일 03:30)', 'setupPageFunnelTrigger')
     .addSeparator()
     .addItem('📊 SNS 월별 합계 수식 복구', 'repairSNSMonthlySummaries')
