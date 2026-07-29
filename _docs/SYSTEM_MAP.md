@@ -56,7 +56,7 @@
 - 진입: `CODEX_VIDEO_DESK/00_PHONE_SPOT_PANEL.bat`(직접 실행=콘솔 보임, 디버그용) / **무창 = `dashboard/panel_hidden.vbs`**(고정 바로가기 타깃).
 
 **핵심 심볼 (server.py, 검증된 줄)**
-- `PANEL_VERSION = "phonespot-web-v57"` (L41) — **버전 단일 출처(SSOT)**. ps1이 이 값을 읽음. 화면/CSS 바꾸면 이 숫자만 올림.
+- `PANEL_VERSION = "phonespot-web-v59"` (L41) — **버전 단일 출처(SSOT)**. ps1이 이 값을 읽음. 화면/CSS 바꾸면 이 숫자만 올림.
 - `get_video_slugs()` (L336) — 영상 슬러그 목록. `list_slugs.py` 호출(articles∪output 독립 스캔).
 - `get_cardnews_rows()` (L1073) — 카드뉴스 행. `CARD_OUTPUT ∪ CARD_IMAGES ∪ CARD_ARTICLES` 합집합 스캔. **정렬 = `slug_sort_key` 내림차순(번호 desc)→ `[:80]` 캡 = 최신 80 보존, 최신 위로(v44).** 4개 리스트(영상·카드·tpList·aiList)+`cardnews_summary`(최신 12) 공용 소스라 한 곳에서 정렬 결정.
 - 액션 디스패치: `if action == "..."` 블록들 (L1589~2010). 주요:
@@ -113,7 +113,7 @@
 - **커버만 재생성 (v55/worker v6, 2026-06-26)**: 영상작업 "커버만 다시 만들기" 버튼 → 액션 `cover_render`(server.py, enqueue) → worker `commands_for` = `run_cover.bat <slug>` → **결과가 mp4 아닌 jpg라 `find_cover`(worker.py, 경계안전 slug + jpg/png)로 탐지**(mp4 `result_after` 대신). 전체 재렌더 없이 커버(썸네일)만 몇 초. 결과 `RESULTS/<slug>_cover/`. **업로드 생략**(RESULTS 보관). run_cover.bat·Cover.tsx = C단원(제작).
 
 - **패널 콘솔 창이 작업표시줄에 상주 = 서버를 콘솔 파이썬으로 띄운 것(2026-06-26 수정).** `start /b python.exe server`는 서버가 그 .bat 콘솔을 생존 내내 붙잡아 창이 안 닫힘 → `start_hidden.ps1`에서 `pythonw.exe`로 기동해야 무창. 진입도 `panel_hidden.vbs`(wscript→bat 히든)로. **`pin_panel.ps1` 바꾸면 `작업표시줄에_패널_고정.bat` 1회 재실행해 바로가기 재생성 필요**(기존 고정은 unpin 후 재고정). Windows 전용=샌드박스 검증 불가.
-- **★ 무콘솔 부모(pythonw)의 부작용 = 자식 콘솔 프로세스가 각자 새 창을 띄움(cmd 깜빡임, v48 수정).** 서버를 pythonw로 띄우면 부모에 콘솔이 없어, `subprocess.run/Popen`으로 부른 콘솔 프로그램(git·bat·python 등)이 **매번 새 콘솔 창을 생성**(python.exe일 땐 부모 콘솔 공유라 안 보였음). 주기 주범=`github_status`(상태폴링 60s마다 git). **해결=server.py/worker.py의 모든 subprocess에 `creationflags=NO_WINDOW`(=`CREATE_NO_WINDOW`)** 부여(모듈 상수 `NO_WINDOW`). **단 `panel_update_restart`의 detached 스폰은 `DETACHED_PROCESS`와 상호배타라 NO_WINDOW 안 붙임**(detached 자체가 무창). 새 subprocess 추가 시 반드시 NO_WINDOW 포함.
+- **★ 무콘솔 부모(pythonw)의 부작용 = 자식 콘솔 프로세스가 각자 새 창을 띄움(cmd 깜빡임, v48 수정).** 서버를 pythonw로 띄우면 부모에 콘솔이 없어, `subprocess.run/Popen`으로 부른 콘솔 프로그램(git·bat·python 등)이 **매번 새 콘솔 창을 생성**(python.exe일 땐 부모 콘솔 공유라 안 보였음). 주기 주범=`github_status`(상태폴링 60s마다 git). **해결=server.py/worker.py의 모든 subprocess에 `creationflags=NO_WINDOW`(=`CREATE_NO_WINDOW`)** 부여(모듈 상수 `NO_WINDOW`). **단 `panel_update_restart`의 detached 스폰은 `DETACHED_PROCESS`와 상호배타라 NO_WINDOW 안 붙임**(detached 자체가 무창). 새 subprocess 추가 시 반드시 NO_WINDOW 포함. **★ 무콘솔 부모 자식처리 3대 함정 정본 = F단원**(stdio는 python.exe / NO_WINDOW / 파이프 대신 임시파일 캡처 + HEAD.lock 정리).
 
 **교차 영향**: 렌더/라이브러리/슬러그 액션은 C·D 단원 스크립트를 subprocess로 부름.
 
@@ -402,6 +402,13 @@
 
 **GitHub 연동 스크립트 (`MAINTENANCE/`)**
 - `codex_github_upload.py`(add→commit→pull→push, 로그 `TEMP/github_upload.log`), `codex_github_update.py`(의존성), `codex_github_status.py`. 셋 다 `find_git()` 보유.
+- **★★ 무콘솔(패널 pythonw) 부모에서 자식 프로세스 3대 함정 + 규칙 (2026-07-29 완결, "시스템 업로드 hang" 대장정).** 패널 서버를 `pythonw.exe`(무창)로 띄운 뒤 git 업로드가 계속 hang/에러 → 원인이 3겹이었다. **새 코드가 패널에서 외부 프로세스를 다룰 땐 아래 3개 다 지킬 것:**
+  1. **자식 stdio 캡처는 python.exe로.** `sys.executable`=pythonw면 자식 파이썬도 pythonw→출력 캡처 불안정. server.py `PY_EXE`(=옆 `python.exe`)로 실행, 무창은 `creationflags=CREATE_NO_WINDOW`로(v58).
+  2. **모든 subprocess에 `CREATE_NO_WINDOW`.** 무콘솔 부모의 콘솔 자식(git·node·ffmpeg)은 각자 새 콘솔 창 팝업(깜빡임). server.py/worker.py `NO_WINDOW` 상수, 자식 스크립트(codex_github_*)도 `subprocess.run` 래핑(v48·v50). detached 스폰만 예외(상호배타).
+  3. **stdout은 파이프 말고 임시파일로 캡처.** 손자 프로세스(**git-lfs `filter-process`**, 전역 config `filter.lfs.process`)가 부모의 캡처 파이프 핸들을 상속·유지 → `subprocess.run(stdout=PIPE)`이 **EOF를 영영 못 받아 deadlock**(git commit은 끝났는데). `codex_github_upload.py run()`은 `tempfile.TemporaryFile`로 캡처(git 종료 즉시 반환). ※ 이 repo는 실제 LFS 파일 없음(.gitattributes에 `filter=lfs` 없음).
+  - **부수: hung 커밋이 남긴 `.git/HEAD.lock`.** 무창 hang으로 죽은 커밋이 HEAD.lock을 남기면 이후 전 커밋이 `cannot lock ref HEAD`로 막힘(무창에선 그 에러조차 파이프에 묻혀 또 hang처럼 보임). `clear_stale_lock()`을 index.lock뿐 아니라 **HEAD.lock·refs/**·logs/**의 *.lock**까지(60s 초과 스테일) 정리하게 확장.
+  - **패널 커밋 비대화형 고정**: `-c core.hooksPath=<없는경로>`(pre/post 훅 off — 훅도 무창 hang 유발), `-c commit.gpgsign=false`, `--no-verify`, env `GIT_TERMINAL_PROMPT=0`/`GIT_EDITOR=true`/`GIT_PAGER=cat`, 커밋 90s·푸시 120s 타임아웃. 게이트(문법/BOM)는 **cmd 커밋(콘솔)에서 유지**. 훅도 하드닝(pre-commit `exec 0</dev/null`, post-commit 텔레그램 백그라운드 `&`).
+  - **진단 팁**: 패널 git이 hang이면 **cmd로 같은 스크립트 직접 실행**(콘솔이라 캡처 문제 없음)→진짜 에러가 바로 보임. 락 잔재 의심 시 `del .git\HEAD.lock .git\index.lock` 후 재시도.
 
 **수정 시 읽을 것**
 - 새 git bat 만들 때: **이 단원의 GIT 패턴만** 복붙 + I 단원 인코딩 규칙.
@@ -785,3 +792,4 @@ rdnews/scripts/update_content_guide.py`로 §2 발행인덱스 자동 재생성,
 - 2026-06-26 (세션2, 캐시·테이블폭 — A단원, 패널 task): **① 브라우저 페이지 캐시로 "재기동해도 옛 UI" (v56 수정)** = `html_response`에 `Cache-Control:no-store`+`Pragma:no-cache`. 헤더 버전은 `/api/state`서 실시간이라 최신처럼 보여 혼란 유발(로그 복사 버튼이 코드엔 있는데 화면엔 없던 사례). 이후 UI 검증은 Ctrl+F5. **② 최근 작업 기록 테이블 가로 스크롤 제거 (v57)** = `min-width:820px` 삭제+`table-layout:fixed`+컬럼 고정폭+말줄임. PANEL_VERSION →v57.
 
 - 2026-07-16: **단말기 누끼 이미지 photo 매칭 추가 (E단원).** `import_device_photos.py`가 외부 누끼 폴더(config/device_photos_path.txt)→`photos/` 복사+브랜드/폼팩터 리네임, `run_codex_casual.bat` photo_tag 직전 배선. 매칭=브랜드+폼팩터 수준(세대숫자 비구별). photos/ gitignore=git전파 X.
+- 2026-07-29 (세션2, "시스템 업로드 hang" 완결 — F·A단원): **무콘솔(pythonw) 전환 부작용 3겹 + HEAD.lock 정리.** ①자식 stdio→`PY_EXE`(python.exe, v58) ②모든 subprocess `CREATE_NO_WINDOW`(v48·v50, github 스크립트 포함) ③`codex_github_upload.run()` stdout을 **임시파일 캡처**(git-lfs `filter-process`가 캡처 파이프 물어 EOF deadlock 해결) + `clear_stale_lock`이 **HEAD.lock·ref/logs 락**까지 정리 + 패널 커밋 비대화형(hooksPath off·gpgsign off·--no-verify·GIT_TERMINAL_PROMPT=0·타임아웃) + 훅 하드닝(pre `exec 0</dev/null`, post 텔레그램 `&` 백그라운드). 진단=cmd 직접 실행로 진짜 에러 확인. 규칙 정본 F단원 "무콘솔 3대 함정". PANEL_VERSION →v59.
