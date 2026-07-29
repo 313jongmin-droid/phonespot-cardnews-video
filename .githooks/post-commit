@@ -30,6 +30,6 @@ fi
 
 TMP="$(mktemp 2>/dev/null || echo "$REPO/_secrets/.tg_commit_msg.txt")"
 printf '%s\n' "$MSG" > "$TMP"
-"$PY" "$REPO/automation/scripts/tg_send.py" "$TMP" >/dev/null 2>&1
-rm -f "$TMP" 2>/dev/null
+# 비차단: 텔레그램 전송을 백그라운드로 분리 -> 네트워크 지연/행이 git commit 을 막지 않게(무창 패널 hang 방지).
+( "$PY" "$REPO/automation/scripts/tg_send.py" "$TMP" >/dev/null 2>&1; rm -f "$TMP" 2>/dev/null ) &
 exit 0

@@ -38,7 +38,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v55"
+PANEL_VERSION = "phonespot-web-v59"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -46,6 +46,22 @@ LOCAL_WORKER_PROCESS: subprocess.Popen | None = None
 LOCAL_WORKER_STREAMS: list = []
 # 서버가 pythonw(무콘솔)로 돌면 자식 콘솔 프로세스가 새 창을 띄운다 → 모든 subprocess에 적용.
 NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
+
+
+def _console_python() -> str:
+    # 서버가 pythonw.exe(무콘솔)로 돌면 PY_EXE=pythonw → 자식 stdio 캡처 불안정.
+    # 캡처가 필요한 자식은 옆의 python.exe(콘솔형)로 실행하고 무창은 CREATE_NO_WINDOW로 처리.
+    import sys as _s
+    from pathlib import Path as _P
+    exe = _P(_s.executable)
+    if __import__("os").name == "nt" and exe.name.lower() == "pythonw.exe":
+        cand = exe.with_name("python.exe")
+        if cand.exists():
+            return str(cand)
+    return _s.executable
+
+
+PY_EXE = _console_python()
 _GH_LAST_ATTEMPT = 0.0  # github_status: 실패해도 60s에 한 번만 재시도(매 폴링 스폰 방지)
 
 if str(SCRIPTS) not in sys.path:
@@ -136,7 +152,7 @@ def start_local_worker() -> None:
     env["PYTHONUNBUFFERED"] = "1"
     creationflags = getattr(subprocess, "CREATE_NO_WINDOW", 0)
     LOCAL_WORKER_PROCESS = subprocess.Popen(
-        [sys.executable, str(worker_script)],
+        [PY_EXE, str(worker_script)],
         cwd=str(DESK),
         stdout=stdout,
         stderr=stderr,
@@ -247,6 +263,8 @@ def run_job(name: str, commands: list[list[str]], cwd: Path, stdin_text: str | N
                 process_env = os.environ.copy()
                 process_env["PYTHONIOENCODING"] = "utf-8"
                 process_env["PYTHONUTF8"] = "1"
+                process_env["PYTHONUNBUFFERED"] = "1"
+                process_env["GIT_TERMINAL_PROMPT"] = "0"
                 process = subprocess.Popen(
                     command,
                     cwd=str(cwd),
@@ -1109,7 +1127,7 @@ def github_status() -> dict:
         if (not file_fresh) and (not attempt_recent) and script.exists():
             _GH_LAST_ATTEMPT = now
             subprocess.run(
-                [sys.executable, str(script)],
+                [PY_EXE, str(script)],
                 cwd=str(ROOT),
                 creationflags=NO_WINDOW,
                 text=True,
@@ -1183,6 +1201,8 @@ def html_response(handler: BaseHTTPRequestHandler, page: str, status: int = 200)
     payload = page.encode("utf-8")
     handler.send_response(status)
     handler.send_header("Content-Type", "text/html; charset=utf-8")
+    handler.send_header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
+    handler.send_header("Pragma", "no-cache")
     cors_headers(handler)
     handler.send_header("Content-Length", str(len(payload)))
     handler.end_headers()
@@ -1441,7 +1461,7 @@ class Handler(BaseHTTPRequestHandler):
             query = urllib.parse.parse_qs(parsed.query)
             slug = validate_slug((query.get("slug") or [""])[0])
             proc = subprocess.run(
-                [sys.executable, str(SCRIPTS / "codex_preflight_check.py"), slug, "--json"],
+                [PY_EXE, str(SCRIPTS / "codex_preflight_check.py"), slug, "--json"],
                 cwd=str(ROOT),
                 text=True,
                 encoding="utf-8",
@@ -1629,7 +1649,7 @@ class Handler(BaseHTTPRequestHandler):
             if action == "library_sync":
                 # 일러스트 라이브러리 공유 허브와 양방향 추가병합(비파괴). 결과는 실행 로그에.
                 ok = run_job("일러스트 라이브러리 공유 동기화",
-                             [[sys.executable, str(SCRIPTS / "codex_library_sync.py")]], SHORTS)
+                             [[PY_EXE, str(SCRIPTS / "codex_library_sync.py")]], SHORTS)
                 if not ok:
                     json_response(self, {"ok": False, "busy": True, "message": "이미 다른 작업이 실행 중입니다. 끝난 뒤 다시 눌러주세요."})
                 else:
@@ -1638,7 +1658,7 @@ class Handler(BaseHTTPRequestHandler):
             if action == "library_dedup":
                 # 라이브러리 근접중복 '리포트만'(읽기전용, 안전). 실제 정리는 bat --apply.
                 ok = run_job("라이브러리 중복 점검(리포트)",
-                             [[sys.executable, str(SCRIPTS / "codex_library_dedup.py")]], SHORTS)
+                             [[PY_EXE, str(SCRIPTS / "codex_library_dedup.py")]], SHORTS)
                 if not ok:
                     json_response(self, {"ok": False, "busy": True, "message": "이미 다른 작업이 실행 중입니다. 끝난 뒤 다시 눌러주세요."})
                 else:
@@ -1647,7 +1667,7 @@ class Handler(BaseHTTPRequestHandler):
             if action == "library_backup":
                 # 라이브러리(로컬+허브) 타임스탬프 스냅샷 백업(회전보관). 결과는 실행 로그에.
                 ok = run_job("라이브러리 백업 스냅샷",
-                             [[sys.executable, str(SCRIPTS / "codex_library_backup.py")]], SHORTS)
+                             [[PY_EXE, str(SCRIPTS / "codex_library_backup.py")]], SHORTS)
                 if not ok:
                     json_response(self, {"ok": False, "busy": True, "message": "이미 다른 작업이 실행 중입니다. 끝난 뒤 다시 눌러주세요."})
                 else:
@@ -1656,7 +1676,7 @@ class Handler(BaseHTTPRequestHandler):
             if action == "producer_check":
                 # 이 PC가 카드뉴스 생성 + 영상 렌더를 모두 독립으로 할 수 있는지 자원 점검. 결과는 실행 로그에.
                 ok = run_job("환경 점검(풀-생산기 자원)",
-                             [[sys.executable, str(SCRIPTS / "codex_producer_check.py")]], SHORTS)
+                             [[PY_EXE, str(SCRIPTS / "codex_producer_check.py")]], SHORTS)
                 if not ok:
                     json_response(self, {"ok": False, "busy": True, "message": "이미 다른 작업이 실행 중입니다. 끝난 뒤 다시 눌러주세요."})
                 else:
@@ -1700,8 +1720,8 @@ class Handler(BaseHTTPRequestHandler):
             if action in ("video_prepare", "card_to_video"):
                 slug = validate_slug(slug)
                 commands = [
-                    [sys.executable, str(SCRIPTS / "codex_prepare_illustrations.py"), slug],
-                    [sys.executable, str(SCRIPTS / "codex_clean_latest_prompt.py"), slug],
+                    [PY_EXE, str(SCRIPTS / "codex_prepare_illustrations.py"), slug],
+                    [PY_EXE, str(SCRIPTS / "codex_clean_latest_prompt.py"), slug],
                 ]
                 ok = run_job("영상 이미지 프롬프트 준비", commands, SHORTS)
                 if not ok:
@@ -1714,7 +1734,7 @@ class Handler(BaseHTTPRequestHandler):
                 slug_now = validate_slug(slug)
                 try:
                     proc = subprocess.run(
-                        [sys.executable, str(SCRIPTS / "codex_import_propose.py"), slug_now],
+                        [PY_EXE, str(SCRIPTS / "codex_import_propose.py"), slug_now],
                         cwd=str(SHORTS), text=True, encoding="utf-8", errors="replace",
                         capture_output=True, timeout=120, creationflags=NO_WINDOW,
                     )
@@ -1789,7 +1809,7 @@ class Handler(BaseHTTPRequestHandler):
                 slug_now = validate_slug(slug)
                 try:
                     proc = subprocess.run(
-                        [sys.executable, str(SCRIPTS / "cardnews_import_propose.py"), slug_now],
+                        [PY_EXE, str(SCRIPTS / "cardnews_import_propose.py"), slug_now],
                         cwd=str(SHORTS), text=True, encoding="utf-8", errors="replace",
                         capture_output=True, timeout=120, creationflags=NO_WINDOW,
                     )
@@ -1876,7 +1896,7 @@ class Handler(BaseHTTPRequestHandler):
                 return
             if action == "promo_list":
                 try:
-                    out = subprocess.run([sys.executable, "scripts/promo_list.py"], cwd=str(SHORTS),
+                    out = subprocess.run([PY_EXE, "scripts/promo_list.py"], cwd=str(SHORTS),
                                          capture_output=True, text=True, timeout=20, creationflags=NO_WINDOW)
                     items = []
                     for line in (out.stdout or "").splitlines():
@@ -1910,7 +1930,7 @@ class Handler(BaseHTTPRequestHandler):
                     json_response(self, {"ok": False, "message": "주제를 선택하세요."})
                     return
                 try:
-                    cmd = [sys.executable, "scripts/promo_generate.py", title, "--slug", slug_req]
+                    cmd = [PY_EXE, "scripts/promo_generate.py", title, "--slug", slug_req]
                     if preset:
                         cmd += ["--preset", preset]
                     gen = subprocess.run(cmd, cwd=str(SHORTS), capture_output=True, text=True, timeout=90, creationflags=NO_WINDOW)
@@ -1980,7 +2000,7 @@ class Handler(BaseHTTPRequestHandler):
                 json_response(self, {"ok": True})
                 return
             if action == "work_queue_refresh":
-                ok = run_job("작업대장 새로고침", [[sys.executable, str(SCRIPTS / "codex_work_queue.py")]], ROOT)
+                ok = run_job("작업대장 새로고침", [[PY_EXE, str(SCRIPTS / "codex_work_queue.py")]], ROOT)
                 if not ok:
                     json_response(self, {"ok": False, "busy": True, "message": "이미 다른 작업이 실행 중입니다. 현재 작업이 끝난 뒤 다시 눌러주세요."})
                 else:
@@ -2007,14 +2027,14 @@ class Handler(BaseHTTPRequestHandler):
                     json_response(self, {"ok": False, "message": f"재시작 실행 실패: {exc}"})
                 return
             if action == "system_upload":
-                ok = run_job("시스템 업로드: GitHub commit/push", [[sys.executable, str(DESK / "MAINTENANCE" / "codex_github_upload.py")]], ROOT)
+                ok = run_job("시스템 업로드: GitHub commit/push", [[PY_EXE, str(DESK / "MAINTENANCE" / "codex_github_upload.py")]], ROOT)
                 if not ok:
                     json_response(self, {"ok": False, "busy": True, "message": "이미 다른 작업이 실행 중입니다. 현재 작업이 끝난 뒤 다시 눌러주세요."})
                 else:
                     json_response(self, {"ok": True})
                 return
             if action == "system_update":
-                ok = run_job("시스템 업데이트: GitHub pull", [[sys.executable, str(DESK / "MAINTENANCE" / "codex_github_update.py")]], ROOT)
+                ok = run_job("시스템 업데이트: GitHub pull", [[PY_EXE, str(DESK / "MAINTENANCE" / "codex_github_update.py")]], ROOT)
                 if not ok:
                     json_response(self, {"ok": False, "busy": True, "message": "이미 다른 작업이 실행 중입니다. 현재 작업이 끝난 뒤 다시 눌러주세요."})
                 else:
@@ -2182,10 +2202,13 @@ INDEX_HTML = r"""<!doctype html>
     .result-row > * { min-width:0; }
     .result-row a { overflow-wrap:anywhere; word-break:break-word; color:var(--accent); }
     .history-scroll { max-height:340px; overflow:auto; }
-    .history-table { width:100%; min-width:820px; border-collapse:collapse; font-size:12px; }
-    .history-table th,.history-table td { padding:10px; border-bottom:.5px solid var(--separator); text-align:left; vertical-align:top; }
-    .history-table th { position:sticky; top:0; z-index:1; background:var(--card-bg); color:var(--label-tertiary); font-weight:600; text-transform:uppercase; letter-spacing:.4px; font-size:11px; }
-    .history-table td:nth-child(2) { max-width:340px; overflow-wrap:anywhere; }
+    .history-table { width:100%; table-layout:fixed; border-collapse:collapse; font-size:12px; }
+    .history-table th,.history-table td { padding:8px 8px; border-bottom:.5px solid var(--separator); text-align:left; vertical-align:top; }
+    .history-table th { position:sticky; top:0; z-index:1; background:var(--card-bg); color:var(--label-tertiary); font-weight:600; text-transform:uppercase; letter-spacing:.3px; font-size:11px; }
+    .history-table th:nth-child(1) { width:50px; } .history-table th:nth-child(3) { width:116px; } .history-table th:nth-child(4) { width:112px; } .history-table th:nth-child(5) { width:58px; } .history-table th:nth-child(6) { width:140px; }
+    .history-table td:nth-child(2) { overflow-wrap:anywhere; word-break:break-word; }
+    .history-table td:nth-child(3),.history-table td:nth-child(6) { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .history-table td:nth-child(4) { white-space:nowrap; }
     .history-status { font-weight:700; white-space:nowrap; }
     .history-status.done { color:var(--green); }
     .history-status.failed,.history-status.cancelled { color:var(--danger); }
@@ -3351,7 +3374,7 @@ def main() -> int:
     # 기다리지 않도록 미리 캐시를 채운다. 실패해도 무해(폴백).
     try:
         subprocess.Popen(
-            [sys.executable, str(SCRIPTS / "codex_warm_embeddings.py")],
+            [PY_EXE, str(SCRIPTS / "codex_warm_embeddings.py")],
             cwd=str(SHORTS),
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
             creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),

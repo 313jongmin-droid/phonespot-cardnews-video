@@ -77,6 +77,8 @@ python scripts\build_script.py !SLUG!
 if errorlevel 1 goto :fail
 python scripts\codex_enhance_script.py !SLUG!
 if errorlevel 1 goto :fail
+rem import device cutout PNGs from external folder into photos/ (path=config/device_photos_path.txt, skip if absent)
+python scripts\import_device_photos.py
 python scripts\codex_photo_tag.py
 rem [disabled 2026-07-10: CLIP(codex_image_embed) handles illustration matching now - no gemini 429] python scripts\codex_illust_tag.py --limit 12
 python scripts\codex_semantic_visual_match.py !SLUG!

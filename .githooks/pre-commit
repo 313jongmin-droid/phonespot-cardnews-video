@@ -11,6 +11,8 @@
 #  4) 카드뉴스 기사 스키마 ERROR (slug/title/cards/captions_md)
 #  경고만(차단X): 추적 .bat/.ps1 중복 md5 (STEP7 SSOT)
 set -u
+# 무콘솔(패널 pythonw) 커밋에서 훅 하위 명령이 stdin 대기로 hang 하는 것 방지: 훅 stdin을 /dev/null로.
+exec 0</dev/null
 fail=0
 staged=$(git diff --cached --name-only --diff-filter=ACM)
 [ -z "$staged" ] && exit 0
@@ -63,7 +65,7 @@ if echo "$staged" | grep -q '^cardnews/articles/.*\.json$'; then
 fi
 
 # 5) 추적 .bat/.ps1 중복 md5 (경고만)
-dups=$(git ls-files 2>/dev/null | grep -iE '\.(bat|ps1|cmd)$' | xargs md5sum 2>/dev/null | awk '{print $1}' | sort | uniq -d)
+dups=$(git ls-files 2>/dev/null | grep -iE '\.(bat|ps1|cmd)$' | xargs -r md5sum 2>/dev/null | awk '{print $1}' | sort | uniq -d)
 [ -n "$dups" ] && echo "[gate] 경고: 동일 내용 .bat/.ps1 존재 (STEP7 SSOT 점검 권장, 차단 안 함)"
 
 if [ "$fail" -ne 0 ]; then

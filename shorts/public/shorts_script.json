@@ -1,30 +1,30 @@
 {
-  "slug": "051_news_combined_discount_cut",
-  "title_short": "가족끼리 묶으면 할인? 이제 옛말",
-  "video_title": "가족끼리 묶으면 할인? 이제 옛말",
+  "slug": "055_news_foldable8_preorder",
+  "title_short": "갤Z폴드8 사전판매 시작, 8월 7일 출시",
+  "video_title": "갤Z폴드8 사전판매 시작, 8월 7일 출시",
   "publication_date": "2026.07.22",
-  "sources": "조선일보·인사이트코리아 2026.07 + 휴대폰성지 폰스팟 자료",
+  "sources": "ZDNet코리아 2026.07 (언팩·출시 일정) + 휴대폰성지 폰스팟 자료",
   "channel_name": "휴대폰성지 폰스팟",
   "channel_tagline": "휴대폰성지 IT 브리핑",
   "opening": {
     "line1": "휴대폰성지 IT 브리핑",
-    "line2": "가족끼리 묶으면 할인? 이제 옛말"
+    "line2": "갤Z폴드8 사전판매 시작, 8월 7일 출시"
   },
   "hook": {
-    "tts": "가족 회선을 묶어 통신비를 아끼던 결합할인이 줄어들고 있습니다. 통신3사가 장기 결합할인을 손보기 시작했습니다. 내 할인이 사라지는 건 아닌지 확인이 필요합니다.",
+    "tts": "갤럭시 언팩에서 공개된 새 폴더블폰이 곧 손에 들어옵니다. 사전판매가 시작되고 공식 출시는 8월 7일입니다. 살 계획이라면 지금부터 챙길 게 있습니다.",
     "caption_body": [
-      "가족끼리 묶으면 할인?",
-      "이제 옛말"
+      "갤Z폴드8",
+      "사전판매 시작"
     ],
     "caption_emphasis": [
-      "이제 옛말"
+      "사전판매"
     ],
     "headline_lines": [
       {
-        "text": "가족끼리 묶으면 할인?"
+        "text": "갤Z폴드8"
       },
       {
-        "text": "이제 옛말",
+        "text": "사전판매 시작",
         "accent": true
       }
     ],
@@ -32,27 +32,22 @@
     "topic": "뉴스",
     "background_image": "",
     "caption_chunks": [
-      "가족 회선을 묶어 통신비를 아끼던",
-      "결합할인이 줄어들고 있습니다.",
-      "통신3사가 장기 결합할인을 손보기 시작했습니다.",
-      "내 할인이 사라지는 건 아닌지 확인이 필요합니다."
+      "갤럭시 언팩에서 공개된 새 폴더블폰이 곧 손에 들어옵니다.",
+      "사전판매가 시작되고 공식 출시는 8월 7일입니다.",
+      "살 계획이라면 지금부터 챙길 게 있습니다."
     ],
     "chunk_visuals": [
       {
         "type": "image",
-        "value": "photos/알뜰폰_로고.JPG"
+        "value": "photos/갤럭시z플립7_z폴드7.JPG"
       },
       {
         "type": "illust",
-        "value": "chart_down"
+        "value": "foldable"
       },
       {
         "type": "illust",
-        "value": "gift_voucher"
-      },
-      {
-        "type": "mascot",
-        "value": "surprised"
+        "value": "basic_fold_202d754f"
       }
     ],
     "stat": {
@@ -61,102 +56,90 @@
       "note": ""
     },
     "display_chunks": [
-      "가족 회선을 묶어 통신비를 아끼던",
-      "결합할인이 줄어들고 있습니다",
-      "통신3사가 장기 결합할인을 손보기 시작했습니다",
-      "내 할인이 사라지는 건 아닌지 확인이 필요합니다"
+      "갤럭시 언팩에서 공개된 새 폴더블폰이 곧 손에 들어옵니다",
+      "사전판매가 시작되고 공식 출시는 8월 7일입니다",
+      "살 계획이라면 지금부터 챙길 게 있습니다"
     ],
     "_codex_caption_lockstep": {
       "version": 2,
       "compiler": "korean_caption_compiler_v2",
       "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-      "chunk_count": 4
+      "chunk_count": 3
     },
     "_codex_contextual_narrative": true,
     "_codex_sync_mode": "global999_tts_caption_lockstep",
     "tts_chunk_weights": [
-      2016.67,
-      1173.55,
-      3559.19,
-      2730.59
+      2960.0,
+      3420.0,
+      2440.0
     ],
     "_tts_timing": {
       "mode": "word_boundary_text_align",
       "windows": [
         {
           "start_ms": 0.0,
-          "end_ms": 2016.67,
-          "duration_ms": 2016.67
+          "end_ms": 2960.0,
+          "duration_ms": 2960.0
         },
         {
-          "start_ms": 2016.67,
-          "end_ms": 3190.22,
-          "duration_ms": 1173.55
+          "start_ms": 2960.0,
+          "end_ms": 6380.0,
+          "duration_ms": 3420.0
         },
         {
-          "start_ms": 3190.22,
-          "end_ms": 6749.41,
-          "duration_ms": 3559.19
-        },
-        {
-          "start_ms": 6749.41,
-          "end_ms": 9480.0,
-          "duration_ms": 2730.59
+          "start_ms": 6380.0,
+          "end_ms": 8820.0,
+          "duration_ms": 2440.0
         }
       ],
       "boundary_count": 20,
-      "caption_signature": "160fbbe3659c5e57225faf78eaf71430a03dbac6f4a8c0fea46fdcce7d782c87"
+      "caption_signature": "0a5363fbe356777276f33eaf0b7c314b1a000cbc52c3ca0acc3fb69bbc47ab04"
     }
   },
   "facts": [
     {
-      "tts": "SKT는 최대 55% 온가족할인과 T+인터넷 결합의 신규 가입을 7월 말까지만 받고 중단합니다. KT·LG유플러스도 오래된 결합상품의 신규 가입을 정리하는 흐름입니다. 이미 쓰는 사람은 유지되지만 새로 드는 건 막힙니다.",
+      "tts": "국내 사전판매는 7월 28일부터 8월 3일까지 진행되고, 공식 출시는 8월 7일입니다. 사전예약 기간에 사면 초반 혜택을 받을 수 있어, 이 기간을 놓치지 않는 게 중요합니다.",
       "caption_body": [
-        "무슨 일",
-        "신규 가입 중단"
+        "언제",
+        "7/28~ 사전판매"
       ],
       "caption_emphasis": [
-        "신규 가입 중단"
+        "7/28~ 사전판매"
       ],
       "headline_lines": [
         {
-          "text": "무슨 일"
+          "text": "언제"
         },
         {
-          "text": "신규 가입 중단",
+          "text": "7/28~ 사전판매",
           "accent": true
         }
       ],
-      "meta": "출처: 인사이트코리아",
+      "meta": "출처: ZDNet코리아",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "SKT는 최대 55% 온가족할인과 T+인터넷",
-        "결합의 신규 가입을 7월 말까지만 받고 중단합니다.",
-        "KT·LG유플러스도 오래된 결합상품의",
-        "신규 가입을 정리하는 흐름입니다.",
-        "이미 쓰는 사람은 유지되지만 새로 드는 건 막힙니다."
+        "국내 사전판매는 7월 28일부터 8월 3일까지 진행되고,",
+        "공식 출시는 8월 7일입니다.",
+        "사전예약 기간에 사면 초반 혜택을 받을 수 있어,",
+        "이 기간을 놓치지 않는 게 중요합니다."
       ],
       "chunk_visuals": [
-        {
-          "type": "image",
-          "value": "photos/SKT_로고.png"
-        },
         {
           "type": "illust",
           "value": "event_period_8cafdac4"
         },
         {
-          "type": "image",
-          "value": "photos/lgu로고.png"
+          "type": "illust",
+          "value": "clock"
         },
         {
           "type": "illust",
-          "value": "display_maintenance_c1ff39c1"
+          "value": "gift_voucher"
         },
         {
           "type": "illust",
-          "value": "document_article"
+          "value": "official_sale_9dc82f05"
         }
       ],
       "stat": {
@@ -166,227 +149,10 @@
       },
       "id": "fact_1",
       "display_chunks": [
-        "SKT는 최대 55% 온가족할인과 T+인터넷",
-        "결합의 신규 가입을 7월 말까지만 받고 중단합니다",
-        "KT·LG유플러스도 오래된 결합상품의",
-        "신규 가입을 정리하는 흐름입니다",
-        "이미 쓰는 사람은 유지되지만 새로 드는 건 막힙니다"
-      ],
-      "_codex_caption_lockstep": {
-        "version": 2,
-        "compiler": "korean_caption_compiler_v2",
-        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 5
-      },
-      "_codex_contextual_narrative": true,
-      "_codex_sync_mode": "global999_tts_caption_lockstep",
-      "tts_chunk_weights": [
-        4051.21,
-        3200.22,
-        3560.88,
-        1739.38,
-        3948.31
-      ],
-      "_tts_timing": {
-        "mode": "word_boundary_text_align",
-        "windows": [
-          {
-            "start_ms": 0.0,
-            "end_ms": 4051.21,
-            "duration_ms": 4051.21
-          },
-          {
-            "start_ms": 4051.21,
-            "end_ms": 7251.43,
-            "duration_ms": 3200.22
-          },
-          {
-            "start_ms": 7251.43,
-            "end_ms": 10812.31,
-            "duration_ms": 3560.88
-          },
-          {
-            "start_ms": 10812.31,
-            "end_ms": 12551.69,
-            "duration_ms": 1739.38
-          },
-          {
-            "start_ms": 12551.69,
-            "end_ms": 16500.0,
-            "duration_ms": 3948.31
-          }
-        ],
-        "boundary_count": 32,
-        "caption_signature": "f47b58860b21dd6acc618e618c94e0d9a511a3c2a30b61d0e9701b7ce2218ba2"
-      }
-    },
-    {
-      "tts": "AI 투자 확대와 해킹 사고 수습으로 통신사 비용 부담이 커졌습니다. 수익성이 낮은 장기 고객 할인 제도를 정비하는 것으로 업계는 봅니다. 소비자 입장에선 혜택이 줄어드는 셈입니다.",
-      "caption_body": [
-        "왜",
-        "장기할인 손보나"
-      ],
-      "caption_emphasis": [
-        "장기할인"
-      ],
-      "headline_lines": [
-        {
-          "text": "왜"
-        },
-        {
-          "text": "장기할인 손보나",
-          "accent": true
-        }
-      ],
-      "meta": "출처: 조선일보",
-      "topic": "뉴스",
-      "background_image": "",
-      "caption_chunks": [
-        "AI 투자 확대와 해킹 사고",
-        "수습으로 통신사 비용 부담이 커졌습니다.",
-        "수익성이 낮은 장기 고객 할인 제도를",
-        "정비하는 것으로 업계는 봅니다.",
-        "소비자 입장에선 혜택이 줄어드는 셈입니다."
-      ],
-      "chunk_visuals": [
-        {
-          "type": "illust",
-          "value": "samsung_ai"
-        },
-        {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "phone_setup_ready"
-        },
-        {
-          "type": "illust",
-          "value": "phone_settings_toggle"
-        },
-        {
-          "type": "mascot",
-          "value": "suspicious"
-        }
-      ],
-      "stat": {
-        "label": "",
-        "value": "",
-        "note": ""
-      },
-      "id": "fact_2",
-      "display_chunks": [
-        "AI 투자 확대와 해킹 사고",
-        "수습으로 통신사 비용 부담이 커졌습니다",
-        "수익성이 낮은 장기 고객 할인 제도를",
-        "정비하는 것으로 업계는 봅니다",
-        "소비자 입장에선 혜택이 줄어드는 셈입니다"
-      ],
-      "_codex_caption_lockstep": {
-        "version": 2,
-        "compiler": "korean_caption_compiler_v2",
-        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
-        "chunk_count": 5
-      },
-      "_codex_contextual_narrative": true,
-      "_codex_sync_mode": "global999_tts_caption_lockstep",
-      "tts_chunk_weights": [
-        1835.61,
-        2217.91,
-        2721.69,
-        1562.09,
-        2402.7
-      ],
-      "_tts_timing": {
-        "mode": "word_boundary_text_align",
-        "windows": [
-          {
-            "start_ms": 0.0,
-            "end_ms": 1835.61,
-            "duration_ms": 1835.61
-          },
-          {
-            "start_ms": 1835.61,
-            "end_ms": 4053.51,
-            "duration_ms": 2217.91
-          },
-          {
-            "start_ms": 4053.51,
-            "end_ms": 6775.2,
-            "duration_ms": 2721.69
-          },
-          {
-            "start_ms": 6775.2,
-            "end_ms": 8337.3,
-            "duration_ms": 1562.09
-          },
-          {
-            "start_ms": 8337.3,
-            "end_ms": 10740.0,
-            "duration_ms": 2402.7
-          }
-        ],
-        "boundary_count": 25,
-        "caption_signature": "5bc61334812bbfafa6dd7884de77380941010cf6090ae5b25955e323cbbe2f7b"
-      }
-    },
-    {
-      "tts": "할인을 위해 온 가족 통신사를 하나로 맞춰 온 사람들이 특히 반발합니다. 이제는 통신사를 유지할 이유가 줄었다며 알뜰폰이나 경쟁사 이동을 검토하는 목소리도 나옵니다.",
-      "caption_body": [
-        "영향",
-        "장기고객 불만"
-      ],
-      "caption_emphasis": [
-        "장기고객 불만"
-      ],
-      "headline_lines": [
-        {
-          "text": "영향"
-        },
-        {
-          "text": "장기고객 불만",
-          "accent": true
-        }
-      ],
-      "meta": "출처: 인사이트코리아",
-      "topic": "뉴스",
-      "background_image": "",
-      "caption_chunks": [
-        "할인을 위해 온 가족 통신사를 하나로 맞춰",
-        "온 사람들이 특히 반발합니다.",
-        "이제는 통신사를 유지할 이유가 줄었다며",
-        "알뜰폰이나 경쟁사 이동을 검토하는 목소리도 나옵니다."
-      ],
-      "chunk_visuals": [
-        {
-          "type": "illust",
-          "value": "budget_choice_42fbdd85"
-        },
-        {
-          "type": "illust",
-          "value": "device_os_requirement"
-        },
-        {
-          "type": "illust",
-          "value": "meeting_room"
-        },
-        {
-          "type": "illust",
-          "value": "device_data_transfer"
-        }
-      ],
-      "stat": {
-        "label": "",
-        "value": "",
-        "note": ""
-      },
-      "id": "fact_3",
-      "display_chunks": [
-        "할인을 위해 온 가족 통신사를 하나로 맞춰",
-        "온 사람들이 특히 반발합니다",
-        "이제는 통신사를 유지할 이유가 줄었다며",
-        "알뜰폰이나 경쟁사 이동을 검토하는 목소리도 나옵니다"
+        "국내 사전판매는 7월 28일부터 8월 3일까지 진행되고,",
+        "공식 출시는 8월 7일입니다",
+        "사전예약 기간에 사면 초반 혜택을 받을 수 있어,",
+        "이 기간을 놓치지 않는 게 중요합니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
@@ -397,87 +163,87 @@
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        2313.33,
-        1286.67,
-        2480.0,
-        2820.0
+        3660.0,
+        2200.0,
+        3460.0,
+        1760.0
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 2313.33,
-            "duration_ms": 2313.33
+            "end_ms": 3660.0,
+            "duration_ms": 3660.0
           },
           {
-            "start_ms": 2313.33,
-            "end_ms": 3600.0,
-            "duration_ms": 1286.67
+            "start_ms": 3660.0,
+            "end_ms": 5860.0,
+            "duration_ms": 2200.0
           },
           {
-            "start_ms": 3600.0,
-            "end_ms": 6080.0,
-            "duration_ms": 2480.0
+            "start_ms": 5860.0,
+            "end_ms": 9320.0,
+            "duration_ms": 3460.0
           },
           {
-            "start_ms": 6080.0,
-            "end_ms": 8900.0,
-            "duration_ms": 2820.0
+            "start_ms": 9320.0,
+            "end_ms": 11080.0,
+            "duration_ms": 1760.0
           }
         ],
-        "boundary_count": 21,
-        "caption_signature": "95d80cf8dac7b0886fce5c787e5fa0aab2a8c83c4e029fffc085eb7f176c2523"
+        "boundary_count": 27,
+        "caption_signature": "c4623d692004bec2f325e60c096bdb15a427f0d14cb3fe08a0a0a3ef5a01a600"
       }
     },
     {
-      "tts": "내가 받는 결합할인이 축소·종료 대상인지, 대안 상품(요즘가족결합 등)으로 갈아탈 때 이득인지 따져봐야 합니다. 무작정 유지하거나 옮기기보다 총비용을 비교하는 게 먼저입니다.",
+      "tts": "국내 출고가는 갤Z폴드8 227만원대, 폴드8 울트라 257만원대, 플립8 168만원대입니다(256GB 기준). 폴더블폰이 200만원을 넘어선 만큼 지원금과 실구매가를 꼭 따져야 합니다.",
       "caption_body": [
-        "대응",
-        "내 결합 점검"
+        "라인업·가격",
+        "폴드8·울트라·플립8"
       ],
       "caption_emphasis": [
-        "내 결합"
+        "폴드8·울트라·플립8"
       ],
       "headline_lines": [
         {
-          "text": "대응"
+          "text": "라인업·가격"
         },
         {
-          "text": "내 결합 점검",
+          "text": "폴드8·울트라·플립8",
           "accent": true
         }
       ],
-      "meta": "출처: 휴대폰성지 폰스팟 자료",
+      "meta": "출처: ZDNet코리아",
       "topic": "뉴스",
       "background_image": "",
       "caption_chunks": [
-        "내가 받는 결합할인이 축소·종료 대상인지,",
-        "대안 상품(요즘가족결합 등)으로",
-        "갈아탈 때 이득인지 따져봐야 합니다.",
-        "무작정 유지하거나 옮기기보다 총비용을",
-        "비교하는 게 먼저입니다."
+        "국내 출고가는 갤Z폴드8 227만원대,",
+        "폴드8 울트라 257만원대,",
+        "플립8 168만원대입니다(256GB 기준).",
+        "폴더블폰이 200만원을 넘어선 만큼",
+        "지원금과 실구매가를 꼭 따져야 합니다."
       ],
       "chunk_visuals": [
         {
           "type": "illust",
-          "value": "store"
+          "value": "mid_ship_7968fa24"
+        },
+        {
+          "type": "illust",
+          "value": "samsung_korea_04b00795"
+        },
+        {
+          "type": "illust",
+          "value": "self_flip_6728256c"
+        },
+        {
+          "type": "illust",
+          "value": "change_review_b93b867a"
         },
         {
           "type": "illust",
           "value": "smartphone"
-        },
-        {
-          "type": "illust",
-          "value": "phone_setup_ready"
-        },
-        {
-          "type": "illust",
-          "value": "phone_settings_toggle"
-        },
-        {
-          "type": "image",
-          "value": "photos/애플_아이폰_2개.JPG"
         }
       ],
       "stat": {
@@ -485,13 +251,13 @@
         "value": "",
         "note": ""
       },
-      "id": "fact_4",
+      "id": "fact_2",
       "display_chunks": [
-        "내가 받는 결합할인이 축소·종료 대상인지,",
-        "대안 상품(요즘가족결합 등)으로",
-        "갈아탈 때 이득인지 따져봐야 합니다",
-        "무작정 유지하거나 옮기기보다 총비용을",
-        "비교하는 게 먼저입니다"
+        "국내 출고가는 갤Z폴드8 227만원대,",
+        "폴드8 울트라 257만원대,",
+        "플립8 168만원대입니다(256GB 기준)",
+        "폴더블폰이 200만원을 넘어선 만큼",
+        "지원금과 실구매가를 꼭 따져야 합니다"
       ],
       "_codex_caption_lockstep": {
         "version": 2,
@@ -502,43 +268,253 @@
       "_codex_contextual_narrative": true,
       "_codex_sync_mode": "global999_tts_caption_lockstep",
       "tts_chunk_weights": [
-        2840.0,
-        2460.0,
-        1840.0,
-        3180.0,
-        1040.0
+        2762.33,
+        2264.0,
+        3595.67,
+        2212.0,
+        2166.0
       ],
       "_tts_timing": {
         "mode": "word_boundary_text_align",
         "windows": [
           {
             "start_ms": 0.0,
-            "end_ms": 2840.0,
-            "duration_ms": 2840.0
+            "end_ms": 2762.33,
+            "duration_ms": 2762.33
           },
           {
-            "start_ms": 2840.0,
-            "end_ms": 5300.0,
-            "duration_ms": 2460.0
+            "start_ms": 2762.33,
+            "end_ms": 5026.33,
+            "duration_ms": 2264.0
           },
           {
-            "start_ms": 5300.0,
-            "end_ms": 7140.0,
-            "duration_ms": 1840.0
+            "start_ms": 5026.33,
+            "end_ms": 8622.0,
+            "duration_ms": 3595.67
           },
           {
-            "start_ms": 7140.0,
-            "end_ms": 10320.0,
-            "duration_ms": 3180.0
+            "start_ms": 8622.0,
+            "end_ms": 10834.0,
+            "duration_ms": 2212.0
           },
           {
-            "start_ms": 10320.0,
-            "end_ms": 11360.0,
-            "duration_ms": 1040.0
+            "start_ms": 10834.0,
+            "end_ms": 13000.0,
+            "duration_ms": 2166.0
           }
         ],
-        "boundary_count": 25,
-        "caption_signature": "da5d2e5b34b10ecc4e9af21b10de3e6a7840a1184acd66fb6c0be68986f90d72"
+        "boundary_count": 22,
+        "caption_signature": "2507cd8f9da4d1e127866a4bae8ce32f6e151838cad06d49cf5eb0f8c84b38e7"
+      }
+    },
+    {
+      "tts": "신제품은 사전예약 기간에 통신3사가 저장용량 업그레이드, 액세서리, 추가 혜택 등으로 경쟁하는 경우가 많습니다. 어디서 어떤 조건을 주는지 비교하면 같은 폰을 더 좋게 살 수 있습니다.",
+      "caption_body": [
+        "혜택",
+        "사전예약 경쟁"
+      ],
+      "caption_emphasis": [
+        "사전예약 경쟁"
+      ],
+      "headline_lines": [
+        {
+          "text": "혜택"
+        },
+        {
+          "text": "사전예약 경쟁",
+          "accent": true
+        }
+      ],
+      "meta": "출처: 휴대폰성지 폰스팟 자료",
+      "topic": "뉴스",
+      "background_image": "",
+      "caption_chunks": [
+        "신제품은 사전예약 기간에 통신3사가 저장용량 업그레이드,",
+        "액세서리, 추가 혜택 등으로 경쟁하는 경우가 많습니다.",
+        "어디서 어떤 조건을 주는지 비교하면 같은",
+        "폰을 더 좋게 살 수 있습니다."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "image",
+          "value": "photos/알뜰폰_로고.JPG"
+        },
+        {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        {
+          "type": "image",
+          "value": "photos/애플_아이폰_2개.JPG"
+        },
+        {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_3",
+      "display_chunks": [
+        "신제품은 사전예약 기간에 통신3사가 저장용량 업그레이드,",
+        "액세서리, 추가 혜택 등으로 경쟁하는 경우가 많습니다",
+        "어디서 어떤 조건을 주는지 비교하면 같은",
+        "폰을 더 좋게 살 수 있습니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 4
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        3700.0,
+        2920.0,
+        2940.0,
+        1100.0
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 3700.0,
+            "duration_ms": 3700.0
+          },
+          {
+            "start_ms": 3700.0,
+            "end_ms": 6620.0,
+            "duration_ms": 2920.0
+          },
+          {
+            "start_ms": 6620.0,
+            "end_ms": 9560.0,
+            "duration_ms": 2940.0
+          },
+          {
+            "start_ms": 9560.0,
+            "end_ms": 10660.0,
+            "duration_ms": 1100.0
+          }
+        ],
+        "boundary_count": 27,
+        "caption_signature": "3435a56d70e1fc7ed95e04abd5675b37e7490c249bd35a552690916c0c6426f9"
+      }
+    },
+    {
+      "tts": "폴드8 계열을 노렸다면 사전예약 기간과 혜택, 실구매가를 미리 확인하세요. 월 납부금만 보지 말고, 지원금과 사은품까지 더한 총비용으로 비교하는 게 이득입니다.",
+      "caption_body": [
+        "살 사람은",
+        "기간·조건 체크"
+      ],
+      "caption_emphasis": [
+        "기간·조건"
+      ],
+      "headline_lines": [
+        {
+          "text": "살 사람은"
+        },
+        {
+          "text": "기간·조건 체크",
+          "accent": true
+        }
+      ],
+      "meta": "출처: 휴대폰성지 폰스팟 자료",
+      "topic": "뉴스",
+      "background_image": "",
+      "caption_chunks": [
+        "폴드8 계열을 노렸다면 사전예약 기간과 혜택,",
+        "실구매가를 미리 확인하세요.",
+        "월 납부금만 보지 말고,",
+        "지원금과 사은품까지 더한 총비용으로",
+        "비교하는 게 이득입니다."
+      ],
+      "chunk_visuals": [
+        {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        {
+          "type": "illust",
+          "value": "payment_fall_8fb48590"
+        },
+        {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        {
+          "type": "mascot",
+          "value": "serious"
+        }
+      ],
+      "stat": {
+        "label": "",
+        "value": "",
+        "note": ""
+      },
+      "id": "fact_4",
+      "display_chunks": [
+        "폴드8 계열을 노렸다면 사전예약 기간과 혜택,",
+        "실구매가를 미리 확인하세요",
+        "월 납부금만 보지 말고,",
+        "지원금과 사은품까지 더한 총비용으로",
+        "비교하는 게 이득입니다"
+      ],
+      "_codex_caption_lockstep": {
+        "version": 2,
+        "compiler": "korean_caption_compiler_v2",
+        "policy": "display chunks are an ordered, lossless semantic partition of section TTS",
+        "chunk_count": 5
+      },
+      "_codex_contextual_narrative": true,
+      "_codex_sync_mode": "global999_tts_caption_lockstep",
+      "tts_chunk_weights": [
+        2945.27,
+        2301.39,
+        1421.97,
+        2365.76,
+        905.61
+      ],
+      "_tts_timing": {
+        "mode": "word_boundary_text_align",
+        "windows": [
+          {
+            "start_ms": 0.0,
+            "end_ms": 2945.27,
+            "duration_ms": 2945.27
+          },
+          {
+            "start_ms": 2945.27,
+            "end_ms": 5246.67,
+            "duration_ms": 2301.39
+          },
+          {
+            "start_ms": 5246.67,
+            "end_ms": 6668.64,
+            "duration_ms": 1421.97
+          },
+          {
+            "start_ms": 6668.64,
+            "end_ms": 9034.39,
+            "duration_ms": 2365.76
+          },
+          {
+            "start_ms": 9034.39,
+            "end_ms": 9940.0,
+            "duration_ms": 905.61
+          }
+        ],
+        "boundary_count": 21,
+        "caption_signature": "e501cd8df5757abb14d90a10aa7b8293c7fbc6745992e079acf1422fd593adca"
       }
     }
   ],
@@ -600,21 +576,21 @@
     "_codex_fixed_cta": true,
     "_codex_narration_source": "fixed_cta_contract",
     "tts_chunk_weights": [
-      1080.0,
-      1960.0
+      1433.33,
+      1486.67
     ],
     "_tts_timing": {
       "mode": "word_boundary_text_align",
       "windows": [
         {
           "start_ms": 0.0,
-          "end_ms": 1080.0,
-          "duration_ms": 1080.0
+          "end_ms": 1433.33,
+          "duration_ms": 1433.33
         },
         {
-          "start_ms": 1080.0,
-          "end_ms": 3040.0,
-          "duration_ms": 1960.0
+          "start_ms": 1433.33,
+          "end_ms": 2920.0,
+          "duration_ms": 1486.67
         }
       ],
       "boundary_count": 6,
@@ -623,7 +599,7 @@
   },
   "_auto_generated": true,
   "_chunk_logic_v2": true,
-  "_source_hash": "e9257339630ecc6b3582a2a4c8f6a8fdf10f5555",
+  "_source_hash": "7540814b26f986ee5fb1a9d99ca0cca01a60351e",
   "_note": "build_script.py 자동 생성 (v2 로직): 시퀀스 내 이미지 순환 + 마스코트 짝수 시퀀스만.",
   "_codex_global_999_quality": true,
   "_codex_common_quality_logic": true,
@@ -643,10 +619,10 @@
         },
         "to": {
           "type": "image",
-          "value": "photos/알뜰폰_로고.JPG"
+          "value": "photos/갤럭시z플립7_z폴드7.JPG"
         },
-        "context": "가족 회선을 묶어 통신비를 아끼던 결합할인이 줄어들고 있습니다 가족끼리 묶으면 할인? 이제 옛말 ['가족끼리 묶으면 할인?', '이제 옛말'] 뉴스",
-        "reason": "photo lexical dist=1 gen=0: 알뜰폰_로고.JPG"
+        "context": "갤럭시 언팩에서 공개된 새 폴더블폰이 곧 손에 들어옵니다 사전판매가 시작되고 공식 출시는 8월 7일입니다 갤Z폴드8 사전판매 시작 ['갤Z폴드8', '사전판매 시작'] 뉴스",
+        "reason": "photo lexical dist=3 gen=0: 갤럭시z플립7_z폴드7.JPG"
       },
       {
         "section": "hook",
@@ -657,13 +633,55 @@
         },
         "to": {
           "type": "illust",
-          "value": "chart_down"
+          "value": "foldable"
         },
-        "context": "가족 회선을 묶어 통신비를 아끼던 결합할인이 줄어들고 있습니다 통신3사가 장기 결합할인을 손보기 시작했습니다 가족끼리 묶으면 할인? 이제 옛말 ['가족끼리 묶으면 할인?', '이제 옛말'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
+        "context": "갤럭시 언팩에서 공개된 새 폴더블폰이 곧 손에 들어옵니다 사전판매가 시작되고 공식 출시는 8월 7일입니다 살 계획이라면 지금부터 챙길 게 있습니다 갤Z폴드8 사전판매 시작 ['갤Z폴드8', '사전판매 시작'] 뉴스",
+        "reason": "illust score 24 (content n/a)"
       },
       {
         "section": "hook",
+        "chunk": 3,
+        "from": {
+          "type": "mascot",
+          "value": "surprised"
+        },
+        "to": {
+          "type": "illust",
+          "value": "basic_fold_202d754f"
+        },
+        "context": "사전판매가 시작되고 공식 출시는 8월 7일입니다 살 계획이라면 지금부터 챙길 게 있습니다 갤Z폴드8 사전판매 시작 ['갤Z폴드8', '사전판매 시작'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "event_period_8cafdac4"
+        },
+        "context": "국내 사전판매는 7월 28일부터 8월 3일까지 진행되고, 공식 출시는 8월 7일입니다 언제 7/28~ 사전판매 ['언제', '7/28~ 사전판매'] 뉴스",
+        "reason": "illust score 24 (content n/a)"
+      },
+      {
+        "section": "fact_1",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "clock"
+        },
+        "context": "국내 사전판매는 7월 28일부터 8월 3일까지 진행되고, 공식 출시는 8월 7일입니다 사전예약 기간에 사면 초반 혜택을 받을 수 있어, 언제 7/28~ 사전판매 ['언제', '7/28~ 사전판매'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_1",
         "chunk": 3,
         "from": {
           "type": "illust",
@@ -673,50 +691,8 @@
           "type": "illust",
           "value": "gift_voucher"
         },
-        "context": "결합할인이 줄어들고 있습니다 통신3사가 장기 결합할인을 손보기 시작했습니다 내 할인이 사라지는 건 아닌지 확인이 필요합니다 가족끼리 묶으면 할인? 이제 옛말 ['가족끼리 묶으면 할인?', '이제 옛말'] 뉴스",
+        "context": "공식 출시는 8월 7일입니다 사전예약 기간에 사면 초반 혜택을 받을 수 있어, 이 기간을 놓치지 않는 게 중요합니다 언제 7/28~ 사전판매 ['언제', '7/28~ 사전판매'] 뉴스",
         "reason": "illust score 12 (content n/a)"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "image",
-          "value": "photos/SKT_로고.png"
-        },
-        "context": "SKT는 최대 55% 온가족할인과 T+인터넷 결합의 신규 가입을 7월 말까지만 받고 중단합니다 무슨 일 신규 가입 중단 ['무슨 일', '신규 가입 중단'] 뉴스",
-        "reason": "photo lexical dist=1 gen=0: SKT_로고.png"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "aluminum_label"
-        },
-        "to": {
-          "type": "illust",
-          "value": "event_period_8cafdac4"
-        },
-        "context": "SKT는 최대 55% 온가족할인과 T+인터넷 결합의 신규 가입을 7월 말까지만 받고 중단합니다 KT·LG유플러스도 오래된 결합상품의 무슨 일 신규 가입 중단 ['무슨 일', '신규 가입 중단'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "appear_e5f828cc"
-        },
-        "to": {
-          "type": "image",
-          "value": "photos/lgu로고.png"
-        },
-        "context": "결합의 신규 가입을 7월 말까지만 받고 중단합니다 KT·LG유플러스도 오래된 결합상품의 신규 가입을 정리하는 흐름입니다 무슨 일 신규 가입 중단 ['무슨 일', '신규 가입 중단'] 뉴스",
-        "reason": "photo lexical dist=1 gen=0: lgu로고.png"
       },
       {
         "section": "fact_1",
@@ -727,23 +703,9 @@
         },
         "to": {
           "type": "illust",
-          "value": "display_maintenance_c1ff39c1"
+          "value": "official_sale_9dc82f05"
         },
-        "context": "KT·LG유플러스도 오래된 결합상품의 신규 가입을 정리하는 흐름입니다 이미 쓰는 사람은 유지되지만 새로 드는 건 막힙니다 무슨 일 신규 가입 중단 ['무슨 일', '신규 가입 중단'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
-      },
-      {
-        "section": "fact_1",
-        "chunk": 5,
-        "from": {
-          "type": "illust",
-          "value": "appliance"
-        },
-        "to": {
-          "type": "illust",
-          "value": "document_article"
-        },
-        "context": "신규 가입을 정리하는 흐름입니다 이미 쓰는 사람은 유지되지만 새로 드는 건 막힙니다 무슨 일 신규 가입 중단 ['무슨 일', '신규 가입 중단'] 뉴스",
+        "context": "사전예약 기간에 사면 초반 혜택을 받을 수 있어, 이 기간을 놓치지 않는 게 중요합니다 언제 7/28~ 사전판매 ['언제', '7/28~ 사전판매'] 뉴스",
         "reason": "illust score 12 (content n/a)"
       },
       {
@@ -755,10 +717,10 @@
         },
         "to": {
           "type": "illust",
-          "value": "samsung_ai"
+          "value": "mid_ship_7968fa24"
         },
-        "context": "AI 투자 확대와 해킹 사고 수습으로 통신사 비용 부담이 커졌습니다 왜 장기할인 손보나 ['왜', '장기할인 손보나'] 뉴스",
-        "reason": "illust score 15 (content n/a)"
+        "context": "국내 출고가는 갤Z폴드8 227만원대, 폴드8 울트라 257만원대, 라인업·가격 폴드8·울트라·플립8 ['라인업·가격', '폴드8·울트라·플립8'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
       },
       {
         "section": "fact_2",
@@ -769,10 +731,10 @@
         },
         "to": {
           "type": "illust",
-          "value": "smartphone"
+          "value": "samsung_korea_04b00795"
         },
-        "context": "AI 투자 확대와 해킹 사고 수습으로 통신사 비용 부담이 커졌습니다 수익성이 낮은 장기 고객 할인 제도를 왜 장기할인 손보나 ['왜', '장기할인 손보나'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
+        "context": "국내 출고가는 갤Z폴드8 227만원대, 폴드8 울트라 257만원대, 플립8 168만원대입니다(256GB 기준) 라인업·가격 폴드8·울트라·플립8 ['라인업·가격', '폴드8·울트라·플립8'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
       },
       {
         "section": "fact_2",
@@ -783,10 +745,10 @@
         },
         "to": {
           "type": "illust",
-          "value": "phone_setup_ready"
+          "value": "self_flip_6728256c"
         },
-        "context": "수습으로 통신사 비용 부담이 커졌습니다 수익성이 낮은 장기 고객 할인 제도를 정비하는 것으로 업계는 봅니다 왜 장기할인 손보나 ['왜', '장기할인 손보나'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
+        "context": "폴드8 울트라 257만원대, 플립8 168만원대입니다(256GB 기준) 폴더블폰이 200만원을 넘어선 만큼 라인업·가격 폴드8·울트라·플립8 ['라인업·가격', '폴드8·울트라·플립8'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
       },
       {
         "section": "fact_2",
@@ -797,191 +759,147 @@
         },
         "to": {
           "type": "illust",
-          "value": "phone_settings_toggle"
+          "value": "change_review_b93b867a"
         },
-        "context": "수익성이 낮은 장기 고객 할인 제도를 정비하는 것으로 업계는 봅니다 소비자 입장에선 혜택이 줄어드는 셈입니다 왜 장기할인 손보나 ['왜', '장기할인 손보나'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "budget_choice_42fbdd85"
-        },
-        "context": "할인을 위해 온 가족 통신사를 하나로 맞춰 온 사람들이 특히 반발합니다 영향 장기고객 불만 ['영향', '장기고객 불만'] 뉴스",
+        "context": "플립8 168만원대입니다(256GB 기준) 폴더블폰이 200만원을 넘어선 만큼 지원금과 실구매가를 꼭 따져야 합니다 라인업·가격 폴드8·울트라·플립8 ['라인업·가격', '폴드8·울트라·플립8'] 뉴스",
         "reason": "illust score 12 (content n/a)"
       },
       {
-        "section": "fact_3",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "aluminum_label"
-        },
-        "to": {
-          "type": "illust",
-          "value": "device_os_requirement"
-        },
-        "context": "할인을 위해 온 가족 통신사를 하나로 맞춰 온 사람들이 특히 반발합니다 이제는 통신사를 유지할 이유가 줄었다며 영향 장기고객 불만 ['영향', '장기고객 불만'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "appear_e5f828cc"
-        },
-        "to": {
-          "type": "illust",
-          "value": "meeting_room"
-        },
-        "context": "온 사람들이 특히 반발합니다 이제는 통신사를 유지할 이유가 줄었다며 알뜰폰이나 경쟁사 이동을 검토하는 목소리도 나옵니다 영향 장기고객 불만 ['영향', '장기고객 불만'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
-      },
-      {
-        "section": "fact_3",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "apple_70385068"
-        },
-        "to": {
-          "type": "illust",
-          "value": "device_data_transfer"
-        },
-        "context": "이제는 통신사를 유지할 이유가 줄었다며 알뜰폰이나 경쟁사 이동을 검토하는 목소리도 나옵니다 영향 장기고객 불만 ['영향', '장기고객 불만'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 1,
-        "from": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "to": {
-          "type": "illust",
-          "value": "store"
-        },
-        "context": "내가 받는 결합할인이 축소·종료 대상인지, 대안 상품(요즘가족결합 등)으로 대응 내 결합 점검 ['대응', '내 결합 점검'] 뉴스",
-        "reason": "illust score 12 (content n/a)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 2,
-        "from": {
-          "type": "illust",
-          "value": "aluminum_label"
-        },
-        "to": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "내가 받는 결합할인이 축소·종료 대상인지, 대안 상품(요즘가족결합 등)으로 갈아탈 때 이득인지 따져봐야 합니다 대응 내 결합 점검 ['대응', '내 결합 점검'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 3,
-        "from": {
-          "type": "illust",
-          "value": "appear_e5f828cc"
-        },
-        "to": {
-          "type": "illust",
-          "value": "phone_setup_ready"
-        },
-        "context": "대안 상품(요즘가족결합 등)으로 갈아탈 때 이득인지 따져봐야 합니다 무작정 유지하거나 옮기기보다 총비용을 대응 내 결합 점검 ['대응', '내 결합 점검'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
-        "chunk": 4,
-        "from": {
-          "type": "illust",
-          "value": "apple_70385068"
-        },
-        "to": {
-          "type": "illust",
-          "value": "phone_settings_toggle"
-        },
-        "context": "갈아탈 때 이득인지 따져봐야 합니다 무작정 유지하거나 옮기기보다 총비용을 비교하는 게 먼저입니다 대응 내 결합 점검 ['대응', '내 결합 점검'] 뉴스",
-        "reason": "neutral filler (no semantic match)"
-      },
-      {
-        "section": "fact_4",
+        "section": "fact_2",
         "chunk": 5,
         "from": {
           "type": "mascot",
-          "value": "serious"
+          "value": "suspicious"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "폴더블폰이 200만원을 넘어선 만큼 지원금과 실구매가를 꼭 따져야 합니다 라인업·가격 폴드8·울트라·플립8 ['라인업·가격', '폴드8·울트라·플립8'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "image",
+          "value": "photos/알뜰폰_로고.JPG"
+        },
+        "context": "신제품은 사전예약 기간에 통신3사가 저장용량 업그레이드, 액세서리, 추가 혜택 등으로 경쟁하는 경우가 많습니다 혜택 사전예약 경쟁 ['혜택', '사전예약 경쟁'] 뉴스",
+        "reason": "photo lexical dist=1 gen=0: 알뜰폰_로고.JPG"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_setup_ready"
+        },
+        "context": "신제품은 사전예약 기간에 통신3사가 저장용량 업그레이드, 액세서리, 추가 혜택 등으로 경쟁하는 경우가 많습니다 어디서 어떤 조건을 주는지 비교하면 같은 혜택 사전예약 경쟁 ['혜택', '사전예약 경쟁'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appear_e5f828cc"
         },
         "to": {
           "type": "image",
           "value": "photos/애플_아이폰_2개.JPG"
         },
-        "context": "무작정 유지하거나 옮기기보다 총비용을 비교하는 게 먼저입니다 대응 내 결합 점검 ['대응', '내 결합 점검'] 뉴스",
+        "context": "액세서리, 추가 혜택 등으로 경쟁하는 경우가 많습니다 어디서 어떤 조건을 주는지 비교하면 같은 폰을 더 좋게 살 수 있습니다 혜택 사전예약 경쟁 ['혜택', '사전예약 경쟁'] 뉴스",
         "reason": "photo lexical dist=1 gen=0: 애플_아이폰_2개.JPG"
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "apple_70385068"
+        },
+        "to": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "어디서 어떤 조건을 주는지 비교하면 같은 폰을 더 좋게 살 수 있습니다 혜택 사전예약 경쟁 ['혜택', '사전예약 경쟁'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 1,
+        "from": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "to": {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        "context": "폴드8 계열을 노렸다면 사전예약 기간과 혜택, 실구매가를 미리 확인하세요 살 사람은 기간·조건 체크 ['살 사람은', '기간·조건 체크'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 2,
+        "from": {
+          "type": "illust",
+          "value": "aluminum_label"
+        },
+        "to": {
+          "type": "illust",
+          "value": "payment_fall_8fb48590"
+        },
+        "context": "폴드8 계열을 노렸다면 사전예약 기간과 혜택, 실구매가를 미리 확인하세요 월 납부금만 보지 말고, 살 사람은 기간·조건 체크 ['살 사람은', '기간·조건 체크'] 뉴스",
+        "reason": "illust score 12 (content n/a)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 3,
+        "from": {
+          "type": "illust",
+          "value": "appear_e5f828cc"
+        },
+        "to": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "실구매가를 미리 확인하세요 월 납부금만 보지 말고, 지원금과 사은품까지 더한 총비용으로 살 사람은 기간·조건 체크 ['살 사람은', '기간·조건 체크'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
+      },
+      {
+        "section": "fact_4",
+        "chunk": 4,
+        "from": {
+          "type": "illust",
+          "value": "apple_70385068"
+        },
+        "to": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "월 납부금만 보지 말고, 지원금과 사은품까지 더한 총비용으로 비교하는 게 이득입니다 살 사람은 기간·조건 체크 ['살 사람은', '기간·조건 체크'] 뉴스",
+        "reason": "neutral filler (no semantic match)"
       }
     ],
     "weak": [
       {
-        "section": "hook",
-        "chunk": 4,
+        "section": "fact_3",
+        "chunk": 1,
         "current": {
-          "type": "mascot",
-          "value": "surprised"
+          "type": "image",
+          "value": "photos/알뜰폰_로고.JPG"
         },
-        "context": "통신3사가 장기 결합할인을 손보기 시작했습니다 내 할인이 사라지는 건 아닌지 확인이 필요합니다 가족끼리 묶으면 할인? 이제 옛말 ['가족끼리 묶으면 할인?', '이제 옛말'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_2",
-        "chunk": 2,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "AI 투자 확대와 해킹 사고 수습으로 통신사 비용 부담이 커졌습니다 수익성이 낮은 장기 고객 할인 제도를 왜 장기할인 손보나 ['왜', '장기할인 손보나'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 3
-      },
-      {
-        "section": "fact_2",
-        "chunk": 3,
-        "current": {
-          "type": "illust",
-          "value": "phone_setup_ready"
-        },
-        "context": "수습으로 통신사 비용 부담이 커졌습니다 수익성이 낮은 장기 고객 할인 제도를 정비하는 것으로 업계는 봅니다 왜 장기할인 손보나 ['왜', '장기할인 손보나'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_2",
-        "chunk": 4,
-        "current": {
-          "type": "illust",
-          "value": "phone_settings_toggle"
-        },
-        "context": "수익성이 낮은 장기 고객 할인 제도를 정비하는 것으로 업계는 봅니다 소비자 입장에선 혜택이 줄어드는 셈입니다 왜 장기할인 손보나 ['왜', '장기할인 손보나'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_2",
-        "chunk": 5,
-        "current": {
-          "type": "mascot",
-          "value": "suspicious"
-        },
-        "context": "정비하는 것으로 업계는 봅니다 소비자 입장에선 혜택이 줄어드는 셈입니다 왜 장기할인 손보나 ['왜', '장기할인 손보나'] 뉴스",
+        "context": "신제품은 사전예약 기간에 통신3사가 저장용량 업그레이드, 액세서리, 추가 혜택 등으로 경쟁하는 경우가 많습니다 혜택 사전예약 경쟁 ['혜택', '사전예약 경쟁'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       },
@@ -990,64 +908,75 @@
         "chunk": 2,
         "current": {
           "type": "illust",
-          "value": "device_os_requirement"
+          "value": "phone_setup_ready"
         },
-        "context": "할인을 위해 온 가족 통신사를 하나로 맞춰 온 사람들이 특히 반발합니다 이제는 통신사를 유지할 이유가 줄었다며 영향 장기고객 불만 ['영향', '장기고객 불만'] 뉴스",
+        "context": "신제품은 사전예약 기간에 통신3사가 저장용량 업그레이드, 액세서리, 추가 혜택 등으로 경쟁하는 경우가 많습니다 어디서 어떤 조건을 주는지 비교하면 같은 혜택 사전예약 경쟁 ['혜택', '사전예약 경쟁'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       },
       {
         "section": "fact_3",
-        "chunk": 4,
-        "current": {
-          "type": "illust",
-          "value": "device_data_transfer"
-        },
-        "context": "이제는 통신사를 유지할 이유가 줄었다며 알뜰폰이나 경쟁사 이동을 검토하는 목소리도 나옵니다 영향 장기고객 불만 ['영향', '장기고객 불만'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_4",
-        "chunk": 2,
-        "current": {
-          "type": "illust",
-          "value": "smartphone"
-        },
-        "context": "내가 받는 결합할인이 축소·종료 대상인지, 대안 상품(요즘가족결합 등)으로 갈아탈 때 이득인지 따져봐야 합니다 대응 내 결합 점검 ['대응', '내 결합 점검'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_4",
         "chunk": 3,
-        "current": {
-          "type": "illust",
-          "value": "phone_setup_ready"
-        },
-        "context": "대안 상품(요즘가족결합 등)으로 갈아탈 때 이득인지 따져봐야 합니다 무작정 유지하거나 옮기기보다 총비용을 대응 내 결합 점검 ['대응', '내 결합 점검'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_4",
-        "chunk": 4,
-        "current": {
-          "type": "illust",
-          "value": "phone_settings_toggle"
-        },
-        "context": "갈아탈 때 이득인지 따져봐야 합니다 무작정 유지하거나 옮기기보다 총비용을 비교하는 게 먼저입니다 대응 내 결합 점검 ['대응', '내 결합 점검'] 뉴스",
-        "best_image_score": 0,
-        "best_illust_score": 0
-      },
-      {
-        "section": "fact_4",
-        "chunk": 5,
         "current": {
           "type": "image",
           "value": "photos/애플_아이폰_2개.JPG"
         },
-        "context": "무작정 유지하거나 옮기기보다 총비용을 비교하는 게 먼저입니다 대응 내 결합 점검 ['대응', '내 결합 점검'] 뉴스",
+        "context": "액세서리, 추가 혜택 등으로 경쟁하는 경우가 많습니다 어디서 어떤 조건을 주는지 비교하면 같은 폰을 더 좋게 살 수 있습니다 혜택 사전예약 경쟁 ['혜택', '사전예약 경쟁'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_3",
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "phone_settings_toggle"
+        },
+        "context": "어디서 어떤 조건을 주는지 비교하면 같은 폰을 더 좋게 살 수 있습니다 혜택 사전예약 경쟁 ['혜택', '사전예약 경쟁'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_4",
+        "chunk": 1,
+        "current": {
+          "type": "illust",
+          "value": "device_os_requirement"
+        },
+        "context": "폴드8 계열을 노렸다면 사전예약 기간과 혜택, 실구매가를 미리 확인하세요 살 사람은 기간·조건 체크 ['살 사람은', '기간·조건 체크'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_4",
+        "chunk": 3,
+        "current": {
+          "type": "illust",
+          "value": "device_data_transfer"
+        },
+        "context": "실구매가를 미리 확인하세요 월 납부금만 보지 말고, 지원금과 사은품까지 더한 총비용으로 살 사람은 기간·조건 체크 ['살 사람은', '기간·조건 체크'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_4",
+        "chunk": 4,
+        "current": {
+          "type": "illust",
+          "value": "smartphone"
+        },
+        "context": "월 납부금만 보지 말고, 지원금과 사은품까지 더한 총비용으로 비교하는 게 이득입니다 살 사람은 기간·조건 체크 ['살 사람은', '기간·조건 체크'] 뉴스",
+        "best_image_score": 0,
+        "best_illust_score": 0
+      },
+      {
+        "section": "fact_4",
+        "chunk": 5,
+        "current": {
+          "type": "mascot",
+          "value": "serious"
+        },
+        "context": "지원금과 사은품까지 더한 총비용으로 비교하는 게 이득입니다 살 사람은 기간·조건 체크 ['살 사람은', '기간·조건 체크'] 뉴스",
         "best_image_score": 0,
         "best_illust_score": 0
       }
@@ -1055,8 +984,8 @@
   },
   "_codex_effective_script": {
     "version": 2,
-    "slug": "051_news_combined_discount_cut",
-    "source": "C:\\backup\\phonespot_cardnews\\cardnews\\output\\051_news_combined_discount_cut\\shorts_script.json",
+    "slug": "055_news_foldable8_preorder",
+    "source": "C:\\backup\\phonespot_cardnews\\cardnews\\output\\055_news_foldable8_preorder\\shorts_script.json",
     "override_applied": false,
     "override_sections": []
   }

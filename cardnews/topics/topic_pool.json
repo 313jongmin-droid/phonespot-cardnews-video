@@ -27,6 +27,9 @@
     {"id": "051", "line": "news", "topic": "통신3사 결합할인 축소", "hook": "가족끼리 묶으면 할인? 이제 옛말 [⑭긴급+⑬반전]", "summary": "SKT 온가족할인 7/31 종료·통신3사 축소→내 결합 점검→매장", "track_suggest": "카드/카드영상", "ttsan": "★검증·시의성·매장정합·실사조건부", "status": "published", "slug": "051_news_combined_discount_cut"},
     {"id": "052", "line": "news", "topic": "통합요금제 숨은 함정", "hook": "요금제 바꿨더니 데이터는 늘고 혜택은 줄었다 [⑰재정의+⑤안되는이유]", "summary": "데이터↑혜택↓·QoS·기존할인 비교·총혜택→매장", "track_suggest": "카드/카드영상", "ttsan": "검증·역설·실사조건부", "status": "published", "slug": "052_news_unified_plan_trap"},
     {"id": "053", "line": "meme", "topic": "통신사 갈아타기 이득?", "hook": "번호이동하면 무조건 이득? 이럴 땐 손해 [⑯질문+⑥비교결론]", "summary": "이득/손해 경우·위약금·잔여할부·결합→계산→매장", "track_suggest": "실사 viral / 카드", "ttsan": "실용·역설·실사조건부", "status": "published", "slug": "053_meme_carrier_switch_worth"},
-    {"id": "054", "line": "meme", "topic": "폰 바꿀 타이밍 3신호", "hook": "폰 언제 바꿔야 이득? 이 신호 오면 [⑯질문+⑬반전]", "summary": "배터리80%·수리비>중고가·약정끝→안바꿔도될때→매장", "track_suggest": "실사 viral / 카드", "ttsan": "공감·실용·실사조건부", "status": "published", "slug": "054_meme_phone_replace_timing"}
+    {"id": "054", "line": "meme", "topic": "폰 바꿀 타이밍 3신호", "hook": "폰 언제 바꿔야 이득? 이 신호 오면 [⑯질문+⑬반전]", "summary": "배터리80%·수리비>중고가·약정끝→안바꿔도될때→매장", "track_suggest": "실사 viral / 카드", "ttsan": "공감·실용·실사조건부", "status": "published", "slug": "054_meme_phone_replace_timing"},
+    {"id": "055", "line": "news", "topic": "갤Z폴드8 사전판매·8/7 출시", "hook": "갤Z폴드8 사전판매 시작, 8월 7일 출시 [⑭긴급+②근황]", "summary": "사전판매 7/28~8/3·가격 227~257만·사전예약 혜택→매장", "track_suggest": "카드/카드영상", "ttsan": "검증·사전예약·매장정합·실사비추천", "status": "published", "slug": "055_news_foldable8_preorder"},
+    {"id": "056", "line": "qa", "topic": "알뜰폰 진짜 싼가", "hook": "알뜰폰이 무조건 싸다? 이럴 땐 손해 [⑬반전+⑯질문]", "summary": "기본료↓ but 결합·멤버십·지원금 빠짐→총비용 비교→매장", "track_suggest": "카드/카드영상", "ttsan": "실용·역설·실사조건부", "status": "published", "slug": "056_qa_mvno_really_cheap"},
+    {"id": "057", "line": "meme", "topic": "나만 비싸게 산 기분", "hook": "폰 사고 나만 호구된 것 같을 때 [⑯질문+⑬반전]", "summary": "월납부·부가서비스·지원금 차이→서면 비교→정찰제 매장", "track_suggest": "실사 viral / 카드", "ttsan": "공감·경쟁실증·실사조건부", "status": "published", "slug": "057_meme_only_i_overpaid"}
   ]
 }

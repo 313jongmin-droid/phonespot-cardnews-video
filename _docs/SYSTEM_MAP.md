@@ -56,7 +56,7 @@
 - 진입: `CODEX_VIDEO_DESK/00_PHONE_SPOT_PANEL.bat`(직접 실행=콘솔 보임, 디버그용) / **무창 = `dashboard/panel_hidden.vbs`**(고정 바로가기 타깃).
 
 **핵심 심볼 (server.py, 검증된 줄)**
-- `PANEL_VERSION = "phonespot-web-v55"` (L41) — **버전 단일 출처(SSOT)**. ps1이 이 값을 읽음. 화면/CSS 바꾸면 이 숫자만 올림.
+- `PANEL_VERSION = "phonespot-web-v57"` (L41) — **버전 단일 출처(SSOT)**. ps1이 이 값을 읽음. 화면/CSS 바꾸면 이 숫자만 올림.
 - `get_video_slugs()` (L336) — 영상 슬러그 목록. `list_slugs.py` 호출(articles∪output 독립 스캔).
 - `get_cardnews_rows()` (L1073) — 카드뉴스 행. `CARD_OUTPUT ∪ CARD_IMAGES ∪ CARD_ARTICLES` 합집합 스캔. **정렬 = `slug_sort_key` 내림차순(번호 desc)→ `[:80]` 캡 = 최신 80 보존, 최신 위로(v44).** 4개 리스트(영상·카드·tpList·aiList)+`cardnews_summary`(최신 12) 공용 소스라 한 곳에서 정렬 결정.
 - 액션 디스패치: `if action == "..."` 블록들 (L1589~2010). 주요:
@@ -69,6 +69,7 @@
 **버전 게이트 동작 (start_hidden.ps1)**
 - ps1이 server.py에서 정규식 `PANEL_VERSION\s*=\s*"([^"]+)"` 로 버전을 읽어 표시(폴백 "phonespot-web-v21").
 - **화면이 안 바뀌면 server.py의 `PANEL_VERSION`만 올리면 됨.** ps1엔 손 안 댐.
+- **★ "재기동했는데 화면 안 바뀜" = 브라우저 페이지 캐시 (v56 수정).** 헤더 버전은 `/api/state`(`data.version`, L2836)에서 실시간으로 받아 최신으로 보이지만, INDEX_HTML/JS는 브라우저가 캐시 → 옛 UI. 진단: 헤더 버전은 신버전인데 새 버튼/기능이 없음. **수정=`html_response`에 `Cache-Control: no-store` + `Pragma: no-cache`(L1186)** → 재기동 시 항상 새 페이지. v56 이전엔 강력 새로고침(Ctrl+F5) 1회 필요. **UI 검증은 항상 Ctrl+F5 후.**
 
 **디자인 시스템 (iOS / Apple HIG, 2026-06-13, v25~v32)** — 전부 `INDEX_HTML`의 `<style>` 블록 안.
 - **렌더 방식**: `INDEX_HTML = r"""..."""` 순수 raw string + `html_response(self, INDEX_HTML)` 직접 서빙(.format/f-string 아님) → **CSS 중괄호 안전**.
@@ -77,7 +78,7 @@
 - **레이아웃**: max-width 센터링 제거 → **풀폭 + 좌우 20px 균일 거터**(header/.runtime-strip/main 동일). `main` 그리드 `400px 1fr`.
 - **트랙 골격 (v38~v39 재설계)**: 헤더 → **가운데정렬 트랙 세그먼트**(카드뉴스·영상/타이포/실사AI, 배너 삭제) → WORK(트랙별 교체) → **`#commonMonitor`**(실행로그·최근작업기록·최근영상결과; `<main>` 밖·모든 트랙 공용·항상표시, 기존 grid폭 1fr hack 제거). 카드뉴스=`<main>`(400px 1fr, 상태카드 포함), 타이포/실사AI=`.track-pane`. `switchTrack(name)`: 미지값→cardnews 폴백·main은 cardnews만 표시·commonMonitor 불변·타이포 진입 시 `promoLoad()`·타이포/실사 진입 시 `loadTopicSelects()` 자동.
 - **3트랙 골격 통일 (v42, 2026-06-26)**: 타이포·실사AI도 카드뉴스와 동일 골격 — `.track-pane`를 `grid 400px 1fr`(좌측 `section:first-child` sticky)로, **좌측=주제 목록**(`tpList`/`aiList`, 카드뉴스와 같은 `.row` 리스트, `/api/slugs` 공유) + **우측=트랙별 작업**(`action-head`+선택배지 `tpSelectedSlug`/`aiSelectedSlug`+`.btn` 그리드). 타이포 우측=요청+promo렌더 2섹션, 실사AI=요청 1섹션. `<select>`(tpTopic/aiTopic) 폐기 → 클릭리스트+상태변수 `tpSelected`/`aiSelected`. JS `renderTopicList`/`selectTopic`(refetch 없이 `window.__topicItems` 캐시 재렌더)·`styleRequest`는 상태변수 읽음. 세 트랙 뼈대 동일·우측 내용만 다름. **함정: `.track-pane` 그리드는 미디어쿼리에 반드시 같이 넣어야 함** — v42에서 누락돼 모바일 박스 깨짐(v45 수정: `@media max-width:1080px`에 `main, .track-pane{grid-template-columns:1fr}` + `.track-pane > section:first-child{position:static}`, 700px 패딩축소). **트랙 탭(v46 세그먼트 컨트롤)**: `.track-tabs`(중앙) > `.track-seg`(회색 캡슐 `--secondary-bg`+inset 보더) > `.track-tab`(16px) / 선택 `.track-tab.on`=주황 알약+`--shadow-card`. `switchTrack`은 인라인 스타일 X → `classList.toggle("on")`. 모바일(≤700px)=캡슐 풀폭+탭 `flex:1`+14px.
-- **작업 기록 로그 펼침 (v53, 2026-06-26)**: `#commonMonitor`의 "최근 작업 기록" 행 클릭 → 그 잡 로그를 행 아래 인라인 펼침(▸/▾). GET `/api/job_log?id=` = 원격은 `REMOTE_QUEUE` 잡의 `log`, 로컬은 `read_local_history`의 `log`. **로컬 잡은 `run_job` finally에서 `final_log`(마지막 40k)를 히스토리에 저장**(이전엔 로컬 로그 미보존). 로그는 펼칠 때만 fetch(폴링 페이로드 경량 유지)·`jobLogCache`로 폴링 재렌더에도 유지. JS `renderJobHistory`/`toggleJobLog`, 결과링크는 `stopPropagation`. **(v54) 별도 "실행 로그" 박스(`#log`) 폐기** — 실행 중 잡의 라이브 로그를 `loadState`(1.5s 폴링)가 `jobLogCache[job.job_id]`에 계속 갱신 + 펼쳐져 있으면 `renderJobHistory` 재호출 → 히스토리 펼침에서 실시간 스트리밍(렌더 진행 관찰). "로그 복사" 버튼은 펼침 안으로 이동(`copyLog`=펼친 잡 로그 복사). "상태" 카드의 실행중 진행률 표시는 유지. 함정: 실행중 잡이 히스토리에 있어야(로컬은 `run_job` 시작 시 status=running으로 등록됨) job_id 매칭됨.
+- **작업 기록 로그 펼침 (v53, 2026-06-26)**: `#commonMonitor`의 "최근 작업 기록" 행 클릭 → 그 잡 로그를 행 아래 인라인 펼침(▸/▾). GET `/api/job_log?id=` = 원격은 `REMOTE_QUEUE` 잡의 `log`, 로컬은 `read_local_history`의 `log`. **로컬 잡은 `run_job` finally에서 `final_log`(마지막 40k)를 히스토리에 저장**(이전엔 로컬 로그 미보존). 로그는 펼칠 때만 fetch(폴링 페이로드 경량 유지)·`jobLogCache`로 폴링 재렌더에도 유지. JS `renderJobHistory`/`toggleJobLog`, 결과링크는 `stopPropagation`. **(v54) 별도 "실행 로그" 박스(`#log`) 폐기** — 실행 중 잡의 라이브 로그를 `loadState`(1.5s 폴링)가 `jobLogCache[job.job_id]`에 계속 갱신 + 펼쳐져 있으면 `renderJobHistory` 재호출 → 히스토리 펼침에서 실시간 스트리밍(렌더 진행 관찰). "로그 복사" 버튼은 펼침 안으로 이동(`copyLog`=펼친 잡 로그 복사). "상태" 카드의 실행중 진행률 표시는 유지. 함정: 실행중 잡이 히스토리에 있어야(로컬은 `run_job` 시작 시 status=running으로 등록됨) job_id 매칭됨. **(v57) 최근 작업 기록 테이블 = `table-layout:fixed` + 컬럼 고정폭(상태50·PC116·시작112·소요58·결과140, PC/결과 말줄임, 작업명 남는폭 줄바꿈), `min-width:820px` 제거** → 1920 좌측 페인에서 가로 스크롤 없이 전부 표시. 복사 버튼은 펼친 로그 우측 상단.
 - **주제목록 공유 + 스타일 요청 큐 (v40, 2026-06-24)**: 타이포·실사AI 탭에 영상후보(주제) 목록을 `/api/slugs` 재사용해 공유(`tpTopic`·`aiTopic` select) + "만들기 요청" 버튼 → 액션 `style_request`(`{slug,track}` → `_state/style_requests.jsonl` append, status=pending) / `style_pending`(목록 표시). **콘텐츠 작성=Claude**(패널은 글 못 씀) — "스타일 요청 처리" 명령으로 큐 읽어 typo=`TOPIC_TO_PROMO.md`·ai=`MEME_TO_VIRAL.md` 작성·렌더, 처리분 status=done. 함정: 자동 즉시 렌더 아님(요청→Claude 작성 게이트).
 - **영상 후보 목록 즉시 표시 (v52, 2026-07-09)**: `reloadLists()`가 예전엔 `sync_cardnews` 잡 띄우고 `waitForCurrentJob(180000)`(최대 3분) **기다린 뒤** 목록을 그려서 "영상 후보만 느림"(카드뉴스 후보=`loadCardnews`는 로컬만 읽어 즉시). 수정: **`loadSlugs`/`loadCardnews`/`loadState` 먼저(로컬 스캔=빠름) → 동기화는 뒤에서 백그라운드**로 돌고 끝나면 목록 재갱신. 팝업 제거(목록 이미 떠 있어 실패 무시). `/api/slugs`=`/api/cardnews/slugs`=같은 `get_cardnews_rows()`(서버 비용 동일, 차이는 sync 대기였음).
   - 좌측 슬러그 섹션 = `main > section`만 **`position:sticky; top:80px; align-self:start`**(우측 높이에 안 늘어남), `.list { max-height:calc(100vh-188px) }`.
@@ -266,6 +267,7 @@
 **핵심 경로/스크립트**
 - 허브: Google Drive 데스크톱 공유폴더 `PhoneSpot_Library`(데스크톱 동기).
 - 경로파일: `shorts/config/library_share_path.txt` (예: `G:\내 드라이브\PhoneSpot_Library`). **git 제외, PC별 다름.**
+- 수동 누끼 산출물: `C:\Users\313jo\OneDrive\Desktop\누끼 작업물\` — 카드뉴스/광고용 제품 누끼 임시 전달 폴더. git 전파 대상 아님.
 - `shorts/scripts/codex_library_sync.py` — 양방향 비파괴 병합(`--dry-run` 미리보기). **렌더 직전 워커가 best-effort 자동 호출**(`RENDER_WORKER/worker.py`).
 - `shorts/scripts/codex_detect_drive_hub.py` — Drive 로컬경로 자동탐지("내 드라이브\PhoneSpot_Library" / "My Drive\…") → 경로파일 기록.
 - `shorts/scripts/codex_library_dedup.py` — 중복 탐지/병합(`--apply`, 임계 `PHONESPOT_DEDUP_SIM`).
@@ -288,6 +290,7 @@
 **함정**
 - 허브 경로파일은 git 비추적 → 새 PC마다 설정 필요.
 - 동기화는 비파괴 병합(삭제 X). 중복정리는 `--apply` 줘야 실삭제.
+- 누끼 PNG는 **실제 RGBA alpha**여야 한다. 체커보드/회색 격자를 배경 픽셀로 박은 파일은 누끼가 아니다. 납품 전 최소 검증: PNG mode=RGBA, 네 모서리 alpha=0, 배경 픽셀 RGB가 보여도 alpha=0.
 
 **새 PC/다른 사용자 통째 이전 + 컴맹 한계 (2026-06-24 정리)**
 - 가장 단순 = `CODEX_VIDEO_DESK/부사수PC_원클릭_셋업.bat` 1파일(빈PC 복사→더블클릭): git/node/python(winget)→clone(`C:\PhoneSpot\phonespot_cardnews`)→`SETUP_FULL_PRODUCER.bat`(deps+chromium+임베딩~1GB)→`00_PHONE_SPOT_PANEL.bat`. 모델=각 PC 완전 독립 생산기(원격워커 폐기, MULTI_PC 가이드 정본).
@@ -316,7 +319,7 @@
     - **결과(021 검증)**: 엑시노스→엑시노스칩청크, 플립→플립청크, 배터리→배터리청크 정확. `갤럭시A`·`S25`·통신사로고는 해당 단어 없는 영상에서 자동 제외.
     - **★ 임베딩 완전 불필요 → 모델 미설치 PC(부사수)에서도 작동.** `build_photo_index()`/`PHOTO_MIN`은 더 이상 매칭에 안 씀(상수는 잔존, 무해). bat의 `PHONESPOT_PHOTO_MIN`도 미사용. 한 사진은 used_visuals로 **한 청크에만**(중복 사용 시 다음 청크는 일러스트 폴백).
     - 선택 시 `{"type":"image","value":"photos/<file>"}` → 기존 `ImageVisual`이 `staticFile('assets/photos/<file>')` 켄번스 모션으로 렌더(렌더러 변경 X). 진단 로그 `[photo] <sec> c<i>: <file> dist=.. gen=..`.
-    - **★ AI 자동태깅 (2026-07-09) — 파일명 안 지어도 매칭.** `codex_photo_tag.py`가 photos/의 신규 이미지를 gemini vision(gemini-2.5-flash)에 보내 **한글 키워드 자동 추출** → `shorts/config/photo_tag_db.json`(파일명+mtime 캐시). 매처 `photo_lexical_score`에 `_photo_db_hits`(DB 키워드 중 청크 등장 구별토큰 수)를 **파일명 점수에 가산** → 아무 이름(IMG_1234.jpg)도 청크 매칭됨. `run_codex_casual.bat:80`에서 semantic match 직전 자동 실행(신규만·캐시·gemini 키 없으면 스킵=파일명 매칭만, 비파괴). **함정: gemini가 브랜드·부위·특징(아이폰/폴더블/카메라/후면)은 잘 잡지만 정확 모델번호(17 vs 18)는 이미지만으론 불확실 → 그건 파일명으로 보조.** 키=`_secrets/gemini_key.txt`.
+    - **★ AI 자동태깅 (2026-07-09) — 파일명 안 지어도 매칭.** `codex_photo_tag.py`가 photos/의 신규 이미지를 gemini vision(gemini-2.5-flash)에 보내 **한글 키워드 자동 추출** → `shorts/config/photo_tag_db.json`(파일명+mtime 캐시). 매처 `photo_lexical_score`에 `_photo_db_hits`(DB 키워드 중 청크 등장 구별토큰 수)를 **파일명 점수에 가산** → 아무 이름(IMG_1234.jpg)도 청크 매칭됨. `run_codex_casual.bat:80`에서 semantic match 직전 자동 실행(신규만·캐시·gemini 키 없으면 스킵=파일명 매칭만, 비파괴). **함정: gemini가 브랜드·부위·특징(아이폰/폴더블/카메라/후면)은 잘 잡지만 정확 모델번호(17 vs 18)는 이미지만으론 불확실 → 그건 파일명으로 보조.** 키=`_secrets/gemini_key.txt`. **★ 단말기 누끼 임포트 (2026-07-16)**: 외부 폴더(예: OneDrive `누끼 작업물`)의 투명배경 단말기 PNG를 `import_device_photos.py`가 `photos/`로 복사(브랜드+한국어 폼팩터 리네임: `iphone17_pro`→`애플_아이폰17_프로`, `폴드8울트라`→`삼성_갤럭시_Z_폴드8_울트라`). 렌더는 `public/assets` 밑만 staticFile → 외부 폴더는 **복사 필수**. 소스경로=`config/device_photos_path.txt`(per-PC, git제외, 없으면 스킵). `run_codex_casual.bat`에서 photo_tag 직전 자동 실행 → 폴더에 단말기 추가하면 매 렌더 자동 반영. **매칭 한계: 브랜드+폼팩터(프로/울트라/플립/폴드/에어/플러스) 수준, 세대 숫자(16/17/25/26)는 2자리라 비구별 토큰**(기존 photos 동일). 폴더블 충돌룰(`_chunk_is_foldable`)로 폴드/플립 청크에 바 폰 배제. **photos/는 gitignore=git 전파 X → 렌더PC에 누끼 폴더 있거나 photos 동기화 필요.**
     - 폴더 README(명명·예시·저작권 주의) + `.gitignore` 등록(실사=대용량/저작권, **git 비추적 → 렌더하는 PC에 직접 있어야 함**, Drive/로컬 공유).
 - `codex_illust_embed.py`(텍스트 임베딩 `ce`, fastembed `paraphrase-multilingual-MiniLM-L12-v2`) / `codex_image_embed.py`(이미지 CLIP `ie`, jina-clip-v1).
 - `codex_illust_match_preview.py` — 읽기전용 의미매칭 미리보기.
@@ -778,3 +781,7 @@ rdnews/scripts/update_content_guide.py`로 §2 발행인덱스 자동 재생성,
 - 2026-07-16 (세션, A안 확정): **대시보드 상단 L2 월옵션 롤백 — 월은 월별핵심 표로 일원화 (G단원, Code.js).** 문제: L2에 이번달/지난달/특정월을 넣었더니 미래월(예 M2=9, 오늘 7월) 선택 시 O2=MIN(EOMONTH,TODAY)로 시작>종료(9/1~7/23) 역전 → 스트립·채널별효율·실적매칭 전부 0, 고정표(기간별핵심)와 어긋나 "안 맞음". 종민 A안 선택: L2를 최근기간 전용(어제/3일/7일/14일/30일)으로 되돌리고 M1/M2 월picker·IFS 특정월 수식 제거(N2/O2 원복). 월 비교는 40행 "월별 핵심" 표(6개월, 이번달=맨위)로 일원화. M1/M2는 A1:Z59 clear로 재빌드 시 자동 소거. ★교훈: 하나의 기간 셀렉터에 상대기간+절대월 혼용 금지(고정 참조표와 불일치·미래월 역전). 반영=buildDashboardV2 재빌드.
 - 2026-07-16 (세션): **유튜브 채널 핸들 명시 지정 (G단원, youtube_sync.js:38 + Code.js _설정).** 종민 유튜브 채널 신규 개설 @phonespot_1(기존 채널 폐기, 같은 구글계정). 기존 youtube_sync.js는 `YouTube.Channels.list(..,{mine:true})` items[0]로 인증계정 기본채널만 잡음 → 같은 계정에 채널 2개(옛+새)면 옛 채널을 계속 수집하는 버그, 게다가 폰스팟·KT가 같은 계정 인증이라 KT도 폰스팟 채널 잡는 잠재버그. 수정: `_설정 YOUTUBE_HANDLE` 읽어 있으면 `{forHandle: 핸들(앞@제거)}`, 없으면 mine:true 폴백. _설정 기본행 YOUTUBE_HANDLE 추가(기본 빈값=mine 폴백, 브랜드별 핸들 입력 권장). ★사장님 할일: 폰스팟 _설정 YOUTUBE_HANDLE=@phonespot_1, KT는 KT핸들 입력 후 유튜브 동기화 재실행. ★함정: retention(YouTubeAnalytics)은 인증계정 소유 채널만 → @phonespot_1이 같은 계정 소유여야 시청지속률 나옴. 기존 유튜브 시트에 옛 채널 영상 잔존→새 채널과 섞임(수기 정리 필요).
 - 2026-07-27 (세션): **사전예약 랜딩 별도속성(546666245) 통합 + 메타+ 유입 소스분기 (G단원, page-funnel.js·meta-sync.js·Code.js).** `fetchPreorderGA4`(사전예약_GA4 탭, 03:30 fetchPageFunnel 경유 자동) + 메타+ **M열 전화클릭→유입 라벨**, 유입=사전예약이면 세션·카톡을 사전예약_GA4(`kakao_click`)서, 그 외 GA4_자동(`kakao_chat_click`)서 읽음(hasPre=`PREORDER_GA4_PROP_ID` 게이트, KT 무회귀). UTM G열 유입구분(UTM_INF=G:G, `ensureUtmNamedRanges_`가 G1 헤더+배경 자동생성). **실측(xlsx): `citymarket_click`·`phone_click` 이벤트 부재→메타+ N(시티마켓클릭) 379행 전부 0, O(시티마켓직접=`citymarket_arrival`) 113행 유효.** 상세=G단원 "2026-07-27 세션". ★장기: 리틀리→랜딩 전환 예정.
+- 2026-07-28 (세션): **수동 누끼 산출물 경로·검증 규칙 추가 (D단원).** 외부 전달 폴더 `C:\Users\313jo\OneDrive\Desktop\누끼 작업물\` 기록. 누끼 PNG는 체커보드 배경 삽입 금지, 실제 RGBA alpha·네 모서리 alpha=0 검증 필수.
+- 2026-06-26 (세션2, 캐시·테이블폭 — A단원, 패널 task): **① 브라우저 페이지 캐시로 "재기동해도 옛 UI" (v56 수정)** = `html_response`에 `Cache-Control:no-store`+`Pragma:no-cache`. 헤더 버전은 `/api/state`서 실시간이라 최신처럼 보여 혼란 유발(로그 복사 버튼이 코드엔 있는데 화면엔 없던 사례). 이후 UI 검증은 Ctrl+F5. **② 최근 작업 기록 테이블 가로 스크롤 제거 (v57)** = `min-width:820px` 삭제+`table-layout:fixed`+컬럼 고정폭+말줄임. PANEL_VERSION →v57.
+
+- 2026-07-16: **단말기 누끼 이미지 photo 매칭 추가 (E단원).** `import_device_photos.py`가 외부 누끼 폴더(config/device_photos_path.txt)→`photos/` 복사+브랜드/폼팩터 리네임, `run_codex_casual.bat` photo_tag 직전 배선. 매칭=브랜드+폼팩터 수준(세대숫자 비구별). photos/ gitignore=git전파 X.

@@ -703,9 +703,31 @@
         "device_data_transfer",
         "store"
       ]
+    },
+    "055_news_foldable8_preorder": {
+      "used_at": "2026-07-28T17:26:52",
+      "source": "semantic_visual_match",
+      "illustrations": [
+        "foldable",
+        "basic_fold_202d754f",
+        "event_period_8cafdac4",
+        "clock",
+        "gift_voucher",
+        "official_sale_9dc82f05",
+        "mid_ship_7968fa24",
+        "samsung_korea_04b00795",
+        "self_flip_6728256c",
+        "change_review_b93b867a",
+        "smartphone",
+        "phone_setup_ready",
+        "phone_settings_toggle",
+        "device_os_requirement",
+        "payment_fall_8fb48590",
+        "device_data_transfer"
+      ]
     }
   },
-  "updated_at": "2026-07-22T15:42:11",
+  "updated_at": "2026-07-28T17:26:56",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -855,6 +877,10 @@
     },
     "051_news_combined_discount_cut": {
       "updated_at": "2026-07-22T15:42:11",
+      "variants": []
+    },
+    "055_news_foldable8_preorder": {
+      "updated_at": "2026-07-28T17:26:56",
       "variants": []
     }
   }

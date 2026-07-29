@@ -181,3 +181,32 @@ mklink "C:\backup\phonespot_cardnews\_state\youtube_insights.md" "C:\Users\313jo
 
 작성: 2026-06-05 (MD 기반 학습 루프로 갱신)
 갱신: 2026-06-08 (유튜브 시트 3행 헤더 구조 + `SHEET_DATA_START_ROW = 4` 룰 박음 + `repairYouTubeSheetHeaders` 복구 함수)
+
+---
+
+## 채널 연동 (@phonespot_1, 2026-07-16)
+
+### 어느 채널을 수집하나 — 채널 결정 지점
+`youtube_sync.js:38` 한 곳에서 결정. 우선순위:
+
+1. `_설정` 시트 **`YOUTUBE_HANDLE`** 값이 있으면 → 그 핸들 채널 (`YouTube.Channels.list(.., {forHandle: 핸들})`, 앞 `@` 자동 제거).
+2. 비어 있으면 → 인증 계정 기본 채널 (`{mine:true}`, 폴백).
+
+과거엔 `{mine:true}`만 썼음. 문제: 같은 구글 계정에 채널이 2개(옛+새)면 `items[0]`=옛 채널을 계속 수집. 게다가 **폰스팟·KT가 같은 구글계정(313jongmin)으로 인증**돼 있어 `mine:true`면 KT도 폰스팟 채널을 잡음. → 그래서 **브랜드별 핸들 명시**로 전환(2026-07-16).
+
+### 연동 설정 (브랜드별, 사장님)
+1. 각 시트 메뉴 `_설정 탭 생성/갱신` 1회 → `YOUTUBE_HANDLE` 행 생김(기본 빈값).
+2. **폰스팟 `_설정` → `YOUTUBE_HANDLE` = `@phonespot_1`**.
+3. **KT `_설정` → `YOUTUBE_HANDLE` = KT 채널 핸들**(안 넣으면 같은 계정이라 폰스팟 채널을 잡음).
+4. 메뉴 `📊 리틀리 방문자 행동 갱신` 아래 유튜브 동기화(또는 03:30 트리거 대기) 재실행 → `유튜브` 시트가 새 채널 데이터로 채워지는지 확인.
+
+### 함정 / 한계
+- **시청 지속률(retention)** = `YouTubeAnalytics.Reports.query`(`youtube_sync.js:86`)는 **인증 계정이 소유한 채널만** 조회 가능. `@phonespot_1`이 인증 계정(313jongmin) 소유여야 retention 컬럼(I열)이 나옴. 소유 아니면 조회수·구독자는 나와도 retention만 0/에러.
+- **기존 데이터 혼재**: `유튜브` 시트에 옛 채널 영상 행이 남아 새 채널과 섞임(코드에 채널 필터 없음). 채널 전환 시 옛 데이터 행은 **수기 정리** 권장.
+- 조회수·구독자·업로드 목록은 `forHandle`로 어떤 공개 채널이든 수집되지만, 소유 아니면 retention만 빠짐.
+
+### 검증
+- `유튜브` 시트 4행~ 최신 날짜의 조회수/구독자가 새 채널(@phonespot_1) 규모와 맞는지.
+- 구독자(G열)가 옛 채널 값이면 아직 `YOUTUBE_HANDLE` 미반영 → 값 확인 + 동기화 재실행.
+
+갱신: 2026-07-16 (채널 핸들 명시 지정 `YOUTUBE_HANDLE` + @phonespot_1 연동)

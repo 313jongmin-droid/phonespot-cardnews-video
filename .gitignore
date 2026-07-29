@@ -49,6 +49,7 @@ _secrets/
 
 # Per-PC local config (PC마다 경로 다름 → 공유 금지)
 shorts/config/library_share_path.txt
+shorts/config/device_photos_path.txt
 shorts/config/concept_name_cache.json
 
 # 런타임/생성 상태 — 각 PC에서 바뀌고 Drive허브로 공유되므로 git 추적 금지(=pull 충돌 방지)

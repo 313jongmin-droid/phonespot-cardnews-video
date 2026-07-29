@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>통신3사 성지개통 하향 최적요금제 계산기</title>
+<style>
+  /* ===== 모바일 우선(mobile-first): 기본=모바일, min-width에서 데스크톱 확장 ===== */
+  :root{--mag:#C71585;--mag-d:#8B0A50;--bg:#faf7f9;--line:#e6d8e0;--ok:#0a7d32;--okbg:#e8f6ec;--warn:#b25400;--warnbg:#fff4e6;--ink:#222;--mut:#6b6b6b}
+  *{box-sizing:border-box}
+  body{font-family:'Malgun Gothic','맑은 고딕',-apple-system,"Segoe UI",Arial,sans-serif;margin:0;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.55;-webkit-text-size-adjust:100%}
+  header{background:linear-gradient(135deg,var(--mag-d),var(--mag));color:#fff;padding:16px}
+  header h1{margin:0;font-size:17px}
+  header p{margin:6px 0 0;font-size:12px;opacity:.92}
+  .wrap{max-width:1120px;margin:0 auto;padding:12px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .card h2{margin:0 0 10px;font-size:15px;color:var(--mag-d);border-left:4px solid var(--mag);padding-left:9px}
+  label{font-size:12.5px;color:var(--mut);display:block;margin-bottom:4px}
+  select,input[type=number],input[type=date],input[type=text]{width:100%;padding:11px 10px;border:1px solid #cfc3ca;border-radius:9px;font-size:16px;background:#fff}
+  .chk{display:flex;align-items:center;gap:6px;font-size:13px;margin-top:6px}
+  .chk input{width:auto;transform:scale(1.2)}
+  button{cursor:pointer;border:none;border-radius:10px;font-weight:700}
+  .btn-add{background:#f0e2ea;color:var(--mag-d);padding:12px 14px;width:100%;font-size:14px;margin-top:4px}
+  .btn-del{background:#f7e0e0;color:#a11;padding:10px;font-size:13px;width:100%}
+  .btn-calc{background:var(--mag);color:#fff;padding:15px 20px;font-size:16px;width:100%}
+  .btn-back{background:#efe7ec;color:var(--mag-d);padding:12px 16px;font-size:14px;width:100%;margin-bottom:12px}
+  .stepbar{display:flex;gap:8px;margin-bottom:12px}
+  .stepbar .s{flex:1;text-align:center;padding:9px 6px;border-radius:9px;background:#efe7ec;color:var(--mut);font-weight:700;font-size:12.5px}
+  .stepbar .s.on{background:var(--mag);color:#fff}
+  .topsel,.formgrid{display:grid;grid-template-columns:1fr;gap:10px}
+  .line-row{grid-template-columns:1fr 1fr;display:grid;gap:9px;align-items:end;padding:11px;border:1px dashed var(--line);border-radius:11px;margin-bottom:10px;background:#fdfbfc}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px;min-width:520px}
+  th,td{border:1px solid var(--line);padding:8px;text-align:right}
+  th{background:#f6eef2;color:var(--mag-d);text-align:center;font-size:11.5px}
+  td.l,th.l{text-align:left}
+  .best{outline:3px solid var(--ok);outline-offset:-3px}
+  .badge{display:inline-block;background:var(--okbg);color:var(--ok);border:1px solid #bfe5cb;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700}
+  .num{font-variant-numeric:tabular-nums}
+  .note{background:var(--warnbg);border:1px solid #f0d9b8;color:#5a3d12;border-radius:8px;padding:10px 12px;font-size:12.5px;margin-top:10px}
+  .note b{color:var(--warn)}
+  .res-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+  .save{font-size:20px;font-weight:800;color:var(--ok)}
+  .mut{color:var(--mut);font-size:12px}
+  .foot{font-size:11.5px;color:var(--mut);line-height:1.7;margin-top:6px}
+  /* 마법사(탭 선택) */
+  .wprog{height:7px;background:#efe7ec;border-radius:999px;margin-bottom:14px;overflow:hidden}
+  .wprog>i{display:block;height:100%;background:var(--mag);border-radius:999px;transition:width .25s}
+  .optcards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+  .optcard{padding:22px 8px;border:2px solid var(--line);border-radius:14px;background:#fff;display:flex;flex-direction:column;gap:3px;align-items:center;cursor:pointer}
+  .optcard b{font-size:18px;color:var(--mag-d)} .optcard span{font-size:11px;color:var(--mut)}
+  .optcard.sel{border-color:var(--mag);background:#fbeef5}
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{padding:12px 18px;border:2px solid var(--line);border-radius:999px;background:#fff;font-size:15px;font-weight:700;color:var(--ink);cursor:pointer}
+  .chip.sel{border-color:var(--mag);background:var(--mag);color:#fff}
+  .wnav{display:flex;gap:10px;margin-bottom:14px}
+  .wnav .btn-back{flex:0 0 38%;margin:0} .wnav .btn-calc{flex:1;margin:0}
+  /* 홈(모드 선택) */
+  .homecards{display:grid;grid-template-columns:1fr;gap:12px}
+  .homecard{text-align:left;padding:18px;border:2px solid var(--line);border-radius:16px;background:#fff;display:flex;flex-direction:column;gap:6px;cursor:pointer}
+  .homecard .ic{font-size:26px}
+  .homecard b{font-size:17px;color:var(--mag-d)}
+  .homecard span{font-size:12.5px;color:var(--mut);line-height:1.55;font-weight:400}
+  .homecard:active{border-color:var(--mag);background:#fbeef5}
+  /* 가이드(접이식) */
+  .guidebox{background:#fff;border:1px solid var(--line);border-radius:14px;padding:4px 14px;margin-bottom:12px}
+  .guidebox summary{cursor:pointer;font-size:14px;font-weight:800;color:var(--mag-d);padding:12px 0;list-style:none}
+  .guidebox summary::-webkit-details-marker{display:none}
+  .guidebox summary::before{content:'📖 ';}
+  .guidebox[open] summary{border-bottom:1px solid var(--line)}
+  .guidebox .gc{font-size:12.5px;line-height:1.75;color:#333;padding:10px 0 14px}
+  .guidebox .gc h4{margin:12px 0 4px;font-size:13px;color:var(--mag-d)}
+  .guidebox .gc b{color:#111}
+  .guidebox .gc .ok{color:#0a7d32;font-weight:700}
+  .guidebox .gc .warn{color:var(--warn);font-weight:700}
+  @media(min-width:760px){
+    header{padding:20px 22px} header h1{font-size:19px} header p{font-size:12.5px}
+    .wrap{padding:18px} .card{padding:16px 18px}
+    select,input[type=number],input[type=date],input[type=text]{padding:8px 9px;font-size:14px}
+    .topsel{grid-template-columns:1fr 1fr 1fr 1fr} .formgrid{grid-template-columns:1fr 1fr}
+    .line-row{grid-template-columns:0.9fr 1.5fr 1fr .7fr .8fr auto}
+    table{min-width:auto}
+    .btn-add{width:auto} .btn-del{width:auto;height:38px}
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>통신3사 성지개통 · 하향 최적요금제 계산기</h1>
+  <p>1단계에서 정보를 입력하면 2단계에서 결과를 보여드려요. 통신사: SKT·KT·LG U+</p>
+</header>
+<div class="wrap">
+  <div id="step1">
+  <div class="stepbar"><div class="s on" id="sb1">1 · 정보 입력</div><div class="s" id="sb2">2 · 결과</div></div>
+
+  <div class="wprog" id="wprog"></div>
+
+  <!-- 마법사 1: 통신사 -->
+  <div class="wstep" data-w="1">
+    <div class="card">
+      <h2>어느 통신사예요?</h2>
+      <div class="optcards" id="carrierCards">
+        <button type="button" class="optcard" data-v="LG U+" onclick="pickCarrier('LG U+')"><b>LG U+</b><span>유플러스</span></button>
+        <button type="button" class="optcard" data-v="SKT" onclick="pickCarrier('SKT')"><b>SKT</b><span>SK텔레콤</span></button>
+        <button type="button" class="optcard" data-v="KT" onclick="pickCarrier('KT')"><b>KT</b><span>케이티</span></button>
+      </div>
+      <select id="carrier" onchange="onCarrierChange()" style="display:none"><option>LG U+</option><option>SKT</option><option>KT</option></select>
+      <div class="foot" style="margin-top:10px">통신사를 누르면 다음 단계로 넘어가요.</div>
+    </div>
+  </div>
+
+  <!-- 마법사 2: 회선 -->
+  <div class="wstep" data-w="2" style="display:none">
+    <div class="card">
+      <h2><span id="linesTitle">회선을 입력하세요</span> <span class="mut" style="font-weight:400">· 첫 줄 = 구매자 본인</span></h2>
+      <div id="lines"></div>
+      <button class="btn-add" id="addLineBtn" onclick="addLine()">+ 가족 회선 추가</button>
+      <div class="foot" style="margin-top:8px">· <b>지원금</b> — 공시(성지): 개통일+185일 지나야 하향, 5G 하향 하한(LG 45,000·SKT 42,000·KT 47,000원) 미만은 위약금. 선약: 자유하향+25%할인. · <b>월 데이터</b>: 실제 사용량(GB), '무제한필요' 체크 시 무제한만.</div>
+    </div>
+    <div class="wnav"><button class="btn-back" onclick="wprev()">← 이전</button><button class="btn-calc" onclick="wproceed()">다음 →</button></div>
+  </div>
+
+  <!-- 마법사 3: 인터넷 -->
+  <div class="wstep" data-w="3" style="display:none">
+    <div class="card">
+      <h2>인터넷도 결합하나요?</h2>
+      <label>인터넷 속도</label>
+      <div class="chips" id="netspeedChips">
+        <button type="button" class="chip" data-v="0" onclick="pickChip('netspeed',0,this)">없음</button>
+        <button type="button" class="chip" data-v="100" onclick="pickChip('netspeed',100,this)">100M</button>
+        <button type="button" class="chip" data-v="500" onclick="pickChip('netspeed',500,this)">500M</button>
+        <button type="button" class="chip" data-v="1000" onclick="pickChip('netspeed',1000,this)">1G</button>
+      </div>
+      <select id="netspeed" style="display:none"><option value="0">없음</option><option value="100">100M</option><option value="500" selected>500M</option><option value="1000">1G</option></select>
+      <div class="formgrid" style="margin-top:12px">
+        <div><label>인터넷 약정</label><select id="netterm"><option value="3" selected>3년</option><option value="2">2년</option><option value="1">1년</option></select></div>
+        <div><label>인터넷 월요금(결합 전 정가)</label><input type="number" id="netbase" value="33000" step="1000"></div>
+      </div>
+      <div class="foot" style="margin-top:6px">· 정가를 넣으면 결합할인을 빼서 실제 청구액을 냅니다. LG 500M 3년 정가 약 33,000원. 속도 '없음'이면 인터넷 0.</div>
+    </div>
+    <div class="wnav"><button class="btn-back" onclick="wprev()">← 이전</button><button class="btn-calc" onclick="wproceed()">다음 →</button></div>
+  </div>
+
+  <!-- 마법사 4: 알뜰폰(결합 구성원) -->
+  <div class="wstep" data-w="4" style="display:none">
+    <div class="card">
+      <h2>알뜰폰 가족이 있나요? <span class="mut" style="font-weight:400">· 없으면 건너뛰기</span></h2>
+      <div class="formgrid">
+        <div><label>결합 내 알뜰폰 회선 수</label><input type="number" id="altcount" value="0" min="0" step="1"></div>
+        <div><label>알뜰폰 1회선 월요금</label><input type="number" id="altfee" value="0" step="1000"></div>
+      </div>
+      <div class="foot" style="margin-top:6px">· 결합에 묶인 알뜰폰(MVNO) 회선. LG 참쉬운은 알뜰폰 1회선당 U+ 각 회선에 440원 추가할인 반영, SKT·KT는 미반영(확인 필요). 알뜰폰 자체 월요금은 가족 총액에 더해집니다. 없으면 0으로 두고 넘어가세요.</div>
+    </div>
+    <div class="wnav"><button class="btn-back" onclick="wprev()">← 이전</button><button class="btn-calc" onclick="wproceed()">결과 보기 →</button></div>
+  </div>
+  </div><!-- /step1 -->
+
+  <div id="step2" style="display:none">
+  <button class="btn-back" onclick="goStep1()">← 정보 수정 (1단계로)</button>
+  <div id="result"></div>
+  <div id="manual"></div>
+  <div id="timeline"></div>
+  <div class="card"><div id="foot" class="foot"></div></div>
+  </div><!-- /step2 -->
+
+  <!-- 가이드(접이식) -->
+  <details class="guidebox">
+    <summary>가이드 · 계산 근거 / 규칙 / 출처 (누르면 펼침)</summary>
+    <div class="gc">
+      <h4>이 도구는?</h4>
+      성지(공시지원금)로 개통해 고가요금제를 쓰던 회선을, <b>개통 6개월 뒤 위약금 없이 하향</b>할 때
+      결합을 지키면서 <b>가계 통신비가 최소가 되는 요금제 조합</b>을 찾아줍니다. (통신사: LG U+ · SKT · KT)
+
+      <h4>핵심 규칙 (공시지원금 기준)</h4>
+      · <b>하향 가능 시점</b> = 개통일 + <b>185일</b> 경과. 그 전엔 지원금 차액정산(위약금) 위험 → 현재 요금제 고정.<br>
+      · <b>하향 하한</b> = 5G 요금제 기준 <b>LG 45,000 · SKT 42,000 · KT 47,000원</b>. 이 이상으로 내리면 위약금 없음, 미만은 차액정산.<br>
+      · <b>하향 횟수 제한 없음</b> — 45,000원 이상만 유지하면 여러 번 내려도 OK. 단 요금제 변경은 월 1회, <b>매월 1일</b> 변경 권장(일할계산 손해 방지).<br>
+      · <b>선약(선택약정)</b>이면: 하향 하한·유지의무 없이 자유 하향 + 낮춘 요금 기준 <b>25% 할인</b>(월정액×0.75)로 계산.
+
+      <h4>결합 규칙 (통신사별)</h4>
+      · <span class="ok">[공식]</span> <b>LG 투게더</b> — 무제한 전용·최소 2회선. 휴대폰 <b>인당</b> 2인 10,000·3인 14,000·4~5인 20,000원 + 인터넷 500M/1G 11,000원(3년). 하향해 무제한이 깨지면 투게더 해지 → 참쉬운 전환 필요.<br>
+      · <span class="ok">[공식]</span> <b>LG 참쉬운</b> — 요금제 33,000원 초과면 가능. 휴대폰 회선당(요금 69,000/88,000 구간): 2개 2,200/3,300/4,400 · 3개 3,300/5,500/6,600 · 4~10개 4,400/6,600/8,800원. 인터넷 100·200M 5,500/500M 9,900/1G 13,200원. 알뜰폰 1회선당 U+ 각 회선에 440원 추가(할인단계 미포함).<br>
+      · <span class="warn">[확인필요]</span> <b>SKT 요즘가족결합</b> — 휴대폰 합산 1/2/3/4~5회선 = 3,500/7,000/18,000/24,000원 + 인터넷 500M 11,000·1G 13,200·100M 4,400원. (2026-05 개편 직후, 블로그·매거진 기준)<br>
+      · <span class="warn">[확인필요]</span> <b>KT 총액결합할인</b> — 모바일 합산 월정액 구간별 2,200~33,110원 + 인터넷 자체 ~5,500원. 프리미엄가족결합(회선당)은 미반영. (2026-07 개편 직후)<br>
+      · <b>비교의 의미</b>: 결합 종류 비교가 필요한 건 <b>LG뿐</b>(투게더=무제한 전용이라 하향 시 깨짐). SKT·KT는 하향해도 결합 유지(할인만 축소) → "최대한 내리고 결합 유지"가 답.
+
+      <h4>요금제 데이터</h4>
+      3사 모두 2026년 통합요금제 개편 반영(LG 6월 · SKT 5월 · KT 7월). LG는 공식 검증 완료. KT 베이직110GB 등 일부 가격은 추정치.
+
+      <h4>나중에 값 갱신하려면</h4>
+      HTML 안 <code>&lt;script&gt;</code>의 <code>DATA</code>(요금제)와 결합 함수(<code>sktMobile·ktMobileTotal</code> 등)의 숫자를 매장 약관 값으로 바꾸면 됩니다. SKT·KT 결합·KT 베이직 가격을 공식 확정하면 그 부분만 교체.
+
+      <h4>출처</h4>
+      LG U+ 공식(요금제·투게더·참쉬운 페이지), 나무위키, 통신3사 개편 뉴스(mt·헤럴드·zdnet), 요금제변경/위약금 정리(싸당). SKT·KT 결합·위약금 세부는 상용 전 공식 재검증 권장.
+    </div>
+  </details>
+</div>
+
+<script>
+// ================= 요금제 데이터 (2026-07 기준) =================
+// f:월정액, gb:데이터(무제한=Infinity), u:무제한여부
+const DATA = {
+ "LG U+":{
+   floor5G:45000, keepDays:185,
+   plans:[
+    {n:"플러스플랜130",f:130000,gb:Infinity,u:true},{n:"플러스플랜115",f:115000,gb:Infinity,u:true},
+    {n:"플러스플랜105",f:105000,gb:Infinity,u:true},{n:"플러스플랜95",f:95000,gb:Infinity,u:true},
+    {n:"데이터플랜MAX",f:85000,gb:Infinity,u:true},{n:"데이터플랜150GB",f:75000,gb:150,u:false},
+    {n:"데이터플랜125GB",f:70000,gb:125,u:false},{n:"데이터플랜95GB",f:68000,gb:95,u:false},
+    {n:"데이터플랜80GB",f:66000,gb:80,u:false},{n:"데이터플랜50GB",f:63000,gb:50,u:false},
+    {n:"데이터플랜31GB",f:61000,gb:31,u:false},{n:"데이터플랜24GB",f:59000,gb:24,u:false},
+    {n:"데이터플랜14GB",f:55000,gb:14,u:false},{n:"데이터플랜9GB",f:47000,gb:9,u:false},
+    {n:"데이터플랜5GB",f:37000,gb:5,u:false},{n:"데이터플랜1.5GB",f:33000,gb:1.5,u:false},
+    {n:"데이터플랜750MB",f:29000,gb:0.75,u:false},{n:"데이터플랜300MB",f:28000,gb:0.3,u:false}],
+   bundles:["투게더","참쉬운","없음"]
+ },
+ "SKT":{
+   floor5G:42000, keepDays:185,
+   plans:[
+    {n:"베스트 Max",f:129000,gb:Infinity,u:true},{n:"베스트 Pro",f:119000,gb:Infinity,u:true},
+    {n:"베스트 109",f:109000,gb:Infinity,u:true},{n:"베스트 99",f:99000,gb:Infinity,u:true},
+    {n:"베스트 89",f:89000,gb:Infinity,u:true},
+    {n:"라이트 79",f:79000,gb:250,u:false},{n:"라이트 69",f:69000,gb:110,u:false},
+    {n:"라이트59 75GB업",f:68000,gb:99,u:false},{n:"라이트59 50GB업",f:66000,gb:74,u:false},
+    {n:"라이트59 30GB업",f:64000,gb:54,u:false},{n:"라이트59 13GB업",f:62000,gb:37,u:false},
+    {n:"라이트 59",f:59000,gb:24,u:false},{n:"라이트 55",f:55000,gb:15,u:false},
+    {n:"라이트 49",f:49000,gb:11,u:false},{n:"라이트 45",f:45000,gb:8,u:false},
+    {n:"라이트 39",f:39000,gb:6,u:false}],
+   bundles:["요즘가족결합","없음"]
+ },
+ "KT":{
+   floor5G:47000, keepDays:185,
+   plans:[
+    {n:"초이스130",f:130000,gb:Infinity,u:true},{n:"초이스110",f:110000,gb:Infinity,u:true},
+    {n:"초이스90",f:90000,gb:Infinity,u:true},
+    {n:"베이직110GB",f:69000,gb:110,u:false},   // 가격 추정(확인필요)
+    {n:"베이직30GB",f:61000,gb:30,u:false},{n:"베이직10GB",f:50000,gb:10,u:false},
+    {n:"베이직600MB",f:28900,gb:0.6,u:false}],
+   bundles:["총액결합할인","없음"]
+ }
+};
+// KT 베이직110GB 월정액은 미확보 → 69,000 추정치. 실제 확인 필요.
+
+const TODAY = new Date(2026,6,24);
+const KEEP_DEFAULT = 185;
+const won = x => Math.round(x).toLocaleString('ko-KR')+"원";
+const fmtD = d => d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+function daysSince(s){if(!s)return 9999;return (TODAY-new Date(s))/86400000;}
+function eligDate(s,keep){if(!s)return null;const d=new Date(s);d.setDate(d.getDate()+keep);return d;}
+function curCarrier(){return DATA[document.getElementById('carrier').value];}
+
+// ---- 결합할인 계산 (통신사별) ----
+// 투게더(LG): 무제한만·최소2회선
+function tgMobile(c){const per=c>=4?20000:(c==3?14000:(c==2?10000:0)); return per*c;} // 인당(회선당)×회선수
+function tgInternet(s,t){if(s<500)return 0;return t==3?11000:(t==2?5500:2750);}
+// 참쉬운(LG): 회선당, 총회선수 구간 × 그 회선 요금구간
+function chamMobile(lc,fee){if(fee<=33000)return 0;const ck=lc>=4?"4":(lc>=3?"3":(lc>=2?"2":"1"));if(ck==="1")return 0;const t=fee>=88000?2:(fee>=69000?1:0);return {"2":[2200,3300,4400],"3":[3300,5500,6600],"4":[4400,6600,8800]}[ck][t];}
+function chamInternet(s){return s==1000?13200:(s==500?9900:(s==100?5500:0));}
+// SKT 요즘가족결합: 휴대폰 합산(회선수) + 인터넷 속도별  ※무제한/저가제외 조건 미확인
+function sktMobile(c){return c>=4?24000:(c==3?18000:(c==2?7000:(c==1?3500:0)));} // 합산(그룹)
+function sktInternet(s){return s==1000?13200:(s==500?11000:(s==100?4400:0));}
+// KT 총액결합할인: 휴대폰 총액구간 + 인터넷 자체할인  ※대표값(범위 상단), 확인필요
+function ktMobileTotal(sum){if(sum>=174900)return 33110;if(sum>=141900)return 27610;if(sum>=108900)return 22110;if(sum>=64900)return 11000;if(sum>=22000)return 5500;return 2200;}
+function ktInternetSelf(s){return s>0?5500:0;}
+
+// 통신사별 결합상품 목록(직접 선택용) + 결합할인 계산 통합 함수
+const BUNDLES={"LG U+":["U+투게더 결합","참쉬운 가족결합","결합 없음"],"SKT":["요즘가족결합","결합 없음"],"KT":["총액결합할인","결합 없음"]};
+function bundleDisc(car,name,picks,lines,speed,term,altCount){
+  altCount=altCount||0;
+  if(name==="U+투게더 결합"){ if(lines.length<2||picks.some(p=>!p.u)) return null; return tgMobile(lines.length)+tgInternet(speed,term); }
+  if(name==="참쉬운 가족결합"){ let m=0; picks.forEach((p,i)=>m+=chamMobile(lines.length, lines[i].sub==='선약'?p.f*0.75:p.f)); return m+chamInternet(speed)+altCount*440*lines.length; }
+  if(name==="요즘가족결합"){ return sktMobile(lines.length)+sktInternet(speed); }
+  if(name==="총액결합할인"){ const sum=picks.reduce((s,p,i)=>s+netFee(p,lines[i]),0); return ktMobileTotal(sum)+ktInternetSelf(speed); }
+  return 0; // 결합 없음
+}
+// 직접 조정 패널 상태
+let manualPick=[], manualBundle=null;
+function setManual(i,name){ manualPick[i]=name; calc(); }
+function setManualBundle(v){ manualBundle=v; calc(); }
+
+let LID=0;
+function planOptions(sel){return curCarrier().plans.map(p=>`<option value="${p.n}" ${sel===p.n?'selected':''}>${p.n} (${won(p.f)})</option>`).join('');}
+function addLine(preset){
+  preset=preset||{}; const id=LID++;
+  const div=document.createElement('div'); div.className='line-row'; div.id='line'+id;
+  div.innerHTML=`
+    <div><label>이름</label><input type="text" class="ln-name" value="${preset.name||('회선'+(id+1))}"></div>
+    <div><label>현재(개통) 요금제</label><select class="ln-plan">${planOptions(preset.plan)}</select></div>
+    <div><label>개통일</label><input type="date" class="ln-date" value="${preset.date||''}"></div>
+    <div><label>월데이터(GB)</label><input type="number" class="ln-gb" min="0" step="1" value="${preset.gb!=null?preset.gb:9}"></div>
+    <div>
+      <label>지원금</label>
+      <select class="ln-sub"><option value="공시" ${preset.sub!=='선약'?'selected':''}>공시(성지)</option><option value="선약" ${preset.sub==='선약'?'selected':''}>선약25%</option></select>
+      <div class="chk"><input type="checkbox" class="ln-unl" ${preset.unl?'checked':''}>무제한필요</div>
+    </div>
+    <div><label>&nbsp;</label><button class="btn-del" onclick="document.getElementById('line${id}').remove()">삭제</button></div>`;
+  document.getElementById('lines').appendChild(div);
+}
+function onCarrierChange(){
+  // 회선들 요금제 셀렉트 재구성(선택값 초기화)
+  document.querySelectorAll('.line-row').forEach(r=>{r.querySelector('.ln-plan').innerHTML=planOptions();});
+  manualPick=[]; manualBundle=null; // 통신사 바뀌면 직접조정 초기화
+  renderFoot(); calc();
+}
+function planByName(n){return curCarrier().plans.find(p=>p.n===n);}
+
+function readLines(){
+  const keep=curCarrier().keepDays;
+  return [...document.querySelectorAll('.line-row')].map(r=>{
+    const cur=planByName(r.querySelector('.ln-plan').value);
+    const dstr=r.querySelector('.ln-date').value;
+    const sub=r.querySelector('.ln-sub').value;
+    const dys=daysSince(dstr);
+    return {name:r.querySelector('.ln-name').value,cur,dstr,elig:eligDate(dstr,keep),days:dys,
+      sub, downgradeable: sub==='선약'? true : dys>=keep,
+      needGB:parseFloat(r.querySelector('.ln-gb').value)||0, needUnl:r.querySelector('.ln-unl').checked};
+  });
+}
+// 선약이면 실부담 = 월정액×0.75
+function netFee(plan,line){return line.sub==='선약'? plan.f*0.75 : plan.f;}
+// 한 회선 최적 요금제 선택
+function pick(line,{mustUnl=false,minFeeGt=0}={}){
+  if(!line.downgradeable) return line.cur;
+  const floor = line.sub==='공시'? curCarrier().floor5G : 0; // 선약은 하한 없음
+  let c=curCarrier().plans.filter(p=>{
+    if(mustUnl&&!p.u) return false;
+    if(line.needUnl&&!p.u) return false;
+    if(!p.u&&p.gb<line.needGB) return false;
+    if(p.f<floor) return false;
+    if(p.f<=minFeeGt) return false;
+    return true;});
+  if(!c.length) return line.cur;
+  const np=c.filter(p=>p.f<=line.cur.f); const pool=np.length?np:c;
+  return pool.reduce((a,b)=>b.f<a.f?b:a);
+}
+function sumNet(picks,lines){return picks.reduce((s,p,i)=>s+netFee(p,lines[i]),0);}
+
+// ---- 통신사별 시나리오 ----
+function scenarios(lines,speed,term,nb,altCount,altTotal){
+  nb=nb||0; altCount=altCount||0; altTotal=altTotal||0;
+  const car=document.getElementById('carrier').value; const out=[];
+  if(car==="LG U+"){
+    // 투게더
+    if(lines.length>=2){
+      const pk=lines.map(l=>pick(l,{mustUnl:true}));
+      if(!pk.some(p=>!p.u)){const fee=sumNet(pk,lines);const disc=tgMobile(lines.length)+tgInternet(speed,term);out.push({name:"U+투게더 결합",picks:pk,fee,disc,net:fee+nb+altTotal-disc});}
+    }
+    // 참쉬운
+    {const pk=lines.map(l=>pick(l,{minFeeGt:33000}));const fee=sumNet(pk,lines);let m=0;pk.forEach((p,i)=>m+=chamMobile(lines.length, lines[i].sub==='선약'?p.f*0.75:p.f));const disc=m+chamInternet(speed)+altCount*440*lines.length;out.push({name:"참쉬운 가족결합",picks:pk,fee,disc,net:fee+nb+altTotal-disc});}
+    // 없음
+    {const pk=lines.map(l=>pick(l,{}));const fee=sumNet(pk,lines);out.push({name:"결합 없음",picks:pk,fee,disc:0,net:fee+nb+altTotal});}
+  } else if(car==="SKT"){
+    {const pk=lines.map(l=>pick(l,{}));const fee=sumNet(pk,lines);const disc=sktMobile(lines.length)+sktInternet(speed);out.push({name:"요즘가족결합",picks:pk,fee,disc,net:fee+nb+altTotal-disc});}
+    {const pk=lines.map(l=>pick(l,{}));const fee=sumNet(pk,lines);out.push({name:"결합 없음",picks:pk,fee,disc:0,net:fee+nb+altTotal});}
+  } else { // KT
+    {const pk=lines.map(l=>pick(l,{}));const fee=sumNet(pk,lines);const sum=pk.reduce((s,p,i)=>s+netFee(p,lines[i]),0);const disc=ktMobileTotal(sum)+ktInternetSelf(speed);out.push({name:"총액결합할인",picks:pk,fee,disc,net:fee+nb+altTotal-disc});}
+    {const pk=lines.map(l=>pick(l,{}));const fee=sumNet(pk,lines);out.push({name:"결합 없음",picks:pk,fee,disc:0,net:fee+nb+altTotal});}
+  }
+  return out;
+}
+function baseline(lines,speed,term,nb,altCount,altTotal){
+  nb=nb||0; altCount=altCount||0; altTotal=altTotal||0;
+  const car=document.getElementById('carrier').value;
+  const fee=lines.reduce((s,l)=>s+netFee(l.cur,l),0);
+  let disc=0,tag="결합 없음";
+  if(car==="LG U+"){ if(lines.length>=2&&lines.every(l=>l.cur.u)){disc=tgMobile(lines.length)+tgInternet(speed,term);tag="U+투게더 결합";}
+    else {let m=0;lines.forEach(l=>m+=chamMobile(lines.length, l.sub==='선약'?l.cur.f*0.75:l.cur.f));disc=m+chamInternet(speed)+altCount*440*lines.length;tag="참쉬운 가족결합";}}
+  else if(car==="SKT"){disc=sktMobile(lines.length)+sktInternet(speed);tag="요즘가족결합";}
+  else {const sum=lines.reduce((s,l)=>s+netFee(l.cur,l),0);disc=ktMobileTotal(sum)+ktInternetSelf(speed);tag="총액결합할인";}
+  return {fee,disc,net:fee+nb+altTotal-disc,tag};
+}
+
+function calc(){
+  const lines=readLines();
+  if(!lines.length){document.getElementById('result').innerHTML='<div class="card">회선을 1개 이상 입력하세요.</div>';return;}
+  const speed=parseInt(document.getElementById('netspeed').value), term=parseInt(document.getElementById('netterm').value);
+  const nb = speed>0 ? (parseInt(document.getElementById('netbase').value)||0) : 0; // 인터넷 기본요금(정가)
+  const altCount = parseInt(document.getElementById('altcount').value)||0;
+  const altFee = parseInt(document.getElementById('altfee').value)||0;
+  const altTotal = altCount*altFee; // 알뜰폰 회선들 자체 월요금 합
+  const base=baseline(lines,speed,term,nb,altCount,altTotal);
+  const scs=scenarios(lines,speed,term,nb,altCount,altTotal);
+  const best=scs.reduce((a,b)=>b.net<a.net?b:a);
+
+  let h='<div class="card"><div class="res-head"><h2 style="border:none;margin:0">추천 결과</h2>';
+  h+=`<div><span class="badge">최적: ${best.name}</span> <span class="save">월 ${won(best.net)}</span></div></div>`;
+  h+=`<div class="mut">현재(하향 전, ${base.tag}): 월 납부금액 <b class="num">${won(base.net)}</b> → 최적안 대비 절감 <b class="save num" style="font-size:14px">${won(base.net-best.net)}/월</b> (연 ${won((base.net-best.net)*12)})</div>`;
+
+  h+='<table><thead><tr><th class="l">구분</th>';
+  lines.forEach(l=>h+=`<th class="l">${l.name}${l.sub==='선약'?' <span class="mut">(선약)</span>':''}</th>`);
+  h+=`<th>인터넷</th><th>요금 합계</th><th>결합할인</th><th>월 납부금액</th><th>현재 대비</th></tr></thead><tbody>`;
+  h+='<tr style="background:#faf3f7"><td class="l"><b>현재(하향 전)</b></td>';
+  lines.forEach(l=>h+=`<td class="l">${l.cur.n}<br><span class="mut">${won(netFee(l.cur,l))}${l.sub==='선약'?' ×0.75':''}</span></td>`);
+  h+=`<td class="num">${nb?won(nb):'-'}</td><td class="num">${won(base.fee+nb+altTotal)}</td><td class="num">-${won(base.disc)}</td><td class="num"><b>${won(base.net)}</b></td><td>-</td></tr>`;
+  scs.forEach(s=>{
+    const isB=s===best;
+    h+=`<tr class="${isB?'best':''}"><td class="l"><b>${s.name}</b>${isB?' <span class="badge">최적</span>':''}</td>`;
+    s.picks.forEach((p,i)=>{
+      const fixed=!lines[i].downgradeable;
+      const eg=fixed&&lines[i].elig?` <span class="mut">(고정·기준일 ${fmtD(lines[i].elig)})</span>`:'';
+      h+=`<td class="l">${p.n}${eg}<br><span class="mut">${won(netFee(p,lines[i]))}</span></td>`;
+    });
+    const diff=s.net-base.net;
+    h+=`<td class="num">${nb?won(nb):'-'}</td><td class="num">${won(s.fee+nb+altTotal)}</td><td class="num">-${won(s.disc)}</td><td class="num"><b>${won(s.net)}</b></td><td class="num" style="color:${diff<0?'var(--ok)':'#a11'}">${diff<0?'':'+'}${won(diff)}</td></tr>`;
+  });
+  h+='</tbody></table>';
+  h+=`<div class="mut" style="margin-top:6px">· '요금 합계'=모바일 회선 + 인터넷 정가(${nb?won(nb):'0원'})${altCount?` + 알뜰폰 ${altCount}회선(${won(altTotal)})`:''}, '월 납부금액'=요금 합계 − 결합할인. 인터넷·${altCount?'알뜰폰 ':''}결합할인이 반영된 실제 청구액입니다.${altCount&&document.getElementById('carrier').value==='LG U+'?` LG 참쉬운은 알뜰폰당 U+회선에 440원 추가(${won(altCount*440*lines.length)}) 반영.`:''}${altCount&&document.getElementById('carrier').value!=='LG U+'?` <b style="color:var(--warn)">SKT·KT 알뜰폰 결합할인은 공식 미확인이라 미반영(알뜰폰 요금만 합산).</b>`:''}</div>`;
+
+  // 주의
+  const fx=lines.filter(l=>!l.downgradeable);
+  let notes='';
+  if(fx.length) notes+=`<div class="note"><b>하향 불가(공시·유지의무 미경과)</b> — 기준일=개통일+${curCarrier().keepDays}일: ${fx.map(l=>l.name+(l.elig?` → <b>${fmtD(l.elig)}</b>부터(${Math.max(0,Math.ceil(curCarrier().keepDays-l.days))}일 남음)`:'')).join(', ')}. 그 전 하향 시 지원금 차액정산 위험 → 현재 요금제로 고정 계산.</div>`;
+  const drop=lines.filter((l,i)=>l.cur.u&&best.picks[i]&&!best.picks[i].u);
+  if(drop.length) notes+=`<div class="note"><b>무제한→용량제 하향</b>: ${drop.map(l=>l.name).join(', ')} — 데이터 소진 후 속도제한 및 OTT 결합혜택 상실 가능. 실사용 데이터가 선택 요금제 이내인지 확인.</div>`;
+  const car=document.getElementById('carrier').value;
+  if(car!=="LG U+") notes+=`<div class="note"><b>${car} 결합·위약금 데이터 주의</b>: ${car}는 2026년 요금제 대개편 직후로, 결합할인 수치·저가/무제한 제외 조건·위약금 기준선의 신요금제 반영 여부가 <b>블로그·뉴스 교차확인 수준</b>입니다(공식 JS페이지 미확보). 상용 응대 전 ${car==='SKT'?'T world 앱/약관':'KT 약관/매장'}로 최종 검증 권장. KT 베이직110GB 월정액은 추정치.</div>`;
+  h+=notes+'</div>';
+  document.getElementById('result').innerHTML=h;
+  document.getElementById('manual').innerHTML=renderManual(lines,speed,term,nb,altCount,altTotal,best);
+  document.getElementById('timeline').innerHTML=renderTimeline(lines);
+  renderFoot();
+}
+
+// ===== 고객 설득용 요약 (본인=첫 회선 기준, 시각적) =====
+function renderSummary(lines,best){
+  const ref=lines[0]; if(!ref||!best.picks[0]) return '';
+  const hi=ref.cur.f, lo=best.picks[0].f;         // 개통 고가 → 추천 하향 (본인 회선)
+  const KEEP_M=6, TERM=24;
+  const avg=(KEEP_M*hi+(TERM-KEEP_M)*lo)/TERM;      // 2년 평균 월 요금(본인)
+  const drop=hi-lo;
+  // ---- 색(검증된 팔레트) ----
+  const cHi='#eb6834', cLo='#0ca30c', cLoInk='#006300', ink='#0b0b0b', sub='#52514e', mut='#898781', grid='#e1e0d9';
+  // ---- SVG 계단 차트 ----
+  const W=720,H=210,ml=16,mr=16,mt=22,mb=28;
+  const xf=m=>ml+(m/TERM)*(W-ml-mr);
+  const maxFee=Math.max(hi,1), yf=f=>mt+(1-f/maxFee)*(H-mt-mb), yBase=H-mb;
+  const xK=xf(KEEP_M), yHi=yf(hi), yLo=yf(lo), xE=xf(TERM);
+  const svg=`
+  <svg viewBox="0 0 ${W} ${H}" width="100%" style="max-width:720px;display:block;margin:4px auto">
+    <line x1="${ml}" y1="${yBase}" x2="${W-mr}" y2="${yBase}" stroke="${grid}" stroke-width="1"/>
+    <path d="M ${ml} ${yBase} L ${ml} ${yHi} L ${xK} ${yHi} L ${xK} ${yBase} Z" fill="${cHi}" fill-opacity="0.14"/>
+    <path d="M ${xK} ${yBase} L ${xK} ${yLo} L ${xE} ${yLo} L ${xE} ${yBase} Z" fill="${cLo}" fill-opacity="0.14"/>
+    <path d="M ${ml} ${yHi} L ${xK} ${yHi}" fill="none" stroke="${cHi}" stroke-width="3" stroke-linecap="round"/>
+    <path d="M ${xK} ${yHi} L ${xK} ${yLo}" fill="none" stroke="${mut}" stroke-width="2" stroke-dasharray="4 3"/>
+    <path d="M ${xK} ${yLo} L ${xE} ${yLo}" fill="none" stroke="${cLo}" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="${xK}" cy="${yLo}" r="5" fill="${cLo}"/>
+    <text x="${ml}" y="${yHi-8}" fill="${cHi}" font-size="15" font-weight="800">${won(hi)}</text>
+    <text x="${xE}" y="${yLo-10}" fill="${cLoInk}" font-size="15" font-weight="800" text-anchor="end">${won(lo)}</text>
+    <text x="${xK+8}" y="${(yHi+yLo)/2}" fill="${cLoInk}" font-size="12" font-weight="700">6개월 후 −${won(drop)} ↓</text>
+    <text x="${ml}" y="${H-8}" fill="${mut}" font-size="11">개통</text>
+    <text x="${xK}" y="${H-8}" fill="${mut}" font-size="11" text-anchor="middle">6개월</text>
+    <text x="${xE}" y="${H-8}" fill="${mut}" font-size="11" text-anchor="end">24개월(약정끝)</text>
+  </svg>`;
+  // ---- 타일 ----
+  const tile=(lab,val,color,note)=>`<div style="flex:1;min-width:130px;background:#fff;border:1px solid ${grid};border-radius:12px;padding:12px 14px">
+     <div style="font-size:12px;color:${mut}">${lab}</div>
+     <div style="font-size:22px;font-weight:800;color:${color};margin-top:2px">${val}</div>
+     ${note?`<div style="font-size:11px;color:${sub};margin-top:2px">${note}</div>`:''}</div>`;
+  let tiles=`<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">`;
+  tiles+=tile('처음 6개월만',won(hi),cHi,'단말기 싸게 산 대가');
+  tiles+=tile('6개월 후',won(lo),cLoInk,`↓ 월 ${won(drop)} 내려가요`);
+  tiles+=tile('2년 평균 월요금',won(avg),ink,'실제 체감은 이거예요');
+  tiles+=`</div>`;
+  // ---- 카피 ----
+  const head=`지금 <b style="color:${cHi}">${won(hi)}</b> 요금제, 부담되시죠? <b>딱 6개월</b>만이에요.`;
+  const line2=`6개월 뒤 <b style="color:${cLoInk}">${won(lo)}</b>으로 내려가서, <b>2년 평균은 월 ${won(avg)}</b> 꼴이에요.`;
+  return `<div class="card" style="background:linear-gradient(180deg,#fff, #fbfbfd)">
+    <h2>📉 한눈에 보기 — "고가요금제, 딱 6개월이에요"</h2>
+    <div style="font-size:15px;color:${ink};line-height:1.7">${head}<br>${line2}</div>
+    ${svg}
+    ${tiles}
+    <div class="foot" style="margin-top:8px">· 본인(첫 회선) 요금제 기준. 2년 평균 = (6개월×${won(hi)} + 18개월×${won(lo)}) ÷ 24. 하향은 6개월(개통+185일) 경과 후 5G 하향 하한(45,000원 안팎) 이상으로 내릴 때 위약금 없음. 정확한 결합·통신사별 최적 하향은 홈의 '요금제 하향 최적화'에서 볼 수 있어요.</div>
+  </div>`;
+}
+
+// ===== (제거됨) 성지 vs 자급제 손익분기 — 리베이트·공시 입력이 빠져 미사용 =====
+function renderCompare(lines,best){ return '';
+  const ref=lines[0]; if(!ref||!best.picks[0]) return '';
+  const hi=ref.cur.f, lo=best.picks[0].f;
+  const base=parseInt(document.getElementById('basefee').value)||0;
+  const rebate=parseInt(document.getElementById('rebate').value)||0;
+  const devsub=parseInt(document.getElementById('devsub').value)||0;
+  const KEEP=6, TERM=24;
+  const extra6=6*(hi-base), extra18=(TERM-KEEP)*(lo-base), extraTel=extra6+extra18;
+  const deviceAdv=devsub+rebate, net=deviceAdv-extraTel, breakEven=Math.max(0,extraTel-devsub);
+  const cHi='#eb6834', cLo='#0ca30c', cLoInk='#006300', ink='#0b0b0b', sub='#52514e', mut='#898781', grid='#e1e0d9';
+  const win=net>=0;
+  // 리베이트 vs 손익분기 막대
+  const maxV=Math.max(breakEven,rebate,1)*1.15;
+  const beP=Math.min(100,breakEven/maxV*100), rbP=Math.min(100,rebate/maxV*100);
+  const bar=`<div style="position:relative;height:30px;background:#f2f0ee;border-radius:8px;margin:6px 0 4px">
+    <div style="position:absolute;left:0;top:0;height:100%;width:${rbP}%;background:${rebate>=breakEven?cLo:cHi};opacity:.85;border-radius:8px 0 0 8px"></div>
+    <div style="position:absolute;left:${beP}%;top:-4px;height:38px;width:2px;background:${ink}"></div>
+    <div style="position:absolute;left:${beP}%;top:-18px;transform:translateX(-50%);font-size:11px;color:${ink};white-space:nowrap">손익분기 ${won(breakEven)}</div>
+  </div>
+  <div class="mut" style="font-size:11px">막대=받은 리베이트(${won(rebate)}) · 세로선=손익분기. 막대가 선을 넘으면 성지 이득.</div>`;
+  const tile=(lab,val,color,note)=>`<div style="flex:1;min-width:120px;background:#fff;border:1px solid ${grid};border-radius:10px;padding:10px 12px">
+     <div style="font-size:11.5px;color:${mut}">${lab}</div><div style="font-size:17px;font-weight:800;color:${color};margin-top:2px">${val}</div>
+     ${note?`<div style="font-size:10.5px;color:${sub};margin-top:1px">${note}</div>`:''}</div>`;
+  let tiles=`<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">`;
+  tiles+=tile('6개월 고가 차액',won(extra6),cHi,`(${won(hi)}−${won(base)})×6`);
+  tiles+=tile('이후 18개월 차액',won(extra18),ink,`(${won(lo)}−${won(base)})×18`);
+  tiles+=tile('통신비 더 낸 총액',won(extraTel),ink,'성지가 자급제보다');
+  tiles+=tile('단말기 싸게 산 값',won(deviceAdv),cLoInk,`공시 ${won(devsub)} + 리베이트 ${won(rebate)}`);
+  tiles+=`</div>`;
+  const verdict=win
+    ? `<span style="color:${cLoInk}">성지가 ${won(net)} 이득 ✓</span>`
+    : `<span style="color:${cHi}">자급제+알뜰폰이 ${won(-net)} 이득</span>`;
+  return `<div class="card">
+    <h2>⚖️ 성지 vs 자급제+알뜰폰 — 진짜 이득은?</h2>
+    <div style="font-size:15px;color:${ink};line-height:1.7">"알뜰폰 ${won(base)} 쓰다가 ${won(hi)}이라니 비싸다" 싶지만, 실제 추가 부담은 <b>6개월 차액뿐</b>이에요.<br>
+    24개월 전체로 따지면 → <b style="font-size:17px">${verdict}</b></div>
+    <div style="margin-top:10px;font-size:13px;color:${sub}">성지 추가 <b>리베이트가 ${won(breakEven)}만 넘으면</b> 자급제+알뜰폰보다 이득입니다.${devsub?'':' <span style="color:'+cHi+'">(공시지원금 입력 시 손익분기가 더 내려가요)</span>'}</div>
+    ${bar}
+    ${tiles}
+    <div class="foot" style="margin-top:8px">· 본인(첫 회선) 기준, 단말기 출고가는 양쪽 동일해 상쇄. 통신비 차액(6개월 고가 + 18개월 하향) vs 단말기 절감(공시+리베이트) 비교.<br>· <b>결합을 하면</b> 성지 쪽 통신비가 결합할인만큼 더 줄어 손익분기가 더 낮아집니다(성지 더 유리) — 위 값은 결합 미반영 보수적 기준.</div>
+  </div>`;
+}
+
+// 직접 요금제 조정 패널 (실시간)
+function renderManual(lines,speed,term,nb,altCount,altTotal,best){
+  const car=document.getElementById('carrier').value;
+  const plans=curCarrier().plans;
+  const valid = manualPick.length===lines.length && manualPick.every(n=>plans.some(p=>p.n===n));
+  if(!valid){ manualPick=best.picks.map(p=>p.n); manualBundle=best.name; }
+  if(!BUNDLES[car].includes(manualBundle)) manualBundle = BUNDLES[car].includes(best.name)?best.name:BUNDLES[car][0];
+  const picks=manualPick.map(n=>plans.find(p=>p.n===n));
+  const mfee=picks.reduce((s,p,i)=>s+netFee(p,lines[i]),0);
+  let mdisc=bundleDisc(car,manualBundle,picks,lines,speed,term,altCount), warn='';
+  if(mdisc===null){ warn='투게더는 무제한 요금제 2회선 이상만 가능 — 현재 조합은 불가라 할인 0으로 표시됩니다.'; mdisc=0; }
+  const mnet=mfee+nb+altTotal-mdisc, diff=mnet-best.net;
+  let h='<div class="card"><h2>직접 요금제 조정 (실시간)</h2>';
+  h+='<div class="mut" style="margin-bottom:8px">요금제·결합을 직접 바꾸면 월 납부금액이 즉시 갱신됩니다(추천값에서 시작). 각 회선의 하향 가능 여부·위약금은 위 표/아래 선택지 표 참고.</div>';
+  h+='<table><thead><tr>';
+  lines.forEach(l=>h+=`<th class="l">${l.name}${l.sub==='선약'?' <span class="mut">(선약)</span>':''}</th>`);
+  h+='<th class="l">결합상품</th><th>요금 합계</th><th>결합할인</th><th>월 납부금액</th><th>추천 대비</th></tr></thead><tbody><tr>';
+  lines.forEach((l,i)=>{
+    const opts=plans.map(p=>`<option value="${p.n}" ${manualPick[i]===p.n?'selected':''}>${p.n} (${won(p.f)})</option>`).join('');
+    h+=`<td class="l"><select onchange="setManual(${i},this.value)" style="width:100%">${opts}</select><br><span class="mut">${won(netFee(picks[i],l))}</span></td>`;
+  });
+  const bopts=BUNDLES[car].map(b=>`<option value="${b}" ${manualBundle===b?'selected':''}>${b}</option>`).join('');
+  h+=`<td class="l"><select onchange="setManualBundle(this.value)" style="width:100%">${bopts}</select></td>`;
+  h+=`<td class="num">${won(mfee+nb+altTotal)}</td><td class="num">-${won(mdisc)}</td><td class="num"><b style="font-size:16px">${won(mnet)}</b></td>`;
+  h+=`<td class="num" style="color:${diff<=0?'var(--ok)':'#a11'}">${diff<0?'':(diff>0?'+':'')}${won(diff)}</td></tr></tbody></table>`;
+  if(warn) h+=`<div class="note">${warn}</div>`;
+  h+='</div>';
+  return h;
+}
+
+// ===== 하향 선택지 비교표 (1회선 기준): 어떤 요금제로 내리면 월 얼마·위약금·데이터 =====
+function renderTimeline(lines){
+  const ref = lines[0]; if(!ref) return '';
+  const car = document.getElementById('carrier').value;
+  const floor = curCarrier().floor5G;
+  // 하향 선택지 = 현재 요금제 이하 전부 (요금 높은 순)
+  const cand = curCarrier().plans.filter(p=>p.f<=ref.cur.f).slice().sort((a,b)=>b.f-a.f);
+  const safeFn = p => ref.sub==='선약' ? true : p.f>=floor;
+  const dataFn = p => p.u || p.gb>=ref.needGB;
+  const feasible = cand.filter(p=>safeFn(p)&&dataFn(p));
+  const rec = feasible.length? feasible.reduce((a,b)=>b.f<a.f?b:a) : null; // 위약금X + 데이터OK 중 최저
+
+  let h='<div class="card"><h2>하향 선택지 비교 (1회선 기준) — 어떤 요금제로 내리면?</h2>';
+  h+=`<div class="mut" style="margin-bottom:8px">기준 회선: <b>${ref.name}</b> · 개통 요금제 <b>${ref.cur.n}</b>(${won(ref.cur.f)}) · 지원금 <b>${ref.sub}</b> · 월데이터 ${ref.needGB}GB · 통신사 ${car}${ref.sub==='선약'?' · <span class="mut">선약은 월요금 25%할인(×0.75) 반영</span>':` · <span class="mut">공시 하향 하한 ${won(floor)}</span>`}</div>`;
+  h+='<table><thead><tr><th class="l">하향 요금제</th><th>데이터</th><th>월요금</th><th>위약금</th><th>데이터 충족</th><th>추천</th></tr></thead><tbody>';
+  cand.forEach(p=>{
+    const fee = netFee(p,ref);
+    const cur = p===ref.cur;
+    const safe = safeFn(p);
+    const dok = dataFn(p);
+    const isRec = p===rec;
+    const dataTxt = p.u?'무제한':(p.gb>=1?p.gb+'GB':(p.gb*1000)+'MB');
+    const penTxt = ref.sub==='선약' ? '없음(자유)' : (safe?'없음':`<span style="color:#a11">발생(${won(floor)} 미만)</span>`);
+    const dokTxt = dok?'○':'<span style="color:#a11">부족</span>';
+    h+=`<tr class="${isRec?'best':''}" style="${cur?'background:#faf3f7':''}">`+
+       `<td class="l">${p.n}${cur?' <span class="mut">(현재)</span>':''}</td>`+
+       `<td class="num">${dataTxt}</td>`+
+       `<td class="num"><b>${won(fee)}</b></td>`+
+       `<td>${penTxt}</td>`+
+       `<td>${dokTxt}</td>`+
+       `<td>${isRec?'<span class="badge">최저·안전</span>':''}</td></tr>`;
+  });
+  h+='</tbody></table>';
+  h+=`<div class="mut" style="margin-top:8px">· <b>추천(최저·안전)</b> = 위약금 없고 데이터도 충족하는 가장 싼 요금제.${rec?` → <b style="color:var(--mag-d)">${rec.n} · ${won(netFee(rec,ref))}</b>`:' (조건 충족 요금제 없음 — 데이터 필요량↓ 또는 선약 전환 검토)'}<br>· 월요금은 <b>1회선</b> 기준(결합할인 배분 전). 실제 청구액은 결합할인이 추가로 빠집니다(종합계산은 위 결과표).<br>· 공시는 개통일+${curCarrier().keepDays}일 경과해야 위약금 없이 하향 가능(각 회선 기준일은 위 결과표 참고).</div></div>`;
+  return h;
+}
+
+function renderFoot(){
+  const car=document.getElementById('carrier').value;
+  const common=`<b>공통 규칙</b> · 선약(선택약정)=요금제 하향 자유+낮춘 요금 기준 25%할인(월정액×0.75). 단 추가지원금 수령 시 6개월 내 하향엔 정산 발생. · 공시(성지)=개통일+185일 경과+5G 하향 하한 이상이어야 위약금 없음(SKT 42,000·KT 47,000·LG 45,000원). · 통화 무제한도 실사용 한도 있음.<br>`;
+  const src={
+   "LG U+":`<b>LG U+</b> 통합요금제 18종(2026-06 개편, 공식·복수확인). 투게더=무제한 전용·최소2회선, 휴대폰 <b>인당(회선당)</b> 2인 10,000·3인 14,000·4~5인 20,000원 + 인터넷 500M/1G 11,000원(공식 확인). 참쉬운=휴대폰 회선당(2개 2,200/3,300/4,400·3개 3,300/5,500/6,600·4~10개 4,400/6,600/8,800, 요금 69,000/88,000 구간) + 인터넷 100·200M 5,500/500M 9,900/1G 13,200원(<b>공식 확인</b>, 요금구간은 약정할인 후 월정액 기준). 하향 하한 5G 45,000원.`,
+   "SKT":`<b>SKT</b> 베스트/라이트(2026-05 개편, 공식 T world 매거진) + 다이렉트. 요즘가족결합(공식 매거진 확인): 휴대폰 <b>합산</b> 1회선3,500·2회선7,000·3회선18,000·4~5회선24,000 / 인터넷 1G13,200·500M11,000·100M4,400. 하향 하한 5G 42,000원. ※결합 요금제 제한은 미명시. 알뜰폰은 USIM을 SKT로 바꾸면 결합 가능(사실상 SKT 회선), 알뜰폰 별도 할인규칙 미확인.`,
+   "KT":`<b>KT</b> 초이스/베이직(2026-07 개편, 뉴스·나무위키). 총액결합할인(공식 static 확인)=모바일 <b>합산</b> 월정액 구간별 2,200/5,500/11,000/22,110/27,610/33,110 + 인터넷 자체 ~5,500원. 하향 하한 5G 47,000원. ※베이직 중간구간 가격·프리미엄가족결합(회선당)·알뜰폰 규칙 미확보.`
+  }[car];
+  document.getElementById('foot').innerHTML=common+src+`<br><span class="mut">출처: 각 통신사 공식 요금제 페이지, 나무위키, 뉴스(mt·헤럴드·zdnet), 블로그(싸당·bohumpixel). 결합·위약금 세부는 상용 전 공식 재검증 권장.</span>`;
+}
+
+// ===== 단계 전환 =====
+function goStep2(){ calc(); document.getElementById('step1').style.display='none'; document.getElementById('step2').style.display=''; document.getElementById('sb1').classList.remove('on'); document.getElementById('sb2').classList.add('on'); window.scrollTo(0,0); }
+function goStep1(){ document.getElementById('step2').style.display='none'; document.getElementById('step1').style.display=''; document.getElementById('sb2').classList.remove('on'); document.getElementById('sb1').classList.add('on'); window.scrollTo(0,0); }
+
+// ===== 모드(홈 분기) + 정보입력 마법사(탭 진행) =====
+let MODE='optimize';
+const FLOWS={ optimize:[1,2,3,4], persuade:[1,2] }; // 설득은 통신사→본인요금제만(비밀숫자 X)
+function curFlow(){ return FLOWS[MODE]; }
+let WSTEP=1;
+function startMode(m){
+  MODE=m;
+  document.getElementById('home').style.display='none';
+  document.getElementById('step2').style.display='none';
+  document.getElementById('step1').style.display='';
+  document.getElementById('sb1').classList.add('on'); document.getElementById('sb2').classList.remove('on');
+  // 설득 모드: 회선 단계에서 가족추가 숨김 + 라벨 조정
+  document.getElementById('addLineBtn').style.display = (m==='persuade')?'none':'';
+  document.getElementById('linesTitle').textContent = (m==='persuade')?'구매(예정) 요금제를 입력하세요':'회선을 입력하세요';
+  showW(curFlow()[0]); calc(); window.scrollTo(0,0);
+}
+function goHome(){ document.getElementById('step1').style.display='none'; document.getElementById('step2').style.display='none'; document.getElementById('home').style.display=''; window.scrollTo(0,0); }
+function updateWprog(){ const f=curFlow(),i=f.indexOf(WSTEP); const el=document.getElementById('wprog'); if(el) el.innerHTML='<i style="width:'+((i+1)/f.length*100)+'%"></i>'; }
+function showW(w){ WSTEP=w; document.querySelectorAll('.wstep').forEach(e=>{e.style.display=(+e.dataset.w===w)?'':'none';});
+  const f=curFlow(),last=(f.indexOf(w)===f.length-1);
+  const btn=document.querySelector('.wstep[data-w="'+w+'"] .wnav .btn-calc'); if(btn) btn.textContent=last?'결과 보기 →':'다음 →';
+  updateWprog(); window.scrollTo(0,0); }
+function wnext(){ const f=curFlow(),i=f.indexOf(WSTEP); if(i<f.length-1) showW(f[i+1]); }
+function wproceed(){ const f=curFlow(),i=f.indexOf(WSTEP); if(i>=f.length-1) goStep2(); else showW(f[i+1]); }
+function wprev(){ const f=curFlow(),i=f.indexOf(WSTEP); if(i>0) showW(f[i-1]); }
+function pickCarrier(v){ const s=document.getElementById('carrier'); s.value=v; onCarrierChange(); document.querySelectorAll('#carrierCards .optcard').forEach(c=>c.classList.toggle('sel',c.dataset.v===v)); wnext(); }
+function pickChip(id,val,btn){ document.getElementById(id).value=String(val); [...btn.parentNode.children].forEach(c=>c.classList.toggle('sel',c===btn)); calc(); }
+
+// ===== 입력 변경 시 실시간 자동 계산 (결과/직접조정 영역 내부 조작은 각자 핸들러가 처리) =====
+['input','change'].forEach(ev=>document.addEventListener(ev,e=>{
+  const t=e.target; if(!t.matches||!t.matches('input,select')) return;
+  if(t.id==='carrier') return; // onCarrierChange가 처리
+  if(t.closest('#result')||t.closest('#manual')||t.closest('#timeline')) return;
+  calc();
+}));
+
+// ===== 초기: LG 사장님 케이스 =====
+addLine({name:"본인",plan:"플러스플랜115",date:"2025-11-15",gb:9,sub:"공시"});
+addLine({name:"아내",plan:"플러스플랜115",date:"2026-06-15",gb:9,sub:"공시"});
+renderFoot(); calc();
+// 마법사 초기 하이라이트 + 첫 단계
+document.querySelectorAll('#carrierCards .optcard').forEach(c=>c.classList.toggle('sel',c.dataset.v===document.getElementById('carrier').value));
+document.querySelectorAll('#netspeedChips .chip').forEach(c=>c.classList.toggle('sel',c.dataset.v===document.getElementById('netspeed').value));
+showW(1);
+</script>
+</body>
+</html>
