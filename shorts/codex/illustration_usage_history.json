@@ -725,9 +725,27 @@
         "payment_fall_8fb48590",
         "device_data_transfer"
       ]
+    },
+    "056_qa_mvno_really_cheap": {
+      "used_at": "2026-07-29T16:49:37",
+      "source": "semantic_visual_match",
+      "illustrations": [
+        "smartphone",
+        "document_article",
+        "basic_fold_202d754f",
+        "phone_setup_ready",
+        "phone_settings_toggle",
+        "device_os_requirement",
+        "gift_voucher",
+        "size_guide_afe009df",
+        "device_data_transfer",
+        "prohibit",
+        "store",
+        "event_period_8cafdac4"
+      ]
     }
   },
-  "updated_at": "2026-07-28T17:26:56",
+  "updated_at": "2026-07-29T16:49:40",
   "requests": {
     "010_tip_iphone_call_record": {
       "updated_at": "2026-06-07T15:07:42",
@@ -881,6 +899,10 @@
     },
     "055_news_foldable8_preorder": {
       "updated_at": "2026-07-28T17:26:56",
+      "variants": []
+    },
+    "056_qa_mvno_really_cheap": {
+      "updated_at": "2026-07-29T16:49:40",
       "variants": []
     }
   }

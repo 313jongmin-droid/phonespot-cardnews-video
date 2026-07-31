@@ -2,6 +2,16 @@
   "version": 1,
   "policy": "Tag reusable illustrations and prefer less recently used semantic matches.",
   "illustrations": {
+    "affordable_mobile_e710cc49": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "알뜰폰",
+        "저렴하다"
+      ],
+      "note": "자동 발굴 개념: 알뜰폰 저렴하다"
+    },
     "aluminum_label": {
       "tags": [
         "materials",
@@ -484,6 +494,17 @@
         "뜻인지"
       ],
       "note": "자동 발굴 개념: 무슨 뜻인지"
+    },
+    "cpt_12ae92eb": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "통신",
+        "사보다",
+        "낮은"
+      ],
+      "note": "자동 발굴 개념: 통신 사보다"
     },
     "cpt_163f537d": {
       "tags": [
@@ -3272,6 +3293,15 @@
       "note": "Reusable editorial illustration.",
       "available": true
     },
+    "total_cost_496b5adf": {
+      "tags": [
+        "auto"
+      ],
+      "keywords": [
+        "총비용"
+      ],
+      "note": "자동 발굴 개념: 총비용"
+    },
     "transfer_interruption_warning": {
       "tags": [
         "library"
@@ -3361,5 +3391,5 @@
       "available": true
     }
   },
-  "updated_at": "2026-07-28T17:26:48"
+  "updated_at": "2026-07-29T16:45:57"
 }
