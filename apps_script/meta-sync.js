@@ -297,7 +297,9 @@ function syncMetaCampaignIntegrated(targetDate) {
 
   // ★ 2026-07-27: 사전예약(별도 GA4 속성) 있는 브랜드(폰스팟)면 유입-소스분기 활성.
   //   M(13) 전화클릭 열을 '유입'(리틀리/시티마켓/사전예약) 라벨로 용도 변경. 유입=사전예약이면 세션·카톡을 사전예약_GA4에서 읽음.
-  const hasPre = String(getBrandConfig_('PREORDER_GA4_PROP_ID', '')).trim() !== '';
+  // ★ 2026-07-27(개선): 유입맵(_유입맵) 기반 다속성 라우팅. 맵 비면(KT) 기존 동작.
+  const inflowMap = (typeof getInflowMap_ === 'function') ? getInflowMap_() : [];
+  const hasPre = inflowMap.length > 0;
   if (hasPre) { try { sh.getRange(1, 13).setValue('유입'); } catch (e) {} }
 
   // 같은 날짜 행 중복 제거 (재실행 안전) — 단, 수기 개통수(20)/메모(21)는 광고그룹키로 보존
@@ -340,40 +342,35 @@ function syncMetaCampaignIntegrated(targetDate) {
     const slugRaw = `IFERROR(VLOOKUP(E${r}, FILTER(UTM_KEYVAL, UTM_CH="페북"), 2, FALSE),"")`;
     const slugLookup = `IF(${slugRaw}="","__UNMAPPED_NO_MATCH__",${slugRaw})`;
     const ga4Base = `'GA4_자동'!A:A,${ymdText},'GA4_자동'!B:B,"meta",'GA4_자동'!D:D,${slugLookup}`;
-    // 사전예약(별도 속성) 매칭 base — 캠페인 슬러그로 매칭 (사전예약_GA4: A날짜 D캠페인 E이벤트 F이벤트수 G세션)
-    const preBase = `'사전예약_GA4'!A:A,${ymdText},'사전예약_GA4'!D:D,${slugLookup}`;
-    // ★ 2026-07-27 유입-소스분기: UTM F열(UTM_INF)의 유입 라벨로 GA4 소스를 가름.
-    //   유입="사전예약" → 사전예약_GA4(별도 속성)에서, 그 외 → GA4_자동(본속성). meta_earlybird 등 캠페인명 충돌 무해화.
+    // ★ 2026-07-27(개선): 유입맵 기반 다속성 라우팅. 라벨별 SUMIFS를 중첩 IF로 생성 → 랜딩(속성) 추가=_유입맵 행 추가만.
     const inflowExpr = `IFERROR(VLOOKUP(E${r},FILTER({UTM_GRP,UTM_INF},UTM_CH="페북"),2,FALSE),"")`;
-    // K(11) 세션 — hasPre면 유입에 따라 소스 분기, 아니면(KT) 기존 GA4_자동
-    sh.getRange(r, 11).setFormula(
-      hasPre
-        ? `=IF(${inflowExpr}="사전예약",IFERROR(SUMIFS('사전예약_GA4'!G:G,${preBase},'사전예약_GA4'!E:E,"session_start"),0),IFERROR(SUMIFS('GA4_자동'!G:G,${ga4Base},'GA4_자동'!E:E,"session_start"),0))`
-        : `=IFERROR(SUMIFS('GA4_자동'!G:G,${ga4Base},'GA4_자동'!E:E,"session_start"),0)`
-    ).setNumberFormat('#,##0');
-    // L(12) 카톡클릭 — 유입=사전예약이면 사전예약 페이지 kakao_click, 아니면 본속성 kakao_chat_click
-    sh.getRange(r, 12).setFormula(
-      hasPre
-        ? `=IF(${inflowExpr}="사전예약",IFERROR(SUMIFS('사전예약_GA4'!F:F,${preBase},'사전예약_GA4'!E:E,"kakao_click"),0),IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"kakao_chat_click"),0))`
-        : `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"kakao_chat_click"),0)`
-    ).setNumberFormat('#,##0');
-    // M(13) — hasPre면 '유입' 라벨(리틀리/시티마켓/사전예약), 아니면 기존 전화클릭(phone_click)
+    const baseSess = `IFERROR(SUMIFS('GA4_자동'!G:G,${ga4Base},'GA4_자동'!E:E,"session_start"),0)`;
+    const baseKakao = `IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"kakao_chat_click"),0)`;
+    let kExpr = baseSess, lExpr = baseKakao;
+    for (let mi = inflowMap.length - 1; mi >= 0; mi--) {
+      const m = inflowMap[mi];
+      const tb = `'${m.tab}'!A:A,${ymdText},'${m.tab}'!D:D,${slugLookup}`;
+      kExpr = `IF(${inflowExpr}="${m.label}",IFERROR(SUMIFS('${m.tab}'!G:G,${tb},'${m.tab}'!E:E,"${m.sessionEvent}"),0),${kExpr})`;
+      lExpr = `IF(${inflowExpr}="${m.label}",IFERROR(SUMIFS('${m.tab}'!F:F,${tb},'${m.tab}'!E:E,"${m.kakaoEvent}"),0),${lExpr})`;
+    }
+    const nonBaseCond = inflowMap.map(function (m) { return `${inflowExpr}="${m.label}"`; }).join(',');
+    const cmClickBase = `IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_click"),0)`;
+    const cmArrBase = `IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_arrival"),0)`;
+    // K(11) 세션 — 유입맵 라우팅(맵 비면 베이스=KT)
+    sh.getRange(r, 11).setFormula(`=${kExpr}`).setNumberFormat('#,##0');
+    // L(12) 카톡클릭 — 속성별 이벤트명(맵), 베이스=kakao_chat_click
+    sh.getRange(r, 12).setFormula(`=${lExpr}`).setNumberFormat('#,##0');
+    // M(13) — hasPre면 '유입' 라벨(리틀리/시티마켓/사전예약…), 아니면 기존 전화클릭(phone_click)
     sh.getRange(r, 13).setFormula(
-      hasPre
-        ? `=${inflowExpr}`
-        : `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"phone_click"),0)`
+      hasPre ? `=${inflowExpr}` : `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"phone_click"),0)`
     ).setNumberFormat(hasPre ? '@' : '#,##0');
-    // N (14) = 시티마켓 클릭 — 사전예약이면 0, 아니면 citymarket_click
+    // N (14) 시티마켓 클릭 — 별도속성(맵) 유입이면 0, 아니면 citymarket_click
     sh.getRange(r, 14).setFormula(
-      hasPre
-        ? `=IF(${inflowExpr}="사전예약",0,IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_click"),0))`
-        : `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_click"),0)`
+      hasPre ? `=IF(OR(${nonBaseCond}),0,${cmClickBase})` : `=${cmClickBase}`
     ).setNumberFormat('#,##0');
-    // O (15) = 시티마켓 직접 — 사전예약이면 0, 아니면 citymarket_arrival
+    // O (15) 시티마켓 직접 — 별도속성(맵) 유입이면 0, 아니면 citymarket_arrival
     sh.getRange(r, 15).setFormula(
-      hasPre
-        ? `=IF(${inflowExpr}="사전예약",0,IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_arrival"),0))`
-        : `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_arrival"),0)`
+      hasPre ? `=IF(OR(${nonBaseCond}),0,${cmArrBase})` : `=${cmArrBase}`
     ).setNumberFormat('#,##0');
     // P (16) = 카톡전환률 = 카톡클릭(L)/세션(K) — L이 이미 유입 소스 반영
     sh.getRange(r, 16).setFormula(

@@ -113,16 +113,74 @@ function fetchPageFunnel() {
 }
 
 // ══════════════════════════════════════════════════════════════
-//  사전예약 페이지 (별도 GA4 속성) 수집 — 2026-07-22 (종민: 리틀리/시티마켓과 성격 달라 분리 유지)
-//  새 랜딩 phonespot86.github.io/preorder = 별도 속성 '폰스팟 사전예약'(546666245)에 연결됨.
-//  본속성(534396517)과 데이터가 분리돼 있어 별도로 읽어 '사전예약_GA4' 탭에 적재.
-//  ★ 브랜드 스코프: _설정 'PREORDER_GA4_PROP_ID' 없으면(KT 등) 그냥 건너뜀.
-//  ★ 같은 구글 계정 소유 속성이면 스크립트 권한으로 조회됨(별도 키 불필요).
-// ══════════════════════════════════════════════════════════════
-function fetchPreorderGA4() {
+//  유입맵 기반 다속성 GA4 수집 (2026-07-27 개선) — 랜딩(속성) 추가 = _유입맵 행 1개
+//  _유입맵 시트(A유입 B GA4속성ID C탭명 D카톡이벤트 E세션이벤트)의 각 행 = 별도 GA4 속성.
+//  베이스(리틀리/시티마켓)는 맵에 안 넣음 = 암묵 기본(GA4_자동 + kakao_chat_click).
+//  시트 없으면 PREORDER_GA4_PROP_ID로 사전예약 1행 합성(하위호환).
+function getInflowMap_() {
   var ss = SpreadsheetApp.getActive();
-  var propId = String(getBrandConfig_('PREORDER_GA4_PROP_ID', '')).trim();
-  if (!propId) return;   // 사전예약 속성 미설정 브랜드는 건너뜀
+  var sh = ss.getSheetByName('_유입맵');
+  var out = [];
+  if (sh && sh.getLastRow() >= 2) {
+    var vals = sh.getRange(2, 1, sh.getLastRow() - 1, 5).getValues();
+    vals.forEach(function (r) {
+      var label = String(r[0] || '').trim();
+      var prop = String(r[1] || '').trim();
+      var tab = String(r[2] || '').trim();
+      if (!label || !prop || !tab) return;   // 3개 필수, 하나라도 비면 스킵
+      out.push({
+        label: label,
+        propId: prop,
+        tab: tab,
+        kakaoEvent: (String(r[3] || '').trim() || 'kakao_click'),
+        sessionEvent: (String(r[4] || '').trim() || 'session_start')
+      });
+    });
+  }
+  if (out.length === 0) {
+    var pid = String(getBrandConfig_('PREORDER_GA4_PROP_ID', '')).trim();
+    if (pid) out.push({ label: '사전예약', propId: pid, tab: '사전예약_GA4', kakaoEvent: 'kakao_click', sessionEvent: 'session_start' });
+  }
+  return out;
+}
+
+// 편집용 _유입맵 시트 보장(없으면 헤더+사전예약 기본행 생성). 별도속성 없는 브랜드(KT)는 no-op.
+function ensureInflowMapSheet_() {
+  var ss = SpreadsheetApp.getActive();
+  var pid = String(getBrandConfig_('PREORDER_GA4_PROP_ID', '')).trim();
+  var sh = ss.getSheetByName('_유입맵');
+  if (sh) return sh;
+  if (!pid) return null;
+  sh = ss.insertSheet('_유입맵');
+  sh.getRange(1, 1, 1, 5).setValues([['유입', 'GA4속성ID', '탭명', '카톡이벤트', '세션이벤트']])
+    .setBackground('#1F4E78').setFontColor('#FFFFFF').setFontWeight('bold').setHorizontalAlignment('center');
+  sh.getRange('B2:B').setNumberFormat('@');
+  sh.getRange(2, 1, 1, 5).setValues([['사전예약', pid, '사전예약_GA4', 'kakao_click', 'session_start']]);
+  sh.getRange('A1:E1').setNote('랜딩(별도 GA4 속성) 추가 = 여기에 행 1개 추가.\n유입=UTM G열에 쓸 라벨 / 탭명=수집될 시트명 / 카톡이벤트=그 속성의 카톡클릭 이벤트명.');
+  sh.setColumnWidths(1, 5, 130);
+  return sh;
+}
+
+// 유입맵의 모든 별도 속성을 수집(속성 중복 탭은 1회). fetchPreorderGA4의 일반화.
+function fetchInflowGA4() {
+  var map = getInflowMap_();
+  if (!map.length) return;
+  ensureInflowMapSheet_();
+  var done = {};
+  map.forEach(function (m) {
+    if (done[m.tab]) return;
+    done[m.tab] = true;
+    try { fetchInflowGA4One_(m.propId, m.tab); } catch (e) {
+      if (typeof logSync_ === 'function') { try { logSync_('fetchInflowGA4', 'FAIL ' + m.tab + ' ' + e.message); } catch (_) {} }
+    }
+  });
+}
+
+// 단일 속성 → 단일 탭 수집 (구 fetchPreorderGA4 본체 파라미터화)
+function fetchInflowGA4One_(propId, tabName) {
+  var ss = SpreadsheetApp.getActive();
+  propId = String(propId || '').trim();
+  if (!propId) return;
   var TZ = 'Asia/Seoul';
   var end = new Date(); end.setDate(end.getDate() - 1);
   var start = new Date(); start.setDate(start.getDate() - 30);
@@ -138,13 +196,12 @@ function fetchPreorderGA4() {
   var resp;
   try { resp = AnalyticsData.Properties.runReport(req, 'properties/' + propId); }
   catch (e) {
-    try { ss.toast('사전예약 속성(' + propId + ') 조회 실패 — 권한/속성ID 확인: ' + e.message, '⚠️ 사전예약 GA4', 8); } catch (_) {}
-    if (typeof logSync_ === 'function') { try { logSync_('fetchPreorderGA4', 'FAIL ' + e.message); } catch (_) {} }
+    try { ss.toast('속성(' + propId + ') 조회 실패 — 권한/속성ID 확인: ' + e.message, '⚠️ 유입 GA4', 8); } catch (_) {}
+    if (typeof logSync_ === 'function') { try { logSync_('fetchInflowGA4One_', 'FAIL ' + tabName + ' ' + e.message); } catch (_) {} }
     return;
   }
   var rows = (resp && resp.rows) ? resp.rows : [];
-  var name = '사전예약_GA4';
-  var sh = ss.getSheetByName(name); if (!sh) sh = ss.insertSheet(name);
+  var sh = ss.getSheetByName(tabName); if (!sh) sh = ss.insertSheet(tabName);
   sh.clearContents();
   var grid = [['날짜', '호스트', '페이지경로', '캠페인', '이벤트', '이벤트수', '세션']];
   rows.forEach(function (r) {
@@ -160,16 +217,18 @@ function fetchPreorderGA4() {
     sh.getRange(2, 6, grid.length - 1, 2).setNumberFormat('#,##0');
   }
   sh.setColumnWidths(1, 7, 130);
-  if (typeof logSync_ === 'function') { try { logSync_('fetchPreorderGA4', (grid.length - 1) + '행 (속성 ' + propId + ')'); } catch (e) {} }
+  if (typeof logSync_ === 'function') { try { logSync_('fetchInflowGA4One_', (grid.length - 1) + '행 (속성 ' + propId + ' → ' + tabName + ')'); } catch (e) {} }
   try {
     var hosts = {};
     rows.forEach(function (r) { var h = r.dimensionValues[1].value; hosts[h] = (hosts[h] || 0) + (parseInt(r.metricValues[0].value, 10) || 0); });
     var hs = Object.keys(hosts).map(function (h) { return h + '(' + hosts[h] + ')'; }).join(', ');
-    ss.toast((grid.length - 1) + '행 수집. 호스트: ' + (hs || '데이터 없음'), '✅ 사전예약 GA4 (속성 ' + propId + ')', 8);
+    ss.toast((grid.length - 1) + '행 수집. 호스트: ' + (hs || '데이터 없음'), '✅ 유입 GA4 (' + tabName + ')', 8);
   } catch (e) {}
 }
 
-// ── 일별 상세 탭 (날짜|유입|이벤트|이벤트수|세션) — setValues 1회 배치 ──
+// 하위호환 별칭 — 기존 호출부(fetchPageFunnel, 메뉴)가 그대로 작동
+function fetchPreorderGA4() { return fetchInflowGA4(); }
+
 function pf_writeDetail_(ss, agg, bk) {
   var sh = ss.getSheetByName(PF_DETAIL_SHEET);
   if (!sh) sh = ss.insertSheet(PF_DETAIL_SHEET);
