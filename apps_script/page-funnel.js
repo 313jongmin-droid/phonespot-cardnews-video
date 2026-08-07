@@ -144,21 +144,33 @@ function getInflowMap_() {
   return out;
 }
 
-// 편집용 _유입맵 시트 보장(없으면 헤더+사전예약 기본행 생성). 별도속성 없는 브랜드(KT)는 no-op.
+// 편집용 _유입맵 시트 보장(없으면 헤더 생성; PREORDER 설정 있으면 사전예약 기본행 시드). 브랜드 무관.
 function ensureInflowMapSheet_() {
   var ss = SpreadsheetApp.getActive();
-  var pid = String(getBrandConfig_('PREORDER_GA4_PROP_ID', '')).trim();
   var sh = ss.getSheetByName('_유입맵');
   if (sh) return sh;
-  if (!pid) return null;
   sh = ss.insertSheet('_유입맵');
   sh.getRange(1, 1, 1, 5).setValues([['유입', 'GA4속성ID', '탭명', '카톡이벤트', '세션이벤트']])
     .setBackground('#1F4E78').setFontColor('#FFFFFF').setFontWeight('bold').setHorizontalAlignment('center');
   sh.getRange('B2:B').setNumberFormat('@');
-  sh.getRange(2, 1, 1, 5).setValues([['사전예약', pid, '사전예약_GA4', 'kakao_click', 'session_start']]);
-  sh.getRange('A1:E1').setNote('랜딩(별도 GA4 속성) 추가 = 여기에 행 1개 추가.\n유입=UTM G열에 쓸 라벨 / 탭명=수집될 시트명 / 카톡이벤트=그 속성의 카톡클릭 이벤트명.');
+  var pid = String(getBrandConfig_('PREORDER_GA4_PROP_ID', '')).trim();
+  if (pid) sh.getRange(2, 1, 1, 5).setValues([['사전예약', pid, '사전예약_GA4', 'kakao_click', 'session_start']]);
+  sh.getRange('A1:E1').setNote('랜딩(별도 GA4 속성) 추가 = 여기에 행 1개 추가.\n유입=UTM G열에 쓸 라벨 / GA4속성ID / 탭명=수집될 시트명 / 카톡이벤트=그 속성의 카톡클릭 이벤트명 / 세션이벤트(보통 session_start).');
   sh.setColumnWidths(1, 5, 130);
   return sh;
+}
+
+// [메뉴] GA4 유입(랜딩) 신규 추가 — 범용·재사용 진입점. _유입맵을 만들고/열어 새 행 입력을 유도.
+//   특정 랜딩에 하드코딩하지 않음: 앞으로 어떤 GA4 속성이 늘어도 이 버튼 1개로 추가.
+function addInflowSource() {
+  var ss = SpreadsheetApp.getActive();
+  var sh = ensureInflowMapSheet_();
+  ss.setActiveSheet(sh);
+  var next = sh.getLastRow() + 1;
+  try { sh.setActiveRange(sh.getRange(next, 1)); } catch (e) {}
+  try {
+    ss.toast('새 행에 입력: 유입라벨 | GA4속성ID | 탭명 | 카톡이벤트 | 세션이벤트.\n입력 후 메뉴 🧾 GA4 유입 수집 실행 → UTM G열(유입구분)에 그 라벨로 광고그룹 태그.', '➕ GA4 유입/랜딩 추가', 12);
+  } catch (e) {}
 }
 
 // 유입맵의 모든 별도 속성을 수집(속성 중복 탭은 1회). fetchPreorderGA4의 일반화.
