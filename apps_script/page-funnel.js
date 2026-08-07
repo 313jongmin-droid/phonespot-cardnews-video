@@ -155,7 +155,7 @@ function ensureInflowMapSheet_() {
   sh.getRange('B2:B').setNumberFormat('@');
   var pid = String(getBrandConfig_('PREORDER_GA4_PROP_ID', '')).trim();
   if (pid) sh.getRange(2, 1, 1, 5).setValues([['사전예약', pid, '사전예약_GA4', 'kakao_click', 'session_start']]);
-  sh.getRange('A1:E1').setNote('랜딩(별도 GA4 속성) 추가 = 여기에 행 1개 추가.\n유입=UTM G열에 쓸 라벨 / GA4속성ID / 탭명=수집될 시트명 / 카톡이벤트=그 속성의 카톡클릭 이벤트명 / 세션이벤트(보통 session_start).');
+  sh.getRange('A1:E1').setNote('랜딩(별도 GA4 속성) 추가 = 여기에 행 1개 추가.\n유입=UTM G열에 쓸 라벨 / GA4속성ID / 탭명=수집될 시트명 / 카톡이벤트=그 속성의 전환(카톡/CTA) 이벤트명, 여러 개면 콤마(예: kakao_click,cta_click) / 세션이벤트(보통 session_start).');
   sh.setColumnWidths(1, 5, 130);
   return sh;
 }

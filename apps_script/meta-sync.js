@@ -350,8 +350,14 @@ function syncMetaCampaignIntegrated(targetDate) {
     for (let mi = inflowMap.length - 1; mi >= 0; mi--) {
       const m = inflowMap[mi];
       const tb = `'${m.tab}'!A:A,${ymdText},'${m.tab}'!D:D,${slugLookup}`;
-      kExpr = `IF(${inflowExpr}="${m.label}",IFERROR(SUMIFS('${m.tab}'!G:G,${tb},'${m.tab}'!E:E,"${m.sessionEvent}"),0),${kExpr})`;
-      lExpr = `IF(${inflowExpr}="${m.label}",IFERROR(SUMIFS('${m.tab}'!F:F,${tb},'${m.tab}'!E:E,"${m.kakaoEvent}"),0),${lExpr})`;
+      // 카톡/세션 이벤트는 콤마로 여러 개 지정 가능(랜딩 최종버튼 "kakao_click,cta_click" 등) → 각 SUMIFS 합산
+      const sumEvents_ = function (col, evStr) {
+        var parts = String(evStr).split(',').map(function (e) { return e.trim(); }).filter(Boolean)
+          .map(function (ev) { return `IFERROR(SUMIFS('${m.tab}'!${col}:${col},${tb},'${m.tab}'!E:E,"${ev}"),0)`; });
+        return parts.length ? parts.join('+') : '0';
+      };
+      kExpr = `IF(${inflowExpr}="${m.label}",${sumEvents_('G', m.sessionEvent)},${kExpr})`;
+      lExpr = `IF(${inflowExpr}="${m.label}",${sumEvents_('F', m.kakaoEvent)},${lExpr})`;
     }
     const nonBaseCond = inflowMap.map(function (m) { return `${inflowExpr}="${m.label}"`; }).join(',');
     const cmClickBase = `IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_click"),0)`;
