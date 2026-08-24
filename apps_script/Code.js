@@ -207,6 +207,7 @@ function onOpen() {
     .addItem('🧭 페이지별 퍼널 (리틀리/시티마켓) 갱신', 'fetchPageFunnel')
     .addItem('➕ GA4 유입(랜딩) 신규 추가', 'addInflowSource')
     .addItem('🧾 GA4 유입 수집 (별도 속성 전체)', 'fetchInflowGA4')
+    .addItem('📖 유입/GA4 추가 가이드', 'showInflowGuide')
     .addSeparator()
     .addItem('🏷️ UTM 슬러그 드롭다운 갱신', 'refreshUtmSlugDropdowns')
     .addItem('🔍 GA4 미매핑 슬러그 → UTM 추가', 'appendUnmappedUtmFromGA4')

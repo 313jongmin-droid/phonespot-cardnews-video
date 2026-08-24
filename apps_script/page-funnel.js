@@ -173,6 +173,29 @@ function addInflowSource() {
   } catch (e) {}
 }
 
+// [메뉴] 📖 유입/GA4 추가 가이드 — 시트에서 바로 볼 수 있게 알림창으로.
+function showInflowGuide() {
+  var msg =
+    '● 새 사이트(새 GA4 속성)일 때\n' +
+    '  1) 메뉴 ➕ GA4 유입(랜딩) 신규 추가 → _유입맵에 행:\n' +
+    '     유입라벨 | GA4속성ID | 탭명 | 카톡이벤트 | session_start\n' +
+    '  2) 메뉴 🧾 GA4 유입 수집 → 탭 생기면 이벤트열에서 카톡이벤트명 확인\n' +
+    '  3) UTM: 채널 / 광고그룹명 / utm_campaign(=GA4 캠페인값) / 유입구분=라벨\n\n' +
+    '● 같은 사이트에 광고그룹만 늘 때\n' +
+    '  - _유입맵 안 건드림. UTM 그 행에 slug + 유입구분만.\n' +
+    '  - slug의 GA4 캠페인이 기존 _GA4 탭에 이미 뜨면 = 같은 속성.\n\n' +
+    '● 핵심 규칙\n' +
+    '  - slug(C)·유입구분(G)은 자동 안 됨 → 직접 입력.\n' +
+    '  - 반드시 "광고그룹 행"에 (빈 행에 넣으면 무효).\n' +
+    '  - 카톡이벤트 여러 개면 콤마: kakao_click,cta_click,citymall_click\n' +
+    '  - 당근도 동일(채널=당근). 당근은 노출/지출 수기 입력 필요.\n' +
+    '  - 같은 유입 광고그룹이 여러 개라도 날짜 안 겹치면 다 태그해도 중복 X.\n' +
+    '  - E열 상태는 ⚡전체새로고침/야간 02:45에 자동 ✅ (표시용, 매칭엔 무관).\n\n' +
+    '상세 = _docs/유입맵_GA4_가이드.md';
+  try { SpreadsheetApp.getUi().alert('📖 GA4 유입(랜딩) 추가 가이드', msg, SpreadsheetApp.getUi().ButtonSet.OK); }
+  catch (e) { try { SpreadsheetApp.getActive().toast('메뉴에서 실행하세요', '가이드', 5); } catch (_) {} }
+}
+
 // 유입맵의 모든 별도 속성을 수집(속성 중복 탭은 1회). fetchPreorderGA4의 일반화.
 function fetchInflowGA4() {
   var map = getInflowMap_();
