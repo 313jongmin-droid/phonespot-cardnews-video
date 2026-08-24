@@ -64,6 +64,12 @@
 
 ---
 
+## 채널별 지원 (메타 + 당근)
+
+- **메타**: `meta-sync.js` — UTM 유입구분(G, `UTM_CH="페북"`).
+- **당근**: `danggn-sync.js` — 동일 유입맵 라우팅(`UTM_CH="당근"`). 당근 랜딩 광고그룹은 UTM 채널=당근 행에 `utm_campaign=<GA4 캠페인, 예 daangn_landing>` + `유입구분=랜딩`. 당근은 API 없음 → 당근+에 노출/클릭/지출 수기 입력 후 🥕 GA4 매칭.
+- 베이스(미태그 당근)는 기존대로 본속성 `GA4_자동`(source=daangn).
+
 ## 관련 코드
 
 - `apps_script/page-funnel.js`: `getInflowMap_` / `ensureInflowMapSheet_` / `fetchInflowGA4`(+`fetchInflowGA4One_`) / `addInflowSource`(메뉴 ➕).

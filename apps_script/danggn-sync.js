@@ -273,6 +273,9 @@ function syncDanggnGA4(opts) {
   }
 
   const utmSource = getBrandConfig_('DANGGN_UTM_SOURCE', 'danggn');
+  // ★ 2026-08: 유입맵 라우팅(랜딩 등 별도 GA4 속성). 맵 비면 기존 동작(본속성 source=daangn).
+  const inflowMap = (typeof getInflowMap_ === 'function') ? getInflowMap_() : [];
+  const hasInflow = inflowMap.length > 0;
 
   let updated = 0;
   let skipped = 0;
@@ -305,25 +308,39 @@ function syncDanggnGA4(opts) {
     // H CPC (=F/E)
     sheet.getRange(row, 8).setFormula(`=IFERROR(F${row}/E${row},"")`);
 
-    // I GA4세션
-    sheet.getRange(row, 9).setFormula(
-      `=IFERROR(SUMIFS('GA4_자동'!G:G,${ga4Base},'GA4_자동'!E:E,"session_start"),0)`
-    );
-    // J 카톡클릭
-    sheet.getRange(row, 10).setFormula(
-      `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"kakao_chat_click"),0)`
-    );
-    // K 전화클릭
+    // ★ 2026-08: 유입맵 라우팅 — 유입=랜딩 등이면 해당 속성 탭(campaign=slug)에서, 아니면 본속성(source=daangn)
+    const inflowExpr = `IFERROR(VLOOKUP("${escapedName}",FILTER({UTM_GRP,UTM_INF},UTM_CH="당근"),2,FALSE),"")`;
+    const baseSess = `IFERROR(SUMIFS('GA4_자동'!G:G,${ga4Base},'GA4_자동'!E:E,"session_start"),0)`;
+    const baseKakao = `IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"kakao_chat_click"),0)`;
+    let kExpr = baseSess, lExpr = baseKakao;
+    for (let mi = inflowMap.length - 1; mi >= 0; mi--) {
+      const m = inflowMap[mi];
+      const tb = `'${m.tab}'!A:A,${ymdText},'${m.tab}'!D:D,${slugLookup}`;
+      const sumEv = function (col, evStr) {
+        var parts = String(evStr).split(',').map(function (e) { return e.trim(); }).filter(Boolean)
+          .map(function (ev) { return `IFERROR(SUMIFS('${m.tab}'!${col}:${col},${tb},'${m.tab}'!E:E,"${ev}"),0)`; });
+        return parts.length ? parts.join('+') : '0';
+      };
+      kExpr = `IF(${inflowExpr}="${m.label}",${sumEv('G', m.sessionEvent)},${kExpr})`;
+      lExpr = `IF(${inflowExpr}="${m.label}",${sumEv('F', m.kakaoEvent)},${lExpr})`;
+    }
+    const nonBaseCond = inflowMap.map(function (m) { return `${inflowExpr}="${m.label}"`; }).join(',');
+    const zeroIfInflow = function (base) { return hasInflow ? `IF(OR(${nonBaseCond}),0,${base})` : base; };
+    // I GA4세션 (유입맵 라우팅)
+    sheet.getRange(row, 9).setFormula(`=${kExpr}`);
+    // J 카톡클릭 (유입=랜딩이면 랜딩 전환이벤트 합산)
+    sheet.getRange(row, 10).setFormula(`=${lExpr}`);
+    // K 전화클릭 — 별도속성 유입이면 0
     sheet.getRange(row, 11).setFormula(
-      `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"phone_click"),0)`
+      `=${zeroIfInflow(`IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"phone_click"),0)`)}`
     );
-    // L (12) 시티마켓 클릭 (리틀리 경유, 당근 광고에 리틀리 URL 포함 시)
+    // L (12) 시티마켓 클릭 — 별도속성 유입이면 0
     sheet.getRange(row, 12).setFormula(
-      `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_click"),0)`
+      `=${zeroIfInflow(`IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_click"),0)`)}`
     );
-    // M (13) 시티마켓 직접 (광고→시티마켓 직접 도달, citymarket_arrival, GTM 2026-06-15)
+    // M (13) 시티마켓 직접 — 별도속성 유입이면 0
     sheet.getRange(row, 13).setFormula(
-      `=IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_arrival"),0)`
+      `=${zeroIfInflow(`IFERROR(SUMIFS('GA4_자동'!F:F,${ga4Base},'GA4_자동'!E:E,"citymarket_arrival"),0)`)}`
     );
 
     // N (14) 카톡전환률 (=J/I)
