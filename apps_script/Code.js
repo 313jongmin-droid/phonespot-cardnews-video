@@ -270,6 +270,9 @@ function refreshAll() {
   try { if (typeof syncGoogleGA4 === 'function') syncGoogleGA4({ interactive: false }); }
   catch (e) { errors.push('syncGoogleGA4: ' + e.message); Logger.log(e); }
 
+  // ★ 2026-08: UTM 상태(E열) 자동 갱신 — 슬러그 채워진 행을 ✅ 매핑됨으로(수동 메뉴 불필요)
+  try { if (typeof flipMappedUtmStatus_ === 'function') flipMappedUtmStatus_(); } catch (e) {}
+
   try { fetchYouTubeAnalyticsDaily(); }
   catch (e) { errors.push('fetchYouTubeAnalyticsDaily: ' + e.message); Logger.log(e); }
 

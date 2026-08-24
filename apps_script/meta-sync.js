@@ -539,11 +539,10 @@ function showUnmappedAdsets() {
 // ============ ★ UTM 정비 (2026-06-18) ============
 // utm_campaign이 채워졌는데 상태가 ⚠️/공백으로 남은 정상 행을 '✅ 매핑됨'으로 갱신.
 // 시프트 행(B=채널명)·안내행(※)은 제외 → cleanup 전에 돌려도 안전.
-function flipMappedUtmStatus() {
+function flipMappedUtmStatus_() {
   const ss = SpreadsheetApp.getActive();
-  const ui = SpreadsheetApp.getUi();
   const sheet = ss.getSheetByName(SHEET_UTM_MAPPING);
-  if (!sheet || sheet.getLastRow() < 2) { ui.alert('UTM 시트 없음/비어있음.'); return; }
+  if (!sheet || sheet.getLastRow() < 2) return 0;
   const CHANNELS = ['페북', '네이버', '당근', '구글', '카카오'];
   const last = sheet.getLastRow();
   const vals = sheet.getRange(2, 1, last - 1, 6).getValues();
@@ -556,14 +555,19 @@ function flipMappedUtmStatus() {
     if (CHANNELS.indexOf(ch) < 0) continue;
     if (CHANNELS.indexOf(name) >= 0) continue;
     if (name.indexOf('※') >= 0 || utm.indexOf('※') >= 0) continue;
-    if (!utm) continue;                                   // 슬러그 없으면 ⚠️ 매핑 필요 그대로
+    if (!utm) continue;
     if (name && status !== '✅ 매핑됨') { sheet.getRange(i + 2, 5).setValue('✅ 매핑됨'); flipped++; }
-    else if (!name && status === '✅ 매핑됨') { sheet.getRange(i + 2, 5).setValue('⚠️ 광고그룹명(B) 입력 필요'); flipped++; }  // 거짓 ✅ 되돌림(B 없음)
+    else if (!name && status === '✅ 매핑됨') { sheet.getRange(i + 2, 5).setValue('⚠️ 광고그룹명(B) 입력 필요'); flipped++; }
   }
-  const msg = 'utm 채워진 행 ' + flipped + '개 상태 ✅ 매핑됨으로 갱신';
-  Logger.log(msg);
-  if (typeof logSync_ === 'function') logSync_('flipMappedUtmStatus', msg);
-  ui.alert('✅ 완료', msg, ui.ButtonSet.OK);
+  if (flipped && typeof logSync_ === 'function') { try { logSync_('flipMappedUtmStatus_', flipped + '행 ✅ 갱신'); } catch (e) {} }
+  return flipped;
+}
+
+// 메뉴용 — 코어 실행 + 알림
+function flipMappedUtmStatus() {
+  const ui = SpreadsheetApp.getUi();
+  const flipped = flipMappedUtmStatus_();
+  ui.alert('✅ 완료', 'utm 채워진 행 ' + flipped + '개 상태 ✅ 매핑됨으로 갱신', ui.ButtonSet.OK);
 }
 
 // ──[수동 1회]── 30일 백필 (초기 1회만 실행)
