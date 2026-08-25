@@ -24,6 +24,20 @@ function tgSend_(text) {
   } catch (e) { Logger.log('[tg] 전송 실패: ' + e.message); return false; }
 }
 
+// 이상징후(헬스체크·목표·토큰) 텔레그램 자동발송 뮤트 플래그. 주간리포트·배포실패는 무관.
+function alertsMuted_() {
+  try { return String(PropertiesService.getScriptProperties().getProperty('ANOMALY_ALERTS_MUTED') || '').trim() === '1'; }
+  catch (e) { return false; }
+}
+function muteAnomalyAlerts() {
+  PropertiesService.getScriptProperties().setProperty('ANOMALY_ALERTS_MUTED', '1');
+  try { SpreadsheetApp.getUi().alert('🔕 이상징후 알림 중단', '헬스체크·목표경고·토큰경고 텔레그램 자동발송을 중단했습니다.\n(주간 리포트·배포 실패 알림은 유지)\n\n재개: 메뉴 🔔 이상징후 알림 재개', SpreadsheetApp.getUi().ButtonSet.OK); } catch (e) {}
+}
+function unmuteAnomalyAlerts() {
+  PropertiesService.getScriptProperties().deleteProperty('ANOMALY_ALERTS_MUTED');
+  try { SpreadsheetApp.getUi().alert('🔔 이상징후 알림 재개', '헬스체크·목표경고·토큰경고 자동발송을 다시 켰습니다.', SpreadsheetApp.getUi().ButtonSet.OK); } catch (e) {}
+}
+
 function _ymd(n) {
   const d = new Date(); d.setDate(d.getDate() - n);
   return Utilities.formatDate(d, 'Asia/Seoul', 'yyyy-MM-dd');
@@ -57,7 +71,7 @@ function runHealthCheck_() {
   });
   const stamp = Utilities.formatDate(new Date(), 'Asia/Seoul', 'MM-dd HH:mm');
   if (warns.length) {
-    tgSend_('🚨 폰스팟 광고 헬스체크 (' + stamp + ')\n\n' + warns.join('\n'));
+    if (!alertsMuted_()) tgSend_('🚨 폰스팟 광고 헬스체크 (' + stamp + ')\n\n' + warns.join('\n'));
     if (typeof logSync_ === 'function') logSync_('healthCheck', '경고 ' + warns.length + '건');
   } else {
     if (typeof logSync_ === 'function') logSync_('healthCheck', 'OK (이상 없음)');
@@ -95,7 +109,7 @@ function checkAdTargets_() {
       }
     });
   });
-  if (warns.length) tgSend_('🎯 광고 목표 경고 (어제 기준, 목표 CPL ' + targetCPL.toLocaleString() + '원)\n\n' + warns.slice(0, 15).join('\n'));
+  if (warns.length && !alertsMuted_()) tgSend_('🎯 광고 목표 경고 (어제 기준, 목표 CPL ' + targetCPL.toLocaleString() + '원)\n\n' + warns.slice(0, 15).join('\n'));
   if (typeof logSync_ === 'function') logSync_('checkAdTargets', warns.length ? ('경고 ' + warns.length + '건') : 'OK');
   return warns;
 }
@@ -218,7 +232,7 @@ function checkTokensDaily() {
 
   const stamp = Utilities.formatDate(new Date(), 'Asia/Seoul', 'MM-dd HH:mm');
   if (problems.length) {
-    tgSend_('🔑 토큰 점검 경고 (' + stamp + ')\n\n' + problems.join('\n') +
+    if (!alertsMuted_()) tgSend_('🔑 토큰 점검 경고 (' + stamp + ')\n\n' + problems.join('\n') +
       '\n\n→ 갱신 필요: Apps Script 프로젝트설정 → 스크립트 속성. (인수인계 시 여기만 확인)');
   }
   if (typeof logSync_ === 'function') logSync_('checkTokensDaily', problems.length ? ('문제 ' + problems.length + '건') : 'OK');
@@ -294,6 +308,9 @@ function setupWeeklyReportTrigger() {
 // ============ 알림 메뉴 ============
 function buildAlertsMenu_(ui) {
   ui.createMenu('알림/모니터링')
+    .addItem('🔕 이상징후 알림 중단', 'muteAnomalyAlerts')
+    .addItem('🔔 이상징후 알림 재개', 'unmuteAnomalyAlerts')
+    .addSeparator()
     .addItem('🩺 헬스체크 지금 실행', 'runHealthCheckMenu')
     .addItem('🎯 목표 경고 지금 점검', 'checkAdTargets_')
     .addItem('☀️ 아침 브리핑 지금 보내기', 'sendMorningBriefing')
