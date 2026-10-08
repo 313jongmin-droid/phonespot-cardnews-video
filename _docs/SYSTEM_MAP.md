@@ -111,6 +111,7 @@
 - 버튼/액션 추가·변경: `static/index.html`(버튼 HTML+JS) + `server.py` 액션 디스패치 블록.
 - 화면만: `static/index.html`(재기동 불필요, Ctrl+F5).
 - 접근/보안: `server.py` `access_denied_reason`.
+- **웹 허브 전환(기획, 미구현)**: `CODEX_VIDEO_DESK/WEB_PLATFORM_PLAN.md` — 관리=웹 허브, 렌더=제작자 PC 에이전트. 단계 P1 에이전트화→P2 자산허브→P3 클라우드+로그인→P4 설치배포. 결정사항 D1~D9.
 - 기동/버전: `start_hidden.ps1` + `PANEL_VERSION`.
 
 **함정**
@@ -825,3 +826,4 @@ rdnews/scripts/update_content_guide.py`로 §2 발행인덱스 자동 재생성,
 - 2026-08-27 (후속): **건우 퇴사 → `broadcast_chat_ids` 비움 (H단원, `_secrets/listener_config.json`).** 위 무한 재발송 사고의 실패 수신자가 건우 chat_id `8728290522`였고 퇴사자여서 제거(현재 `[]` = 종민 1명만 수신). **`_secrets/`는 .gitignore = git 전파 안 됨** → 부사수 PC 등 다른 머신에도 같은 설정 있으면 각각 수정. 규칙으로 승격: 퇴사·이탈자 chat_id는 즉시 제거(잔류하면 매 발송 실패 → 수정 전 코드였다면 무한 재발송, 수정 후에도 stderr 에러 로그 누적).
 - 2026-07-16 (세션): **checkTokensDaily 구글Ads 토큰 점검 제거 (H단원, alerts.js:219~223).** 종민 요청: 텔레그램 "🔑 토큰 점검 경고"의 "· 구글Ads 토큰 실패" 줄이 매일 뜸(구글Ads refresh_token 테스트모드 7일 만료 오탐). 구글Ads 블록만 삭제, 메타·네이버·텔레그램 점검은 유지. Gmail 포워딩 아님=시스템 자체 알림(alerts.js checkTokensDaily 매일 08:30 트리거). 구글Ads 사용 재개 시 블록 복구.
 - 2026-10-08 (재진단 v60): **패널 15항목 개선 (A·F·I단원).** 화면 `static/index.html` 분리, 접근제어(Host 검증·LAN 토큰·same-origin), 워커 pid 안전확인(os.kill 함정), 큐 로그 파일분리+저장 스로틀, 워커 v7, 라이브 로그, state 로그 4000자, GET 500 래퍼, 2MB/썸네일 제한, 로그 자동정리, auto_update 자동커밋 제거, 업로드 게이트 확장. 격리 서버 e2e 검증.
+- 2026-10-08 (기획): **웹 허브 전환 기획서 신설 (A단원).** `CODEX_VIDEO_DESK/WEB_PLATFORM_PLAN.md` — 사내 인원 기준, 렌더 코드 무수정, 패널 PC 직접실행 액션 14개 에이전트화부터.

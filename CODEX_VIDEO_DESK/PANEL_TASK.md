@@ -16,6 +16,8 @@
   - (v43) 시맨틱 색은 `:root` 토큰만 사용(`var(--green/--warning-text/--blue/--danger)`), 인라인 hex 금지. `--warning-text` 신설.
   - 고아 dispatch 제거됨(open_card_output/prompt/root/webui·open_desk·open_prompt·open_work_queue±tsv/md·독립 video_import_render). `video_import_render` 액션명은 큐/worker 계약용 보존.
 
+- **웹 허브 전환 기획(미구현)**: `CODEX_VIDEO_DESK/WEB_PLATFORM_PLAN.md` — 이 task 소유. 구현은 이 기획서 §5 단계 순서.
+
 ## 2. 안 만지는 것 (제작 task 영역)
 - `shorts/src/*`(Remotion 컴포넌트), `shorts/scripts/build_*.py`, `run_*.bat` **내부 로직**, `promo/`·`promo_ai/` 콘텐츠, `cardnews/` 기사·이미지·렌더.
 - 패널은 이것들을 **호출만** 한다(수정 ❌).
