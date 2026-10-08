@@ -31,11 +31,11 @@ if errorlevel 1 (
 
 >>"%LOG%" echo.
 >>"%LOG%" echo [%date% %time%] auto-update: git pull --ff-only in "%ROOT%"
-rem protect newly-created article JSON (untracked) so the stash below never sweeps them away
-"%GIT%" -C "%ROOT%" add cardnews/articles >>"%LOG%" 2>&1
-"%GIT%" -c user.email=phonespot@local -c user.name=phonespot -C "%ROOT%" commit -m "auto-save articles before update" >>"%LOG%" 2>&1
-rem receiver PC: stash local runtime/untracked so they do not block pull
-"%GIT%" -C "%ROOT%" stash --include-untracked >>"%LOG%" 2>&1
+rem receiver PC: stash local runtime/untracked so they do not block pull.
+rem cardnews/articles is EXCLUDED from the stash (keeps new local articles in place).
+rem No auto-commit here: a local commit on a pull-only PC diverges main and makes
+rem every later "pull --ff-only" fail silently.
+"%GIT%" -C "%ROOT%" stash push --include-untracked -m "phonespot-autoupdate" -- . ":(exclude)cardnews/articles" >>"%LOG%" 2>&1
 "%GIT%" -C "%ROOT%" pull --ff-only >>"%LOG%" 2>&1
 >>"%LOG%" echo [exit] !errorlevel!
 exit /b 0

@@ -110,6 +110,20 @@ def run(command: list[str], check: bool = True, timeout: int | None = None) -> s
     return result
 
 
+def quiet(command: list[str], cwd: Path | None = None, timeout: int = 60) -> tuple[int, str]:
+    """로그 없이 실행해 (returncode, 출력) 반환. run()과 같은 임시파일 캡처(파이프 교착 방지)."""
+    import tempfile as _tempfile
+    with _tempfile.TemporaryFile() as _fh:
+        try:
+            result = subprocess.run(command, cwd=str(cwd or ROOT), stdout=_fh, stderr=subprocess.STDOUT, timeout=timeout)
+        except subprocess.TimeoutExpired:
+            return 124, f"timeout after {timeout}s"
+        except OSError as exc:
+            return 127, str(exc)
+        _fh.seek(0)
+        return result.returncode, _fh.read().decode("utf-8", "replace")
+
+
 def ahead_count() -> int:
     result = subprocess.run(
         [GIT, "rev-list", "--count", "@{u}..HEAD"],
@@ -165,22 +179,43 @@ def main() -> int:
     changed = [line.strip() for line in (diff.stdout or "").splitlines() if line.strip()]
     # 검증 게이트(D): 깨진 .py/.bat 은 커밋하지 않는다. 편집/마운트 손상이 HEAD까지
     #   오염돼 복구가 어려웠던 사고(매처 main 소실 / bat truncation) 재발 방지.
+    # (2026-10) 패널 커밋은 git 훅을 끄므로(무창 hang) 훅의 검사를 여기서 동일하게 수행한다:
+    #   .py 문법 / .js·.mjs 문법(node --check) / .bat·.cmd CRLF + 한글이면 UTF-8 BOM / 기사 스키마.
+    #   파일 목록은 core.quotepath=false (기본값이면 한글 파일명이 "\354.." 로 이스케이프돼 검사가 조용히 빠졌다).
     import py_compile as _pyc
+    import re as _re
+    import shutil as _sh
+    _rc, _out = quiet([GIT, "-c", "core.quotepath=false", "diff", "--cached", "--name-only", "--diff-filter=ACM", "-z"])
+    _check = [x for x in _out.split("\0") if x.strip()] if _rc == 0 else [c.strip().strip('"') for c in changed]
+    _node = _sh.which("node")
     _bad = []
-    for _rel in changed:
-        _r = _rel.strip().strip('"')
+    for _r in _check:
         _full = ROOT / _r
         try:
             if _r.endswith(".py"):
                 _pyc.compile(str(_full), doraise=True)
-            elif _r.endswith(".bat"):
+            elif _r.endswith((".js", ".mjs")) and _node:
+                _jrc, _jout = quiet([_node, "--check", str(_full)], timeout=30)
+                if _jrc != 0:
+                    _lines = [l for l in _jout.strip().splitlines() if l.strip()]
+                    _bad.append((_r, "JS 문법: " + next((l for l in _lines if "Error" in l), (_lines or [""])[0])[:160]))
+            elif _r.lower().endswith((".bat", ".cmd")):
                 _b = _full.read_bytes()
                 if _b and _b.count(b"\n") != _b.count(b"\r\n"):
                     _bad.append((_r, "LF(CRLF 아님) - cmd 파싱 깨짐"))
+                if _re.search("[\uac00-\ud7a3]", _b.decode("utf-8", "replace")) and not _b.startswith(b"\xef\xbb\xbf"):
+                    _bad.append((_r, "한글 포함인데 UTF-8 BOM 없음 - cmd 한글 깨짐(I단원)"))
         except FileNotFoundError:
             pass
         except Exception as _e:
-            _bad.append((_r, (str(_e).splitlines() or [""])[0] or type(_e).__name__))
+            _lines = [l for l in str(_e).splitlines() if l.strip()]
+            _bad.append((_r, next((l.strip() for l in _lines if "Error" in l), (_lines or [type(_e).__name__])[0].strip())[:200]))
+    if any(_r.startswith("cardnews/articles/") and _r.endswith(".json") for _r in _check):
+        _validator = ROOT / "cardnews" / "scripts" / "validate_article.py"
+        if _validator.exists():
+            _vrc, _vout = quiet([sys.executable, str(_validator), "--all"], cwd=ROOT / "cardnews", timeout=180)
+            if _vrc != 0:
+                _bad.append(("cardnews/articles/*.json", "기사 스키마 ERROR: " + " | ".join(_vout.strip().splitlines()[-3:])[:240]))
     if _bad:
         log("")
         log("[ABORT] 검증 실패 - 깨진 파일이 있어 커밋/푸시 중단(HEAD 오염 차단):")

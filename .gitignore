@@ -179,3 +179,6 @@ shorts/promo/out/
 shorts/promo_ai/out_promo_ai/**/_chk*/
 shorts/promo_ai/out_promo_ai/**/_insp*/
 shorts/promo_ai/out_promo_ai/**/_ref*/
+
+# scratch folders created by other tasks (named _to_delete*) — never commit (panel upload uses git add -A)
+_to_delete*/

@@ -5,7 +5,8 @@
 > 상위 구조: `CLAUDE.md`(헤드) → `_docs/SYSTEM_MAP.md` 대단원 **A(패널)** → 이 파일.
 
 ## 1. 소유 (이 task가 만지는 것)
-- `CODEX_VIDEO_DESK/dashboard/server.py` — 패널 본체. `INDEX_HTML`(UI+JS) + 액션 디스패치(`if action == "..."`) + `PANEL_VERSION`(SSOT).
+- `CODEX_VIDEO_DESK/dashboard/server.py` — 패널 본체. 액션 디스패치(`if action == "..."`) + 접근제어(`access_denied_reason`) + `PANEL_VERSION`(SSOT).
+- `CODEX_VIDEO_DESK/dashboard/static/index.html` — **UI+CSS+JS 정본(v60에서 `INDEX_HTML` 분리)**. 요청마다 디스크에서 읽음 → 화면만 고치면 재기동 없이 Ctrl+F5.
 - `CODEX_VIDEO_DESK/dashboard/` — `start_hidden.ps1`(버전게이트), `remote_queue.py`(렌더 잡 큐), `auto_update.cmd`, `stop_panel.ps1`.
 - `CODEX_VIDEO_DESK/RENDER_WORKER/worker.py` — 잡 클레임 → `commands_for`(액션→bat) → `result_after`(결과 탐지) → 업로드.
 - 큐/상태: `remote_queue`(렌더 잡), `_state/style_requests.jsonl`(스타일 요청 큐: `style_request`/`style_pending`).
@@ -27,9 +28,11 @@
 - 기존 계약 사례: `shorts/promo/PANEL_INTEGRATION_HANDOFF.md`(promo). 새 트랙도 이 패턴.
 
 ## 4. 함정 / 규칙
-- `server.py` 165KB·`SYSTEM_MAP`·`CLAUDE.md` 대형 = **bash-python 편집만**(Edit툴 truncation), 태그 균형(section/div/script) + `PANEL_VERSION` bump 검증(I단원).
+- `server.py`(110KB)·`static/index.html`(92KB)·`SYSTEM_MAP`·`CLAUDE.md` 대형 = **bash-python 편집만**(Edit툴 truncation). UI 편집 후 `static/index.html` 태그 균형(section/div/script) + `<script>` 추출 `node --check` + `PANEL_VERSION` bump 검증(I단원). `SYSTEM_MAP`은 손상 바이트 1곳 있음 → `errors="surrogateescape"`로 읽고 쓰기.
+- 접근제어(v60): 다른 기기 UI 접속 = 토큰 필요, `/api/worker/*`는 Host만. 상세·함정 = SYSTEM_MAP A단원 "v60 재진단 개선".
+- Windows `os.kill(pid,0)` 금지(=프로세스 종료). 생존확인은 `_pid_alive()`.
 - 화면 안 바뀌면 `PANEL_VERSION`만 올림(ps1이 읽음).
 - 샌드박스 렌더 불가 → 동작 검증은 렌더PC 로그.
 
 ## 5. 시작 명령
-`CODEX_VIDEO_DESK/PANEL_TASK.md 읽고 패널(dashboard/server.py·worker·큐)만. 콘텐츠/Remotion 안 건드림.`
+`CODEX_VIDEO_DESK/PANEL_TASK.md 읽고 패널(dashboard/server.py·static/index.html·worker·큐)만. 콘텐츠/Remotion 안 건드림.`

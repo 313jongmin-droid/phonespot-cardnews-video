@@ -65,7 +65,7 @@
   2. **송신 (PC → 사장님)** (★ outbox watcher):
      - 매 폴 사이클 끝에 `_state/outbox/*.txt` 검사
      - 새 파일 → 텔레그램 sendMessage 호출 (4096자 초과 시 3800자 청크 분할)
-     - 송신 성공 시 `_state/outbox_sent/` 로 이동 (실패 시 outbox 잔존, 다음 사이클 재시도)
+     - 송신 후 `_state/outbox_sent/` 로 이동 — **★ 2026-08-27: 1회 패스 후 무조건 이동, 재발송 없음.** 수신자 일부 실패는 stderr 로그만(`[outbox] moved with FAILED recipients:`). 구버전은 부분 실패 시 파일이 잔존해 성공 수신자에게 무한 중복 발송됨(사고 이력 = `SYSTEM_MAP.md` H단원 2026-08-27)
      - 응답 body 로그 (`resp_ok / message_id / desc`)
 
 ### 2-2. `automation/scripts/tg_send.py`

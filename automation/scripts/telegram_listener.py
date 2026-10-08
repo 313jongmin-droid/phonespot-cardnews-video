@@ -316,7 +316,10 @@ def check_outbox(recipients: list) -> None:
             text = f.read_text(encoding="utf-8")
             # 텔레그램 4096자 제한 — 초과 시 분할
             chunks = [text[i:i+3800] for i in range(0, len(text), 3800)] or [""]
-            ok_all = True
+            # ★ 2026-08-27 수정: 수신자별 독립 발송 + 1회 패스 후 무조건 이동.
+            # (구버전은 수신자 1명이라도 실패하면 파일이 outbox에 잔존 → 매 폴링마다
+            #  성공한 수신자에게 무한 재발송. 종민 중복 수신 사고 원인.)
+            failed = []
             for cid in recipients:
                 for i, ch in enumerate(chunks):
                     prefix = f"[{i+1}/{len(chunks)}]\n" if len(chunks) > 1 else ""
@@ -328,16 +331,17 @@ def check_outbox(recipients: list) -> None:
                     # 응답 body 전체 로깅 (진단용)
                     print(f"[outbox] chat_id={cid} resp_ok={r.get('ok')} message_id={r.get('result',{}).get('message_id')} desc={r.get('description','')[:200]}")
                     if not r.get("ok"):
-                        ok_all = False
+                        failed.append((cid, r.get("description", "")[:200]))
                         print(f"[outbox] send failed full: {r}", file=sys.stderr)
-                        break
-                if not ok_all:
-                    break  # 일부 실패 시 파일 잔존 → 다음 사이클 재시도 (성공 수신자는 중복 수신 가능)
-            if ok_all:
-                dst = OUTBOX_SENT_DIR / f.name
-                if dst.exists():
-                    dst.unlink()
-                f.rename(dst)
+                        break  # 이 수신자만 중단, 다음 수신자로 진행
+            dst = OUTBOX_SENT_DIR / f.name
+            if dst.exists():
+                dst.unlink()
+            f.rename(dst)
+            if failed:
+                # 재발송 안 함(중복 방지). 실패는 로그로만 남김.
+                print(f"[outbox] moved with FAILED recipients: {f.name} -> {failed}", file=sys.stderr)
+            else:
                 print(f"[outbox] sent + moved: {f.name}")
         except Exception as e:
             print(f"[outbox] error on {f.name}: {e}", file=sys.stderr)

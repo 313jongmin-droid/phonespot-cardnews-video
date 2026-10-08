@@ -216,11 +216,8 @@ function checkTokensDaily() {
     catch (e) { problems.push('· 메타 토큰 실패: ' + String(e.message).slice(0, 120)); }
   }
 
-  // 2) 구글 Ads refresh_token — 등록돼 있으면 access token 교환 시도
-  if (props.getProperty('GOOGLE_ADS_REFRESH_TOKEN')) {
-    try { if (typeof _gadsAccessToken_ === 'function') _gadsAccessToken_(); }
-    catch (e) { problems.push('· 구글Ads 토큰 실패: ' + String(e.message).slice(0, 120)); }
-  }
+  // 2) 구글 Ads refresh_token 점검 제거 (2026-07-16 종민): 테스트모드 7일 만료로 매일 오탐 경고 → 노이즈.
+  //    구글Ads 사용 재개 시 이 블록 복구. (기존: GOOGLE_ADS_REFRESH_TOKEN 있으면 _gadsAccessToken_() 교환 시도)
 
   // 3) 네이버 키 (API키=만료없음, 존재만 확인)
   if (!props.getProperty('NAVER_SECRET_KEY') || !props.getProperty('NAVER_CUSTOMER_ID'))

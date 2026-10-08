@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
+import hmac
 import html
 import json
 import os
 import re
+import secrets
 import shutil
 import socket
 import subprocess
@@ -38,7 +40,7 @@ DOWNLOADS = Path.home() / "Downloads"
 CHUNK_OVERRIDES = DESK / "CHUNK_OVERRIDES"
 WORK_QUEUE = DESK / "WORK_QUEUE"
 PORT = int(os.environ.get("PHONESPOT_PANEL_PORT", "4878"))
-PANEL_VERSION = "phonespot-web-v59"
+PANEL_VERSION = "phonespot-web-v60"
 SAFE_SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,160}$")
 REMOTE_QUEUE = RemoteQueue(ROOT)
 LOCAL_HISTORY_PATH = DESK / "TEMP" / "local_job_history.json"
@@ -125,6 +127,90 @@ def append_log(text: str) -> None:
             JOB["log"] = JOB["log"][-260_000:]
 
 
+def proposal_candidate_paths() -> set:
+    """현재 가져오기 제안(IMPORT/CARD_IMPORT_PROPOSAL.json)의 후보 이미지 경로(소문자, resolve)."""
+    out: set = set()
+    for name in ("IMPORT_PROPOSAL.json", "CARD_IMPORT_PROPOSAL.json"):
+        try:
+            data = json.loads((DESK / name).read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        for item in (data.get("assignments") or []):
+            path = (item or {}).get("candidate_path")
+            if isinstance(path, str) and path:
+                try:
+                    out.add(str(Path(path).resolve()).lower())
+                except OSError:
+                    pass
+    return out
+
+
+def prune_logs(max_files: int = 40, max_age_days: int = 14) -> int:
+    """패널/워커 실행 로그 자동 정리(실행마다 새 파일 쌓이던 것): 기간 초과 삭제 + 종류별 최신 max_files개만 유지."""
+    removed = 0
+    cutoff = time.time() - max_age_days * 86400
+    for folder, pattern in ((DESK / "TEMP" / "panel" / "panel_logs", "panel_*.log"),
+                            (DESK / "TEMP" / "worker" / "logs", "worker_*.log")):
+        if not folder.exists():
+            continue
+        files = []
+        for f in folder.glob(pattern):
+            try:
+                files.append((f.stat().st_mtime, f))
+            except OSError:
+                pass
+        files.sort(key=lambda t: t[0], reverse=True)
+        for idx, (mtime, f) in enumerate(files):
+            if idx >= max_files or mtime < cutoff:
+                try:
+                    f.unlink()
+                    removed += 1
+                except OSError:
+                    pass  # 현재 실행 중인 로그(열려 있음)는 윈도우에서 삭제 불가 → 건너뜀
+    return removed
+
+
+def _pid_alive(pid: int) -> bool:
+    """프로세스 생존 확인(부작용 없음).
+    ★ 윈도우에서 os.kill(pid, 0)은 생존확인이 아니라 TerminateProcess(강제 종료)다(파이썬 문서:
+      CTRL_C/CTRL_BREAK 외 시그널은 무조건 종료). 과거 이 코드가 고아 워커·PID 재할당된 무관 프로세스를 죽였다."""
+    if pid <= 0:
+        return False
+    if os.name == "nt":
+        import ctypes
+        from ctypes import wintypes
+        k32 = ctypes.WinDLL("kernel32", use_last_error=True)
+        k32.OpenProcess.restype = wintypes.HANDLE
+        k32.OpenProcess.argtypes = [wintypes.DWORD, wintypes.BOOL, wintypes.DWORD]
+        k32.GetExitCodeProcess.argtypes = [wintypes.HANDLE, ctypes.POINTER(wintypes.DWORD)]
+        k32.GetExitCodeProcess.restype = wintypes.BOOL
+        k32.CloseHandle.argtypes = [wintypes.HANDLE]
+        handle = k32.OpenProcess(0x1000, False, pid)  # PROCESS_QUERY_LIMITED_INFORMATION
+        if not handle:
+            return False
+        try:
+            code = wintypes.DWORD()
+            if not k32.GetExitCodeProcess(handle, ctypes.byref(code)):
+                return False
+            return code.value == 259  # STILL_ACTIVE
+        finally:
+            k32.CloseHandle(handle)
+    try:
+        os.kill(pid, 0)  # POSIX에서만 생존확인 의미
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        return True
+    except OSError:
+        return False
+    return True
+
+
+def _local_worker_online() -> bool:
+    worker = REMOTE_QUEUE.workers().get(socket.gethostname()) or {}
+    return bool(worker.get("online"))
+
+
 def start_local_worker() -> None:
     global LOCAL_WORKER_PROCESS
     if os.environ.get("PHONESPOT_AUTO_WORKER", "1") == "0":
@@ -135,10 +221,14 @@ def start_local_worker() -> None:
     pid_file = DESK / "TEMP" / "worker" / "local_worker.pid"
     if pid_file.exists():
         try:
-            os.kill(int(pid_file.read_text(encoding="ascii").strip()), 0)
+            old_pid = int(pid_file.read_text(encoding="ascii").split()[0])
+        except (OSError, ValueError, IndexError):
+            old_pid = 0
+        # 기존(고아) 워커가 살아있고 패널에 온라인 등록돼 있을 때만 재사용.
+        # 그 외(PID가 다른 프로그램에 재할당 등)는 절대 건드리지 않고 새 워커를 띄운다.
+        if old_pid and _pid_alive(old_pid) and _local_worker_online():
             return
-        except (OSError, ValueError):
-            pid_file.unlink(missing_ok=True)
+        pid_file.unlink(missing_ok=True)
     log_dir = DESK / "TEMP" / "worker" / "logs"
     log_dir.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -171,6 +261,12 @@ def stop_local_worker() -> None:
                 LOCAL_WORKER_PROCESS.kill()
             except Exception:
                 pass
+    # 윈도우 terminate()=TerminateProcess라 워커의 atexit 정리가 안 돈다 → pid 파일은 서버가 직접 지운다.
+    if LOCAL_WORKER_PROCESS is not None:
+        try:
+            (DESK / "TEMP" / "worker" / "local_worker.pid").unlink(missing_ok=True)
+        except OSError:
+            pass
 
 
 def telegram_send(message: str) -> bool:
@@ -1182,9 +1278,129 @@ def origin_allowed(handler: BaseHTTPRequestHandler, origin: str) -> bool:
     if not origin:
         return True
     host = handler.headers.get("Host", "")
-    if origin in {f"http://{host}", f"https://{host}"}:
+    # 같은 출처만 허용. (과거 *.googleusercontent.com 허용 = 아무나 만든 Apps Script 웹앱이 패널 액션을
+    #  실행할 수 있던 구멍. Apps Script 쪽에 패널 호출 코드 없음 확인 후 제거, 2026-10.)
+    return origin in {f"http://{host}", f"https://{host}"}
+
+
+PANEL_TOKEN_PATH = DESK / "TEMP" / "panel" / "panel_token.txt"
+_ALLOWED_HOSTS_CACHE: dict = {"at": 0.0, "hosts": set()}
+
+
+def panel_token() -> str:
+    """다른 기기(LAN) 접속용 토큰. 최초 1회 생성, TEMP(git 비추적)에 보관."""
+    try:
+        token = PANEL_TOKEN_PATH.read_text(encoding="ascii").strip()
+        if len(token) >= 20:
+            return token
+    except OSError:
+        pass
+    token = secrets.token_urlsafe(24)
+    PANEL_TOKEN_PATH.parent.mkdir(parents=True, exist_ok=True)
+    PANEL_TOKEN_PATH.write_text(token, encoding="ascii")
+    return token
+
+
+def local_ipv4s() -> list[str]:
+    ips: set[str] = set()
+    try:
+        for info in socket.getaddrinfo(socket.gethostname(), None):
+            addr = str(info[4][0])
+            if ":" not in addr:
+                ips.add(addr)
+    except OSError:
+        pass
+    try:  # 기본 경로 인터페이스 IP(실제 전송 없음, 라우팅 조회만)
+        probe = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        try:
+            probe.connect(("10.255.255.255", 1))
+            ips.add(probe.getsockname()[0])
+        finally:
+            probe.close()
+    except OSError:
+        pass
+    return sorted(ip for ip in ips if not ip.startswith("127."))
+
+
+def allowed_hosts() -> set:
+    now = time.time()
+    if _ALLOWED_HOSTS_CACHE["hosts"] and now - _ALLOWED_HOSTS_CACHE["at"] < 60:
+        return _ALLOWED_HOSTS_CACHE["hosts"]
+    hosts = {"localhost", "127.0.0.1", "::1"}
+    name = socket.gethostname().lower()
+    hosts.update({name, name.split(".")[0]})
+    try:
+        hosts.add(socket.getfqdn().lower())
+    except OSError:
+        pass
+    hosts.update(local_ipv4s())
+    extra = os.environ.get("PHONESPOT_PANEL_ALLOWED_HOSTS", "")
+    hosts.update(h.strip().lower() for h in extra.split(",") if h.strip())
+    _ALLOWED_HOSTS_CACHE.update({"at": now, "hosts": hosts})
+    return hosts
+
+
+def request_host(handler: BaseHTTPRequestHandler) -> str:
+    raw = (handler.headers.get("Host") or "").strip().lower()
+    if raw.startswith("["):
+        return raw[1:raw.find("]")] if "]" in raw else raw
+    return raw.rsplit(":", 1)[0] if raw.count(":") == 1 else raw
+
+
+def is_local_client(handler: BaseHTTPRequestHandler) -> bool:
+    ip = str(handler.client_address[0] or "")
+    if ip == "::1" or ip.startswith("127.") or ip.startswith("::ffff:127."):
         return True
-    return origin.startswith("https://script.google.com") or origin.endswith(".googleusercontent.com")
+    return ip.replace("::ffff:", "") in allowed_hosts()  # 같은 PC가 자기 LAN IP로 접속한 경우
+
+
+def request_token(handler: BaseHTTPRequestHandler) -> str:
+    token = (handler.headers.get("X-Panel-Token") or "").strip()
+    if token:
+        return token
+    for part in (handler.headers.get("Cookie") or "").split(";"):
+        key, _, value = part.strip().partition("=")
+        if key == "panel_token":
+            return value.strip()
+    return (urllib.parse.parse_qs(urlparse(handler.path).query).get("t") or [""])[0]
+
+
+def has_valid_token(handler: BaseHTTPRequestHandler) -> bool:
+    token = request_token(handler)
+    return bool(token) and hmac.compare_digest(token.encode(), panel_token().encode())
+
+
+def access_denied_reason(handler: BaseHTTPRequestHandler, path: str) -> str:
+    """접근 제어(빈 문자열 = 허용).
+    - /api/health: 항상 허용(런처 헬스체크).
+    - 유효 토큰(헤더/쿠키/?t=)이면 허용.
+    - Host가 이 PC 이름·IP가 아니면 차단 = DNS 리바인딩(남의 도메인으로 127.0.0.1 접근) 방어.
+    - /api/worker/*: Host만 맞으면 허용(원격 워커 호환).
+    - 그 외: 같은 PC 접속만 토큰 없이 허용. 다른 기기는 토큰 필요("다른 기기 접속 링크")."""
+    if path == "/api/health":
+        return ""
+    if has_valid_token(handler):
+        return ""
+    if request_host(handler) not in allowed_hosts():
+        return "host not allowed"
+    if path.startswith("/api/worker/"):
+        return ""
+    if is_local_client(handler):
+        return ""
+    return "token required"
+
+
+def deny_response(handler: BaseHTTPRequestHandler, reason: str, path: str) -> None:
+    if path.startswith("/api/"):
+        json_response(handler, {"ok": False, "error": f"forbidden: {reason}"}, 403)
+        return
+    page = ("<!doctype html><html><head><meta charset='utf-8'><title>접근 제한</title></head>"
+            "<body style='font-family:Arial,sans-serif;margin:32px;line-height:1.6'>"
+            "<h2>폰스팟 패널 — 접근 제한</h2>"
+            "<p>이 패널은 패널이 켜진 PC에서는 그대로 열립니다. 다른 기기(폰·다른 PC)에서 열려면 "
+            "패널 PC 화면 상단의 <b>[다른 기기 접속 링크]</b>를 복사해 그 주소로 접속하세요(한 번 접속하면 저장됨).</p>"
+            f"<p style='color:#888'>사유: {html.escape(reason)}</p></body></html>")
+    html_response(handler, page, 403)
 
 
 def json_response(handler: BaseHTTPRequestHandler, data: dict, status: int = 200) -> None:
@@ -1242,6 +1458,8 @@ def read_body(handler: BaseHTTPRequestHandler) -> dict:
     length = int(handler.headers.get("Content-Length", "0") or "0")
     if length <= 0:
         return {}
+    if length > 2 * 1024 * 1024:
+        raise RuntimeError("요청 본문이 너무 큽니다(2MB 초과).")
     raw = handler.rfile.read(length).decode("utf-8", errors="replace")
     return json.loads(raw or "{}")
 
@@ -1288,12 +1506,32 @@ class Handler(BaseHTTPRequestHandler):
         return
 
     def do_OPTIONS(self) -> None:
+        reason = access_denied_reason(self, urlparse(self.path).path)
+        if reason:
+            deny_response(self, reason, "/api/")
+            return
         self.send_response(204)
         cors_headers(self)
         self.end_headers()
 
     def do_GET(self) -> None:
+        # 과거엔 GET에 예외처리가 없어 RuntimeError 시 응답 없이 연결만 끊겼다(클라이언트는 원인 모름).
+        try:
+            self._handle_get()
+        except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError):
+            pass
+        except Exception as exc:  # noqa: BLE001
+            try:
+                json_response(self, {"ok": False, "error": str(exc)}, 500)
+            except Exception:
+                pass
+
+    def _handle_get(self) -> None:
         parsed = urlparse(self.path)
+        reason = access_denied_reason(self, parsed.path)
+        if reason:
+            deny_response(self, reason, parsed.path)
+            return
         if parsed.path == "/api/health":
             json_response(self, {"ok": True, "service": "phonespot-panel", "version": PANEL_VERSION})
             return
@@ -1312,6 +1550,9 @@ class Handler(BaseHTTPRequestHandler):
                 try:
                     target.relative_to(root.resolve())
                     allowed = True
+                    # 다운로드 폴더는 개인 파일이 섞여 있으므로 '현재 가져오기 제안의 후보'만 노출
+                    if root == DOWNLOADS and str(target).lower() not in proposal_candidate_paths():
+                        allowed = False
                     break
                 except (ValueError, OSError):
                     continue
@@ -1325,7 +1566,18 @@ class Handler(BaseHTTPRequestHandler):
                 json_response(self, {"ok": False, "error": "read fail"}, 404)
             return
         if parsed.path == "/":
-            html_response(self, INDEX_HTML)
+            if (urllib.parse.parse_qs(parsed.query).get("t") or [""])[0] and has_valid_token(self):
+                self.send_response(302)  # 다른 기기: 토큰을 쿠키로 저장하고 주소창에서 토큰 제거
+                self.send_header("Set-Cookie", f"panel_token={panel_token()}; Path=/; Max-Age=31536000; SameSite=Strict; HttpOnly")
+                self.send_header("Location", "/")
+                self.send_header("Content-Length", "0")
+                self.end_headers()
+                return
+            page = load_index_html()
+            if is_local_client(self):  # 같은 PC에서 연 화면에만 다른 기기 접속 링크 제공
+                links = ",".join(f"http://{ip}:{PORT}/?t={panel_token()}" for ip in local_ipv4s())
+                page = page.replace("</head>", f'<meta name="panel-lan-links" content="{html.escape(links)}">\n</head>', 1)
+            html_response(self, page)
             return
         if parsed.path == "/prompt":
             path = DESK / "LATEST_PROMPT.md"
@@ -1413,7 +1665,10 @@ class Handler(BaseHTTPRequestHandler):
             with STATE_LOCK:
                 local_job = dict(JOB)
             remote_job = REMOTE_QUEUE.panel_job()
-            job = select_panel_job(local_job, remote_job)
+            job = dict(select_panel_job(local_job, remote_job) or {})
+            # 상태 폴링(1.5s)엔 로그 꼬리만: 진행률 파싱용. 전체/긴 꼬리는 펼칠 때 /api/job_log 로.
+            if job.get("log"):
+                job["log"] = str(job["log"])[-4000:]
             workers = REMOTE_QUEUE.workers()
             online_workers = [worker for worker in workers.values() if worker.get("online")]
             json_response(self, {
@@ -1509,17 +1764,20 @@ class Handler(BaseHTTPRequestHandler):
             json_response(self, {"rows": job_history(limit)})
             return
         if parsed.path == "/api/job_log":
-            job_id = (urllib.parse.parse_qs(parsed.query).get("id") or [""])[0]
-            log = ""
-            for job in REMOTE_QUEUE.jobs():
-                if job.get("id") == job_id:
-                    log = job.get("log") or ""
-                    break
-            if not log:
-                for job in read_local_history():
-                    if job.get("id") == job_id:
-                        log = job.get("log") or ""
-                        break
+            query = urllib.parse.parse_qs(parsed.query)
+            job_id = (query.get("id") or [""])[0]
+            try:
+                tail = max(0, int((query.get("tail") or ["0"])[0]))
+            except ValueError:
+                tail = 0
+            log = REMOTE_QUEUE.job_log(job_id, tail or None)  # 원격: 잡별 로그 파일(전체)
+            if log is None:
+                with STATE_LOCK:
+                    log = JOB.get("log") if (job_id and JOB.get("job_id") == job_id) else None  # 로컬 실행 중/직전
+                if log is None:
+                    log = next((j.get("log") or "" for j in read_local_history() if j.get("id") == job_id), "")
+                if tail and len(log) > tail:
+                    log = log[-tail:]
             json_response(self, {"ok": True, "log": log})
             return
         if parsed.path == "/api/result":
@@ -1545,6 +1803,10 @@ class Handler(BaseHTTPRequestHandler):
     def do_POST(self) -> None:
         try:
             parsed = urlparse(self.path)
+            reason = access_denied_reason(self, parsed.path)
+            if reason:
+                deny_response(self, reason, parsed.path)
+                return
             origin = self.headers.get("Origin", "")
             if origin and not origin_allowed(self, origin):
                 json_response(self, {"ok": False, "error": "origin not allowed"}, 403)
@@ -2022,7 +2284,8 @@ class Handler(BaseHTTPRequestHandler):
                         stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
                         creationflags=flags, close_fds=True,
                     )
-                    json_response(self, {"ok": True, "message": "최신 코드를 받고 패널을 재시작합니다. 잠시 후 자동 새로고침됩니다."})
+                    receiver = (DESK / "TEMP" / "panel" / "auto_update.on").exists()
+                    json_response(self, {"ok": True, "message": ("최신 코드를 받고(수신 PC) 패널을 재시작합니다." if receiver else "패널을 재시작합니다(이 PC는 push 전용이라 pull 없이 재시작만).") + " 잠시 후 자동 새로고침됩니다."})
                 except Exception as exc:  # noqa: BLE001
                     json_response(self, {"ok": False, "message": f"재시작 실행 실패: {exc}"})
                 return
@@ -2095,1272 +2358,15 @@ class Handler(BaseHTTPRequestHandler):
             json_response(self, {"ok": False, "error": str(exc)}, 500)
 
 
-INDEX_HTML = r"""<!doctype html>
-<html lang="ko">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>폰스팟 통합 제작 패널</title>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css" />
-  <style>
-    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css');
-    :root{
-      --system-bg:#F2F2F7; --card-bg:#FFFFFF; --secondary-bg:#F2F2F7; --tertiary-bg:#FAFAFA;
-      --label:#1D1D1F; --label-secondary:#3C3C43; --label-tertiary:#86868B; --label-quaternary:#C7C7CC;
-      --separator:rgba(60,60,67,.08); --separator-opaque:#ECECEE;
-      --accent:#F74B0B; --accent-hover:#D63E06; --accent-soft:rgba(247,75,11,.10); --accent-tint:rgba(247,75,11,.05);
-      --success:#34C759; --warning:#FF9500; --danger:#FF3B30; --warning-text:#B25A00;
-      --r-sm:6px; --r-md:10px; --r-lg:14px; --r-xl:18px;
-      --shadow-subtle:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04),0 0 0 .5px rgba(0,0,0,.04);
-      --shadow-card:0 4px 16px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.05),0 0 0 .5px rgba(0,0,0,.03);
-      --shadow-elevated:0 12px 32px rgba(0,0,0,.13),0 4px 12px rgba(0,0,0,.07);
-      --t-fast:150ms cubic-bezier(.4,0,.2,1);
-      /* legacy aliases so existing inline var() refs keep working */
-      --bg:var(--system-bg); --panel:var(--card-bg); --ink:var(--label); --muted:var(--label-tertiary);
-      --line:var(--separator-opaque); --orange:var(--accent); --orange-soft:var(--accent-soft);
-      --blue:#0A84FF; --red:var(--danger); --green:#1B7A3D; --r:var(--r-md);
-    }
-    * { box-sizing:border-box; }
-    body { margin:0; background:var(--system-bg); color:var(--label);
-      font-family:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Segoe UI','Malgun Gothic',sans-serif;
-      font-variant-numeric:tabular-nums;
-      letter-spacing:-.2px; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
-    header { min-height:60px; display:flex; align-items:center; justify-content:space-between; padding:14px 20px;
-      background:rgba(255,255,255,.86); backdrop-filter:saturate(180%) blur(20px); -webkit-backdrop-filter:saturate(180%) blur(20px);
-      color:var(--label); border-bottom:.5px solid var(--separator); gap:16px; position:sticky; top:0; z-index:20; }
-    header strong { font-size:18px; font-weight:700; letter-spacing:-.4px; }
-    header span { color:var(--label-tertiary); font-size:13px; word-break:break-all; }
-    main { display:grid; grid-template-columns:400px 1fr; gap:18px; padding:18px 20px; max-width:none; margin:0; }
-    section { background:var(--card-bg); border-radius:var(--r-xl); overflow:hidden; box-shadow:var(--shadow-card); }
-    main > section { align-self:start; position:sticky; top:80px; }
-    .head { display:flex; align-items:center; justify-content:space-between; padding:15px 18px; border-bottom:.5px solid var(--separator); background:transparent; gap:10px; }
-    h2 { margin:0; font-size:18px; font-weight:700; letter-spacing:-.3px; }
-    .small { font-size:12px; color:var(--label-tertiary); }
-    .pad { padding:18px; }
-    .tabs { display:flex; gap:2px; padding:4px; margin:10px; background:rgba(118,118,128,.08); border-radius:var(--r-md); }
-    .tab { flex:1; border:none; background:transparent; border-radius:7px; padding:8px; cursor:pointer; font-weight:600; font-size:13px; color:var(--label); transition:var(--t-fast); }
-    .tab:hover { color:var(--accent); }
-    .tab.active { background:var(--card-bg); color:var(--accent); box-shadow:0 1px 3px rgba(0,0,0,.10); }
-    .list { max-height:715px; overflow:auto; }
-    .list { padding:7px; max-height:calc(100vh - 188px); }
-    .row { width:100%; border:0; background:var(--card-bg); text-align:left; cursor:pointer; display:grid; grid-template-columns:38px minmax(0,1fr) auto; gap:12px; align-items:center; font-size:13px; padding:13px 12px; border-radius:13px; margin-bottom:5px; transition:var(--t-fast); }
-    .row.video, .row.card { grid-template-columns:38px minmax(0,1fr) auto; }
-    .row:hover { background:var(--accent-tint); }
-    .row.active { background:var(--accent-soft); box-shadow:inset 0 0 0 1px var(--accent); }
-    .row-number { display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:11px; background:var(--secondary-bg); color:var(--label-secondary); font-size:14px; font-weight:700; line-height:1; flex-shrink:0; }
-    .row.active .row-number { background:var(--accent); color:#fff; }
-    .row-main { min-width:0; display:flex; flex-direction:column; gap:3px; }
-    .slug-name { font-weight:600; font-size:14px; letter-spacing:-.2px; line-height:1.3; overflow-wrap:anywhere; color:var(--label); }
-    .row-sub { font-size:12px; color:var(--label-tertiary); line-height:1.35; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-    .row-date,.flag { color:var(--label-tertiary); font-size:12px; white-space:nowrap; }
-    .title-sub { display:block; color:var(--label-tertiary); font-size:12px; margin-top:2px; font-weight:400; line-height:1.35; }
-    .flag { font-weight:600; color:var(--label-tertiary); }
-    .stage-pill { display:inline-flex; align-items:center; justify-content:center; min-width:82px; padding:4px 8px; border-radius:100px; font-size:11px; font-weight:700; border:none; background:rgba(118,118,128,.12); color:var(--label-secondary); }
-    .stage-pill.ok { background:rgba(52,199,89,.15); color:var(--green); }
-    .stage-pill.warn { background:rgba(255,149,0,.15); color:var(--warning-text); }
-    .stage-pill.muted { background:rgba(118,118,128,.12); color:var(--label-tertiary); }
-    .grid { display:grid; grid-template-columns:repeat(3,minmax(160px,1fr)); gap:12px; }
-    .pair { display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:stretch; }
-    .pair.lopsided { grid-template-columns:1.8fr 1fr; }
-    .action-head { align-items:stretch; flex-direction:column; gap:12px; }
-    .selected-badge { min-width:0; max-width:none; width:100%; padding:12px 16px; border:none; border-radius:var(--r-md); background:var(--accent-soft); color:var(--label); }
-    .selected-badge span { display:block; font-size:12px; color:var(--accent); font-weight:600; margin-bottom:3px; }
-    .selected-badge b { display:block; font-size:18px; font-weight:700; line-height:1.3; white-space:normal; word-break:break-all; }
-    .status-note { margin-top:8px; padding:11px 13px; background:var(--secondary-bg); border:none; border-radius:var(--r-md); line-height:1.45; }
-    .btn { border:none; background:var(--card-bg); color:var(--label); border-radius:var(--r-md); min-height:78px; padding:14px; cursor:pointer; text-align:left; box-shadow:var(--shadow-subtle); transition:var(--t-fast); }
-    .btn:hover, .btn:focus-visible { background:var(--accent-tint); transform:translateY(-1px); box-shadow:var(--shadow-elevated),inset 0 0 0 1px var(--accent-soft); }
-    .btn:active { transform:scale(.99); }
-    .btn.primary { background:var(--accent-tint); }
-    .btn.primary strong { color:var(--accent); }
-    .btn.compact { min-height:78px; padding:13px; box-shadow:var(--shadow-subtle); }
-    .btn.compact strong { margin-bottom:6px; font-size:14px; } .btn.compact span { display:block; }
-    .foldbar { grid-column:1/-1; display:flex; align-items:center; justify-content:center; gap:8px; background:var(--secondary-bg); border:none; border-radius:var(--r-md); padding:11px 14px; margin-top:2px; cursor:pointer; font-size:13px; font-weight:600; color:var(--label-secondary); transition:var(--t-fast); }
-    .foldbar:hover { background:rgba(118,118,128,.16); color:var(--label); }
-    .foldbar-caret { font-size:11px; color:var(--label-tertiary); }
-    .btn strong { display:block; font-size:14px; font-weight:600; margin-bottom:6px; } .btn span { font-size:12px; color:var(--label-tertiary); line-height:1.35; }
-    .btn:hover strong, .btn:hover span, .btn:focus-visible strong, .btn:focus-visible span { color:inherit; }
-    .runtime-strip { max-width:none; margin:16px 0 0; padding:0 20px; display:grid; grid-template-columns:repeat(4,1fr); gap:12px; box-sizing:border-box; }
-    .runtime-card { border:none; border-radius:var(--r-lg); background:var(--card-bg); padding:10px 13px; min-height:0; min-width:0; box-shadow:var(--shadow-card); }
-    .runtime-card span { display:block; font-size:10.5px; color:var(--label-tertiary); margin-bottom:3px; }
-    .runtime-card b { display:block; font-size:14px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-    .runtime-card.good b::before { content:"●"; color:var(--success); font-size:9px; vertical-align:2px; margin-right:7px; }
-    .runtime-card.bad b::before { content:"●"; color:var(--danger); font-size:9px; vertical-align:2px; margin-right:7px; }
-    .runtime-card.warn b::before { content:"●"; color:var(--warning); font-size:9px; vertical-align:2px; margin-right:7px; }
-    .runtime-action { margin-top:8px; border:none; background:var(--accent-soft); color:var(--accent); border-radius:8px; padding:6px 10px; font-size:11px; font-weight:700; cursor:pointer; transition:var(--t-fast); }
-    .runtime-action:hover { background:var(--accent); color:#fff; }
-    .runtime-actions { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
-    .runtime-actions .runtime-action { margin-top:8px; }
-    .runtime-select { width:100%; margin-top:7px; border:none; background:var(--secondary-bg); border-radius:8px; padding:6px 8px; font-size:11px; font-family:inherit; color:var(--label); }
-    .status { display:grid; grid-template-columns:repeat(auto-fit,minmax(96px,1fr)); gap:10px; }
-    .metric { border:none; border-radius:var(--r-md); padding:12px; background:var(--secondary-bg); min-height:72px; } .metric b { display:block; font-size:23px; font-weight:600; letter-spacing:-.4px; margin-top:5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-    .metric.slug b { font-size:13px; white-space:normal; word-break:break-all; line-height:1.3; }
-    .metric .small { word-break:keep-all; }
-    .warn { color:var(--danger); } .ok { color:var(--green); }
-    .log { height:360px; overflow:auto; background:#1C1C1E; color:#E5E5EA; padding:16px; font-family:'SF Mono',Consolas,monospace; font-size:12px; white-space:pre-wrap; border-radius:0 0 var(--r-lg) var(--r-lg); }
-    .results { max-height:340px; overflow:auto; font-size:13px; } .result-row { display:flex; flex-direction:column; gap:3px; padding:9px 0; border-bottom:.5px solid var(--separator); }
-    .result-row > * { min-width:0; }
-    .result-row a { overflow-wrap:anywhere; word-break:break-word; color:var(--accent); }
-    .history-scroll { max-height:340px; overflow:auto; }
-    .history-table { width:100%; table-layout:fixed; border-collapse:collapse; font-size:12px; }
-    .history-table th,.history-table td { padding:8px 8px; border-bottom:.5px solid var(--separator); text-align:left; vertical-align:top; }
-    .history-table th { position:sticky; top:0; z-index:1; background:var(--card-bg); color:var(--label-tertiary); font-weight:600; text-transform:uppercase; letter-spacing:.3px; font-size:11px; }
-    .history-table th:nth-child(1) { width:50px; } .history-table th:nth-child(3) { width:116px; } .history-table th:nth-child(4) { width:112px; } .history-table th:nth-child(5) { width:58px; } .history-table th:nth-child(6) { width:140px; }
-    .history-table td:nth-child(2) { overflow-wrap:anywhere; word-break:break-word; }
-    .history-table td:nth-child(3),.history-table td:nth-child(6) { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .history-table td:nth-child(4) { white-space:nowrap; }
-    .history-status { font-weight:700; white-space:nowrap; }
-    .history-status.done { color:var(--green); }
-    .history-status.failed,.history-status.cancelled { color:var(--danger); }
-    .history-status.running,.history-status.pending { color:var(--warning-text); }
-    .history-result a { display:block; max-width:190px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--accent); }
-    .preflight-panel { display:none; border-top:.5px solid var(--separator); background:var(--tertiary-bg); }
-    .preflight-list { display:grid; gap:8px; }
-    .preflight-item { border:none; border-radius:var(--r-md); padding:10px 12px; background:var(--card-bg); box-shadow:var(--shadow-subtle); font-size:13px; line-height:1.45; }
-    .preflight-item.OK { box-shadow:var(--shadow-subtle),inset 0 0 0 1px rgba(52,199,89,.4); }
-    .preflight-item.WARN { box-shadow:var(--shadow-subtle),inset 0 0 0 1px rgba(255,149,0,.4); }
-    .preflight-item.ERROR { box-shadow:var(--shadow-subtle),inset 0 0 0 1px rgba(255,59,48,.4); }
-    .preflight-item pre { white-space:pre-wrap; margin:6px 0 0; font-family:'SF Mono',Consolas,monospace; font-size:12px; color:var(--label-secondary); }
-    .weak-panel { display:none; border-top:.5px solid var(--separator); background:var(--accent-tint); }
-    .weak-table { width:100%; border-collapse:collapse; font-size:12px; }
-    .weak-table th,.weak-table td { border-bottom:.5px solid var(--separator); padding:8px; vertical-align:top; text-align:left; }
-    .weak-table th { background:var(--accent-soft); color:var(--accent); position:sticky; top:0; font-weight:600; }
-    .weak-scroll { max-height:330px; overflow:auto; }
-    .weak-table select,.weak-table input { width:100%; border:none; background:var(--card-bg); border-radius:8px; padding:7px; font-size:12px; box-shadow:inset 0 0 0 1px var(--separator); }
-    .mini-btn { border:none; color:var(--accent); background:var(--accent-soft); border-radius:8px; padding:6px 10px; cursor:pointer; font-size:12px; font-weight:600; margin:2px; transition:var(--t-fast); }
-    .mini-btn:hover { background:var(--accent); color:#fff; }
-    .mini-btn:disabled { color:var(--label-quaternary); background:var(--secondary-bg); cursor:not-allowed; }
-    .track-pane { display:grid; grid-template-columns:400px 1fr; gap:18px; padding:18px 20px; }
-    .track-pane > section:first-child { position:sticky; top:80px; align-self:start; }
-    .track-tabs { display:flex; justify-content:center; padding:12px 20px; border-bottom:.5px solid var(--separator); }
-    .track-seg { display:inline-flex; gap:4px; background:var(--secondary-bg); border-radius:14px; padding:5px; box-shadow:inset 0 0 0 1px var(--separator); }
-    .track-tab { border:none; background:transparent; color:var(--label-secondary); border-radius:10px; padding:10px 24px; font-size:16px; font-weight:600; cursor:pointer; white-space:nowrap; transition:background var(--t-fast), color var(--t-fast), box-shadow var(--t-fast); }
-    .track-tab:hover { color:var(--label); }
-    .track-tab.on { background:var(--accent); color:#fff; font-weight:800; box-shadow:var(--shadow-card); }
-    .track-form p.small { margin:10px 0 4px; }
-    .track-form .fld { display:inline-flex; flex-direction:column; gap:4px; font-size:12px; color:var(--label-tertiary); margin:4px 0; }
-    .track-form .fld-row { display:flex; gap:14px; flex-wrap:wrap; align-items:flex-end; margin:4px 0; }
-    .track-form input, .track-form textarea { border:none; background:var(--secondary-bg); border-radius:8px; padding:9px 11px; font-size:13px; font-family:inherit; color:var(--label); box-shadow:inset 0 0 0 1px var(--separator); }
-    .track-form .fld-row > input { flex:1; min-width:200px; }
-    .track-form textarea { width:100%; line-height:1.6; resize:vertical; }
-    .track-form input:focus, .track-form textarea:focus { outline:none; box-shadow:inset 0 0 0 1.5px var(--accent); }
-    .track-form .uprow { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
-    .track-form .actions { margin-top:14px; display:flex; gap:8px; }
-    .track-form .actions .mini-btn { padding:9px 18px; font-size:13px; }
-    .chunk-panel { display:none; border-top:.5px solid var(--separator); background:#F0F6FF; }
-    .chunk-table { width:100%; border-collapse:collapse; font-size:12px; }
-    .chunk-table th,.chunk-table td { border-bottom:.5px solid var(--separator); padding:8px; vertical-align:top; text-align:left; }
-    .chunk-table th { background:#E5F0FF; color:var(--blue); position:sticky; top:0; font-weight:600; }
-    .chunk-text { white-space:pre-wrap; line-height:1.45; }
-    .head > button { background:var(--accent); color:#fff; border:none; padding:8px 14px; border-radius:var(--r-md); font-size:13px; font-weight:600; cursor:pointer; transition:var(--t-fast); }
-    .head > button:hover { background:var(--accent-hover); }
-    .head > button:active { transform:scale(.98); }
-    ::-webkit-scrollbar { width:8px; height:8px; }
-    ::-webkit-scrollbar-thumb { background:rgba(118,118,128,.3); border-radius:100px; }
-    ::-webkit-scrollbar-thumb:hover { background:rgba(118,118,128,.5); }
-    ::-webkit-scrollbar-track { background:transparent; }
-    @keyframes fadeIn { from{opacity:0;transform:translateY(8px);} to{opacity:1;transform:translateY(0);} }
-    section { animation:fadeIn 220ms cubic-bezier(.4,0,.2,1); }
-    @media (prefers-reduced-motion:reduce){ *,*::before,*::after{ animation-duration:.01ms!important; transition-duration:.01ms!important; } }
-    @media (max-width:1080px) { main, .track-pane { grid-template-columns:1fr; } .grid { grid-template-columns:1fr 1fr; } .pair,.pair.lopsided { grid-template-columns:1fr; } main > section, .track-pane > section:first-child { position:static; } }
-    @media (max-width:700px) {
-      header { padding:12px 14px; flex-wrap:wrap; }
-      header > span { width:100%; }
-      main, .track-pane { padding:10px; }
-      .runtime-strip { grid-template-columns:minmax(0,1fr) minmax(0,1fr); padding:0 10px; }
-      .grid { grid-template-columns:1fr; }
-      .action-head { align-items:stretch; flex-direction:column; }
-      .selected-badge { min-width:0; width:100%; }
-      .result-row { flex-direction:column; }
-      .track-seg { width:100%; } .track-tab { flex:1; padding:10px 8px; font-size:14px; }
-    }
-  </style>
-</head>
-<body>
-  <header><div><strong>폰스팟 통합 제작 패널</strong> <span>카드뉴스 + 숏폼 영상</span> <span id="panelVersion" style="margin-left:8px;padding:2px 8px;border-radius:10px;background:#eef;color:#334;font-weight:600;font-size:12px"></span></div><span id="rootText"></span></header>
-  <div class="runtime-strip">
-    <div class="runtime-card" id="runtimeMode"><span>실행 위치</span><b id="runtimeModeText">확인 중</b><select class="runtime-select" id="targetWorker"><option value="">자동 배정</option></select></div>
-    <div class="runtime-card" id="runtimeSync"><span>카드뉴스 동기화</span><b id="runtimeSyncText">확인 중</b></div>
-    <div class="runtime-card" id="runtimeJob"><span>실행 상태</span><b id="runtimeJobText">대기 중</b><div class="runtime-actions"><button class="runtime-action" id="cancelJobButton" onclick="cancelRemoteJob()" style="display:none">취소</button><button class="runtime-action" id="retryJobButton" onclick="retryRemoteJob()" style="display:none">재시도</button></div></div>
-    <div class="runtime-card" id="runtimeGithub"><span>GitHub</span><b id="runtimeGithubText">확인 중</b><div class="runtime-actions"><button class="runtime-action" id="runtimeGithubDownloadButton" onclick="runGithubDownload(event)">다운로드</button><button class="runtime-action" id="runtimeGithubUploadButton" onclick="runGithubUpload(event)">업로드</button><button class="runtime-action" id="runtimeRestartButton" onclick="panelUpdateRestart(event)" title="최신 코드 받고 패널 재시작">갱신·재시작</button></div></div>
-  </div>
-  <div class="track-tabs">
-    <div class="track-seg">
-      <button class="track-tab" data-track="cardnews" onclick="switchTrack('cardnews')">카드뉴스·영상</button>
-      <button class="track-tab" data-track="typo" onclick="switchTrack('typo')">타이포</button>
-      <button class="track-tab" data-track="ai" onclick="switchTrack('ai')">실사AI</button>
-    </div>
-  </div>
-  <main>
-    <section>
-      <div class="tabs">
-        <button id="tabVideo" class="tab active" onclick="setMode('video')">영상</button>
-        <button id="tabCard" class="tab" onclick="setMode('card')">카드뉴스</button>
-      </div>
-      <div class="head"><h2 id="listTitle">영상 후보</h2><button onclick="reloadLists()">동기화 새로고침</button></div>
-      <div id="videoList" class="list"></div>
-      <div id="cardList" class="list" style="display:none"></div>
-    </section>
-    <div style="display:grid; gap:16px;">
-      <section>
-        <div class="head action-head"><h2 id="actionTitle">영상 작업</h2><div class="selected-badge"><span id="selectedModeLabel">선택 항목</span><b id="selectedSlug">없음</b></div></div>
-        <div id="videoActions" class="pad grid">
-          <button class="btn primary" onclick="runAction('video_prepare')"><strong>1. 영상용 프롬프트 준비</strong><span>선택한 카드뉴스 결과를 숏폼 영상 스크립트와 일러스트 요청으로 변환합니다.</span></button>
-          <button class="btn primary" onclick="openImportReview()"><strong>2. 이미지 가져오기 + 렌더</strong><span>다운로드한 GPT 이미지를 그림 내용으로 자동 배정 제안 → 확인하고 확정합니다.</span></button>
-          <button class="btn primary" onclick="runAction('video_render_selected')"><strong>3. 선택 영상만 렌더</strong><span>추가 이미지 없이 현재 선택한 슬러그를 다시 렌더합니다.</span></button>
-          <button class="btn" onclick="runAction('cover_render')"><strong>커버만 다시 만들기</strong><span>영상 전체 재렌더 없이 커버(썸네일)만 다시 생성. 결과는 RESULTS/&lt;slug&gt;_cover/.</span></button>
-          <button class="foldbar" id="viewEditToggle" onclick="toggleViewEdit()">보기 · 편집 <span class="foldbar-caret" id="viewEditCaret">▾</span></button>
-          <div id="viewEditActions" style="display:none;grid-column:1/-1;gap:12px;grid-template-columns:repeat(3,minmax(160px,1fr))">
-            <button class="btn compact" onclick="runPreflight()"><strong>렌더 전 사전검사</strong><span>이미지·스크립트·CTA·한글·중복 사용을 먼저 확인합니다.</span></button>
-            <button class="btn compact" onclick="window.open('/prompt','_blank')"><strong>영상 프롬프트 보기</strong><span>최신 영상용 GPT 프롬프트를 브라우저에서 엽니다.</span></button>
-            <button class="btn compact" onclick="openIllustrationRequests()"><strong>신규 일러스트 요청서</strong><span>이 영상의 범용 일러스트 추천과 GPT 프롬프트.</span></button>
-            <button class="btn compact" onclick="runAction('open_results')"><strong>영상 결과 폴더</strong><span>완성 MP4와 발행 패키지 폴더를 엽니다.</span></button>
-            <button class="btn compact" onclick="runAction('open_illustrations')"><strong>일러스트 폴더</strong><span>재사용 일러스트 라이브러리와 드롭 폴더.</span></button>
-            <button class="btn compact" onclick="showChunks()"><strong>청크 경계 편집</strong><span>내용·TTS는 유지하고 줄바꿈·합치기·분할만 조정합니다.</span></button>
-          </div>
-          <button class="foldbar" id="manageToggle" onclick="toggleManage()">라이브러리 · 시스템 관리 <span class="foldbar-caret" id="manageCaret">▾</span></button>
-          <div id="manageActions" style="display:none;grid-column:1/-1;gap:12px;grid-template-columns:repeat(3,minmax(160px,1fr))">
-            <button class="btn" onclick="runAction('library_sync')"><strong>일러스트 라이브러리 공유</strong><span>공유 허브와 양방향 병합(비파괴). 허브 경로 먼저 설정. 결과는 실행 로그.</span></button>
-            <button class="btn" onclick="runAction('library_dedup')"><strong>라이브러리 중복 점검</strong><span>비슷한 그림 리포트(읽기전용). 정리는 라이브러리_중복정리.bat --apply.</span></button>
-            <button class="btn" onclick="runAction('library_backup')"><strong>라이브러리 백업</strong><span>일러스트+태그DB 타임스탬프 스냅샷(회전보관).</span></button>
-            <button class="btn" onclick="chooseUpload('illustration')"><strong>일러스트 웹 업로드</strong><span>다른 PC에서 만든 일러스트를 드롭 폴더에 올립니다.</span></button>
-            <button class="btn" onclick="runAction('producer_check')"><strong>환경 점검</strong><span>이 PC가 카드뉴스+영상 렌더를 독립으로 할 수 있는지(노드·렌더러·폰트·임베딩) 확인. 결과는 실행 로그.</span></button>
-            <button class="btn" onclick="runAction('system_update')"><strong>시스템 업데이트</strong><span>GitHub에서 최신 코드만 받아옵니다(결과물 안 건드림).</span></button>
-            <button class="btn" style="border-color:var(--danger);color:var(--danger)" onclick="deleteSlug()"><strong>선택 슬러그 삭제</strong><span>선택한 슬러그의 기사·이미지·렌더 결과를 로컬에서 제거(되돌릴 수 없음).</span></button>
-          </div>
-        </div>
-        <div id="cardActions" class="pad grid" style="display:none">
-          <button class="btn" onclick="reloadLists()"><strong>1. 후보 새로고침</strong><span>articles·images·output 폴더를 다시 스캔합니다.</span></button>
-          <button class="btn primary" onclick="openCardPrompt()"><strong>2. 이미지 프롬프트 보기</strong><span>선택한 카드뉴스의 images/&lt;slug&gt;/prompt.md를 엽니다.</span></button>
-          <button class="btn" onclick="runAction('open_card_images')"><strong>3. 이미지 업로드 폴더</strong><span>1.png~5.png를 넣을 카드 이미지 폴더.</span></button>
-          <button class="btn" onclick="chooseUpload('card')"><strong>3-1. 이미지 웹 업로드</strong><span>다른 PC에서도 카드 이미지를 바로 올립니다.</span></button>
-          <button class="btn primary" onclick="openCardImportReview()"><strong>3-2. 이미지 자동 배정(검수)</strong><span>다운로드 그림을 슬라이드 내용으로 1~5.png에 자동 배정.</span></button>
-          <button class="btn primary" onclick="runAction('card_render')"><strong>4. 카드뉴스 생성</strong><span>1x1·4x5·9x16 카드와 captions.md를 생성합니다.</span></button>
-          <button class="btn" onclick="runAction('open_card_result')"><strong>5. 결과 확인</strong><span>완성된 카드뉴스 output 폴더를 엽니다.</span></button>
-          <button class="btn primary" onclick="runAction('card_to_video')"><strong>6. 영상으로 넘기기</strong><span>완성 카드뉴스를 영상 준비 단계로 넘깁니다.</span></button>
-          <div style="grid-column:1/-1;font-size:12px;color:var(--label-tertiary);margin-top:2px">기타</div>
-          <button class="btn" onclick="runAction('telegram_card_summary')"><strong>후보 현황 텔레그램</strong><span>현재 카드뉴스 후보·상태를 텔레그램으로 보냅니다.</span></button>
-          <button class="btn" style="border-color:var(--danger);color:var(--danger)" onclick="deleteSlug()"><strong>선택 슬러그 삭제</strong><span>선택한 슬러그의 기사·이미지·렌더 결과를 로컬에서 제거(되돌릴 수 없음).</span></button>
-        </div>
-      </section>
-      <section>
-        <div class="head"><h2>상태</h2><div style="display:flex;gap:8px;align-items:center"><span class="small" id="jobText">대기 중</span><button class="mini-btn" id="statusCancelButton" onclick="cancelRemoteJob()" style="display:none">중도 취소</button></div></div>
-        <div class="pad status">
-          <div class="metric slug"><span class="small" id="metric1Label">선택 슬러그</span><b id="latestSlug">-</b></div>
-          <div class="metric"><span class="small" id="metric2Label">상태</span><b id="requestCount">-</b></div>
-          <div class="metric"><span class="small" id="metric3Label">이미지</span><b id="missingCount">-</b></div>
-          <div class="metric"><span class="small" id="metric4Label">카드</span><b id="downloadCount">-</b></div>
-          <div class="metric"><span class="small" id="metric5Label">영상 스크립트</span><b id="weakCount">-</b></div>
-        </div>
-        <div class="pad small" id="advice"></div>
-        <div id="preflightPanel" class="preflight-panel">
-          <div class="head"><h2>렌더 전 사전검사</h2><button onclick="togglePreflightPanel()">닫기</button></div>
-          <div class="pad">
-            <div class="status-note" id="preflightSummary">아직 검사하지 않았습니다.</div>
-            <div class="preflight-list" id="preflightRows"></div>
-          </div>
-        </div>
-        <div id="illustrationRequestNote" class="pad small"></div>
-        <div id="importPanel" class="weak-panel">
-          <div class="head"><h2>이미지 가져오기 검수</h2><button onclick="toggleImportPanel()">닫기</button></div>
-          <div class="pad small" id="importNote">다운로드한 그림을 그림 <b>내용</b>으로 자동 배정한 제안입니다. 썸네일을 보고 파일명이 맞는지 확인한 뒤 확정하세요. 파일명이 틀린 채로 확정하면 라이브러리가 잘못된 그림으로 채워집니다.</div>
-          <div class="weak-scroll"><div id="importRows"></div></div>
-          <div class="pad"><button class="btn primary" id="importConfirmBtn" onclick="confirmImport()" style="display:none">확정 → 가져오고 렌더</button></div>
-        </div>
-        <div id="weakPanel" class="weak-panel">
-          <div class="head"><h2>약한 매핑 상세</h2><button onclick="toggleWeakPanel()">닫기</button></div>
-          <div class="pad small">이미지/일러스트가 청크 문맥과 약하게 연결된 항목입니다. 10개 이상이면 렌더 전 재매핑을 권장합니다.</div>
-          <div class="weak-scroll">
-            <table class="weak-table">
-              <thead><tr><th>구간</th><th>현재 visual</th><th>청크</th><th>추천 방향</th><th>수정</th></tr></thead>
-              <tbody id="weakRows"></tbody>
-            </table>
-          </div>
-        </div>
-        <div id="chunkPanel" class="chunk-panel">
-          <div class="head"><h2>청크 경계 편집</h2><button onclick="toggleChunkPanel()">닫기</button></div>
-          <div class="pad small">문장 내용과 TTS는 유지합니다. "직접 끊기"로 원하는 위치에서 자막을 끊을 수 있고, 렌더 때 실제 TTS 단어 시간에 다시 맞춰져 싱크는 그대로입니다.</div>
-          <div class="pad small" id="chunkMessage"></div>
-          <div id="manualSplitBox" class="pad" style="display:none;border-top:1px solid var(--line);background:#fffef7">
-            <div class="small" style="margin-bottom:6px">직접 끊기 — <b id="manualSplitSection"></b> · <b>줄바꿈(Enter)이 자막을 끊는 지점</b>입니다. 글자는 그대로 두고 위치만 바꾸세요.</div>
-            <textarea id="manualSplitText" style="width:100%;min-height:150px;border:1px solid var(--line);border-radius:8px;padding:10px;font-size:13px;line-height:1.7;font-family:inherit"></textarea>
-            <div style="margin-top:8px;display:flex;gap:8px">
-              <button class="mini-btn" onclick="applyManualSplit()">이대로 적용</button>
-              <button class="mini-btn" onclick="cancelManualSplit()">취소</button>
-            </div>
-          </div>
-          <div class="weak-scroll">
-            <table class="chunk-table">
-              <thead><tr><th>구간</th><th>청크 문구</th><th>visual</th><th>작업</th></tr></thead>
-              <tbody id="chunkRows"></tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-    </div>
-  </main>
-  <div id="trackTypo" class="track-pane" style="display:none">
-    <section>
-      <div class="head"><h2>타이포 주제</h2><button onclick="loadTopicSelects()">동기화 새로고침</button></div>
-      <div id="tpList" class="list"></div>
-    </section>
-    <div style="display:grid;gap:16px">
-      <section>
-        <div class="head action-head"><h2>타이포 작업</h2><div class="selected-badge"><span>선택 주제</span><b id="tpSelectedSlug">없음</b></div></div>
-        <div class="pad grid">
-          <button class="btn primary" onclick="typoAutoMake()"><strong>주제로 바로 생성+렌더</strong><span>선택 주제를 자동으로 promo MD 작성(Gemini/템플릿) 후 즉시 렌더 큐 — 원클릭.</span></button>
-          <button class="mini-btn" onclick="styleRequest('typo')">요청만 등록(Claude가 직접 작성)</button>
-        </div>
-        <div id="tpReqLog" class="pad small"></div>
-      </section>
-      <section>
-        <div class="head"><h2>타이포 광고 렌더</h2><span class="small">모션그래픽 · 나레이션 없음 · 9:16</span></div>
-        <div class="pad track-form">
-          <p class="small" style="margin-top:0">기존 promo 스크립트를 골라 바로 렌더(효과음+음악, 나레이션 없음).</p>
-          <div class="uprow">
-            <button class="mini-btn" onclick="promoLoad()">목록 새로고침</button>
-            <span id="tpCount" class="small"></span>
-          </div>
-          <div class="fld-row">
-            <label class="fld">스크립트 <select id="tpScript" style="min-width:320px"></select></label>
-            <label class="fld">프리셋 <select id="tpPreset" style="min-width:150px">
-              <option value="">기본(스크립트 지정)</option>
-              <option value="showcase">showcase</option>
-              <option value="punchy">punchy</option>
-              <option value="data">data</option>
-              <option value="calm">calm</option>
-            </select></label>
-          </div>
-          <div class="actions"><button class="mini-btn" onclick="promoRender()">렌더</button></div>
-          <div id="tpLog" class="small" style="margin-top:8px"></div>
-        </div>
-      </section>
-    </div>
-  </div>
-  <div id="trackAi" class="track-pane" style="display:none">
-    <section>
-      <div class="head"><h2>실사 AI 주제</h2><button onclick="loadTopicSelects()">동기화 새로고침</button></div>
-      <div id="aiList" class="list"></div>
-    </section>
-    <div style="display:grid;gap:16px">
-      <section>
-        <div class="head action-head"><h2>실사 AI 작업</h2><div class="selected-badge"><span>선택 주제</span><b id="aiSelectedSlug">없음</b></div></div>
-        <div class="pad grid">
-          <button class="btn primary" onclick="styleRequest('ai')"><strong>실사로 만들기 요청</strong><span>선택 주제를 Claude가 MEME_TO_VIRAL/실사 스펙대로 작성, shorts/promo_ai Higgsfield 워크플로로 제작(요청 등록).</span></button>
-        </div>
-        <div id="aiReqLog" class="pad small"></div>
-      </section>
-    </div>
-  </div>
-  <div id="commonMonitor" style="display:grid;gap:16px;padding:16px 20px">
-      <div class="pair lopsided">
-      <section>
-        <div class="head"><h2>최근 작업 기록</h2><button onclick="loadJobHistory()">새로고침</button></div>
-        <div class="history-scroll">
-          <table class="history-table">
-            <thead><tr><th>상태</th><th>작업</th><th>실행 PC</th><th>시작</th><th>소요 시간</th><th>결과</th></tr></thead>
-            <tbody id="jobHistoryRows"><tr><td colspan="6">기록을 불러오는 중입니다.</td></tr></tbody>
-          </table>
-        </div>
-      </section>
-      <section><div class="head"><h2>최근 영상 결과</h2><button onclick="runAction('open_results')">결과 폴더 열기</button></div><div class="pad results" id="results"></div></section>
-      </div>
-  </div>
-  <input id="cardUploadInput" type="file" accept=".png,.jpg,.jpeg,.webp" multiple hidden>
-  <input id="illustrationUploadInput" type="file" accept=".png,.jpg,.jpeg,.webp" multiple hidden>
-  <script>
-    let selected = "";
-    let tpSelected = "";
-    let aiSelected = "";
-    let promoItems = [];
-    let selectedCard = "";
-    let mode = "video";
-    let videoItems = [];
-    let cardItems = [];
-    let lastState = null;
-    let currentRemoteJob = null;
-    async function api(path, options) { const res = await fetch(path, options); if (!res.ok) throw new Error(await res.text()); return await res.json(); }
-    function switchTrack(name){
-      if(["cardnews","typo","ai"].indexOf(name)<0){ name="cardnews"; }
-      try{ localStorage.setItem("panel.track", name); }catch(e){}
-      var main=document.querySelector("main");
-      if(main) main.style.display = (name==="cardnews") ? "" : "none";
-      [["typo","trackTypo"],["ai","trackAi"]].forEach(function(t){
-        var el=document.getElementById(t[1]); if(el) el.style.display=(name===t[0])?"":"none";
-      });
-      if(name==="typo" && !promoItems.length){ promoLoad(); }
-      if(name==="typo" || name==="ai"){ loadTopicSelects(); }
-      document.querySelectorAll(".track-tab").forEach(function(b){
-        b.classList.toggle("on", b.getAttribute("data-track")===name);
-      });
-    }
-    async function loadTopicSelects(){
-      try{
-        var d=await api("/api/slugs"); window.__topicItems=d.slugs||[];
-        renderTopicList("tpList","typo"); renderTopicList("aiList","ai");
-      }catch(e){}
-    }
-    function renderTopicList(boxId, track){
-      var box=document.getElementById(boxId); if(!box) return;
-      var items=window.__topicItems||[];
-      var cur=(track==="typo")?tpSelected:aiSelected;
-      box.innerHTML="";
-      items.forEach(function(item, idx){
-        var btn=document.createElement("button");
-        btn.className="row"+(item.slug===cur?" active":"");
-        btn.innerHTML='<span class="row-number">'+((item.slug.match(/^\d+/)||[idx+1])[0])+'</span><span class="row-main"><span class="slug-name">'+(item.title||item.slug)+'</span><span class="row-sub">'+item.slug+(item.date?' · '+item.date:'')+(item.flag&&item.flag!=="undefined"?" \u00b7 "+item.flag:"")+'</span></span>';
-        btn.onclick=function(){ selectTopic(track, item.slug); };
-        box.appendChild(btn);
-      });
-      if(!cur && items.length){ selectTopic(track, items[0].slug); }
-    }
-    function selectTopic(track, slug){
-      if(track==="typo"){ tpSelected=slug; var b=document.getElementById("tpSelectedSlug"); if(b) b.textContent=slug; renderTopicList("tpList","typo"); }
-      else { aiSelected=slug; var b2=document.getElementById("aiSelectedSlug"); if(b2) b2.textContent=slug; renderTopicList("aiList","ai"); }
-    }
-    async function styleRequest(track){
-      var slug=(track==="typo")?tpSelected:aiSelected; var logId=track==="typo"?"tpReqLog":"aiReqLog";
-      var log=document.getElementById(logId);
-      if(!slug){ log.textContent="주제를 선택하세요."; return; }
-      try{
-        var r=await api("/api/action",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"style_request",slug:slug,track:track})});
-        var pr=await api("/api/action",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"style_pending"})});
-        var pend=(pr.items||[]).filter(function(x){return x.status!=="done";}).length;
-        log.textContent=(r.message||"등록됨")+" · 대기 "+pend+"건 (코웍에서 '스타일 요청 처리'로 작성)";
-      }catch(e){ log.textContent="요청 실패: "+e; }
-    }
-    async function typoAutoMake(){
-      var slug=tpSelected; var log=document.getElementById("tpReqLog");
-      if(!slug){ log.textContent="주제를 선택하세요."; return; }
-      var title=""; var it=(window.__topicItems||[]).find(function(x){return (x.slug||x.nn||x)===slug;});
-      if(it){ title=it.title||it.slug||slug; }
-      log.textContent="자동 생성+렌더 중…";
-      try{
-        var r=await api("/api/action",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"promo_generate",slug:slug,title:title})});
-        log.textContent=r.message||(r.ok?"등록됨":"실패");
-        if(r.ok){ promoLoad(); }
-      }catch(e){ log.textContent="자동 생성 실패: "+e; }
-    }
-    async function promoLoad(){
-      var log=document.getElementById("tpLog");
-      try{
-        var r=await api("/api/action",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"promo_list"})});
-        promoItems=r.items||[];
-        var sel=document.getElementById("tpScript"); sel.innerHTML="";
-        promoItems.forEach(function(it){
-          var o=document.createElement("option");
-          o.value=it.nn; o.textContent=it.nn+"  "+it.title+"  ["+it.preset+"]";
-          sel.appendChild(o);
-        });
-        document.getElementById("tpCount").textContent=promoItems.length+"개";
-        if(log) log.textContent = promoItems.length? "" : (r.message||"목록 없음");
-      }catch(e){ if(log) log.textContent="목록 실패: "+e; }
-    }
-    async function promoRender(){
-      var log=document.getElementById("tpLog");
-      var nn=document.getElementById("tpScript").value;
-      var it=promoItems.find(function(x){ return x.nn===nn; });
-      if(!it){ log.textContent="스크립트를 선택하세요."; return; }
-      var preset=document.getElementById("tpPreset").value || it.preset;
-      try{
-        var r=await api("/api/action",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"promo_render",nn:it.nn,label:it.label,preset:preset})});
-        log.textContent=r.message||"렌더 대기열 등록";
-      }catch(e){ log.textContent="렌더 실패: "+e; }
-    }
-    setTimeout(function(){ try{ switchTrack(localStorage.getItem("panel.track")||"cardnews"); }catch(e){ try{switchTrack("cardnews");}catch(_){} } }, 0);
-    function chooseUpload(kind) {
-      if (kind === "card" && !selectedCard) {
-        alert("카드뉴스 항목을 먼저 선택하세요.");
-        return;
-      }
-      document.getElementById(kind === "card" ? "cardUploadInput" : "illustrationUploadInput").click();
-    }
-    async function uploadSelectedFiles(kind, files) {
-      if (!files.length) return;
-      const slug = kind === "card" ? selectedCard : "";
-      let uploaded = 0;
-      try {
-        for (const file of files) {
-          const result = await api(`/api/upload?kind=${encodeURIComponent(kind)}&slug=${encodeURIComponent(slug)}`, {
-            method: "POST",
-            headers: {"Content-Type": file.type || "application/octet-stream", "X-File-Name": file.name},
-            body: file
-          });
-          if (result.ok) uploaded += 1;
-        }
-        alert(`${uploaded}개 이미지 업로드 완료`);
-        await reloadLists();
-      } catch (err) {
-        alert("이미지 업로드 실패: " + String(err));
-      }
-    }
-    document.getElementById("cardUploadInput").addEventListener("change", event => {
-      uploadSelectedFiles("card", [...event.target.files]);
-      event.target.value = "";
-    });
-    document.getElementById("illustrationUploadInput").addEventListener("change", event => {
-      uploadSelectedFiles("illustration", [...event.target.files]);
-      event.target.value = "";
-    });
-    function setMode(next) {
-      mode = next;
-      document.getElementById("tabVideo").classList.toggle("active", next === "video");
-      document.getElementById("tabCard").classList.toggle("active", next === "card");
-      document.getElementById("videoList").style.display = next === "video" ? "" : "none";
-      document.getElementById("cardList").style.display = next === "card" ? "" : "none";
-      document.getElementById("videoActions").style.display = next === "video" ? "" : "none";
-      document.getElementById("cardActions").style.display = next === "card" ? "" : "none";
-      document.getElementById("listTitle").textContent = next === "video" ? "영상 후보" : "카드뉴스 후보";
-      document.getElementById("actionTitle").textContent = next === "video" ? "영상 작업" : "카드뉴스 작업";
-      updateSelectedStatus();
-      refreshIllustrationRequestNote();
-    }
-    async function loadSlugs() {
-      const data = await api("/api/slugs"); videoItems = data.slugs || []; const box = document.getElementById("videoList"); box.innerHTML = "";
-      videoItems.forEach((item, idx) => {
-        const btn = document.createElement("button");
-        btn.className = "row video" + (item.slug === selected ? " active" : "");
-        btn.innerHTML = `<span class="row-number">${(item.slug.match(/^\d+/) || [idx + 1])[0]}</span><span class="row-main"><span class="slug-name">${item.title || item.slug}</span><span class="row-sub">${item.slug}${item.date ? " · " + item.date : ""}${item.flag && item.flag !== "undefined" ? " · " + item.flag : ""}</span></span><span class="stage-pill ${item.stageClass || "muted"}">${item.stage || "-"}</span>`;
-        btn.onclick = () => { selected = item.slug; document.getElementById("selectedSlug").textContent = selected; setMode("video"); updateSelectedStatus(); loadSlugs(); };
-        box.appendChild(btn);
-      });
-      if (!selected && videoItems.length) { selected = videoItems[0].slug; document.getElementById("selectedSlug").textContent = selected; updateSelectedStatus(); loadSlugs(); }
-    }
-    async function loadCardnews() {
-      const data = await api("/api/cardnews/slugs"); cardItems = data.rows || []; const box = document.getElementById("cardList"); box.innerHTML = "";
-      cardItems.forEach((item, idx) => {
-        const btn = document.createElement("button");
-        btn.className = "row card" + (item.slug === selectedCard ? " active" : "");
-        btn.innerHTML = `<span class="row-number">${(item.slug.match(/^\d+/) || [idx + 1])[0]}</span><span class="row-main"><span class="slug-name">${item.title || item.slug}</span><span class="row-sub">${item.slug}</span><span class="row-sub">${item.date || "-"} · 이미지 ${item.images}/5 · 카드 ${item.cards} · 프롬프트 ${item.prompt ? "있음" : "없음"}</span></span><span class="stage-pill ${item.stageClass || "muted"}">${item.stage || item.status}</span>`;
-        btn.onclick = () => { selectedCard = item.slug; selected = item.slug; document.getElementById("selectedSlug").textContent = selected; setMode("card"); updateSelectedStatus(); loadCardnews(); loadSlugs(); };
-        box.appendChild(btn);
-      });
-    }
-    function togglePreflightPanel() {
-      const panel = document.getElementById("preflightPanel");
-      panel.style.display = panel.style.display === "block" ? "none" : "block";
-    }
-    function renderPreflight(result) {
-      const panel = document.getElementById("preflightPanel");
-      const summary = document.getElementById("preflightSummary");
-      const rows = document.getElementById("preflightRows");
-      panel.style.display = "block";
-      const cls = result.status === "OK" ? "ok" : "warn";
-      summary.innerHTML = `<b>${escapeHtml(result.slug || selected)}</b> · 상태 ${result.status} · 오류 ${result.errors || 0} · 경고 ${result.warnings || 0}`;
-      rows.innerHTML = "";
-      (result.items || []).forEach(item => {
-        const div = document.createElement("div");
-        div.className = `preflight-item ${item.level || ""}`;
-        div.innerHTML = `<b>[${escapeHtml(item.level || "-")}] ${escapeHtml(item.message || "")}</b>${item.detail ? `<pre>${escapeHtml(item.detail)}</pre>` : ""}`;
-        rows.appendChild(div);
-      });
-    }
-    async function refreshIllustrationRequestNote() {
-      const slug = selected || selectedCard;
-      const box = document.getElementById("illustrationRequestNote");
-      if (!box || !slug) return;
-      try {
-        const data = await api(`/api/illustration-requests?slug=${encodeURIComponent(slug)}`);
-        if (!data.exists) {
-          box.innerHTML = `<div class="status-note">신규 일러스트 요청서가 아직 없습니다. 1번 영상용 프롬프트 준비를 먼저 실행하세요.</div>`;
-          return;
-        }
-        const tone = (data.count || 0) > 0 ? "warn" : "ok";
-        const text = (data.count || 0) > 0
-          ? `신규 일러스트 제안 ${data.count}개 · 문맥 경고 ${data.gaps || 0}개`
-          : `신규 일러스트 제안 없음 · 문맥 경고 ${data.gaps || 0}개`;
-        box.innerHTML = `<div class="status-note"><b>일러스트 요청서</b> · ${text} <button onclick="openIllustrationRequests()" style="margin-left:8px">열기</button></div>`;
-      } catch (e) {
-        box.innerHTML = `<div class="status-note">일러스트 요청서 상태 확인 실패: ${escapeHtml(e.message)}</div>`;
-      }
-    }
-    function openIllustrationRequests() {
-      const slug = selected || selectedCard;
-      if (!slug) { alert("먼저 슬러그를 선택하세요."); return; }
-      window.open(`/illustration-requests/${encodeURIComponent(slug)}`, "_blank");
-    }
-    async function runPreflight() {
-      const slug = selected || selectedCard;
-      if (!slug) { alert("먼저 슬러그를 선택하세요."); return; }
-      try {
-        const result = await api(`/api/preflight?slug=${encodeURIComponent(slug)}`);
-        renderPreflight(result);
-      } catch (e) {
-        alert("사전검사 실패: " + e.message);
-      }
-    }
-    async function sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
-    async function waitForCurrentJob(maxMs) {
-      const started = Date.now();
-      while (Date.now() - started < maxMs) {
-        const data = await api("/api/job");
-        const job = data.job || {};
-        if (!job.running) return job;
-        document.getElementById("jobText").textContent = `실행 중: ${job.name || "작업"}`;
-        await sleep(1200);
-      }
-      return null;
-    }
-    async function reloadLists() {
-      // ★ 목록 먼저 즉시 표시(로컬 폴더 스캔=빠름). 동기화는 뒤에서 백그라운드로 → 영상 후보가 3분 안 기다림.
-      await loadSlugs();
-      await loadCardnews();
-      await loadState();
-      try {
-        const result = await api("/api/action", {
-          method:"POST",
-          headers:{"Content-Type":"application/json"},
-          body: JSON.stringify({action:"sync_cardnews", slug:selected || selectedCard || ""})
-        });
-        if (result.ok) {
-          await waitForCurrentJob(180000);
-          await loadSlugs();
-          await loadCardnews();
-          await loadState();
-        }
-      } catch (e) {
-        // 동기화 호출 실패해도 목록은 이미 표시됨 — 무시
-      }
-    }
-    function findCardRow(slug) {
-      return (cardItems || []).find(x => x.slug === slug) || null;
-    }
-    function findVideoRow(slug) {
-      return (videoItems || []).find(x => x.slug === slug) || null;
-    }
-    function setMetric(id, value, cls) {
-      const el = document.getElementById(id);
-      el.textContent = value == null || value === "" ? "-" : String(value);
-      el.className = cls || "";
-    }
-    function updateSelectedStatus() {
-      const activeSlug = mode === "card" ? (selectedCard || selected) : selected;
-      document.getElementById("selectedSlug").textContent = activeSlug || "없음";
-      document.getElementById("selectedModeLabel").textContent = mode === "card" ? "선택한 카드뉴스" : "선택한 영상";
-      const card = activeSlug ? findCardRow(activeSlug) : null;
-      const video = activeSlug ? findVideoRow(activeSlug) : null;
+STATIC_DIR = Path(__file__).resolve().parent / "static"
+INDEX_PATH = STATIC_DIR / "index.html"
 
-      document.getElementById("metric1Label").textContent = "선택 슬러그";
-      document.getElementById("metric2Label").textContent = "상태";
-      document.getElementById("metric3Label").textContent = "이미지";
-      document.getElementById("metric4Label").textContent = "카드";
-      document.getElementById("metric5Label").textContent = "영상 스크립트";
-      setMetric("latestSlug", activeSlug || "-");
 
-      if (card) {
-        setMetric("requestCount", card.stage || card.status || (card.done ? "완료" : "진행중"), card.stageClass === "ok" ? "ok" : "warn");
-        setMetric("missingCount", `${card.images || 0}/5`, (card.images || 0) >= 5 ? "ok" : "warn");
-        setMetric("downloadCount", `${card.cards || 0}`, (card.cards || 0) > 0 ? "ok" : "warn");
-        setMetric("weakCount", card.script ? "있음" : "없음", card.script ? "ok" : "warn");
-        const advice = document.getElementById("advice");
-        const parts = [];
-        parts.push(`<b>${escapeHtml(activeSlug || "")}</b> 선택 중`);
-        if (card.stage) parts.push(`단계 ${card.stage}`);
-        parts.push(`기사 ${card.article ? "있음" : "없음"}`);
-        parts.push(`프롬프트 ${card.prompt ? "있음" : "없음"}`);
-        parts.push(`캡션 ${card.captions ? "있음" : "없음"}`);
-        parts.push(`영상 스크립트 ${card.script ? "있음" : "없음"}`);
-        if (mode === "video" && video) parts.push(`영상 플래그 [${video.flag}]`);
-        advice.innerHTML = `<div class="status-note">${parts.join(" · ")}</div>`;
-      } else if (video) {
-        setMetric("requestCount", `[${video.flag}]`, video.flag === "OK" ? "ok" : "warn");
-        setMetric("missingCount", "-");
-        setMetric("downloadCount", "-");
-        setMetric("weakCount", "-");
-        document.getElementById("advice").innerHTML = `<div class="status-note"><b>${escapeHtml(activeSlug || "")}</b> 선택 중 · 카드뉴스 상세 정보는 아직 로드되지 않았습니다.</div>`;
-      } else if (lastState) {
-        setMetric("requestCount", "대기");
-        setMetric("missingCount", "-");
-        setMetric("downloadCount", "-");
-        setMetric("weakCount", "-");
-        document.getElementById("advice").innerHTML = `<div class="status-note">왼쪽 목록에서 작업할 항목을 선택하세요.</div>`;
-      }
-    }
-    function formatHistoryTime(value) {
-      if (!value) return "-";
-      const date = new Date(value);
-      if (Number.isNaN(date.getTime())) return String(value);
-      return date.toLocaleString("ko-KR", {month:"2-digit", day:"2-digit", hour:"2-digit", minute:"2-digit", second:"2-digit"});
-    }
-    function formatDuration(seconds) {
-      if (seconds === null || seconds === undefined) return "-";
-      const total = Math.max(0, Number(seconds) || 0);
-      const hours = Math.floor(total / 3600);
-      const minutes = Math.floor((total % 3600) / 60);
-      const secs = total % 60;
-      if (hours) return `${hours}시간 ${minutes}분 ${secs}초`;
-      if (minutes) return `${minutes}분 ${secs}초`;
-      return `${secs}초`;
-    }
-    let expandedJobId = null;
-    const jobLogCache = {};
-    let lastJobRows = [];
-    async function loadJobHistory() {
-      try {
-        const data = await api("/api/jobs?limit=50");
-        lastJobRows = data.rows || [];
-        renderJobHistory();
-      } catch (err) {
-        document.getElementById("jobHistoryRows").innerHTML = `<tr><td colspan="6">작업 기록을 불러오지 못했습니다: ${escapeHtml(String(err))}</td></tr>`;
-      }
-    }
-    function renderJobHistory() {
-      const body = document.getElementById("jobHistoryRows");
-      const rows = lastJobRows;
-      if (!rows.length) { body.innerHTML = "<tr><td colspan='6'>아직 실행 기록이 없습니다.</td></tr>"; return; }
-      const statusLabels = {pending:"대기", running:"실행 중", done:"성공", failed:"실패", cancelled:"취소"};
-      let html = "";
-      rows.forEach(row => {
-        const status = ["pending", "running", "done", "failed", "cancelled"].includes(row.status) ? row.status : "failed";
-        const results = (row.result_files || []).map(file =>
-          `<a onclick="event.stopPropagation()" href="/api/result?folder=${encodeURIComponent(file.folder)}&file=${encodeURIComponent(file.file)}">${escapeHtml(file.name)}</a>`
-        ).join("");
-        const worker = row.worker_id || (row.kind === "local" ? "패널 PC" : "배정 대기");
-        const rid = row.id || "";
-        const isOpen = !!rid && expandedJobId === rid;
-        const caret = isOpen ? "\u25be" : "\u25b8";
-        html += `<tr onclick="toggleJobLog('${rid}')" style="cursor:pointer">
-            <td><span class="history-status ${status}">${statusLabels[row.status] || escapeHtml(row.status || "-")}</span></td>
-            <td>${caret} ${escapeHtml(row.name || "-")}</td>
-            <td>${escapeHtml(worker)}</td>
-            <td>${formatHistoryTime(row.started_at || row.created_at)}</td>
-            <td>${formatDuration(row.duration_seconds)}</td>
-            <td class="history-result">${results || "-"}</td>
-          </tr>`;
-        if (isOpen) {
-          const cached = jobLogCache[rid];
-          const text = cached === undefined ? "로그를 불러오는 중..." : (cached || "(로그 없음)");
-          const live = row.status === "running" ? `<span style="font-size:11px;color:var(--text-muted)">실행 중 · 자동 갱신</span>` : `<span></span>`;
-          html += `<tr><td colspan="6" style="padding:0 12px 10px"><div style="display:flex;justify-content:space-between;align-items:center;margin:2px 0 5px">${live}<button class="mini-btn" onclick="event.stopPropagation();copyLog()">로그 복사</button></div><div class="log" style="height:auto;max-height:260px;margin:0">${escapeHtml(text)}</div></td></tr>`;
-        }
-      });
-      body.innerHTML = html;
-    }
-    async function toggleJobLog(id) {
-      if (!id) return;
-      if (expandedJobId === id) { expandedJobId = null; renderJobHistory(); return; }
-      expandedJobId = id;
-      renderJobHistory();
-      if (jobLogCache[id] === undefined) {
-        try {
-          const d = await api("/api/job_log?id=" + encodeURIComponent(id));
-          jobLogCache[id] = d.log || "";
-        } catch (e) { jobLogCache[id] = "로그 로드 실패: " + String(e); }
-        if (expandedJobId === id) renderJobHistory();
-      }
-    }
-    async function loadState() {
-      const data = await api("/api/state");
-      lastState = data;
-      document.getElementById("rootText").textContent = data.root;
-      const pv = document.getElementById("panelVersion");
-      if (pv) pv.textContent = data.version || "";
-      const sync = data.sync || {};
-      document.getElementById("runtimeModeText").textContent = `${sync.rootMode || "-"} · 렌더 PC ${data.readyWorkers || 0}/${data.onlineWorkers || 0}대 준비`;
-      const workerSelect = document.getElementById("targetWorker");
-      const selectedWorker = workerSelect.value;
-      workerSelect.innerHTML = `<option value="">자동 배정</option>`;
-      Object.entries(data.workers || {}).forEach(([id, worker]) => {
-        if (!worker.online) return;
-        const option = document.createElement("option");
-        option.value = id;
-        option.textContent = `${worker.name || id} · ${worker.status || "idle"}`;
-        option.disabled = worker.ready === false;
-        if (worker.ready === false) {
-          option.textContent = `${worker.name || id} · 준비 필요: ${(worker.issues || []).join(", ") || "설정 확인"}`;
-        }
-        workerSelect.appendChild(option);
-      });
-      if ([...workerSelect.options].some(option => option.value === selectedWorker)) workerSelect.value = selectedWorker;
-      document.getElementById("runtimeMode").className = `runtime-card ${sync.rootOk ? "good" : "bad"}`;
-      document.getElementById("runtimeSyncText").textContent = `${sync.ok ? "성공" : "확인 필요"} · ${sync.endedAt || sync.message || "-"}`;
-      document.getElementById("runtimeSync").className = `runtime-card ${sync.ok ? "good" : "bad"}`;
-      const gh = data.github || {};
-      const ghCard = document.getElementById("runtimeGithub");
-      const ghText = document.getElementById("runtimeGithubText");
-      if (ghText) {
-        const commit = gh.local ? " · " + gh.local : "";
-        ghText.textContent = `${gh.message || "확인 중"}${commit}`;
-      }
-      if (ghCard) ghCard.className = `runtime-card ${gh.class || "warn"}`;
-      const ghDown = document.getElementById("runtimeGithubDownloadButton");
-      const ghUp = document.getElementById("runtimeGithubUploadButton");
-      if (ghDown) ghDown.title = gh.detail || "GitHub에서 최신 코드를 받습니다.";
-      if (ghUp) ghUp.title = "내 PC의 변경사항을 GitHub에 올립니다.";
-      refreshIllustrationRequestNote();
-      updateSelectedStatus();
-      const job = data.job || {};
-      currentRemoteJob = job.remote ? job : null;
-      const prog = job.running ? renderProgress(job.log) : "";
-      const runtimeJob = document.getElementById("runtimeJob");
-      const runtimeJobText = document.getElementById("runtimeJobText");
-      if (runtimeJobText) runtimeJobText.textContent = job.running ? (`실행 중 · ${job.name}` + (prog ? ` — ${prog}` : "")) : (job.exit_code === null ? "대기 중" : `마지막 종료 ${job.exit_code}`);
-      if (runtimeJob) runtimeJob.className = `runtime-card ${job.running ? "warn" : (job.exit_code === 0 ? "good" : (job.exit_code === null ? "" : "bad"))}`;
-      const cancelButton = document.getElementById("cancelJobButton");
-      const retryButton = document.getElementById("retryJobButton");
-      cancelButton.style.display = job.remote && job.running ? "" : "none";
-      retryButton.style.display = job.remote && !job.running && job.exit_code !== 0 ? "" : "none";
-      const statusCancel = document.getElementById("statusCancelButton");
-      if (statusCancel) statusCancel.style.display = job.remote && job.running ? "" : "none";
-      document.getElementById("jobText").textContent = job.running ? (`실행 중: ${job.name}` + (prog ? ` · ${prog}` : "")) : (job.exit_code === null ? "대기 중" : `마지막 종료 코드: ${job.exit_code}`);
-      if (job.running && job.job_id) { jobLogCache[job.job_id] = job.log || ""; if (expandedJobId === job.job_id) renderJobHistory(); }
-      const results = document.getElementById("results"); results.innerHTML = ""; (data.results || []).forEach(r => {
-        const div = document.createElement("div");
-        div.className = "result-row";
-        const link = r.mp4
-          ? `<a href="/api/result?folder=${encodeURIComponent(r.name)}&file=${encodeURIComponent(r.mp4)}">${escapeHtml(r.mp4)}</a>`
-          : "";
-        div.innerHTML = `<span>${escapeHtml(r.name)}</span><span class="small">${link}</span>`;
-        results.appendChild(div);
-      });
-    }
-
-    async function panelUpdateRestart(event){
-      if(event){ event.preventDefault(); event.stopPropagation(); }
-      if(!confirm("최신 코드를 받고(git pull) 패널을 재시작할까요?\n커밋 안 한 변경은 자동 보관(stash)됩니다. 진행 중 렌더가 있으면 끝난 뒤 실행하세요.")) return;
-      var btn=document.getElementById("runtimeRestartButton"); if(btn) btn.disabled=true;
-      var el=document.getElementById("runtimeGithubText");
-      try{
-        await api("/api/action",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"panel_update_restart",slug:""})});
-      }catch(e){ /* 재시작 중 연결이 끊길 수 있음 - 무시 */ }
-      if(el) el.textContent="재시작 중...";
-      var sawDown=false, tries=0;
-      var timer=setInterval(async function(){
-        tries++;
-        try{
-          var h=await fetch("/api/health",{cache:"no-store"});
-          if(h.ok){ if(sawDown){ clearInterval(timer); location.reload(); } }
-          else { sawDown=true; }
-        }catch(_){ sawDown=true; }
-        if(tries>60){ clearInterval(timer); location.reload(); }
-      }, 1500);
-    }
-    async function runGithubAction(event, action, label) {
-      if (event) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-      const down = document.getElementById("runtimeGithubDownloadButton");
-      const up = document.getElementById("runtimeGithubUploadButton");
-      const text = document.getElementById("runtimeGithubText");
-      try {
-        if (down) down.disabled = true;
-        if (up) up.disabled = true;
-        if (text) text.textContent = label + " 요청 중...";
-        const result = await api("/api/action", {
-          method: "POST",
-          headers: {"Content-Type": "application/json"},
-          body: JSON.stringify({action, slug: ""})
-        });
-        if (!result.ok) {
-          alert(result.message || result.error || label + "을 시작하지 못했습니다.");
-        }
-        await loadState();
-        await loadJobHistory();
-      } catch (err) {
-        alert("GitHub " + label + " 버튼 오류: " + String(err));
-      } finally {
-        if (down) down.disabled = false;
-        if (up) up.disabled = false;
-      }
-    }
-    async function runGithubDownload(event) {
-      return runGithubAction(event, "system_update", "다운로드");
-    }
-    async function runGithubUpload(event) {
-      return runGithubAction(event, "system_upload", "업로드");
-    }
-
-    async function deleteSlug() {
-      if (!selected) { alert("먼저 슬러그를 선택하세요."); return; }
-      if (!confirm("정말 삭제할까요?\n'" + selected + "' 의 articles / images / output 파일이 모두 지워집니다. 되돌릴 수 없습니다.")) return;
-      try {
-        const result = await api("/api/action", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({action:"delete_slug", slug:selected}) });
-        alert(result.ok ? (result.message || "삭제됨") : (result.message || "삭제 실패"));
-        if (result.ok) { selected = ""; document.getElementById("selectedSlug").textContent = "없음"; }
-      } catch (err) { alert(String(err)); }
-      await loadState(); await loadSlugs(); await loadCardnews();
-    }
-    async function runAction(action) {
-      console.log("runAction", action);
-      try {
-        const targetWorker = document.getElementById("targetWorker")?.value || "";
-        const result = await api("/api/action", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({action, slug:selected, target_worker:targetWorker}) });
-        if (!result.ok) {
-          alert(result.message || "작업을 시작하지 못했습니다. 실행 로그를 확인해주세요.");
-        }
-        await loadState();
-        await loadJobHistory();
-      } catch (err) { alert(String(err)); }
-    }
-    async function deleteSlug() {
-      if (!selected) { alert("먼저 슬러그를 선택하세요."); return; }
-      if (!confirm("'" + selected + "' 슬러그를 삭제할까요?\n기사(주제)·카드 이미지·렌더 결과가 로컬에서 제거됩니다. 되돌릴 수 없습니다.")) return;
-      try {
-        const result = await api("/api/action", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({action:"delete_slug", slug:selected}) });
-        alert(result.message || (result.ok ? "삭제됨" : "삭제 실패"));
-        selected = "";
-        await reloadLists();
-        await loadState();
-      } catch (err) { alert(String(err)); }
-    }
-    async function cancelRemoteJob() {
-      if (!currentRemoteJob?.job_id) return;
-      await api("/api/action", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({action:"remote_job_cancel", job_id:currentRemoteJob.job_id})});
-      await loadState();
-      await loadJobHistory();
-    }
-    async function retryRemoteJob() {
-      if (!currentRemoteJob?.job_id) return;
-      await api("/api/action", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({action:"remote_job_retry", job_id:currentRemoteJob.job_id})});
-      await loadState();
-      await loadJobHistory();
-    }
-    function toggleWeakPanel() {
-      const panel = document.getElementById("weakPanel");
-      panel.style.display = panel.style.display === "block" ? "none" : "block";
-    }
-    function toggleImportPanel() {
-      const panel = document.getElementById("importPanel");
-      panel.style.display = panel.style.display === "block" ? "none" : "block";
-    }
-    function toggleManage() {
-      const m = document.getElementById("manageActions");
-      const c = document.getElementById("manageCaret");
-      if (!m) return;
-      const open = m.style.display === "grid";
-      m.style.display = open ? "none" : "grid";
-      if (c) c.textContent = open ? "▾" : "▴";
-    }
-    function toggleViewEdit() {
-      const m = document.getElementById("viewEditActions");
-      const c = document.getElementById("viewEditCaret");
-      if (!m) return;
-      const open = m.style.display === "grid";
-      m.style.display = open ? "none" : "grid";
-      if (c) c.textContent = open ? "▾" : "▴";
-      try { localStorage.setItem("panel.viewEdit", open ? "0" : "1"); } catch(e){}
-    }
-    async function openCardImportReview() {
-      if (!selected) { alert("먼저 카드뉴스를 선택하세요."); return; }
-      window.__importKind = "card";
-      const panel = document.getElementById("importPanel");
-      const rows = document.getElementById("importRows");
-      const btn = document.getElementById("importConfirmBtn");
-      panel.style.display = "block";
-      btn.style.display = "none";
-      rows.innerHTML = "<div class='pad small'>슬라이드 내용으로 자동 배정 중입니다...</div>";
-      let result;
-      try {
-        result = await api("/api/action", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({action:"card_import_propose", slug:selected}) });
-      } catch (err) { rows.innerHTML = "<div class='pad small'>제안 생성 실패: " + escapeHtml(String(err)) + "</div>"; return; }
-      if (!result.ok) { rows.innerHTML = "<div class='pad small'>" + escapeHtml(result.message || "제안을 생성하지 못했습니다.") + "</div>"; return; }
-      renderImportProposal(result.proposal || {});
-    }
-    async function openImportReview() {
-      if (!selected) { alert("먼저 슬러그를 선택하세요."); return; }
-      window.__importKind = "video";
-      const panel = document.getElementById("importPanel");
-      const rows = document.getElementById("importRows");
-      const btn = document.getElementById("importConfirmBtn");
-      panel.style.display = "block";
-      btn.style.display = "none";
-      rows.innerHTML = "<div class='pad small'>그림 내용을 분석해 자동 배정 중입니다...</div>";
-      let result;
-      try {
-        result = await api("/api/action", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({action:"video_import_propose", slug:selected}) });
-      } catch (err) { rows.innerHTML = "<div class='pad small'>제안 생성 실패: " + escapeHtml(String(err)) + "</div>"; return; }
-      if (!result.ok) { rows.innerHTML = "<div class='pad small'>" + escapeHtml(result.message || "제안을 생성하지 못했습니다.") + "</div>"; return; }
-      renderImportProposal(result.proposal || {});
-    }
-    function renderImportProposal(p) {
-      window.__importProposal = p;
-      const rows = document.getElementById("importRows");
-      const btn = document.getElementById("importConfirmBtn");
-      const reqs = p.requests || [];
-      const assigns = p.assignments || [];
-      const engineLabel = p.engine === "image-embedding" ? "그림 내용 매칭" : (p.engine === "fallback-mtime" ? "시간순 추정(모델 없음 — 꼭 확인)" : "후보 없음");
-      const optionsHtml = ["<option value=''>— 사용 안 함 —</option>"].concat(
-        reqs.map(r => `<option value="${escapeHtml(r.filename)}">${r.optional ? "[자동발굴] " : ""}${escapeHtml(r.filename)}${r.concept_label ? " · " + escapeHtml(r.concept_label) : ""}</option>`)
-      ).join("");
-      let html = `<div class='pad small'>엔진: <b>${escapeHtml(engineLabel)}</b> · 후보 ${assigns.length}장 · 요청 ${reqs.length}건</div>`;
-      if (!reqs.length) {
-        if ((window.__importKind || "video") === "card") {
-          html += "<div class='pad small'>슬라이드 설명(prompt.md)을 읽지 못했습니다. '2. 이미지 프롬프트 보기'로 prompt.md가 있는지 확인하세요.</div>";
-        } else {
-          html += "<div class='pad small'>이 영상은 새로 그릴 이미지가 없습니다(누락 요청 0건). 바로 렌더하면 됩니다.</div>";
-          html += "<div class='pad'><button class='btn primary' onclick='renderNowFromReview()'>이미지 없이 바로 렌더</button></div>";
-        }
-        rows.innerHTML = html; btn.style.display = "none"; return;
-      }
-      if (!assigns.length) {
-        html += "<div class='pad small'>가져올 그림 후보가 없습니다. GPT 이미지를 ILLUSTRATION_DROP 또는 다운로드 폴더에 저장한 뒤 다시 누르세요.</div>";
-        rows.innerHTML = html; btn.style.display = "none"; return;
-      }
-      assigns.forEach((a, idx) => {
-        const conf = (a.confidence === null || a.confidence === undefined) ? "" : `<span class='pill ${a.confidence >= 0.30 ? "ok" : "warn"}'>신뢰도 ${(a.confidence).toFixed(2)}</span>`;
-        const dedup = a.dedup
-          ? (a.dedup.skip
-              ? `<span class='pill warn'>기존 '${escapeHtml(a.dedup.variant)}'와 거의 동일 (${(a.dedup.score).toFixed(2)}) · 안 넣어도 자동 재사용 → 기본 '사용 안 함'</span>`
-              : `<span class='pill warn'>중복 가능: ${escapeHtml(a.dedup.variant)} (${(a.dedup.score).toFixed(2)})</span>`)
-          : "";
-        const exact = a.exact_name ? "<span class='pill ok'>정확한 파일명</span>" : "";
-        const thumb = `/api/illust-thumb?path=${encodeURIComponent(a.candidate_path)}`;
-        html += `<div class='import-row' style='display:flex;gap:12px;align-items:center;padding:8px;border-bottom:1px solid #eee'>
-          <img src="${thumb}" alt="" style="width:96px;height:72px;object-fit:cover;border:1px solid #ddd;border-radius:6px;background:#fafafa" onerror="this.style.opacity=0.2"/>
-          <div style='flex:1;min-width:0'>
-            <div class='small' style='word-break:break-all'>${escapeHtml(a.candidate_name)}</div>
-            <div style='margin:4px 0'>${conf} ${exact} ${dedup}</div>
-            <select id="importSel_${idx}">${optionsHtml}</select>
-          </div>
-        </div>`;
-      });
-      if ((p.unmatched_requests || []).length) {
-        html += `<div class='pad small'>아직 후보가 없는 요청: ${ (p.unmatched_requests).map(escapeHtml).join(", ") }</div>`;
-      }
-      rows.innerHTML = html;
-      assigns.forEach((a, idx) => {
-        const sel = document.getElementById("importSel_" + idx);
-        if (!sel) return;
-        if (a.dedup && a.dedup.skip) sel.value = "";              // 거의 동일 → 기본 건너뛰기
-        else if (a.proposed_filename) sel.value = a.proposed_filename;
-      });
-      btn.style.display = "inline-block";
-    }
-    async function renderNowFromReview() {
-      if (!confirm("새 이미지 없이 현재 영상을 렌더 대기열에 등록합니다.")) return;
-      try {
-        const r = await api("/api/action", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({action:"video_render_selected", slug:selected}) });
-        alert(r.message || (r.ok ? "렌더 대기열에 등록했습니다." : "실패했습니다."));
-        if (r.ok) { document.getElementById("importPanel").style.display = "none"; await loadState(); await loadJobHistory(); }
-      } catch (err) { alert(String(err)); }
-    }
-    async function confirmImport() {
-      const p = window.__importProposal || {};
-      const assigns = p.assignments || [];
-      const mapping = [];
-      const usedFn = new Set();
-      for (let idx = 0; idx < assigns.length; idx++) {
-        const sel = document.getElementById("importSel_" + idx);
-        const fn = sel ? sel.value : "";
-        if (!fn) continue;
-        if (usedFn.has(fn)) { alert("같은 파일명이 두 번 선택됐습니다: " + fn + "\n하나만 남겨주세요."); return; }
-        usedFn.add(fn);
-        mapping.push({ candidate_path: assigns[idx].candidate_path, filename: fn });
-      }
-      if (!mapping.length) { alert("최소 한 장은 파일명을 배정하세요."); return; }
-      const kind = window.__importKind || "video";
-      const action = kind === "card" ? "card_import_confirm" : "video_import_confirm";
-      const msg = (kind === "card")
-        ? ("이 매핑대로 카드 이미지 폴더에 1~5.png로 넣습니다.\n슬라이드 내용과 맞는지 확인했나요? (" + mapping.length + "장)")
-        : ("이 매핑대로 라이브러리에 넣고 렌더 대기열에 등록합니다.\n파일명이 그림 내용과 맞는지 확인했나요? (" + mapping.length + "장)");
-      if (!confirm(msg)) return;
-      let result;
-      try {
-        result = await api("/api/action", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({action, slug:selected, mapping}) });
-      } catch (err) { alert("확정 실패: " + String(err)); return; }
-      alert(result.message || (result.ok ? "확정했습니다." : "실패했습니다."));
-      if (result.ok) {
-        document.getElementById("importPanel").style.display = "none";
-        await loadState();
-        await loadJobHistory();
-      }
-    }
-    async function showWeakMappings() {
-      const data = await api("/api/weak-mappings");
-      const body = document.getElementById("weakRows");
-      body.innerHTML = "";
-      if (!data.rows || data.rows.length === 0) {
-        body.innerHTML = "<tr><td colspan='5'>약한 매핑이 없습니다.</td></tr>";
-      } else {
-        const visualOptions = buildVisualOptions(data.visuals || {});
-        data.rows.forEach((r, idx) => {
-          const tr = document.createElement("tr");
-          tr.innerHTML = `<td>${r.section}<br>청크 ${r.chunk}</td>
-            <td>${r.variant || "-"}</td>
-            <td>${escapeHtml(r.text || "")}</td>
-            <td>${escapeHtml(r.suggestion || "")}</td>
-            <td>
-              <select id="weakType_${idx}" onchange="fillVisualValue(${idx})">
-                <option value="illust">일러스트</option>
-                <option value="image">GPT 이미지</option>
-                <option value="logo">로고</option>
-                <option value="mascot">마스코트</option>
-                <option value="none">비우기</option>
-              </select>
-              <input id="weakValue_${idx}" list="weakValues_${idx}" placeholder="예: penalty_refund 또는 3.png">
-              <datalist id="weakValues_${idx}">${visualOptions}</datalist>
-              <button class="mini-btn" onclick="saveWeakVisual(${idx}, '${escapeJs(r.section)}', ${Number(r.chunk_index) || 0})">저장</button>
-            </td>`;
-          body.appendChild(tr);
-        });
-      }
-      document.getElementById("weakPanel").style.display = "block";
-      window.__weakVisuals = data.visuals || {};
-    }
-    function buildVisualOptions(visuals) {
-      const rows = [];
-      ["illust","image","logo","mascot"].forEach(type => {
-        (visuals[type] || []).forEach(v => rows.push(`<option value="${escapeHtml(v)}" label="${type}:${escapeHtml(v)}"></option>`));
-      });
-      return rows.join("");
-    }
-    function fillVisualValue(idx) {
-      const type = document.getElementById(`weakType_${idx}`).value;
-      const input = document.getElementById(`weakValue_${idx}`);
-      if (type === "none") input.value = "none";
-      else input.value = "";
-    }
-    async function saveWeakVisual(idx, section, chunkIndex) {
-      const type = document.getElementById(`weakType_${idx}`).value;
-      const value = document.getElementById(`weakValue_${idx}`).value.trim();
-      if (!value) { alert("새 visual 값을 입력하세요."); return; }
-      await api("/api/action", {
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body: JSON.stringify({
-          action:"update_visual",
-          slug:selected,
-          section,
-          chunk_index:chunkIndex,
-          visual_type:type,
-          visual_value:value
-        })
-      });
-      alert("저장했습니다. 필요하면 선택 영상만 렌더를 다시 실행하세요.");
-      await showWeakMappings();
-    }
-    async function showChunks() {
-      try {
-        if (!selected) { alert("먼저 슬러그를 선택하세요."); return; }
-        const data = await api("/api/chunks?slug=" + encodeURIComponent(selected));
-        const body = document.getElementById("chunkRows");
-        body.innerHTML = "";
-        const rows = data.rows || [];
-        window.__chunkRows = rows;
-        if (!rows.length) {
-          body.innerHTML = "<tr><td colspan='4'>청크가 없습니다. 먼저 영상 이미지 프롬프트 준비를 실행하세요.</td></tr>";
-        }
-        rows.forEach((r) => {
-          const tr = document.createElement("tr");
-          const overrideBadge = r.override ? "<br><span class='pill ok'>편집본</span>" : "";
-          const rebalanceButton = r.section_first
-            ? `<button class="mini-btn" onclick="openManualSplit('${escapeJs(r.section)}')">✏ 직접 끊기</button> <button class="mini-btn" onclick="adjustChunk('${escapeJs(r.section)}', 0, 'rebalance_section')">구간 자동 보정</button>`
-            : "";
-          const mergePrevDisabled = r.can_merge_prev ? "" : "disabled title='첫 청크이거나 합친 문장이 너무 깁니다.'";
-          const mergeNextDisabled = r.can_merge_next ? "" : "disabled title='마지막 청크이거나 합친 문장이 너무 깁니다.'";
-          const splitDisabled = r.can_split ? "" : "disabled title='안전하게 나눌 수 있을 만큼 길지 않습니다.'";
-          tr.innerHTML = `<td>${escapeHtml(r.section)}<br>청크 ${Number(r.chunk) || 0}<br>${Number(r.chars) || 0}자${overrideBadge}</td>
-            <td class="chunk-text">${escapeHtml(r.text || "")}</td>
-            <td>${escapeHtml(r.visual || "-")}</td>
-            <td>
-              ${rebalanceButton}
-              <button class="mini-btn" onclick="adjustChunk('${escapeJs(r.section)}', ${Number(r.chunk_index)||0}, 'linebreak')">자동 줄바꿈</button>
-              <button class="mini-btn" ${mergePrevDisabled} onclick="adjustChunk('${escapeJs(r.section)}', ${Number(r.chunk_index)||0}, 'merge_prev')">앞과 합치기</button>
-              <button class="mini-btn" ${mergeNextDisabled} onclick="adjustChunk('${escapeJs(r.section)}', ${Number(r.chunk_index)||0}, 'merge_next')">뒤와 합치기</button>
-              <button class="mini-btn" ${splitDisabled} onclick="adjustChunk('${escapeJs(r.section)}', ${Number(r.chunk_index)||0}, 'split_auto')">자동 둘로 나누기</button>
-            </td>`;
-          body.appendChild(tr);
-        });
-        document.getElementById("chunkPanel").style.display = "block";
-      } catch (err) {
-        alert("청크 목록을 불러오지 못했습니다.\n" + String(err));
-      }
-    }
-    function toggleChunkPanel() {
-      const panel = document.getElementById("chunkPanel");
-      panel.style.display = panel.style.display === "block" ? "none" : "block";
-    }
-    function openManualSplit(section) {
-      const rows = (window.__chunkRows || []).filter(r => r.section === section);
-      const text = rows.map(r => String(r.text || "").replace(/\s+/g, " ").trim()).join("\n");
-      const box = document.getElementById("manualSplitBox");
-      document.getElementById("manualSplitSection").textContent = section;
-      document.getElementById("manualSplitText").value = text;
-      box.dataset.section = section;
-      box.style.display = "block";
-      box.scrollIntoView({ block: "nearest" });
-    }
-    function cancelManualSplit() { document.getElementById("manualSplitBox").style.display = "none"; }
-    async function applyManualSplit() {
-      const box = document.getElementById("manualSplitBox");
-      const section = box.dataset.section || "";
-      const text = document.getElementById("manualSplitText").value;
-      try {
-        const r = await api("/api/action", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({action:"set_section_chunks", slug:selected, section, text}) });
-        if (!r.ok) { alert(r.message || "적용하지 못했습니다."); return; }
-        box.style.display = "none";
-        alert("끊기를 적용했습니다. 다음 렌더부터 반영됩니다.");
-        await showChunks();
-      } catch (err) { alert("적용 실패: " + String(err)); }
-    }
-    async function adjustChunk(section, chunkIndex, op) {
-      const message = document.getElementById("chunkMessage");
-      try {
-        if (message) message.textContent = "청크를 저장하는 중입니다.";
-        const result = await api("/api/action", {
-          method:"POST",
-          headers:{"Content-Type":"application/json"},
-          body: JSON.stringify({ action:"adjust_chunk", slug:selected, section, chunk_index:chunkIndex, op })
-        });
-        if (!result.ok) {
-          alert(result.message || "청크 조정에 실패했습니다.");
-          if (message) message.textContent = result.message || "청크 조정에 실패했습니다.";
-          return;
-        }
-        await showChunks();
-        if (message) message.textContent = "저장했습니다. 다음 렌더부터 자동으로 반영됩니다.";
-      } catch (err) {
-        if (message) message.textContent = "저장하지 못했습니다.";
-        alert("청크 조정 실패\n" + String(err));
-      }
-    }
-    async function copyLog() {
-      const text = (expandedJobId && jobLogCache[expandedJobId]) || "";
-      if (!text.trim()) { alert("복사할 로그가 없습니다. 먼저 작업 기록에서 로그를 펼치세요."); return; }
-      try {
-        await navigator.clipboard.writeText(text);
-        alert("로그를 복사했습니다.");
-      } catch (e) {
-        const t = document.createElement("textarea");
-        t.value = text; document.body.appendChild(t); t.select();
-        try { document.execCommand("copy"); alert("로그를 복사했습니다."); }
-        finally { t.remove(); }
-      }
-    }
-    function renderProgress(log) {
-      if (!log) return "";
-      let p = "";
-      const lines = String(log).split("\n");
-      for (const ln of lines) {
-        let m;
-        if (m = ln.match(/----- Step (\d+\/\d+)[:：]?\s*(.*?)-----/)) p = "단계 " + m[1] + (m[2] && m[2].trim() ? " · " + m[2].trim() : "");
-        else if (m = ln.match(/\[render\]\s*(\d+)%/)) p = "프레임 렌더 " + m[1] + "%";
-        else if (ln.indexOf("frame=") >= 0 && (m = ln.match(/frame=\s*(\d+)/)) && /speed=\s*([\d.]+x)/.test(ln)) p = "인코딩 " + m[1] + "프레임 (" + ln.match(/speed=\s*([\d.]+x)/)[1] + ")";
-        else if (ln.indexOf("[CLAIMED]") >= 0) p = "워커 배정됨";
-        else if (ln.indexOf("[DOWNLOAD]") >= 0) p = "준비 중";
-        else if (ln.indexOf("[UPLOAD]") >= 0 || ln.indexOf("[LOCAL]") >= 0) p = "결과 정리 중";
-        else if (ln.indexOf("[OK] Final MP4") >= 0 || ln.indexOf("DONE.") >= 0) p = "마무리 중";
-      }
-      return p;
-    }
-    function escapeHtml(s) {
-      return String(s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-    }
-    function escapeJs(s) {
-      return String(s).replace(/\\/g, "\\\\").replace(/'/g, "\\'");
-    }
-    function openCardPrompt() {
-      if (!selected) { alert("카드뉴스를 먼저 선택하세요."); return; }
-      window.open("/card-prompt/" + encodeURIComponent(selected), "_blank");
-    }
-    reloadLists(); loadState(); loadJobHistory(); setInterval(loadState, 1500); setInterval(loadJobHistory, 5000); setInterval(loadCardnews, 10000);
-    try { if (localStorage.getItem("panel.viewEdit") === "1") toggleViewEdit(); } catch(e){}
-  </script>
-</body>
-</html>"""
+def load_index_html() -> str:
+    # 화면(HTML/CSS/JS) 정본 = dashboard/static/index.html. 요청마다 디스크에서 읽어 서빙한다.
+    # → UI만 바꾸면 브라우저 새로고침으로 반영(재기동·PANEL_VERSION bump 불필요).
+    # → server.py 거대 raw string 편집 시 파일 꼬리 truncation 사고 원천 차단.
+    return INDEX_PATH.read_text(encoding="utf-8")
 
 
 def main() -> int:
@@ -3369,6 +2375,10 @@ def main() -> int:
         return 1
     host = os.environ.get("PHONESPOT_PANEL_HOST", "0.0.0.0")
     server = ThreadingHTTPServer((host, PORT), Handler)
+    try:
+        prune_logs()
+    except Exception:
+        pass
     start_local_worker()
     # 5-1: 임베딩 캐시 백그라운드 워밍 - 첫 버튼2/렌더가 라이브러리 전체를 임베딩하느라
     # 기다리지 않도록 미리 캐시를 채운다. 실패해도 무해(폴백).
@@ -3395,6 +2405,7 @@ def main() -> int:
         server.serve_forever()
     finally:
         stop_local_worker()
+        REMOTE_QUEUE.flush()
         server.server_close()
     return 0
 

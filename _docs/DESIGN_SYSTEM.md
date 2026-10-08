@@ -1,8 +1,8 @@
 # 폰스팟 디자인 시스템 (정본)
 
-> **출처**: `CODEX_VIDEO_DESK/dashboard/server.py` 의 `INDEX_HTML <style> :root` 토큰 추출 (패널 iOS/Apple HIG 리뉴얼, PANEL_VERSION v25~v32).
+> **출처**: `CODEX_VIDEO_DESK/dashboard/static/index.html` 의 `<style> :root` 토큰 추출 (v60에서 server.py `INDEX_HTML`로부터 분리) (패널 iOS/Apple HIG 리뉴얼, PANEL_VERSION v25~v32).
 > **용도**: 패널·광고 생성기(`ads/.../generator.html`)·향후 브랜드 페이지(KT/국민/진짜폰스팟)·영상(Remotion)이 **같은 디자인 언어**를 재사용.
-> 새 페이지는 아래 `:root` 토큰을 복사해 `var(--…)`로 참조. 값 변경은 **server.py `:root` 가 정본** → 여기 동기화.
+> 새 페이지는 아래 `:root` 토큰을 복사해 `var(--…)`로 참조. 값 변경은 **`static/index.html` `:root` 가 정본** → 여기 동기화.
 
 ---
 
@@ -63,6 +63,6 @@
 1. 새 HTML 페이지(생성기·브랜드)는 위 `:root` 블록을 **그대로 복사** → `var(--accent)` 등으로 참조. 하드코딩 hex 금지.
 2. **브랜드 오렌지 `#F74B0B` 고정.** 시맨틱 색은 상태 표시에만(브랜딩 X).
 3. 그림자는 3단계(`subtle`/`card`/`elevated`)만. 모서리는 4단계만. 무드 통일.
-4. 값 변경은 **server.py `:root` 에서** → 이 문서 동기화(정본=server.py, 이 문서=참조 인덱스).
+4. 값 변경은 **`static/index.html` `:root` 에서** → 이 문서 동기화(정본=static/index.html, 이 문서=참조 인덱스).
 
-> ※ server.py 는 165KB 대형파일 — CSS 수정 시 **Edit 도구 금지, bash-python only**(SYSTEM_MAP I단원 규칙).
+> ※ static/index.html 은 92KB 대형파일 — CSS 수정 시 **Edit 도구 금지, bash-python only**(SYSTEM_MAP I단원 규칙).

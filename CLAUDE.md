@@ -92,7 +92,7 @@
 - **멀티PC 독립생산 + 일러스트 Drive 공유**: `CODEX_VIDEO_DESK/MAINTENANCE/MULTI_PC_STANDALONE_AND_LIBRARY_SHARING_GUIDE.md`
 - **최근(2026-06) 변경 종합**: `CODEX_VIDEO_DESK/MAINTENANCE/PHONESPOT_UPDATES_2026-06_GUIDE.md`
 - **노트북 개발 / 사무실 실행 / GitHub 연동**: `_docs/DEV_LAPTOP_OFFICE_RUN_GITHUB.md`
-- **패널/페이지 디자인 (색·토큰·컴포넌트 재사용)**: `_docs/DESIGN_SYSTEM.md` (server.py `:root` 정본 추출 — 패널·광고 생성기·브랜드 페이지 공용 디자인 언어)
+- **패널/페이지 디자인 (색·토큰·컴포넌트 재사용)**: `_docs/DESIGN_SYSTEM.md` (`CODEX_VIDEO_DESK/dashboard/static/index.html` `:root` 정본 추출(v60~, 이전 server.py) — 패널·광고 생성기·브랜드 페이지 공용 디자인 언어)
 - **광고 운영 자동화 (메타·인스타·네이버·인사이트)**: `ads/SNS_AUTOMATION_ROADMAP.md`(채널별 가능여부 매트릭스) + 작업 채널 가이드 (`ads/META_AUTOMATION.md` / `ads/NAVER_AUTOMATION.md` / `ads/INSTAGRAM_AUTOMATION_PENDING.md`(완료 헤더))
 - **멀티 브랜드 모노레포 (KT/국민/진짜폰스팟 등 신설)**: `ads/MULTI_BRAND_ARCHITECTURE.md` — `_shared/`+`brands/<brand>/` 분리, clasp+GitHub, Phase 1~4
 - **재해 복구 (PC 손상/실수 삭제/PC 교체/repo 삭제)**: `_docs/DISASTER_RECOVERY.md` — 시나리오 A/B/C, 자산별 백업 출처 매트릭스, `_secrets/` 별도 백업 절차, 검증

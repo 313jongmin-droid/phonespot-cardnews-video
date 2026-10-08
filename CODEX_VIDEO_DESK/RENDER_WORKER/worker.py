@@ -30,7 +30,7 @@ SERVER = (os.environ.get("PHONESPOT_PANEL_URL") or SAVED_URL or "http://127.0.0.
 # 로컬 패널이면 결과가 이미 RESULTS/<키>/ 에 있으므로 업로드/패키지 다운로드(=remote_ 폴더) 불필요
 LOCAL_PANEL = ("127.0.0.1" in SERVER) or ("localhost" in SERVER)
 WORKER_ID = os.environ.get("PHONESPOT_WORKER_ID") or socket.gethostname()
-VERSION = "render-worker-v6"
+VERSION = "render-worker-v7"
 # 워커가 pythonw(무콘솔)로 돌면 자식(bat/python) 콘솔이 새 창을 띄움 → subprocess에 적용.
 NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
 INSTANCE_ID = uuid4().hex
@@ -93,8 +93,22 @@ def readiness() -> dict:
     return {"ready": not issues, "issues": issues, "checks": checks}
 
 
+_READY_CACHE: dict = {"at": 0.0, "value": None}
+
+
+def cached_readiness(force: bool = False) -> dict:
+    """readiness()는 모듈탐색·glob·디스크조회라 매 루프(≈1s) 호출은 낭비.
+    준비됨이면 30초, 미준비면 5초(의존성 설치 직후 빨리 반영) 캐시."""
+    value = _READY_CACHE["value"]
+    max_age = 30.0 if (value and value.get("ready")) else 5.0
+    if force or value is None or time.time() - _READY_CACHE["at"] >= max_age:
+        value = readiness()
+        _READY_CACHE.update({"at": time.time(), "value": value})
+    return value
+
+
 def registration_payload(status: dict | None = None) -> dict:
-    status = status or readiness()
+    status = status or cached_readiness()
     return {
         "worker_id": WORKER_ID,
         "name": socket.gethostname(),
@@ -387,9 +401,10 @@ def main() -> int:
     print(f"Panel  : {SERVER}")
     print(f"Root   : {ROOT}")
     last_issues: tuple[str, ...] | None = None
+    last_register = 0.0
     while True:
         try:
-            status = readiness()
+            status = cached_readiness()
             issues = tuple(status["issues"])
             if issues != last_issues:
                 if issues:
@@ -397,7 +412,11 @@ def main() -> int:
                 else:
                     print("[ready] render dependencies passed")
                 last_issues = issues
-            json_request("/api/worker/register", registration_payload(status))
+                last_register = 0.0  # 준비상태가 바뀌면 즉시 재등록
+            # 등록(=workers.json 기록 유발)은 5초마다만. claim 자체가 last_seen을 갱신하므로 온라인 유지됨.
+            if time.time() - last_register >= 5:
+                json_request("/api/worker/register", registration_payload(status))
+                last_register = time.time()
             if not status["ready"]:
                 time.sleep(5)
                 continue
@@ -407,7 +426,7 @@ def main() -> int:
             })
             job = response.get("job")
             if not job:
-                time.sleep(1)
+                time.sleep(2)  # 대기 중 폴링 1s→2s (잡 시작 지연 최대 +1s)
                 continue
             print(f"[claim] {job['id']} {job['action']} {job['slug']}")
             try:
@@ -422,6 +441,8 @@ def main() -> int:
                 "message": message,
             })
             print(f"[complete] ok={ok} exit={exit_code} {message}")
+            cached_readiness(force=True)  # 렌더 후 디스크 여유 등 재확인
+            last_register = 0.0
         except KeyboardInterrupt:
             return 0
         except Exception as exc:

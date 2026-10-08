@@ -41,12 +41,13 @@
 
 ## A. 패널 (웹 대시보드)
 
-**디자인 토큰 정본** = `server.py INDEX_HTML <style> :root` (색·radius·shadow·transition·Pretendard). 추출 참조 = **`_docs/DESIGN_SYSTEM.md`**(패널·광고 생성기·브랜드 페이지 공용). 값 변경은 server.py에서 → 문서 동기화. server.py 165KB 대형 = CSS 수정 bash-python only(I단원). 시맨틱 색 토큰(`:root`)=`--accent/--success/--warning/--danger/--blue/--green` + **`--warning-text:#B25A00`(v43 신설, 진한 앰버 상태텍스트)**. 상태/위험 색은 인라인 hex 금지 → `var(--green)`/`var(--warning-text)`/`var(--blue)`/`var(--danger)` 사용(v43 정리). 비시맨틱(로그 터미널 `#1C1C1E`/chunk 패널 블루틴트/메모 배경)은 토큰 예외.
+**디자인 토큰 정본** = `dashboard/static/index.html <style> :root` (v60부터. 이전 = `server.py INDEX_HTML`) (색·radius·shadow·transition·Pretendard). 추출 참조 = **`_docs/DESIGN_SYSTEM.md`**(패널·광고 생성기·브랜드 페이지 공용). 값 변경은 server.py에서 → 문서 동기화. server.py 165KB 대형 = CSS 수정 bash-python only(I단원). 시맨틱 색 토큰(`:root`)=`--accent/--success/--warning/--danger/--blue/--green` + **`--warning-text:#B25A00`(v43 신설, 진한 앰버 상태텍스트)**. 상태/위험 색은 인라인 hex 금지 → `var(--green)`/`var(--warning-text)`/`var(--blue)`/`var(--danger)` 사용(v43 정리). 비시맨틱(로그 터미널 `#1C1C1E`/chunk 패널 블루틴트/메모 배경)은 토큰 예외.
 
-**목적**: 카드뉴스+영상 생산을 한 화면에서 제어. 단일 파이썬 HTTP 서버 + 인라인 HTML.
+**목적**: 카드뉴스+영상 생산을 한 화면에서 제어. 단일 파이썬 HTTP 서버 + 화면 파일 `dashboard/static/index.html`(v60 분리, 이전 인라인 `INDEX_HTML`).
 
 **핵심 파일**
-- `CODEX_VIDEO_DESK/dashboard/server.py` — 서버 본체. `INDEX_HTML`(r"""…""" 원시문자열)에 화면+JS가 통째로 들어있음.
+- `CODEX_VIDEO_DESK/dashboard/server.py` — 서버 본체(~110KB). ~~`INDEX_HTML`~~ **v60에서 제거.**
+- **`CODEX_VIDEO_DESK/dashboard/static/index.html`** — 화면+CSS+JS 정본(v60, ~92KB). `load_index_html()`가 **요청마다 디스크에서 읽음** → 화면만 고치면 패널 재기동 없이 새로고침으로 반영(no-store). 아래 v59 이전 항목의 `INDEX_HTML` = 이 파일로 읽을 것.
 - `CODEX_VIDEO_DESK/dashboard/start_hidden.ps1` — 패널 기동 런처(숨김 실행). **버전 게이트**가 여기. **서버는 `pythonw.exe`(콘솔 없는 파이썬)로 기동 → 지속 cmd 창 없음**(2026-06-26 실행모델). pythonw 없으면 python.exe 폴백.
 - `CODEX_VIDEO_DESK/dashboard/auto_update.cmd` — (수신PC 옵트인) 기동 시 `git pull --ff-only`.
 - `CODEX_VIDEO_DESK/dashboard/remote_queue.py` — 원격 렌더 잡 큐.
@@ -56,15 +57,15 @@
 - 진입: `CODEX_VIDEO_DESK/00_PHONE_SPOT_PANEL.bat`(직접 실행=콘솔 보임, 디버그용) / **무창 = `dashboard/panel_hidden.vbs`**(고정 바로가기 타깃).
 
 **핵심 심볼 (server.py, 검증된 줄)**
-- `PANEL_VERSION = "phonespot-web-v59"` (L41) — **버전 단일 출처(SSOT)**. ps1이 이 값을 읽음. 화면/CSS 바꾸면 이 숫자만 올림.
-- `get_video_slugs()` (L336) — 영상 슬러그 목록. `list_slugs.py` 호출(articles∪output 독립 스캔).
-- `get_cardnews_rows()` (L1073) — 카드뉴스 행. `CARD_OUTPUT ∪ CARD_IMAGES ∪ CARD_ARTICLES` 합집합 스캔. **정렬 = `slug_sort_key` 내림차순(번호 desc)→ `[:80]` 캡 = 최신 80 보존, 최신 위로(v44).** 4개 리스트(영상·카드·tpList·aiList)+`cardnews_summary`(최신 12) 공용 소스라 한 곳에서 정렬 결정.
-- 액션 디스패치: `if action == "..."` 블록들 (L1589~2010). 주요:
-  - `producer_check`(L1627)=환경 점검 / `delete_slug`(L1636, 단일)=슬러그 삭제 (구 중복 핸들러 v41서 제거)
-  - `system_upload`(L1932)=GitHub 커밋·push / `system_update`(L1939)=의존성 업데이트
-  - `library_sync`(L1600)·`library_dedup`(L1609)·`library_backup`(L1618)
+- `PANEL_VERSION = "phonespot-web-v60"` (L43) — **버전 단일 출처(SSOT)**. ps1이 이 값을 읽음. 화면/CSS 바꾸면 이 숫자만 올림.
+- `get_video_slugs()` (L457, v60) — 영상 슬러그 목록. `list_slugs.py` 호출(articles∪output 독립 스캔).
+- `get_cardnews_rows()` (L1195, v60) — 카드뉴스 행. `CARD_OUTPUT ∪ CARD_IMAGES ∪ CARD_ARTICLES` 합집합 스캔. **정렬 = `slug_sort_key` 내림차순(번호 desc)→ `[:80]` 캡 = 최신 80 보존, 최신 위로(v44).** 4개 리스트(영상·카드·tpList·aiList)+`cardnews_summary`(최신 12) 공용 소스라 한 곳에서 정렬 결정.
+- 액션 디스패치: `if action == "..."` 블록들 (v60 L1900~2349, `do_POST` L1803). 주요:
+  - `producer_check`(L1938)=환경 점검 / `delete_slug`(L1947, 단일)=슬러그 삭제 (구 중복 핸들러 v41서 제거)
+  - `system_upload`(L2292)=GitHub 커밋·push / `system_update`(L2299)=의존성 업데이트
+  - `library_sync`(L1911)·`library_dedup`(L1920)·`library_backup`(L1929)
   - `video_prepare`(=`card_to_video` 통합, v41: 버튼 1·6 둘 다 이 핸들러)·`video_import_propose/confirm`·`video_render_selected`·`card_*`·`update_visual`·`adjust_chunk`·`set_section_chunks`·`telegram_*`
-- 환경점검 버튼 UI: L2172 근처. deleteSlug() JS: L2633·2655 근처.
+- 환경점검 버튼 UI: `static/index.html` L230 근처. deleteSlug() JS: `static/index.html` L911.
 
 **버전 게이트 동작 (start_hidden.ps1)**
 - ps1이 server.py에서 정규식 `PANEL_VERSION\s*=\s*"([^"]+)"` 로 버전을 읽어 표시(폴백 "phonespot-web-v21").
@@ -95,9 +96,21 @@
   - 상단 4박스(runtime-card)는 패딩·폰트·`min-height:0`로 슬림화.
 - **롤백**: iOS 이전(주황) 디자인은 git 이력에서 복원 — `git log --oneline -- CODEX_VIDEO_DESK/dashboard/server.py`로 커밋 찾아 `git checkout <commit> -- CODEX_VIDEO_DESK/dashboard/server.py`. (옛 `server.py.bak_pre_ios_20260613`은 v41 정리 때 삭제됨.)
 
+**v60 재진단 개선 (2026-10-08, 15항목)** — 격리 서버 실기동 e2e로 검증(샌드박스 Linux; Windows 전용 동작은 미검증 표기)
+- **화면 분리**: `INDEX_HTML` → `static/index.html`(byte 동일 추출 후 편집). `/` = `load_index_html()`.
+- **접근 제어(server.py L1286~ `PANEL_TOKEN_PATH`·`panel_token`·`allowed_hosts`·`access_denied_reason`·`deny_response`)**: ① `/api/health` 항상 허용(런처) ② 유효 토큰(헤더 `X-Panel-Token`/쿠키 `panel_token`/`?t=`) 허용 ③ **Host가 이 PC 이름·IP·localhost가 아니면 403 = DNS 리바인딩 차단** ④ `/api/worker/*`는 Host만 맞으면 허용(원격 워커 호환) ⑤ 같은 PC 접속은 토큰 없이 허용 ⑥ **다른 기기는 토큰 필요**. 토큰 = `CODEX_VIDEO_DESK/TEMP/panel/panel_token.txt`(git 비추적, 최초 1회 생성). 같은 PC 화면 상단 **[다른 기기 접속 링크]**(`#lanLinkBtn`, `<meta name="panel-lan-links">`) 복사 → 폰에서 `http://IP:PORT/?t=…` 접속 시 302 + 쿠키 1년 저장. 추가 호스트명 허용 = env `PHONESPOT_PANEL_ALLOWED_HOSTS`(콤마). POST Origin은 **same-origin만**(googleusercontent 와일드카드 제거 — 리포에 패널 호출하는 Apps Script 없음 grep 확인).
+- **로컬 워커 pid (server.py `_pid_alive` L173·`start_local_worker` L214·`stop_local_worker`)**: 기존 워커는 **살아있고(OpenProcess+GetExitCodeProcess==259) AND 큐에 온라인**일 때만 재사용, 아니면 pid 파일 지우고 새로 spawn. 서버가 띄운 워커만 종료 시 terminate + pid 파일 삭제. e2e: 신규spawn→shutdown 시 워커·pid 정리 / 서버 강제종료 후 재기동 시 중복 워커 0 / 죽은 pid 파일 → 새 spawn 확인.
+- **큐 I/O (`remote_queue.py` 재작성)**: 잡 로그 = **`TEMP/remote_logs/<job_id>.log` append 전용** + JSON엔 tail 8000자만(`LOG_TAIL`). 저장은 메모리 캐시 + **2초 스로틀**(`SAVE_INTERVAL`, flusher 0.5s tick) + 종료 시 `flush()`. 기존 큰 로그는 로드 시 파일로 자동 이관(실측 jobs.json 2.27MB→0.75MB). 공개 API 동일.
+- **워커 v7 (`worker.py`)**: `cached_readiness()`(ready 30s / not-ready 5s 캐시), register 5s, idle claim 2s, 잡 끝나면 강제 재점검.
+- **라이브 로그**: 실행 중 잡을 펼쳐두면 `refreshLiveLog`가 `/api/job_log?id=&tail=60000`로 갱신(스크롤 하단 고정 유지). `/api/job_log` 우선순위 = 원격 큐 파일 → 실행 중 로컬 JOB → 로컬 기록. `/api/state`의 job.log는 **마지막 4000자만**(1.5초 폴링 경량화).
+- **GET 예외**: `do_GET` → `_handle_get` 래퍼, 예외 시 500 JSON(이전 = 무응답 끊김).
+- **기타**: 본문 2MB 상한(`read_body`, 초과 시 읽지 않고 끊음) / `/api/illust-thumb`의 Downloads는 **현재 가져오기 제안(IMPORT/CARD_IMPORT_PROPOSAL.json `assignments[].candidate_path`) 후보만** 제공(`proposal_candidate_paths`) / `prune_logs(40개, 14일)` 기동 시 / UI 목록 `escapeHtml` / 탭 숨김 시 폴링 정지(`visibilitychange`) / 종료 시 `REMOTE_QUEUE.flush()`.
+- **갱신·재시작**: `-UpdateRestart`가 더 이상 pull 강제 안 함 — `TEMP/panel/auto_update.on` 마커 있을 때만 pull(로컬 PC=재시작만). 메시지도 마커 기준.
+
 **수정 시 읽을 것**
-- 버튼/액션 추가·변경: `server.py`의 `INDEX_HTML`(버튼 HTML+JS) + 액션 디스패치 블록.
-- 화면만: `INDEX_HTML`.
+- 버튼/액션 추가·변경: `static/index.html`(버튼 HTML+JS) + `server.py` 액션 디스패치 블록.
+- 화면만: `static/index.html`(재기동 불필요, Ctrl+F5).
+- 접근/보안: `server.py` `access_denied_reason`.
 - 기동/버전: `start_hidden.ps1` + `PANEL_VERSION`.
 
 **함정**
@@ -114,6 +127,10 @@
 
 - **패널 콘솔 창이 작업표시줄에 상주 = 서버를 콘솔 파이썬으로 띄운 것(2026-06-26 수정).** `start /b python.exe server`는 서버가 그 .bat 콘솔을 생존 내내 붙잡아 창이 안 닫힘 → `start_hidden.ps1`에서 `pythonw.exe`로 기동해야 무창. 진입도 `panel_hidden.vbs`(wscript→bat 히든)로. **`pin_panel.ps1` 바꾸면 `작업표시줄에_패널_고정.bat` 1회 재실행해 바로가기 재생성 필요**(기존 고정은 unpin 후 재고정). Windows 전용=샌드박스 검증 불가.
 - **★ 무콘솔 부모(pythonw)의 부작용 = 자식 콘솔 프로세스가 각자 새 창을 띄움(cmd 깜빡임, v48 수정).** 서버를 pythonw로 띄우면 부모에 콘솔이 없어, `subprocess.run/Popen`으로 부른 콘솔 프로그램(git·bat·python 등)이 **매번 새 콘솔 창을 생성**(python.exe일 땐 부모 콘솔 공유라 안 보였음). 주기 주범=`github_status`(상태폴링 60s마다 git). **해결=server.py/worker.py의 모든 subprocess에 `creationflags=NO_WINDOW`(=`CREATE_NO_WINDOW`)** 부여(모듈 상수 `NO_WINDOW`). **단 `panel_update_restart`의 detached 스폰은 `DETACHED_PROCESS`와 상호배타라 NO_WINDOW 안 붙임**(detached 자체가 무창). 새 subprocess 추가 시 반드시 NO_WINDOW 포함. **★ 무콘솔 부모 자식처리 3대 함정 정본 = F단원**(stdio는 python.exe / NO_WINDOW / 파이프 대신 임시파일 캡처 + HEAD.lock 정리).
+
+- **★ Windows `os.kill(pid, 0)` = 생존확인이 아니라 TerminateProcess(프로세스를 죽임).** POSIX 관용구 그대로 쓰면 워커를 죽인다 → `_pid_alive()`(ctypes OpenProcess(0x1000)+GetExitCodeProcess, STILL_ACTIVE=259)만 사용.
+- **다른 기기에서 "forbidden: token required"/접근 제한 페이지** = v60 접근제어 정상 동작. 패널 PC 화면의 [다른 기기 접속 링크]로 1회 접속. "host not allowed" = 그 기기가 PC 이름/IP 아닌 주소(다른 도메인·hosts 별칭)로 접속 → `PHONESPOT_PANEL_ALLOWED_HOSTS`에 추가.
+- 원격 렌더 워커(다른 PC)는 `/api/worker/*`만 쓰므로 토큰 불필요(Host만 맞으면 됨). 패널 UI는 원격에서 토큰 필요.
 
 **교차 영향**: 렌더/라이브러리/슬러그 액션은 C·D 단원 스크립트를 subprocess로 부름.
 
@@ -426,6 +443,8 @@
 
 - **★ pip 의존성 설치 (Python 3.14 truststore 재귀 우회, 2026-07-16)**: 런타임이 3.14면 pip의 vendored truststore가 `ssl.verify_mode`에서 무한재귀(RecursionError) → **모든 HTTPS 설치 실패**(fastembed·faster-whisper 등, `--isolated`로도 안 됨). 우회 = `python -m pip install --use-deprecated=legacy-certs ...`(pip `_internal/cli/index_command.py`: legacy-certs면 truststore ssl_context 안 만듦, 코드확정). 구버전 pip엔 플래그 없어 에러 → `SETUP_EMBED.bat`·`SETUP_FULL_PRODUCER.bat`은 **legacy-certs→plain→--user 3-tier 폴백**. 네이티브 확장은 3.14 wheel 여부 별도 확인(ctranslate2 4.8.1=cp314 O). `.phonespot_runtime`가 3.14 = 이 이슈 상시.
 
+- **2026-10-08 (v60) 패널 git 경로 정리 (F)**: ① `dashboard/auto_update.cmd` **자동 커밋 제거** — 로컬 변경은 `git stash push --include-untracked -m phonespot-autoupdate -- . ":(exclude)cardnews/articles"`로 치워두고 `pull --ff-only`(수신PC가 커밋을 만들어 origin과 분기하던 경로 차단, 복구 = `git stash list`/`git stash pop`). ② **업로드 게이트 확장**(`codex_github_upload.py`): staged 목록을 `-c core.quotepath=false diff --cached --name-only --diff-filter=ACM -z`로(한글 파일명 누락 방지) → `.py` py_compile / `.js·.mjs` `node --check` / `.bat·.cmd` CRLF+한글 시 BOM / `cardnews/articles/*` `validate_article.py --all`(180s). 실패 시 unstage+중단. ③ `.gitignore` += `_to_delete*/`(스크래치 폴더; 이미 추적된 6파일은 `git rm -r --cached _to_delete _to_delete_ga4_scratch` 1회).
+
 ## G. 광고 관리대장 (ads/, ads_kt/) — 별도 정본으로 위임
 
 **목적**: 폰스팟/KT 광고 KPI·메타/네이버/유튜브 자동화·광고소재 생성기. **이 맵은 포인터만**; 상세는 ads 자체 정본 가이드.
@@ -503,7 +522,7 @@
 **목적**: 폰↔PC 명령, 발행 신호 큐.
 
 **핵심 경로**
-- `automation/scripts/telegram_listener.py` — 폰→PC 명령 + outbox 자동 푸시(매 폴 사이클 끝 `check_outbox(outbox_recipients)`). **★ 다중 수신(2026-07-03)**: outbox 수신자 = `trusted_chat_ids` 첫 번째(사장님 8814209968) + `_secrets/listener_config.json`의 `broadcast_chat_ids`(수신 전용, 명령 권한 X — 현재 건우 8728290522). 수신자 추가 = 그 사람이 봇(@PLauto_claude_bot)에 텍스트 1개 전송 → listener 끈 상태에서 getUpdates로 chat_id 확인(켜져 있으면 listener가 소비해 안 보임) → broadcast_chat_ids에 추가 → 재시작.
+- `automation/scripts/telegram_listener.py` — 폰→PC 명령 + outbox 자동 푸시(매 폴 사이클 끝 `check_outbox(outbox_recipients)`). **★ 다중 수신(2026-07-03)**: outbox 수신자 = `trusted_chat_ids` 첫 번째(사장님 8814209968) + `_secrets/listener_config.json`의 `broadcast_chat_ids`(수신 전용, 명령 권한 X — **2026-08-27 현재 비어 있음 `[]`**. 건우 8728290522는 퇴사로 제거, 잔류 시 발송 실패가 무한 재발송을 유발했음 → 아래 함정). **★ 퇴사·이탈자는 즉시 `broadcast_chat_ids`에서 빼라** — 봇 차단/대화 삭제된 chat_id는 계속 실패한다. 수신자 추가 = 그 사람이 봇(@PLauto_claude_bot)에 텍스트 1개 전송 → listener 끈 상태에서 getUpdates로 chat_id 확인(켜져 있으면 listener가 소비해 안 보임) → broadcast_chat_ids에 추가 → 재시작.
 - `automation/scripts/tg_send.py` — 1회 송신 CLI(`from tg_send import send_text` 모듈 사용 + `py -3 tg_send.py <txt_path>` CLI). 특정인 1회 발송 = venv python -c로 `send_text(text, chat_id="...")`.
 - **아침 브리핑(2026-07-03 신설)**: Claude 앱 스케줄 task `phonespot-morning-briefing` 매일 08:00 — Drive 스냅샷 read → 3/7/30일 집계(기준일 오늘−2) + 원천 교차검증 + 탭별 분석(시트 메모 검증) → `_state/outbox/<YYYY-MM-DD>_아침브리핑.txt`. 전제 = PC 켜짐(절전 해제 완료) + Claude 앱 실행 중 + listener 가동. 시트발 alerts.js sendMorningBriefing 대체.
 - `_state/outbox/*.txt` — 클로드가 떨군 송신 큐 / `_state/outbox_sent/` — 완료 보관(4096자 초과 시 3800자 청크 분할 + `[N/M]` 프리픽스).
@@ -514,7 +533,7 @@
 - 카드뉴스 작성 완료 통지: `<NNN>_ready.txt` 또는 `<NNN>_<NNN>_<NNN>_ready.txt` (일괄). slug + title + 산출물 경로 + 사장님 다음 단계 포함.
 - PING/디버그: `ping_test.txt`.
 - 아침 브리핑: `<YYYY-MM-DD>_아침브리핑.txt` (스케줄 task 자동 생성. 포맷 = ━━━ 섹션 구분 + 한 줄 한 정보, "상태" 섹션 금지 — 종민 지시 2026-07-03).
-- 송신 성공 시 자동 `_state/outbox_sent/`로 이동. 실패 시 outbox에 잔존(다음 사이클 재시도).
+- 송신 후 자동 `_state/outbox_sent/`로 이동. **★ 2026-08-27 변경: 1회 패스 후 무조건 이동(재발송 없음).** 일부 수신자 실패는 stderr `[outbox] moved with FAILED recipients:` 로그로만 남고 재시도 안 함 — 중복 발송 방지 우선(아래 함정 참조).
 
 **수정 시 읽을 것**: `AUTOMATION_OVERVIEW.md` + 해당 스크립트.
 
@@ -524,6 +543,8 @@
 - 미등록(untrusted) 사용자가 봇에 메시지 보내면 로그에 `ignored untrusted chat_id=N`만 남고 **봇은 무응답이 정상** (보낸 사람 폰에선 아무 반응 없음).
 - 송신 성공 = `resp_ok=True + message_id` 로그 확인(`automation/_state/listener_log.txt`). 폰 미수신 시 봇 채팅창·알림 mute·차단 점검.
 - **★ listener는 반드시 truststore venv(`.phonespot_runtime\Scripts\python.exe`)로 띄울 것 (2026-06-18).** `start_telegram_listener.bat`이 `py -3`(시스템 파이썬)을 쓰면 사무실 TLS 가로채기에서 `call_api`(urllib, `telegram_listener.py:107`) 송신이 `CERTIFICATE_VERIFY_FAILED`로 실패 → outbox 잔존. 이식(06-18) SSL 해결은 venv `sitecustomize.py`의 `truststore.inject_into_ssl()`에만 적용됨(경로 고친 4파일 목록에서 이 bat 누락). `tg_send.py`도 동일 — venv로 실행해야 SSL OK.
+- **★ 다중 수신자 부분 실패 → 무한 재발송 사고 (2026-08-27 실증, 수정 완료).** 구버전 `check_outbox()`는 수신자 1명이라도 실패하면 `ok_all=False`로 파일을 outbox에 남기고 **다음 폴 사이클에 전체 재발송** → 성공한 수신자(종민)에게 무한 중복. 8/27 브리핑이 07:10~07:31 약 21분간 30초 폴링(getUpdates timeout=30) × 2청크 = **약 84개** 발송됨. 원인 수신자 = broadcast `8728290522`(건우) 발송 실패. 수정 = 수신자별 독립 발송(`break`는 해당 수신자만) + 1회 패스 후 무조건 `rename` + 실패는 `failed` 리스트로 로그만. **재발 시 즉시 조치 = outbox의 해당 .txt를 outbox_sent로 옮기면 루프 정지.**
+- **★ outbox 파일이 60초 안 사라진다고 "listener 미가동"으로 단정 금지 (2026-08-27 오진).** 위 부분 실패 루프면 listener는 멀쩡히 돌면서 파일만 안 옮긴다. 판별 = 사장님이 실제 수신했는지 + `listener_log.txt`의 `resp_ok` 확인. (수정 후에는 잔존 = 진짜 listener OFF로 봐도 됨.)
 - **진단 순서**: ① outbox에 .txt 잔존 = listener OFF 또는 송신 실패 ② `listener_log.txt` 마지막 줄 `stopped`면 데몬 꺼짐 → venv로 직접 띄워 테스트 `..\.phonespot_runtime\Scripts\python.exe -u scripts\telegram_listener.py`(~35초 내 잔존분 푸시) ③ 로그에 `[outbox] send failed ... CERTIFICATE_VERIFY_FAILED`면 venv 미사용 확정 → bat 수정.
 - **.bat 편집 시 `[IO.File]::ReadAllText/WriteAllText`는 상대경로면 .NET cwd(PS 위치 아님) 기준 → 엉뚱한 폴더. 반드시 절대경로.** (ReadAllText/WriteAllText는 CRLF·인코딩 보존 = .bat 안전 편집법, Edit툴 LF변환 회피.)
 
@@ -542,7 +563,7 @@
 - **한글이 꼭 필요한 .ps1(예 `pin_panel.ps1`=Windows "표시줄에 고정" verb를 `-match "표시줄"`로 잡아야 함)은 UTF-8 BOM 필수.** BOM 없으면 Windows PowerShell 5.1이 CP949로 오독 → 한글 문자열 리터럴이 깨져 `Unexpected token`/`Missing closing` 파싱 실패(2026-06-26 pin 실증). `.gitattributes`가 `*.ps1 binary`라 BOM은 커밋 보존. 나머지(로직 ps1)는 ASCII화가 안전. 점검=아래 스니펫에 `nonASCII 본문>0 && BOM 없음 = 위험` 추가.
 
 **편집 절차 (truncation 회피)**
-- `.bat/.ps1`·거대 raw string(server.py INDEX_HTML)·`generator.html`은 Edit 부분일치 truncation 위험.
+- `.bat/.ps1`·거대 raw string(server.py INDEX_HTML)·`generator.html`은 Edit 부분일치 truncation 위험. ※ v60부터 패널 화면 = `dashboard/static/index.html`(92KB, 일반 HTML 파일 — 역시 26KB+라 bash-python 편집, 편집 후 `<script>` 추출 `node --check` + section/div/script 태그균형).
 - 편집 후 **반드시 검증**: BOM 없음 / nonASCII 본문 0 / CRLF. 검증 스니펫(workspace bash, 마운트 경로):
   ```python
   b=open(p,'rb').read(); bom=b[:3]==b'\xef\xbb\xbf'
@@ -565,7 +586,7 @@
 **★ 대형파일 안전규칙 + 커밋 검증 게이트 (2026-06-14, D 적용)**
 - **~31KB 도구 캡**: Edit 도구·Read·cat·grep·git show 는 ~31KB 넘는 파일을 그 지점에서 잘라 읽는다. **그 캡된 내용을 되쓰면 호스트 파일이 truncate**(매처 main 소실·bat 꼬리 소실의 진짜 뿌리). **bash-python(open/write)은 캡 없음 → 대형파일은 이걸로만.**
 - **규칙(절대): 26KB+ 파일은 Edit 도구 금지, bash-python(read→`assert count==1`→write)으로만.** 매 쓰기 후 ① byte수 비교 ② `py_compile`(.py) ③ CRLF·`:end`/끝마커(.bat) 확인. **진실 확인도 Read 말고 `python -c "..open(p).read().."`**(Read·grep은 캡됨).
-- **대형 추적 파일**(분할은 비추천 — 다른 task 영역이거나 쪼개도 캡 밑 안 됨, 규칙으로 관리): `apps_script/generator.html`·`ads/.../generator.html`(173KB, **광고 task**)·`server.py`(165KB, 패널)·`meta-sync.gs`(73KB)·`Code.gs`(46KB, **광고**)·`apps_script/index.html`(41KB)·`APPLY_..._V2.py`(38KB)·`codex_semantic_visual_match.py`(32KB).
+- **대형 추적 파일**(분할은 비추천 — 다른 task 영역이거나 쪼개도 캡 밑 안 됨, 규칙으로 관리): `apps_script/generator.html`·`ads/.../generator.html`(173KB, **광고 task**)·`server.py`(165KB→v60 110KB + `static/index.html` 92KB, 패널)·`meta-sync.gs`(73KB)·`Code.gs`(46KB, **광고**)·`apps_script/index.html`(41KB)·`APPLY_..._V2.py`(38KB)·`codex_semantic_visual_match.py`(32KB).
 - **★ 커밋 검증 게이트(D) — `CODEX_VIDEO_DESK/MAINTENANCE/codex_github_upload.py` main()**: `git add -A` 직후, 변경된 **.py 는 `py_compile`, .bat 는 ① CRLF(lone LF 0) ② 한글내용(`[\uAC00-\uD7A3]`) 포함 시 UTF-8 BOM(EF BB BF)** 검사 → 하나라도 깨지면 `git reset -q` + `return 3`(커밋·푸시 중단). **훅 정본=`.githooks/pre-commit`**(게이트3=한글bat BOM, L44-55). **★ 복구(2026-06-18 실증)**: 시스템업로드가 `LF(CRLF 아님)` 또는 `한글 .bat인데 BOM 없음`으로 ABORT 시 — 해당 .bat을 bash-python으로 CRLF 정규화 + (한글 있으면) 선두 BOM 추가(`b'\xef\xbb\xbf'+b`), 내용변경0(`git diff -w`) 확인 후 재업로드. 단 L445 'NO BOM' 절대규칙과 충돌 → **신규 .bat은 한글 본문 ASCII화가 더 안전**(BOM이 `@echo off` 앞 → 일부 cmd 첫줄 오작동 위험), 게이트 통과용 BOM 추가만 허용. stale `.git/index.lock`(직전 git 중단 잔재) → lock 에러 시 로컬 PC `Remove-Item -Force ...\.git\index.lock` 후 재실행. **편집 손상이 HEAD까지 오염되는 것을 원천 차단**(과거: 깨진 매처·bat 이 자동커밋으로 git 에 올라가 복구 난항). 정상본만 커밋되므로 git 이 항상 안전한 롤백 지점.
 - **복구법 요약**: 큰 .py 꼬리 소실 = `git log -- <path>` → main 있는 커밋 블롭과 공통 앵커로 `cur[:i]+good[j:]` splice. bat 꼬리 소실 = 읽기 없이 **바이너리 append** + 전체 CRLF 정규화(`b.replace(CRLF,LF).replace(LF,CRLF)`). DB NUL 손상 = `cp`(‧`git checkout`은 .gitattributes 필터가 NUL 유발 → 우회).
 
@@ -800,3 +821,7 @@ rdnews/scripts/update_content_guide.py`로 §2 발행인덱스 자동 재생성,
 - 2026-08-22: **유입맵 라우팅 당근 확장 (G단원, danggn-sync.js).** 당근도 랜딩 등 별도 GA4 속성으로 광고 집행 → `syncDanggnGA4`에 메타와 동일한 유입맵 중첩IF 라우팅 추가(`UTM_CH="당근"` 유입구분). 유입=랜딩이면 I세션·J카톡을 랜딩_GA4(campaign=slug, 카톡=kakao_click+cta_click+citymall_click)에서, 아니면 본속성 GA4_자동(source=daangn). K전화·L/M시티마켓은 별도속성 유입이면 0. 미태그 당근·KT(맵 비움)는 기존과 동일(node 검증). 실측 근거: 랜딩_GA4 daangn_landing = session_start 334·citymall_click 153·kakao_click 5(기존 당근 sync가 통째로 놓치던 것). 당근은 API 없음 → 당근+ 수기입력 + UTM(채널=당근, slug=daangn_landing, 유입=랜딩) 태그 필요.
 - 2026-08-22 (버그수정): **UTM 상태(E열) 자동 갱신 (G단원, meta-sync.js·Code.js).** 증상=슬러그(C)+광고그룹명(B) 다 채워도 E열이 '⚠️ 매핑 필요'로 계속 남음(종민 지적, 버그처럼 보임). 원인=`flipMappedUtmStatus`가 **메뉴 수동 전용**(ui.alert 포함)이라 자동 실행 안 됨 → autoDiscover가 넣은 ⚠️ 상태가 안 갱신. 수정=코어 `flipMappedUtmStatus_()`(무UI, 카운트 반환) 분리 + `refreshAll`에 자동 호출(야간 02:45 포함). 메뉴 `flipMappedUtmStatus`는 코어+알림 래퍼로 유지. 상태는 표시용이라 매칭(SUMIFS)엔 원래 무영향. node PASS.
 - 2026-08-24 (종민 요청): **이상징후 텔레그램 알림 중단 토글 (G단원, alerts.js).** 헬스체크(02:45)·목표경고·토큰경고(08:30) 자동발송을 Script Property `ANOMALY_ALERTS_MUTED='1'`로 뮤트(`alertsMuted_` 게이트). 메뉴 '알림/모니터링'에 **🔕 이상징후 알림 중단 / 🔔 재개** 추가(muteAnomalyAlerts/unmuteAnomalyAlerts = 속성 set/delete). **주간 리포트·배포 실패 알림은 유지**(뮤트 무관). 기본=미뮤트라 배포 후 🔕 1회 클릭 필요(브랜드별 속성). node PASS.
+- 2026-08-27 (사고+수정): **★ outbox 다중 수신자 부분 실패 → 무한 재발송 (H단원, telegram_listener.py `check_outbox`).** 증상=아침 브리핑이 종민 폰에 수십 번 반복 수신. 원인=구버전이 수신자 1명이라도 실패하면 `ok_all=False`로 파일을 outbox에 남기고 다음 폴 사이클에 **전체 재발송** → 성공 수신자에게 무한 중복(구버전 주석에 "성공 수신자는 중복 수신 가능"으로 이미 명시돼 있었음). 8/27 07:10~07:31 21분간 30초 폴링 × 2청크 = 약 84개 발송. 실패 수신자 = broadcast `8728290522`(건우), 실패 사유는 샌드박스에서 api.telegram.org 차단으로 미확인(listener 콘솔 `[outbox] send failed full:` 줄에 기록됨). **수정**=수신자별 독립 발송(`break`는 해당 수신자 루프만) + 1회 패스 후 무조건 `rename` + 실패는 `failed` 리스트로 stderr 로그만, 재시도 없음(중복 방지 우선). **즉시 조치법**=outbox의 해당 .txt를 outbox_sent로 옮기면 루프 정지. **부수 교훈(오진)**=outbox 파일이 60초 안 사라진다고 "listener 미가동"으로 단정하면 안 됨 — 부분 실패 루프면 listener는 정상 가동 중. 판별=실제 수신 여부 + `resp_ok` 로그. **코드 변경이라 로컬 PC listener 재시작해야 반영됨.**
+- 2026-08-27 (후속): **건우 퇴사 → `broadcast_chat_ids` 비움 (H단원, `_secrets/listener_config.json`).** 위 무한 재발송 사고의 실패 수신자가 건우 chat_id `8728290522`였고 퇴사자여서 제거(현재 `[]` = 종민 1명만 수신). **`_secrets/`는 .gitignore = git 전파 안 됨** → 부사수 PC 등 다른 머신에도 같은 설정 있으면 각각 수정. 규칙으로 승격: 퇴사·이탈자 chat_id는 즉시 제거(잔류하면 매 발송 실패 → 수정 전 코드였다면 무한 재발송, 수정 후에도 stderr 에러 로그 누적).
+- 2026-07-16 (세션): **checkTokensDaily 구글Ads 토큰 점검 제거 (H단원, alerts.js:219~223).** 종민 요청: 텔레그램 "🔑 토큰 점검 경고"의 "· 구글Ads 토큰 실패" 줄이 매일 뜸(구글Ads refresh_token 테스트모드 7일 만료 오탐). 구글Ads 블록만 삭제, 메타·네이버·텔레그램 점검은 유지. Gmail 포워딩 아님=시스템 자체 알림(alerts.js checkTokensDaily 매일 08:30 트리거). 구글Ads 사용 재개 시 블록 복구.
+- 2026-10-08 (재진단 v60): **패널 15항목 개선 (A·F·I단원).** 화면 `static/index.html` 분리, 접근제어(Host 검증·LAN 토큰·same-origin), 워커 pid 안전확인(os.kill 함정), 큐 로그 파일분리+저장 스로틀, 워커 v7, 라이브 로그, state 로그 4000자, GET 500 래퍼, 2MB/썸네일 제한, 로그 자동정리, auto_update 자동커밋 제거, 업로드 게이트 확장. 격리 서버 e2e 검증.

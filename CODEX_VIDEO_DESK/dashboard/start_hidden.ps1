@@ -19,7 +19,9 @@ if ($UpdateRestart) { $NoBrowser = $true }
 # Main PC: does nothing unless the marker is turned on.
 $autoUpdateMarker = Join-Path $desk "TEMP\panel\auto_update.on"
 $autoUpdateCmd = Join-Path $PSScriptRoot "auto_update.cmd"
-if ((((Test-Path $autoUpdateMarker)) -or $UpdateRestart) -and (Test-Path $autoUpdateCmd)) {
+# -UpdateRestart never forces a pull: on the push-only local dev PC a pull/stash would hide
+# uncommitted work. Pull happens only on receiver PCs (marker present).
+if ((Test-Path $autoUpdateMarker) -and (Test-Path $autoUpdateCmd)) {
   try { cmd.exe /c call "$autoUpdateCmd" | Out-Null } catch {}
 }
 
