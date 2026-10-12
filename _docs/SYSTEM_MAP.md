@@ -492,7 +492,7 @@
 - **STEP 0 머신 모델 갱신**: 노트북 → 로컬 PC로 push 주체 변경. F단원 동기화. 정본 = `CLAUDE.md` STEP 0.
 - **GitHub Actions 실패 알림**: `deploy-apps-script.yml`에 `Notify Telegram on failure` step + GitHub Secrets `TELEGRAM_BOT_TOKEN`/`TELEGRAM_CHAT_ID` 등록. workflow #4 `d4157c0` 29초 성공 = 알림 트리거 안 됨(=정상). 다음 진짜 실패 시점에 첫 알림 = 자동 검증. 정본 = `ads/MULTI_BRAND_ARCHITECTURE.md` "🔔 실패 알림 셋업".
 - **`_secrets/` 백업 정책**: 별도 백업 비채택(사장님 결정) + 재발급 절차로 처리. **★ 핵심**: Apps Script PropertiesService 키(메타·네이버·인스타·GA4·유튜브·Gemini·Apify)는 Google 클라우드 저장 = `_secrets/` 손실 무영향. 영향 = 로컬 텔레그램 listener 정도. 정본 = `_docs/DISASTER_RECOVERY.md`.
-- **사내 인수인계 (2026-10-12)**: 정본 = `_docs/HANDOVER_INTERNAL.md` — 역할 R1 운영자/R2 제작자별 계정·권한 표, 담당자 PC 셋업, 완료 기준, 권한 회수(키 재발급) 역순. 사전 점검: git 이력 비밀값 스캔 0건(468커밋, 정규식 한계 명시). **함정**: ① GitHub Write 권한자는 워크플로로 Actions Secrets(`CLASPRC_JSON`=사장님 Google OAuth) 접근 가능 ② Apps Script 설치형 트리거는 만든 사람 계정으로 실행 ③ 웹앱 허용 이메일 하드코딩 `apps_script/Code.js:590` ④ 텔레그램 권한 = `_secrets/listener_config.json` `trusted_chat_ids`/`broadcast_chat_ids`.
+- **사내 인수인계 (2026-10-12)**: 정본 = `_docs/HANDOVER_INTERNAL.md` — **휴면 인수인계**: §1 시스템 설명(모듈 M1~M8) · §2 개인 계정 연결 지점 A1~A17(사장님 개인 계정 의존 목록) · §3 모듈별 재가동 순서 · §6 권한 회수. **사실**: M2 카드뉴스·M3 영상·M4 패널은 계정 없이 동작(Supertone→edge-tts, Gemini 없으면 태깅 스킵·템플릿 대체), M5 광고·M6 텔레그램·M8 유튜브는 계정 재연결 필수. 사전 점검: git 이력 비밀값 스캔 0건(468커밋, 정규식 한계 명시). **함정**: ① GitHub Write 권한자는 워크플로로 Actions Secrets(`CLASPRC_JSON`=사장님 Google OAuth) 접근 가능 ② Apps Script 설치형 트리거는 만든 사람 계정으로 실행 ③ 웹앱 허용 이메일 하드코딩 `apps_script/Code.js:590` ④ 텔레그램 권한 = `_secrets/listener_config.json` `trusted_chat_ids`/`broadcast_chat_ids`.
 - **`ads/README_FOR_AI.md` 갱신**: Phase 1 자동 배포 흐름 + **콘솔 직접 수정 ❌** 룰 박음. 다음 광고운영 클로드 진입점에서 즉시 파악.
 
 **2026-06-15 세션 3 — B1 시트 read 인프라 + 당근 자동화 (상세 = `CLAUDE.md` STEP 8)**
@@ -835,3 +835,4 @@ rdnews/scripts/update_content_guide.py`로 §2 발행인덱스 자동 재생성,
   - **시트와 무관(별도 경로, 이 변경으로 안 막힘)**: Cowork 스케줄 작업 'phonespot-morning-briefing'(AI 브리핑, outbox → telegram_listener). 끄려면 데스크톱 앱 스케줄 작업에서 해당 작업 비활성화.
   - **재개 방법**: (1) `alerts.js`에서 `TELEGRAM_ALL_OFF = false` (필요한 것만 살리려면 `tgSend_` 호출부 단위로 판단; 이상징후 3종만 따로 끄려면 메뉴 🔕 이상징후 알림 중단 = `ANOMALY_ALERTS_MUTED`) → (2) 워크플로 두 스텝의 `false && ` 제거 → (3) push. 필요 Script Property: `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`(유지됨, 삭제 안 함). 아침 브리핑까지 살리려면 추가로 `MORNING_BRIEFING_DISABLED` 삭제 + `setupMorningBriefingTrigger`(단, 2026-07-03 AI 브리핑으로 대체·폐기된 기능).
 - 2026-10-12: **사내 인수인계 가이드 신설 (F단원, 0번 인덱스 행 추가).** `_docs/HANDOVER_INTERNAL.md` — 계정·권한 인벤토리, git 이력 비밀값 스캔 0건, 하드코딩·잔여물 점검, 권한 회수 절차.
+- 2026-10-12 (갱신): **HANDOVER_INTERNAL.md를 휴면 인수인계 구조로 재편** — 시스템 설명 M1~M8, 개인 계정 연결 지점 A1~A17, 모듈별 재가동 가이드.

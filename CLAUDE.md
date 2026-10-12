@@ -96,7 +96,7 @@
 - **패널/페이지 디자인 (색·토큰·컴포넌트 재사용)**: `_docs/DESIGN_SYSTEM.md` (`CODEX_VIDEO_DESK/dashboard/static/index.html` `:root` 정본 추출(v60~, 이전 server.py) — 패널·광고 생성기·브랜드 페이지 공용 디자인 언어)
 - **광고 운영 자동화 (메타·인스타·네이버·인사이트)**: `ads/SNS_AUTOMATION_ROADMAP.md`(채널별 가능여부 매트릭스) + 작업 채널 가이드 (`ads/META_AUTOMATION.md` / `ads/NAVER_AUTOMATION.md` / `ads/INSTAGRAM_AUTOMATION_PENDING.md`(완료 헤더))
 - **멀티 브랜드 모노레포 (KT/국민/진짜폰스팟 등 신설)**: `ads/MULTI_BRAND_ARCHITECTURE.md` — `_shared/`+`brands/<brand>/` 분리, clasp+GitHub, Phase 1~4
-- **사내 인수인계 (담당자 추가·교체·권한 회수)**: `_docs/HANDOVER_INTERNAL.md` — R1 운영자/R2 제작자 권한표, PC 셋업, 완료 기준, 퇴사 시 키 재발급
+- **사내 인수인계 (담당자 추가·교체·권한 회수)**: `_docs/HANDOVER_INTERNAL.md` — 시스템 설명(M1~M8) + 개인 계정 연결 지점(A1~A17) + 모듈별 재가동 가이드 + 권한 회수
 - **재해 복구 (PC 손상/실수 삭제/PC 교체/repo 삭제)**: `_docs/DISASTER_RECOVERY.md` — 시나리오 A/B/C, 자산별 백업 출처 매트릭스, `_secrets/` 별도 백업 절차, 검증
 
 각 Read 결과는 다음 작업의 컨텍스트로 직접 활용. 사장님이 "수집해줘" / "발행해줘" / "매커니즘 알려줘" 같은 짧은 명령만 줘도 위 가이드로 모든 형식·룰을 자동 적용해야 함.
