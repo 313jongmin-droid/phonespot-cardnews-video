@@ -185,3 +185,4 @@
 - 2026-07-21: **실사 AI 적합도 판별 가이드 신설 (C단원).** `shorts/promo_ai/LIVE_ACTION_FIT.md` — 주제 단위로 `실사AI: 추천/조건부/비추천` 태깅(필수3조건+가감점, 004·005·050 vs 047·049 캘리브레이션). 주제 수집 task가 태그를 붙이도록 복붙용 구문 포함(TOPIC_ENGINE은 별도 task 소유 → 참조만). 함께 promo_ai WORKFLOW에 품질·안전 룰 4종(조명 일체화 / 나레이션 무음패딩·loudnorm / 부메랑 금지·"할부원금" 용어통일 / 덤프 삭제·폴더보고) 박음. 상세 = SYSTEM_MAP C단원 2026-07-21.
 - 2026-10-08: **패널 v60 — UI 정본 경로 변경 (A단원).** 화면 = `CODEX_VIDEO_DESK/dashboard/static/index.html`(server.py `INDEX_HTML` 분리). CLAUDE.md STEP1 디자인 링크·DESIGN_SYSTEM.md·PANEL_TASK.md 동기화. 다른 기기 패널 접속은 토큰 링크 필요.
 - 2026-10-08: **웹 허브 전환 기획서 추가 (STEP 1 조건부 링크).** `CODEX_VIDEO_DESK/WEB_PLATFORM_PLAN.md`.
+- 2026-10-12: **사내 인수인계 가이드 추가 (STEP 1 조건부 + STEP 2 라우팅).** `_docs/HANDOVER_INTERNAL.md`.

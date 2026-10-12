@@ -96,6 +96,7 @@
 - **패널/페이지 디자인 (색·토큰·컴포넌트 재사용)**: `_docs/DESIGN_SYSTEM.md` (`CODEX_VIDEO_DESK/dashboard/static/index.html` `:root` 정본 추출(v60~, 이전 server.py) — 패널·광고 생성기·브랜드 페이지 공용 디자인 언어)
 - **광고 운영 자동화 (메타·인스타·네이버·인사이트)**: `ads/SNS_AUTOMATION_ROADMAP.md`(채널별 가능여부 매트릭스) + 작업 채널 가이드 (`ads/META_AUTOMATION.md` / `ads/NAVER_AUTOMATION.md` / `ads/INSTAGRAM_AUTOMATION_PENDING.md`(완료 헤더))
 - **멀티 브랜드 모노레포 (KT/국민/진짜폰스팟 등 신설)**: `ads/MULTI_BRAND_ARCHITECTURE.md` — `_shared/`+`brands/<brand>/` 분리, clasp+GitHub, Phase 1~4
+- **사내 인수인계 (담당자 추가·교체·권한 회수)**: `_docs/HANDOVER_INTERNAL.md` — R1 운영자/R2 제작자 권한표, PC 셋업, 완료 기준, 퇴사 시 키 재발급
 - **재해 복구 (PC 손상/실수 삭제/PC 교체/repo 삭제)**: `_docs/DISASTER_RECOVERY.md` — 시나리오 A/B/C, 자산별 백업 출처 매트릭스, `_secrets/` 별도 백업 절차, 검증
 
 각 Read 결과는 다음 작업의 컨텍스트로 직접 활용. 사장님이 "수집해줘" / "발행해줘" / "매커니즘 알려줘" 같은 짧은 명령만 줘도 위 가이드로 모든 형식·룰을 자동 적용해야 함.
@@ -133,6 +134,7 @@
 | "SNS 자동화" / "스레드 자동화" / "카카오 채널 자동화" / "틱톡 자동화" / "네이버 블로그 자동화" | `ads/SNS_AUTOMATION_ROADMAP.md` 매트릭스 확인. 카카오 채널·당근·네이버 블로그 = API 없음 확정 |
 | "멀티 브랜드" / "KT 시트" / "국민인터넷 시트" / "진짜 폰스팟" / "브랜드 분리" / "공용 코드 배포" / "clasp" / "push-all" | **★ 별도 task로 진행 (2026-06-15 사장님 결정).** 광고운영 task가 안 만짐. 정본 = `ads/MULTI_BRAND_ARCHITECTURE.md` "다른 task 충돌 방지 — 책임 분담" 섹션. 별도 클로드 세션 시작 명령: `ads/MULTI_BRAND_ARCHITECTURE.md 읽고 Phase 2 진행. _shared/ 폴더 분리 + brands/phonespot/ 셋업` |
 | "카드뉴스 기사 써줘" / "주제 뽑아줘" / "기사 만들어줘" | `cardnews/templates/article_authoring_spec.md` → 주제제안(content_guide)→사실수집→기사 JSON 저장. 영상만이면 카드이미지·image_prompts 생략 |
+| "인수인계" / "담당자 추가" / "직원 권한" / "퇴사 권한 회수" | `_docs/HANDOVER_INTERNAL.md` Read → 역할(R1/R2) 확인 → §2 권한표·§3 셋업·§7 회수 순서대로 |
 | "부사수 셋업" / "새 PC" / "멀티PC" / "독립 셋업" | `부사수PC_원클릭_셋업.bat`(빈 PC 한 파일) + MULTI_PC 가이드 |
 | "일러스트 공유" / "라이브러리 동기화" / "허브" | 패널 "관리>라이브러리 동기화" 또는 `라이브러리_공유_동기화.bat`. 허브=Drive `PhoneSpot_Library`(데스크톱 동기), 경로파일 `shorts/config/library_share_path.txt` |
 | "주제(기사) 깃에 올려" / "전파" | `기사_깃에_올리기.bat`(대표 push) → 부사수 git pull |
