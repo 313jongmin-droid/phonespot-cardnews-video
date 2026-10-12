@@ -9,7 +9,10 @@
  */
 
 // ============ 텔레그램 발송 ============
+// ★ 2026-10-12 종민 요청: 시트발 텔레그램 전체 종료. 재개 = 아래 플래그를 false로 바꾸고 push.
+var TELEGRAM_ALL_OFF = true;
 function tgSend_(text) {
+  if (TELEGRAM_ALL_OFF) { Logger.log('[tg] 전체 종료 상태 — 스킵: ' + String(text).slice(0, 60)); return false; }
   const props = PropertiesService.getScriptProperties();
   const token = props.getProperty('TELEGRAM_BOT_TOKEN');
   const chat = props.getProperty('TELEGRAM_CHAT_ID');

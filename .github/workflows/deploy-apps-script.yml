@@ -107,7 +107,7 @@ jobs:
       # ===== 완료 알림 (항상 1개) =====
       # 성공: apps_script 변경이면 "배포 완료", 아니면 "반영 완료"
       - name: Notify Telegram on success
-        if: success()
+        if: false && success()  # 2026-10-12 텔레그램 전체 종료
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -132,7 +132,7 @@ jobs:
 
       # 실패: 배포(또는 문법 게이트) 실패 시에만
       - name: Notify Telegram on failure
-        if: failure()
+        if: false && failure()  # 2026-10-12 텔레그램 전체 종료
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
