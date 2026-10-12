@@ -134,7 +134,7 @@
 | "SNS 자동화" / "스레드 자동화" / "카카오 채널 자동화" / "틱톡 자동화" / "네이버 블로그 자동화" | `ads/SNS_AUTOMATION_ROADMAP.md` 매트릭스 확인. 카카오 채널·당근·네이버 블로그 = API 없음 확정 |
 | "멀티 브랜드" / "KT 시트" / "국민인터넷 시트" / "진짜 폰스팟" / "브랜드 분리" / "공용 코드 배포" / "clasp" / "push-all" | **★ 별도 task로 진행 (2026-06-15 사장님 결정).** 광고운영 task가 안 만짐. 정본 = `ads/MULTI_BRAND_ARCHITECTURE.md` "다른 task 충돌 방지 — 책임 분담" 섹션. 별도 클로드 세션 시작 명령: `ads/MULTI_BRAND_ARCHITECTURE.md 읽고 Phase 2 진행. _shared/ 폴더 분리 + brands/phonespot/ 셋업` |
 | "카드뉴스 기사 써줘" / "주제 뽑아줘" / "기사 만들어줘" | `cardnews/templates/article_authoring_spec.md` → 주제제안(content_guide)→사실수집→기사 JSON 저장. 영상만이면 카드이미지·image_prompts 생략 |
-| "인수인계" / "담당자 추가" / "직원 권한" / "퇴사 권한 회수" | `_docs/HANDOVER_INTERNAL.md` Read → 역할(R1/R2) 확인 → §2 권한표·§3 셋업·§7 회수 순서대로 |
+| "인수인계" / "담당자 추가" / "직원 권한" / "퇴사 권한 회수" / "회사 계정 이전" | `_docs/HANDOVER_INTERNAL.md` Read → §2 개인 계정 연결 지점·§3 재가동·§6 권한 회수 / 계정 이전은 §7(T0~T8, ID 교체표 §7.4) |
 | "부사수 셋업" / "새 PC" / "멀티PC" / "독립 셋업" | `부사수PC_원클릭_셋업.bat`(빈 PC 한 파일) + MULTI_PC 가이드 |
 | "일러스트 공유" / "라이브러리 동기화" / "허브" | 패널 "관리>라이브러리 동기화" 또는 `라이브러리_공유_동기화.bat`. 허브=Drive `PhoneSpot_Library`(데스크톱 동기), 경로파일 `shorts/config/library_share_path.txt` |
 | "주제(기사) 깃에 올려" / "전파" | `기사_깃에_올리기.bat`(대표 push) → 부사수 git pull |
@@ -149,7 +149,20 @@
 - 응답 톤 짧게. 미사여구·과한 보고 ❌. "방금 한 일" 요약 ❌.
 - 매뉴얼 인용 시 줄 번호로 직접 가리키기 (예: `INSTRUCTIONS_CARDNEWS.md:329-352`).
 - 옵션 제시는 정직한 한계 동봉. **클로드가 권장 강요 ❌**. 사장님이 직접 선택.
-- **★ 모든 task(광고운영·카드뉴스·영상·기사 등) 코드/파일 변경을 끝낼 때마다 cmd 푸시 코드를 항상 같이 줄 것** (종민 요청 2026-06-18 광고운영 → 2026-06-19 전체 task로 확대). "bat 돌려라"로 대체 ❌ — 실제 명령을 매번 명시. git이 PATH에 없으니 형식: (stale lock 걸리면 먼저 `del /f /q C:\backup\phonespot_cardnews\.git\index.lock 2>nul`) `cd /d C:\backup\phonespot_cardnews` → `set GIT="C:\Program Files\Git\cmd\git.exe"` → `%GIT% add -A`(특정 영역만 올릴 땐 폴더 지정; 광고=apps_script) → `%GIT% commit -m "..."`(ASCII 메시지, cmd 인코딩 안전) → `%GIT% push origin main`. safe.directory·user.identity는 이미 설정됨. 영상/카드뉴스 track은 패널 '시스템 업로드'(commit 게이트 포함)도 가능하나 **cmd도 항상 함께** 제공. (보조 bat: `광고_깃에_올리기.bat`·`기사_깃에_올리기.bat`.)
+- **★ 모든 task(광고운영·카드뉴스·영상·기사 등) 코드/파일 변경을 끝낼 때마다 cmd 푸시 코드를 항상 같이 줄 것** (종민 요청 2026-06-18 광고운영 → 2026-06-19 전체 task로 확대). "bat 돌려라"로 대체 ❌ — 실제 명령을 매번 명시. git이 PATH에 없으니 형식: (stale lock 걸리면 먼저 `del /f /q C:\backup\phonespot_cardnews\.git\index.lock 2>nul`) `cd /d C:\backup\phonespot_cardnews` → `set GIT="C:\Program Files\Git\cmd\git.exe"` → **아래 "안전 푸시 형식" 필수**(ASCII 메시지, cmd 인코딩 안전). safe.directory·user.identity는 이미 설정됨. 영상/카드뉴스 track은 패널 '시스템 업로드'(commit 게이트 포함)도 가능하나 **이 버튼은 `git add -A`(전체)라 다른 task 변경까지 올림** — cmd도 항상 함께 제공. (보조 bat: `광고_깃에_올리기.bat`·`기사_깃에_올리기.bat`.)
+- **★ 안전 푸시 형식 (2026-10-12 사고 후 의무화)** — 사고: 패널 v60 푸시 커밋 `e0828d8`에 다른 task가 staged해 둔 `apps_script/alerts.js`가 섞여 GitHub Actions가 구글 시트 Apps Script를 강제 배포(`clasp push --force`), 시트 프로젝트 1개 복구에 1시간 소모. **원인 사실**: ① `git commit`(경로 미지정)은 index에 이미 staged된 **다른 task 변경까지 전부** 커밋 ② `git push`는 **아직 안 올린 다른 task 로컬 커밋까지 전부** 올림 ③ `.github/workflows/deploy-apps-script.yml`은 main push마다 실행, 변경 목록에 `apps_script/**`·`apps_script_sheet_export/**`가 있으면 폰스팟·KT 둘 다 강제 배포. **형식**:
+  ```
+  cd /d C:\backup\phonespot_cardnews
+  set GIT="C:\Program Files\Git\cmd\git.exe"
+  %GIT% fetch origin
+  %GIT% log --oneline origin/main..HEAD
+  %GIT% diff --cached --name-only
+  %GIT% add -- <이번 작업 파일들>
+  %GIT% commit -m "..." -- <이번 작업 파일들>
+  %GIT% log --oneline --stat origin/main..HEAD
+  %GIT% push origin main
+  ```
+  규칙: `add -A`·경로 없는 `commit` 금지 / `commit -- <경로>`는 지정 파일만 커밋(다른 staged 변경은 그대로 남음) / 1·2번째 확인 줄 출력에 **이번 작업 아닌 커밋·파일이 있으면 push 중단하고 사장님께 보고** / 마지막 `--stat`에 `apps_script/` 또는 `apps_script_sheet_export/`가 보이는데 광고(시트) 작업이 아니면 **push 금지**(= 시트 배포가 일어남).
 - **★ 멀티브랜드 상시 적용 (종민 2026-07-13)**: 모든 코드/대시보드/시트 변경은 **폰스팟 + KT폰샵 둘 다 무조건 100% 상시 적용**. "어느 브랜드에 적용?"을 **묻지 말 것**. 코드는 push→GitHub Actions clasp가 양쪽 scriptId 자동 배포(멀티브랜드 허브). 가이드/문서도 브랜드 구분 없이 "둘 다" 전제로 기술. 사장님은 각 시트에서 재빌드/메뉴 실행만 양쪽에.
 
 ---

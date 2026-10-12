@@ -186,3 +186,5 @@
 - 2026-10-08: **패널 v60 — UI 정본 경로 변경 (A단원).** 화면 = `CODEX_VIDEO_DESK/dashboard/static/index.html`(server.py `INDEX_HTML` 분리). CLAUDE.md STEP1 디자인 링크·DESIGN_SYSTEM.md·PANEL_TASK.md 동기화. 다른 기기 패널 접속은 토큰 링크 필요.
 - 2026-10-08: **웹 허브 전환 기획서 추가 (STEP 1 조건부 링크).** `CODEX_VIDEO_DESK/WEB_PLATFORM_PLAN.md`.
 - 2026-10-12: **사내 인수인계 가이드 추가 (STEP 1 조건부 + STEP 2 라우팅).** `_docs/HANDOVER_INTERNAL.md`.
+- 2026-10-12: **회사 계정 완전 이전 계획 추가 (HANDOVER_INTERNAL.md §7) + STEP 2 라우팅 문구 갱신.**
+- 2026-10-12: **STEP 3 푸시 형식 교체 → "안전 푸시 형식"(경로 지정 커밋 + push 전 남의 커밋/파일 확인 + apps_script 배포 차단 규칙).** 사고 = v60 커밋에 다른 task의 `apps_script/alerts.js` 섞여 시트 강제 배포.
