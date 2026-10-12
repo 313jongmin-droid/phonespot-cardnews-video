@@ -840,3 +840,17 @@ rdnews/scripts/update_content_guide.py`로 §2 발행인덱스 자동 재생성,
 - 2026-10-12 (갱신): **HANDOVER_INTERNAL.md를 휴면 인수인계 구조로 재편** — 시스템 설명 M1~M8, 개인 계정 연결 지점 A1~A17, 모듈별 재가동 가이드.
 - 2026-10-12 (추가): **HANDOVER_INTERNAL.md §7 회사 계정 완전 이전 계획** — 완료 정의(클린룸 테스트), T0~T8, ID·주소 교체표, 리스크.
 - 2026-10-12 (사고): **커밋 섞임 → 시트 강제 배포 사고 기록 + 안전 푸시 형식 의무화 (F단원, CLAUDE.md STEP 3).**
+
+---
+
+## 스레드 자동화 모듈 (apps_script/threads_*.js) — G단원 (2026-10-12 편입)
+
+- **소유**: 폰스팟 본점 시트(`1tCGFfu2FbGo1XbigaYPptlSbD-7Tj3PLnYH0_o9g5jI`) 전용, 계정 @kr_phonespot. KT폰샵·Sheet Export에선 `threadsGuard_`(threads_00_guard.js:28)가 시트ID 확인 → 전부 no-op.
+- **파일 7개**: threads_00_guard(가드·뮤트) / threads_price_sync(시세 수집 1단계) / threads_draft_gen(초안 생성 2단계) / threads_publish(발행 3단계) / threads_timeslot_stats(시각별 성과 4단계) / threads_auto_select(자동선정·훅학습 5단계) / threads_sync(성과 수집).
+- **루프**: 시세 수집 → 초안 생성 → 발행 → 조회수 수집 → 훅·요인 학습. 트리거: syncPrices(매시) · publishApproved(5분) · syncThreads(03시) · generateSlot8/12/18/21. 설치 함수 installAutoTriggers/installDraftTriggers/installPublishTrigger/installPriceTriggers/installThreadsTriggers. 트리거 한도 20개/사용자/스크립트 주의.
+- **사용 탭**: 스레드_초안·시세_초안·스레드_성과·시세_현재·훅_성과·동기화_로그 등 — 이름 변경 금지.
+- **텔레그램**: alerts.js `TELEGRAM_ALL_OFF`(현재 true) 추종 → `threadsMuted_()`이면 발송 대신 동기화_로그에 '뮤트' 기록(`threadsMuteLog_`).
+- **Script Property**: THREADS_LONG_TOKEN 등 — 값은 레포에 넣지 말 것(Script Property만).
+- **★규칙**: 에디터에서 직접 고치지 말 것. 모든 Apps Script 변경은 레포→Actions 배포로만. apps_script/ 변경은 타 레인과 섞지 말고 **단독 커밋**.
+- **★함정/사고**: 2026-10-08 18:28 e0828d8(panel v60)에 alerts.js가 섞여 배포 → `clasp push --force`가 원격을 레포 기준으로 덮어써 에디터 전용 스레드 7파일 삭제 → 4일 정지. 재발방지 = 본 편입 + 배포 가드(deploy-apps-script.yml에 원격-only 파일 감지 시 중단 스텝).
+- 2026-10-12 (세션): **스레드 자동화 모듈 레포 편입 (G단원, apps_script/threads_*.js 7개).** 에디터 전용이던 7파일을 레포 apps_script/에 편입(단독커밋 #1). 검증: node --check 7/7 통과, 기존 최상위 선언(함수·전역) 충돌 0건, md5 일치. threadsGuard_로 본점 시트 전용(KT/Export no-op), 텔레그램=TELEGRAM_ALL_OFF 추종. 10/8 e0828d8 force-push 삭제사고(4일 정지) 복구. 상세=위 "스레드 자동화 모듈" 섹션. 후속 커밋 #2=배포 가드(원격-only 파일 감지 시 clasp push 중단).
